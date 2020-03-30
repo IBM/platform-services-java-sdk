@@ -1,0 +1,11 @@
+{
+  "debug": true,
+  "branch": "master",
+  "verifyConditions": ["@semantic-release/changelog", "@semantic-release/git"],
+  "prepare": ["@semantic-release/changelog", "@semantic-release/git"],
+  "publish": [
+    {
+      "path": "@semantic-release/github"
+    }
+  ]
+}

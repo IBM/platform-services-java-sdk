@@ -1,0 +1,29 @@
+language: node_js
+
+sudo: false
+
+node_js:
+- 10
+- 12
+
+before_install:
+-  'openssl aes-256-cbc -K $ghost_key -iv $ghost_iv -in .ghostenv.enc -out .ghostenv -d || true'
+
+script:
+- npm run build
+- npm run test-unit-travis || travis_terminate 1
+- npm run test-integration-travis || travis_terminate 1
+- npm run check-packages
+# - sh scripts/typedoc/generate_typedoc.sh currently in progress
+
+after_success:
+- npm run report-coverage
+# - scripts/jsdoc/publish.sh - currently in progress
+
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: npx semantic-release
+  on:
+    node: 12
+    branch: master

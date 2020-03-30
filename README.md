@@ -1,7 +1,13 @@
-# IBM Cloud Platform Node.js SDK
-[![Build Status](https://travis.ibm.com/ibmcloud/platform-services-node-sdk.svg?token=eW5FVD71iyte6tTby8gr&branch=master)](https://travis.ibm.com/ibmcloud/platform-services-node-sdk)
+[![Build Status](https://travis-ci.com/IBM/platform-services-node-sdk.svg?branch=master)](https://travis-ci.com/IBM/platform-services-node-sdk)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
+# IBM Cloud Platform Services Node.js SDK
 
 Node.js client library to interact with various [IBM Cloud Platform Service APIs](https://cloud.ibm.com/apidocs?category=platform_services).
+
+Disclaimer: this SDK is being released initially as a **pre-release** version.
+Changes might occur which impact applications that use this SDK.
 
 ## Table of Contents
 
@@ -37,22 +43,8 @@ IBM Cloud services:
 
 Service Name | Import Path
 --- | --- 
-[Case Management](https://cloud.ibm.com/apidocs/case-management) | ibm-cloud-platform/case-management/v1
-[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit) | ibm-cloud-platform/enterprise-billing-units/v1
-[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | ibm-cloud-platform/enterprise-management/v1
-[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | ibm-cloud-platform/enterprise-usage-reports/v1
-[Global Resource Catalog](https://cloud.ibm.com/apidocs/globalcatalog) | ibm-cloud-platform/global-catalog/v1
-[Global Search](https://cloud.ibm.com/apidocs/search) | ibm-cloud-platform/global-search/v2
-[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | ibm-cloud-platform/global-tagging/v1
-[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | ibm-cloud-platform/iam-access-groups/v2
-[IAM Identity Services](https://cloud.ibm.com/apidocs/iam-identity-token-api) | ibm-cloud-platform/iam-identity-services/v1
-[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | ibm-cloud-platform/iam-policy-management/v1
-[Open Services Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | ibm-cloud-platform/open-service-broker/v1
-[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller) | ibm-cloud-platform/resource-controller/v2
-[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ibm-cloud-platform/resource-manager/v2
-[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | ibm-cloud-platform/usage-metering/v4
-[Usage Reports](https://cloud.ibm.com/apidocs/usage-metering) | ibm-cloud-platform/usage-reports/v1
-[User Management](https://cloud.ibm.com/apidocs/user-management) | ibm-cloud-platform/user-management/v1
+[Global Search](https://cloud.ibm.com/apidocs/search) | ibm-platform-services/global-search/v2
+[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | ibm-platform-services/global-tagging/v1
 
 ## Prerequisites
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.
@@ -63,7 +55,7 @@ Service Name | Import Path
 ## Installation
 
 ```sh
-npm install ibm-cloud-platform
+npm install ibm-platform-services
 ```
 
 ## Using the SDK
@@ -72,12 +64,12 @@ For general SDK usage information, please see [this link](https://github.com/IBM
 ## Questions
 
 If you are having difficulties using this SDK or have a question about the IBM Cloud services,
-please ask a question at [dW Answers](https://developer.ibm.com/answers/questions/ask/?topics=ibm-cloud) or
+please ask a question at
 [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-cloud).
 
 ## Issues
 If you encounter an issue with the SDK, you are welcome to submit
-a [bug report](https://github.ibm.com/ibmcloud/platform-services-node-sdk/issues).
+a [bug report](https://github.com/IBM/platform-services-node-sdk/issues).
 Before that, please search for similar issues. It's possible someone has
 already encountered this issue.
 

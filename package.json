@@ -1,10 +1,10 @@
 {
-  "name": "ibm-cloud-platform",
-  "version": "0.0.1",
-  "description": "IBM Cloud Platform Services Node SDK",
+  "name": "ibm-platform-services",
+  "version": "0.0.0",
+  "description": "IBM Cloud Platform Services Node.js SDK",
   "repository": {
     "type": "git",
-    "url": "https://github.ibm.com/ibmcloud/platform-services-node-sdk"
+    "url": "https://github.com/IBM/platform-services-node-sdk"
   },
   "keywords": [
     "ibm"
@@ -37,7 +37,7 @@
   "dependencies": {
     "@types/node": "^12.0.8",
     "extend": "^3.0.2",
-    "ibm-cloud-sdk-core": "^2.2.0",
+    "ibm-cloud-sdk-core": "^2.3.0",
     "jest-skipped-reporter": "0.0.5"
   },
   "devDependencies": {

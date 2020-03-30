@@ -28,6 +28,16 @@
             <artifactId>platform-services-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>global-search</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>global-tagging</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

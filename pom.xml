@@ -38,7 +38,11 @@
     <modules>
         <!-- This module should always be listed first -->
         <module>modules/common</module>
- 
+
+	<!-- Each of the service modules should be listed here -->
+        <module>modules/global-search</module>
+        <module>modules/global-tagging</module>
+
         <!-- This module should always be listed last -->
        <module>modules/coverage-reports</module>
     </modules>

@@ -1,0 +1,52 @@
+---
+language: java
+dist: xenial
+
+jdk:
+- openjdk8
+
+notifications:
+  email: true
+
+branches:
+  except:
+  - gh-pages
+
+cache:
+  directories:
+  - "$HOME/.m2"
+
+before_install:
+- sudo apt-get update
+- sudo apt-get install python
+- nvm install 12
+- npm install -g npm@6.x
+# - '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $ghost_key -iv $ghost_iv -in .ghostenv.enc -out .ghostenv -d || true'
+
+install: true
+
+# For a tagged build, we'll set the maven artifact version #.
+# before_script:
+# - echo "TRAVIS_TAG = '${TRAVIS_TAG}'"
+# - >-
+#       [ -n "${TRAVIS_TAG}" ]
+#       && mvn versions:set -DnewVersion=${TRAVIS_TAG} -DgenerateBackupPoms=false
+#       || true
+
+script:
+#-  if [[ -n "$TRAVIS_TAG" ]]; then mvn deploy $MVN_ARGS; else mvn package $MVN_ARGS; fi
+-  mvn package
+ 
+# before_deploy:
+# - pip install --user bump2version
+# - npm install @semantic-release/changelog
+# - npm install @semantic-release/exec
+# - npm install @semantic-release/git
+# - npm install @semantic-release/github
+# 
+# deploy:
+#   - provider: script
+#     script: npx semantic-release
+#     skip_cleanup: true
+#     on:
+#       branch: master

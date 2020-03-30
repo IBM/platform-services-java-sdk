@@ -1,0 +1,41 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Update this section to reflect the correct values for your SDK project -->
+    <parent>
+        <groupId>com.ibm.cloud</groupId>
+        <artifactId>platform-services</artifactId>
+        <version>99-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
+    </parent>
+
+    <!-- Update this section to reflect your SDK project name, etc. -->
+    <artifactId>platform-services-common</artifactId>
+    <packaging>jar</packaging>
+    <name>Platform Services SDK Common Library</name>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.ibm.cloud</groupId>
+            <artifactId>sdk-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>${project.parent.artifactId}.properties</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+</project>

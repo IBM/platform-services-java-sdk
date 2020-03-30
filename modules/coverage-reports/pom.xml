@@ -1,0 +1,57 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <!-- Update this section to reflect the correct values for your SDK project -->
+    <parent>
+        <groupId>com.ibm.cloud</groupId>
+	<!-- Update this to reflect your parent project's artifact id -->
+        <artifactId>platform-services</artifactId>
+        <version>99-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>platform-services-coverage-reports</artifactId>
+    <name>Platform Services Test Coverage Reports</name>
+
+    <dependencies>
+	<!-- 
+	     There should be a dependency for EACH module in the project.
+	     Add new "dependency" entries here as needed when you add modules to
+	     your parent pom.xml.   This will ensure that an aggregate code
+	     coverage report contains information for all of your modules.
+	     Note: the "artifactId" values below should reflect the "artifactId" value specified
+	     in each module's pom.xml file (i.e. not the module's directory name).
+	-->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>platform-services-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report-aggregate</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report-aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

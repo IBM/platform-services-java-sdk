@@ -1,0 +1,91 @@
+{{#unless hideSources}}
+    {{> member.sources}}
+{{/unless}}
+
+{{> comment}}
+
+{{#if typeParameters}}
+    <h4 class="tsd-type-parameters-title">Type parameters</h4>
+    {{> typeParameters}}
+{{/if}}
+
+{{#if parameters}}
+    <h4 class="tsd-parameters-title">Parameters</h4>
+    <table class="params">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Attribute</th>
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+            {{#each parameters}}
+                <tr>
+                    <td><code>{{name}}</code></td>
+                    <td>{{#with type}}{{>type}}{{/with}}</td>
+                    <td>{{this.flags}}</td>
+                    <td>
+                        <p>{{comment.text}}</p>
+                        <p>{{comment.shortText}}</p>
+                        {{#with type.reflection.children}}
+                        {{#if this}}
+                        <h4>Properties</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Attributes</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!-- Print out all required parameters-->
+                            {{#each this}}
+                            {{#unless this.flags}}
+                                <tr>
+                                    <td><code>{{name}}</code></td>
+                                    <td>{{#with type}}{{>type}}{{/with}}</td>
+                                    <td>{{flags}}</td>
+                                    <td>{{comment.shortText}}</td>
+                                </tr>
+                            {{/unless}}
+                            {{/each}}
+
+                            <!-- Print out all optional parameters-->
+                            {{#each this}}
+                            {{#if this.flags}}
+                            <tr>
+                                <td><code>{{name}}</code></td>
+                                <td>{{#with type}}{{>type}}{{/with}}</td>
+                                <td>{{flags}}</td>
+                                <td>{{comment.shortText}}</td>
+                            </tr>
+                            {{/if}}
+                            {{/each}}
+                            </tbody>
+                        </table>
+                        {{/if}}
+                        {{/with}}
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{/if}}
+
+{{#if type}}
+    <h4 class="tsd-returns-title">Returns {{#with type}}{{>type}}{{/with}}</h4>
+
+    {{#if comment.returns}}
+        {{#markdown}}{{{comment.returns}}}{{/markdown}}
+    {{/if}}
+
+    {{#if type.declaration}}
+        {{#with type.declaration}}
+            {{> parameter}}
+        {{/with}}
+    {{/if}}
+{{/if}}

@@ -7,18 +7,18 @@ node_js:
 - 12
 
 before_install:
--  '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $ghost_key -iv $ghost_iv -in .ghostenv.enc -out .ghostenv -d || true'
+#-  '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $ghost_key -iv $ghost_iv -in .ghostenv.enc -out .ghostenv -d || true'
 
 script:
 - npm run build
 - npm run test-unit-travis || travis_terminate 1
 # - npm run test-integration-travis || travis_terminate 1
 - npm run check-packages
-# - sh scripts/typedoc/generate_typedoc.sh currently in progress
+# - sh scripts/typedoc/generate_typedoc.sh
 
 after_success:
 - npm run report-coverage
-# - scripts/jsdoc/publish.sh - currently in progress
+# - scripts/jsdoc/publish.sh
 
 deploy:
 - provider: script

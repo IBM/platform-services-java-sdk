@@ -1,7 +1,7 @@
 {
   "name": "ibm-platform-services",
-  "version": "0.0.0",
-  "description": "IBM Cloud Platform Services Node.js SDK",
+  "version": "0.1.0",
+  "description": "Node.js client library for IBM Cloud Platform Services",
   "repository": {
     "type": "git",
     "url": "https://github.com/IBM/platform-services-node-sdk"

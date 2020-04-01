@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.1.0...v0.1.1) (2020-04-01)
+
+
+### Bug Fixes
+
+* **build:** add npm deployment to build ([b99fcf3](https://github.com/IBM/platform-services-node-sdk/commit/b99fcf3ec1ea85c8f75cf5d4b53c90a90e5939f5))
+
 # [0.1.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.0.0...v0.1.0) (2020-03-30)
 
 

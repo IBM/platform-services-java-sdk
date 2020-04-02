@@ -16,6 +16,10 @@ cache:
   directories:
   - "$HOME/.m2"
 
+env:
+  global:
+    - MVN_ARGS="--settings build/.travis.settings.xml"
+
 before_install:
 - sudo apt-get update
 - sudo apt-get install python
@@ -23,20 +27,22 @@ before_install:
 - npm install -g npm@6.x
 # - '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $ghost_key -iv $ghost_iv -in .ghostenv.enc -out .ghostenv -d || true'
 
-install: true
+install:
+- curl -s https://codecov.io/bash > $HOME/codecov-bash.sh && chmod +x $HOME/codecov-bash.sh
+
 
 # For a tagged build, we'll set the maven artifact version #.
-# before_script:
-# - echo "TRAVIS_TAG = '${TRAVIS_TAG}'"
-# - >-
-#       [ -n "${TRAVIS_TAG}" ]
-#       && mvn versions:set -DnewVersion=${TRAVIS_TAG} -DgenerateBackupPoms=false
-#       || true
+before_script:
+- echo "TRAVIS_TAG = '${TRAVIS_TAG}'"
+- >-
+      [ -n "${TRAVIS_TAG}" ]
+      && mvn versions:set -DnewVersion=${TRAVIS_TAG} -DgenerateBackupPoms=false
+      || true
 
 script:
-#-  if [[ -n "$TRAVIS_TAG" ]]; then mvn deploy $MVN_ARGS; else mvn package $MVN_ARGS; fi
--  mvn package
- 
+# For a tagged release, build the "deploy" goal, otherwise build "package".
+-  if [[ -n "$TRAVIS_TAG" ]]; then mvn deploy $MVN_ARGS; else mvn verify $MVN_ARGS; fi
+
 before_deploy:
 - pip install --user bump2version
 - npm install @semantic-release/changelog
@@ -45,8 +51,25 @@ before_deploy:
 - npm install @semantic-release/github
 
 deploy:
+  # On master, run semrel to create a new tagged-release.
   - provider: script
     script: npx semantic-release
     skip_cleanup: true
     on:
       branch: master
+  # Publish javadocs to gh-pages only for a tagged-release.
+  - provider: script
+    script: "./build/publish-javadoc.sh"
+    skip_cleanup: true
+    on:
+      tags: true
+      jdk: openjdk8
+  # Upload code coverage reports to codecov.io for master or tagged release
+  - provider: script
+    script: $HOME/codecov-bash.sh -s modules/coverage-reports/target/site/jacoco-aggregate -t $CODECOV_TOKEN
+    skip_cleanup: true
+    on:
+      condition: $TRAVIS_BRANCH == master || -n "$TRAVIS_TAG"
+      jdk: openjdk8
+      
+  

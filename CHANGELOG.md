@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/IBM/platform-services-java-sdk/compare/0.1.1...0.1.2) (2020-04-03)
+
+
+### Bug Fixes
+
+* avoid auth errors during javadoc publish step ([a2adf30](https://github.com/IBM/platform-services-java-sdk/commit/a2adf30389e57b9cd4e0fc8ef3d7e8a3ee9d494b))
+
 ## [0.1.1](https://github.com/IBM/platform-services-java-sdk/compare/0.1.0...0.1.1) (2020-04-03)
 
 

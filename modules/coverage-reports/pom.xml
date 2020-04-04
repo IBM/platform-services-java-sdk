@@ -38,6 +38,11 @@
             <artifactId>global-tagging</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>iam-access-groups</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

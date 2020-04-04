@@ -44,6 +44,7 @@
 		<!-- Each of the service modules should be listed here -->
 		<module>modules/global-search</module>
 		<module>modules/global-tagging</module>
+		<module>modules/iam-access-groups</module>
 
 		<!-- This module should always be listed last -->
 		<module>modules/coverage-reports</module>

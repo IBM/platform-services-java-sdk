@@ -38,7 +38,7 @@
 		<!-- Deployment-related properties -->
 		<bintray.subject>ibm-cloud-sdks</bintray.subject>
 		<bintray.repo>ibm-cloud-sdk-repo</bintray.repo>
-		<bintray.package>ibm-cloud-platform-services</bintray.package>
+		<bintray.package>com.ibm.cloud:platform-services</bintray.package>
 	</properties>
 
 	<modules>

@@ -2,6 +2,7 @@
 [![codecov](https://codecov.io/gh/IBM/platform-services-java-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/IBM/platform-services-java-sdk)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Javadoc](https://img.shields.io/static/v1?label=javadoc&message=latest&color=blue)](https://ibm.github.io/platform-services-java-sdk/docs/latest)
 
 # IBM Cloud Platform Services Java SDK Version 0.1.2
 

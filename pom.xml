@@ -31,10 +31,6 @@
 		<powermock-version>2.0.5</powermock-version>
 		<mockito-version>3.2.4</mockito-version>
 
-		<!-- Skip integration tests by default; they require credentials and will 
-			be run on travis -->
-		<skipITs>true</skipITs>
-
 		<!-- Deployment-related properties -->
 		<bintray.subject>ibm-cloud-sdks</bintray.subject>
 		<bintray.repo>ibm-cloud-sdk-repo</bintray.repo>
@@ -105,9 +101,18 @@
 
 			<!-- Each module (except "common") should depend on this artifact -->
 			<dependency>
-				<groupId>com.ibm.cloud</groupId>
+				<groupId>${project.groupId}</groupId>
 				<artifactId>platform-services-common</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<!-- >>> Replace this with the "common" module's artifactId (e.g. my-services-common) -->
+                <groupId>${project.groupId}</groupId>
+				<artifactId>platform-services-common</artifactId>
+                <version>${project.version}</version>
+				<type>test-jar</type>
+				<classifier>tests</classifier>
+				<scope>test</scope>
 			</dependency>
 
 			<!-- TestNG is used to run unit/integration tests -->

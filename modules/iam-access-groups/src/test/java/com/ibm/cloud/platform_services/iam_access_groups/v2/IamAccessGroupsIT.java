@@ -17,6 +17,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertNotNull;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -24,14 +25,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Group;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupsList;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupsOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccessGroupOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.*;
+import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
@@ -40,16 +36,20 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
  */
 public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
-    private static final String HEADER_ETAG = "ETag";
+    IamAccessGroups service = null;
 
+    private static final String HEADER_ETAG = "ETag";
     private static final String TEST_GROUP_NAME = "SDK Test Group - Java";
     private static final String TEST_GROUP_DESC = "This group is used for integration test purposes. It can be deleted at any time.";
+    private static final String TEST_USER_ID = "IBMid-1234";
+    private static final String TEST_USER_TYPE = "user";
 
-    IamAccessGroups service = null;
     String testAccountId = null;
     String testGroupId = null;
     String testGroupETag = null;
-
+    String testClaimRuleId = null;
+    String testClaimRuleETag = null;
+    AccountSettings testAccountSettings = null;
 
     /**
      * This method provides our config filename to the base class.
@@ -76,7 +76,6 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
         // Load up the config properties for this service.
         Map<String, String> config = CredentialUtils.getServiceProperties(IamAccessGroups.DEFAULT_SERVICE_NAME);
-        System.out.println("Service properties:\n" + config.toString());
 
         // Retrieve our test-specific properties.
         testAccountId = config.get("TEST_ACCOUNT_ID");
@@ -108,8 +107,6 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
         assertEquals(result.getName(), TEST_GROUP_NAME);
 
         testGroupId = result.getId();
-        System.out.println(String.format("Created Access Group: id=%s, accountId=%s",
-                result.getId(), result.getAccountId()));
     }
 
     @Test(dependsOnMethods = {"testCreateAccessGroup"})
@@ -129,15 +126,11 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
         assertEquals(result.getAccountId(), testAccountId);
         assertEquals(result.getName(), TEST_GROUP_NAME);
         assertEquals(result.getId(), testGroupId);
-
-        System.out.println(String.format("\nResponse headers:\n%s", response.getHeaders().toString()));
+        assertEquals(result.getDescription(), "");
 
         List<String> values = response.getHeaders().values(HEADER_ETAG);
         assertNotNull(values);
         testGroupETag = values.get(0);
-
-        System.out.println(String.format("Retrieved Access Group: id=%s, accountId=%s ETag=%s",
-                result.getId(), result.getAccountId(), testGroupETag));
     }
 
     @Test(dependsOnMethods = {"testGetAccessGroup"})
@@ -158,13 +151,9 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
         Group result = response.getResult();
         assertNotNull(result);
         assertEquals(result.getAccountId(), testAccountId);
-        assertEquals(result.getName(), TEST_GROUP_NAME);
         assertEquals(result.getId(), testGroupId);
+        assertEquals(result.getName(), TEST_GROUP_NAME);
         assertEquals(result.getDescription(), TEST_GROUP_DESC);
-
-        System.out.println(String.format("Updated Access Group: id=%s, accountId=%s, description=%s",
-                result.getId(), result.getAccountId(), result.getDescription()));
-
     }
 
     @Test(dependsOnMethods = {"testUpdateAccessGroupDescription"})
@@ -180,15 +169,10 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
         GroupsList result = response.getResult();
         assertNotNull(response.getResult());
-        System.out.println("ListAccessGroups results:");
-        System.out.println("total count: " + result.getTotalCount());
 
+        // Confirm the test group is present
         boolean foundTestGroup = false;
         for (Group group : result.getGroups()) {
-            System.out.println(
-                    String.format("Access group: id=%s, accountId=%s, description=%s",
-                            group.getId(), group.getAccountId(), group.getDescription()));
-
             if (testGroupId.equals(group.getId())) {
                 foundTestGroup = true;
                 break;
@@ -197,9 +181,297 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
         assertTrue(foundTestGroup);
     }
 
+    @Test(dependsOnMethods = { "testListAccessGroups" })
+    public void testAddMembersToAccessGroup() {
+        assertNotNull(testGroupId);
+
+        AddGroupMembersRequestMembersItem membersItem = new AddGroupMembersRequestMembersItem.Builder()
+                .iamId(TEST_USER_ID)
+                .type(TEST_USER_TYPE)
+                .build();
+        AddMembersToAccessGroupOptions options = new AddMembersToAccessGroupOptions.Builder()
+                .accessGroupId(testGroupId)
+                .addMembers(membersItem).build();
+        Response<AddGroupMembersResponse> response = service.addMembersToAccessGroup(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 207);
+
+        AddGroupMembersResponse result = response.getResult();
+        assertNotNull(result);
+
+        // Confirm the test user is present
+        boolean foundTestUser = false;
+        for (AddGroupMembersResponseMembersItem member : result.getMembers()) {
+            if (TEST_USER_ID.equals(member.getIamId())) {
+                foundTestUser = true;
+            }
+        }
+        assertTrue(foundTestUser);
+    }
+
+    @Test(dependsOnMethods = { "testAddMembersToAccessGroup" })
+    public void testAddMemberToMultipleAccessGroups() {
+        assertNotNull(testGroupId);
+
+        AddMemberToMultipleAccessGroupsOptions options = new AddMemberToMultipleAccessGroupsOptions.Builder()
+                .accountId(
+                        testAccountId)
+                .iamId(TEST_USER_ID)
+                .type(TEST_USER_TYPE)
+                .addGroups(testGroupId)
+                .build();
+        Response<AddMembershipMultipleGroupsResponse> response = service.addMemberToMultipleAccessGroups(options)
+                .execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 207);
+
+        AddMembershipMultipleGroupsResponse result = response.getResult();
+        assertNotNull(result);
+
+        // Confirm the test group is present
+        boolean foundTestGroup = false;
+        for (AddMembershipMultipleGroupsResponseGroupsItem group : result.getGroups()) {
+            if (testGroupId.equals(group.getAccessGroupId())) {
+                foundTestGroup = true;
+            }
+        }
+        assertTrue(foundTestGroup);
+    }
+
+    @Test(dependsOnMethods = { "testAddMemberToMultipleAccessGroups" })
+    public void testCheckMembership() {
+        assertNotNull(testGroupId);
+
+        IsMemberOfAccessGroupOptions options = new IsMemberOfAccessGroupOptions.Builder()
+                .accessGroupId(testGroupId)
+                .iamId(TEST_USER_ID)
+                .build();
+        Response<Void> response = service.isMemberOfAccessGroup(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test(dependsOnMethods = { "testCheckMembership" })
+    public void testListGroupMembers() {
+        assertNotNull(testGroupId);
+
+        ListAccessGroupMembersOptions options = new ListAccessGroupMembersOptions.Builder()
+                .accessGroupId(testGroupId)
+                .build();
+        Response<GroupMembersList> response = service.listAccessGroupMembers(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        GroupMembersList result = response.getResult();
+        assertNotNull(result);
+
+        // Confirm the test user is present
+        boolean foundTestUser = false;
+        for (ListGroupMembersResponseMember member : result.getMembers()) {
+            if (TEST_USER_ID.equals(member.getIamId())) {
+                foundTestUser = true;
+            }
+        }
+        assertTrue(foundTestUser);
+    }
+
+    @Test(dependsOnMethods = { "testListGroupMembers" })
+    public void testDeleteGroupMembership() {
+        assertNotNull(testGroupId);
+
+        RemoveMemberFromAccessGroupOptions options = new RemoveMemberFromAccessGroupOptions.Builder()
+                .accessGroupId(testGroupId)
+                .iamId(TEST_USER_ID)
+                .build();
+        Response<Void> response = service.removeMemberFromAccessGroup(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test(dependsOnMethods = { "testDeleteGroupMembership" })
+    public void testDeleteMemberFromAllGroups() {
+        assertNotNull(testGroupId);
+
+        try {
+            RemoveMemberFromAllAccessGroupsOptions options = new RemoveMemberFromAllAccessGroupsOptions.Builder()
+                    .accountId(testAccountId)
+                    .iamId(TEST_USER_ID)
+                    .build();
+            service.removeMemberFromAllAccessGroups(options).execute();
+        } catch (NotFoundException e) {
+            assertEquals(e.getStatusCode(), 404);
+            assertTrue(e.getMessage().contains(TEST_USER_ID));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testDeleteMemberFromAllGroups" })
+    public void testDeleteBulkMembersFromGroup() {
+        assertNotNull(testGroupId);
+
+        try {
+            RemoveMembersFromAccessGroupOptions options = new RemoveMembersFromAccessGroupOptions.Builder()
+                    .accessGroupId(testGroupId)
+                    .addMembers(TEST_USER_ID)
+                    .build();
+            service.removeMembersFromAccessGroup(options).execute();
+        } catch (NotFoundException e) {
+            assertEquals(e.getStatusCode(), 404);
+            assertTrue(e.getMessage().contains(testGroupId));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testDeleteBulkMembersFromGroup" })
+    public void testCreateAccessGroupRule() {
+        assertNotNull(testGroupId);
+
+        Long testExpiration = 24L;
+        RuleConditions testCondition = new RuleConditions.Builder("test claim", "EQUALS", "1").build();
+        List<RuleConditions> testConditions = Arrays.asList(testCondition);
+
+        AddAccessGroupRuleOptions options = new AddAccessGroupRuleOptions.Builder()
+                .accessGroupId(testGroupId)
+                .expiration(testExpiration)
+                .realmName("test realm name")
+                .conditions(testConditions)
+                .build();
+        Response<Rule> response = service.addAccessGroupRule(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 201);
+
+        Rule result = response.getResult();
+        assertNotNull(result);
+        assertEquals(result.getAccessGroupId(), testGroupId);
+        assertEquals(result.getAccountId(), testAccountId);
+        assertEquals(result.getExpiration(), testExpiration);
+
+        testClaimRuleId = result.getId();
+    }
+
+    @Test(dependsOnMethods = { "testCreateAccessGroupRule" })
+    public void testGetAccessGroupRule() {
+        assertNotNull(testGroupId);
+        assertNotNull(testClaimRuleId);
+
+        GetAccessGroupRuleOptions options = new GetAccessGroupRuleOptions.Builder()
+                .accessGroupId(testGroupId)
+                .ruleId(testClaimRuleId)
+                .build();
+        Response<Rule> response = service.getAccessGroupRule(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        Rule result = response.getResult();
+        assertNotNull(result);
+        assertEquals(result.getId(), testClaimRuleId);
+        assertEquals(result.getAccessGroupId(), testGroupId);
+        assertEquals(result.getAccountId(), testAccountId);
+
+        testClaimRuleETag = response.getHeaders().values(HEADER_ETAG).get(0);
+    }
+
+    @Test(dependsOnMethods = { "testGetAccessGroupRule" })
+    public void testListAccessGroupRules() {
+        assertNotNull(testGroupId);
+
+        ListAccessGroupRulesOptions options = new ListAccessGroupRulesOptions.Builder()
+                .accessGroupId(testGroupId)
+                .build();
+        Response<RulesList> response = service.listAccessGroupRules(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        RulesList result = response.getResult();
+        assertNotNull(result);
+
+        // Confirm the test rule is present
+        boolean foundTestClaimRule = false;
+        for (Rule rule : result.getRules()) {
+            if (testClaimRuleId.equals(rule.getId())) {
+                foundTestClaimRule = true;
+            }
+        }
+        assertTrue(foundTestClaimRule);
+    }
+
+    @Test(dependsOnMethods = { "testListAccessGroupRules" })
+    public void testUpdateAccessGroupRule() {
+        assertNotNull(testGroupId);
+        assertNotNull(testClaimRuleId);
+
+        Long testExpiration = 24L;
+        RuleConditions testCondition = new RuleConditions.Builder("test claim", "EQUALS", "1").build();
+        List<RuleConditions> testConditions = Arrays.asList(testCondition);
+
+        ReplaceAccessGroupRuleOptions options = new ReplaceAccessGroupRuleOptions.Builder()
+                .accessGroupId(testGroupId)
+                .ruleId(testClaimRuleId)
+                .ifMatch(testClaimRuleETag)
+                .expiration(testExpiration)
+                .realmName("updated test realm name")
+                .conditions(testConditions)
+                .build();
+        Response<Rule> response = service.replaceAccessGroupRule(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        Rule result = response.getResult();
+        assertNotNull(result);
+        assertEquals(result.getId(), testClaimRuleId);
+        assertEquals(result.getAccessGroupId(), testGroupId);
+        assertEquals(result.getAccountId(), testAccountId);
+    }
+
+    @Test(dependsOnMethods = { "testUpdateAccessGroupRule" })
+    public void testDeleteAccessGroupRule() {
+        assertNotNull(testGroupId);
+        assertNotNull(testClaimRuleId);
+
+        RemoveAccessGroupRuleOptions options = new RemoveAccessGroupRuleOptions.Builder()
+                .accessGroupId(testGroupId)
+                .ruleId(testClaimRuleId)
+                .build();
+        Response<Void> response = service.removeAccessGroupRule(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test(dependsOnMethods = { "testDeleteAccessGroupRule" })
+    public void testGetAccountSettings() {
+        GetAccountSettingsOptions options = new GetAccountSettingsOptions.Builder()
+                .accountId(testAccountId)
+                .build();
+        Response<AccountSettings> response = service.getAccountSettings(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        AccountSettings accountSettings = response.getResult();
+        assertNotNull(accountSettings);
+        assertEquals(accountSettings.getAccountId(), testAccountId);
+
+        testAccountSettings = accountSettings;
+    }
+
+    @Test(dependsOnMethods = { "testGetAccountSettings" })
+    public void testUpdateAccountSettings() {
+        UpdateAccountSettingsOptions options = new UpdateAccountSettingsOptions.Builder()
+                .accountId(testAccountId)
+                .publicAccessEnabled(testAccountSettings.isPublicAccessEnabled())
+                .build();
+        Response<AccountSettings> response = service.updateAccountSettings(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        AccountSettings accountSettings = response.getResult();
+        assertNotNull(accountSettings);
+        assertEquals(accountSettings.getAccountId(), testAccountId);
+        assertEquals(accountSettings.isPublicAccessEnabled(), options.publicAccessEnabled());
+    }
+
     @AfterClass
     public void tearDown() {
         // Delete all the access groups that we created during the test.
+        //
+        // List all groups in the account (minus the public access group)
         ListAccessGroupsOptions options = new ListAccessGroupsOptions.Builder()
                 .accountId(testAccountId)
                 .hidePublicAccess(true)
@@ -207,10 +479,14 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
         Response<GroupsList> response = service.listAccessGroups(options).execute();
         assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
 
+        // Iterate across the groups
         GroupsList result = response.getResult();
         assertNotNull(result);
         for (Group group : result.getGroups()) {
+
+            // Force delete each test group
             if (TEST_GROUP_NAME.equals(group.getName())) {
                 DeleteAccessGroupOptions deleteOptions = new DeleteAccessGroupOptions.Builder()
                         .accessGroupId(group.getId())
@@ -219,10 +495,8 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
                 Response<Void> deleteResponse = service.deleteAccessGroup(deleteOptions).execute();
                 assertNotNull(deleteResponse);
                 assertEquals(deleteResponse.getStatusCode(), 204);
-
-                System.out.println(
-                        String.format("Deleted Access group: id=%s", group.getId()));
             }
         }
+
     }
 }

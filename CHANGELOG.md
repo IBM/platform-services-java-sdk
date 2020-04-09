@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/IBM/platform-services-java-sdk/compare/0.1.2...0.2.0) (2020-04-09)
+
+
+### Features
+
+* **IAM Access Groups:** add new service to project ([5614bda](https://github.com/IBM/platform-services-java-sdk/commit/5614bdacfc9bbc5c13a9751f898ad49c0aad0d82))
+
 ## [0.1.2](https://github.com/IBM/platform-services-java-sdk/compare/0.1.1...0.1.2) (2020-04-03)
 
 

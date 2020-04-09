@@ -46,6 +46,7 @@ Service Name | Artifact Id
 --- | --- 
 [Global Search](https://cloud.ibm.com/apidocs/search) | global-search
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | global-tagging
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | iam-access-groups
 
 ## Prerequisites
 

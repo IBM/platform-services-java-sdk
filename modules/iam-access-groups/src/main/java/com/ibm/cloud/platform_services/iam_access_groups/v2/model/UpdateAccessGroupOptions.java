@@ -1,0 +1,205 @@
+/*
+ * (C) Copyright IBM Corp. 2020.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+package com.ibm.cloud.platform_services.iam_access_groups.v2.model;
+
+import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
+/**
+ * The updateAccessGroup options.
+ */
+public class UpdateAccessGroupOptions extends GenericModel {
+
+  protected String accessGroupId;
+  protected String ifMatch;
+  protected String name;
+  protected String description;
+  protected String transactionId;
+
+  /**
+   * Builder.
+   */
+  public static class Builder {
+    private String accessGroupId;
+    private String ifMatch;
+    private String name;
+    private String description;
+    private String transactionId;
+
+    private Builder(UpdateAccessGroupOptions updateAccessGroupOptions) {
+      this.accessGroupId = updateAccessGroupOptions.accessGroupId;
+      this.ifMatch = updateAccessGroupOptions.ifMatch;
+      this.name = updateAccessGroupOptions.name;
+      this.description = updateAccessGroupOptions.description;
+      this.transactionId = updateAccessGroupOptions.transactionId;
+    }
+
+    /**
+     * Instantiates a new builder.
+     */
+    public Builder() {
+    }
+
+    /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param accessGroupId the accessGroupId
+     * @param ifMatch the ifMatch
+     */
+    public Builder(String accessGroupId, String ifMatch) {
+      this.accessGroupId = accessGroupId;
+      this.ifMatch = ifMatch;
+    }
+
+    /**
+     * Builds a UpdateAccessGroupOptions.
+     *
+     * @return the new UpdateAccessGroupOptions instance
+     */
+    public UpdateAccessGroupOptions build() {
+      return new UpdateAccessGroupOptions(this);
+    }
+
+    /**
+     * Set the accessGroupId.
+     *
+     * @param accessGroupId the accessGroupId
+     * @return the UpdateAccessGroupOptions builder
+     */
+    public Builder accessGroupId(String accessGroupId) {
+      this.accessGroupId = accessGroupId;
+      return this;
+    }
+
+    /**
+     * Set the ifMatch.
+     *
+     * @param ifMatch the ifMatch
+     * @return the UpdateAccessGroupOptions builder
+     */
+    public Builder ifMatch(String ifMatch) {
+      this.ifMatch = ifMatch;
+      return this;
+    }
+
+    /**
+     * Set the name.
+     *
+     * @param name the name
+     * @return the UpdateAccessGroupOptions builder
+     */
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    /**
+     * Set the description.
+     *
+     * @param description the description
+     * @return the UpdateAccessGroupOptions builder
+     */
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the UpdateAccessGroupOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
+  }
+
+  protected UpdateAccessGroupOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accessGroupId,
+      "accessGroupId cannot be empty");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ifMatch,
+      "ifMatch cannot be null");
+    accessGroupId = builder.accessGroupId;
+    ifMatch = builder.ifMatch;
+    name = builder.name;
+    description = builder.description;
+    transactionId = builder.transactionId;
+  }
+
+  /**
+   * New builder.
+   *
+   * @return a UpdateAccessGroupOptions builder
+   */
+  public Builder newBuilder() {
+    return new Builder(this);
+  }
+
+  /**
+   * Gets the accessGroupId.
+   *
+   * The Access group to update.
+   *
+   * @return the accessGroupId
+   */
+  public String accessGroupId() {
+    return accessGroupId;
+  }
+
+  /**
+   * Gets the ifMatch.
+   *
+   * The current revision number of the group being updated. This can be found in the Create/Get Access Group response
+   * Etag header.
+   *
+   * @return the ifMatch
+   */
+  public String ifMatch() {
+    return ifMatch;
+  }
+
+  /**
+   * Gets the name.
+   *
+   * Assign the specified name to the Access Group. This field has a limit of 100 characters.
+   *
+   * @return the name
+   */
+  public String name() {
+    return name;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * Assign a description for the Access Group. This field has a limit of 250 characters.
+   *
+   * @return the description
+   */
+  public String description() {
+    return description;
+  }
+
+  /**
+   * Gets the transactionId.
+   *
+   * An optional transaction id for the request.
+   *
+   * @return the transactionId
+   */
+  public String transactionId() {
+    return transactionId;
+  }
+}
+

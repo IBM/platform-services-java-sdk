@@ -23,7 +23,7 @@ describe('Tests of Common Library', () => {
   describe('getSdkHeaders', () => {
     test('should return correct User-Agent header', () => {
       const headers = getSdkHeaders('service1', 'v1', 'operation1');
-      console.log('SDK headers: ', headers);
+      // console.log('SDK headers: ', headers);
       expect(headers).not.toEqual(null);
       expect(headers['User-Agent']).toMatch(/^platform-services-node-sdk\/.*/);
     });

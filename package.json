@@ -27,6 +27,7 @@
     "test-integration": "npm run build && jest --expand test/integration/ --reporters jest-skipped-reporter",
     "test-unit-travis": "jest --runInBand test/unit/",
     "test-integration-travis": "jest --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' --json test/integration > test-output.log",
+    "test-travis": "jest --runInBand --testNamePattern='^((?!@slow).)*$' test/",
     "report-coverage": "codecov",
     "check-packages": "installed-check -e -d -v"
   },
@@ -38,7 +39,8 @@
     "@types/node": "^12.0.8",
     "extend": "^3.0.2",
     "ibm-cloud-sdk-core": "^2.3.0",
-    "jest-skipped-reporter": "0.0.5"
+    "jest-skipped-reporter": "0.0.5",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.4",

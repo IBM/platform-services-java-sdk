@@ -49,7 +49,7 @@ Service Name | Import Path
 --- | --- 
 [Global Search](https://cloud.ibm.com/apidocs/search) | ibm-platform-services/global-search/v2
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | ibm-platform-services/global-tagging/v1
-
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | ibm-platform-services/iam-acess-groups/v2
 ## Prerequisites
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.
 * **Node.js >=10**: This SDK is tested with Node.js versions 10 and up. It may work on previous versions but this is not officially supported.

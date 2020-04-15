@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.1.1...v0.2.0) (2020-04-15)
+
+
+### Features
+
+* **IAM Access Groups:** add service, unit test and skeleton int test to project ([8c408c4](https://github.com/IBM/platform-services-node-sdk/commit/8c408c44747c2dc2febd2ab01ca0a7af13abac43))
+
 ## [0.1.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.1.0...v0.1.1) (2020-04-01)
 
 

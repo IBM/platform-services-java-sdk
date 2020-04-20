@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/IBM/platform-services-java-sdk/compare/0.2.0...0.2.1) (2020-04-20)
+
+
+### Bug Fixes
+
+* add source jars to build to allow jcenter deployment ([806f90a](https://github.com/IBM/platform-services-java-sdk/commit/806f90a7d706bd756bff67745cd40a697b7f9c9e))
+
 # [0.2.0](https://github.com/IBM/platform-services-java-sdk/compare/0.1.2...0.2.0) (2020-04-09)
 
 

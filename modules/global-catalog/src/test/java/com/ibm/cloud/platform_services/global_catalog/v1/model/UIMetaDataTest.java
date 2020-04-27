@@ -1,0 +1,150 @@
+/*
+ * (C) Copyright IBM Corp. 2020.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+package com.ibm.cloud.platform_services.global_catalog.v1.model;
+
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Bullets;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.I18N;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Strings;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaData;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaMedia;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.URLS;
+import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
+
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import java.io.InputStream;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
+
+/**
+ * Unit test class for the UIMetaData model.
+ */
+public class UIMetaDataTest {
+  final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
+  final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
+
+  @Test
+  public void testUIMetaData() throws Throwable {
+    Bullets bulletsModel = new Bullets.Builder()
+      .title("testString")
+      .description("testString")
+      .icon("testString")
+      .quantity("testString")
+      .build();
+    assertEquals(bulletsModel.title(), "testString");
+    assertEquals(bulletsModel.description(), "testString");
+    assertEquals(bulletsModel.icon(), "testString");
+    assertEquals(bulletsModel.quantity(), "testString");
+
+    UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
+      .caption("testString")
+      .thumbnailUrl("testString")
+      .type("testString")
+      .url("testString")
+      .source(bulletsModel)
+      .build();
+    assertEquals(uiMetaMediaModel.caption(), "testString");
+    assertEquals(uiMetaMediaModel.thumbnailUrl(), "testString");
+    assertEquals(uiMetaMediaModel.type(), "testString");
+    assertEquals(uiMetaMediaModel.url(), "testString");
+    assertEquals(uiMetaMediaModel.source(), bulletsModel);
+
+    Strings stringsModel = new Strings.Builder()
+      .bullets(new ArrayList<Bullets>(Arrays.asList(bulletsModel)))
+      .media(new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)))
+      .notCreatableMsg("testString")
+      .notCreatableRobotMsg("testString")
+      .deprecationWarning("testString")
+      .popupWarningMessage("testString")
+      .instruction("testString")
+      .build();
+    assertEquals(stringsModel.bullets(), new ArrayList<Bullets>(Arrays.asList(bulletsModel)));
+    assertEquals(stringsModel.media(), new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)));
+    assertEquals(stringsModel.notCreatableMsg(), "testString");
+    assertEquals(stringsModel.notCreatableRobotMsg(), "testString");
+    assertEquals(stringsModel.deprecationWarning(), "testString");
+    assertEquals(stringsModel.popupWarningMessage(), "testString");
+    assertEquals(stringsModel.instruction(), "testString");
+
+    I18N i18NModel = new I18N();
+    i18NModel.put("foo", stringsModel);
+    assertEquals(i18NModel.get("foo"), stringsModel);
+
+    URLS urlsModel = new URLS.Builder()
+      .docUrl("testString")
+      .instructionsUrl("testString")
+      .apiUrl("testString")
+      .createUrl("testString")
+      .sdkDownloadUrl("testString")
+      .termsUrl("testString")
+      .customCreatePageUrl("testString")
+      .catalogDetailsUrl("testString")
+      .deprecationDocUrl("testString")
+      .build();
+    assertEquals(urlsModel.docUrl(), "testString");
+    assertEquals(urlsModel.instructionsUrl(), "testString");
+    assertEquals(urlsModel.apiUrl(), "testString");
+    assertEquals(urlsModel.createUrl(), "testString");
+    assertEquals(urlsModel.sdkDownloadUrl(), "testString");
+    assertEquals(urlsModel.termsUrl(), "testString");
+    assertEquals(urlsModel.customCreatePageUrl(), "testString");
+    assertEquals(urlsModel.catalogDetailsUrl(), "testString");
+    assertEquals(urlsModel.deprecationDocUrl(), "testString");
+
+    UIMetaData uiMetaDataModel = new UIMetaData.Builder()
+      .strings(i18NModel)
+      .urls(urlsModel)
+      .embeddableDashboard("testString")
+      .embeddableDashboardFullWidth(true)
+      .navigationOrder(new ArrayList<String>(Arrays.asList("testString")))
+      .notCreatable(true)
+      .reservable(true)
+      .primaryOfferingId("testString")
+      .accessibleDuringProvision(true)
+      .sideBySideIndex(Long.valueOf("26"))
+      .endOfServiceTime(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .build();
+    assertEquals(uiMetaDataModel.strings(), i18NModel);
+    assertEquals(uiMetaDataModel.urls(), urlsModel);
+    assertEquals(uiMetaDataModel.embeddableDashboard(), "testString");
+    assertEquals(uiMetaDataModel.embeddableDashboardFullWidth(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModel.navigationOrder(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(uiMetaDataModel.notCreatable(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModel.reservable(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModel.primaryOfferingId(), "testString");
+    assertEquals(uiMetaDataModel.accessibleDuringProvision(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModel.sideBySideIndex(), Long.valueOf("26"));
+    assertEquals(uiMetaDataModel.endOfServiceTime(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+
+    String json = TestUtilities.serialize(uiMetaDataModel);
+
+    UIMetaData uiMetaDataModelNew = TestUtilities.deserialize(json, UIMetaData.class);
+    assertTrue(uiMetaDataModelNew instanceof UIMetaData);
+    assertEquals(uiMetaDataModelNew.strings().toString(), i18NModel.toString());
+    assertEquals(uiMetaDataModelNew.urls().toString(), urlsModel.toString());
+    assertEquals(uiMetaDataModelNew.embeddableDashboard(), "testString");
+    assertEquals(uiMetaDataModelNew.embeddableDashboardFullWidth(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModelNew.notCreatable(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModelNew.reservable(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModelNew.primaryOfferingId(), "testString");
+    assertEquals(uiMetaDataModelNew.accessibleDuringProvision(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModelNew.sideBySideIndex(), Long.valueOf("26"));
+    assertEquals(uiMetaDataModelNew.endOfServiceTime().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
+  }
+}

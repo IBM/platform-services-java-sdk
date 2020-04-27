@@ -42,6 +42,7 @@
         <module>modules/common</module>
 
         <!-- Each of the service modules should be listed here -->
+        <module>modules/global-catalog</module>
         <module>modules/global-search</module>
         <module>modules/global-tagging</module>
         <module>modules/iam-access-groups</module>

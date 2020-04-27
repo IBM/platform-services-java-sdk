@@ -44,6 +44,7 @@ Changes might occur which impact applications that use this SDK.
 
 Service Name | Artifact Id 
 --- | --- 
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | enterprise-management
 [Global Search](https://cloud.ibm.com/apidocs/search) | global-search
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | global-tagging
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | iam-access-groups

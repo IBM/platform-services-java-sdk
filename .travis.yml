@@ -27,6 +27,7 @@ before_install:
 - npm install -g npm@6.x
 - '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_3058bc69cb40_key -iv $encrypted_3058bc69cb40_iv -in ghost.env.enc -out ghost.env -d || true'
 - '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_66f264007c0d_key -iv $encrypted_66f264007c0d_iv -in iam_access_groups.env.enc -out iam_access_groups.env -d || true'
+- '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_25d847003bcf_key -iv $encrypted_25d847003bcf_iv -in enterprise-management.env.enc -out enterprise-management.env -d || true'
 
 install:
 - curl -s https://codecov.io/bash > $HOME/codecov-bash.sh && chmod +x $HOME/codecov-bash.sh

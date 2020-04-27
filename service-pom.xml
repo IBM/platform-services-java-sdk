@@ -28,6 +28,14 @@
             <groupId>com.ibm.cloud</groupId>
         </dependency>
         <dependency>
+            <!-- >>> Replace this with the "common" module's artifactId (e.g. my-services-common) -->
+            <artifactId>platform-services-common</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <type>test-jar</type>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <scope>test</scope>

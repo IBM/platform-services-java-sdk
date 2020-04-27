@@ -8,7 +8,8 @@
 
 # IBM Cloud Platform Services Node.js SDK
 
-Node.js client library to interact with various [IBM Cloud Platform Service APIs](https://cloud.ibm.com/apidocs?category=platform_services).
+Node.js client library to interact with various 
+[IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
 
 Disclaimer: this SDK is being released initially as a **pre-release** version.
 Changes might occur which impact applications that use this SDK.
@@ -47,9 +48,11 @@ IBM Cloud services:
 
 Service Name | Import Path
 --- | --- 
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | ibm-platform-services/global-catalog/v1
 [Global Search](https://cloud.ibm.com/apidocs/search) | ibm-platform-services/global-search/v2
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | ibm-platform-services/global-tagging/v1
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | ibm-platform-services/iam-acess-groups/v2
+
 ## Prerequisites
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.
 * **Node.js >=10**: This SDK is tested with Node.js versions 10 and up. It may work on previous versions but this is not officially supported.

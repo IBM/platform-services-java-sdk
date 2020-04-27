@@ -6,9 +6,11 @@ lib/*.js
 
 # service-specific tsc outputs (js files)
 # service-name/*.js // UNCOMMENT AND ADD YOUR OWN SERVICE FILES
-iam-policy-management/*.js
+global-catalog/*.js
 global-search/*.js
 global-tagging/*.js
+iam-access-groups/*.js
+iam-policy-management/*.js
 resource-controller/*.js
 usage-metering/*.js
 usage-reports/*.js
@@ -66,8 +68,7 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
+# files containing secrets
 *.env
 
 # next.js build output

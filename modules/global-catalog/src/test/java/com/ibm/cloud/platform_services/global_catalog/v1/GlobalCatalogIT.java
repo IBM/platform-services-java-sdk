@@ -136,6 +136,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         defaultChild = new CreateCatalogEntryOptions.Builder()
                 .id(idChild)
                 .name(nameChild)
+                .parentId(id)
                 .active(active)
                 .kind(kind)
                 .disabled(disabled)

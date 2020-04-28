@@ -186,7 +186,7 @@ class GlobalCatalogV1 extends BaseService {
    */
   public createCatalogEntry(params: GlobalCatalogV1.CreateCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
     const _params = extend({}, params);
-    const requiredParams = ['name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider', 'id'];
+    const requiredParams = ['name', 'kind', 'overviewUi', 'images', 'tags', 'provider', 'id'];
 
     return new Promise((resolve, reject) => {
       const missingParams = getMissingParams(_params, requiredParams);
@@ -338,7 +338,7 @@ class GlobalCatalogV1 extends BaseService {
    */
   public updateCatalogEntry(params: GlobalCatalogV1.UpdateCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
     const _params = extend({}, params);
-    const requiredParams = ['id', 'name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider'];
+    const requiredParams = ['id', 'name', 'kind', 'overviewUi', 'images', 'tags', 'provider'];
 
     return new Promise((resolve, reject) => {
       const missingParams = getMissingParams(_params, requiredParams);

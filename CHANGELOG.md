@@ -1,3 +1,10 @@
+## [0.2.2](https://github.com/IBM/platform-services-java-sdk/compare/0.2.1...0.2.2) (2020-05-02)
+
+
+### Bug Fixes
+
+* **build:** use alternate plugin for bintray deployment ([cfac4f8](https://github.com/IBM/platform-services-java-sdk/commit/cfac4f8ec82c548f9dfb9f3c9a67dae1c1c70d97))
+
 ## [0.2.1](https://github.com/IBM/platform-services-java-sdk/compare/0.2.0...0.2.1) (2020-04-20)
 
 

@@ -1,6 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ibm.cloud</groupId>
@@ -19,6 +18,8 @@
         <okhttp3-version>3.13.1</okhttp3-version>
         <surefire-version>3.0.0-M3</surefire-version>
         <jacoco-plugin-version>0.8.5</jacoco-plugin-version>
+        <bintray-plugin-version>1.5.20191113165555</bintray-plugin-version>
+        <maven-deploy-plugin-version>3.0.0-M1</maven-deploy-plugin-version>
         <maven-source-plugin-version>3.1.0</maven-source-plugin-version>
         <maven-jar-plugin-version>3.2.0</maven-jar-plugin-version>
         <maven-javadoc-plugin-version>3.1.1</maven-javadoc-plugin-version>
@@ -32,9 +33,8 @@
         <mockito-version>3.2.4</mockito-version>
 
         <!-- Deployment-related properties -->
-        <bintray.subject>ibm-cloud-sdks</bintray.subject>
-        <bintray.repo>ibm-cloud-sdk-repo</bintray.repo>
-        <bintray.package>com.ibm.cloud:platform-services</bintray.package>
+        <bintray.org>ibm-cloud-sdks</bintray.org>
+        <bintray.repo>platform-services-java-sdk</bintray.repo>
     </properties>
 
     <modules>
@@ -84,12 +84,14 @@
         </repository>
     </repositories>
 
-    <distributionManagement>
-        <repository>
-            <id>bintray</id>
-            <url>https://api.bintray.com/maven/${bintray.subject}/${bintray.repo}/${bintray.package}/</url>
-        </repository>
-    </distributionManagement>
+    <!-- We use an alternate deploy plugin which doesn't use 'distributionManagement' 
+    <distributionManagement> 
+        <repository> 
+            <id>bintray</id> 
+            <url>https://api.bintray.com/maven/${bintray.subject}/${bintray.repo}/${project.groupId}:${project.artifactId}/</url> 
+        </repository> 
+    </distributionManagement> 
+    -->
 
     <dependencyManagement>
         <dependencies>
@@ -103,6 +105,7 @@
             <!-- Each module (except "common") should depend on this artifact -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
+                <!-- >>> Replace this with the "common" module's artifactId (e.g. my-services-common) -->
                 <artifactId>platform-services-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -152,6 +155,16 @@
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>com.carrotgarden.maven</groupId>
+                    <artifactId>bintray-maven-plugin</artifactId>
+                    <version>${bintray-plugin-version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin-version}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
@@ -304,6 +317,50 @@
             </plugins>
         </pluginManagement>
         <plugins>
+
+            <!-- Disable default maven-deploy-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!-- Enable alternate bintray-maven-plugin -->
+            <plugin>
+                <groupId>com.carrotgarden.maven</groupId>
+                <artifactId>bintray-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+
+                    <!-- Bintray oranization name. -->
+                    <subject>${bintray.org}</subject>
+
+                    <!-- Bintray target repository. -->
+                    <repository>${bintray.repo}</repository>
+
+                    <!-- Bintray credentials in settings.xml. -->
+                    <serverId>bintray</serverId>
+
+                    <bintrayPackage>${project.groupId}:${project.artifactId}</bintrayPackage>
+
+                    <performDestroy>false</performDestroy>
+                    <performCleanup>false</performCleanup>
+                    <performDeploy>true</performDeploy>
+                    <performEnsure>true</performEnsure>
+                    <retryFailedDeploymentCount>2</retryFailedDeploymentCount>
+
+                </configuration>
+                <executions>
+                    <!-- Activate "bintray:deploy" during "deploy" -->
+                    <execution>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>

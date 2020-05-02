@@ -47,6 +47,14 @@
 
     <build>
         <plugins>
+            <!-- No need to deploy this artifact since it contains only coverage info -->
+            <plugin>
+                <groupId>com.carrotgarden.maven</groupId>
+                <artifactId>bintray-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>

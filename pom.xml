@@ -35,6 +35,7 @@
         <!-- Deployment-related properties -->
         <bintray.org>ibm-cloud-sdks</bintray.org>
         <bintray.repo>platform-services-java-sdk</bintray.repo>
+        <bintray.package.url>https://github.com/IBM/platform-services-java-sdk</bintray.package.url>
     </properties>
 
     <modules>
@@ -343,14 +344,17 @@
                     <!-- Bintray credentials in settings.xml. -->
                     <serverId>bintray</serverId>
 
+                    <!--  We'll use the maven coordinates for the bintray package name -->
                     <bintrayPackage>${project.groupId}:${project.artifactId}</bintrayPackage>
+                    
+                    <!-- Use the project's github url when creating each module's package in the bintray repo -->
+                    <packageVcsUrl>${bintray.package.url}</packageVcsUrl>
 
                     <performDestroy>false</performDestroy>
                     <performCleanup>false</performCleanup>
                     <performDeploy>true</performDeploy>
                     <performEnsure>true</performEnsure>
                     <retryFailedDeploymentCount>2</retryFailedDeploymentCount>
-
                 </configuration>
                 <executions>
                     <!-- Activate "bintray:deploy" during "deploy" -->

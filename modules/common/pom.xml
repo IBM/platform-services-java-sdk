@@ -16,7 +16,6 @@
 	<packaging>jar</packaging>
 	<name>Platform Services SDK Common Library</name>
 
-
 	<dependencies>
 		<dependency>
 			<groupId>com.ibm.cloud</groupId>

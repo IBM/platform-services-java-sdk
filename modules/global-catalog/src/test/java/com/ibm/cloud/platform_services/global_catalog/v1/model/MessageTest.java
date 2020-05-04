@@ -13,7 +13,10 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.GetArtifactOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Message;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Visibility;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.VisibilityDetail;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.VisibilityDetailAccounts;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,29 +29,25 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetArtifactOptions model.
+ * Unit test class for the Message model.
  */
-public class GetArtifactOptionsTest {
+public class MessageTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetArtifactOptions() throws Throwable {
-    GetArtifactOptions getArtifactOptionsModel = new GetArtifactOptions.Builder()
-      .objectId("testString")
-      .artifactId("testString")
-      .accept("testString")
-      .account("testString")
-      .build();
-    assertEquals(getArtifactOptionsModel.objectId(), "testString");
-    assertEquals(getArtifactOptionsModel.artifactId(), "testString");
-    assertEquals(getArtifactOptionsModel.accept(), "testString");
-    assertEquals(getArtifactOptionsModel.account(), "testString");
+  public void testMessage() throws Throwable {
+    Message messageModel = new Message();
+    assertNull(messageModel.getId());
+    assertNull(messageModel.getEffective());
+    assertNull(messageModel.getTime());
+    assertNull(messageModel.getWhoId());
+    assertNull(messageModel.getWhoName());
+    assertNull(messageModel.getWhoEmail());
+    assertNull(messageModel.getInstance());
+    assertNull(messageModel.getGid());
+    assertNull(messageModel.getType());
+    assertNull(messageModel.getMessage());
+    assertNull(messageModel.getData());
   }
-  
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetArtifactOptionsError() throws Throwable {
-    new GetArtifactOptions.Builder().build();
-  }
-
 }

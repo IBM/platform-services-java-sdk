@@ -16,13 +16,11 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Amount;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Bullets;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Callbacks;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntry;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadata;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataDeployment;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataDeploymentBroker;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataPricing;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.I18N;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.Image;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Metrics;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseAlias;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBasePlan;
@@ -32,10 +30,7 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBas
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseTemplate;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseTemplateEnvironmentVariables;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseTemplateSource;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.Overview;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.OverviewUI;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Price;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.Provider;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.StartingPrice;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Strings;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaData;
@@ -55,25 +50,28 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the CatalogEntry model.
+ * Unit test class for the CatalogEntryMetadata model.
  */
-public class CatalogEntryTest {
+public class CatalogEntryMetadataTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testCatalogEntry() throws Throwable {
-    CatalogEntry catalogEntryModel = new CatalogEntry();
-    assertNull(catalogEntryModel.getName());
-    assertNull(catalogEntryModel.getKind());
-    assertNull(catalogEntryModel.getOverviewUi());
-    assertNull(catalogEntryModel.getImages());
-    assertNull(catalogEntryModel.getParentId());
-    assertNull(catalogEntryModel.isDisabled());
-    assertNull(catalogEntryModel.getTags());
-    assertNull(catalogEntryModel.isGroup());
-    assertNull(catalogEntryModel.getProvider());
-    assertNull(catalogEntryModel.isActive());
-    assertNull(catalogEntryModel.getMetadata());
+  public void testCatalogEntryMetadata() throws Throwable {
+    CatalogEntryMetadata catalogEntryMetadataModel = new CatalogEntryMetadata();
+    assertNull(catalogEntryMetadataModel.isRcCompatible());
+    assertNull(catalogEntryMetadataModel.getUi());
+    assertNull(catalogEntryMetadataModel.getCompliance());
+    assertNull(catalogEntryMetadataModel.getService());
+    assertNull(catalogEntryMetadataModel.getPlan());
+    assertNull(catalogEntryMetadataModel.getTemplate());
+    assertNull(catalogEntryMetadataModel.getAlias());
+    assertNull(catalogEntryMetadataModel.getSla());
+    assertNull(catalogEntryMetadataModel.getCallbacks());
+    assertNull(catalogEntryMetadataModel.getVersion());
+    assertNull(catalogEntryMetadataModel.getOriginalName());
+    assertNull(catalogEntryMetadataModel.getOther());
+    assertNull(catalogEntryMetadataModel.getPricing());
+    assertNull(catalogEntryMetadataModel.getDeployment());
   }
 }

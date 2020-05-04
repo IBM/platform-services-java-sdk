@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.GetArtifactOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataDeploymentBroker;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,29 +26,16 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetArtifactOptions model.
+ * Unit test class for the CatalogEntryMetadataDeploymentBroker model.
  */
-public class GetArtifactOptionsTest {
+public class CatalogEntryMetadataDeploymentBrokerTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetArtifactOptions() throws Throwable {
-    GetArtifactOptions getArtifactOptionsModel = new GetArtifactOptions.Builder()
-      .objectId("testString")
-      .artifactId("testString")
-      .accept("testString")
-      .account("testString")
-      .build();
-    assertEquals(getArtifactOptionsModel.objectId(), "testString");
-    assertEquals(getArtifactOptionsModel.artifactId(), "testString");
-    assertEquals(getArtifactOptionsModel.accept(), "testString");
-    assertEquals(getArtifactOptionsModel.account(), "testString");
+  public void testCatalogEntryMetadataDeploymentBroker() throws Throwable {
+    CatalogEntryMetadataDeploymentBroker catalogEntryMetadataDeploymentBrokerModel = new CatalogEntryMetadataDeploymentBroker();
+    assertNull(catalogEntryMetadataDeploymentBrokerModel.getName());
+    assertNull(catalogEntryMetadataDeploymentBrokerModel.getGuid());
   }
-  
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetArtifactOptionsError() throws Throwable {
-    new GetArtifactOptions.Builder().build();
-  }
-
 }

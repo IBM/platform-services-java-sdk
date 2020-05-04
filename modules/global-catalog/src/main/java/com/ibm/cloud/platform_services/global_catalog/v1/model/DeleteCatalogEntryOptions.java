@@ -21,6 +21,7 @@ public class DeleteCatalogEntryOptions extends GenericModel {
 
   protected String id;
   protected String account;
+  protected Boolean force;
 
   /**
    * Builder.
@@ -28,10 +29,12 @@ public class DeleteCatalogEntryOptions extends GenericModel {
   public static class Builder {
     private String id;
     private String account;
+    private Boolean force;
 
     private Builder(DeleteCatalogEntryOptions deleteCatalogEntryOptions) {
       this.id = deleteCatalogEntryOptions.id;
       this.account = deleteCatalogEntryOptions.account;
+      this.force = deleteCatalogEntryOptions.force;
     }
 
     /**
@@ -79,6 +82,17 @@ public class DeleteCatalogEntryOptions extends GenericModel {
       this.account = account;
       return this;
     }
+
+    /**
+     * Set the force.
+     *
+     * @param force the force
+     * @return the DeleteCatalogEntryOptions builder
+     */
+    public Builder force(Boolean force) {
+      this.force = force;
+      return this;
+    }
   }
 
   protected DeleteCatalogEntryOptions(Builder builder) {
@@ -86,6 +100,7 @@ public class DeleteCatalogEntryOptions extends GenericModel {
       "id cannot be empty");
     id = builder.id;
     account = builder.account;
+    force = builder.force;
   }
 
   /**
@@ -119,6 +134,18 @@ public class DeleteCatalogEntryOptions extends GenericModel {
    */
   public String account() {
     return account;
+  }
+
+  /**
+   * Gets the force.
+   *
+   * This will cause entry to be deleted fully. By default it is archived for two weeks, so that it can be restored if
+   * necessary.
+   *
+   * @return the force
+   */
+  public Boolean force() {
+    return force;
   }
 }
 

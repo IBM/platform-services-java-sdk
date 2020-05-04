@@ -47,7 +47,7 @@ public class CatalogEntry extends GenericModel {
   protected Boolean group;
   protected Provider provider;
   protected Boolean active;
-  protected ObjectMetadataSet metadata;
+  protected CatalogEntryMetadata metadata;
   protected String id;
   @SerializedName("catalog_crn")
   protected Object catalogCrn;
@@ -177,11 +177,11 @@ public class CatalogEntry extends GenericModel {
   /**
    * Gets the metadata.
    *
-   * Model used to describe metadata object that can be set.
+   * Model used to describe metadata object returned.
    *
    * @return the metadata
    */
-  public ObjectMetadataSet getMetadata() {
+  public CatalogEntryMetadata getMetadata() {
     return metadata;
   }
 

@@ -22,7 +22,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class Amount extends GenericModel {
 
-  protected String counrty;
+  protected String country;
   protected String currency;
   protected List<Price> prices;
 
@@ -30,12 +30,12 @@ public class Amount extends GenericModel {
    * Builder.
    */
   public static class Builder {
-    private String counrty;
+    private String country;
     private String currency;
     private List<Price> prices;
 
     private Builder(Amount amount) {
-      this.counrty = amount.counrty;
+      this.country = amount.country;
       this.currency = amount.currency;
       this.prices = amount.prices;
     }
@@ -72,13 +72,13 @@ public class Amount extends GenericModel {
     }
 
     /**
-     * Set the counrty.
+     * Set the country.
      *
-     * @param counrty the counrty
+     * @param country the country
      * @return the Amount builder
      */
-    public Builder counrty(String counrty) {
-      this.counrty = counrty;
+    public Builder country(String country) {
+      this.country = country;
       return this;
     }
 
@@ -107,7 +107,7 @@ public class Amount extends GenericModel {
   }
 
   protected Amount(Builder builder) {
-    counrty = builder.counrty;
+    country = builder.country;
     currency = builder.currency;
     prices = builder.prices;
   }
@@ -122,14 +122,14 @@ public class Amount extends GenericModel {
   }
 
   /**
-   * Gets the counrty.
+   * Gets the country.
    *
    * Country.
    *
-   * @return the counrty
+   * @return the country
    */
-  public String counrty() {
-    return counrty;
+  public String country() {
+    return country;
   }
 
   /**

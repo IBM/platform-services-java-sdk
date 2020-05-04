@@ -21,6 +21,7 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetad
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataDeployment;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataDeploymentBroker;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataPricing;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.EntrySearchResult;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.I18N;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Image;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Metrics;
@@ -55,25 +56,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the CatalogEntry model.
+ * Unit test class for the EntrySearchResult model.
  */
-public class CatalogEntryTest {
+public class EntrySearchResultTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testCatalogEntry() throws Throwable {
-    CatalogEntry catalogEntryModel = new CatalogEntry();
-    assertNull(catalogEntryModel.getName());
-    assertNull(catalogEntryModel.getKind());
-    assertNull(catalogEntryModel.getOverviewUi());
-    assertNull(catalogEntryModel.getImages());
-    assertNull(catalogEntryModel.getParentId());
-    assertNull(catalogEntryModel.isDisabled());
-    assertNull(catalogEntryModel.getTags());
-    assertNull(catalogEntryModel.isGroup());
-    assertNull(catalogEntryModel.getProvider());
-    assertNull(catalogEntryModel.isActive());
-    assertNull(catalogEntryModel.getMetadata());
+  public void testEntrySearchResult() throws Throwable {
+    EntrySearchResult entrySearchResultModel = new EntrySearchResult();
+    assertNull(entrySearchResultModel.getOffset());
+    assertNull(entrySearchResultModel.getLimit());
+    assertNull(entrySearchResultModel.getCount());
+    assertNull(entrySearchResultModel.getResourceCount());
+    assertNull(entrySearchResultModel.getFirst());
+    assertNull(entrySearchResultModel.getLast());
+    assertNull(entrySearchResultModel.getPrev());
+    assertNull(entrySearchResultModel.getNext());
+    assertNull(entrySearchResultModel.getResources());
   }
 }

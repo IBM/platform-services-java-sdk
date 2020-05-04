@@ -17,6 +17,7 @@ import static org.testng.Assert.*;
 import static org.testng.AssertJUnit.assertNotNull;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     private static final Boolean active = false;
     private static final Boolean disabled = false;
     private static final String artifactId = "someArtifactId.json";
-    private static final byte[] artifact = "{\"someKey\": \"someValue\"}".getBytes();
+    private static final byte[] artifact = "This is a simulated artifact".getBytes();
     private static final String visibilityRestriction = "private";
 
     CreateCatalogEntryOptions defaultCreate;
@@ -120,7 +121,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
                 .tags(tags)
                 .provider(provider)
                 .build();
-        defaultDelete = new DeleteCatalogEntryOptions.Builder().id(id).build();
+        defaultDelete = new DeleteCatalogEntryOptions.Builder().id(id).force(true).build();
         defaultGet = new GetCatalogEntryOptions.Builder().id(id).build();
         defaultUpdate = new UpdateCatalogEntryOptions.Builder()
                 .id(id)
@@ -156,7 +157,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
                 .objectId(defaultCreate.id())
                 .artifactId(artifactId)
                 .artifact(new ByteArrayInputStream(artifact))
-                .contentType("application/json")
+                .contentType("text/plain")
                 .build();
         getArtifact = new GetArtifactOptions.Builder()
                 .objectId(defaultCreate.id())
@@ -194,7 +195,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(result.getProvider(), defaultCreate.provider());
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testCreateCatalogEntry" })
     public void testGetCatalogEntry() {
         service.createCatalogEntry(defaultCreate).execute();
         Response<CatalogEntry> response = service.getCatalogEntry(defaultGet).execute();
@@ -211,7 +212,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(result.getProvider(), defaultCreate.provider());
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testGetCatalogEntry" })
     public void testUpdateCatalogEntry() {
         service.createCatalogEntry(defaultCreate).execute();
         Response<CatalogEntry> response = service.updateCatalogEntry(defaultUpdate).execute();
@@ -228,7 +229,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(result.getProvider(), defaultUpdate.provider());
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testUpdateCatalogEntry" })
     public void testDeleteCatalogEntry() {
         service.createCatalogEntry(defaultCreate).execute();
         Response<Void> response = service.deleteCatalogEntry(defaultDelete).execute();
@@ -236,7 +237,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testDeleteCatalogEntry" })
     public void testGetCatalogEntryAfterDeleteFailure() {
         service.createCatalogEntry(defaultCreate).execute();
         service.deleteCatalogEntry(defaultDelete).execute();
@@ -249,7 +250,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testDeleteCatalogEntry" })
     public void testGetCatalogEntryFailure() {
         try {
             service.getCatalogEntry(defaultGet).execute();
@@ -259,7 +260,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testDeleteCatalogEntry" })
     public void testDeleteCatalogEntryFailure() {
         service.createCatalogEntry(defaultCreate).execute();
         Response<Void> response = service.deleteCatalogEntry(defaultDelete).execute();
@@ -267,7 +268,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testUpdateCatalogEntry" })
     public void testUpdateCatalogEntryFailure() {
         try {
             service.updateCatalogEntry(defaultUpdate).execute();
@@ -277,7 +278,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testUpdateCatalogEntryFailure" })
     public void testCreateCatalogEntryFailure() {
         service.createCatalogEntry(defaultCreate).execute();
 
@@ -289,43 +290,45 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Ignore
     @Test
-    public void testListCatalogEntry() {
-        Response<SearchResult> response = service.listCatalogEntries().execute();
+    public void testListCatalogEntries() {
+        Response<EntrySearchResult> response = service.listCatalogEntries().execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
-        SearchResult result = response.getResult();
+        EntrySearchResult result = response.getResult();
         assertNotNull(result);
         assertNotNull(result.getResources());
         assertTrue(result.getResources().size() > 0);
     }
 
+    @Ignore
     @Test
-    public void testGetChildCatalogEntry() {
+    public void testGetChildObjects() {
         service.createCatalogEntry(defaultCreate).execute();
         service.createCatalogEntry(defaultChild).execute();
-        Response<List<SearchResult>> response = service.getChildObjects(getChild).execute(); // TODO: busted, java.lang.IllegalStateException: Expected BEGIN_ARRAY but was BEGIN_OBJECT at line 1 column 2 path $
+        Response<EntrySearchResult> response = service.getChildObjects(getChild).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
-        List<SearchResult> result = response.getResult();
+        EntrySearchResult result = response.getResult();
         assertNotNull(result);
-        assertEquals(result.size(), 1);
-        System.out.println(result.get(0));
-        assertEquals(result.get(0).getResources().size(), 1);
+        assertEquals(result.getResourceCount(), Long.valueOf(1));
+        System.out.println(result.getResources().get(0));
     }
 
     @Test
-    public void testGetChildCatalogEntryFailure() {
+    public void testGetChildObjectsFailure() {
         try {
-            service.getChildObjects(getChild).execute(); // TODO: busted, java.lang.IllegalStateException: Expected BEGIN_ARRAY but was BEGIN_OBJECT at line 1 column 2 path $
+            service.getChildObjects(getChild).execute();
             fail("Expected NotFoundException.");
         } catch (NotFoundException e) {
             assertEquals(e.getStatusCode(), 404);
         }
     }
 
+    @Ignore
     @Test
     public void testRestoreCatalogEntry() {
         service.createCatalogEntry(defaultCreate).execute();
@@ -423,6 +426,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Ignore
     @Test
     public void testListArtifacts() {
         service.createCatalogEntry(defaultCreate).execute();
@@ -458,10 +462,12 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     public void testGetArtifacts() {
         service.createCatalogEntry(defaultCreate).execute();
         service.uploadArtifact(uploadArtifact).execute();
-        Response<Void> response = service.getArtifact(getArtifact).execute();
+        Response<InputStream> response = service.getArtifact(getArtifact).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
-        assertEquals(response.getResult(), uploadArtifact.artifact());     // TODO: busted, artifact not returned because of void
+        // TODO can't assert that 2 input streams are equal.
+        // Will need to read the bytes in each one and compare that.
+        // assertEquals(response.getResult(), uploadArtifact.artifact());
     }
 
     @Test

@@ -21,6 +21,7 @@ public class GetArtifactOptions extends GenericModel {
 
   protected String objectId;
   protected String artifactId;
+  protected String accept;
   protected String account;
 
   /**
@@ -29,11 +30,13 @@ public class GetArtifactOptions extends GenericModel {
   public static class Builder {
     private String objectId;
     private String artifactId;
+    private String accept;
     private String account;
 
     private Builder(GetArtifactOptions getArtifactOptions) {
       this.objectId = getArtifactOptions.objectId;
       this.artifactId = getArtifactOptions.artifactId;
+      this.accept = getArtifactOptions.accept;
       this.account = getArtifactOptions.account;
     }
 
@@ -86,6 +89,17 @@ public class GetArtifactOptions extends GenericModel {
     }
 
     /**
+     * Set the accept.
+     *
+     * @param accept the accept
+     * @return the GetArtifactOptions builder
+     */
+    public Builder accept(String accept) {
+      this.accept = accept;
+      return this;
+    }
+
+    /**
      * Set the account.
      *
      * @param account the account
@@ -104,6 +118,7 @@ public class GetArtifactOptions extends GenericModel {
       "artifactId cannot be empty");
     objectId = builder.objectId;
     artifactId = builder.artifactId;
+    accept = builder.accept;
     account = builder.account;
   }
 
@@ -136,6 +151,17 @@ public class GetArtifactOptions extends GenericModel {
    */
   public String artifactId() {
     return artifactId;
+  }
+
+  /**
+   * Gets the accept.
+   *
+   * The type of the response:  or *_/_*.
+   *
+   * @return the accept
+   */
+  public String accept() {
+    return accept;
   }
 
   /**

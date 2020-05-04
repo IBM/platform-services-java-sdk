@@ -45,11 +45,11 @@ public class AmountTest {
     assertEquals(priceModel.price(), Double.valueOf("72.5"));
 
     Amount amountModel = new Amount.Builder()
-      .counrty("testString")
+      .country("testString")
       .currency("testString")
       .prices(new ArrayList<Price>(Arrays.asList(priceModel)))
       .build();
-    assertEquals(amountModel.counrty(), "testString");
+    assertEquals(amountModel.country(), "testString");
     assertEquals(amountModel.currency(), "testString");
     assertEquals(amountModel.prices(), new ArrayList<Price>(Arrays.asList(priceModel)));
 
@@ -57,7 +57,7 @@ public class AmountTest {
 
     Amount amountModelNew = TestUtilities.deserialize(json, Amount.class);
     assertTrue(amountModelNew instanceof Amount);
-    assertEquals(amountModelNew.counrty(), "testString");
+    assertEquals(amountModelNew.country(), "testString");
     assertEquals(amountModelNew.currency(), "testString");
   }
 }

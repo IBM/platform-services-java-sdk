@@ -15,10 +15,12 @@ package com.ibm.cloud.platform_services.global_catalog.v1;
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Artifacts;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.AuditSearchResult;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntry;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CreateCatalogEntryOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.DeleteArtifactOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.DeleteCatalogEntryOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.EntrySearchResult;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetArtifactOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetAuditLogsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetCatalogEntryOptions;
@@ -29,7 +31,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.ListArtifactsOpti
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ListCatalogEntriesOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.PricingGet;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.RestoreCatalogEntryOptions;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.SearchResult;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UpdateCatalogEntryOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UpdateVisibilityOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UploadArtifactOptions;
@@ -41,7 +42,7 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
-import java.util.List;
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -103,9 +104,9 @@ public class GlobalCatalog extends BaseService {
    * Includes key information, such as ID, name, kind, CRN, tags, and provider. This endpoint is ETag enabled.
    *
    * @param listCatalogEntriesOptions the {@link ListCatalogEntriesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link SearchResult}
+   * @return a {@link ServiceCall} with a result of type {@link EntrySearchResult}
    */
-  public ServiceCall<SearchResult> listCatalogEntries(ListCatalogEntriesOptions listCatalogEntriesOptions) {
+  public ServiceCall<EntrySearchResult> listCatalogEntries(ListCatalogEntriesOptions listCatalogEntriesOptions) {
     String[] pathSegments = { "" };
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "listCatalogEntries");
@@ -136,8 +137,8 @@ public class GlobalCatalog extends BaseService {
         builder.query("complete", listCatalogEntriesOptions.complete());
       }
     }
-    ResponseConverter<SearchResult> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<SearchResult>() { }.getType());
+    ResponseConverter<EntrySearchResult> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EntrySearchResult>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -146,9 +147,9 @@ public class GlobalCatalog extends BaseService {
    *
    * Includes key information, such as ID, name, kind, CRN, tags, and provider. This endpoint is ETag enabled.
    *
-   * @return a {@link ServiceCall} with a result of type {@link SearchResult}
+   * @return a {@link ServiceCall} with a result of type {@link EntrySearchResult}
    */
-  public ServiceCall<SearchResult> listCatalogEntries() {
+  public ServiceCall<EntrySearchResult> listCatalogEntries() {
     return listCatalogEntries(null);
   }
 
@@ -317,6 +318,9 @@ public class GlobalCatalog extends BaseService {
     if (deleteCatalogEntryOptions.account() != null) {
       builder.query("account", deleteCatalogEntryOptions.account());
     }
+    if (deleteCatalogEntryOptions.force() != null) {
+      builder.query("force", String.valueOf(deleteCatalogEntryOptions.force()));
+    }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -327,9 +331,9 @@ public class GlobalCatalog extends BaseService {
    * Fetch child catalog entries for a catalog entry with a specific id. This endpoint is ETag enabled.
    *
    * @param getChildObjectsOptions the {@link GetChildObjectsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link List}
+   * @return a {@link ServiceCall} with a result of type {@link EntrySearchResult}
    */
-  public ServiceCall<List<SearchResult>> getChildObjects(GetChildObjectsOptions getChildObjectsOptions) {
+  public ServiceCall<EntrySearchResult> getChildObjects(GetChildObjectsOptions getChildObjectsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getChildObjectsOptions,
       "getChildObjectsOptions cannot be null");
     String[] pathSegments = { "", "" };
@@ -361,8 +365,8 @@ public class GlobalCatalog extends BaseService {
     if (getChildObjectsOptions.complete() != null) {
       builder.query("complete", getChildObjectsOptions.complete());
     }
-    ResponseConverter<List<SearchResult>> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<List<SearchResult>>() { }.getType());
+    ResponseConverter<EntrySearchResult> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EntrySearchResult>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -488,9 +492,9 @@ public class GlobalCatalog extends BaseService {
    * This endpoint returns the audit logs for an object. Only administrators and editors can get logs.
    *
    * @param getAuditLogsOptions the {@link GetAuditLogsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link SearchResult}
+   * @return a {@link ServiceCall} with a result of type {@link AuditSearchResult}
    */
-  public ServiceCall<SearchResult> getAuditLogs(GetAuditLogsOptions getAuditLogsOptions) {
+  public ServiceCall<AuditSearchResult> getAuditLogs(GetAuditLogsOptions getAuditLogsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAuditLogsOptions,
       "getAuditLogsOptions cannot be null");
     String[] pathSegments = { "", "logs" };
@@ -516,8 +520,8 @@ public class GlobalCatalog extends BaseService {
     if (getAuditLogsOptions.limit() != null) {
       builder.query("_limit", String.valueOf(getAuditLogsOptions.limit()));
     }
-    ResponseConverter<SearchResult> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<SearchResult>() { }.getType());
+    ResponseConverter<AuditSearchResult> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AuditSearchResult>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -554,9 +558,9 @@ public class GlobalCatalog extends BaseService {
    * This endpoint returns the binary of an artifact.
    *
    * @param getArtifactOptions the {@link GetArtifactOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
+   * @return a {@link ServiceCall} with a result of type {@link InputStream}
    */
-  public ServiceCall<Void> getArtifact(GetArtifactOptions getArtifactOptions) {
+  public ServiceCall<InputStream> getArtifact(GetArtifactOptions getArtifactOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getArtifactOptions,
       "getArtifactOptions cannot be null");
     String[] pathSegments = { "", "artifacts" };
@@ -566,10 +570,13 @@ public class GlobalCatalog extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
+    if (getArtifactOptions.accept() != null) {
+      builder.header("Accept", getArtifactOptions.accept());
+    }
     if (getArtifactOptions.account() != null) {
       builder.query("account", getArtifactOptions.account());
     }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    ResponseConverter<InputStream> responseConverter = ResponseConverterUtils.getInputStream();
     return createServiceCall(builder.build(), responseConverter);
   }
 

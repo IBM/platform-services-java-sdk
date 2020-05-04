@@ -13,12 +13,18 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.SearchResult;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Amount;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataPricing;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Metrics;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Price;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.StartingPrice;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,18 +32,18 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the SearchResult model.
+ * Unit test class for the CatalogEntryMetadataPricing model.
  */
-public class SearchResultTest {
+public class CatalogEntryMetadataPricingTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testSearchResult() throws Throwable {
-    SearchResult searchResultModel = new SearchResult();
-    assertNull(searchResultModel.getPage());
-    assertNull(searchResultModel.getResultsPerPage());
-    assertNull(searchResultModel.getTotalResults());
-    assertNull(searchResultModel.getResources());
+  public void testCatalogEntryMetadataPricing() throws Throwable {
+    CatalogEntryMetadataPricing catalogEntryMetadataPricingModel = new CatalogEntryMetadataPricing();
+    assertNull(catalogEntryMetadataPricingModel.getType());
+    assertNull(catalogEntryMetadataPricingModel.getOrigin());
+    assertNull(catalogEntryMetadataPricingModel.getStartingPrice());
+    assertNull(catalogEntryMetadataPricingModel.getMetrics());
   }
 }

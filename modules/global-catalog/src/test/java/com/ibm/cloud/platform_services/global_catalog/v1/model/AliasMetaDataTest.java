@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.DeploymentBaseBroker;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.AliasMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,26 +26,26 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the DeploymentBaseBroker model.
+ * Unit test class for the AliasMetaData model.
  */
-public class DeploymentBaseBrokerTest {
+public class AliasMetaDataTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testDeploymentBaseBroker() throws Throwable {
-    DeploymentBaseBroker deploymentBaseBrokerModel = new DeploymentBaseBroker.Builder()
-      .name("testString")
-      .guid("testString")
+  public void testAliasMetaData() throws Throwable {
+    AliasMetaData aliasMetaDataModel = new AliasMetaData.Builder()
+      .type("testString")
+      .planId("testString")
       .build();
-    assertEquals(deploymentBaseBrokerModel.name(), "testString");
-    assertEquals(deploymentBaseBrokerModel.guid(), "testString");
+    assertEquals(aliasMetaDataModel.type(), "testString");
+    assertEquals(aliasMetaDataModel.planId(), "testString");
 
-    String json = TestUtilities.serialize(deploymentBaseBrokerModel);
+    String json = TestUtilities.serialize(aliasMetaDataModel);
 
-    DeploymentBaseBroker deploymentBaseBrokerModelNew = TestUtilities.deserialize(json, DeploymentBaseBroker.class);
-    assertTrue(deploymentBaseBrokerModelNew instanceof DeploymentBaseBroker);
-    assertEquals(deploymentBaseBrokerModelNew.name(), "testString");
-    assertEquals(deploymentBaseBrokerModelNew.guid(), "testString");
+    AliasMetaData aliasMetaDataModelNew = TestUtilities.deserialize(json, AliasMetaData.class);
+    assertTrue(aliasMetaDataModelNew instanceof AliasMetaData);
+    assertEquals(aliasMetaDataModelNew.type(), "testString");
+    assertEquals(aliasMetaDataModelNew.planId(), "testString");
   }
 }

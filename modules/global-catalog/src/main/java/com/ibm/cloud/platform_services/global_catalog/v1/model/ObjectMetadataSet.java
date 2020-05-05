@@ -26,17 +26,17 @@ public class ObjectMetadataSet extends GenericModel {
 
   @SerializedName("rc_compatible")
   protected Boolean rcCompatible;
+  protected CFMetaData service;
+  protected PlanMetaData plan;
+  protected AliasMetaData alias;
+  protected TemplateMetaData template;
   protected UIMetaData ui;
   protected List<String> compliance;
-  protected ObjectMetadataBaseService service;
-  protected ObjectMetadataBasePlan plan;
-  protected ObjectMetadataBaseTemplate template;
-  protected ObjectMetadataBaseAlias alias;
-  protected ObjectMetadataBaseSla sla;
+  protected SLAMetaData sla;
   protected Callbacks callbacks;
-  protected String version;
   @SerializedName("original_name")
   protected String originalName;
+  protected String version;
   protected Map<String, Object> other;
   protected PricingSet pricing;
   protected DeploymentBase deployment;
@@ -46,32 +46,32 @@ public class ObjectMetadataSet extends GenericModel {
    */
   public static class Builder {
     private Boolean rcCompatible;
+    private CFMetaData service;
+    private PlanMetaData plan;
+    private AliasMetaData alias;
+    private TemplateMetaData template;
     private UIMetaData ui;
     private List<String> compliance;
-    private ObjectMetadataBaseService service;
-    private ObjectMetadataBasePlan plan;
-    private ObjectMetadataBaseTemplate template;
-    private ObjectMetadataBaseAlias alias;
-    private ObjectMetadataBaseSla sla;
+    private SLAMetaData sla;
     private Callbacks callbacks;
-    private String version;
     private String originalName;
+    private String version;
     private Map<String, Object> other;
     private PricingSet pricing;
     private DeploymentBase deployment;
 
     private Builder(ObjectMetadataSet objectMetadataSet) {
       this.rcCompatible = objectMetadataSet.rcCompatible;
-      this.ui = objectMetadataSet.ui;
-      this.compliance = objectMetadataSet.compliance;
       this.service = objectMetadataSet.service;
       this.plan = objectMetadataSet.plan;
-      this.template = objectMetadataSet.template;
       this.alias = objectMetadataSet.alias;
+      this.template = objectMetadataSet.template;
+      this.ui = objectMetadataSet.ui;
+      this.compliance = objectMetadataSet.compliance;
       this.sla = objectMetadataSet.sla;
       this.callbacks = objectMetadataSet.callbacks;
-      this.version = objectMetadataSet.version;
       this.originalName = objectMetadataSet.originalName;
+      this.version = objectMetadataSet.version;
       this.other = objectMetadataSet.other;
       this.pricing = objectMetadataSet.pricing;
       this.deployment = objectMetadataSet.deployment;
@@ -120,6 +120,50 @@ public class ObjectMetadataSet extends GenericModel {
     }
 
     /**
+     * Set the service.
+     *
+     * @param service the service
+     * @return the ObjectMetadataSet builder
+     */
+    public Builder service(CFMetaData service) {
+      this.service = service;
+      return this;
+    }
+
+    /**
+     * Set the plan.
+     *
+     * @param plan the plan
+     * @return the ObjectMetadataSet builder
+     */
+    public Builder plan(PlanMetaData plan) {
+      this.plan = plan;
+      return this;
+    }
+
+    /**
+     * Set the alias.
+     *
+     * @param alias the alias
+     * @return the ObjectMetadataSet builder
+     */
+    public Builder alias(AliasMetaData alias) {
+      this.alias = alias;
+      return this;
+    }
+
+    /**
+     * Set the template.
+     *
+     * @param template the template
+     * @return the ObjectMetadataSet builder
+     */
+    public Builder template(TemplateMetaData template) {
+      this.template = template;
+      return this;
+    }
+
+    /**
      * Set the ui.
      *
      * @param ui the ui
@@ -143,56 +187,12 @@ public class ObjectMetadataSet extends GenericModel {
     }
 
     /**
-     * Set the service.
-     *
-     * @param service the service
-     * @return the ObjectMetadataSet builder
-     */
-    public Builder service(ObjectMetadataBaseService service) {
-      this.service = service;
-      return this;
-    }
-
-    /**
-     * Set the plan.
-     *
-     * @param plan the plan
-     * @return the ObjectMetadataSet builder
-     */
-    public Builder plan(ObjectMetadataBasePlan plan) {
-      this.plan = plan;
-      return this;
-    }
-
-    /**
-     * Set the template.
-     *
-     * @param template the template
-     * @return the ObjectMetadataSet builder
-     */
-    public Builder template(ObjectMetadataBaseTemplate template) {
-      this.template = template;
-      return this;
-    }
-
-    /**
-     * Set the alias.
-     *
-     * @param alias the alias
-     * @return the ObjectMetadataSet builder
-     */
-    public Builder alias(ObjectMetadataBaseAlias alias) {
-      this.alias = alias;
-      return this;
-    }
-
-    /**
      * Set the sla.
      *
      * @param sla the sla
      * @return the ObjectMetadataSet builder
      */
-    public Builder sla(ObjectMetadataBaseSla sla) {
+    public Builder sla(SLAMetaData sla) {
       this.sla = sla;
       return this;
     }
@@ -209,17 +209,6 @@ public class ObjectMetadataSet extends GenericModel {
     }
 
     /**
-     * Set the version.
-     *
-     * @param version the version
-     * @return the ObjectMetadataSet builder
-     */
-    public Builder version(String version) {
-      this.version = version;
-      return this;
-    }
-
-    /**
      * Set the originalName.
      *
      * @param originalName the originalName
@@ -227,6 +216,17 @@ public class ObjectMetadataSet extends GenericModel {
      */
     public Builder originalName(String originalName) {
       this.originalName = originalName;
+      return this;
+    }
+
+    /**
+     * Set the version.
+     *
+     * @param version the version
+     * @return the ObjectMetadataSet builder
+     */
+    public Builder version(String version) {
+      this.version = version;
       return this;
     }
 
@@ -266,16 +266,16 @@ public class ObjectMetadataSet extends GenericModel {
 
   protected ObjectMetadataSet(Builder builder) {
     rcCompatible = builder.rcCompatible;
-    ui = builder.ui;
-    compliance = builder.compliance;
     service = builder.service;
     plan = builder.plan;
-    template = builder.template;
     alias = builder.alias;
+    template = builder.template;
+    ui = builder.ui;
+    compliance = builder.compliance;
     sla = builder.sla;
     callbacks = builder.callbacks;
-    version = builder.version;
     originalName = builder.originalName;
+    version = builder.version;
     other = builder.other;
     pricing = builder.pricing;
     deployment = builder.deployment;
@@ -302,6 +302,50 @@ public class ObjectMetadataSet extends GenericModel {
   }
 
   /**
+   * Gets the service.
+   *
+   * Service-related metadata.
+   *
+   * @return the service
+   */
+  public CFMetaData service() {
+    return service;
+  }
+
+  /**
+   * Gets the plan.
+   *
+   * Plan-related metadata.
+   *
+   * @return the plan
+   */
+  public PlanMetaData plan() {
+    return plan;
+  }
+
+  /**
+   * Gets the alias.
+   *
+   * Alias-related metadata.
+   *
+   * @return the alias
+   */
+  public AliasMetaData alias() {
+    return alias;
+  }
+
+  /**
+   * Gets the template.
+   *
+   * Template-related metadata.
+   *
+   * @return the template
+   */
+  public TemplateMetaData template() {
+    return template;
+  }
+
+  /**
    * Gets the ui.
    *
    * Information related to the UI presentation associated with a catalog entry.
@@ -324,57 +368,13 @@ public class ObjectMetadataSet extends GenericModel {
   }
 
   /**
-   * Gets the service.
-   *
-   * Service-related metadata.
-   *
-   * @return the service
-   */
-  public ObjectMetadataBaseService service() {
-    return service;
-  }
-
-  /**
-   * Gets the plan.
-   *
-   * Plan-related metadata.
-   *
-   * @return the plan
-   */
-  public ObjectMetadataBasePlan plan() {
-    return plan;
-  }
-
-  /**
-   * Gets the template.
-   *
-   * Template-related metadata.
-   *
-   * @return the template
-   */
-  public ObjectMetadataBaseTemplate template() {
-    return template;
-  }
-
-  /**
-   * Gets the alias.
-   *
-   * Alias-related metadata.
-   *
-   * @return the alias
-   */
-  public ObjectMetadataBaseAlias alias() {
-    return alias;
-  }
-
-  /**
    * Gets the sla.
    *
    * Service Level Agreement related metadata.
    *
    * @return the sla
    */
-  public ObjectMetadataBaseSla sla() {
+  public SLAMetaData sla() {
     return sla;
   }
 
@@ -390,17 +390,6 @@ public class ObjectMetadataSet extends GenericModel {
   }
 
   /**
-   * Gets the version.
-   *
-   * Optional version of the object.
-   *
-   * @return the version
-   */
-  public String version() {
-    return version;
-  }
-
-  /**
    * Gets the originalName.
    *
    * The original name of the object.
@@ -409,6 +398,17 @@ public class ObjectMetadataSet extends GenericModel {
    */
   public String originalName() {
     return originalName;
+  }
+
+  /**
+   * Gets the version.
+   *
+   * Optional version of the object.
+   *
+   * @return the version
+   */
+  public String version() {
+    return version;
   }
 
   /**

@@ -13,8 +13,8 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Broker;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.DeploymentBase;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.DeploymentBaseBroker;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -35,23 +35,23 @@ public class DeploymentBaseTest {
 
   @Test
   public void testDeploymentBase() throws Throwable {
-    DeploymentBaseBroker deploymentBaseBrokerModel = new DeploymentBaseBroker.Builder()
+    Broker brokerModel = new Broker.Builder()
       .name("testString")
       .guid("testString")
       .build();
-    assertEquals(deploymentBaseBrokerModel.name(), "testString");
-    assertEquals(deploymentBaseBrokerModel.guid(), "testString");
+    assertEquals(brokerModel.name(), "testString");
+    assertEquals(brokerModel.guid(), "testString");
 
     DeploymentBase deploymentBaseModel = new DeploymentBase.Builder()
       .location("testString")
       .targetCrn("testString")
-      .broker(deploymentBaseBrokerModel)
+      .broker(brokerModel)
       .supportsRcMigration(true)
       .targetNetwork("testString")
       .build();
     assertEquals(deploymentBaseModel.location(), "testString");
     assertEquals(deploymentBaseModel.targetCrn(), "testString");
-    assertEquals(deploymentBaseModel.broker(), deploymentBaseBrokerModel);
+    assertEquals(deploymentBaseModel.broker(), brokerModel);
     assertEquals(deploymentBaseModel.supportsRcMigration(), Boolean.valueOf(true));
     assertEquals(deploymentBaseModel.targetNetwork(), "testString");
 
@@ -61,7 +61,7 @@ public class DeploymentBaseTest {
     assertTrue(deploymentBaseModelNew instanceof DeploymentBase);
     assertEquals(deploymentBaseModelNew.location(), "testString");
     assertEquals(deploymentBaseModelNew.targetCrn(), "testString");
-    assertEquals(deploymentBaseModelNew.broker().toString(), deploymentBaseBrokerModel.toString());
+    assertEquals(deploymentBaseModelNew.broker().toString(), brokerModel.toString());
     assertEquals(deploymentBaseModelNew.supportsRcMigration(), Boolean.valueOf(true));
     assertEquals(deploymentBaseModelNew.targetNetwork(), "testString");
   }

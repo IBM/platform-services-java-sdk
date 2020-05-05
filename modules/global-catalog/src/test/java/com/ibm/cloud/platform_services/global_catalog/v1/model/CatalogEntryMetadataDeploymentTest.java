@@ -13,8 +13,8 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Broker;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataDeployment;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataDeploymentBroker;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;

@@ -12,6 +12,8 @@
  */
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import java.util.Map;
+
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
@@ -20,8 +22,10 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class Callbacks extends GenericModel {
 
-  @SerializedName("broker_utl")
-  protected String brokerUtl;
+  @SerializedName("controller_url")
+  protected String controllerUrl;
+  @SerializedName("broker_url")
+  protected String brokerUrl;
   @SerializedName("broker_proxy_url")
   protected String brokerProxyUrl;
   @SerializedName("dashboard_url")
@@ -36,16 +40,15 @@ public class Callbacks extends GenericModel {
   protected String serviceMonitorApi;
   @SerializedName("service_monitor_app")
   protected String serviceMonitorApp;
-  @SerializedName("service_staging_url")
-  protected String serviceStagingUrl;
-  @SerializedName("service_production_url")
-  protected String serviceProductionUrl;
+  @SerializedName("api_endpoint")
+  protected Map<String, String> apiEndpoint;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private String brokerUtl;
+    private String controllerUrl;
+    private String brokerUrl;
     private String brokerProxyUrl;
     private String dashboardUrl;
     private String dashboardDataUrl;
@@ -53,11 +56,11 @@ public class Callbacks extends GenericModel {
     private String dashboardDetailTabExtUrl;
     private String serviceMonitorApi;
     private String serviceMonitorApp;
-    private String serviceStagingUrl;
-    private String serviceProductionUrl;
+    private Map<String, String> apiEndpoint;
 
     private Builder(Callbacks callbacks) {
-      this.brokerUtl = callbacks.brokerUtl;
+      this.controllerUrl = callbacks.controllerUrl;
+      this.brokerUrl = callbacks.brokerUrl;
       this.brokerProxyUrl = callbacks.brokerProxyUrl;
       this.dashboardUrl = callbacks.dashboardUrl;
       this.dashboardDataUrl = callbacks.dashboardDataUrl;
@@ -65,8 +68,7 @@ public class Callbacks extends GenericModel {
       this.dashboardDetailTabExtUrl = callbacks.dashboardDetailTabExtUrl;
       this.serviceMonitorApi = callbacks.serviceMonitorApi;
       this.serviceMonitorApp = callbacks.serviceMonitorApp;
-      this.serviceStagingUrl = callbacks.serviceStagingUrl;
-      this.serviceProductionUrl = callbacks.serviceProductionUrl;
+      this.apiEndpoint = callbacks.apiEndpoint;
     }
 
     /**
@@ -85,13 +87,24 @@ public class Callbacks extends GenericModel {
     }
 
     /**
-     * Set the brokerUtl.
+     * Set the controllerUrl.
      *
-     * @param brokerUtl the brokerUtl
+     * @param controllerUrl the controllerUrl
      * @return the Callbacks builder
      */
-    public Builder brokerUtl(String brokerUtl) {
-      this.brokerUtl = brokerUtl;
+    public Builder controllerUrl(String controllerUrl) {
+      this.controllerUrl = controllerUrl;
+      return this;
+    }
+
+    /**
+     * Set the brokerUrl.
+     *
+     * @param brokerUrl the brokerUrl
+     * @return the Callbacks builder
+     */
+    public Builder brokerUrl(String brokerUrl) {
+      this.brokerUrl = brokerUrl;
       return this;
     }
 
@@ -173,30 +186,20 @@ public class Callbacks extends GenericModel {
     }
 
     /**
-     * Set the serviceStagingUrl.
+     * Set the apiEndpoint.
      *
-     * @param serviceStagingUrl the serviceStagingUrl
+     * @param apiEndpoint the apiEndpoint
      * @return the Callbacks builder
      */
-    public Builder serviceStagingUrl(String serviceStagingUrl) {
-      this.serviceStagingUrl = serviceStagingUrl;
-      return this;
-    }
-
-    /**
-     * Set the serviceProductionUrl.
-     *
-     * @param serviceProductionUrl the serviceProductionUrl
-     * @return the Callbacks builder
-     */
-    public Builder serviceProductionUrl(String serviceProductionUrl) {
-      this.serviceProductionUrl = serviceProductionUrl;
+    public Builder apiEndpoint(Map<String, String> apiEndpoint) {
+      this.apiEndpoint = apiEndpoint;
       return this;
     }
   }
 
   protected Callbacks(Builder builder) {
-    brokerUtl = builder.brokerUtl;
+    controllerUrl = builder.controllerUrl;
+    brokerUrl = builder.brokerUrl;
     brokerProxyUrl = builder.brokerProxyUrl;
     dashboardUrl = builder.dashboardUrl;
     dashboardDataUrl = builder.dashboardDataUrl;
@@ -204,8 +207,7 @@ public class Callbacks extends GenericModel {
     dashboardDetailTabExtUrl = builder.dashboardDetailTabExtUrl;
     serviceMonitorApi = builder.serviceMonitorApi;
     serviceMonitorApp = builder.serviceMonitorApp;
-    serviceStagingUrl = builder.serviceStagingUrl;
-    serviceProductionUrl = builder.serviceProductionUrl;
+    apiEndpoint = builder.apiEndpoint;
   }
 
   /**
@@ -218,14 +220,25 @@ public class Callbacks extends GenericModel {
   }
 
   /**
-   * Gets the brokerUtl.
+   * Gets the controllerUrl.
+   *
+   * The URL of the deployment controller.
+   *
+   * @return the controllerUrl
+   */
+  public String controllerUrl() {
+    return controllerUrl;
+  }
+
+  /**
+   * Gets the brokerUrl.
    *
    * The URL of the deployment broker.
    *
-   * @return the brokerUtl
+   * @return the brokerUrl
    */
-  public String brokerUtl() {
-    return brokerUtl;
+  public String brokerUrl() {
+    return brokerUrl;
   }
 
   /**
@@ -306,25 +319,14 @@ public class Callbacks extends GenericModel {
   }
 
   /**
-   * Gets the serviceStagingUrl.
+   * Gets the apiEndpoint.
    *
-   * Service URL in staging.
+   * API endpoint.
    *
-   * @return the serviceStagingUrl
+   * @return the apiEndpoint
    */
-  public String serviceStagingUrl() {
-    return serviceStagingUrl;
-  }
-
-  /**
-   * Gets the serviceProductionUrl.
-   *
-   * Service URL in production.
-   *
-   * @return the serviceProductionUrl
-   */
-  public String serviceProductionUrl() {
-    return serviceProductionUrl;
+  public Map<String, String> apiEndpoint() {
+    return apiEndpoint;
   }
 }
 

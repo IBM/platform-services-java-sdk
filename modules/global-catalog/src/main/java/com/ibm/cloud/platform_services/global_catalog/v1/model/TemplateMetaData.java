@@ -14,6 +14,7 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -21,14 +22,14 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * Template-related metadata.
  */
-public class ObjectMetadataBaseTemplate extends GenericModel {
+public class TemplateMetaData extends GenericModel {
 
   protected List<String> services;
   @SerializedName("default_memory")
   protected Long defaultMemory;
   @SerializedName("start_cmd")
   protected String startCmd;
-  protected ObjectMetadataBaseTemplateSource source;
+  protected SourceMetaData source;
   @SerializedName("runtime_catalog_id")
   protected String runtimeCatalogId;
   @SerializedName("cf_runtime_id")
@@ -39,7 +40,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
   protected String executableFile;
   protected String buildpack;
   @SerializedName("environment_variables")
-  protected ObjectMetadataBaseTemplateEnvironmentVariables environmentVariables;
+  protected Map<String, String> environmentVariables;
 
   /**
    * Builder.
@@ -48,25 +49,25 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
     private List<String> services;
     private Long defaultMemory;
     private String startCmd;
-    private ObjectMetadataBaseTemplateSource source;
+    private SourceMetaData source;
     private String runtimeCatalogId;
     private String cfRuntimeId;
     private String templateId;
     private String executableFile;
     private String buildpack;
-    private ObjectMetadataBaseTemplateEnvironmentVariables environmentVariables;
+    private Map<String, String> environmentVariables;
 
-    private Builder(ObjectMetadataBaseTemplate objectMetadataBaseTemplate) {
-      this.services = objectMetadataBaseTemplate.services;
-      this.defaultMemory = objectMetadataBaseTemplate.defaultMemory;
-      this.startCmd = objectMetadataBaseTemplate.startCmd;
-      this.source = objectMetadataBaseTemplate.source;
-      this.runtimeCatalogId = objectMetadataBaseTemplate.runtimeCatalogId;
-      this.cfRuntimeId = objectMetadataBaseTemplate.cfRuntimeId;
-      this.templateId = objectMetadataBaseTemplate.templateId;
-      this.executableFile = objectMetadataBaseTemplate.executableFile;
-      this.buildpack = objectMetadataBaseTemplate.buildpack;
-      this.environmentVariables = objectMetadataBaseTemplate.environmentVariables;
+    private Builder(TemplateMetaData templateMetaData) {
+      this.services = templateMetaData.services;
+      this.defaultMemory = templateMetaData.defaultMemory;
+      this.startCmd = templateMetaData.startCmd;
+      this.source = templateMetaData.source;
+      this.runtimeCatalogId = templateMetaData.runtimeCatalogId;
+      this.cfRuntimeId = templateMetaData.cfRuntimeId;
+      this.templateId = templateMetaData.templateId;
+      this.executableFile = templateMetaData.executableFile;
+      this.buildpack = templateMetaData.buildpack;
+      this.environmentVariables = templateMetaData.environmentVariables;
     }
 
     /**
@@ -76,19 +77,19 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
     }
 
     /**
-     * Builds a ObjectMetadataBaseTemplate.
+     * Builds a TemplateMetaData.
      *
-     * @return the new ObjectMetadataBaseTemplate instance
+     * @return the new TemplateMetaData instance
      */
-    public ObjectMetadataBaseTemplate build() {
-      return new ObjectMetadataBaseTemplate(this);
+    public TemplateMetaData build() {
+      return new TemplateMetaData(this);
     }
 
     /**
      * Adds an services to services.
      *
      * @param services the new services
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
     public Builder addServices(String services) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(services,
@@ -105,7 +106,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Existing services will be replaced.
      *
      * @param services the services
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
     public Builder services(List<String> services) {
       this.services = services;
@@ -116,7 +117,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Set the defaultMemory.
      *
      * @param defaultMemory the defaultMemory
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
     public Builder defaultMemory(long defaultMemory) {
       this.defaultMemory = defaultMemory;
@@ -127,7 +128,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Set the startCmd.
      *
      * @param startCmd the startCmd
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
     public Builder startCmd(String startCmd) {
       this.startCmd = startCmd;
@@ -138,9 +139,9 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Set the source.
      *
      * @param source the source
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
-    public Builder source(ObjectMetadataBaseTemplateSource source) {
+    public Builder source(SourceMetaData source) {
       this.source = source;
       return this;
     }
@@ -149,7 +150,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Set the runtimeCatalogId.
      *
      * @param runtimeCatalogId the runtimeCatalogId
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
     public Builder runtimeCatalogId(String runtimeCatalogId) {
       this.runtimeCatalogId = runtimeCatalogId;
@@ -160,7 +161,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Set the cfRuntimeId.
      *
      * @param cfRuntimeId the cfRuntimeId
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
     public Builder cfRuntimeId(String cfRuntimeId) {
       this.cfRuntimeId = cfRuntimeId;
@@ -171,7 +172,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Set the templateId.
      *
      * @param templateId the templateId
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
     public Builder templateId(String templateId) {
       this.templateId = templateId;
@@ -182,7 +183,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Set the executableFile.
      *
      * @param executableFile the executableFile
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
     public Builder executableFile(String executableFile) {
       this.executableFile = executableFile;
@@ -193,7 +194,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Set the buildpack.
      *
      * @param buildpack the buildpack
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
     public Builder buildpack(String buildpack) {
       this.buildpack = buildpack;
@@ -204,15 +205,15 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
      * Set the environmentVariables.
      *
      * @param environmentVariables the environmentVariables
-     * @return the ObjectMetadataBaseTemplate builder
+     * @return the TemplateMetaData builder
      */
-    public Builder environmentVariables(ObjectMetadataBaseTemplateEnvironmentVariables environmentVariables) {
+    public Builder environmentVariables(Map<String, String> environmentVariables) {
       this.environmentVariables = environmentVariables;
       return this;
     }
   }
 
-  protected ObjectMetadataBaseTemplate(Builder builder) {
+  protected TemplateMetaData(Builder builder) {
     services = builder.services;
     defaultMemory = builder.defaultMemory;
     startCmd = builder.startCmd;
@@ -228,7 +229,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ObjectMetadataBaseTemplate builder
+   * @return a TemplateMetaData builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -274,7 +275,7 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
    *
    * @return the source
    */
-  public ObjectMetadataBaseTemplateSource source() {
+  public SourceMetaData source() {
     return source;
   }
 
@@ -336,11 +337,11 @@ public class ObjectMetadataBaseTemplate extends GenericModel {
   /**
    * Gets the environmentVariables.
    *
-   * Environment variables for the template.
+   * Environment variables (key/value pairs) for the template.
    *
    * @return the environmentVariables
    */
-  public ObjectMetadataBaseTemplateEnvironmentVariables environmentVariables() {
+  public Map<String, String> environmentVariables() {
     return environmentVariables;
   }
 }

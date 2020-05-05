@@ -290,7 +290,6 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Ignore
     @Test
     public void testListCatalogEntries() {
         Response<EntrySearchResult> response = service.listCatalogEntries().execute();
@@ -303,7 +302,6 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertTrue(result.getResources().size() > 0);
     }
 
-    @Ignore
     @Test
     public void testGetChildObjects() {
         service.createCatalogEntry(defaultCreate).execute();
@@ -328,7 +326,6 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Ignore
     @Test
     public void testRestoreCatalogEntry() {
         service.createCatalogEntry(defaultCreate).execute();

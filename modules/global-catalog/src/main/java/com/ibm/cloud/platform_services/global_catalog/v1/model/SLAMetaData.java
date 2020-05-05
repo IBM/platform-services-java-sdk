@@ -17,13 +17,13 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * Service Level Agreement related metadata.
  */
-public class ObjectMetadataBaseSla extends GenericModel {
+public class SLAMetaData extends GenericModel {
 
   protected String terms;
   protected String tenancy;
   protected String provisioning;
   protected String responsiveness;
-  protected ObjectMetadataBaseSlaDr dr;
+  protected DRMetaData dr;
 
   /**
    * Builder.
@@ -33,14 +33,14 @@ public class ObjectMetadataBaseSla extends GenericModel {
     private String tenancy;
     private String provisioning;
     private String responsiveness;
-    private ObjectMetadataBaseSlaDr dr;
+    private DRMetaData dr;
 
-    private Builder(ObjectMetadataBaseSla objectMetadataBaseSla) {
-      this.terms = objectMetadataBaseSla.terms;
-      this.tenancy = objectMetadataBaseSla.tenancy;
-      this.provisioning = objectMetadataBaseSla.provisioning;
-      this.responsiveness = objectMetadataBaseSla.responsiveness;
-      this.dr = objectMetadataBaseSla.dr;
+    private Builder(SLAMetaData slaMetaData) {
+      this.terms = slaMetaData.terms;
+      this.tenancy = slaMetaData.tenancy;
+      this.provisioning = slaMetaData.provisioning;
+      this.responsiveness = slaMetaData.responsiveness;
+      this.dr = slaMetaData.dr;
     }
 
     /**
@@ -50,19 +50,19 @@ public class ObjectMetadataBaseSla extends GenericModel {
     }
 
     /**
-     * Builds a ObjectMetadataBaseSla.
+     * Builds a SLAMetaData.
      *
-     * @return the new ObjectMetadataBaseSla instance
+     * @return the new SLAMetaData instance
      */
-    public ObjectMetadataBaseSla build() {
-      return new ObjectMetadataBaseSla(this);
+    public SLAMetaData build() {
+      return new SLAMetaData(this);
     }
 
     /**
      * Set the terms.
      *
      * @param terms the terms
-     * @return the ObjectMetadataBaseSla builder
+     * @return the SLAMetaData builder
      */
     public Builder terms(String terms) {
       this.terms = terms;
@@ -73,7 +73,7 @@ public class ObjectMetadataBaseSla extends GenericModel {
      * Set the tenancy.
      *
      * @param tenancy the tenancy
-     * @return the ObjectMetadataBaseSla builder
+     * @return the SLAMetaData builder
      */
     public Builder tenancy(String tenancy) {
       this.tenancy = tenancy;
@@ -84,7 +84,7 @@ public class ObjectMetadataBaseSla extends GenericModel {
      * Set the provisioning.
      *
      * @param provisioning the provisioning
-     * @return the ObjectMetadataBaseSla builder
+     * @return the SLAMetaData builder
      */
     public Builder provisioning(String provisioning) {
       this.provisioning = provisioning;
@@ -95,7 +95,7 @@ public class ObjectMetadataBaseSla extends GenericModel {
      * Set the responsiveness.
      *
      * @param responsiveness the responsiveness
-     * @return the ObjectMetadataBaseSla builder
+     * @return the SLAMetaData builder
      */
     public Builder responsiveness(String responsiveness) {
       this.responsiveness = responsiveness;
@@ -106,15 +106,15 @@ public class ObjectMetadataBaseSla extends GenericModel {
      * Set the dr.
      *
      * @param dr the dr
-     * @return the ObjectMetadataBaseSla builder
+     * @return the SLAMetaData builder
      */
-    public Builder dr(ObjectMetadataBaseSlaDr dr) {
+    public Builder dr(DRMetaData dr) {
       this.dr = dr;
       return this;
     }
   }
 
-  protected ObjectMetadataBaseSla(Builder builder) {
+  protected SLAMetaData(Builder builder) {
     terms = builder.terms;
     tenancy = builder.tenancy;
     provisioning = builder.provisioning;
@@ -125,7 +125,7 @@ public class ObjectMetadataBaseSla extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ObjectMetadataBaseSla builder
+   * @return a SLAMetaData builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -183,7 +183,7 @@ public class ObjectMetadataBaseSla extends GenericModel {
    *
    * @return the dr
    */
-  public ObjectMetadataBaseSlaDr dr() {
+  public DRMetaData dr() {
     return dr;
   }
 }

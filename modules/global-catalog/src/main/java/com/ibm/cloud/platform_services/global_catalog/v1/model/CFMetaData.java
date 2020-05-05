@@ -14,6 +14,7 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -21,7 +22,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * Service-related metadata.
  */
-public class ObjectMetadataBaseService extends GenericModel {
+public class CFMetaData extends GenericModel {
 
   protected String type;
   @SerializedName("iam_compatible")
@@ -29,13 +30,11 @@ public class ObjectMetadataBaseService extends GenericModel {
   @SerializedName("unique_api_key")
   protected Boolean uniqueApiKey;
   protected Boolean provisionable;
+  protected Boolean bindable;
   @SerializedName("async_provisioning_supported")
   protected Boolean asyncProvisioningSupported;
   @SerializedName("async_unprovisioning_supported")
   protected Boolean asyncUnprovisioningSupported;
-  @SerializedName("cf_guid")
-  protected String cfGuid;
-  protected Boolean bindable;
   protected List<String> requires;
   @SerializedName("plan_updateable")
   protected Boolean planUpdateable;
@@ -46,6 +45,8 @@ public class ObjectMetadataBaseService extends GenericModel {
   protected Long testCheckInterval;
   @SerializedName("service_key_supported")
   protected Boolean serviceKeySupported;
+  @SerializedName("cf_guid")
+  protected Map<String, String> cfGuid;
 
   /**
    * Builder.
@@ -55,32 +56,32 @@ public class ObjectMetadataBaseService extends GenericModel {
     private Boolean iamCompatible;
     private Boolean uniqueApiKey;
     private Boolean provisionable;
+    private Boolean bindable;
     private Boolean asyncProvisioningSupported;
     private Boolean asyncUnprovisioningSupported;
-    private String cfGuid;
-    private Boolean bindable;
     private List<String> requires;
     private Boolean planUpdateable;
     private String state;
     private Boolean serviceCheckEnabled;
     private Long testCheckInterval;
     private Boolean serviceKeySupported;
+    private Map<String, String> cfGuid;
 
-    private Builder(ObjectMetadataBaseService objectMetadataBaseService) {
-      this.type = objectMetadataBaseService.type;
-      this.iamCompatible = objectMetadataBaseService.iamCompatible;
-      this.uniqueApiKey = objectMetadataBaseService.uniqueApiKey;
-      this.provisionable = objectMetadataBaseService.provisionable;
-      this.asyncProvisioningSupported = objectMetadataBaseService.asyncProvisioningSupported;
-      this.asyncUnprovisioningSupported = objectMetadataBaseService.asyncUnprovisioningSupported;
-      this.cfGuid = objectMetadataBaseService.cfGuid;
-      this.bindable = objectMetadataBaseService.bindable;
-      this.requires = objectMetadataBaseService.requires;
-      this.planUpdateable = objectMetadataBaseService.planUpdateable;
-      this.state = objectMetadataBaseService.state;
-      this.serviceCheckEnabled = objectMetadataBaseService.serviceCheckEnabled;
-      this.testCheckInterval = objectMetadataBaseService.testCheckInterval;
-      this.serviceKeySupported = objectMetadataBaseService.serviceKeySupported;
+    private Builder(CFMetaData cfMetaData) {
+      this.type = cfMetaData.type;
+      this.iamCompatible = cfMetaData.iamCompatible;
+      this.uniqueApiKey = cfMetaData.uniqueApiKey;
+      this.provisionable = cfMetaData.provisionable;
+      this.bindable = cfMetaData.bindable;
+      this.asyncProvisioningSupported = cfMetaData.asyncProvisioningSupported;
+      this.asyncUnprovisioningSupported = cfMetaData.asyncUnprovisioningSupported;
+      this.requires = cfMetaData.requires;
+      this.planUpdateable = cfMetaData.planUpdateable;
+      this.state = cfMetaData.state;
+      this.serviceCheckEnabled = cfMetaData.serviceCheckEnabled;
+      this.testCheckInterval = cfMetaData.testCheckInterval;
+      this.serviceKeySupported = cfMetaData.serviceKeySupported;
+      this.cfGuid = cfMetaData.cfGuid;
     }
 
     /**
@@ -90,19 +91,19 @@ public class ObjectMetadataBaseService extends GenericModel {
     }
 
     /**
-     * Builds a ObjectMetadataBaseService.
+     * Builds a CFMetaData.
      *
-     * @return the new ObjectMetadataBaseService instance
+     * @return the new CFMetaData instance
      */
-    public ObjectMetadataBaseService build() {
-      return new ObjectMetadataBaseService(this);
+    public CFMetaData build() {
+      return new CFMetaData(this);
     }
 
     /**
      * Adds an requires to requires.
      *
      * @param requires the new requires
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder addRequires(String requires) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(requires,
@@ -118,7 +119,7 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the type.
      *
      * @param type the type
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder type(String type) {
       this.type = type;
@@ -129,7 +130,7 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the iamCompatible.
      *
      * @param iamCompatible the iamCompatible
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder iamCompatible(Boolean iamCompatible) {
       this.iamCompatible = iamCompatible;
@@ -140,7 +141,7 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the uniqueApiKey.
      *
      * @param uniqueApiKey the uniqueApiKey
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder uniqueApiKey(Boolean uniqueApiKey) {
       this.uniqueApiKey = uniqueApiKey;
@@ -151,7 +152,7 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the provisionable.
      *
      * @param provisionable the provisionable
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder provisionable(Boolean provisionable) {
       this.provisionable = provisionable;
@@ -159,10 +160,21 @@ public class ObjectMetadataBaseService extends GenericModel {
     }
 
     /**
+     * Set the bindable.
+     *
+     * @param bindable the bindable
+     * @return the CFMetaData builder
+     */
+    public Builder bindable(Boolean bindable) {
+      this.bindable = bindable;
+      return this;
+    }
+
+    /**
      * Set the asyncProvisioningSupported.
      *
      * @param asyncProvisioningSupported the asyncProvisioningSupported
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder asyncProvisioningSupported(Boolean asyncProvisioningSupported) {
       this.asyncProvisioningSupported = asyncProvisioningSupported;
@@ -173,32 +185,10 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the asyncUnprovisioningSupported.
      *
      * @param asyncUnprovisioningSupported the asyncUnprovisioningSupported
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder asyncUnprovisioningSupported(Boolean asyncUnprovisioningSupported) {
       this.asyncUnprovisioningSupported = asyncUnprovisioningSupported;
-      return this;
-    }
-
-    /**
-     * Set the cfGuid.
-     *
-     * @param cfGuid the cfGuid
-     * @return the ObjectMetadataBaseService builder
-     */
-    public Builder cfGuid(String cfGuid) {
-      this.cfGuid = cfGuid;
-      return this;
-    }
-
-    /**
-     * Set the bindable.
-     *
-     * @param bindable the bindable
-     * @return the ObjectMetadataBaseService builder
-     */
-    public Builder bindable(Boolean bindable) {
-      this.bindable = bindable;
       return this;
     }
 
@@ -207,7 +197,7 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Existing requires will be replaced.
      *
      * @param requires the requires
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder requires(List<String> requires) {
       this.requires = requires;
@@ -218,7 +208,7 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the planUpdateable.
      *
      * @param planUpdateable the planUpdateable
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder planUpdateable(Boolean planUpdateable) {
       this.planUpdateable = planUpdateable;
@@ -229,7 +219,7 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the state.
      *
      * @param state the state
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder state(String state) {
       this.state = state;
@@ -240,7 +230,7 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the serviceCheckEnabled.
      *
      * @param serviceCheckEnabled the serviceCheckEnabled
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder serviceCheckEnabled(Boolean serviceCheckEnabled) {
       this.serviceCheckEnabled = serviceCheckEnabled;
@@ -251,7 +241,7 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the testCheckInterval.
      *
      * @param testCheckInterval the testCheckInterval
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder testCheckInterval(long testCheckInterval) {
       this.testCheckInterval = testCheckInterval;
@@ -262,35 +252,46 @@ public class ObjectMetadataBaseService extends GenericModel {
      * Set the serviceKeySupported.
      *
      * @param serviceKeySupported the serviceKeySupported
-     * @return the ObjectMetadataBaseService builder
+     * @return the CFMetaData builder
      */
     public Builder serviceKeySupported(Boolean serviceKeySupported) {
       this.serviceKeySupported = serviceKeySupported;
       return this;
     }
+
+    /**
+     * Set the cfGuid.
+     *
+     * @param cfGuid the cfGuid
+     * @return the CFMetaData builder
+     */
+    public Builder cfGuid(Map<String, String> cfGuid) {
+      this.cfGuid = cfGuid;
+      return this;
+    }
   }
 
-  protected ObjectMetadataBaseService(Builder builder) {
+  protected CFMetaData(Builder builder) {
     type = builder.type;
     iamCompatible = builder.iamCompatible;
     uniqueApiKey = builder.uniqueApiKey;
     provisionable = builder.provisionable;
+    bindable = builder.bindable;
     asyncProvisioningSupported = builder.asyncProvisioningSupported;
     asyncUnprovisioningSupported = builder.asyncUnprovisioningSupported;
-    cfGuid = builder.cfGuid;
-    bindable = builder.bindable;
     requires = builder.requires;
     planUpdateable = builder.planUpdateable;
     state = builder.state;
     serviceCheckEnabled = builder.serviceCheckEnabled;
     testCheckInterval = builder.testCheckInterval;
     serviceKeySupported = builder.serviceKeySupported;
+    cfGuid = builder.cfGuid;
   }
 
   /**
    * New builder.
    *
-   * @return a ObjectMetadataBaseService builder
+   * @return a CFMetaData builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -342,6 +343,17 @@ public class ObjectMetadataBaseService extends GenericModel {
   }
 
   /**
+   * Gets the bindable.
+   *
+   * Boolean value that describes whether you can create bindings for this service.
+   *
+   * @return the bindable
+   */
+  public Boolean bindable() {
+    return bindable;
+  }
+
+  /**
    * Gets the asyncProvisioningSupported.
    *
    * Boolean value that describes whether the service supports asynchronous provisioning.
@@ -361,29 +373,6 @@ public class ObjectMetadataBaseService extends GenericModel {
    */
   public Boolean asyncUnprovisioningSupported() {
     return asyncUnprovisioningSupported;
-  }
-
-  /**
-   * Gets the cfGuid.
-   *
-   * If the field is imported from Cloud Foundry, the Cloud Foundry region's GUID. This is a required field. For
-   * example, `us-south=123`.
-   *
-   * @return the cfGuid
-   */
-  public String cfGuid() {
-    return cfGuid;
-  }
-
-  /**
-   * Gets the bindable.
-   *
-   * Boolean value that describes whether you can create bindings for this service.
-   *
-   * @return the bindable
-   */
-  public Boolean bindable() {
-    return bindable;
   }
 
   /**
@@ -450,6 +439,18 @@ public class ObjectMetadataBaseService extends GenericModel {
    */
   public Boolean serviceKeySupported() {
     return serviceKeySupported;
+  }
+
+  /**
+   * Gets the cfGuid.
+   *
+   * If the field is imported from Cloud Foundry, the Cloud Foundry region's GUID. This is a required field. For
+   * example, `us-south=123`.
+   *
+   * @return the cfGuid
+   */
+  public Map<String, String> cfGuid() {
+    return cfGuid;
   }
 }
 

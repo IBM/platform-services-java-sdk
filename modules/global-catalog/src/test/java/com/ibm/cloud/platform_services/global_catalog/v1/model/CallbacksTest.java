@@ -35,7 +35,8 @@ public class CallbacksTest {
   @Test
   public void testCallbacks() throws Throwable {
     Callbacks callbacksModel = new Callbacks.Builder()
-      .brokerUtl("testString")
+      .controllerUrl("testString")
+      .brokerUrl("testString")
       .brokerProxyUrl("testString")
       .dashboardUrl("testString")
       .dashboardDataUrl("testString")
@@ -43,10 +44,10 @@ public class CallbacksTest {
       .dashboardDetailTabExtUrl("testString")
       .serviceMonitorApi("testString")
       .serviceMonitorApp("testString")
-      .serviceStagingUrl("testString")
-      .serviceProductionUrl("testString")
+      .apiEndpoint(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
       .build();
-    assertEquals(callbacksModel.brokerUtl(), "testString");
+    assertEquals(callbacksModel.controllerUrl(), "testString");
+    assertEquals(callbacksModel.brokerUrl(), "testString");
     assertEquals(callbacksModel.brokerProxyUrl(), "testString");
     assertEquals(callbacksModel.dashboardUrl(), "testString");
     assertEquals(callbacksModel.dashboardDataUrl(), "testString");
@@ -54,14 +55,14 @@ public class CallbacksTest {
     assertEquals(callbacksModel.dashboardDetailTabExtUrl(), "testString");
     assertEquals(callbacksModel.serviceMonitorApi(), "testString");
     assertEquals(callbacksModel.serviceMonitorApp(), "testString");
-    assertEquals(callbacksModel.serviceStagingUrl(), "testString");
-    assertEquals(callbacksModel.serviceProductionUrl(), "testString");
+    assertEquals(callbacksModel.apiEndpoint(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
 
     String json = TestUtilities.serialize(callbacksModel);
 
     Callbacks callbacksModelNew = TestUtilities.deserialize(json, Callbacks.class);
     assertTrue(callbacksModelNew instanceof Callbacks);
-    assertEquals(callbacksModelNew.brokerUtl(), "testString");
+    assertEquals(callbacksModelNew.controllerUrl(), "testString");
+    assertEquals(callbacksModelNew.brokerUrl(), "testString");
     assertEquals(callbacksModelNew.brokerProxyUrl(), "testString");
     assertEquals(callbacksModelNew.dashboardUrl(), "testString");
     assertEquals(callbacksModelNew.dashboardDataUrl(), "testString");
@@ -69,7 +70,5 @@ public class CallbacksTest {
     assertEquals(callbacksModelNew.dashboardDetailTabExtUrl(), "testString");
     assertEquals(callbacksModelNew.serviceMonitorApi(), "testString");
     assertEquals(callbacksModelNew.serviceMonitorApp(), "testString");
-    assertEquals(callbacksModelNew.serviceStagingUrl(), "testString");
-    assertEquals(callbacksModelNew.serviceProductionUrl(), "testString");
   }
 }

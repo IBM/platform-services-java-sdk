@@ -17,7 +17,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * SLA Disaster Recovery-related metadata.
  */
-public class ObjectMetadataBaseSlaDr extends GenericModel {
+public class DRMetaData extends GenericModel {
 
   protected Boolean dr;
   protected String description;
@@ -29,9 +29,9 @@ public class ObjectMetadataBaseSlaDr extends GenericModel {
     private Boolean dr;
     private String description;
 
-    private Builder(ObjectMetadataBaseSlaDr objectMetadataBaseSlaDr) {
-      this.dr = objectMetadataBaseSlaDr.dr;
-      this.description = objectMetadataBaseSlaDr.description;
+    private Builder(DRMetaData drMetaData) {
+      this.dr = drMetaData.dr;
+      this.description = drMetaData.description;
     }
 
     /**
@@ -41,19 +41,19 @@ public class ObjectMetadataBaseSlaDr extends GenericModel {
     }
 
     /**
-     * Builds a ObjectMetadataBaseSlaDr.
+     * Builds a DRMetaData.
      *
-     * @return the new ObjectMetadataBaseSlaDr instance
+     * @return the new DRMetaData instance
      */
-    public ObjectMetadataBaseSlaDr build() {
-      return new ObjectMetadataBaseSlaDr(this);
+    public DRMetaData build() {
+      return new DRMetaData(this);
     }
 
     /**
      * Set the dr.
      *
      * @param dr the dr
-     * @return the ObjectMetadataBaseSlaDr builder
+     * @return the DRMetaData builder
      */
     public Builder dr(Boolean dr) {
       this.dr = dr;
@@ -64,7 +64,7 @@ public class ObjectMetadataBaseSlaDr extends GenericModel {
      * Set the description.
      *
      * @param description the description
-     * @return the ObjectMetadataBaseSlaDr builder
+     * @return the DRMetaData builder
      */
     public Builder description(String description) {
       this.description = description;
@@ -72,7 +72,7 @@ public class ObjectMetadataBaseSlaDr extends GenericModel {
     }
   }
 
-  protected ObjectMetadataBaseSlaDr(Builder builder) {
+  protected DRMetaData(Builder builder) {
     dr = builder.dr;
     description = builder.description;
   }
@@ -80,7 +80,7 @@ public class ObjectMetadataBaseSlaDr extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ObjectMetadataBaseSlaDr builder
+   * @return a DRMetaData builder
    */
   public Builder newBuilder() {
     return new Builder(this);

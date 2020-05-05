@@ -17,7 +17,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * Location of your applications source files.
  */
-public class ObjectMetadataBaseTemplateSource extends GenericModel {
+public class SourceMetaData extends GenericModel {
 
   protected String path;
   protected String type;
@@ -31,10 +31,10 @@ public class ObjectMetadataBaseTemplateSource extends GenericModel {
     private String type;
     private String url;
 
-    private Builder(ObjectMetadataBaseTemplateSource objectMetadataBaseTemplateSource) {
-      this.path = objectMetadataBaseTemplateSource.path;
-      this.type = objectMetadataBaseTemplateSource.type;
-      this.url = objectMetadataBaseTemplateSource.url;
+    private Builder(SourceMetaData sourceMetaData) {
+      this.path = sourceMetaData.path;
+      this.type = sourceMetaData.type;
+      this.url = sourceMetaData.url;
     }
 
     /**
@@ -44,19 +44,19 @@ public class ObjectMetadataBaseTemplateSource extends GenericModel {
     }
 
     /**
-     * Builds a ObjectMetadataBaseTemplateSource.
+     * Builds a SourceMetaData.
      *
-     * @return the new ObjectMetadataBaseTemplateSource instance
+     * @return the new SourceMetaData instance
      */
-    public ObjectMetadataBaseTemplateSource build() {
-      return new ObjectMetadataBaseTemplateSource(this);
+    public SourceMetaData build() {
+      return new SourceMetaData(this);
     }
 
     /**
      * Set the path.
      *
      * @param path the path
-     * @return the ObjectMetadataBaseTemplateSource builder
+     * @return the SourceMetaData builder
      */
     public Builder path(String path) {
       this.path = path;
@@ -67,7 +67,7 @@ public class ObjectMetadataBaseTemplateSource extends GenericModel {
      * Set the type.
      *
      * @param type the type
-     * @return the ObjectMetadataBaseTemplateSource builder
+     * @return the SourceMetaData builder
      */
     public Builder type(String type) {
       this.type = type;
@@ -78,7 +78,7 @@ public class ObjectMetadataBaseTemplateSource extends GenericModel {
      * Set the url.
      *
      * @param url the url
-     * @return the ObjectMetadataBaseTemplateSource builder
+     * @return the SourceMetaData builder
      */
     public Builder url(String url) {
       this.url = url;
@@ -86,7 +86,7 @@ public class ObjectMetadataBaseTemplateSource extends GenericModel {
     }
   }
 
-  protected ObjectMetadataBaseTemplateSource(Builder builder) {
+  protected SourceMetaData(Builder builder) {
     path = builder.path;
     type = builder.type;
     url = builder.url;
@@ -95,7 +95,7 @@ public class ObjectMetadataBaseTemplateSource extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ObjectMetadataBaseTemplateSource builder
+   * @return a SourceMetaData builder
    */
   public Builder newBuilder() {
     return new Builder(this);

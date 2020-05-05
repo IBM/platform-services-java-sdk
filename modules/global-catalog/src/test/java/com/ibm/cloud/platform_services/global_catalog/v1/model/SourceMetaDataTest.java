@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseTemplateSource;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.SourceMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,29 +26,29 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ObjectMetadataBaseTemplateSource model.
+ * Unit test class for the SourceMetaData model.
  */
-public class ObjectMetadataBaseTemplateSourceTest {
+public class SourceMetaDataTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testObjectMetadataBaseTemplateSource() throws Throwable {
-    ObjectMetadataBaseTemplateSource objectMetadataBaseTemplateSourceModel = new ObjectMetadataBaseTemplateSource.Builder()
+  public void testSourceMetaData() throws Throwable {
+    SourceMetaData sourceMetaDataModel = new SourceMetaData.Builder()
       .path("testString")
       .type("testString")
       .url("testString")
       .build();
-    assertEquals(objectMetadataBaseTemplateSourceModel.path(), "testString");
-    assertEquals(objectMetadataBaseTemplateSourceModel.type(), "testString");
-    assertEquals(objectMetadataBaseTemplateSourceModel.url(), "testString");
+    assertEquals(sourceMetaDataModel.path(), "testString");
+    assertEquals(sourceMetaDataModel.type(), "testString");
+    assertEquals(sourceMetaDataModel.url(), "testString");
 
-    String json = TestUtilities.serialize(objectMetadataBaseTemplateSourceModel);
+    String json = TestUtilities.serialize(sourceMetaDataModel);
 
-    ObjectMetadataBaseTemplateSource objectMetadataBaseTemplateSourceModelNew = TestUtilities.deserialize(json, ObjectMetadataBaseTemplateSource.class);
-    assertTrue(objectMetadataBaseTemplateSourceModelNew instanceof ObjectMetadataBaseTemplateSource);
-    assertEquals(objectMetadataBaseTemplateSourceModelNew.path(), "testString");
-    assertEquals(objectMetadataBaseTemplateSourceModelNew.type(), "testString");
-    assertEquals(objectMetadataBaseTemplateSourceModelNew.url(), "testString");
+    SourceMetaData sourceMetaDataModelNew = TestUtilities.deserialize(json, SourceMetaData.class);
+    assertTrue(sourceMetaDataModelNew instanceof SourceMetaData);
+    assertEquals(sourceMetaDataModelNew.path(), "testString");
+    assertEquals(sourceMetaDataModelNew.type(), "testString");
+    assertEquals(sourceMetaDataModelNew.url(), "testString");
   }
 }

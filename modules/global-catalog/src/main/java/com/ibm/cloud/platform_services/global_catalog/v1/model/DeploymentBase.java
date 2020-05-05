@@ -23,7 +23,7 @@ public class DeploymentBase extends GenericModel {
   protected String location;
   @SerializedName("target_crn")
   protected String targetCrn;
-  protected DeploymentBaseBroker broker;
+  protected Broker broker;
   @SerializedName("supports_rc_migration")
   protected Boolean supportsRcMigration;
   @SerializedName("target_network")
@@ -35,7 +35,7 @@ public class DeploymentBase extends GenericModel {
   public static class Builder {
     private String location;
     private String targetCrn;
-    private DeploymentBaseBroker broker;
+    private Broker broker;
     private Boolean supportsRcMigration;
     private String targetNetwork;
 
@@ -90,7 +90,7 @@ public class DeploymentBase extends GenericModel {
      * @param broker the broker
      * @return the DeploymentBase builder
      */
-    public Builder broker(DeploymentBaseBroker broker) {
+    public Builder broker(Broker broker) {
       this.broker = broker;
       return this;
     }
@@ -164,7 +164,7 @@ public class DeploymentBase extends GenericModel {
    *
    * @return the broker
    */
-  public DeploymentBaseBroker broker() {
+  public Broker broker() {
     return broker;
   }
 

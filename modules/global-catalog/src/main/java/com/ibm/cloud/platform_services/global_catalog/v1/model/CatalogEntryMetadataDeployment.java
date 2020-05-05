@@ -23,7 +23,7 @@ public class CatalogEntryMetadataDeployment extends GenericModel {
   protected String location;
   @SerializedName("target_crn")
   protected String targetCrn;
-  protected CatalogEntryMetadataDeploymentBroker broker;
+  protected Broker broker;
   @SerializedName("supports_rc_migration")
   protected Boolean supportsRcMigration;
   @SerializedName("target_network")
@@ -60,7 +60,7 @@ public class CatalogEntryMetadataDeployment extends GenericModel {
    *
    * @return the broker
    */
-  public CatalogEntryMetadataDeploymentBroker getBroker() {
+  public Broker getBroker() {
     return broker;
   }
 

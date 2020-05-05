@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseSlaDr;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Broker;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,26 +26,26 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ObjectMetadataBaseSlaDr model.
+ * Unit test class for the Broker model.
  */
-public class ObjectMetadataBaseSlaDrTest {
+public class BrokerTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testObjectMetadataBaseSlaDr() throws Throwable {
-    ObjectMetadataBaseSlaDr objectMetadataBaseSlaDrModel = new ObjectMetadataBaseSlaDr.Builder()
-      .dr(true)
-      .description("testString")
+  public void testBroker() throws Throwable {
+    Broker brokerModel = new Broker.Builder()
+      .name("testString")
+      .guid("testString")
       .build();
-    assertEquals(objectMetadataBaseSlaDrModel.dr(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseSlaDrModel.description(), "testString");
+    assertEquals(brokerModel.name(), "testString");
+    assertEquals(brokerModel.guid(), "testString");
 
-    String json = TestUtilities.serialize(objectMetadataBaseSlaDrModel);
+    String json = TestUtilities.serialize(brokerModel);
 
-    ObjectMetadataBaseSlaDr objectMetadataBaseSlaDrModelNew = TestUtilities.deserialize(json, ObjectMetadataBaseSlaDr.class);
-    assertTrue(objectMetadataBaseSlaDrModelNew instanceof ObjectMetadataBaseSlaDr);
-    assertEquals(objectMetadataBaseSlaDrModelNew.dr(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseSlaDrModelNew.description(), "testString");
+    Broker brokerModelNew = TestUtilities.deserialize(json, Broker.class);
+    assertTrue(brokerModelNew instanceof Broker);
+    assertEquals(brokerModelNew.name(), "testString");
+    assertEquals(brokerModelNew.guid(), "testString");
   }
 }

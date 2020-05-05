@@ -13,30 +13,29 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import com.ibm.cloud.platform_services.global_catalog.v1.model.AliasMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Amount;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Broker;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Bullets;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.CFMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Callbacks;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CreateCatalogEntryOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.DRMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.DeploymentBase;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.DeploymentBaseBroker;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.I18N;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Image;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseAlias;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBasePlan;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseService;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseSla;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseSlaDr;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseTemplate;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseTemplateEnvironmentVariables;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataBaseTemplateSource;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataSet;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Overview;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.OverviewUI;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.PlanMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Price;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.PricingSet;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Provider;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.SLAMetaData;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.SourceMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.StartingPrice;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Strings;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.TemplateMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaMedia;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.URLS;
@@ -119,37 +118,32 @@ public class CreateCatalogEntryOptionsTest {
     assertEquals(stringsModel.popupWarningMessage(), "testString");
     assertEquals(stringsModel.instruction(), "testString");
 
-    DeploymentBaseBroker deploymentBaseBrokerModel = new DeploymentBaseBroker.Builder()
+    Broker brokerModel = new Broker.Builder()
       .name("testString")
       .guid("testString")
       .build();
-    assertEquals(deploymentBaseBrokerModel.name(), "testString");
-    assertEquals(deploymentBaseBrokerModel.guid(), "testString");
+    assertEquals(brokerModel.name(), "testString");
+    assertEquals(brokerModel.guid(), "testString");
+
+    DRMetaData drMetaDataModel = new DRMetaData.Builder()
+      .dr(true)
+      .description("testString")
+      .build();
+    assertEquals(drMetaDataModel.dr(), Boolean.valueOf(true));
+    assertEquals(drMetaDataModel.description(), "testString");
 
     I18N i18NModel = new I18N();
     i18NModel.put("foo", stringsModel);
     assertEquals(i18NModel.get("foo"), stringsModel);
 
-    ObjectMetadataBaseSlaDr objectMetadataBaseSlaDrModel = new ObjectMetadataBaseSlaDr.Builder()
-      .dr(true)
-      .description("testString")
-      .build();
-    assertEquals(objectMetadataBaseSlaDrModel.dr(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseSlaDrModel.description(), "testString");
-
-    ObjectMetadataBaseTemplateEnvironmentVariables objectMetadataBaseTemplateEnvironmentVariablesModel = new ObjectMetadataBaseTemplateEnvironmentVariables.Builder()
-      .key("testString")
-      .build();
-    assertEquals(objectMetadataBaseTemplateEnvironmentVariablesModel.key(), "testString");
-
-    ObjectMetadataBaseTemplateSource objectMetadataBaseTemplateSourceModel = new ObjectMetadataBaseTemplateSource.Builder()
+    SourceMetaData sourceMetaDataModel = new SourceMetaData.Builder()
       .path("testString")
       .type("testString")
       .url("testString")
       .build();
-    assertEquals(objectMetadataBaseTemplateSourceModel.path(), "testString");
-    assertEquals(objectMetadataBaseTemplateSourceModel.type(), "testString");
-    assertEquals(objectMetadataBaseTemplateSourceModel.url(), "testString");
+    assertEquals(sourceMetaDataModel.path(), "testString");
+    assertEquals(sourceMetaDataModel.type(), "testString");
+    assertEquals(sourceMetaDataModel.url(), "testString");
 
     StartingPrice startingPriceModel = new StartingPrice.Builder()
       .planId("testString")
@@ -181,8 +175,47 @@ public class CreateCatalogEntryOptionsTest {
     assertEquals(urlsModel.catalogDetailsUrl(), "testString");
     assertEquals(urlsModel.deprecationDocUrl(), "testString");
 
+    AliasMetaData aliasMetaDataModel = new AliasMetaData.Builder()
+      .type("testString")
+      .planId("testString")
+      .build();
+    assertEquals(aliasMetaDataModel.type(), "testString");
+    assertEquals(aliasMetaDataModel.planId(), "testString");
+
+    CFMetaData cfMetaDataModel = new CFMetaData.Builder()
+      .type("testString")
+      .iamCompatible(true)
+      .uniqueApiKey(true)
+      .provisionable(true)
+      .bindable(true)
+      .asyncProvisioningSupported(true)
+      .asyncUnprovisioningSupported(true)
+      .requires(new ArrayList<String>(Arrays.asList("testString")))
+      .planUpdateable(true)
+      .state("testString")
+      .serviceCheckEnabled(true)
+      .testCheckInterval(Long.valueOf("26"))
+      .serviceKeySupported(true)
+      .cfGuid(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+      .build();
+    assertEquals(cfMetaDataModel.type(), "testString");
+    assertEquals(cfMetaDataModel.iamCompatible(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.uniqueApiKey(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.provisionable(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.bindable(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.asyncProvisioningSupported(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.asyncUnprovisioningSupported(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.requires(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(cfMetaDataModel.planUpdateable(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.state(), "testString");
+    assertEquals(cfMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.testCheckInterval(), Long.valueOf("26"));
+    assertEquals(cfMetaDataModel.serviceKeySupported(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.cfGuid(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
+
     Callbacks callbacksModel = new Callbacks.Builder()
-      .brokerUtl("testString")
+      .controllerUrl("testString")
+      .brokerUrl("testString")
       .brokerProxyUrl("testString")
       .dashboardUrl("testString")
       .dashboardDataUrl("testString")
@@ -190,10 +223,10 @@ public class CreateCatalogEntryOptionsTest {
       .dashboardDetailTabExtUrl("testString")
       .serviceMonitorApi("testString")
       .serviceMonitorApp("testString")
-      .serviceStagingUrl("testString")
-      .serviceProductionUrl("testString")
+      .apiEndpoint(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
       .build();
-    assertEquals(callbacksModel.brokerUtl(), "testString");
+    assertEquals(callbacksModel.controllerUrl(), "testString");
+    assertEquals(callbacksModel.brokerUrl(), "testString");
     assertEquals(callbacksModel.brokerProxyUrl(), "testString");
     assertEquals(callbacksModel.dashboardUrl(), "testString");
     assertEquals(callbacksModel.dashboardDataUrl(), "testString");
@@ -201,116 +234,20 @@ public class CreateCatalogEntryOptionsTest {
     assertEquals(callbacksModel.dashboardDetailTabExtUrl(), "testString");
     assertEquals(callbacksModel.serviceMonitorApi(), "testString");
     assertEquals(callbacksModel.serviceMonitorApp(), "testString");
-    assertEquals(callbacksModel.serviceStagingUrl(), "testString");
-    assertEquals(callbacksModel.serviceProductionUrl(), "testString");
+    assertEquals(callbacksModel.apiEndpoint(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
 
     DeploymentBase deploymentBaseModel = new DeploymentBase.Builder()
       .location("testString")
       .targetCrn("testString")
-      .broker(deploymentBaseBrokerModel)
+      .broker(brokerModel)
       .supportsRcMigration(true)
       .targetNetwork("testString")
       .build();
     assertEquals(deploymentBaseModel.location(), "testString");
     assertEquals(deploymentBaseModel.targetCrn(), "testString");
-    assertEquals(deploymentBaseModel.broker(), deploymentBaseBrokerModel);
+    assertEquals(deploymentBaseModel.broker(), brokerModel);
     assertEquals(deploymentBaseModel.supportsRcMigration(), Boolean.valueOf(true));
     assertEquals(deploymentBaseModel.targetNetwork(), "testString");
-
-    ObjectMetadataBaseAlias objectMetadataBaseAliasModel = new ObjectMetadataBaseAlias.Builder()
-      .type("testString")
-      .planId("testString")
-      .build();
-    assertEquals(objectMetadataBaseAliasModel.type(), "testString");
-    assertEquals(objectMetadataBaseAliasModel.planId(), "testString");
-
-    ObjectMetadataBasePlan objectMetadataBasePlanModel = new ObjectMetadataBasePlan.Builder()
-      .bindable(true)
-      .reservable(true)
-      .allowInternalUsers(true)
-      .asyncProvisioningSupported(true)
-      .asyncUnprovisioningSupported(true)
-      .testCheckInterval(Long.valueOf("26"))
-      .singleScopeInstance("testString")
-      .serviceCheckEnabled(true)
-      .cfGuid("testString")
-      .build();
-    assertEquals(objectMetadataBasePlanModel.bindable(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBasePlanModel.reservable(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBasePlanModel.allowInternalUsers(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBasePlanModel.asyncProvisioningSupported(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBasePlanModel.asyncUnprovisioningSupported(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBasePlanModel.testCheckInterval(), Long.valueOf("26"));
-    assertEquals(objectMetadataBasePlanModel.singleScopeInstance(), "testString");
-    assertEquals(objectMetadataBasePlanModel.serviceCheckEnabled(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBasePlanModel.cfGuid(), "testString");
-
-    ObjectMetadataBaseService objectMetadataBaseServiceModel = new ObjectMetadataBaseService.Builder()
-      .type("testString")
-      .iamCompatible(true)
-      .uniqueApiKey(true)
-      .provisionable(true)
-      .asyncProvisioningSupported(true)
-      .asyncUnprovisioningSupported(true)
-      .cfGuid("testString")
-      .bindable(true)
-      .requires(new ArrayList<String>(Arrays.asList("testString")))
-      .planUpdateable(true)
-      .state("testString")
-      .serviceCheckEnabled(true)
-      .testCheckInterval(Long.valueOf("26"))
-      .serviceKeySupported(true)
-      .build();
-    assertEquals(objectMetadataBaseServiceModel.type(), "testString");
-    assertEquals(objectMetadataBaseServiceModel.iamCompatible(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseServiceModel.uniqueApiKey(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseServiceModel.provisionable(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseServiceModel.asyncProvisioningSupported(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseServiceModel.asyncUnprovisioningSupported(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseServiceModel.cfGuid(), "testString");
-    assertEquals(objectMetadataBaseServiceModel.bindable(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseServiceModel.requires(), new ArrayList<String>(Arrays.asList("testString")));
-    assertEquals(objectMetadataBaseServiceModel.planUpdateable(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseServiceModel.state(), "testString");
-    assertEquals(objectMetadataBaseServiceModel.serviceCheckEnabled(), Boolean.valueOf(true));
-    assertEquals(objectMetadataBaseServiceModel.testCheckInterval(), Long.valueOf("26"));
-    assertEquals(objectMetadataBaseServiceModel.serviceKeySupported(), Boolean.valueOf(true));
-
-    ObjectMetadataBaseSla objectMetadataBaseSlaModel = new ObjectMetadataBaseSla.Builder()
-      .terms("testString")
-      .tenancy("testString")
-      .provisioning("testString")
-      .responsiveness("testString")
-      .dr(objectMetadataBaseSlaDrModel)
-      .build();
-    assertEquals(objectMetadataBaseSlaModel.terms(), "testString");
-    assertEquals(objectMetadataBaseSlaModel.tenancy(), "testString");
-    assertEquals(objectMetadataBaseSlaModel.provisioning(), "testString");
-    assertEquals(objectMetadataBaseSlaModel.responsiveness(), "testString");
-    assertEquals(objectMetadataBaseSlaModel.dr(), objectMetadataBaseSlaDrModel);
-
-    ObjectMetadataBaseTemplate objectMetadataBaseTemplateModel = new ObjectMetadataBaseTemplate.Builder()
-      .services(new ArrayList<String>(Arrays.asList("testString")))
-      .defaultMemory(Long.valueOf("26"))
-      .startCmd("testString")
-      .source(objectMetadataBaseTemplateSourceModel)
-      .runtimeCatalogId("testString")
-      .cfRuntimeId("testString")
-      .templateId("testString")
-      .executableFile("testString")
-      .buildpack("testString")
-      .environmentVariables(objectMetadataBaseTemplateEnvironmentVariablesModel)
-      .build();
-    assertEquals(objectMetadataBaseTemplateModel.services(), new ArrayList<String>(Arrays.asList("testString")));
-    assertEquals(objectMetadataBaseTemplateModel.defaultMemory(), Long.valueOf("26"));
-    assertEquals(objectMetadataBaseTemplateModel.startCmd(), "testString");
-    assertEquals(objectMetadataBaseTemplateModel.source(), objectMetadataBaseTemplateSourceModel);
-    assertEquals(objectMetadataBaseTemplateModel.runtimeCatalogId(), "testString");
-    assertEquals(objectMetadataBaseTemplateModel.cfRuntimeId(), "testString");
-    assertEquals(objectMetadataBaseTemplateModel.templateId(), "testString");
-    assertEquals(objectMetadataBaseTemplateModel.executableFile(), "testString");
-    assertEquals(objectMetadataBaseTemplateModel.buildpack(), "testString");
-    assertEquals(objectMetadataBaseTemplateModel.environmentVariables(), objectMetadataBaseTemplateEnvironmentVariablesModel);
 
     Overview overviewModel = new Overview.Builder()
       .displayName("testString")
@@ -321,6 +258,27 @@ public class CreateCatalogEntryOptionsTest {
     assertEquals(overviewModel.longDescription(), "testString");
     assertEquals(overviewModel.description(), "testString");
 
+    PlanMetaData planMetaDataModel = new PlanMetaData.Builder()
+      .bindable(true)
+      .reservable(true)
+      .allowInternalUsers(true)
+      .asyncProvisioningSupported(true)
+      .asyncUnprovisioningSupported(true)
+      .testCheckInterval(Long.valueOf("26"))
+      .singleScopeInstance("testString")
+      .serviceCheckEnabled(true)
+      .cfGuid(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+      .build();
+    assertEquals(planMetaDataModel.bindable(), Boolean.valueOf(true));
+    assertEquals(planMetaDataModel.reservable(), Boolean.valueOf(true));
+    assertEquals(planMetaDataModel.allowInternalUsers(), Boolean.valueOf(true));
+    assertEquals(planMetaDataModel.asyncProvisioningSupported(), Boolean.valueOf(true));
+    assertEquals(planMetaDataModel.asyncUnprovisioningSupported(), Boolean.valueOf(true));
+    assertEquals(planMetaDataModel.testCheckInterval(), Long.valueOf("26"));
+    assertEquals(planMetaDataModel.singleScopeInstance(), "testString");
+    assertEquals(planMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));
+    assertEquals(planMetaDataModel.cfGuid(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
+
     PricingSet pricingSetModel = new PricingSet.Builder()
       .type("testString")
       .origin("testString")
@@ -329,6 +287,42 @@ public class CreateCatalogEntryOptionsTest {
     assertEquals(pricingSetModel.type(), "testString");
     assertEquals(pricingSetModel.origin(), "testString");
     assertEquals(pricingSetModel.startingPrice(), startingPriceModel);
+
+    SLAMetaData slaMetaDataModel = new SLAMetaData.Builder()
+      .terms("testString")
+      .tenancy("testString")
+      .provisioning("testString")
+      .responsiveness("testString")
+      .dr(drMetaDataModel)
+      .build();
+    assertEquals(slaMetaDataModel.terms(), "testString");
+    assertEquals(slaMetaDataModel.tenancy(), "testString");
+    assertEquals(slaMetaDataModel.provisioning(), "testString");
+    assertEquals(slaMetaDataModel.responsiveness(), "testString");
+    assertEquals(slaMetaDataModel.dr(), drMetaDataModel);
+
+    TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
+      .services(new ArrayList<String>(Arrays.asList("testString")))
+      .defaultMemory(Long.valueOf("26"))
+      .startCmd("testString")
+      .source(sourceMetaDataModel)
+      .runtimeCatalogId("testString")
+      .cfRuntimeId("testString")
+      .templateId("testString")
+      .executableFile("testString")
+      .buildpack("testString")
+      .environmentVariables(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+      .build();
+    assertEquals(templateMetaDataModel.services(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(templateMetaDataModel.defaultMemory(), Long.valueOf("26"));
+    assertEquals(templateMetaDataModel.startCmd(), "testString");
+    assertEquals(templateMetaDataModel.source(), sourceMetaDataModel);
+    assertEquals(templateMetaDataModel.runtimeCatalogId(), "testString");
+    assertEquals(templateMetaDataModel.cfRuntimeId(), "testString");
+    assertEquals(templateMetaDataModel.templateId(), "testString");
+    assertEquals(templateMetaDataModel.executableFile(), "testString");
+    assertEquals(templateMetaDataModel.buildpack(), "testString");
+    assertEquals(templateMetaDataModel.environmentVariables(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
 
     UIMetaData uiMetaDataModel = new UIMetaData.Builder()
       .strings(i18NModel)
@@ -368,31 +362,31 @@ public class CreateCatalogEntryOptionsTest {
 
     ObjectMetadataSet objectMetadataSetModel = new ObjectMetadataSet.Builder()
       .rcCompatible(true)
+      .service(cfMetaDataModel)
+      .plan(planMetaDataModel)
+      .alias(aliasMetaDataModel)
+      .template(templateMetaDataModel)
       .ui(uiMetaDataModel)
       .compliance(new ArrayList<String>(Arrays.asList("testString")))
-      .service(objectMetadataBaseServiceModel)
-      .plan(objectMetadataBasePlanModel)
-      .template(objectMetadataBaseTemplateModel)
-      .alias(objectMetadataBaseAliasModel)
-      .sla(objectMetadataBaseSlaModel)
+      .sla(slaMetaDataModel)
       .callbacks(callbacksModel)
-      .version("testString")
       .originalName("testString")
+      .version("testString")
       .other(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
       .pricing(pricingSetModel)
       .deployment(deploymentBaseModel)
       .build();
     assertEquals(objectMetadataSetModel.rcCompatible(), Boolean.valueOf(true));
+    assertEquals(objectMetadataSetModel.service(), cfMetaDataModel);
+    assertEquals(objectMetadataSetModel.plan(), planMetaDataModel);
+    assertEquals(objectMetadataSetModel.alias(), aliasMetaDataModel);
+    assertEquals(objectMetadataSetModel.template(), templateMetaDataModel);
     assertEquals(objectMetadataSetModel.ui(), uiMetaDataModel);
     assertEquals(objectMetadataSetModel.compliance(), new ArrayList<String>(Arrays.asList("testString")));
-    assertEquals(objectMetadataSetModel.service(), objectMetadataBaseServiceModel);
-    assertEquals(objectMetadataSetModel.plan(), objectMetadataBasePlanModel);
-    assertEquals(objectMetadataSetModel.template(), objectMetadataBaseTemplateModel);
-    assertEquals(objectMetadataSetModel.alias(), objectMetadataBaseAliasModel);
-    assertEquals(objectMetadataSetModel.sla(), objectMetadataBaseSlaModel);
+    assertEquals(objectMetadataSetModel.sla(), slaMetaDataModel);
     assertEquals(objectMetadataSetModel.callbacks(), callbacksModel);
-    assertEquals(objectMetadataSetModel.version(), "testString");
     assertEquals(objectMetadataSetModel.originalName(), "testString");
+    assertEquals(objectMetadataSetModel.version(), "testString");
     assertEquals(objectMetadataSetModel.other(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
     assertEquals(objectMetadataSetModel.pricing(), pricingSetModel);
     assertEquals(objectMetadataSetModel.deployment(), deploymentBaseModel);

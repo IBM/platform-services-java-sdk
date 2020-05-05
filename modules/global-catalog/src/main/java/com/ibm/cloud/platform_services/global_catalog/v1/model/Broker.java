@@ -17,7 +17,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * The broker associated with a catalog entry.
  */
-public class DeploymentBaseBroker extends GenericModel {
+public class Broker extends GenericModel {
 
   protected String name;
   protected String guid;
@@ -29,9 +29,9 @@ public class DeploymentBaseBroker extends GenericModel {
     private String name;
     private String guid;
 
-    private Builder(DeploymentBaseBroker deploymentBaseBroker) {
-      this.name = deploymentBaseBroker.name;
-      this.guid = deploymentBaseBroker.guid;
+    private Builder(Broker broker) {
+      this.name = broker.name;
+      this.guid = broker.guid;
     }
 
     /**
@@ -41,19 +41,19 @@ public class DeploymentBaseBroker extends GenericModel {
     }
 
     /**
-     * Builds a DeploymentBaseBroker.
+     * Builds a Broker.
      *
-     * @return the new DeploymentBaseBroker instance
+     * @return the new Broker instance
      */
-    public DeploymentBaseBroker build() {
-      return new DeploymentBaseBroker(this);
+    public Broker build() {
+      return new Broker(this);
     }
 
     /**
      * Set the name.
      *
      * @param name the name
-     * @return the DeploymentBaseBroker builder
+     * @return the Broker builder
      */
     public Builder name(String name) {
       this.name = name;
@@ -64,7 +64,7 @@ public class DeploymentBaseBroker extends GenericModel {
      * Set the guid.
      *
      * @param guid the guid
-     * @return the DeploymentBaseBroker builder
+     * @return the Broker builder
      */
     public Builder guid(String guid) {
       this.guid = guid;
@@ -72,7 +72,7 @@ public class DeploymentBaseBroker extends GenericModel {
     }
   }
 
-  protected DeploymentBaseBroker(Builder builder) {
+  protected Broker(Builder builder) {
     name = builder.name;
     guid = builder.guid;
   }
@@ -80,7 +80,7 @@ public class DeploymentBaseBroker extends GenericModel {
   /**
    * New builder.
    *
-   * @return a DeploymentBaseBroker builder
+   * @return a Broker builder
    */
   public Builder newBuilder() {
     return new Builder(this);

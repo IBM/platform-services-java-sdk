@@ -18,7 +18,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * Alias-related metadata.
  */
-public class ObjectMetadataBaseAlias extends GenericModel {
+public class AliasMetaData extends GenericModel {
 
   protected String type;
   @SerializedName("plan_id")
@@ -31,9 +31,9 @@ public class ObjectMetadataBaseAlias extends GenericModel {
     private String type;
     private String planId;
 
-    private Builder(ObjectMetadataBaseAlias objectMetadataBaseAlias) {
-      this.type = objectMetadataBaseAlias.type;
-      this.planId = objectMetadataBaseAlias.planId;
+    private Builder(AliasMetaData aliasMetaData) {
+      this.type = aliasMetaData.type;
+      this.planId = aliasMetaData.planId;
     }
 
     /**
@@ -43,19 +43,19 @@ public class ObjectMetadataBaseAlias extends GenericModel {
     }
 
     /**
-     * Builds a ObjectMetadataBaseAlias.
+     * Builds a AliasMetaData.
      *
-     * @return the new ObjectMetadataBaseAlias instance
+     * @return the new AliasMetaData instance
      */
-    public ObjectMetadataBaseAlias build() {
-      return new ObjectMetadataBaseAlias(this);
+    public AliasMetaData build() {
+      return new AliasMetaData(this);
     }
 
     /**
      * Set the type.
      *
      * @param type the type
-     * @return the ObjectMetadataBaseAlias builder
+     * @return the AliasMetaData builder
      */
     public Builder type(String type) {
       this.type = type;
@@ -66,7 +66,7 @@ public class ObjectMetadataBaseAlias extends GenericModel {
      * Set the planId.
      *
      * @param planId the planId
-     * @return the ObjectMetadataBaseAlias builder
+     * @return the AliasMetaData builder
      */
     public Builder planId(String planId) {
       this.planId = planId;
@@ -74,7 +74,7 @@ public class ObjectMetadataBaseAlias extends GenericModel {
     }
   }
 
-  protected ObjectMetadataBaseAlias(Builder builder) {
+  protected AliasMetaData(Builder builder) {
     type = builder.type;
     planId = builder.planId;
   }
@@ -82,7 +82,7 @@ public class ObjectMetadataBaseAlias extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ObjectMetadataBaseAlias builder
+   * @return a AliasMetaData builder
    */
   public Builder newBuilder() {
     return new Builder(this);

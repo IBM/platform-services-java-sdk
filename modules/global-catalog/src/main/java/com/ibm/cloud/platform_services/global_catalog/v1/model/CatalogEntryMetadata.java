@@ -25,17 +25,17 @@ public class CatalogEntryMetadata extends GenericModel {
 
   @SerializedName("rc_compatible")
   protected Boolean rcCompatible;
+  protected CFMetaData service;
+  protected PlanMetaData plan;
+  protected AliasMetaData alias;
+  protected TemplateMetaData template;
   protected UIMetaData ui;
   protected List<String> compliance;
-  protected ObjectMetadataBaseService service;
-  protected ObjectMetadataBasePlan plan;
-  protected ObjectMetadataBaseTemplate template;
-  protected ObjectMetadataBaseAlias alias;
-  protected ObjectMetadataBaseSla sla;
+  protected SLAMetaData sla;
   protected Callbacks callbacks;
-  protected String version;
   @SerializedName("original_name")
   protected String originalName;
+  protected String version;
   protected Map<String, Object> other;
   protected CatalogEntryMetadataPricing pricing;
   protected CatalogEntryMetadataDeployment deployment;
@@ -49,6 +49,50 @@ public class CatalogEntryMetadata extends GenericModel {
    */
   public Boolean isRcCompatible() {
     return rcCompatible;
+  }
+
+  /**
+   * Gets the service.
+   *
+   * Service-related metadata.
+   *
+   * @return the service
+   */
+  public CFMetaData getService() {
+    return service;
+  }
+
+  /**
+   * Gets the plan.
+   *
+   * Plan-related metadata.
+   *
+   * @return the plan
+   */
+  public PlanMetaData getPlan() {
+    return plan;
+  }
+
+  /**
+   * Gets the alias.
+   *
+   * Alias-related metadata.
+   *
+   * @return the alias
+   */
+  public AliasMetaData getAlias() {
+    return alias;
+  }
+
+  /**
+   * Gets the template.
+   *
+   * Template-related metadata.
+   *
+   * @return the template
+   */
+  public TemplateMetaData getTemplate() {
+    return template;
   }
 
   /**
@@ -74,57 +118,13 @@ public class CatalogEntryMetadata extends GenericModel {
   }
 
   /**
-   * Gets the service.
-   *
-   * Service-related metadata.
-   *
-   * @return the service
-   */
-  public ObjectMetadataBaseService getService() {
-    return service;
-  }
-
-  /**
-   * Gets the plan.
-   *
-   * Plan-related metadata.
-   *
-   * @return the plan
-   */
-  public ObjectMetadataBasePlan getPlan() {
-    return plan;
-  }
-
-  /**
-   * Gets the template.
-   *
-   * Template-related metadata.
-   *
-   * @return the template
-   */
-  public ObjectMetadataBaseTemplate getTemplate() {
-    return template;
-  }
-
-  /**
-   * Gets the alias.
-   *
-   * Alias-related metadata.
-   *
-   * @return the alias
-   */
-  public ObjectMetadataBaseAlias getAlias() {
-    return alias;
-  }
-
-  /**
    * Gets the sla.
    *
    * Service Level Agreement related metadata.
    *
    * @return the sla
    */
-  public ObjectMetadataBaseSla getSla() {
+  public SLAMetaData getSla() {
     return sla;
   }
 
@@ -140,17 +140,6 @@ public class CatalogEntryMetadata extends GenericModel {
   }
 
   /**
-   * Gets the version.
-   *
-   * Optional version of the object.
-   *
-   * @return the version
-   */
-  public String getVersion() {
-    return version;
-  }
-
-  /**
    * Gets the originalName.
    *
    * The original name of the object.
@@ -159,6 +148,17 @@ public class CatalogEntryMetadata extends GenericModel {
    */
   public String getOriginalName() {
     return originalName;
+  }
+
+  /**
+   * Gets the version.
+   *
+   * Optional version of the object.
+   *
+   * @return the version
+   */
+  public String getVersion() {
+    return version;
   }
 
   /**

@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataDeploymentBroker;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.DRMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,16 +26,26 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the CatalogEntryMetadataDeploymentBroker model.
+ * Unit test class for the DRMetaData model.
  */
-public class CatalogEntryMetadataDeploymentBrokerTest {
+public class DRMetaDataTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testCatalogEntryMetadataDeploymentBroker() throws Throwable {
-    CatalogEntryMetadataDeploymentBroker catalogEntryMetadataDeploymentBrokerModel = new CatalogEntryMetadataDeploymentBroker();
-    assertNull(catalogEntryMetadataDeploymentBrokerModel.getName());
-    assertNull(catalogEntryMetadataDeploymentBrokerModel.getGuid());
+  public void testDRMetaData() throws Throwable {
+    DRMetaData drMetaDataModel = new DRMetaData.Builder()
+      .dr(true)
+      .description("testString")
+      .build();
+    assertEquals(drMetaDataModel.dr(), Boolean.valueOf(true));
+    assertEquals(drMetaDataModel.description(), "testString");
+
+    String json = TestUtilities.serialize(drMetaDataModel);
+
+    DRMetaData drMetaDataModelNew = TestUtilities.deserialize(json, DRMetaData.class);
+    assertTrue(drMetaDataModelNew instanceof DRMetaData);
+    assertEquals(drMetaDataModelNew.dr(), Boolean.valueOf(true));
+    assertEquals(drMetaDataModelNew.description(), "testString");
   }
 }

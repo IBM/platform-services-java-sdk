@@ -12,13 +12,15 @@
  */
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import java.util.Map;
+
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
  * Plan-related metadata.
  */
-public class ObjectMetadataBasePlan extends GenericModel {
+public class PlanMetaData extends GenericModel {
 
   protected Boolean bindable;
   protected Boolean reservable;
@@ -35,7 +37,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
   @SerializedName("service_check_enabled")
   protected Boolean serviceCheckEnabled;
   @SerializedName("cf_guid")
-  protected String cfGuid;
+  protected Map<String, String> cfGuid;
 
   /**
    * Builder.
@@ -49,18 +51,18 @@ public class ObjectMetadataBasePlan extends GenericModel {
     private Long testCheckInterval;
     private String singleScopeInstance;
     private Boolean serviceCheckEnabled;
-    private String cfGuid;
+    private Map<String, String> cfGuid;
 
-    private Builder(ObjectMetadataBasePlan objectMetadataBasePlan) {
-      this.bindable = objectMetadataBasePlan.bindable;
-      this.reservable = objectMetadataBasePlan.reservable;
-      this.allowInternalUsers = objectMetadataBasePlan.allowInternalUsers;
-      this.asyncProvisioningSupported = objectMetadataBasePlan.asyncProvisioningSupported;
-      this.asyncUnprovisioningSupported = objectMetadataBasePlan.asyncUnprovisioningSupported;
-      this.testCheckInterval = objectMetadataBasePlan.testCheckInterval;
-      this.singleScopeInstance = objectMetadataBasePlan.singleScopeInstance;
-      this.serviceCheckEnabled = objectMetadataBasePlan.serviceCheckEnabled;
-      this.cfGuid = objectMetadataBasePlan.cfGuid;
+    private Builder(PlanMetaData planMetaData) {
+      this.bindable = planMetaData.bindable;
+      this.reservable = planMetaData.reservable;
+      this.allowInternalUsers = planMetaData.allowInternalUsers;
+      this.asyncProvisioningSupported = planMetaData.asyncProvisioningSupported;
+      this.asyncUnprovisioningSupported = planMetaData.asyncUnprovisioningSupported;
+      this.testCheckInterval = planMetaData.testCheckInterval;
+      this.singleScopeInstance = planMetaData.singleScopeInstance;
+      this.serviceCheckEnabled = planMetaData.serviceCheckEnabled;
+      this.cfGuid = planMetaData.cfGuid;
     }
 
     /**
@@ -70,19 +72,19 @@ public class ObjectMetadataBasePlan extends GenericModel {
     }
 
     /**
-     * Builds a ObjectMetadataBasePlan.
+     * Builds a PlanMetaData.
      *
-     * @return the new ObjectMetadataBasePlan instance
+     * @return the new PlanMetaData instance
      */
-    public ObjectMetadataBasePlan build() {
-      return new ObjectMetadataBasePlan(this);
+    public PlanMetaData build() {
+      return new PlanMetaData(this);
     }
 
     /**
      * Set the bindable.
      *
      * @param bindable the bindable
-     * @return the ObjectMetadataBasePlan builder
+     * @return the PlanMetaData builder
      */
     public Builder bindable(Boolean bindable) {
       this.bindable = bindable;
@@ -93,7 +95,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
      * Set the reservable.
      *
      * @param reservable the reservable
-     * @return the ObjectMetadataBasePlan builder
+     * @return the PlanMetaData builder
      */
     public Builder reservable(Boolean reservable) {
       this.reservable = reservable;
@@ -104,7 +106,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
      * Set the allowInternalUsers.
      *
      * @param allowInternalUsers the allowInternalUsers
-     * @return the ObjectMetadataBasePlan builder
+     * @return the PlanMetaData builder
      */
     public Builder allowInternalUsers(Boolean allowInternalUsers) {
       this.allowInternalUsers = allowInternalUsers;
@@ -115,7 +117,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
      * Set the asyncProvisioningSupported.
      *
      * @param asyncProvisioningSupported the asyncProvisioningSupported
-     * @return the ObjectMetadataBasePlan builder
+     * @return the PlanMetaData builder
      */
     public Builder asyncProvisioningSupported(Boolean asyncProvisioningSupported) {
       this.asyncProvisioningSupported = asyncProvisioningSupported;
@@ -126,7 +128,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
      * Set the asyncUnprovisioningSupported.
      *
      * @param asyncUnprovisioningSupported the asyncUnprovisioningSupported
-     * @return the ObjectMetadataBasePlan builder
+     * @return the PlanMetaData builder
      */
     public Builder asyncUnprovisioningSupported(Boolean asyncUnprovisioningSupported) {
       this.asyncUnprovisioningSupported = asyncUnprovisioningSupported;
@@ -137,7 +139,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
      * Set the testCheckInterval.
      *
      * @param testCheckInterval the testCheckInterval
-     * @return the ObjectMetadataBasePlan builder
+     * @return the PlanMetaData builder
      */
     public Builder testCheckInterval(long testCheckInterval) {
       this.testCheckInterval = testCheckInterval;
@@ -148,7 +150,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
      * Set the singleScopeInstance.
      *
      * @param singleScopeInstance the singleScopeInstance
-     * @return the ObjectMetadataBasePlan builder
+     * @return the PlanMetaData builder
      */
     public Builder singleScopeInstance(String singleScopeInstance) {
       this.singleScopeInstance = singleScopeInstance;
@@ -159,7 +161,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
      * Set the serviceCheckEnabled.
      *
      * @param serviceCheckEnabled the serviceCheckEnabled
-     * @return the ObjectMetadataBasePlan builder
+     * @return the PlanMetaData builder
      */
     public Builder serviceCheckEnabled(Boolean serviceCheckEnabled) {
       this.serviceCheckEnabled = serviceCheckEnabled;
@@ -170,15 +172,15 @@ public class ObjectMetadataBasePlan extends GenericModel {
      * Set the cfGuid.
      *
      * @param cfGuid the cfGuid
-     * @return the ObjectMetadataBasePlan builder
+     * @return the PlanMetaData builder
      */
-    public Builder cfGuid(String cfGuid) {
+    public Builder cfGuid(Map<String, String> cfGuid) {
       this.cfGuid = cfGuid;
       return this;
     }
   }
 
-  protected ObjectMetadataBasePlan(Builder builder) {
+  protected PlanMetaData(Builder builder) {
     bindable = builder.bindable;
     reservable = builder.reservable;
     allowInternalUsers = builder.allowInternalUsers;
@@ -193,7 +195,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ObjectMetadataBasePlan builder
+   * @return a PlanMetaData builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -295,7 +297,7 @@ public class ObjectMetadataBasePlan extends GenericModel {
    *
    * @return the cfGuid
    */
-  public String cfGuid() {
+  public Map<String, String> cfGuid() {
     return cfGuid;
   }
 }

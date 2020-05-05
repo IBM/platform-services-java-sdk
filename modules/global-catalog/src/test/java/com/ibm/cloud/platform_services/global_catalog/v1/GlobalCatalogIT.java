@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.nio.charset.StandardCharsets;
 
 import org.testng.annotations.*;
 
@@ -29,6 +30,8 @@ import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.service.exception.ConflictException;
 import com.ibm.cloud.sdk.core.service.exception.ForbiddenException;
 import com.ibm.cloud.sdk.core.http.Response;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * Integration test class for the GlobalCatalog service.
@@ -52,6 +55,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     CreateCatalogEntryOptions defaultCreate;
     CreateCatalogEntryOptions defaultChild;
     DeleteCatalogEntryOptions defaultDelete;
+    DeleteCatalogEntryOptions forceDelete;
     GetCatalogEntryOptions defaultGet;
     UpdateCatalogEntryOptions defaultUpdate;
     RestoreCatalogEntryOptions defaultRestore;
@@ -62,6 +66,10 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     GetPricingOptions getPricing;
     ListArtifactsOptions listArtifacts;
     UploadArtifactOptions uploadArtifact;
+    UploadArtifactOptions uploadArtifactList;
+    UploadArtifactOptions uploadArtifactCreate;
+    UploadArtifactOptions uploadArtifactCreateFailure;
+    UploadArtifactOptions uploadArtifactDelete;
     GetArtifactOptions getArtifact;
     DeleteArtifactOptions deleteArtifact;
 
@@ -121,7 +129,8 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
                 .tags(tags)
                 .provider(provider)
                 .build();
-        defaultDelete = new DeleteCatalogEntryOptions.Builder().id(id).force(true).build();
+        defaultDelete = new DeleteCatalogEntryOptions.Builder().id(id).force(false).build();
+        forceDelete = new DeleteCatalogEntryOptions.Builder().id(id).force(true).build();
         defaultGet = new GetCatalogEntryOptions.Builder().id(id).build();
         defaultUpdate = new UpdateCatalogEntryOptions.Builder()
                 .id(id)
@@ -146,7 +155,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
                 .tags(tags)
                 .provider(provider)
                 .build();
-        getChild = new GetChildObjectsOptions.Builder().id(idChild).kind(kind).build();
+        getChild = new GetChildObjectsOptions.Builder().id(id).kind(kind).build();
         defaultRestore = new RestoreCatalogEntryOptions.Builder().id(id).build();
         bogusRestore = new RestoreCatalogEntryOptions.Builder().id("bogus").build();
         getVisibility = new GetVisibilityOptions.Builder().id(defaultCreate.id()).build();
@@ -154,6 +163,30 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         getPricing = new GetPricingOptions.Builder().id(defaultCreate.id()).build();
         listArtifacts = new ListArtifactsOptions.Builder().objectId(defaultCreate.id()).build();
         uploadArtifact = new UploadArtifactOptions.Builder()
+                .objectId(defaultCreate.id())
+                .artifactId(artifactId)
+                .artifact(new ByteArrayInputStream(artifact))
+                .contentType("text/plain")
+                .build();
+        uploadArtifactList = new UploadArtifactOptions.Builder()
+                .objectId(defaultCreate.id())
+                .artifactId(artifactId)
+                .artifact(new ByteArrayInputStream(artifact))
+                .contentType("text/plain")
+                .build();
+        uploadArtifactCreate = new UploadArtifactOptions.Builder()
+                .objectId(defaultCreate.id())
+                .artifactId(artifactId)
+                .artifact(new ByteArrayInputStream(artifact))
+                .contentType("text/plain")
+                .build();
+        uploadArtifactCreateFailure = new UploadArtifactOptions.Builder()
+                .objectId(defaultCreate.id())
+                .artifactId(artifactId)
+                .artifact(new ByteArrayInputStream(artifact))
+                .contentType("text/plain")
+                .build();
+        uploadArtifactDelete = new UploadArtifactOptions.Builder()
                 .objectId(defaultCreate.id())
                 .artifactId(artifactId)
                 .artifact(new ByteArrayInputStream(artifact))
@@ -171,12 +204,12 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
 
     @BeforeMethod
     public void beforeTest() {
-        service.deleteCatalogEntry(defaultDelete).execute();
+        service.deleteCatalogEntry(forceDelete).execute();
     }
 
     @AfterMethod
     public void afterTest() {
-        service.deleteCatalogEntry(defaultDelete).execute();
+        service.deleteCatalogEntry(forceDelete).execute();
     }
 
     @Test
@@ -232,7 +265,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     @Test(dependsOnMethods = { "testUpdateCatalogEntry" })
     public void testDeleteCatalogEntry() {
         service.createCatalogEntry(defaultCreate).execute();
-        Response<Void> response = service.deleteCatalogEntry(defaultDelete).execute();
+        Response<Void> response = service.deleteCatalogEntry(forceDelete).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
     }
@@ -240,7 +273,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     @Test(dependsOnMethods = { "testDeleteCatalogEntry" })
     public void testGetCatalogEntryAfterDeleteFailure() {
         service.createCatalogEntry(defaultCreate).execute();
-        service.deleteCatalogEntry(defaultDelete).execute();
+        service.deleteCatalogEntry(forceDelete).execute();
 
         try {
             service.getCatalogEntry(defaultGet).execute();
@@ -263,7 +296,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     @Test(dependsOnMethods = { "testDeleteCatalogEntry" })
     public void testDeleteCatalogEntryFailure() {
         service.createCatalogEntry(defaultCreate).execute();
-        Response<Void> response = service.deleteCatalogEntry(defaultDelete).execute();
+        Response<Void> response = service.deleteCatalogEntry(forceDelete).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
     }
@@ -312,8 +345,18 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
 
         EntrySearchResult result = response.getResult();
         assertNotNull(result);
+        assertEquals(result.getOffset(), Long.valueOf(0));
+        assertEquals(result.getCount(), Long.valueOf(1));
         assertEquals(result.getResourceCount(), Long.valueOf(1));
-        System.out.println(result.getResources().get(0));
+
+        CatalogEntry resource = result.getResources().get(0);
+        assertNotNull(resource);
+        assertEquals(resource.getId(), defaultChild.id());
+        assertEquals(resource.getName(), defaultChild.name());
+        assertEquals(resource.getKind(), defaultChild.kind());
+        assertEquals(resource.getImages(), defaultChild.images());
+        assertEquals(resource.getTags(), defaultChild.tags());
+        assertEquals(resource.getProvider(), defaultChild.provider());
     }
 
     @Test
@@ -413,7 +456,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
             assertEquals(e.getStatusCode(), 404);
         }
 
-        service.deleteCatalogEntry(defaultDelete).execute();
+        service.deleteCatalogEntry(forceDelete).execute();
 
         try {
             service.getPricing(getPricing).execute();
@@ -423,11 +466,10 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Ignore
     @Test
     public void testListArtifacts() {
         service.createCatalogEntry(defaultCreate).execute();
-        service.uploadArtifact(uploadArtifact).execute();
+        service.uploadArtifact(uploadArtifactList).execute();
         Response<Artifacts> response = service.listArtifacts(listArtifacts).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
@@ -439,9 +481,9 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         List<Artifact> resources = result.getResources();
         assertNotNull(resources);
         assertEquals(resources.size(), 1);
-        assertEquals(resources.get(0).getName(), uploadArtifact.artifactId());
-        assertEquals(resources.get(0).getUrl(), String.format("%s/%s/artifacts/%s", service.getServiceUrl(), defaultCreate.id(), uploadArtifact.artifactId()));
-        assertEquals(resources.get(0).getSize().intValue(), 23); // TODO: busted always returns a value for 4???
+        assertEquals(resources.get(0).getName(), uploadArtifactList.artifactId());
+        assertEquals(resources.get(0).getUrl(), String.format("%s/%s/artifacts/%s", service.getServiceUrl(), defaultCreate.id(), uploadArtifactList.artifactId()));
+        assertEquals(resources.get(0).getSize().intValue(), 28);
     }
 
     @Test
@@ -462,9 +504,13 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         Response<InputStream> response = service.getArtifact(getArtifact).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
-        // TODO can't assert that 2 input streams are equal.
-        // Will need to read the bytes in each one and compare that.
-        // assertEquals(response.getResult(), uploadArtifact.artifact());
+
+        InputStream result = response.getResult();
+        try {
+            assertEquals(IOUtils.toByteArray(result), artifact);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
     }
 
     @Test
@@ -478,7 +524,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
             assertEquals(e.getStatusCode(), 404);
         }
 
-        service.deleteCatalogEntry(defaultDelete);
+        service.deleteCatalogEntry(forceDelete).execute();
 
         try {
             service.getArtifact(getArtifact).execute();
@@ -491,7 +537,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     @Test
     public void testCreateArtifact() {
         service.createCatalogEntry(defaultCreate).execute();
-        Response<Void> response = service.uploadArtifact(uploadArtifact).execute();
+        Response<Void> response = service.uploadArtifact(uploadArtifactCreate).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
     }
@@ -499,7 +545,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     @Test
     public void testCreateArtifactFailure() {
         try {
-            service.uploadArtifact(uploadArtifact).execute();
+            service.uploadArtifact(uploadArtifactCreateFailure).execute();
             fail("Expected NotFoundException.");
         } catch (NotFoundException e) {
             assertEquals(e.getStatusCode(), 404);
@@ -509,7 +555,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     @Test
     public void testDeleteArtifact() {
         service.createCatalogEntry(defaultCreate).execute();
-        service.uploadArtifact(uploadArtifact).execute();
+        service.uploadArtifact(uploadArtifactDelete).execute();
         Response<Void> response = service.deleteArtifact(deleteArtifact).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);

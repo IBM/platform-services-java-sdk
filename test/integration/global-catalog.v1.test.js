@@ -31,6 +31,11 @@ describe('GlobalCatalogV1_integration', () => {
 
     const timestamp = Math.floor(new Date() / 1000);
 
+    const forceDelete = {
+        'id': `someId${timestamp}`,
+        'force': true
+    };
+
     const defaultEntry = {
         'name': `someName${timestamp}`,
         'id': `someId${timestamp}`,
@@ -125,12 +130,12 @@ describe('GlobalCatalogV1_integration', () => {
     });
 
     beforeEach(async done => {
-        await service.deleteCatalogEntry(defaultEntry);
+        await service.deleteCatalogEntry(forceDelete);
         done();
     });
 
     afterEach(async done => {
-        await service.deleteCatalogEntry(defaultEntry);
+        await service.deleteCatalogEntry(forceDelete);
         done();
     });
 
@@ -218,7 +223,7 @@ describe('GlobalCatalogV1_integration', () => {
 
         try {
             await service.createCatalogEntry(defaultEntry);
-            response = await service.deleteCatalogEntry(updatedEntry);
+            response = await service.deleteCatalogEntry(forceDelete);
         } catch (err) {
             done(err);
         }
@@ -237,7 +242,7 @@ describe('GlobalCatalogV1_integration', () => {
 
         try {
             await service.createCatalogEntry(defaultEntry);
-            await service.deleteCatalogEntry(defaultEntry);
+            await service.deleteCatalogEntry(forceDelete);
         } catch (err) {
             done(err);
         }
@@ -515,9 +520,16 @@ describe('GlobalCatalogV1_integration', () => {
     test('List catalog entry artifacts', async done => {
         let response;
 
+        const args = {
+            'objectId': defaultEntry.id,
+            'artifactId': defaultEntry.artifactId,
+            'artifact': {
+                'someKey': 'someValue'
+            }
+        };
+
         try {
             await service.createCatalogEntry(defaultEntry);
-            const args = {'objectId': defaultEntry.id, 'artifactId': defaultEntry.artifactId, 'artifact': defaultEntry.artifact};
             await service.uploadArtifact(args);
             response = await service.listArtifacts(args);
         } catch (err) {
@@ -564,9 +576,16 @@ describe('GlobalCatalogV1_integration', () => {
     test('Get catalog entry artifact', async done => {
         let response;
 
+        const args = {
+            'objectId': defaultEntry.id,
+            'artifactId': defaultEntry.artifactId,
+            'artifact': {
+                'someKey': 'someValue'
+            }
+        };
+
         try {
             await service.createCatalogEntry(defaultEntry);
-            const args = {'objectId': defaultEntry.id, 'artifactId': defaultEntry.artifactId, 'artifact': defaultEntry.artifact};
             await service.uploadArtifact(args);
             response = await service.getArtifact(args);
         } catch (err) {
@@ -578,10 +597,11 @@ describe('GlobalCatalogV1_integration', () => {
 
         const { result } = response || {};
         expect(result).toBeDefined();
-        expect(result).toEqual(defaultEntry.artifact)
+        expect(JSON.parse(result.read().toString())).toEqual(defaultEntry.artifact)
 
         done();
     });
+
 
     test('Fail to get catalog entry artifact', async done => {
         expect.assertions(2);
@@ -612,9 +632,16 @@ describe('GlobalCatalogV1_integration', () => {
     test('Create catalog entry artifact', async done => {
         let response;
 
+        const args = {
+            'objectId': defaultEntry.id,
+            'artifactId': defaultEntry.artifactId,
+            'artifact': {
+                'someKey': 'someValue'
+            }
+        };
+
         try {
             await service.createCatalogEntry(defaultEntry);
-            const args = {'objectId': defaultEntry.id, 'artifactId': defaultEntry.artifactId, 'artifact': defaultEntry.artifact};
             response = await service.uploadArtifact(args);
         } catch (err) {
             done(err);
@@ -633,8 +660,15 @@ describe('GlobalCatalogV1_integration', () => {
     test('Fail to create catalog entry artifact', async done => {
         expect.assertions(1);
 
+        const args = {
+            'objectId': 'bogus',
+            'artifactId': 'bogus',
+            'artifact': {
+                'someKey': 'someValue'
+            }
+        };
+
         try {
-            const args = {'objectId': 'bogus', 'artifactId': 'bogus', 'artifact': defaultEntry.artifact};
             await service.uploadArtifact(args);
         } catch (err) {
             expect(err.status).toEqual(404);
@@ -645,9 +679,16 @@ describe('GlobalCatalogV1_integration', () => {
     test('Delete catalog entry artifact', async done => {
         let response;
 
+        const args = {
+            'objectId': defaultEntry.id,
+            'artifactId': defaultEntry.artifactId,
+            'artifact':  {
+                'someKey': 'someValue'
+            }
+        };
+
         try {
             await service.createCatalogEntry(defaultEntry);
-            const args = {'objectId': defaultEntry.id, 'artifactId': defaultEntry.artifactId, 'artifact': defaultEntry.artifact};
             await service.uploadArtifact(args);
             response = await service.deleteArtifact(args);
         } catch (err) {

@@ -14,7 +14,7 @@
     <artifactId>iam-access-groups</artifactId>
 
     <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
-    <name>IAM Access Groups</name>
+    <name>IAM Access Groups API</name>
     <packaging>jar</packaging>
 
     <dependencies>

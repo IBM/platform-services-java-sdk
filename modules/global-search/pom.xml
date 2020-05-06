@@ -14,7 +14,7 @@
     <artifactId>global-search</artifactId>
 
     <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
-    <name>Global Search</name>
+    <name>Global Search and Tagging - Search API</name>
     <packaging>jar</packaging>
 
     <dependencies>

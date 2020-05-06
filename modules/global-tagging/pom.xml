@@ -14,7 +14,7 @@
     <artifactId>global-tagging</artifactId>
 
     <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
-    <name>Global Tagging</name>
+    <name>Global Search and Tagging - Tagging API</name>
     <packaging>jar</packaging>
 
     <dependencies>

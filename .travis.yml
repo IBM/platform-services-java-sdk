@@ -2,13 +2,13 @@ language: node_js
 
 sudo: false
 
-node_js:
-- 10
-- 12
-
-before_install:
--  '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_3058bc69cb40_key -iv $encrypted_3058bc69cb40_iv -in ghost.env.enc -out ghost.env -d || true'
--  '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_66f264007c0d_key -iv $encrypted_66f264007c0d_iv -in iam_access_groups.env.enc -out iam_access_groups.env -d || true'
+matrix:
+  include:
+    - node_js: 10
+    - node_js: 12
+      before_script:
+        -  '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_3058bc69cb40_key -iv $encrypted_3058bc69cb40_iv -in ghost.env.enc -out ghost.env -d || true'
+        -  '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_66f264007c0d_key -iv $encrypted_66f264007c0d_iv -in iam_access_groups.env.enc -out iam_access_groups.env -d || true'
 
 script:
 - npm run build

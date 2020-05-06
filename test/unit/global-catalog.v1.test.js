@@ -175,11 +175,12 @@ describe('GlobalCatalogV1', () => {
         display_name: 'testString',
         long_description: 'testString',
         description: 'testString',
+        featured_description: 'testString',
       };
 
       // OverviewUI
       const overviewUiModel = {
-	foo: overviewModel,
+        foo: overviewModel,
       };
 
       // Image
@@ -204,13 +205,13 @@ describe('GlobalCatalogV1', () => {
         title: 'testString',
         description: 'testString',
         icon: 'testString',
-        quantity: 'testString',
+        quantity: 38,
       };
 
       // Price
       const priceModel = {
         quantity_tier: 38,
-        price: 72.5,
+        Price: 72.5,
       };
 
       // UIMetaMedia
@@ -218,13 +219,13 @@ describe('GlobalCatalogV1', () => {
         caption: 'testString',
         thumbnail_url: 'testString',
         type: 'testString',
-        url: 'testString',
+        URL: 'testString',
         source: bulletsModel,
       };
 
       // Amount
       const amountModel = {
-        counrty: 'testString',
+        country: 'testString',
         currency: 'testString',
         prices: [priceModel],
       };
@@ -234,36 +235,31 @@ describe('GlobalCatalogV1', () => {
         bullets: [bulletsModel],
         media: [uiMetaMediaModel],
         not_creatable_msg: 'testString',
-        not_creatable_robot_msg: 'testString',
+        not_creatable__robot_msg: 'testString',
         deprecation_warning: 'testString',
         popup_warning_message: 'testString',
         instruction: 'testString',
       };
 
-      // DeploymentBaseBroker
-      const deploymentBaseBrokerModel = {
+      // Broker
+      const brokerModel = {
         name: 'testString',
         guid: 'testString',
       };
 
-      // I18N
-      const i18NModel = {
-	foo: stringsModel,
-      };
-
-      // ObjectMetadataBaseSlaDr
-      const objectMetadataBaseSlaDrModel = {
+      // DRMetaData
+      const drMetaDataModel = {
         dr: true,
         description: 'testString',
       };
 
-      // ObjectMetadataBaseTemplateEnvironmentVariables
-      const objectMetadataBaseTemplateEnvironmentVariablesModel = {
-        key: 'testString',
+      // I18N
+      const i18NModel = {
+        foo: stringsModel,
       };
 
-      // ObjectMetadataBaseTemplateSource
-      const objectMetadataBaseTemplateSourceModel = {
+      // SourceMetaData
+      const sourceMetaDataModel = {
         path: 'testString',
         type: 'testString',
         url: 'testString',
@@ -273,6 +269,7 @@ describe('GlobalCatalogV1', () => {
       const startingPriceModel = {
         plan_id: 'testString',
         deployment_id: 'testString',
+        unit: 'testString',
         amount: [amountModel],
       };
 
@@ -287,11 +284,39 @@ describe('GlobalCatalogV1', () => {
         custom_create_page_url: 'testString',
         catalog_details_url: 'testString',
         deprecation_doc_url: 'testString',
+        dashboard_url: 'testString',
+        registration_url: 'testString',
+        apidocsurl: 'testString',
+      };
+
+      // AliasMetaData
+      const aliasMetaDataModel = {
+        type: 'testString',
+        plan_id: 'testString',
+      };
+
+      // CFMetaData
+      const cfMetaDataModel = {
+        type: 'testString',
+        iam_compatible: true,
+        unique_api_key: true,
+        provisionable: true,
+        bindable: true,
+        async_provisioning_supported: true,
+        async_unprovisioning_supported: true,
+        requires: ['testString'],
+        plan_updateable: true,
+        state: 'testString',
+        service_check_enabled: true,
+        test_check_interval: 38,
+        service_key_supported: true,
+        cf_guid: { 'key1' : 'testString' },
       };
 
       // Callbacks
       const callbacksModel = {
-        broker_utl: 'testString',
+        controller_url: 'testString',
+        broker_url: 'testString',
         broker_proxy_url: 'testString',
         dashboard_url: 'testString',
         dashboard_data_url: 'testString',
@@ -299,27 +324,24 @@ describe('GlobalCatalogV1', () => {
         dashboard_detail_tab_ext_url: 'testString',
         service_monitor_api: 'testString',
         service_monitor_app: 'testString',
-        service_staging_url: 'testString',
-        service_production_url: 'testString',
+        api_endpoint: { 'key1' : 'testString' },
       };
 
       // DeploymentBase
       const deploymentBaseModel = {
         location: 'testString',
+        location_url: 'testString',
+        original_location: 'testString',
         target_crn: 'testString',
-        broker: deploymentBaseBrokerModel,
+        service_crn: 'testString',
+        mccp_id: 'testString',
+        broker: brokerModel,
         supports_rc_migration: true,
         target_network: 'testString',
       };
 
-      // ObjectMetadataBaseAlias
-      const objectMetadataBaseAliasModel = {
-        type: 'testString',
-        plan_id: 'testString',
-      };
-
-      // ObjectMetadataBasePlan
-      const objectMetadataBasePlanModel = {
+      // PlanMetaData
+      const planMetaDataModel = {
         bindable: true,
         reservable: true,
         allow_internal_users: true,
@@ -328,48 +350,7 @@ describe('GlobalCatalogV1', () => {
         test_check_interval: 38,
         single_scope_instance: 'testString',
         service_check_enabled: true,
-        cf_guid: 'testString',
-      };
-
-      // ObjectMetadataBaseService
-      const objectMetadataBaseServiceModel = {
-        type: 'testString',
-        iam_compatible: true,
-        unique_api_key: true,
-        provisionable: true,
-        async_provisioning_supported: true,
-        async_unprovisioning_supported: true,
-        cf_guid: 'testString',
-        bindable: true,
-        requires: ['testString'],
-        plan_updateable: true,
-        state: 'testString',
-        service_check_enabled: true,
-        test_check_interval: 38,
-        service_key_supported: true,
-      };
-
-      // ObjectMetadataBaseSla
-      const objectMetadataBaseSlaModel = {
-        terms: 'testString',
-        tenancy: 'testString',
-        provisioning: 'testString',
-        responsiveness: 'testString',
-        dr: objectMetadataBaseSlaDrModel,
-      };
-
-      // ObjectMetadataBaseTemplate
-      const objectMetadataBaseTemplateModel = {
-        services: ['testString'],
-        default_memory: 38,
-        start_cmd: 'testString',
-        source: objectMetadataBaseTemplateSourceModel,
-        runtime_catalog_id: 'testString',
-        cf_runtime_id: 'testString',
-        template_id: 'testString',
-        executable_file: 'testString',
-        buildpack: 'testString',
-        environment_variables: objectMetadataBaseTemplateEnvironmentVariablesModel,
+        cf_guid: { 'key1' : 'testString' },
       };
 
       // PricingSet
@@ -377,6 +358,29 @@ describe('GlobalCatalogV1', () => {
         type: 'testString',
         origin: 'testString',
         starting_price: startingPriceModel,
+      };
+
+      // SLAMetaData
+      const slaMetaDataModel = {
+        terms: 'testString',
+        tenancy: 'testString',
+        provisioning: 'testString',
+        responsiveness: 'testString',
+        dr: drMetaDataModel,
+      };
+
+      // TemplateMetaData
+      const templateMetaDataModel = {
+        services: ['testString'],
+        default_memory: 38,
+        start_cmd: 'testString',
+        source: sourceMetaDataModel,
+        runtime_catalog_id: 'testString',
+        cf_runtime_id: 'testString',
+        template_id: 'testString',
+        executable_file: 'testString',
+        buildpack: 'testString',
+        environment_variables: { 'key1' : 'testString' },
       };
 
       // UIMetaData
@@ -387,27 +391,29 @@ describe('GlobalCatalogV1', () => {
         embeddable_dashboard_full_width: true,
         navigation_order: ['testString'],
         not_creatable: true,
-        reservable: true,
         primary_offering_id: 'testString',
         accessible_during_provision: true,
         side_by_side_index: 38,
         end_of_service_time: '2019-01-01T12:00:00',
+        hidden: true,
+        hide_lite_metering: true,
+        no_upgrade_next_step: true,
       };
 
       // ObjectMetadataSet
       const objectMetadataSetModel = {
         rc_compatible: true,
+        service: cfMetaDataModel,
+        plan: planMetaDataModel,
+        alias: aliasMetaDataModel,
+        template: templateMetaDataModel,
         ui: uiMetaDataModel,
         compliance: ['testString'],
-        service: objectMetadataBaseServiceModel,
-        plan: objectMetadataBasePlanModel,
-        template: objectMetadataBaseTemplateModel,
-        alias: objectMetadataBaseAliasModel,
-        sla: objectMetadataBaseSlaModel,
+        sla: slaMetaDataModel,
         callbacks: callbacksModel,
-        version: 'testString',
         original_name: 'testString',
-        other: { foo: 'bar' },
+        version: 'testString',
+        other: { 'key1' : { foo: 'bar' } },
         pricing: pricingSetModel,
         deployment: deploymentBaseModel,
       };
@@ -620,11 +626,12 @@ describe('GlobalCatalogV1', () => {
         display_name: 'testString',
         long_description: 'testString',
         description: 'testString',
+        featured_description: 'testString',
       };
 
       // OverviewUI
       const overviewUiModel = {
-	foo: overviewModel,
+        foo: overviewModel,
       };
 
       // Image
@@ -649,13 +656,13 @@ describe('GlobalCatalogV1', () => {
         title: 'testString',
         description: 'testString',
         icon: 'testString',
-        quantity: 'testString',
+        quantity: 38,
       };
 
       // Price
       const priceModel = {
         quantity_tier: 38,
-        price: 72.5,
+        Price: 72.5,
       };
 
       // UIMetaMedia
@@ -663,13 +670,13 @@ describe('GlobalCatalogV1', () => {
         caption: 'testString',
         thumbnail_url: 'testString',
         type: 'testString',
-        url: 'testString',
+        URL: 'testString',
         source: bulletsModel,
       };
 
       // Amount
       const amountModel = {
-        counrty: 'testString',
+        country: 'testString',
         currency: 'testString',
         prices: [priceModel],
       };
@@ -679,36 +686,31 @@ describe('GlobalCatalogV1', () => {
         bullets: [bulletsModel],
         media: [uiMetaMediaModel],
         not_creatable_msg: 'testString',
-        not_creatable_robot_msg: 'testString',
+        not_creatable__robot_msg: 'testString',
         deprecation_warning: 'testString',
         popup_warning_message: 'testString',
         instruction: 'testString',
       };
 
-      // DeploymentBaseBroker
-      const deploymentBaseBrokerModel = {
+      // Broker
+      const brokerModel = {
         name: 'testString',
         guid: 'testString',
       };
 
-      // I18N
-      const i18NModel = {
-	foo: stringsModel,
-      };
-
-      // ObjectMetadataBaseSlaDr
-      const objectMetadataBaseSlaDrModel = {
+      // DRMetaData
+      const drMetaDataModel = {
         dr: true,
         description: 'testString',
       };
 
-      // ObjectMetadataBaseTemplateEnvironmentVariables
-      const objectMetadataBaseTemplateEnvironmentVariablesModel = {
-        key: 'testString',
+      // I18N
+      const i18NModel = {
+        foo: stringsModel,
       };
 
-      // ObjectMetadataBaseTemplateSource
-      const objectMetadataBaseTemplateSourceModel = {
+      // SourceMetaData
+      const sourceMetaDataModel = {
         path: 'testString',
         type: 'testString',
         url: 'testString',
@@ -718,6 +720,7 @@ describe('GlobalCatalogV1', () => {
       const startingPriceModel = {
         plan_id: 'testString',
         deployment_id: 'testString',
+        unit: 'testString',
         amount: [amountModel],
       };
 
@@ -732,11 +735,39 @@ describe('GlobalCatalogV1', () => {
         custom_create_page_url: 'testString',
         catalog_details_url: 'testString',
         deprecation_doc_url: 'testString',
+        dashboard_url: 'testString',
+        registration_url: 'testString',
+        apidocsurl: 'testString',
+      };
+
+      // AliasMetaData
+      const aliasMetaDataModel = {
+        type: 'testString',
+        plan_id: 'testString',
+      };
+
+      // CFMetaData
+      const cfMetaDataModel = {
+        type: 'testString',
+        iam_compatible: true,
+        unique_api_key: true,
+        provisionable: true,
+        bindable: true,
+        async_provisioning_supported: true,
+        async_unprovisioning_supported: true,
+        requires: ['testString'],
+        plan_updateable: true,
+        state: 'testString',
+        service_check_enabled: true,
+        test_check_interval: 38,
+        service_key_supported: true,
+        cf_guid: { 'key1' : 'testString' },
       };
 
       // Callbacks
       const callbacksModel = {
-        broker_utl: 'testString',
+        controller_url: 'testString',
+        broker_url: 'testString',
         broker_proxy_url: 'testString',
         dashboard_url: 'testString',
         dashboard_data_url: 'testString',
@@ -744,27 +775,24 @@ describe('GlobalCatalogV1', () => {
         dashboard_detail_tab_ext_url: 'testString',
         service_monitor_api: 'testString',
         service_monitor_app: 'testString',
-        service_staging_url: 'testString',
-        service_production_url: 'testString',
+        api_endpoint: { 'key1' : 'testString' },
       };
 
       // DeploymentBase
       const deploymentBaseModel = {
         location: 'testString',
+        location_url: 'testString',
+        original_location: 'testString',
         target_crn: 'testString',
-        broker: deploymentBaseBrokerModel,
+        service_crn: 'testString',
+        mccp_id: 'testString',
+        broker: brokerModel,
         supports_rc_migration: true,
         target_network: 'testString',
       };
 
-      // ObjectMetadataBaseAlias
-      const objectMetadataBaseAliasModel = {
-        type: 'testString',
-        plan_id: 'testString',
-      };
-
-      // ObjectMetadataBasePlan
-      const objectMetadataBasePlanModel = {
+      // PlanMetaData
+      const planMetaDataModel = {
         bindable: true,
         reservable: true,
         allow_internal_users: true,
@@ -773,48 +801,7 @@ describe('GlobalCatalogV1', () => {
         test_check_interval: 38,
         single_scope_instance: 'testString',
         service_check_enabled: true,
-        cf_guid: 'testString',
-      };
-
-      // ObjectMetadataBaseService
-      const objectMetadataBaseServiceModel = {
-        type: 'testString',
-        iam_compatible: true,
-        unique_api_key: true,
-        provisionable: true,
-        async_provisioning_supported: true,
-        async_unprovisioning_supported: true,
-        cf_guid: 'testString',
-        bindable: true,
-        requires: ['testString'],
-        plan_updateable: true,
-        state: 'testString',
-        service_check_enabled: true,
-        test_check_interval: 38,
-        service_key_supported: true,
-      };
-
-      // ObjectMetadataBaseSla
-      const objectMetadataBaseSlaModel = {
-        terms: 'testString',
-        tenancy: 'testString',
-        provisioning: 'testString',
-        responsiveness: 'testString',
-        dr: objectMetadataBaseSlaDrModel,
-      };
-
-      // ObjectMetadataBaseTemplate
-      const objectMetadataBaseTemplateModel = {
-        services: ['testString'],
-        default_memory: 38,
-        start_cmd: 'testString',
-        source: objectMetadataBaseTemplateSourceModel,
-        runtime_catalog_id: 'testString',
-        cf_runtime_id: 'testString',
-        template_id: 'testString',
-        executable_file: 'testString',
-        buildpack: 'testString',
-        environment_variables: objectMetadataBaseTemplateEnvironmentVariablesModel,
+        cf_guid: { 'key1' : 'testString' },
       };
 
       // PricingSet
@@ -822,6 +809,29 @@ describe('GlobalCatalogV1', () => {
         type: 'testString',
         origin: 'testString',
         starting_price: startingPriceModel,
+      };
+
+      // SLAMetaData
+      const slaMetaDataModel = {
+        terms: 'testString',
+        tenancy: 'testString',
+        provisioning: 'testString',
+        responsiveness: 'testString',
+        dr: drMetaDataModel,
+      };
+
+      // TemplateMetaData
+      const templateMetaDataModel = {
+        services: ['testString'],
+        default_memory: 38,
+        start_cmd: 'testString',
+        source: sourceMetaDataModel,
+        runtime_catalog_id: 'testString',
+        cf_runtime_id: 'testString',
+        template_id: 'testString',
+        executable_file: 'testString',
+        buildpack: 'testString',
+        environment_variables: { 'key1' : 'testString' },
       };
 
       // UIMetaData
@@ -832,27 +842,29 @@ describe('GlobalCatalogV1', () => {
         embeddable_dashboard_full_width: true,
         navigation_order: ['testString'],
         not_creatable: true,
-        reservable: true,
         primary_offering_id: 'testString',
         accessible_during_provision: true,
         side_by_side_index: 38,
         end_of_service_time: '2019-01-01T12:00:00',
+        hidden: true,
+        hide_lite_metering: true,
+        no_upgrade_next_step: true,
       };
 
       // ObjectMetadataSet
       const objectMetadataSetModel = {
         rc_compatible: true,
+        service: cfMetaDataModel,
+        plan: planMetaDataModel,
+        alias: aliasMetaDataModel,
+        template: templateMetaDataModel,
         ui: uiMetaDataModel,
         compliance: ['testString'],
-        service: objectMetadataBaseServiceModel,
-        plan: objectMetadataBasePlanModel,
-        template: objectMetadataBaseTemplateModel,
-        alias: objectMetadataBaseAliasModel,
-        sla: objectMetadataBaseSlaModel,
+        sla: slaMetaDataModel,
         callbacks: callbacksModel,
-        version: 'testString',
         original_name: 'testString',
-        other: { foo: 'bar' },
+        version: 'testString',
+        other: { 'key1' : { foo: 'bar' } },
         pricing: pricingSetModel,
         deployment: deploymentBaseModel,
       };
@@ -982,9 +994,11 @@ describe('GlobalCatalogV1', () => {
         // Construct the params object for operation deleteCatalogEntry
         const id = 'testString';
         const account = 'testString';
+        const force = true;
         const params = {
           id: id,
           account: account,
+          force: force,
         };
 
         const deleteCatalogEntryResult = globalCatalog.deleteCatalogEntry(params);
@@ -1002,6 +1016,7 @@ describe('GlobalCatalogV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['account']).toEqual(account);
+        expect(options.qs['force']).toEqual(force);
         expect(options.path['id']).toEqual(id);
       });
 
@@ -1289,7 +1304,7 @@ describe('GlobalCatalogV1', () => {
 
       // VisibilityDetailAccounts
       const visibilityDetailAccountsModel = {
-        accountid: 'testString',
+        _accountid_: 'testString',
       };
 
       // VisibilityDetail
@@ -1300,11 +1315,13 @@ describe('GlobalCatalogV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateVisibility
         const id = 'testString';
+        const extendable = true;
         const include = visibilityDetailModel;
         const exclude = visibilityDetailModel;
         const account = 'testString';
         const params = {
           id: id,
+          extendable: extendable,
           include: include,
           exclude: exclude,
           account: account,
@@ -1324,6 +1341,7 @@ describe('GlobalCatalogV1', () => {
         const expectedAccept = undefined;
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['extendable']).toEqual(extendable);
         expect(options.body['include']).toEqual(include);
         expect(options.body['exclude']).toEqual(exclude);
         expect(options.qs['account']).toEqual(account);
@@ -1603,10 +1621,12 @@ describe('GlobalCatalogV1', () => {
         // Construct the params object for operation getArtifact
         const objectId = 'testString';
         const artifactId = 'testString';
+        const accept = 'testString';
         const account = 'testString';
         const params = {
           objectId: objectId,
           artifactId: artifactId,
+          accept: accept,
           account: account,
         };
 
@@ -1621,12 +1641,14 @@ describe('GlobalCatalogV1', () => {
         const options = getOptions(createRequestMock);
 
         checkUrlAndMethod(options, '/{object_id}/artifacts/{artifact_id}', 'GET');
-        const expectedAccept = undefined;
+        const expectedAccept = accept;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        checkUserHeader(createRequestMock, 'Accept', accept);
         expect(options.qs['account']).toEqual(account);
         expect(options.path['object_id']).toEqual(objectId);
         expect(options.path['artifact_id']).toEqual(artifactId);
+        expect(options.responseType).toBe('stream');
       });
 
       test('should prioritize user-given headers', () => {

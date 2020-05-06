@@ -119,9 +119,9 @@ class GlobalCatalogV1 extends BaseService {
    * @param {string} [params.complete] - Returns all available fields for all languages. Use the value `?complete=true`
    * as shortcut for ?include=*&languages=*.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.SearchResult>>}
+   * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>>}
    */
-  public listCatalogEntries(params?: GlobalCatalogV1.ListCatalogEntriesParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.SearchResult>> {
+  public listCatalogEntries(params?: GlobalCatalogV1.ListCatalogEntriesParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>> {
     const _params = extend({}, params);
 
     return new Promise((resolve, reject) => {
@@ -186,7 +186,7 @@ class GlobalCatalogV1 extends BaseService {
    */
   public createCatalogEntry(params: GlobalCatalogV1.CreateCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
     const _params = extend({}, params);
-    const requiredParams = ['name', 'kind', 'overviewUi', 'images', 'tags', 'provider', 'id'];
+    const requiredParams = ['name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider', 'id'];
 
     return new Promise((resolve, reject) => {
       const missingParams = getMissingParams(_params, requiredParams);
@@ -338,7 +338,7 @@ class GlobalCatalogV1 extends BaseService {
    */
   public updateCatalogEntry(params: GlobalCatalogV1.UpdateCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
     const _params = extend({}, params);
-    const requiredParams = ['id', 'name', 'kind', 'overviewUi', 'images', 'tags', 'provider'];
+    const requiredParams = ['id', 'name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider'];
 
     return new Promise((resolve, reject) => {
       const missingParams = getMissingParams(_params, requiredParams);
@@ -403,6 +403,8 @@ class GlobalCatalogV1 extends BaseService {
    * @param {string} [params.account] - This changes the scope of the request regardless of the authorization header.
    * Example scopes are `account` and `global`. `account=global` is reqired if operating with a service ID that has a
    * global admin policy, for example `GET /?account=global`.
+   * @param {boolean} [params.force] - This will cause entry to be deleted fully. By default it is archived for two
+   * weeks, so that it can be restored if necessary.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
@@ -417,7 +419,8 @@ class GlobalCatalogV1 extends BaseService {
       }
 
       const query = {
-        'account': _params.account
+        'account': _params.account,
+        'force': _params.force
       };
 
       const path = {
@@ -469,9 +472,9 @@ class GlobalCatalogV1 extends BaseService {
    * (*).
    * @param {string} [params.complete] - Use the value `?complete=true` as shortcut for ?include=*&languages=*.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.SearchResult[]>>}
+   * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>>}
    */
-  public getChildObjects(params: GlobalCatalogV1.GetChildObjectsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.SearchResult[]>> {
+  public getChildObjects(params: GlobalCatalogV1.GetChildObjectsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>> {
     const _params = extend({}, params);
     const requiredParams = ['id', 'kind'];
 
@@ -631,6 +634,7 @@ class GlobalCatalogV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The object's unique ID.
+   * @param {boolean} [params.extendable] - Allows the visibility to be extenable.
    * @param {VisibilityDetail} [params.include] - Visibility details related to a catalog entry.
    * @param {VisibilityDetail} [params.exclude] - Visibility details related to a catalog entry.
    * @param {string} [params.account] - This changes the scope of the request regardless of the authorization header.
@@ -650,6 +654,7 @@ class GlobalCatalogV1 extends BaseService {
       }
 
       const body = {
+        'extendable': _params.extendable,
         'include': _params.include,
         'exclude': _params.exclude
       };
@@ -764,9 +769,9 @@ class GlobalCatalogV1 extends BaseService {
    * @param {number} [params.limit] - Count of number of entries to return. The default is fifty. The maximum value is
    * two hundred.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.SearchResult>>}
+   * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.AuditSearchResult>>}
    */
-  public getAuditLogs(params: GlobalCatalogV1.GetAuditLogsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.SearchResult>> {
+  public getAuditLogs(params: GlobalCatalogV1.GetAuditLogsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.AuditSearchResult>> {
     const _params = extend({}, params);
     const requiredParams = ['id'];
 
@@ -871,13 +876,14 @@ class GlobalCatalogV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.objectId - The object's unique ID.
    * @param {string} params.artifactId - The artifact's ID.
+   * @param {string} [params.accept] - The type of the response:  or *_/_*.
    * @param {string} [params.account] - This changes the scope of the request regardless of the authorization header.
    * Example scopes are `account` and `global`. `account=global` is reqired if operating with a service ID that has a
    * global admin policy, for example `GET /?account=global`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
+   * @returns {Promise<GlobalCatalogV1.Response<NodeJS.ReadableStream|Buffer>>}
    */
-  public getArtifact(params: GlobalCatalogV1.GetArtifactParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
+  public getArtifact(params: GlobalCatalogV1.GetArtifactParams): Promise<GlobalCatalogV1.Response<NodeJS.ReadableStream|Buffer>> {
     const _params = extend({}, params);
     const requiredParams = ['objectId', 'artifactId'];
 
@@ -904,9 +910,11 @@ class GlobalCatalogV1 extends BaseService {
           method: 'GET',
           qs: query,
           path,
+          responseType: 'stream',
         },
         defaultOptions: extend(true, {}, this.baseOptions, {
           headers: extend(true, sdkHeaders, {
+            'Accept': _params.accept
           }, _params.headers),
         }),
       };
@@ -1241,6 +1249,10 @@ namespace GlobalCatalogV1 {
      *  example `GET /?account=global`.
      */
     account?: string;
+    /** This will cause entry to be deleted fully. By default it is archived for two weeks, so that it can be
+     *  restored if necessary.
+     */
+    force?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1310,6 +1322,8 @@ namespace GlobalCatalogV1 {
   export interface UpdateVisibilityParams {
     /** The object's unique ID. */
     id: string;
+    /** Allows the visibility to be extenable. */
+    extendable?: boolean;
     /** Visibility details related to a catalog entry. */
     include?: VisibilityDetail;
     /** Visibility details related to a catalog entry. */
@@ -1377,6 +1391,8 @@ namespace GlobalCatalogV1 {
     objectId: string;
     /** The artifact's ID. */
     artifactId: string;
+    /** The type of the response:  or *_/_*. */
+    accept?: string;
     /** This changes the scope of the request regardless of the authorization header. Example scopes are `account`
      *  and `global`. `account=global` is reqired if operating with a service ID that has a global admin policy, for
      *  example `GET /?account=global`.
@@ -1420,10 +1436,18 @@ namespace GlobalCatalogV1 {
    * model interfaces
    ************************/
 
+  /** Alias-related metadata. */
+  export interface AliasMetaData {
+    /** Type of alias. */
+    type?: string;
+    /** Points to the plan that this object is an alias for. */
+    plan_id?: string;
+  }
+
   /** Country-specific pricing information. */
   export interface Amount {
     /** Country. */
-    counrty?: string;
+    country?: string;
     /** Currency. */
     currency?: string;
     /** See Price for nested fields. */
@@ -1452,6 +1476,36 @@ namespace GlobalCatalogV1 {
     resources?: Artifact[];
   }
 
+  /** A paginated search result containing audit logs. */
+  export interface AuditSearchResult {
+    /** The offset (origin 0) of the first resource in this page of search results. */
+    offset?: number;
+    /** The maximum number of resources returned in each page of search results. */
+    limit?: number;
+    /** The overall total number of resources in the search result set. */
+    count?: number;
+    /** The number of resources returned in this page of search results. */
+    resource_count?: number;
+    /** A URL for retrieving the first page of search results. */
+    first?: string;
+    /** A URL for retrieving the last page of search results. */
+    last?: string;
+    /** A URL for retrieving the previous page of search results. */
+    prev?: string;
+    /** A URL for retrieving the next page of search results. */
+    next?: string;
+    /** The resources (audit messages) contained in this page of search results. */
+    resources?: Message[];
+  }
+
+  /** The broker associated with a catalog entry. */
+  export interface Broker {
+    /** Broker name. */
+    name?: string;
+    /** Broker guid. */
+    guid?: string;
+  }
+
   /** Information related to list delimiters. */
   export interface Bullets {
     /** The bullet title. */
@@ -1461,13 +1515,51 @@ namespace GlobalCatalogV1 {
     /** The icon to use for rendering the bullet. */
     icon?: string;
     /** The bullet quantity. */
-    quantity?: string;
+    quantity?: number;
+  }
+
+  /** Service-related metadata. */
+  export interface CFMetaData {
+    /** Type of service. */
+    type?: string;
+    /** Boolean value that describes whether the service is compatible with Identity and Access Management. */
+    iam_compatible?: boolean;
+    /** Boolean value that describes whether the service has a unique API key. */
+    unique_api_key?: boolean;
+    /** Boolean value that describes whether the service is provisionable or not. You may need sales or support to
+     *  create this service.
+     */
+    provisionable?: boolean;
+    /** Boolean value that describes whether you can create bindings for this service. */
+    bindable?: boolean;
+    /** Boolean value that describes whether the service supports asynchronous provisioning. */
+    async_provisioning_supported?: boolean;
+    /** Boolean value that describes whether the service supports asynchronous unprovisioning. */
+    async_unprovisioning_supported?: boolean;
+    /** Service dependencies. */
+    requires?: string[];
+    /** Boolean value that describes whether the service supports upgrade or downgrade for some plans. */
+    plan_updateable?: boolean;
+    /** String that describes whether the service is active or inactive. */
+    state?: string;
+    /** Boolean value that describes whether the service check is enabled. */
+    service_check_enabled?: boolean;
+    /** Test check interval. */
+    test_check_interval?: number;
+    /** Boolean value that describes whether the service supports service keys. */
+    service_key_supported?: boolean;
+    /** If the field is imported from Cloud Foundry, the Cloud Foundry region's GUID. This is a required field. For
+     *  example, `us-south=123`.
+     */
+    cf_guid?: JsonObject;
   }
 
   /** Callback-related information associated with a catalog entry. */
   export interface Callbacks {
+    /** The URL of the deployment controller. */
+    controller_url?: string;
     /** The URL of the deployment broker. */
-    broker_utl?: string;
+    broker_url?: string;
     /** The URL of the deployment broker SC proxy. */
     broker_proxy_url?: string;
     /** The URL of dashboard callback. */
@@ -1482,10 +1574,8 @@ namespace GlobalCatalogV1 {
     service_monitor_api?: string;
     /** Service monitor app URL. */
     service_monitor_app?: string;
-    /** Service URL in staging. */
-    service_staging_url?: string;
-    /** Service URL in production. */
-    service_production_url?: string;
+    /** API endpoint. */
+    api_endpoint?: JsonObject;
   }
 
   /** An entry in the global catalog. */
@@ -1516,8 +1606,8 @@ namespace GlobalCatalogV1 {
     provider: Provider;
     /** Boolean value that describes whether the service is active. */
     active?: boolean;
-    /** Model used to describe metadata object that can be set. */
-    metadata?: ObjectMetadataSet;
+    /** Model used to describe metadata object returned. */
+    metadata?: CatalogEntryMetadata;
     /** Catalog entry's unique ID. It's the same across all catalog instances. */
     id?: string;
     catalog_crn?: any;
@@ -1529,26 +1619,122 @@ namespace GlobalCatalogV1 {
     updated?: any;
   }
 
+  /** Model used to describe metadata object returned. */
+  export interface CatalogEntryMetadata {
+    /** Boolean value that describes whether the service is compatible with the Resource Controller. */
+    rc_compatible?: boolean;
+    /** Service-related metadata. */
+    service?: CFMetaData;
+    /** Plan-related metadata. */
+    plan?: PlanMetaData;
+    /** Alias-related metadata. */
+    alias?: AliasMetaData;
+    /** Template-related metadata. */
+    template?: TemplateMetaData;
+    /** Information related to the UI presentation associated with a catalog entry. */
+    ui?: UIMetaData;
+    /** Compliance information for HIPAA and PCI. */
+    compliance?: string[];
+    /** Service Level Agreement related metadata. */
+    sla?: SLAMetaData;
+    /** Callback-related information associated with a catalog entry. */
+    callbacks?: Callbacks;
+    /** The original name of the object. */
+    original_name?: string;
+    /** Optional version of the object. */
+    version?: string;
+    /** Additional information. */
+    other?: JsonObject;
+    /** Pricing-related information. */
+    pricing?: CatalogEntryMetadataPricing;
+    /** Deployment-related metadata. */
+    deployment?: CatalogEntryMetadataDeployment;
+  }
+
   /** Deployment-related metadata. */
-  export interface DeploymentBase {
+  export interface CatalogEntryMetadataDeployment {
     /** Describes the region where the service is located. */
     location?: string;
+    /** Pointer to the location resource in the catalog. */
+    location_url?: string;
+    /** Original service location. */
+    original_location?: string;
     /** A CRN that describes the deployment. crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource]. */
     target_crn?: string;
+    /** CRN for the service. */
+    service_crn?: string;
+    /** ID for MCCP. */
+    mccp_id?: string;
     /** The broker associated with a catalog entry. */
-    broker?: DeploymentBaseBroker;
+    broker?: Broker;
     /** This deployment not only supports RC but is ready to migrate and support the RC broker for a location. */
     supports_rc_migration?: boolean;
     /** network to use during deployment. */
     target_network?: string;
   }
 
-  /** The broker associated with a catalog entry. */
-  export interface DeploymentBaseBroker {
-    /** Broker name. */
-    name?: string;
-    /** Broker guid. */
-    guid?: string;
+  /** Pricing-related information. */
+  export interface CatalogEntryMetadataPricing {
+    /** Type of plan. Valid values are `free`, `trial`, `paygo`, `bluemix-subscription`, and `ibm-subscription`. */
+    type?: string;
+    /** Defines where the pricing originates. */
+    origin?: string;
+    /** Plan-specific starting price information. */
+    starting_price?: StartingPrice;
+    /** Plan-specific cost metric structure. */
+    metrics?: Metrics[];
+  }
+
+  /** SLA Disaster Recovery-related metadata. */
+  export interface DRMetaData {
+    /** Required boolean value that describes whether disaster recovery is on. */
+    dr?: boolean;
+    /** Description of the disaster recovery implementation. */
+    description?: string;
+  }
+
+  /** Deployment-related metadata. */
+  export interface DeploymentBase {
+    /** Describes the region where the service is located. */
+    location?: string;
+    /** URL of deployment. */
+    location_url?: string;
+    /** Original service location. */
+    original_location?: string;
+    /** A CRN that describes the deployment. crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource]. */
+    target_crn?: string;
+    /** CRN for the service. */
+    service_crn?: string;
+    /** ID for MCCP. */
+    mccp_id?: string;
+    /** The broker associated with a catalog entry. */
+    broker?: Broker;
+    /** This deployment not only supports RC but is ready to migrate and support the RC broker for a location. */
+    supports_rc_migration?: boolean;
+    /** network to use during deployment. */
+    target_network?: string;
+  }
+
+  /** A paginated search result containing catalog entries. */
+  export interface EntrySearchResult {
+    /** The offset (origin 0) of the first resource in this page of search results. */
+    offset?: number;
+    /** The maximum number of resources returned in each page of search results. */
+    limit?: number;
+    /** The overall total number of resources in the search result set. */
+    count?: number;
+    /** The number of resources returned in this page of search results. */
+    resource_count?: number;
+    /** A URL for retrieving the first page of search results. */
+    first?: string;
+    /** A URL for retrieving the last page of search results. */
+    last?: string;
+    /** A URL for retrieving the previous page of search results. */
+    prev?: string;
+    /** A URL for retrieving the next page of search results. */
+    next?: string;
+    /** The resources (catalog entries) contained in this page of search results. */
+    resources?: CatalogEntry[];
   }
 
   /** Language specific translation of translation properties, like label and description. */
@@ -1569,12 +1755,42 @@ namespace GlobalCatalogV1 {
     feature_image?: string;
   }
 
+  /** log object describing who did what. */
+  export interface Message {
+    /** id of catalog entry. */
+    id?: string;
+    /** Information related to the visibility of a catalog entry. */
+    effective?: Visibility;
+    /** time of action. */
+    time?: string;
+    /** user ID of person who did action. */
+    who_id?: string;
+    /** name of person who did action. */
+    who_name?: string;
+    /** user email of person who did action. */
+    who_email?: string;
+    /** Global catalog instance where this occured. */
+    instance?: string;
+    /** transaction id associatd with action. */
+    gid?: string;
+    /** type of action taken. */
+    type?: string;
+    /** message describing action. */
+    message?: string;
+    /** JSON object containing details on changes made to object data. */
+    data?: JsonObject;
+  }
+
   /** Plan-specific cost metrics information. */
   export interface Metrics {
+    /** The part reference. */
+    part_ref?: string;
     /** The metric ID or part number. */
     metric_id?: string;
     /** The tier model. */
     tier_model?: string;
+    /** The unit to charge. */
+    charge_unit?: string;
     /** The charge unit name. */
     charge_unit_name?: string;
     /** The charge unit quantity. */
@@ -1585,20 +1801,68 @@ namespace GlobalCatalogV1 {
     charge_unit_display_name?: string;
     /** Usage limit for the metric. */
     usage_cap_qty?: number;
+    /** Display capacity. */
+    display_cap?: number;
+    /** Effective from time. */
+    effective_from?: string;
+    /** Effective until time. */
+    effective_until?: string;
     /** The pricing per metric by country and currency. */
     amounts?: Amount[];
   }
 
-  /** Alias-related metadata. */
-  export interface ObjectMetadataBaseAlias {
-    /** Type of alias. */
-    type?: string;
-    /** Points to the plan that this object is an alias for. */
-    plan_id?: string;
+  /** Model used to describe metadata object that can be set. */
+  export interface ObjectMetadataSet {
+    /** Boolean value that describes whether the service is compatible with the Resource Controller. */
+    rc_compatible?: boolean;
+    /** Service-related metadata. */
+    service?: CFMetaData;
+    /** Plan-related metadata. */
+    plan?: PlanMetaData;
+    /** Alias-related metadata. */
+    alias?: AliasMetaData;
+    /** Template-related metadata. */
+    template?: TemplateMetaData;
+    /** Information related to the UI presentation associated with a catalog entry. */
+    ui?: UIMetaData;
+    /** Compliance information for HIPAA and PCI. */
+    compliance?: string[];
+    /** Service Level Agreement related metadata. */
+    sla?: SLAMetaData;
+    /** Callback-related information associated with a catalog entry. */
+    callbacks?: Callbacks;
+    /** The original name of the object. */
+    original_name?: string;
+    /** Optional version of the object. */
+    version?: string;
+    /** Additional information. */
+    other?: JsonObject;
+    /** Pricing-related information. */
+    pricing?: PricingSet;
+    /** Deployment-related metadata. */
+    deployment?: DeploymentBase;
+  }
+
+  /** Overview is nested in the top level. The key value pair is `[_language_]overview_ui`. */
+  export interface Overview {
+    /** The translated display name. */
+    display_name: string;
+    /** The translated long description. */
+    long_description: string;
+    /** The translated description. */
+    description: string;
+    /** The translated description that will be featured. */
+    featured_description?: string;
+  }
+
+  /** Overview is nested in the top level. The key value pair is `[_language_]overview_ui`. */
+  export interface OverviewUI {
+    /** OverviewUI accepts additional properties. */
+    [propName: string]: any;
   }
 
   /** Plan-related metadata. */
-  export interface ObjectMetadataBasePlan {
+  export interface PlanMetaData {
     /** Boolean value that describes whether the service can be bound to an application. */
     bindable?: boolean;
     /** Boolean value that describes whether the service can be reserved. */
@@ -1618,155 +1882,7 @@ namespace GlobalCatalogV1 {
     /** If the field is imported from Cloud Foundry, the Cloud Foundry region's GUID. This is a required field. For
      *  example, `us-south=123`.
      */
-    cf_guid?: string;
-  }
-
-  /** Service-related metadata. */
-  export interface ObjectMetadataBaseService {
-    /** Type of service. */
-    type?: string;
-    /** Boolean value that describes whether the service is compatible with Identity and Access Management. */
-    iam_compatible?: boolean;
-    /** Boolean value that describes whether the service has a unique API key. */
-    unique_api_key?: boolean;
-    /** Boolean value that describes whether the service is provisionable or not. You may need sales or support to
-     *  create this service.
-     */
-    provisionable?: boolean;
-    /** Boolean value that describes whether the service supports asynchronous provisioning. */
-    async_provisioning_supported?: boolean;
-    /** Boolean value that describes whether the service supports asynchronous unprovisioning. */
-    async_unprovisioning_supported?: boolean;
-    /** If the field is imported from Cloud Foundry, the Cloud Foundry region's GUID. This is a required field. For
-     *  example, `us-south=123`.
-     */
-    cf_guid?: string;
-    /** Boolean value that describes whether you can create bindings for this service. */
-    bindable?: boolean;
-    /** Service dependencies. */
-    requires?: string[];
-    /** Boolean value that describes whether the service supports upgrade or downgrade for some plans. */
-    plan_updateable?: boolean;
-    /** String that describes whether the service is active or inactive. */
-    state?: string;
-    /** Boolean value that describes whether the service check is enabled. */
-    service_check_enabled?: boolean;
-    /** Test check interval. */
-    test_check_interval?: number;
-    /** Boolean value that describes whether the service supports service keys. */
-    service_key_supported?: boolean;
-  }
-
-  /** Service Level Agreement related metadata. */
-  export interface ObjectMetadataBaseSla {
-    /** Required Service License Agreement Terms of Use. */
-    terms?: string;
-    /** Required deployment type. Valid values are dedicated, local, or public. It can be Single or Multi tennancy,
-     *  more specifically on a Server, VM, Physical, or Pod.
-     */
-    tenancy?: string;
-    /** Provisioning reliability, for example, 99.95. */
-    provisioning?: string;
-    /** Uptime reliability of the service, for example, 99.95. */
-    responsiveness?: string;
-    /** SLA Disaster Recovery-related metadata. */
-    dr?: ObjectMetadataBaseSlaDr;
-  }
-
-  /** SLA Disaster Recovery-related metadata. */
-  export interface ObjectMetadataBaseSlaDr {
-    /** Required boolean value that describes whether disaster recovery is on. */
-    dr?: boolean;
-    /** Description of the disaster recovery implementation. */
-    description?: string;
-  }
-
-  /** Template-related metadata. */
-  export interface ObjectMetadataBaseTemplate {
-    /** List of required offering or plan IDs. */
-    services?: string[];
-    /** Cloud Foundry instance memory value. */
-    default_memory?: number;
-    /** Start Command. */
-    start_cmd?: string;
-    /** Location of your applications source files. */
-    source?: ObjectMetadataBaseTemplateSource;
-    /** ID of the runtime. */
-    runtime_catalog_id?: string;
-    /** ID of the Cloud Foundry runtime. */
-    cf_runtime_id?: string;
-    /** ID of the boilerplate or template. */
-    template_id?: string;
-    /** File path to the executable file for the template. */
-    executable_file?: string;
-    /** ID of the buildpack used by the template. */
-    buildpack?: string;
-    /** Environment variables for the template. */
-    environment_variables?: ObjectMetadataBaseTemplateEnvironmentVariables;
-  }
-
-  /** Environment variables for the template. */
-  export interface ObjectMetadataBaseTemplateEnvironmentVariables {
-    /** Key is the editable first string in a key:value pair of environment variables. */
-    key?: string;
-  }
-
-  /** Location of your applications source files. */
-  export interface ObjectMetadataBaseTemplateSource {
-    /** Path to your application. */
-    path?: string;
-    /** Type of source, for example, git. */
-    type?: string;
-    /** URL to source. */
-    url?: string;
-  }
-
-  /** Model used to describe metadata object that can be set. */
-  export interface ObjectMetadataSet {
-    /** Boolean value that describes whether the service is compatible with the Resource Controller. */
-    rc_compatible?: boolean;
-    /** Information related to the UI presentation associated with a catalog entry. */
-    ui?: UIMetaData;
-    /** Compliance information for HIPAA and PCI. */
-    compliance?: string[];
-    /** Service-related metadata. */
-    service?: ObjectMetadataBaseService;
-    /** Plan-related metadata. */
-    plan?: ObjectMetadataBasePlan;
-    /** Template-related metadata. */
-    template?: ObjectMetadataBaseTemplate;
-    /** Alias-related metadata. */
-    alias?: ObjectMetadataBaseAlias;
-    /** Service Level Agreement related metadata. */
-    sla?: ObjectMetadataBaseSla;
-    /** Callback-related information associated with a catalog entry. */
-    callbacks?: Callbacks;
-    /** Optional version of the object. */
-    version?: string;
-    /** The original name of the object. */
-    original_name?: string;
-    /** Additional information. */
-    other?: JsonObject;
-    /** Pricing-related information. */
-    pricing?: PricingSet;
-    /** Deployment-related metadata. */
-    deployment?: DeploymentBase;
-  }
-
-  /** Overview is nested in the top level. The key value pair is `[_language_]overview_ui`. */
-  export interface Overview {
-    /** The translated display name. */
-    display_name: string;
-    /** The translated long description. */
-    long_description: string;
-    /** The translated description. */
-    description: string;
-  }
-
-  /** Overview is nested in the top level. The key value pair is `[_language_]overview_ui`. */
-  export interface OverviewUI {
-    /** OverviewUI accepts additional properties. */
-    [propName: string]: any;
+    cf_guid?: JsonObject;
   }
 
   /** Pricing-related information. */
@@ -1774,7 +1890,7 @@ namespace GlobalCatalogV1 {
     /** Pricing tier. */
     quantity_tier?: number;
     /** Price in the selected currency. */
-    price?: number;
+    Price?: number;
   }
 
   /** Pricing-related information. */
@@ -1813,16 +1929,30 @@ namespace GlobalCatalogV1 {
     phone?: string;
   }
 
-  /** The results obtained by performing a search. */
-  export interface SearchResult {
-    /** Returned Page Number. */
-    page?: string;
-    /** Results Per Page – if the page is full. */
-    results_per_page?: string;
-    /** Total number of results. */
-    total_results?: string;
-    /** Resulting objects. */
-    resources?: JsonObject[];
+  /** Service Level Agreement related metadata. */
+  export interface SLAMetaData {
+    /** Required Service License Agreement Terms of Use. */
+    terms?: string;
+    /** Required deployment type. Valid values are dedicated, local, or public. It can be Single or Multi tennancy,
+     *  more specifically on a Server, VM, Physical, or Pod.
+     */
+    tenancy?: string;
+    /** Provisioning reliability, for example, 99.95. */
+    provisioning?: string;
+    /** Uptime reliability of the service, for example, 99.95. */
+    responsiveness?: string;
+    /** SLA Disaster Recovery-related metadata. */
+    dr?: DRMetaData;
+  }
+
+  /** Location of your applications source files. */
+  export interface SourceMetaData {
+    /** Path to your application. */
+    path?: string;
+    /** Type of source, for example, git. */
+    type?: string;
+    /** URL to source. */
+    url?: string;
   }
 
   /** Plan-specific starting price information. */
@@ -1831,6 +1961,8 @@ namespace GlobalCatalogV1 {
     plan_id?: string;
     /** ID of the deployment the starting price is calculated. */
     deployment_id?: string;
+    /** Pricing unit. */
+    unit?: string;
     /** The pricing per metric by country and currency. */
     amount?: Amount[];
   }
@@ -1844,13 +1976,37 @@ namespace GlobalCatalogV1 {
     /** Warning that a message is not creatable. */
     not_creatable_msg?: string;
     /** Warning that a robot message is not creatable. */
-    not_creatable_robot_msg?: string;
+    not_creatable__robot_msg?: string;
     /** Warning for deprecation. */
     deprecation_warning?: string;
     /** Popup warning message. */
     popup_warning_message?: string;
     /** Instructions for UI strings. */
     instruction?: string;
+  }
+
+  /** Template-related metadata. */
+  export interface TemplateMetaData {
+    /** List of required offering or plan IDs. */
+    services?: string[];
+    /** Cloud Foundry instance memory value. */
+    default_memory?: number;
+    /** Start Command. */
+    start_cmd?: string;
+    /** Location of your applications source files. */
+    source?: SourceMetaData;
+    /** ID of the runtime. */
+    runtime_catalog_id?: string;
+    /** ID of the Cloud Foundry runtime. */
+    cf_runtime_id?: string;
+    /** ID of the boilerplate or template. */
+    template_id?: string;
+    /** File path to the executable file for the template. */
+    executable_file?: string;
+    /** ID of the buildpack used by the template. */
+    buildpack?: string;
+    /** Environment variables (key/value pairs) for the template. */
+    environment_variables?: JsonObject;
   }
 
   /** Information related to the UI presentation associated with a catalog entry. */
@@ -1867,8 +2023,6 @@ namespace GlobalCatalogV1 {
     navigation_order?: string[];
     /** Describes whether this entry is able to be created from the UI element or CLI. */
     not_creatable?: boolean;
-    /** Describes whether a plan or flavor is reservable. */
-    reservable?: boolean;
     /** ID of the primary offering for a group. */
     primary_offering_id?: string;
     /** Alert to ACE to allow instance UI to be accessible while the provisioning state of instance is in progress. */
@@ -1877,6 +2031,12 @@ namespace GlobalCatalogV1 {
     side_by_side_index?: number;
     /** Date and time the service will no longer be available. */
     end_of_service_time?: string;
+    /** Denotes visibility. */
+    hidden?: boolean;
+    /** Denotes lite metering visibility. */
+    hide_lite_metering?: boolean;
+    /** Denotes whether an upgrade should occurr. */
+    no_upgrade_next_step?: boolean;
   }
 
   /** Media-related metadata. */
@@ -1888,7 +2048,7 @@ namespace GlobalCatalogV1 {
     /** Type of media. */
     type?: string;
     /** URL for media. */
-    url?: string;
+    URL?: string;
     /** Information related to list delimiters. */
     source?: Bullets;
   }
@@ -1913,6 +2073,12 @@ namespace GlobalCatalogV1 {
     catalog_details_url?: string;
     /** URL for deprecation documentation. */
     deprecation_doc_url?: string;
+    /** URL for dashboard. */
+    dashboard_url?: string;
+    /** URL for registration. */
+    registration_url?: string;
+    /** URL for API documentation. */
+    apidocsurl?: string;
   }
 
   /** Information related to the visibility of a catalog entry. */
@@ -1924,6 +2090,8 @@ namespace GlobalCatalogV1 {
     restrictions?: string;
     /** IAM Scope-related information associated with a catalog entry. */
     owner?: string;
+    /** Allows the visibility to be extenable. */
+    extendable?: boolean;
     /** Visibility details related to a catalog entry. */
     include?: VisibilityDetail;
     /** Visibility details related to a catalog entry. */
@@ -1945,7 +2113,7 @@ namespace GlobalCatalogV1 {
     /** (_accountid_) is the GUID of the account and the value is the scope of who set it. For setting visibility
      *  use "" as the value. It is replaced with the owner scope when saved.
      */
-    accountid?: string;
+    _accountid_?: string;
   }
 
 }

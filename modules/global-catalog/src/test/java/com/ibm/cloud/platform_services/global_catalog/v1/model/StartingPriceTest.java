@@ -57,10 +57,12 @@ public class StartingPriceTest {
     StartingPrice startingPriceModel = new StartingPrice.Builder()
       .planId("testString")
       .deploymentId("testString")
+      .unit("testString")
       .amount(new ArrayList<Amount>(Arrays.asList(amountModel)))
       .build();
     assertEquals(startingPriceModel.planId(), "testString");
     assertEquals(startingPriceModel.deploymentId(), "testString");
+    assertEquals(startingPriceModel.unit(), "testString");
     assertEquals(startingPriceModel.amount(), new ArrayList<Amount>(Arrays.asList(amountModel)));
 
     String json = TestUtilities.serialize(startingPriceModel);
@@ -69,5 +71,6 @@ public class StartingPriceTest {
     assertTrue(startingPriceModelNew instanceof StartingPrice);
     assertEquals(startingPriceModelNew.planId(), "testString");
     assertEquals(startingPriceModelNew.deploymentId(), "testString");
+    assertEquals(startingPriceModelNew.unit(), "testString");
   }
 }

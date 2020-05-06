@@ -44,13 +44,21 @@ public class DeploymentBaseTest {
 
     DeploymentBase deploymentBaseModel = new DeploymentBase.Builder()
       .location("testString")
+      .locationUrl("testString")
+      .originalLocation("testString")
       .targetCrn("testString")
+      .serviceCrn("testString")
+      .mccpId("testString")
       .broker(brokerModel)
       .supportsRcMigration(true)
       .targetNetwork("testString")
       .build();
     assertEquals(deploymentBaseModel.location(), "testString");
+    assertEquals(deploymentBaseModel.locationUrl(), "testString");
+    assertEquals(deploymentBaseModel.originalLocation(), "testString");
     assertEquals(deploymentBaseModel.targetCrn(), "testString");
+    assertEquals(deploymentBaseModel.serviceCrn(), "testString");
+    assertEquals(deploymentBaseModel.mccpId(), "testString");
     assertEquals(deploymentBaseModel.broker(), brokerModel);
     assertEquals(deploymentBaseModel.supportsRcMigration(), Boolean.valueOf(true));
     assertEquals(deploymentBaseModel.targetNetwork(), "testString");
@@ -60,7 +68,11 @@ public class DeploymentBaseTest {
     DeploymentBase deploymentBaseModelNew = TestUtilities.deserialize(json, DeploymentBase.class);
     assertTrue(deploymentBaseModelNew instanceof DeploymentBase);
     assertEquals(deploymentBaseModelNew.location(), "testString");
+    assertEquals(deploymentBaseModelNew.locationUrl(), "testString");
+    assertEquals(deploymentBaseModelNew.originalLocation(), "testString");
     assertEquals(deploymentBaseModelNew.targetCrn(), "testString");
+    assertEquals(deploymentBaseModelNew.serviceCrn(), "testString");
+    assertEquals(deploymentBaseModelNew.mccpId(), "testString");
     assertEquals(deploymentBaseModelNew.broker().toString(), brokerModel.toString());
     assertEquals(deploymentBaseModelNew.supportsRcMigration(), Boolean.valueOf(true));
     assertEquals(deploymentBaseModelNew.targetNetwork(), "testString");

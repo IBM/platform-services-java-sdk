@@ -34,7 +34,6 @@ public class UIMetaData extends GenericModel {
   protected List<String> navigationOrder;
   @SerializedName("not_creatable")
   protected Boolean notCreatable;
-  protected Boolean reservable;
   @SerializedName("primary_offering_id")
   protected String primaryOfferingId;
   @SerializedName("accessible_during_provision")
@@ -43,6 +42,11 @@ public class UIMetaData extends GenericModel {
   protected Long sideBySideIndex;
   @SerializedName("end_of_service_time")
   protected Date endOfServiceTime;
+  protected Boolean hidden;
+  @SerializedName("hide_lite_metering")
+  protected Boolean hideLiteMetering;
+  @SerializedName("no_upgrade_next_step")
+  protected Boolean noUpgradeNextStep;
 
   /**
    * Builder.
@@ -54,11 +58,13 @@ public class UIMetaData extends GenericModel {
     private Boolean embeddableDashboardFullWidth;
     private List<String> navigationOrder;
     private Boolean notCreatable;
-    private Boolean reservable;
     private String primaryOfferingId;
     private Boolean accessibleDuringProvision;
     private Long sideBySideIndex;
     private Date endOfServiceTime;
+    private Boolean hidden;
+    private Boolean hideLiteMetering;
+    private Boolean noUpgradeNextStep;
 
     private Builder(UIMetaData uiMetaData) {
       this.strings = uiMetaData.strings;
@@ -67,11 +73,13 @@ public class UIMetaData extends GenericModel {
       this.embeddableDashboardFullWidth = uiMetaData.embeddableDashboardFullWidth;
       this.navigationOrder = uiMetaData.navigationOrder;
       this.notCreatable = uiMetaData.notCreatable;
-      this.reservable = uiMetaData.reservable;
       this.primaryOfferingId = uiMetaData.primaryOfferingId;
       this.accessibleDuringProvision = uiMetaData.accessibleDuringProvision;
       this.sideBySideIndex = uiMetaData.sideBySideIndex;
       this.endOfServiceTime = uiMetaData.endOfServiceTime;
+      this.hidden = uiMetaData.hidden;
+      this.hideLiteMetering = uiMetaData.hideLiteMetering;
+      this.noUpgradeNextStep = uiMetaData.noUpgradeNextStep;
     }
 
     /**
@@ -173,17 +181,6 @@ public class UIMetaData extends GenericModel {
     }
 
     /**
-     * Set the reservable.
-     *
-     * @param reservable the reservable
-     * @return the UIMetaData builder
-     */
-    public Builder reservable(Boolean reservable) {
-      this.reservable = reservable;
-      return this;
-    }
-
-    /**
      * Set the primaryOfferingId.
      *
      * @param primaryOfferingId the primaryOfferingId
@@ -226,6 +223,39 @@ public class UIMetaData extends GenericModel {
       this.endOfServiceTime = endOfServiceTime;
       return this;
     }
+
+    /**
+     * Set the hidden.
+     *
+     * @param hidden the hidden
+     * @return the UIMetaData builder
+     */
+    public Builder hidden(Boolean hidden) {
+      this.hidden = hidden;
+      return this;
+    }
+
+    /**
+     * Set the hideLiteMetering.
+     *
+     * @param hideLiteMetering the hideLiteMetering
+     * @return the UIMetaData builder
+     */
+    public Builder hideLiteMetering(Boolean hideLiteMetering) {
+      this.hideLiteMetering = hideLiteMetering;
+      return this;
+    }
+
+    /**
+     * Set the noUpgradeNextStep.
+     *
+     * @param noUpgradeNextStep the noUpgradeNextStep
+     * @return the UIMetaData builder
+     */
+    public Builder noUpgradeNextStep(Boolean noUpgradeNextStep) {
+      this.noUpgradeNextStep = noUpgradeNextStep;
+      return this;
+    }
   }
 
   protected UIMetaData(Builder builder) {
@@ -235,11 +265,13 @@ public class UIMetaData extends GenericModel {
     embeddableDashboardFullWidth = builder.embeddableDashboardFullWidth;
     navigationOrder = builder.navigationOrder;
     notCreatable = builder.notCreatable;
-    reservable = builder.reservable;
     primaryOfferingId = builder.primaryOfferingId;
     accessibleDuringProvision = builder.accessibleDuringProvision;
     sideBySideIndex = builder.sideBySideIndex;
     endOfServiceTime = builder.endOfServiceTime;
+    hidden = builder.hidden;
+    hideLiteMetering = builder.hideLiteMetering;
+    noUpgradeNextStep = builder.noUpgradeNextStep;
   }
 
   /**
@@ -318,17 +350,6 @@ public class UIMetaData extends GenericModel {
   }
 
   /**
-   * Gets the reservable.
-   *
-   * Describes whether a plan or flavor is reservable.
-   *
-   * @return the reservable
-   */
-  public Boolean reservable() {
-    return reservable;
-  }
-
-  /**
    * Gets the primaryOfferingId.
    *
    * ID of the primary offering for a group.
@@ -370,6 +391,39 @@ public class UIMetaData extends GenericModel {
    */
   public Date endOfServiceTime() {
     return endOfServiceTime;
+  }
+
+  /**
+   * Gets the hidden.
+   *
+   * Denotes visibility.
+   *
+   * @return the hidden
+   */
+  public Boolean hidden() {
+    return hidden;
+  }
+
+  /**
+   * Gets the hideLiteMetering.
+   *
+   * Denotes lite metering visibility.
+   *
+   * @return the hideLiteMetering
+   */
+  public Boolean hideLiteMetering() {
+    return hideLiteMetering;
+  }
+
+  /**
+   * Gets the noUpgradeNextStep.
+   *
+   * Denotes whether an upgrade should occurr.
+   *
+   * @return the noUpgradeNextStep
+   */
+  public Boolean noUpgradeNextStep() {
+    return noUpgradeNextStep;
   }
 }
 

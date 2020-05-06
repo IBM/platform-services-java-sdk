@@ -45,7 +45,7 @@ public class GetArtifactOptionsTest {
     assertEquals(getArtifactOptionsModel.accept(), "testString");
     assertEquals(getArtifactOptionsModel.account(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetArtifactOptionsError() throws Throwable {
     new GetArtifactOptions.Builder().build();

@@ -41,7 +41,7 @@ public class ListArtifactsOptionsTest {
     assertEquals(listArtifactsOptionsModel.objectId(), "testString");
     assertEquals(listArtifactsOptionsModel.account(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testListArtifactsOptionsError() throws Throwable {
     new ListArtifactsOptions.Builder().build();

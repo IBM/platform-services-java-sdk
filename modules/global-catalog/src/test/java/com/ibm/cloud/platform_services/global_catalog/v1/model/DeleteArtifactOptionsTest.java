@@ -43,7 +43,7 @@ public class DeleteArtifactOptionsTest {
     assertEquals(deleteArtifactOptionsModel.artifactId(), "testString");
     assertEquals(deleteArtifactOptionsModel.account(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testDeleteArtifactOptionsError() throws Throwable {
     new DeleteArtifactOptions.Builder().build();

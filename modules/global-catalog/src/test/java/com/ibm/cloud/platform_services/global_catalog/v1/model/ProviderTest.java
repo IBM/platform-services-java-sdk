@@ -57,7 +57,7 @@ public class ProviderTest {
     assertEquals(providerModelNew.supportEmail(), "testString");
     assertEquals(providerModelNew.phone(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testProviderError() throws Throwable {
     new Provider.Builder().build();

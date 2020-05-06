@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -22,10 +23,14 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class Metrics extends GenericModel {
 
+  @SerializedName("part_ref")
+  protected String partRef;
   @SerializedName("metric_id")
   protected String metricId;
   @SerializedName("tier_model")
   protected String tierModel;
+  @SerializedName("charge_unit")
+  protected String chargeUnit;
   @SerializedName("charge_unit_name")
   protected String chargeUnitName;
   @SerializedName("charge_unit_quantity")
@@ -36,7 +41,24 @@ public class Metrics extends GenericModel {
   protected String chargeUnitDisplayName;
   @SerializedName("usage_cap_qty")
   protected Long usageCapQty;
+  @SerializedName("display_cap")
+  protected Long displayCap;
+  @SerializedName("effective_from")
+  protected Date effectiveFrom;
+  @SerializedName("effective_until")
+  protected Date effectiveUntil;
   protected List<Amount> amounts;
+
+  /**
+   * Gets the partRef.
+   *
+   * The part reference.
+   *
+   * @return the partRef
+   */
+  public String getPartRef() {
+    return partRef;
+  }
 
   /**
    * Gets the metricId.
@@ -58,6 +80,17 @@ public class Metrics extends GenericModel {
    */
   public String getTierModel() {
     return tierModel;
+  }
+
+  /**
+   * Gets the chargeUnit.
+   *
+   * The unit to charge.
+   *
+   * @return the chargeUnit
+   */
+  public String getChargeUnit() {
+    return chargeUnit;
   }
 
   /**
@@ -113,6 +146,39 @@ public class Metrics extends GenericModel {
    */
   public Long getUsageCapQty() {
     return usageCapQty;
+  }
+
+  /**
+   * Gets the displayCap.
+   *
+   * Display capacity.
+   *
+   * @return the displayCap
+   */
+  public Long getDisplayCap() {
+    return displayCap;
+  }
+
+  /**
+   * Gets the effectiveFrom.
+   *
+   * Effective from time.
+   *
+   * @return the effectiveFrom
+   */
+  public Date getEffectiveFrom() {
+    return effectiveFrom;
+  }
+
+  /**
+   * Gets the effectiveUntil.
+   *
+   * Effective until time.
+   *
+   * @return the effectiveUntil
+   */
+  public Date getEffectiveUntil() {
+    return effectiveUntil;
   }
 
   /**

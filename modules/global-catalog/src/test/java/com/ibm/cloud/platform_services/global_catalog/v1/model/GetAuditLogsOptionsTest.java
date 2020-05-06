@@ -49,7 +49,7 @@ public class GetAuditLogsOptionsTest {
     assertEquals(getAuditLogsOptionsModel.offset(), Long.valueOf("26"));
     assertEquals(getAuditLogsOptionsModel.limit(), Long.valueOf("26"));
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetAuditLogsOptionsError() throws Throwable {
     new GetAuditLogsOptions.Builder().build();

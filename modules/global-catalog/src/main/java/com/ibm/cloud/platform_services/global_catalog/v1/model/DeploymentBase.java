@@ -21,8 +21,16 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class DeploymentBase extends GenericModel {
 
   protected String location;
+  @SerializedName("location_url")
+  protected String locationUrl;
+  @SerializedName("original_location")
+  protected String originalLocation;
   @SerializedName("target_crn")
   protected String targetCrn;
+  @SerializedName("service_crn")
+  protected String serviceCrn;
+  @SerializedName("mccp_id")
+  protected String mccpId;
   protected Broker broker;
   @SerializedName("supports_rc_migration")
   protected Boolean supportsRcMigration;
@@ -34,14 +42,22 @@ public class DeploymentBase extends GenericModel {
    */
   public static class Builder {
     private String location;
+    private String locationUrl;
+    private String originalLocation;
     private String targetCrn;
+    private String serviceCrn;
+    private String mccpId;
     private Broker broker;
     private Boolean supportsRcMigration;
     private String targetNetwork;
 
     private Builder(DeploymentBase deploymentBase) {
       this.location = deploymentBase.location;
+      this.locationUrl = deploymentBase.locationUrl;
+      this.originalLocation = deploymentBase.originalLocation;
       this.targetCrn = deploymentBase.targetCrn;
+      this.serviceCrn = deploymentBase.serviceCrn;
+      this.mccpId = deploymentBase.mccpId;
       this.broker = deploymentBase.broker;
       this.supportsRcMigration = deploymentBase.supportsRcMigration;
       this.targetNetwork = deploymentBase.targetNetwork;
@@ -74,6 +90,28 @@ public class DeploymentBase extends GenericModel {
     }
 
     /**
+     * Set the locationUrl.
+     *
+     * @param locationUrl the locationUrl
+     * @return the DeploymentBase builder
+     */
+    public Builder locationUrl(String locationUrl) {
+      this.locationUrl = locationUrl;
+      return this;
+    }
+
+    /**
+     * Set the originalLocation.
+     *
+     * @param originalLocation the originalLocation
+     * @return the DeploymentBase builder
+     */
+    public Builder originalLocation(String originalLocation) {
+      this.originalLocation = originalLocation;
+      return this;
+    }
+
+    /**
      * Set the targetCrn.
      *
      * @param targetCrn the targetCrn
@@ -81,6 +119,28 @@ public class DeploymentBase extends GenericModel {
      */
     public Builder targetCrn(String targetCrn) {
       this.targetCrn = targetCrn;
+      return this;
+    }
+
+    /**
+     * Set the serviceCrn.
+     *
+     * @param serviceCrn the serviceCrn
+     * @return the DeploymentBase builder
+     */
+    public Builder serviceCrn(String serviceCrn) {
+      this.serviceCrn = serviceCrn;
+      return this;
+    }
+
+    /**
+     * Set the mccpId.
+     *
+     * @param mccpId the mccpId
+     * @return the DeploymentBase builder
+     */
+    public Builder mccpId(String mccpId) {
+      this.mccpId = mccpId;
       return this;
     }
 
@@ -120,7 +180,11 @@ public class DeploymentBase extends GenericModel {
 
   protected DeploymentBase(Builder builder) {
     location = builder.location;
+    locationUrl = builder.locationUrl;
+    originalLocation = builder.originalLocation;
     targetCrn = builder.targetCrn;
+    serviceCrn = builder.serviceCrn;
+    mccpId = builder.mccpId;
     broker = builder.broker;
     supportsRcMigration = builder.supportsRcMigration;
     targetNetwork = builder.targetNetwork;
@@ -147,6 +211,28 @@ public class DeploymentBase extends GenericModel {
   }
 
   /**
+   * Gets the locationUrl.
+   *
+   * URL of deployment.
+   *
+   * @return the locationUrl
+   */
+  public String locationUrl() {
+    return locationUrl;
+  }
+
+  /**
+   * Gets the originalLocation.
+   *
+   * Original service location.
+   *
+   * @return the originalLocation
+   */
+  public String originalLocation() {
+    return originalLocation;
+  }
+
+  /**
    * Gets the targetCrn.
    *
    * A CRN that describes the deployment. crn:v1:[cname]:[ctype]:[location]:[scope]::[resource-type]:[resource].
@@ -155,6 +241,28 @@ public class DeploymentBase extends GenericModel {
    */
   public String targetCrn() {
     return targetCrn;
+  }
+
+  /**
+   * Gets the serviceCrn.
+   *
+   * CRN for the service.
+   *
+   * @return the serviceCrn
+   */
+  public String serviceCrn() {
+    return serviceCrn;
+  }
+
+  /**
+   * Gets the mccpId.
+   *
+   * ID for MCCP.
+   *
+   * @return the mccpId
+   */
+  public String mccpId() {
+    return mccpId;
   }
 
   /**

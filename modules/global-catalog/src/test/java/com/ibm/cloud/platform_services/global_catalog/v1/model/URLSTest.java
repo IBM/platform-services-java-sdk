@@ -44,6 +44,9 @@ public class URLSTest {
       .customCreatePageUrl("testString")
       .catalogDetailsUrl("testString")
       .deprecationDocUrl("testString")
+      .dashboardUrl("testString")
+      .registrationUrl("testString")
+      .apidocsurl("testString")
       .build();
     assertEquals(urlsModel.docUrl(), "testString");
     assertEquals(urlsModel.instructionsUrl(), "testString");
@@ -54,6 +57,9 @@ public class URLSTest {
     assertEquals(urlsModel.customCreatePageUrl(), "testString");
     assertEquals(urlsModel.catalogDetailsUrl(), "testString");
     assertEquals(urlsModel.deprecationDocUrl(), "testString");
+    assertEquals(urlsModel.dashboardUrl(), "testString");
+    assertEquals(urlsModel.registrationUrl(), "testString");
+    assertEquals(urlsModel.apidocsurl(), "testString");
 
     String json = TestUtilities.serialize(urlsModel);
 
@@ -68,5 +74,8 @@ public class URLSTest {
     assertEquals(urlsModelNew.customCreatePageUrl(), "testString");
     assertEquals(urlsModelNew.catalogDetailsUrl(), "testString");
     assertEquals(urlsModelNew.deprecationDocUrl(), "testString");
+    assertEquals(urlsModelNew.dashboardUrl(), "testString");
+    assertEquals(urlsModelNew.registrationUrl(), "testString");
+    assertEquals(urlsModelNew.apidocsurl(), "testString");
   }
 }

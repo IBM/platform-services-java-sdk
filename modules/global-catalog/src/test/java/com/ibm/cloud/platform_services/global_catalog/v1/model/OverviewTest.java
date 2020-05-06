@@ -38,10 +38,12 @@ public class OverviewTest {
       .displayName("testString")
       .longDescription("testString")
       .description("testString")
+      .featuredDescription("testString")
       .build();
     assertEquals(overviewModel.displayName(), "testString");
     assertEquals(overviewModel.longDescription(), "testString");
     assertEquals(overviewModel.description(), "testString");
+    assertEquals(overviewModel.featuredDescription(), "testString");
 
     String json = TestUtilities.serialize(overviewModel);
 
@@ -50,8 +52,9 @@ public class OverviewTest {
     assertEquals(overviewModelNew.displayName(), "testString");
     assertEquals(overviewModelNew.longDescription(), "testString");
     assertEquals(overviewModelNew.description(), "testString");
+    assertEquals(overviewModelNew.featuredDescription(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testOverviewError() throws Throwable {
     new Overview.Builder().build();

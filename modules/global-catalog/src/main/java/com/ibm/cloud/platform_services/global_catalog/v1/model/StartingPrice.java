@@ -27,6 +27,7 @@ public class StartingPrice extends GenericModel {
   protected String planId;
   @SerializedName("deployment_id")
   protected String deploymentId;
+  protected String unit;
   protected List<Amount> amount;
 
   /**
@@ -35,11 +36,13 @@ public class StartingPrice extends GenericModel {
   public static class Builder {
     private String planId;
     private String deploymentId;
+    private String unit;
     private List<Amount> amount;
 
     private Builder(StartingPrice startingPrice) {
       this.planId = startingPrice.planId;
       this.deploymentId = startingPrice.deploymentId;
+      this.unit = startingPrice.unit;
       this.amount = startingPrice.amount;
     }
 
@@ -97,6 +100,17 @@ public class StartingPrice extends GenericModel {
     }
 
     /**
+     * Set the unit.
+     *
+     * @param unit the unit
+     * @return the StartingPrice builder
+     */
+    public Builder unit(String unit) {
+      this.unit = unit;
+      return this;
+    }
+
+    /**
      * Set the amount.
      * Existing amount will be replaced.
      *
@@ -112,6 +126,7 @@ public class StartingPrice extends GenericModel {
   protected StartingPrice(Builder builder) {
     planId = builder.planId;
     deploymentId = builder.deploymentId;
+    unit = builder.unit;
     amount = builder.amount;
   }
 
@@ -144,6 +159,17 @@ public class StartingPrice extends GenericModel {
    */
   public String deploymentId() {
     return deploymentId;
+  }
+
+  /**
+   * Gets the unit.
+   *
+   * Pricing unit.
+   *
+   * @return the unit
+   */
+  public String unit() {
+    return unit;
   }
 
   /**

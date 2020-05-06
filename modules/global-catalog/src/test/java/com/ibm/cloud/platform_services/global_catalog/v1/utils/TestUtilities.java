@@ -67,7 +67,7 @@ public class TestUtilities {
         } catch (Exception e) {
             return null;
         }
-        
+
         return queryMap;
     }
 

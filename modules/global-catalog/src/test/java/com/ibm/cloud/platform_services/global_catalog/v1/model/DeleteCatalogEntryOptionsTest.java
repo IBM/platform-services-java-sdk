@@ -43,7 +43,7 @@ public class DeleteCatalogEntryOptionsTest {
     assertEquals(deleteCatalogEntryOptionsModel.account(), "testString");
     assertEquals(deleteCatalogEntryOptionsModel.force(), Boolean.valueOf(true));
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testDeleteCatalogEntryOptionsError() throws Throwable {
     new DeleteCatalogEntryOptions.Builder().build();

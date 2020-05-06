@@ -21,6 +21,7 @@ public class Visibility extends GenericModel {
 
   protected String restrictions;
   protected String owner;
+  protected Boolean extendable;
   protected VisibilityDetail include;
   protected VisibilityDetail exclude;
   protected Boolean approved;
@@ -29,10 +30,12 @@ public class Visibility extends GenericModel {
    * Builder.
    */
   public static class Builder {
+    private Boolean extendable;
     private VisibilityDetail include;
     private VisibilityDetail exclude;
 
     private Builder(Visibility visibility) {
+      this.extendable = visibility.extendable;
       this.include = visibility.include;
       this.exclude = visibility.exclude;
     }
@@ -50,6 +53,17 @@ public class Visibility extends GenericModel {
      */
     public Visibility build() {
       return new Visibility(this);
+    }
+
+    /**
+     * Set the extendable.
+     *
+     * @param extendable the extendable
+     * @return the Visibility builder
+     */
+    public Builder extendable(Boolean extendable) {
+      this.extendable = extendable;
+      return this;
     }
 
     /**
@@ -76,6 +90,7 @@ public class Visibility extends GenericModel {
   }
 
   protected Visibility(Builder builder) {
+    extendable = builder.extendable;
     include = builder.include;
     exclude = builder.exclude;
   }
@@ -111,6 +126,17 @@ public class Visibility extends GenericModel {
    */
   public String owner() {
     return owner;
+  }
+
+  /**
+   * Gets the extendable.
+   *
+   * Allows the visibility to be extenable.
+   *
+   * @return the extendable
+   */
+  public Boolean extendable() {
+    return extendable;
   }
 
   /**

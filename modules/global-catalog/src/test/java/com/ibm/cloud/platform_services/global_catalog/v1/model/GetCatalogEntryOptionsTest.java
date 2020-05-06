@@ -49,7 +49,7 @@ public class GetCatalogEntryOptionsTest {
     assertEquals(getCatalogEntryOptionsModel.complete(), "testString");
     assertEquals(getCatalogEntryOptionsModel.depth(), Long.valueOf("26"));
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetCatalogEntryOptionsError() throws Throwable {
     new GetCatalogEntryOptions.Builder().build();

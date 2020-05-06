@@ -55,7 +55,7 @@ public class GetChildObjectsOptionsTest {
     assertEquals(getChildObjectsOptionsModel.languages(), "testString");
     assertEquals(getChildObjectsOptionsModel.complete(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetChildObjectsOptionsError() throws Throwable {
     new GetChildObjectsOptions.Builder().build();

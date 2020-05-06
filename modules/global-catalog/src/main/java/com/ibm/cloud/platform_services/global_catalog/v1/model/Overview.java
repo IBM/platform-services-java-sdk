@@ -25,6 +25,8 @@ public class Overview extends GenericModel {
   @SerializedName("long_description")
   protected String longDescription;
   protected String description;
+  @SerializedName("featured_description")
+  protected String featuredDescription;
 
   /**
    * Builder.
@@ -33,11 +35,13 @@ public class Overview extends GenericModel {
     private String displayName;
     private String longDescription;
     private String description;
+    private String featuredDescription;
 
     private Builder(Overview overview) {
       this.displayName = overview.displayName;
       this.longDescription = overview.longDescription;
       this.description = overview.description;
+      this.featuredDescription = overview.featuredDescription;
     }
 
     /**
@@ -100,6 +104,17 @@ public class Overview extends GenericModel {
       this.description = description;
       return this;
     }
+
+    /**
+     * Set the featuredDescription.
+     *
+     * @param featuredDescription the featuredDescription
+     * @return the Overview builder
+     */
+    public Builder featuredDescription(String featuredDescription) {
+      this.featuredDescription = featuredDescription;
+      return this;
+    }
   }
 
   protected Overview(Builder builder) {
@@ -112,6 +127,7 @@ public class Overview extends GenericModel {
     displayName = builder.displayName;
     longDescription = builder.longDescription;
     description = builder.description;
+    featuredDescription = builder.featuredDescription;
   }
 
   /**
@@ -154,6 +170,17 @@ public class Overview extends GenericModel {
    */
   public String description() {
     return description;
+  }
+
+  /**
+   * Gets the featuredDescription.
+   *
+   * The translated description that will be featured.
+   *
+   * @return the featuredDescription
+   */
+  public String featuredDescription() {
+    return featuredDescription;
   }
 }
 

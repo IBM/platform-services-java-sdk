@@ -48,7 +48,7 @@ public class UploadArtifactOptionsTest {
     assertEquals(uploadArtifactOptionsModel.contentType(), "testString");
     assertEquals(uploadArtifactOptionsModel.account(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testUploadArtifactOptionsError() throws Throwable {
     new UploadArtifactOptions.Builder().build();

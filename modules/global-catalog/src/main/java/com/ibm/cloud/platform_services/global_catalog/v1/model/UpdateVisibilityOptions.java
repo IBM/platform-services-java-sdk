@@ -20,6 +20,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class UpdateVisibilityOptions extends GenericModel {
 
   protected String id;
+  protected Boolean extendable;
   protected VisibilityDetail include;
   protected VisibilityDetail exclude;
   protected String account;
@@ -29,12 +30,14 @@ public class UpdateVisibilityOptions extends GenericModel {
    */
   public static class Builder {
     private String id;
+    private Boolean extendable;
     private VisibilityDetail include;
     private VisibilityDetail exclude;
     private String account;
 
     private Builder(UpdateVisibilityOptions updateVisibilityOptions) {
       this.id = updateVisibilityOptions.id;
+      this.extendable = updateVisibilityOptions.extendable;
       this.include = updateVisibilityOptions.include;
       this.exclude = updateVisibilityOptions.exclude;
       this.account = updateVisibilityOptions.account;
@@ -72,6 +75,17 @@ public class UpdateVisibilityOptions extends GenericModel {
      */
     public Builder id(String id) {
       this.id = id;
+      return this;
+    }
+
+    /**
+     * Set the extendable.
+     *
+     * @param extendable the extendable
+     * @return the UpdateVisibilityOptions builder
+     */
+    public Builder extendable(Boolean extendable) {
+      this.extendable = extendable;
       return this;
     }
 
@@ -115,6 +129,7 @@ public class UpdateVisibilityOptions extends GenericModel {
      * @return the UpdateVisibilityOptions builder
      */
     public Builder visibility(Visibility visibility) {
+      this.extendable = visibility.extendable();
       this.include = visibility.include();
       this.exclude = visibility.exclude();
       return this;
@@ -125,6 +140,7 @@ public class UpdateVisibilityOptions extends GenericModel {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
     id = builder.id;
+    extendable = builder.extendable;
     include = builder.include;
     exclude = builder.exclude;
     account = builder.account;
@@ -148,6 +164,17 @@ public class UpdateVisibilityOptions extends GenericModel {
    */
   public String id() {
     return id;
+  }
+
+  /**
+   * Gets the extendable.
+   *
+   * Allows the visibility to be extenable.
+   *
+   * @return the extendable
+   */
+  public Boolean extendable() {
+    return extendable;
   }
 
   /**

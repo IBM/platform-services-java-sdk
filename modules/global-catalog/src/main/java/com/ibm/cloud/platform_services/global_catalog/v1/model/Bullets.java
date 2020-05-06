@@ -22,7 +22,7 @@ public class Bullets extends GenericModel {
   protected String title;
   protected String description;
   protected String icon;
-  protected String quantity;
+  protected Long quantity;
 
   /**
    * Builder.
@@ -31,7 +31,7 @@ public class Bullets extends GenericModel {
     private String title;
     private String description;
     private String icon;
-    private String quantity;
+    private Long quantity;
 
     private Builder(Bullets bullets) {
       this.title = bullets.title;
@@ -94,7 +94,7 @@ public class Bullets extends GenericModel {
      * @param quantity the quantity
      * @return the Bullets builder
      */
-    public Builder quantity(String quantity) {
+    public Builder quantity(long quantity) {
       this.quantity = quantity;
       return this;
     }
@@ -156,7 +156,7 @@ public class Bullets extends GenericModel {
    *
    * @return the quantity
    */
-  public String quantity() {
+  public Long quantity() {
     return quantity;
   }
 }

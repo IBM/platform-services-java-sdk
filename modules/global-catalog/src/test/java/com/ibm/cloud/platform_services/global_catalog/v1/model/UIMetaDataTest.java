@@ -45,12 +45,12 @@ public class UIMetaDataTest {
       .title("testString")
       .description("testString")
       .icon("testString")
-      .quantity("testString")
+      .quantity(Long.valueOf("26"))
       .build();
     assertEquals(bulletsModel.title(), "testString");
     assertEquals(bulletsModel.description(), "testString");
     assertEquals(bulletsModel.icon(), "testString");
-    assertEquals(bulletsModel.quantity(), "testString");
+    assertEquals(bulletsModel.quantity(), Long.valueOf("26"));
 
     UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
       .caption("testString")
@@ -96,6 +96,9 @@ public class UIMetaDataTest {
       .customCreatePageUrl("testString")
       .catalogDetailsUrl("testString")
       .deprecationDocUrl("testString")
+      .dashboardUrl("testString")
+      .registrationUrl("testString")
+      .apidocsurl("testString")
       .build();
     assertEquals(urlsModel.docUrl(), "testString");
     assertEquals(urlsModel.instructionsUrl(), "testString");
@@ -106,6 +109,9 @@ public class UIMetaDataTest {
     assertEquals(urlsModel.customCreatePageUrl(), "testString");
     assertEquals(urlsModel.catalogDetailsUrl(), "testString");
     assertEquals(urlsModel.deprecationDocUrl(), "testString");
+    assertEquals(urlsModel.dashboardUrl(), "testString");
+    assertEquals(urlsModel.registrationUrl(), "testString");
+    assertEquals(urlsModel.apidocsurl(), "testString");
 
     UIMetaData uiMetaDataModel = new UIMetaData.Builder()
       .strings(i18NModel)
@@ -114,11 +120,13 @@ public class UIMetaDataTest {
       .embeddableDashboardFullWidth(true)
       .navigationOrder(new ArrayList<String>(Arrays.asList("testString")))
       .notCreatable(true)
-      .reservable(true)
       .primaryOfferingId("testString")
       .accessibleDuringProvision(true)
       .sideBySideIndex(Long.valueOf("26"))
       .endOfServiceTime(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .hidden(true)
+      .hideLiteMetering(true)
+      .noUpgradeNextStep(true)
       .build();
     assertEquals(uiMetaDataModel.strings(), i18NModel);
     assertEquals(uiMetaDataModel.urls(), urlsModel);
@@ -126,11 +134,13 @@ public class UIMetaDataTest {
     assertEquals(uiMetaDataModel.embeddableDashboardFullWidth(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.navigationOrder(), new ArrayList<String>(Arrays.asList("testString")));
     assertEquals(uiMetaDataModel.notCreatable(), Boolean.valueOf(true));
-    assertEquals(uiMetaDataModel.reservable(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.primaryOfferingId(), "testString");
     assertEquals(uiMetaDataModel.accessibleDuringProvision(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.sideBySideIndex(), Long.valueOf("26"));
     assertEquals(uiMetaDataModel.endOfServiceTime(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(uiMetaDataModel.hidden(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModel.hideLiteMetering(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModel.noUpgradeNextStep(), Boolean.valueOf(true));
 
     String json = TestUtilities.serialize(uiMetaDataModel);
 
@@ -141,10 +151,12 @@ public class UIMetaDataTest {
     assertEquals(uiMetaDataModelNew.embeddableDashboard(), "testString");
     assertEquals(uiMetaDataModelNew.embeddableDashboardFullWidth(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModelNew.notCreatable(), Boolean.valueOf(true));
-    assertEquals(uiMetaDataModelNew.reservable(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModelNew.primaryOfferingId(), "testString");
     assertEquals(uiMetaDataModelNew.accessibleDuringProvision(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModelNew.sideBySideIndex(), Long.valueOf("26"));
     assertEquals(uiMetaDataModelNew.endOfServiceTime().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
+    assertEquals(uiMetaDataModelNew.hidden(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModelNew.hideLiteMetering(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModelNew.noUpgradeNextStep(), Boolean.valueOf(true));
   }
 }

@@ -51,7 +51,7 @@ public class VisibilityDetailTest {
     assertTrue(visibilityDetailModelNew instanceof VisibilityDetail);
     assertEquals(visibilityDetailModelNew.accounts().toString(), visibilityDetailAccountsModel.toString());
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testVisibilityDetailError() throws Throwable {
     new VisibilityDetail.Builder().build();

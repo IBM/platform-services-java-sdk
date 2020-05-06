@@ -41,7 +41,7 @@ public class RestoreCatalogEntryOptionsTest {
     assertEquals(restoreCatalogEntryOptionsModel.id(), "testString");
     assertEquals(restoreCatalogEntryOptionsModel.account(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testRestoreCatalogEntryOptionsError() throws Throwable {
     new RestoreCatalogEntryOptions.Builder().build();

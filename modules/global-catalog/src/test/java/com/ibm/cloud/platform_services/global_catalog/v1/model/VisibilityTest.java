@@ -47,9 +47,11 @@ public class VisibilityTest {
     assertEquals(visibilityDetailModel.accounts(), visibilityDetailAccountsModel);
 
     Visibility visibilityModel = new Visibility.Builder()
+      .extendable(true)
       .include(visibilityDetailModel)
       .exclude(visibilityDetailModel)
       .build();
+    assertEquals(visibilityModel.extendable(), Boolean.valueOf(true));
     assertEquals(visibilityModel.include(), visibilityDetailModel);
     assertEquals(visibilityModel.exclude(), visibilityDetailModel);
 
@@ -57,6 +59,7 @@ public class VisibilityTest {
 
     Visibility visibilityModelNew = TestUtilities.deserialize(json, Visibility.class);
     assertTrue(visibilityModelNew instanceof Visibility);
+    assertEquals(visibilityModelNew.extendable(), Boolean.valueOf(true));
     assertEquals(visibilityModelNew.include().toString(), visibilityDetailModel.toString());
     assertEquals(visibilityModelNew.exclude().toString(), visibilityDetailModel.toString());
   }

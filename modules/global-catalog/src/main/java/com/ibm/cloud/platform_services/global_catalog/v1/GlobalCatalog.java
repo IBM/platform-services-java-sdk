@@ -447,6 +447,9 @@ public class GlobalCatalog extends BaseService {
       builder.query("account", updateVisibilityOptions.account());
     }
     final JsonObject contentJson = new JsonObject();
+    if (updateVisibilityOptions.extendable() != null) {
+      contentJson.addProperty("extendable", updateVisibilityOptions.extendable());
+    }
     if (updateVisibilityOptions.include() != null) {
       contentJson.add("include", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateVisibilityOptions.include()));
     }

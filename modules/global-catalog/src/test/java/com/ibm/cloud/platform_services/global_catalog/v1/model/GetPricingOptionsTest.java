@@ -41,7 +41,7 @@ public class GetPricingOptionsTest {
     assertEquals(getPricingOptionsModel.id(), "testString");
     assertEquals(getPricingOptionsModel.account(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetPricingOptionsError() throws Throwable {
     new GetPricingOptions.Builder().build();

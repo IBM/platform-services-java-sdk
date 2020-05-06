@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import java.util.Date;
 import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
@@ -24,7 +25,7 @@ public class Message extends GenericModel {
 
   protected String id;
   protected Visibility effective;
-  protected String time;
+  protected Date time;
   @SerializedName("who_id")
   protected String whoId;
   @SerializedName("who_name")
@@ -66,7 +67,7 @@ public class Message extends GenericModel {
    *
    * @return the time
    */
-  public String getTime() {
+  public Date getTime() {
     return time;
   }
 

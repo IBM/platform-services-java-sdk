@@ -54,7 +54,7 @@ public class ImageTest {
     assertEquals(imageModelNew.mediumImage(), "testString");
     assertEquals(imageModelNew.featureImage(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testImageError() throws Throwable {
     new Image.Builder().build();

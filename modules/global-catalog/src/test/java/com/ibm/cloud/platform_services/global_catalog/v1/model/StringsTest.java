@@ -42,12 +42,12 @@ public class StringsTest {
       .title("testString")
       .description("testString")
       .icon("testString")
-      .quantity("testString")
+      .quantity(Long.valueOf("26"))
       .build();
     assertEquals(bulletsModel.title(), "testString");
     assertEquals(bulletsModel.description(), "testString");
     assertEquals(bulletsModel.icon(), "testString");
-    assertEquals(bulletsModel.quantity(), "testString");
+    assertEquals(bulletsModel.quantity(), Long.valueOf("26"));
 
     UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
       .caption("testString")

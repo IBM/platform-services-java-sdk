@@ -39,10 +39,12 @@ public class OverviewUITest {
       .displayName("testString")
       .longDescription("testString")
       .description("testString")
+      .featuredDescription("testString")
       .build();
     assertEquals(overviewModel.displayName(), "testString");
     assertEquals(overviewModel.longDescription(), "testString");
     assertEquals(overviewModel.description(), "testString");
+    assertEquals(overviewModel.featuredDescription(), "testString");
 
     OverviewUI overviewUiModel = new OverviewUI();
     overviewUiModel.put("foo", overviewModel);

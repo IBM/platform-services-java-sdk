@@ -38,12 +38,12 @@ public class BulletsTest {
       .title("testString")
       .description("testString")
       .icon("testString")
-      .quantity("testString")
+      .quantity(Long.valueOf("26"))
       .build();
     assertEquals(bulletsModel.title(), "testString");
     assertEquals(bulletsModel.description(), "testString");
     assertEquals(bulletsModel.icon(), "testString");
-    assertEquals(bulletsModel.quantity(), "testString");
+    assertEquals(bulletsModel.quantity(), Long.valueOf("26"));
 
     String json = TestUtilities.serialize(bulletsModel);
 
@@ -52,6 +52,6 @@ public class BulletsTest {
     assertEquals(bulletsModelNew.title(), "testString");
     assertEquals(bulletsModelNew.description(), "testString");
     assertEquals(bulletsModelNew.icon(), "testString");
-    assertEquals(bulletsModelNew.quantity(), "testString");
+    assertEquals(bulletsModelNew.quantity(), Long.valueOf("26"));
   }
 }

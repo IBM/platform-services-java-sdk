@@ -58,10 +58,12 @@ public class PricingSetTest {
     StartingPrice startingPriceModel = new StartingPrice.Builder()
       .planId("testString")
       .deploymentId("testString")
+      .unit("testString")
       .amount(new ArrayList<Amount>(Arrays.asList(amountModel)))
       .build();
     assertEquals(startingPriceModel.planId(), "testString");
     assertEquals(startingPriceModel.deploymentId(), "testString");
+    assertEquals(startingPriceModel.unit(), "testString");
     assertEquals(startingPriceModel.amount(), new ArrayList<Amount>(Arrays.asList(amountModel)));
 
     PricingSet pricingSetModel = new PricingSet.Builder()

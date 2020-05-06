@@ -60,12 +60,12 @@ public class ObjectMetadataSetTest {
       .title("testString")
       .description("testString")
       .icon("testString")
-      .quantity("testString")
+      .quantity(Long.valueOf("26"))
       .build();
     assertEquals(bulletsModel.title(), "testString");
     assertEquals(bulletsModel.description(), "testString");
     assertEquals(bulletsModel.icon(), "testString");
-    assertEquals(bulletsModel.quantity(), "testString");
+    assertEquals(bulletsModel.quantity(), Long.valueOf("26"));
 
     Price priceModel = new Price.Builder()
       .quantityTier(Long.valueOf("26"))
@@ -143,10 +143,12 @@ public class ObjectMetadataSetTest {
     StartingPrice startingPriceModel = new StartingPrice.Builder()
       .planId("testString")
       .deploymentId("testString")
+      .unit("testString")
       .amount(new ArrayList<Amount>(Arrays.asList(amountModel)))
       .build();
     assertEquals(startingPriceModel.planId(), "testString");
     assertEquals(startingPriceModel.deploymentId(), "testString");
+    assertEquals(startingPriceModel.unit(), "testString");
     assertEquals(startingPriceModel.amount(), new ArrayList<Amount>(Arrays.asList(amountModel)));
 
     URLS urlsModel = new URLS.Builder()
@@ -159,6 +161,9 @@ public class ObjectMetadataSetTest {
       .customCreatePageUrl("testString")
       .catalogDetailsUrl("testString")
       .deprecationDocUrl("testString")
+      .dashboardUrl("testString")
+      .registrationUrl("testString")
+      .apidocsurl("testString")
       .build();
     assertEquals(urlsModel.docUrl(), "testString");
     assertEquals(urlsModel.instructionsUrl(), "testString");
@@ -169,6 +174,9 @@ public class ObjectMetadataSetTest {
     assertEquals(urlsModel.customCreatePageUrl(), "testString");
     assertEquals(urlsModel.catalogDetailsUrl(), "testString");
     assertEquals(urlsModel.deprecationDocUrl(), "testString");
+    assertEquals(urlsModel.dashboardUrl(), "testString");
+    assertEquals(urlsModel.registrationUrl(), "testString");
+    assertEquals(urlsModel.apidocsurl(), "testString");
 
     AliasMetaData aliasMetaDataModel = new AliasMetaData.Builder()
       .type("testString")
@@ -233,13 +241,21 @@ public class ObjectMetadataSetTest {
 
     DeploymentBase deploymentBaseModel = new DeploymentBase.Builder()
       .location("testString")
+      .locationUrl("testString")
+      .originalLocation("testString")
       .targetCrn("testString")
+      .serviceCrn("testString")
+      .mccpId("testString")
       .broker(brokerModel)
       .supportsRcMigration(true)
       .targetNetwork("testString")
       .build();
     assertEquals(deploymentBaseModel.location(), "testString");
+    assertEquals(deploymentBaseModel.locationUrl(), "testString");
+    assertEquals(deploymentBaseModel.originalLocation(), "testString");
     assertEquals(deploymentBaseModel.targetCrn(), "testString");
+    assertEquals(deploymentBaseModel.serviceCrn(), "testString");
+    assertEquals(deploymentBaseModel.mccpId(), "testString");
     assertEquals(deploymentBaseModel.broker(), brokerModel);
     assertEquals(deploymentBaseModel.supportsRcMigration(), Boolean.valueOf(true));
     assertEquals(deploymentBaseModel.targetNetwork(), "testString");
@@ -317,11 +333,13 @@ public class ObjectMetadataSetTest {
       .embeddableDashboardFullWidth(true)
       .navigationOrder(new ArrayList<String>(Arrays.asList("testString")))
       .notCreatable(true)
-      .reservable(true)
       .primaryOfferingId("testString")
       .accessibleDuringProvision(true)
       .sideBySideIndex(Long.valueOf("26"))
       .endOfServiceTime(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .hidden(true)
+      .hideLiteMetering(true)
+      .noUpgradeNextStep(true)
       .build();
     assertEquals(uiMetaDataModel.strings(), i18NModel);
     assertEquals(uiMetaDataModel.urls(), urlsModel);
@@ -329,11 +347,13 @@ public class ObjectMetadataSetTest {
     assertEquals(uiMetaDataModel.embeddableDashboardFullWidth(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.navigationOrder(), new ArrayList<String>(Arrays.asList("testString")));
     assertEquals(uiMetaDataModel.notCreatable(), Boolean.valueOf(true));
-    assertEquals(uiMetaDataModel.reservable(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.primaryOfferingId(), "testString");
     assertEquals(uiMetaDataModel.accessibleDuringProvision(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.sideBySideIndex(), Long.valueOf("26"));
     assertEquals(uiMetaDataModel.endOfServiceTime(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(uiMetaDataModel.hidden(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModel.hideLiteMetering(), Boolean.valueOf(true));
+    assertEquals(uiMetaDataModel.noUpgradeNextStep(), Boolean.valueOf(true));
 
     ObjectMetadataSet objectMetadataSetModel = new ObjectMetadataSet.Builder()
       .rcCompatible(true)

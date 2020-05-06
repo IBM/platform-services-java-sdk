@@ -39,13 +39,18 @@ public class MetricsTest {
   @Test
   public void testMetrics() throws Throwable {
     Metrics metricsModel = new Metrics();
+    assertNull(metricsModel.getPartRef());
     assertNull(metricsModel.getMetricId());
     assertNull(metricsModel.getTierModel());
+    assertNull(metricsModel.getChargeUnit());
     assertNull(metricsModel.getChargeUnitName());
     assertNull(metricsModel.getChargeUnitQuantity());
     assertNull(metricsModel.getResourceDisplayName());
     assertNull(metricsModel.getChargeUnitDisplayName());
     assertNull(metricsModel.getUsageCapQty());
+    assertNull(metricsModel.getDisplayCap());
+    assertNull(metricsModel.getEffectiveFrom());
+    assertNull(metricsModel.getEffectiveUntil());
     assertNull(metricsModel.getAmounts());
   }
 }

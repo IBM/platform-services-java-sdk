@@ -12,6 +12,8 @@
  */
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import java.util.Date;
+
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
@@ -20,7 +22,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class Artifact extends GenericModel {
 
   protected String name;
-  protected String updated;
+  protected Date updated;
   protected String url;
   protected String etag;
   protected Long size;
@@ -43,7 +45,7 @@ public class Artifact extends GenericModel {
    *
    * @return the updated
    */
-  public String getUpdated() {
+  public Date getUpdated() {
     return updated;
   }
 

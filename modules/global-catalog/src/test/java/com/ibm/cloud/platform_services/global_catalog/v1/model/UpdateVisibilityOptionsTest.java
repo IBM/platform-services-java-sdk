@@ -48,16 +48,18 @@ public class UpdateVisibilityOptionsTest {
 
     UpdateVisibilityOptions updateVisibilityOptionsModel = new UpdateVisibilityOptions.Builder()
       .id("testString")
+      .extendable(true)
       .include(visibilityDetailModel)
       .exclude(visibilityDetailModel)
       .account("testString")
       .build();
     assertEquals(updateVisibilityOptionsModel.id(), "testString");
+    assertEquals(updateVisibilityOptionsModel.extendable(), Boolean.valueOf(true));
     assertEquals(updateVisibilityOptionsModel.include(), visibilityDetailModel);
     assertEquals(updateVisibilityOptionsModel.exclude(), visibilityDetailModel);
     assertEquals(updateVisibilityOptionsModel.account(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testUpdateVisibilityOptionsError() throws Throwable {
     new UpdateVisibilityOptions.Builder().build();

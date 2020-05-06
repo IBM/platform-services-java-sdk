@@ -38,6 +38,11 @@ public class URLS extends GenericModel {
   protected String catalogDetailsUrl;
   @SerializedName("deprecation_doc_url")
   protected String deprecationDocUrl;
+  @SerializedName("dashboard_url")
+  protected String dashboardUrl;
+  @SerializedName("registration_url")
+  protected String registrationUrl;
+  protected String apidocsurl;
 
   /**
    * Builder.
@@ -52,6 +57,9 @@ public class URLS extends GenericModel {
     private String customCreatePageUrl;
     private String catalogDetailsUrl;
     private String deprecationDocUrl;
+    private String dashboardUrl;
+    private String registrationUrl;
+    private String apidocsurl;
 
     private Builder(URLS urls) {
       this.docUrl = urls.docUrl;
@@ -63,6 +71,9 @@ public class URLS extends GenericModel {
       this.customCreatePageUrl = urls.customCreatePageUrl;
       this.catalogDetailsUrl = urls.catalogDetailsUrl;
       this.deprecationDocUrl = urls.deprecationDocUrl;
+      this.dashboardUrl = urls.dashboardUrl;
+      this.registrationUrl = urls.registrationUrl;
+      this.apidocsurl = urls.apidocsurl;
     }
 
     /**
@@ -178,6 +189,39 @@ public class URLS extends GenericModel {
       this.deprecationDocUrl = deprecationDocUrl;
       return this;
     }
+
+    /**
+     * Set the dashboardUrl.
+     *
+     * @param dashboardUrl the dashboardUrl
+     * @return the URLS builder
+     */
+    public Builder dashboardUrl(String dashboardUrl) {
+      this.dashboardUrl = dashboardUrl;
+      return this;
+    }
+
+    /**
+     * Set the registrationUrl.
+     *
+     * @param registrationUrl the registrationUrl
+     * @return the URLS builder
+     */
+    public Builder registrationUrl(String registrationUrl) {
+      this.registrationUrl = registrationUrl;
+      return this;
+    }
+
+    /**
+     * Set the apidocsurl.
+     *
+     * @param apidocsurl the apidocsurl
+     * @return the URLS builder
+     */
+    public Builder apidocsurl(String apidocsurl) {
+      this.apidocsurl = apidocsurl;
+      return this;
+    }
   }
 
   protected URLS(Builder builder) {
@@ -190,6 +234,9 @@ public class URLS extends GenericModel {
     customCreatePageUrl = builder.customCreatePageUrl;
     catalogDetailsUrl = builder.catalogDetailsUrl;
     deprecationDocUrl = builder.deprecationDocUrl;
+    dashboardUrl = builder.dashboardUrl;
+    registrationUrl = builder.registrationUrl;
+    apidocsurl = builder.apidocsurl;
   }
 
   /**
@@ -298,6 +345,39 @@ public class URLS extends GenericModel {
    */
   public String deprecationDocUrl() {
     return deprecationDocUrl;
+  }
+
+  /**
+   * Gets the dashboardUrl.
+   *
+   * URL for dashboard.
+   *
+   * @return the dashboardUrl
+   */
+  public String dashboardUrl() {
+    return dashboardUrl;
+  }
+
+  /**
+   * Gets the registrationUrl.
+   *
+   * URL for registration.
+   *
+   * @return the registrationUrl
+   */
+  public String registrationUrl() {
+    return registrationUrl;
+  }
+
+  /**
+   * Gets the apidocsurl.
+   *
+   * URL for API documentation.
+   *
+   * @return the apidocsurl
+   */
+  public String apidocsurl() {
+    return apidocsurl;
   }
 }
 

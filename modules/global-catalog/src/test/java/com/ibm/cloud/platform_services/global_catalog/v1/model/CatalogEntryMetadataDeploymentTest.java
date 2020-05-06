@@ -37,7 +37,10 @@ public class CatalogEntryMetadataDeploymentTest {
   public void testCatalogEntryMetadataDeployment() throws Throwable {
     CatalogEntryMetadataDeployment catalogEntryMetadataDeploymentModel = new CatalogEntryMetadataDeployment();
     assertNull(catalogEntryMetadataDeploymentModel.getLocation());
+    assertNull(catalogEntryMetadataDeploymentModel.getOriginalLocation());
     assertNull(catalogEntryMetadataDeploymentModel.getTargetCrn());
+    assertNull(catalogEntryMetadataDeploymentModel.getServiceCrn());
+    assertNull(catalogEntryMetadataDeploymentModel.getMccpId());
     assertNull(catalogEntryMetadataDeploymentModel.getBroker());
     assertNull(catalogEntryMetadataDeploymentModel.isSupportsRcMigration());
     assertNull(catalogEntryMetadataDeploymentModel.getTargetNetwork());

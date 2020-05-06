@@ -41,7 +41,7 @@ public class GetVisibilityOptionsTest {
     assertEquals(getVisibilityOptionsModel.id(), "testString");
     assertEquals(getVisibilityOptionsModel.account(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetVisibilityOptionsError() throws Throwable {
     new GetVisibilityOptions.Builder().build();

@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.2.0...v0.3.0) (2020-05-07)
+
+
+### Features
+
+* **Global Catalog:** add service and unit test code to project ([ebdecda](https://github.com/IBM/platform-services-node-sdk/commit/ebdecda5d1d21a695b4ed466ee60087856e2eb88))
+
 # [0.2.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.1.1...v0.2.0) (2020-04-15)
 
 

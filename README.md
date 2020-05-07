@@ -8,7 +8,8 @@
 
 # IBM Cloud Platform Services Java SDK Version 0.2.2
 
-Java client library to interact with various [IBM Cloud Platform Service APIs](https://cloud.ibm.com/apidocs?category=platform_services).
+Java client library to interact with various 
+[IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
 
 <!--
   The TOC below is generated using the `markdown-toc` node package.
@@ -44,6 +45,7 @@ Changes might occur which impact applications that use this SDK.
 
 Service Name | Artifact Id 
 --- | --- 
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | global-catalog
 [Global Search](https://cloud.ibm.com/apidocs/search) | global-search
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | global-tagging
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | iam-access-groups

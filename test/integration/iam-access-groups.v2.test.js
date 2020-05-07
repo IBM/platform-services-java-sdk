@@ -36,16 +36,16 @@ describe('IamAccessGroupsV2_integration', () => {
   let service;
   let config;
   let testAccountId;
-  const testGroupName = "SDK Test Group - Node";
-  const testGroupDescription = "This group is used for integration test purposes. It can be deleted at any time.";
+  const testGroupName = 'SDK Test Group - Node';
+  const testGroupDescription = 'This group is used for integration test purposes. It can be deleted at any time.';
   let testGroupETag;
   let testGroupId;
-  const testUserId = "IBMid-1234";
-  const userType = "user";
+  const testUserId = 'IBMid-1234';
+  const userType = 'user';
   let testClaimRuleId;
   let testClaimRuleETag;
   let testAccountSettings;
-  
+
   test('should successfully complete initialization', done => {
     // Initialize the service client.
     service = IamAccessGroupsV2.newInstance();
@@ -59,13 +59,12 @@ describe('IamAccessGroupsV2_integration', () => {
 
     // Retrieve the test account id to be used with the tests.
     testAccountId = config.testAccountId;
-    
+
     expect(testAccountId).not.toBeNull();
     done();
   });
 
   test('Create an access group', async done => {
-    
     const params = {
       accountId: testAccountId,
       name: testGroupName,
@@ -111,10 +110,10 @@ describe('IamAccessGroupsV2_integration', () => {
     expect(result.account_id).toEqual(testAccountId);
     expect(result.id).toEqual(testGroupId);
     expect(result.name).toEqual(testGroupName);
-    expect(result.description).toEqual("");
+    expect(result.description).toEqual('');
 
     testGroupETag = response.headers.etag;
-    
+
     done();
   });
 
@@ -190,7 +189,7 @@ describe('IamAccessGroupsV2_integration', () => {
         {
           iam_id: testUserId,
           type: userType,
-        }
+        },
       ],
     };
 
@@ -349,7 +348,6 @@ describe('IamAccessGroupsV2_integration', () => {
       expect(err.message).toContain(testUserId);
       done();
     }
-
   });
 
   test('Delete multiple members from an access group', async done => {
@@ -367,24 +365,23 @@ describe('IamAccessGroupsV2_integration', () => {
       expect(err.message).toContain(testGroupId);
       done();
     }
-
   });
 
   test('Create an access group rule', async done => {
     expect(testGroupId).toBeDefined();
 
-    let testExpiration = 24;
+    const testExpiration = 24;
 
     const params = {
       accessGroupId: testGroupId,
       expiration: testExpiration,
-      realmName: "test realm name",
+      realmName: 'test realm name',
       conditions: [
         {
-          claim: "test claim",
-          operator: "EQUALS",
-          value: "1",
-        }
+          claim: 'test claim',
+          operator: 'EQUALS',
+          value: '1',
+        },
       ],
     };
 
@@ -474,20 +471,20 @@ describe('IamAccessGroupsV2_integration', () => {
     expect(testGroupId).toBeDefined();
     expect(testClaimRuleId).toBeDefined();
 
-    let testExpiration = 24;
+    const testExpiration = 24;
 
     const params = {
       accessGroupId: testGroupId,
       ruleId: testClaimRuleId,
       ifMatch: testClaimRuleETag,
       expiration: testExpiration,
-      realmName: "updated test realm name",
+      realmName: 'updated test realm name',
       conditions: [
         {
-          claim: "test claim",
-          operator: "EQUALS",
-          value: "1",
-        }
+          claim: 'test claim',
+          operator: 'EQUALS',
+          value: '1',
+        },
       ],
     };
 
@@ -532,7 +529,6 @@ describe('IamAccessGroupsV2_integration', () => {
   });
 
   test('Get account settings', async done => {
-
     const params = {
       accountId: testAccountId,
     };
@@ -556,7 +552,6 @@ describe('IamAccessGroupsV2_integration', () => {
   });
 
   test('Update account settings', async done => {
-
     const params = {
       accountId: testAccountId,
       publicAccessEnabled: testAccountSettings.public_access_enabled,
@@ -580,12 +575,11 @@ describe('IamAccessGroupsV2_integration', () => {
   });
 
   test('Clean up all test groups', async done => {
-   
     // List all groups in the account (minus the public access group)
     const params = {
       accountId: testAccountId,
       hidePublicAccess: true,
-    }
+    };
 
     let response;
     try {
@@ -602,14 +596,12 @@ describe('IamAccessGroupsV2_integration', () => {
     // Iterate across the groups
     let group;
     for (group of result.groups) {
-
       // Force delete each test group
       if (group.name === testGroupName) {
-        
         const params = {
           accessGroupId: group.id,
           force: true,
-        }
+        };
 
         let response;
         try {
@@ -625,6 +617,4 @@ describe('IamAccessGroupsV2_integration', () => {
 
     done();
   });
-  
 });
-

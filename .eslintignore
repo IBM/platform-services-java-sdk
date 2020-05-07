@@ -6,9 +6,9 @@ dist/
 node_modules/
 examples/**/node_modules/
 
-test/resources/auth.js
+test/resources/*.js
 # ignore emitted js
 **/*v*.js
-!test/**/*.js
+!test/integration/*.js
 lib/*.js
 scripts/typedoc/

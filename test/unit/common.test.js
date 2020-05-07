@@ -18,7 +18,6 @@
 const common = require('../../dist/lib/common');
 const { getSdkHeaders } = common;
 
-
 describe('Tests of Common Library', () => {
   describe('getSdkHeaders', () => {
     test('should return correct User-Agent header', () => {

@@ -18,7 +18,7 @@
 'use strict';
 
 const GlobalSearchV2 = require('../../dist/global-search/v2');
-const {IamAuthenticator} = require('ibm-cloud-sdk-core');
+const { IamAuthenticator } = require('ibm-cloud-sdk-core');
 const authHelper = require('../resources/auth-helper.js');
 
 const timeout = 10000; // ten seconds
@@ -52,14 +52,14 @@ describe('GlobalSearchV2_integration', () => {
     serviceUrl: config.GST_API_URL,
   };
   const globalSearch = new GlobalSearchV2(options);
-  
+
   test('should search resources', done => {
     const params = {
       query: query,
       transactionId: transactionId,
       limit: limit,
       timeout: timeout,
-    };        
+    };
     return globalSearch.search(params).then(response => {
       expect(response.hasOwnProperty('status')).toBe(true);
       expect(response.status).toBe(200);
@@ -99,7 +99,6 @@ describe('GlobalSearchV2_integration', () => {
     });
   });
 
-
   test('should get supported types', done => {
     const params3 = {};
     return globalSearch.getSupportedTypes(params3).then(response => {
@@ -110,4 +109,3 @@ describe('GlobalSearchV2_integration', () => {
     });
   });
 });
-

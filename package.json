@@ -24,10 +24,10 @@
     "jest": "jest test/",
     "test": "npm run build && npm run lint && jest test/",
     "test-unit": "npm run build && jest test/unit/",
-    "test-integration": "npm run build && jest --expand test/integration/ --reporters jest-skipped-reporter",
+    "test-integration": "npm run build && jest --expand test/integration/",
+    "test-travis": "jest --runInBand --testNamePattern='^((?!@slow).)*$' test/",
     "test-unit-travis": "jest --runInBand test/unit/",
     "test-integration-travis": "jest --runInBand --no-colors --testNamePattern='^((?!@slow).)*$' --json test/integration > test-output.log",
-    "test-travis": "jest --runInBand --testNamePattern='^((?!@slow).)*$' test/",
     "report-coverage": "codecov",
     "check-packages": "installed-check -e -d -v"
   },
@@ -39,8 +39,7 @@
     "@types/node": "^12.0.8",
     "extend": "^3.0.2",
     "ibm-cloud-sdk-core": "^2.4.0",
-    "jest-skipped-reporter": "0.0.5",
-    "dotenv": "^8.2.0"
+    "jest-skipped-reporter": "0.0.5"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.4",
@@ -61,7 +60,8 @@
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
     "typedoc": "^0.16.9",
-    "typescript": "^3.4.5"
+    "typescript": "^3.4.5",
+    "dotenv": "^8.2.0"
   },
   "jest": {
     "collectCoverage": true,

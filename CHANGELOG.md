@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/IBM/platform-services-java-sdk/compare/0.2.2...0.3.0) (2020-05-07)
+
+
+### Features
+
+* **Global Catalog:** add service to project ([#7](https://github.com/IBM/platform-services-java-sdk/issues/7)) ([da9daef](https://github.com/IBM/platform-services-java-sdk/commit/da9daefa0ade10d0b14b3a25882caf3ae4bb26a8))
+
 ## [0.2.2](https://github.com/IBM/platform-services-java-sdk/compare/0.2.1...0.2.2) (2020-05-02)
 
 

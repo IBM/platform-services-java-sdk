@@ -20,6 +20,11 @@ import static org.testng.AssertJUnit.assertNotNull;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.TimeZone;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -37,11 +42,12 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
     IamAccessGroups service = null;
+    Random random = new Random();
 
     private static final String HEADER_ETAG = "ETag";
     private static final String TEST_GROUP_NAME = "SDK Test Group - Java";
     private static final String TEST_GROUP_DESC = "This group is used for integration test purposes. It can be deleted at any time.";
-    private static final String TEST_USER_ID = "IBMid-1234";
+    private final String TEST_USER_ID = "IBMid-" + String.valueOf(random.nextInt(100000));;
     private static final String TEST_USER_TYPE = "user";
 
     String testAccountId = null;
@@ -486,15 +492,33 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
         assertNotNull(result);
         for (Group group : result.getGroups()) {
 
-            // Force delete each test group
+            // Force delete the test group (or any test groups older than 5 minutes)
             if (TEST_GROUP_NAME.equals(group.getName())) {
-                DeleteAccessGroupOptions deleteOptions = new DeleteAccessGroupOptions.Builder()
-                        .accessGroupId(group.getId())
-                        .force(true)
-                        .build();
-                Response<Void> deleteResponse = service.deleteAccessGroup(deleteOptions).execute();
-                assertNotNull(deleteResponse);
-                assertEquals(deleteResponse.getStatusCode(), 204);
+
+                try {
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    Date parsedDate = dateFormat.parse(group.getCreatedAt());
+                    Date now = new Date();
+
+                    final int FIVE_MINUTES = 5 * 60 * 1000;
+                    long createdAt = parsedDate.getTime();
+                    long fiveMinutesAgo = now.getTime() - FIVE_MINUTES;
+
+                    if (testGroupId.equals(group.getId()) || createdAt < fiveMinutesAgo) {
+                        DeleteAccessGroupOptions deleteOptions = new DeleteAccessGroupOptions.Builder()
+                                .accessGroupId(group.getId()).force(true).build();
+                        Response<Void> deleteResponse = service.deleteAccessGroup(deleteOptions).execute();
+                        assertNotNull(deleteResponse);
+                        assertEquals(deleteResponse.getStatusCode(), 204);
+                    }
+
+                }  catch (ParseException e) {
+                    System.out.println("Exception :" + e);
+                    System.out.println("Cleanup failed");
+                    break;
+                }
             }
         }
 

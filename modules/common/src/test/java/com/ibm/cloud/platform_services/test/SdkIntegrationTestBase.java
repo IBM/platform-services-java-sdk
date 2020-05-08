@@ -29,7 +29,7 @@ import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
  * This class provides common functionality used by integration tests.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "okhttp3.*"})
+@PowerMockIgnore({"javax.net.ssl.*", "okhttp3.*", "okio.*"})
 public abstract class SdkIntegrationTestBase extends PowerMockTestCase {
 
     // Default behavior is to skip tests, unless we have a valid config file.

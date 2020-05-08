@@ -1,0 +1,142 @@
+/*
+ * (C) Copyright IBM Corp. 2020.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+package com.ibm.cloud.platform_services.case_management.v1.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
+/**
+ * The addWatchlist options.
+ */
+public class AddWatchlistOptions extends GenericModel {
+
+  protected String caseNumber;
+  protected List<UserIdAndRealm> watchlist;
+
+  /**
+   * Builder.
+   */
+  public static class Builder {
+    private String caseNumber;
+    private List<UserIdAndRealm> watchlist;
+
+    private Builder(AddWatchlistOptions addWatchlistOptions) {
+      this.caseNumber = addWatchlistOptions.caseNumber;
+      this.watchlist = addWatchlistOptions.watchlist;
+    }
+
+    /**
+     * Instantiates a new builder.
+     */
+    public Builder() {
+    }
+
+    /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param caseNumber the caseNumber
+     */
+    public Builder(String caseNumber) {
+      this.caseNumber = caseNumber;
+    }
+
+    /**
+     * Builds a AddWatchlistOptions.
+     *
+     * @return the new AddWatchlistOptions instance
+     */
+    public AddWatchlistOptions build() {
+      return new AddWatchlistOptions(this);
+    }
+
+    /**
+     * Adds an watchlist to watchlist.
+     *
+     * @param watchlist the new watchlist
+     * @return the AddWatchlistOptions builder
+     */
+    public Builder addWatchlist(UserIdAndRealm watchlist) {
+      com.ibm.cloud.sdk.core.util.Validator.notNull(watchlist,
+        "watchlist cannot be null");
+      if (this.watchlist == null) {
+        this.watchlist = new ArrayList<UserIdAndRealm>();
+      }
+      this.watchlist.add(watchlist);
+      return this;
+    }
+
+    /**
+     * Set the caseNumber.
+     *
+     * @param caseNumber the caseNumber
+     * @return the AddWatchlistOptions builder
+     */
+    public Builder caseNumber(String caseNumber) {
+      this.caseNumber = caseNumber;
+      return this;
+    }
+
+    /**
+     * Set the watchlist.
+     * Existing watchlist will be replaced.
+     *
+     * @param watchlist the watchlist
+     * @return the AddWatchlistOptions builder
+     */
+    public Builder watchlist(List<UserIdAndRealm> watchlist) {
+      this.watchlist = watchlist;
+      return this;
+    }
+  }
+
+  protected AddWatchlistOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.caseNumber,
+      "caseNumber cannot be empty");
+    caseNumber = builder.caseNumber;
+    watchlist = builder.watchlist;
+  }
+
+  /**
+   * New builder.
+   *
+   * @return a AddWatchlistOptions builder
+   */
+  public Builder newBuilder() {
+    return new Builder(this);
+  }
+
+  /**
+   * Gets the caseNumber.
+   *
+   * Unique identifier of a case.
+   *
+   * @return the caseNumber
+   */
+  public String caseNumber() {
+    return caseNumber;
+  }
+
+  /**
+   * Gets the watchlist.
+   *
+   * Array of user ID objects.
+   *
+   * @return the watchlist
+   */
+  public List<UserIdAndRealm> watchlist() {
+    return watchlist;
+  }
+}
+

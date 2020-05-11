@@ -99,92 +99,6 @@ public class ResourceManagerTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testListQuotaDefinitionsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": {\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}, \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}]}";
-    String listQuotaDefinitionsPath = "/quota_definitions";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the ListQuotaDefinitionsOptions model
-    ListQuotaDefinitionsOptions listQuotaDefinitionsOptionsModel = new ListQuotaDefinitionsOptions();
-
-    // Invoke operation with valid options model (positive test)
-    Response<QuotaDefinitionList> response = testService.listQuotaDefinitions(listQuotaDefinitionsOptionsModel).execute();
-    assertNotNull(response);
-    QuotaDefinitionList responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listQuotaDefinitionsPath);
-  }
-
-  @Test
-  public void testGetQuotaDefinitionWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": {\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}, \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}";
-    String getQuotaDefinitionPath = "/quota_definitions/testString";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetQuotaDefinitionOptions model
-    GetQuotaDefinitionOptions getQuotaDefinitionOptionsModel = new GetQuotaDefinitionOptions.Builder()
-    .id("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<QuotaDefinition> response = testService.getQuotaDefinition(getQuotaDefinitionOptionsModel).execute();
-    assertNotNull(response);
-    QuotaDefinition responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getQuotaDefinitionPath);
-  }
-
-  // Test the getQuotaDefinition operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetQuotaDefinitionNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.getQuotaDefinition(null).execute();
-  }
-
-  @Test
   public void testListResourceGroupsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}]}";
@@ -200,6 +114,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     // Construct an instance of the ListResourceGroupsOptions model
     ListResourceGroupsOptions listResourceGroupsOptionsModel = new ListResourceGroupsOptions.Builder()
     .accountId("testString")
+    .date("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -218,6 +133,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("date"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listResourceGroupsPath);
@@ -412,6 +328,92 @@ public class ResourceManagerTest extends PowerMockTestCase {
 
     // Invoke operation with null options model (negative test)
     testService.deleteResourceGroup(null).execute();
+  }
+
+  @Test
+  public void testListQuotaDefinitionsWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": [{\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}], \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}]}";
+    String listQuotaDefinitionsPath = "/quota_definitions";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the ListQuotaDefinitionsOptions model
+    ListQuotaDefinitionsOptions listQuotaDefinitionsOptionsModel = new ListQuotaDefinitionsOptions();
+
+    // Invoke operation with valid options model (positive test)
+    Response<QuotaDefinitionList> response = testService.listQuotaDefinitions(listQuotaDefinitionsOptionsModel).execute();
+    assertNotNull(response);
+    QuotaDefinitionList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listQuotaDefinitionsPath);
+  }
+
+  @Test
+  public void testGetQuotaDefinitionWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": [{\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}], \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}";
+    String getQuotaDefinitionPath = "/quota_definitions/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetQuotaDefinitionOptions model
+    GetQuotaDefinitionOptions getQuotaDefinitionOptionsModel = new GetQuotaDefinitionOptions.Builder()
+    .id("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<QuotaDefinition> response = testService.getQuotaDefinition(getQuotaDefinitionOptionsModel).execute();
+    assertNotNull(response);
+    QuotaDefinition responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getQuotaDefinitionPath);
+  }
+
+  // Test the getQuotaDefinition operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetQuotaDefinitionNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    testService.getQuotaDefinition(null).execute();
   }
 
   /** Initialize the server */

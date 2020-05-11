@@ -13,6 +13,7 @@
 package com.ibm.cloud.platform_services.resource_manager.v2.model;
 
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -40,7 +41,7 @@ public class QuotaDefinition extends GenericModel {
   @SerializedName("vsi_limit")
   protected Double vsiLimit;
   @SerializedName("resource_quotas")
-  protected ResourceQuota resourceQuotas;
+  protected List<ResourceQuota> resourceQuotas;
   @SerializedName("created_at")
   protected Date createdAt;
   @SerializedName("updated_at")
@@ -159,11 +160,11 @@ public class QuotaDefinition extends GenericModel {
   /**
    * Gets the resourceQuotas.
    *
-   * A resource quota.
+   * The resource quotas associated with a quota definition.
    *
    * @return the resourceQuotas
    */
-  public ResourceQuota getResourceQuotas() {
+  public List<ResourceQuota> getResourceQuotas() {
     return resourceQuotas;
   }
 

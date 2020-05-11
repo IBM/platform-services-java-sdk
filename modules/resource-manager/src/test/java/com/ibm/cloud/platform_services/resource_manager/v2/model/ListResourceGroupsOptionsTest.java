@@ -36,7 +36,9 @@ public class ListResourceGroupsOptionsTest {
   public void testListResourceGroupsOptions() throws Throwable {
     ListResourceGroupsOptions listResourceGroupsOptionsModel = new ListResourceGroupsOptions.Builder()
       .accountId("testString")
+      .date("testString")
       .build();
     assertEquals(listResourceGroupsOptionsModel.accountId(), "testString");
+    assertEquals(listResourceGroupsOptionsModel.date(), "testString");
   }
 }

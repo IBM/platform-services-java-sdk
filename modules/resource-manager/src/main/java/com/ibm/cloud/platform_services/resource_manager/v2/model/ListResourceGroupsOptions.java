@@ -20,15 +20,18 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class ListResourceGroupsOptions extends GenericModel {
 
   protected String accountId;
+  protected String date;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String accountId;
+    private String date;
 
     private Builder(ListResourceGroupsOptions listResourceGroupsOptions) {
       this.accountId = listResourceGroupsOptions.accountId;
+      this.date = listResourceGroupsOptions.date;
     }
 
     /**
@@ -56,10 +59,22 @@ public class ListResourceGroupsOptions extends GenericModel {
       this.accountId = accountId;
       return this;
     }
+
+    /**
+     * Set the date.
+     *
+     * @param date the date
+     * @return the ListResourceGroupsOptions builder
+     */
+    public Builder date(String date) {
+      this.date = date;
+      return this;
+    }
   }
 
   protected ListResourceGroupsOptions(Builder builder) {
     accountId = builder.accountId;
+    date = builder.date;
   }
 
   /**
@@ -80,6 +95,17 @@ public class ListResourceGroupsOptions extends GenericModel {
    */
   public String accountId() {
     return accountId;
+  }
+
+  /**
+   * Gets the date.
+   *
+   * The date would be in a format of YYYY-MM which returns resource groups exclude the deleted ones before this month.
+   *
+   * @return the date
+   */
+  public String date() {
+    return date;
   }
 }
 

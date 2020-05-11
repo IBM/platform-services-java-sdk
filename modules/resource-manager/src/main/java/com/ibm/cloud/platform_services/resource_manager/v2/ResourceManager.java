@@ -45,7 +45,7 @@ public class ResourceManager extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "resource_manager";
 
-  public static final String DEFAULT_SERVICE_URL = "https://resource-controller.cloud.ibm.com";
+  public static final String DEFAULT_SERVICE_URL = "https://resource-controller.cloud.ibm.com/v2";
 
  /**
    * Class method which constructs an instance of the `ResourceManager` client.
@@ -84,63 +84,6 @@ public class ResourceManager extends BaseService {
   }
 
   /**
-   * Get a list of all quota definitions.
-   *
-   * Get a list of all quota definitions.
-   *
-   * @param listQuotaDefinitionsOptions the {@link ListQuotaDefinitionsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link QuotaDefinitionList}
-   */
-  public ServiceCall<QuotaDefinitionList> listQuotaDefinitions(ListQuotaDefinitionsOptions listQuotaDefinitionsOptions) {
-    String[] pathSegments = { "quota_definitions" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_manager", "v2", "listQuotaDefinitions");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    ResponseConverter<QuotaDefinitionList> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<QuotaDefinitionList>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get a list of all quota definitions.
-   *
-   * Get a list of all quota definitions.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link QuotaDefinitionList}
-   */
-  public ServiceCall<QuotaDefinitionList> listQuotaDefinitions() {
-    return listQuotaDefinitions(null);
-  }
-
-  /**
-   * Get a quota definition.
-   *
-   * Get a quota definition.
-   *
-   * @param getQuotaDefinitionOptions the {@link GetQuotaDefinitionOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link QuotaDefinition}
-   */
-  public ServiceCall<QuotaDefinition> getQuotaDefinition(GetQuotaDefinitionOptions getQuotaDefinitionOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getQuotaDefinitionOptions,
-      "getQuotaDefinitionOptions cannot be null");
-    String[] pathSegments = { "quota_definitions" };
-    String[] pathParameters = { getQuotaDefinitionOptions.id() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_manager", "v2", "getQuotaDefinition");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-
-    ResponseConverter<QuotaDefinition> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<QuotaDefinition>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
    * Get a list of all resource groups.
    *
    * Get a list of all resource groups in an account.
@@ -159,6 +102,9 @@ public class ResourceManager extends BaseService {
     if (listResourceGroupsOptions != null) {
       if (listResourceGroupsOptions.accountId() != null) {
         builder.query("account_id", listResourceGroupsOptions.accountId());
+      }
+      if (listResourceGroupsOptions.date() != null) {
+        builder.query("date", listResourceGroupsOptions.date());
       }
     }
     ResponseConverter<ResourceGroupList> responseConverter =
@@ -296,6 +242,63 @@ public class ResourceManager extends BaseService {
     }
 
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List quota definitions.
+   *
+   * Get a list of all quota definitions.
+   *
+   * @param listQuotaDefinitionsOptions the {@link ListQuotaDefinitionsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link QuotaDefinitionList}
+   */
+  public ServiceCall<QuotaDefinitionList> listQuotaDefinitions(ListQuotaDefinitionsOptions listQuotaDefinitionsOptions) {
+    String[] pathSegments = { "quota_definitions" };
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_manager", "v2", "listQuotaDefinitions");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<QuotaDefinitionList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<QuotaDefinitionList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List quota definitions.
+   *
+   * Get a list of all quota definitions.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link QuotaDefinitionList}
+   */
+  public ServiceCall<QuotaDefinitionList> listQuotaDefinitions() {
+    return listQuotaDefinitions(null);
+  }
+
+  /**
+   * Get a quota definition.
+   *
+   * Get a a quota definition.
+   *
+   * @param getQuotaDefinitionOptions the {@link GetQuotaDefinitionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link QuotaDefinition}
+   */
+  public ServiceCall<QuotaDefinition> getQuotaDefinition(GetQuotaDefinitionOptions getQuotaDefinitionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getQuotaDefinitionOptions,
+      "getQuotaDefinitionOptions cannot be null");
+    String[] pathSegments = { "quota_definitions" };
+    String[] pathParameters = { getQuotaDefinitionOptions.id() };
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_manager", "v2", "getQuotaDefinition");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+
+    ResponseConverter<QuotaDefinition> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<QuotaDefinition>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

@@ -360,6 +360,9 @@
                 <executions>
                     <!-- Activate "bintray:deploy" during "deploy" -->
                     <execution>
+                        <?m2e ignore?>
+                        <id>bintray-deploy</id>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>

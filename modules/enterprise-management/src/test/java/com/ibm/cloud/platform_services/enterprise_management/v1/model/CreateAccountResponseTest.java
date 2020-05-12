@@ -35,6 +35,6 @@ public class CreateAccountResponseTest {
   @Test
   public void testCreateAccountResponse() throws Throwable {
     CreateAccountResponse createAccountResponseModel = new CreateAccountResponse();
-    assertNull(createAccountResponseModel.getAccountGroupId());
+    assertNull(createAccountResponseModel.getAccountId());
   }
 }

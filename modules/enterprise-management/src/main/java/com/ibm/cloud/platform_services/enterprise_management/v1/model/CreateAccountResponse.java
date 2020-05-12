@@ -20,8 +20,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class CreateAccountResponse extends GenericModel {
 
-  @SerializedName("account_group_id")
-  protected String accountGroupId;
+  @SerializedName("account_id")
+  protected String accountId;
 
   /**
    * Gets the accountGroupId.
@@ -30,8 +30,8 @@ public class CreateAccountResponse extends GenericModel {
    *
    * @return the accountGroupId
    */
-  public String getAccountGroupId() {
-    return accountGroupId;
+  public String getAccountId() {
+    return accountId;
   }
 }
 

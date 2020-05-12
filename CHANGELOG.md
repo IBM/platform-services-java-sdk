@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/IBM/platform-services-java-sdk/compare/0.3.0...0.4.0) (2020-05-12)
+
+
+### Features
+
+* **Resource Manager:** add service to project ([#15](https://github.com/IBM/platform-services-java-sdk/issues/15)) ([df43198](https://github.com/IBM/platform-services-java-sdk/commit/df43198af1b5a57ac1730f4ac7a24da2aed6d717))
+
 # [0.3.0](https://github.com/IBM/platform-services-java-sdk/compare/0.2.2...0.3.0) (2020-05-07)
 
 

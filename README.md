@@ -6,7 +6,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
-# IBM Cloud Platform Services Java SDK Version 0.3.0
+# IBM Cloud Platform Services Java SDK Version 0.4.0
 
 Java client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
@@ -60,7 +60,7 @@ Service Name | Artifact Id
 * Java 8 or above.
 
 ## Installation
-The current version of this SDK is: 0.3.0
+The current version of this SDK is: 0.4.0
 
 #### All the services
 To define a dependency on the entire set of services contained in the project, use a dependency like these:
@@ -71,14 +71,14 @@ To define a dependency on the entire set of services contained in the project, u
 <dependency>
 	<groupId>com.ibm.cloud</groupId>
 	<artifactId>platform-services</artifactId>
-	<version>0.3.0</version>
+	<version>0.4.0</version>
 </dependency>
 ```
 
 ##### Gradle
 
 ```gradle
-'com.ibm.cloud:platform-services:0.3.0'
+'com.ibm.cloud:platform-services:0.4.0'
 ```
 
 #### A single service
@@ -90,13 +90,13 @@ To define a dependency on a single service, use a dependency that contains the a
 <dependency>
     <groupId>com.ibm.cloud</groupId>
     <artifactId>global-search</artifactId>
-    <version>0.3.0</version>
+    <version>0.4.0</version>
 </dependency>
 ```
 
 ##### Gradle
 ```gradle
-'com.ibm.cloud:global-search:0.3.0'
+'com.ibm.cloud:global-search:0.4.0'
 ```
 Each service's artifact id is listed in the table above.
 

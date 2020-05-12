@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The getAccountById options.
+ * The getAccount options.
  */
-public class GetAccountByIdOptions extends GenericModel {
+public class GetAccountOptions extends GenericModel {
 
   protected String accountId;
 
@@ -27,8 +27,8 @@ public class GetAccountByIdOptions extends GenericModel {
   public static class Builder {
     private String accountId;
 
-    private Builder(GetAccountByIdOptions getAccountByIdOptions) {
-      this.accountId = getAccountByIdOptions.accountId;
+    private Builder(GetAccountOptions getAccountOptions) {
+      this.accountId = getAccountOptions.accountId;
     }
 
     /**
@@ -47,19 +47,19 @@ public class GetAccountByIdOptions extends GenericModel {
     }
 
     /**
-     * Builds a GetAccountByIdOptions.
+     * Builds a GetAccountOptions.
      *
-     * @return the new GetAccountByIdOptions instance
+     * @return the new GetAccountOptions instance
      */
-    public GetAccountByIdOptions build() {
-      return new GetAccountByIdOptions(this);
+    public GetAccountOptions build() {
+      return new GetAccountOptions(this);
     }
 
     /**
      * Set the accountId.
      *
      * @param accountId the accountId
-     * @return the GetAccountByIdOptions builder
+     * @return the GetAccountOptions builder
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
@@ -67,7 +67,7 @@ public class GetAccountByIdOptions extends GenericModel {
     }
   }
 
-  protected GetAccountByIdOptions(Builder builder) {
+  protected GetAccountOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
     accountId = builder.accountId;
@@ -76,7 +76,7 @@ public class GetAccountByIdOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a GetAccountByIdOptions builder
+   * @return a GetAccountOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

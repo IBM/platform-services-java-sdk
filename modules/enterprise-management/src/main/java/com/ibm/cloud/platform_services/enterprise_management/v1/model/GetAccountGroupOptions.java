@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The getAccountGroupById options.
+ * The getAccountGroup options.
  */
-public class GetAccountGroupByIdOptions extends GenericModel {
+public class GetAccountGroupOptions extends GenericModel {
 
   protected String accountGroupId;
 
@@ -27,8 +27,8 @@ public class GetAccountGroupByIdOptions extends GenericModel {
   public static class Builder {
     private String accountGroupId;
 
-    private Builder(GetAccountGroupByIdOptions getAccountGroupByIdOptions) {
-      this.accountGroupId = getAccountGroupByIdOptions.accountGroupId;
+    private Builder(GetAccountGroupOptions getAccountGroupOptions) {
+      this.accountGroupId = getAccountGroupOptions.accountGroupId;
     }
 
     /**
@@ -47,19 +47,19 @@ public class GetAccountGroupByIdOptions extends GenericModel {
     }
 
     /**
-     * Builds a GetAccountGroupByIdOptions.
+     * Builds a GetAccountGroupOptions.
      *
-     * @return the new GetAccountGroupByIdOptions instance
+     * @return the new GetAccountGroupOptions instance
      */
-    public GetAccountGroupByIdOptions build() {
-      return new GetAccountGroupByIdOptions(this);
+    public GetAccountGroupOptions build() {
+      return new GetAccountGroupOptions(this);
     }
 
     /**
      * Set the accountGroupId.
      *
      * @param accountGroupId the accountGroupId
-     * @return the GetAccountGroupByIdOptions builder
+     * @return the GetAccountGroupOptions builder
      */
     public Builder accountGroupId(String accountGroupId) {
       this.accountGroupId = accountGroupId;
@@ -67,7 +67,7 @@ public class GetAccountGroupByIdOptions extends GenericModel {
     }
   }
 
-  protected GetAccountGroupByIdOptions(Builder builder) {
+  protected GetAccountGroupOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountGroupId,
       "accountGroupId cannot be empty");
     accountGroupId = builder.accountGroupId;
@@ -76,7 +76,7 @@ public class GetAccountGroupByIdOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a GetAccountGroupByIdOptions builder
+   * @return a GetAccountGroupOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

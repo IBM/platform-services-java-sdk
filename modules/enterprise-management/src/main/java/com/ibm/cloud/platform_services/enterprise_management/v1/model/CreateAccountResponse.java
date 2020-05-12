@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The create account request completed successfully.
+ * A newly-created account.
  */
 public class CreateAccountResponse extends GenericModel {
 
@@ -24,11 +24,11 @@ public class CreateAccountResponse extends GenericModel {
   protected String accountId;
 
   /**
-   * Gets the accountGroupId.
+   * Gets the accountId.
    *
-   * The ID of the account group entity that was created.
+   * The ID of the account entity that was created.
    *
-   * @return the accountGroupId
+   * @return the accountId
    */
   public String getAccountId() {
     return accountId;

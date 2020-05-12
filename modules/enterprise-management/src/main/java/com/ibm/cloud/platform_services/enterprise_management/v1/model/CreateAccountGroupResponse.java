@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Create account group request completed successfully.
+ * A newly-created account group.
  */
 public class CreateAccountGroupResponse extends GenericModel {
 

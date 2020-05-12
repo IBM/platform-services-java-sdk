@@ -14,21 +14,18 @@ package com.ibm.cloud.platform_services.enterprise_management.v1;
 
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroupResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.EnterpriseResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountByIdOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupByIdOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupPermissibleActionsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountPermissibleActionsOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterpriseOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterprisePermissibleActionsOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ImportAccountToEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsResponse;
@@ -59,7 +56,7 @@ public class EnterpriseManagement extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "enterprise_management";
 
-  public static final String DEFAULT_SERVICE_URL = "https://enterprise.test.cloud.ibm.com/v1";
+  public static final String DEFAULT_SERVICE_URL = "https://enterprise.cloud.ibm.com/v1";
 
  /**
    * Class method which constructs an instance of the `EnterpriseManagement` client.
@@ -128,7 +125,7 @@ public class EnterpriseManagement extends BaseService {
   }
 
   /**
-   * Get account groups by query parameter.
+   * List account groups.
    *
    * Retrieve all account groups based on the values that are passed in the query parameters. If no query parameter is
    * passed, all of the account groups in the enterprise for which the calling identity has access are returned.
@@ -172,7 +169,7 @@ public class EnterpriseManagement extends BaseService {
   }
 
   /**
-   * Get account groups by query parameter.
+   * List account groups.
    *
    * Retrieve all account groups based on the values that are passed in the query parameters. If no query parameter is
    * passed, all of the account groups in the enterprise for which the calling identity has access are returned.
@@ -197,23 +194,23 @@ public class EnterpriseManagement extends BaseService {
    * Retrieve an account by the `account_group_id` parameter. All data related to the account group is returned only if
    * the caller has access to retrieve the account group.
    *
-   * @param getAccountGroupByIdOptions the {@link GetAccountGroupByIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountGroupResponse}
+   * @param getAccountGroupOptions the {@link GetAccountGroupOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountGroup}
    */
-  public ServiceCall<AccountGroupResponse> getAccountGroupById(GetAccountGroupByIdOptions getAccountGroupByIdOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountGroupByIdOptions,
-      "getAccountGroupByIdOptions cannot be null");
+  public ServiceCall<AccountGroup> getAccountGroup(GetAccountGroupOptions getAccountGroupOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountGroupOptions,
+      "getAccountGroupOptions cannot be null");
     String[] pathSegments = { "account-groups" };
-    String[] pathParameters = { getAccountGroupByIdOptions.accountGroupId() };
+    String[] pathParameters = { getAccountGroupOptions.accountGroupId() };
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccountGroupById");
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccountGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
 
-    ResponseConverter<AccountGroupResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountGroupResponse>() { }.getType());
+    ResponseConverter<AccountGroup> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountGroup>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -242,35 +239,6 @@ public class EnterpriseManagement extends BaseService {
     }
     if (updateAccountGroupOptions.primaryContactIamId() != null) {
       contentJson.addProperty("primary_contact_iam_id", updateAccountGroupOptions.primaryContactIamId());
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get permissible actions for an account group.
-   *
-   * Return all the actions that are allowed on a particular account group. This method takes an array of IAM actions in
-   * the body of the request and returns those actions that can be performed by the caller. An authentication check is
-   * performed for each action that is passed in the payload.
-   *
-   * @param getAccountGroupPermissibleActionsOptions the {@link GetAccountGroupPermissibleActionsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> getAccountGroupPermissibleActions(GetAccountGroupPermissibleActionsOptions getAccountGroupPermissibleActionsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountGroupPermissibleActionsOptions,
-      "getAccountGroupPermissibleActionsOptions cannot be null");
-    String[] pathSegments = { "account-groups", "permissible-actions" };
-    String[] pathParameters = { getAccountGroupPermissibleActionsOptions.accountGroupId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccountGroupPermissibleActions");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    final JsonObject contentJson = new JsonObject();
-    if (getAccountGroupPermissibleActionsOptions.actions() != null) {
-      contentJson.add("actions", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(getAccountGroupPermissibleActionsOptions.actions()));
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
@@ -345,7 +313,7 @@ public class EnterpriseManagement extends BaseService {
   }
 
   /**
-   * Get accounts by query parameter.
+   * List accounts.
    *
    * Retrieve all accounts based on the values that are passed in the query parameters. If no query parameter is passed,
    * all of the accounts in the enterprise for which the calling identity has access are returned.
@@ -389,7 +357,7 @@ public class EnterpriseManagement extends BaseService {
   }
 
   /**
-   * Get accounts by query parameter.
+   * List accounts.
    *
    * Retrieve all accounts based on the values that are passed in the query parameters. If no query parameter is passed,
    * all of the accounts in the enterprise for which the calling identity has access are returned.
@@ -414,28 +382,28 @@ public class EnterpriseManagement extends BaseService {
    * Retrieve an account by the `account_id` parameter. All data related to the account is returned only if the caller
    * has access to retrieve the account.
    *
-   * @param getAccountByIdOptions the {@link GetAccountByIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountResponse}
+   * @param getAccountOptions the {@link GetAccountOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link Account}
    */
-  public ServiceCall<AccountResponse> getAccountById(GetAccountByIdOptions getAccountByIdOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountByIdOptions,
-      "getAccountByIdOptions cannot be null");
+  public ServiceCall<Account> getAccount(GetAccountOptions getAccountOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountOptions,
+      "getAccountOptions cannot be null");
     String[] pathSegments = { "accounts" };
-    String[] pathParameters = { getAccountByIdOptions.accountId() };
+    String[] pathParameters = { getAccountOptions.accountId() };
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccountById");
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccount");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
 
-    ResponseConverter<AccountResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountResponse>() { }.getType());
+    ResponseConverter<Account> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Account>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Move an account with the enterprise.
+   * Move an account within the enterprise.
    *
    * Move an account to a different parent within the same enterprise.
    *
@@ -454,35 +422,6 @@ public class EnterpriseManagement extends BaseService {
     }
     final JsonObject contentJson = new JsonObject();
     contentJson.addProperty("parent", updateAccountOptions.parent());
-    builder.bodyJson(contentJson);
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get permissible actions for an account.
-   *
-   * Return all the actions that are allowed on a particular account. This method takes an array of IAM actions in the
-   * body of the request and returns those actions which can be performed by the caller. An authentication check is
-   * performed for each action that is passed in the payload.
-   *
-   * @param getAccountPermissibleActionsOptions the {@link GetAccountPermissibleActionsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> getAccountPermissibleActions(GetAccountPermissibleActionsOptions getAccountPermissibleActionsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountPermissibleActionsOptions,
-      "getAccountPermissibleActionsOptions cannot be null");
-    String[] pathSegments = { "accounts", "permissible-actions" };
-    String[] pathParameters = { getAccountPermissibleActionsOptions.accountId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccountPermissibleActions");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    final JsonObject contentJson = new JsonObject();
-    if (getAccountPermissibleActionsOptions.actions() != null) {
-      contentJson.add("actions", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(getAccountPermissibleActionsOptions.actions()));
-    }
     builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
@@ -525,7 +464,7 @@ public class EnterpriseManagement extends BaseService {
   }
 
   /**
-   * Get enterprise by query parameter.
+   * List enterprises.
    *
    * Retrieve all enterprises for a given ID by passing the IDs on query parameters. If no ID is passed, the enterprises
    * for which the calling identity is the primary contact are returned. You can use pagination parameters to filter the
@@ -568,7 +507,7 @@ public class EnterpriseManagement extends BaseService {
   }
 
   /**
-   * Get enterprise by query parameter.
+   * List enterprises.
    *
    * Retrieve all enterprises for a given ID by passing the IDs on query parameters. If no ID is passed, the enterprises
    * for which the calling identity is the primary contact are returned. You can use pagination parameters to filter the
@@ -593,9 +532,9 @@ public class EnterpriseManagement extends BaseService {
    * caller has access to retrieve the enterprise.
    *
    * @param getEnterpriseOptions the {@link GetEnterpriseOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link EnterpriseResponse}
+   * @return a {@link ServiceCall} with a result of type {@link Enterprise}
    */
-  public ServiceCall<EnterpriseResponse> getEnterprise(GetEnterpriseOptions getEnterpriseOptions) {
+  public ServiceCall<Enterprise> getEnterprise(GetEnterpriseOptions getEnterpriseOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getEnterpriseOptions,
       "getEnterpriseOptions cannot be null");
     String[] pathSegments = { "enterprises" };
@@ -607,8 +546,8 @@ public class EnterpriseManagement extends BaseService {
     }
     builder.header("Accept", "application/json");
 
-    ResponseConverter<EnterpriseResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EnterpriseResponse>() { }.getType());
+    ResponseConverter<Enterprise> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Enterprise>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -640,35 +579,6 @@ public class EnterpriseManagement extends BaseService {
     }
     if (updateEnterpriseOptions.primaryContactIamId() != null) {
       contentJson.addProperty("primary_contact_iam_id", updateEnterpriseOptions.primaryContactIamId());
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get permissible actions for an enterprise.
-   *
-   * Return all the actions that are allowed on a particular enterprise. This method takes an array of IAM actions in
-   * the body of the request and returns those actions which can be performed by the caller. An authentication check is
-   * performed for each action that is passed in the payload.
-   *
-   * @param getEnterprisePermissibleActionsOptions the {@link GetEnterprisePermissibleActionsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> getEnterprisePermissibleActions(GetEnterprisePermissibleActionsOptions getEnterprisePermissibleActionsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getEnterprisePermissibleActionsOptions,
-      "getEnterprisePermissibleActionsOptions cannot be null");
-    String[] pathSegments = { "enterprises", "permissible-actions" };
-    String[] pathParameters = { getEnterprisePermissibleActionsOptions.enterpriseId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getEnterprisePermissibleActions");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    final JsonObject contentJson = new JsonObject();
-    if (getEnterprisePermissibleActionsOptions.actions() != null) {
-      contentJson.add("actions", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(getEnterprisePermissibleActionsOptions.actions()));
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();

@@ -43,7 +43,7 @@ public class CreateAccountOptionsTest {
     assertEquals(createAccountOptionsModel.name(), "testString");
     assertEquals(createAccountOptionsModel.ownerIamId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testCreateAccountOptionsError() throws Throwable {
     new CreateAccountOptions.Builder().build();

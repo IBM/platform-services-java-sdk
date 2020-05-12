@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterpriseResources;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,27 +26,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListEnterpriseResources model.
+ * Unit test class for the GetAccountGroupOptions model.
  */
-public class ListEnterpriseResourcesTest {
+public class GetAccountGroupOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListEnterpriseResources() throws Throwable {
-    ListEnterpriseResources listEnterpriseResourcesModel = new ListEnterpriseResources();
-    assertNull(listEnterpriseResourcesModel.getUrl());
-    assertNull(listEnterpriseResourcesModel.getId());
-    assertNull(listEnterpriseResourcesModel.getEnterpriseAccountId());
-    assertNull(listEnterpriseResourcesModel.getCrn());
-    assertNull(listEnterpriseResourcesModel.getName());
-    assertNull(listEnterpriseResourcesModel.getDomain());
-    assertNull(listEnterpriseResourcesModel.getState());
-    assertNull(listEnterpriseResourcesModel.getPrimaryContactIamId());
-    assertNull(listEnterpriseResourcesModel.getPrimaryContactEmail());
-    assertNull(listEnterpriseResourcesModel.getCreatedAt());
-    assertNull(listEnterpriseResourcesModel.getCreatedBy());
-    assertNull(listEnterpriseResourcesModel.getUpdatedAt());
-    assertNull(listEnterpriseResourcesModel.getUpdatedBy());
+  public void testGetAccountGroupOptions() throws Throwable {
+    GetAccountGroupOptions getAccountGroupOptionsModel = new GetAccountGroupOptions.Builder()
+      .accountGroupId("testString")
+      .build();
+    assertEquals(getAccountGroupOptionsModel.accountGroupId(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetAccountGroupOptionsError() throws Throwable {
+    new GetAccountGroupOptions.Builder().build();
+  }
+
 }

@@ -13,29 +13,23 @@
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
 import com.ibm.cloud.platform_services.enterprise_management.v1.EnterpriseManagement;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroupResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.EnterpriseResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountByIdOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupByIdOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupPermissibleActionsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountPermissibleActionsOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterpriseOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterprisePermissibleActionsOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ImportAccountToEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsResources;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountResources;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterpriseResources;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountGroupOptions;
@@ -52,8 +46,6 @@ import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +74,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
-  
+
   protected MockWebServer server;
   protected EnterpriseManagement testService;
 
@@ -168,7 +160,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testListAccountGroupsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"updated_at\": \"updatedAt\", \"updated_by\": \"updatedBy\"}]}";
+    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}]}";
     String listAccountGroupsPath = "/account-groups";
 
     server.enqueue(new MockResponse()
@@ -211,10 +203,10 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testGetAccountGroupByIdWOptions() throws Throwable {
+  public void testGetAccountGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"updated_at\": \"updatedAt\", \"updated_by\": \"updatedBy\"}";
-    String getAccountGroupByIdPath = "/account-groups/testString";
+    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}";
+    String getAccountGroupPath = "/account-groups/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -223,15 +215,15 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetAccountGroupByIdOptions model
-    GetAccountGroupByIdOptions getAccountGroupByIdOptionsModel = new GetAccountGroupByIdOptions.Builder()
+    // Construct an instance of the GetAccountGroupOptions model
+    GetAccountGroupOptions getAccountGroupOptionsModel = new GetAccountGroupOptions.Builder()
     .accountGroupId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AccountGroupResponse> response = testService.getAccountGroupById(getAccountGroupByIdOptionsModel).execute();
+    Response<AccountGroup> response = testService.getAccountGroup(getAccountGroupOptionsModel).execute();
     assertNotNull(response);
-    AccountGroupResponse responseObj = response.getResult();
+    AccountGroup responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -245,19 +237,19 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getAccountGroupByIdPath);
+    assertEquals(parsedPath, getAccountGroupPath);
   }
 
-  // Test the getAccountGroupById operation with null options model parameter
+  // Test the getAccountGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountGroupByIdNoOptions() throws Throwable {
+  public void testGetAccountGroupNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getAccountGroupById(null).execute();
+    testService.getAccountGroup(null).execute();
   }
 
   @Test
@@ -310,57 +302,6 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Invoke operation with null options model (negative test)
     testService.updateAccountGroup(null).execute();
-  }
-
-  @Test
-  public void testGetAccountGroupPermissibleActionsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "";
-    String getAccountGroupPermissibleActionsPath = "/account-groups/testString/permissible-actions";
-
-    server.enqueue(new MockResponse()
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetAccountGroupPermissibleActionsOptions model
-    GetAccountGroupPermissibleActionsOptions getAccountGroupPermissibleActionsOptionsModel = new GetAccountGroupPermissibleActionsOptions.Builder()
-    .accountGroupId("testString")
-    .actions(new ArrayList<String>(Arrays.asList("testString")))
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.getAccountGroupPermissibleActions(getAccountGroupPermissibleActionsOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
-    assertNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "POST");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getAccountGroupPermissibleActionsPath);
-  }
-
-  // Test the getAccountGroupPermissibleActions operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountGroupPermissibleActionsNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.getAccountGroupPermissibleActions(null).execute();
   }
 
   @Test
@@ -419,7 +360,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testCreateAccountWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_group_id\": \"accountGroupId\"}";
+    String mockResponseBody = "{\"account_id\": \"accountId\"}";
     String createAccountPath = "/accounts";
 
     server.enqueue(new MockResponse()
@@ -471,7 +412,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testListAccountsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"owner_iam_id\": \"ownerIamId\", \"paid\": true, \"owner_email\": \"ownerEmail\", \"is_enterprise_account\": false, \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"updated_at\": \"updatedAt\", \"updated_by\": \"updatedBy\"}]}";
+    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"owner_iam_id\": \"ownerIamId\", \"paid\": true, \"owner_email\": \"ownerEmail\", \"is_enterprise_account\": false, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}]}";
     String listAccountsPath = "/accounts";
 
     server.enqueue(new MockResponse()
@@ -514,10 +455,10 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testGetAccountByIdWOptions() throws Throwable {
+  public void testGetAccountWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"owner_iam_id\": \"ownerIamId\", \"paid\": true, \"owner_email\": \"ownerEmail\", \"is_enterprise_account\": false, \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"updated_at\": \"updatedAt\", \"updated_by\": \"updatedBy\"}";
-    String getAccountByIdPath = "/accounts/testString";
+    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"owner_iam_id\": \"ownerIamId\", \"paid\": true, \"owner_email\": \"ownerEmail\", \"is_enterprise_account\": false, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}";
+    String getAccountPath = "/accounts/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -526,15 +467,15 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetAccountByIdOptions model
-    GetAccountByIdOptions getAccountByIdOptionsModel = new GetAccountByIdOptions.Builder()
+    // Construct an instance of the GetAccountOptions model
+    GetAccountOptions getAccountOptionsModel = new GetAccountOptions.Builder()
     .accountId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AccountResponse> response = testService.getAccountById(getAccountByIdOptionsModel).execute();
+    Response<Account> response = testService.getAccount(getAccountOptionsModel).execute();
     assertNotNull(response);
-    AccountResponse responseObj = response.getResult();
+    Account responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -548,19 +489,19 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getAccountByIdPath);
+    assertEquals(parsedPath, getAccountPath);
   }
 
-  // Test the getAccountById operation with null options model parameter
+  // Test the getAccount operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountByIdNoOptions() throws Throwable {
+  public void testGetAccountNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getAccountById(null).execute();
+    testService.getAccount(null).execute();
   }
 
   @Test
@@ -612,57 +553,6 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Invoke operation with null options model (negative test)
     testService.updateAccount(null).execute();
-  }
-
-  @Test
-  public void testGetAccountPermissibleActionsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "";
-    String getAccountPermissibleActionsPath = "/accounts/testString/permissible-actions";
-
-    server.enqueue(new MockResponse()
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetAccountPermissibleActionsOptions model
-    GetAccountPermissibleActionsOptions getAccountPermissibleActionsOptionsModel = new GetAccountPermissibleActionsOptions.Builder()
-    .accountId("testString")
-    .actions(new ArrayList<String>(Arrays.asList("testString")))
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.getAccountPermissibleActions(getAccountPermissibleActionsOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
-    assertNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "POST");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getAccountPermissibleActionsPath);
-  }
-
-  // Test the getAccountPermissibleActions operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountPermissibleActionsNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.getAccountPermissibleActions(null).execute();
   }
 
   @Test
@@ -721,7 +611,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testListEnterprisesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"updated_at\": \"updatedAt\", \"updated_by\": \"updatedBy\"}]}";
+    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}]}";
     String listEnterprisesPath = "/enterprises";
 
     server.enqueue(new MockResponse()
@@ -766,7 +656,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testGetEnterpriseWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"updated_at\": \"updatedAt\", \"updated_by\": \"updatedBy\"}";
+    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}";
     String getEnterprisePath = "/enterprises/testString";
 
     server.enqueue(new MockResponse()
@@ -782,9 +672,9 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<EnterpriseResponse> response = testService.getEnterprise(getEnterpriseOptionsModel).execute();
+    Response<Enterprise> response = testService.getEnterprise(getEnterpriseOptionsModel).execute();
     assertNotNull(response);
-    EnterpriseResponse responseObj = response.getResult();
+    Enterprise responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -864,57 +754,6 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Invoke operation with null options model (negative test)
     testService.updateEnterprise(null).execute();
-  }
-
-  @Test
-  public void testGetEnterprisePermissibleActionsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "";
-    String getEnterprisePermissibleActionsPath = "/enterprises/testString/permissible-actions";
-
-    server.enqueue(new MockResponse()
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetEnterprisePermissibleActionsOptions model
-    GetEnterprisePermissibleActionsOptions getEnterprisePermissibleActionsOptionsModel = new GetEnterprisePermissibleActionsOptions.Builder()
-    .enterpriseId("testString")
-    .actions(new ArrayList<String>(Arrays.asList("testString")))
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.getEnterprisePermissibleActions(getEnterprisePermissibleActionsOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
-    assertNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "POST");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getEnterprisePermissibleActionsPath);
-  }
-
-  // Test the getEnterprisePermissibleActions operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetEnterprisePermissibleActionsNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.getEnterprisePermissibleActions(null).execute();
   }
 
   /** Initialize the server */

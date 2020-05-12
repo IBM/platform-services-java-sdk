@@ -43,7 +43,7 @@ public class UpdateAccountGroupOptionsTest {
     assertEquals(updateAccountGroupOptionsModel.name(), "testString");
     assertEquals(updateAccountGroupOptionsModel.primaryContactIamId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testUpdateAccountGroupOptionsError() throws Throwable {
     new UpdateAccountGroupOptions.Builder().build();

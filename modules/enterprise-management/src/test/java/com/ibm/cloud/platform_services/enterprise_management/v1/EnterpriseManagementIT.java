@@ -3,61 +3,42 @@ package com.ibm.cloud.platform_services.enterprise_management.v1;
 import static org.testng.Assert.assertEquals;
 import static org.testng.AssertJUnit.assertNotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
-import java.util.List;
 import java.net.MalformedURLException;
-
-import java.lang.Thread;
 import java.net.URL;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import com.cloudant.client.api.model.Document;
-import com.cloudant.client.api.views.AllDocsResponse;
+
+import com.cloudant.client.api.ClientBuilder;
+import com.cloudant.client.api.CloudantClient;
+import com.cloudant.client.api.Database;
 import com.cloudant.client.api.views.Key;
-import com.cloudant.client.api.views.ViewMultipleRequest;
-import com.cloudant.client.api.views.ViewRequest;
-import com.cloudant.client.api.views.ViewRequestBuilder;
 import com.cloudant.client.api.views.ViewResponse;
-import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
-import com.ibm.cloud.sdk.core.util.CredentialUtils;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroupResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.EnterpriseResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountByIdOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupByIdOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupPermissibleActionsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountPermissibleActionsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterpriseOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterprisePermissibleActionsOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ImportAccountToEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsResources;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountResources;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterpriseResources;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
+import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
-import org.json.JSONObject;
-import org.json.JSONArray;
-import com.cloudant.client.api.ClientBuilder;
-import com.cloudant.client.api.CloudantClient;
-import com.cloudant.client.api.Database;
+import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 /**
  * This class contains integration tests for the Enterprise Management.
@@ -175,7 +156,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test03_PutConfirmVerificationCode() throws Throwable {
-        String response = accountManagementService.confirmVerificationCode(subscriptionEmail, verificationCode, token, config.get("AM_HOST"));
+        accountManagementService.confirmVerificationCode(subscriptionEmail, verificationCode, token, config.get("AM_HOST"));
     }
 
     @Test
@@ -207,7 +188,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         Thread.sleep(35000);
         List<ViewResponse.Row<String, String>> result = db.getViewRequestBuilder("v1_green", "by_email").newRequest(Key
                 .Type.STRING, String.class).reduce(false).keys(subscriptionEmail).includeDocs(true).build().getResponse().getRows();
-        for (ViewResponse.Row row : result) {
+        for (ViewResponse.Row<String, String> row : result) {
             assertNotNull(row.getDocument());
             activationToken = row.getId();
         }
@@ -215,7 +196,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test07_VerifyAMAccount() throws Throwable {
-        String response = accountManagementService.verifyAMAccount(subscriptionEmail, activationToken, token, config.get("AM_HOST"));
+        accountManagementService.verifyAMAccount(subscriptionEmail, activationToken, token, config.get("AM_HOST"));
         Thread.sleep(35000);
         String response2 = accountManagementService.getAccountByAccountId(subsAccountId, token, config.get("AM_HOST"));
         JSONObject obj = new JSONObject(response2);
@@ -251,11 +232,11 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     @Test
     public void test11_GetAccountByIdUsingEnterprise() throws Throwable {
         Thread.sleep(35000);
-        GetAccountByIdOptions getAccountByIdOptions = new GetAccountByIdOptions.Builder().accountId(enterpriseAccountId).build();
-        Response<AccountResponse> response = service.getAccountById(getAccountByIdOptions).execute();
+        GetAccountOptions getAccountByIdOptions = new GetAccountOptions.Builder().accountId(enterpriseAccountId).build();
+        Response<Account> response = service.getAccount(getAccountByIdOptions).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
-        AccountResponse responseObj = response.getResult();
+        Account responseObj = response.getResult();
         assertNotNull(responseObj);
     }
 
@@ -292,13 +273,13 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test14_GetAccountGroupByIdWOptions() throws Throwable {
-        GetAccountGroupByIdOptions getAccountGroupByIdOptions = new GetAccountGroupByIdOptions.Builder()
+        GetAccountGroupOptions getAccountGroupByIdOptions = new GetAccountGroupOptions.Builder()
                 .accountGroupId(accountGroupId).build();
 
-        Response<AccountGroupResponse> response = service.getAccountGroupById(getAccountGroupByIdOptions).execute();
+        Response<AccountGroup> response = service.getAccountGroup(getAccountGroupByIdOptions).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
-        AccountGroupResponse responseObj = response.getResult();
+        AccountGroup responseObj = response.getResult();
         assertNotNull(responseObj);
         crn = responseObj.getCrn();
     }
@@ -312,17 +293,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 204);
     }
-
-    @Test
-    public void test16_GetAccountGroupPermissibleActionsWOptions() throws Throwable {
-        GetAccountGroupPermissibleActionsOptions getAccountGroupPermissibleActionsOptions = new GetAccountGroupPermissibleActionsOptions.Builder()
-                .accountGroupId(accountGroupId).actions(new ArrayList<String>(Arrays.asList("testString"))).build();
-        Response<Void> response = service.getAccountGroupPermissibleActions(getAccountGroupPermissibleActionsOptions)
-                .execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
-    }
-
 
     @Test
     public void test17_CreateVerificationCode() throws Throwable {
@@ -371,7 +341,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         Thread.sleep(35000);
         List<ViewResponse.Row<String, String>> result = db.getViewRequestBuilder("v1_green", "by_email").newRequest(Key
                 .Type.STRING, String.class).reduce(false).keys(email).includeDocs(true).build().getResponse().getRows();
-        for (ViewResponse.Row row : result) {
+        for (ViewResponse.Row<String, String> row : result) {
             assertNotNull(row.getDocument());
             activationToken = row.getId();
         }
@@ -436,13 +406,13 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test29_GetAccountGroupByIdWOptions() throws Throwable {
-        GetAccountGroupByIdOptions getAccountGroupByIdOptions = new GetAccountGroupByIdOptions.Builder()
+        GetAccountGroupOptions getAccountGroupByIdOptions = new GetAccountGroupOptions.Builder()
                 .accountGroupId(accountGroupId).build();
 
-        Response<AccountGroupResponse> response = service.getAccountGroupById(getAccountGroupByIdOptions).execute();
+        Response<AccountGroup> response = service.getAccountGroup(getAccountGroupByIdOptions).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
-        AccountGroupResponse responseObj = response.getResult();
+        AccountGroup responseObj = response.getResult();
         assertNotNull(responseObj);
         crn2 = responseObj.getCrn();
     }
@@ -456,17 +426,4 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 202);
 
     }
-
-    @Test
-    public void test31_GetPermissibleActionsForAccount() throws Throwable {
-        List<String> list = new ArrayList<String>();
-        list.add("testString");
-        GetAccountPermissibleActionsOptions getAccountPermissibleActionsOptions = new GetAccountPermissibleActionsOptions.Builder()
-                .actions(list).accountId(subsAccountId).build();
-
-        Response<Void> response = service.getAccountPermissibleActions(getAccountPermissibleActionsOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
-    }
-
 }

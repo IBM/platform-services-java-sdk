@@ -13,14 +13,12 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterprisePermissibleActionsOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,25 +26,29 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetEnterprisePermissibleActionsOptions model.
+ * Unit test class for the AccountGroup model.
  */
-public class GetEnterprisePermissibleActionsOptionsTest {
+public class AccountGroupTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetEnterprisePermissibleActionsOptions() throws Throwable {
-    GetEnterprisePermissibleActionsOptions getEnterprisePermissibleActionsOptionsModel = new GetEnterprisePermissibleActionsOptions.Builder()
-      .enterpriseId("testString")
-      .actions(new ArrayList<String>(Arrays.asList("testString")))
-      .build();
-    assertEquals(getEnterprisePermissibleActionsOptionsModel.enterpriseId(), "testString");
-    assertEquals(getEnterprisePermissibleActionsOptionsModel.actions(), new ArrayList<String>(Arrays.asList("testString")));
+  public void testAccountGroup() throws Throwable {
+    AccountGroup accountGroupModel = new AccountGroup();
+    assertNull(accountGroupModel.getUrl());
+    assertNull(accountGroupModel.getId());
+    assertNull(accountGroupModel.getCrn());
+    assertNull(accountGroupModel.getParent());
+    assertNull(accountGroupModel.getEnterpriseAccountId());
+    assertNull(accountGroupModel.getEnterpriseId());
+    assertNull(accountGroupModel.getEnterprisePath());
+    assertNull(accountGroupModel.getName());
+    assertNull(accountGroupModel.getState());
+    assertNull(accountGroupModel.getPrimaryContactIamId());
+    assertNull(accountGroupModel.getPrimaryContactEmail());
+    assertNull(accountGroupModel.getCreatedAt());
+    assertNull(accountGroupModel.getCreatedBy());
+    assertNull(accountGroupModel.getUpdatedAt());
+    assertNull(accountGroupModel.getUpdatedBy());
   }
-  
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetEnterprisePermissibleActionsOptionsError() throws Throwable {
-    new GetEnterprisePermissibleActionsOptions.Builder().build();
-  }
-
 }

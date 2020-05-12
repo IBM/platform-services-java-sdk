@@ -41,7 +41,7 @@ public class UpdateAccountOptionsTest {
     assertEquals(updateAccountOptionsModel.accountId(), "testString");
     assertEquals(updateAccountOptionsModel.parent(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testUpdateAccountOptionsError() throws Throwable {
     new UpdateAccountOptions.Builder().build();

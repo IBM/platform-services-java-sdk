@@ -12,13 +12,15 @@
  */
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
+import java.util.Date;
+
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * An object that represents an enterprise.
+ * An enterprise resource.
  */
-public class ListEnterpriseResources extends GenericModel {
+public class Enterprise extends GenericModel {
 
   protected String url;
   protected String id;
@@ -33,11 +35,11 @@ public class ListEnterpriseResources extends GenericModel {
   @SerializedName("primary_contact_email")
   protected String primaryContactEmail;
   @SerializedName("created_at")
-  protected String createdAt;
+  protected Date createdAt;
   @SerializedName("created_by")
   protected String createdBy;
   @SerializedName("updated_at")
-  protected String updatedAt;
+  protected Date updatedAt;
   @SerializedName("updated_by")
   protected String updatedBy;
 
@@ -147,7 +149,7 @@ public class ListEnterpriseResources extends GenericModel {
    *
    * @return the createdAt
    */
-  public String getCreatedAt() {
+  public Date getCreatedAt() {
     return createdAt;
   }
 
@@ -169,7 +171,7 @@ public class ListEnterpriseResources extends GenericModel {
    *
    * @return the updatedAt
    */
-  public String getUpdatedAt() {
+  public Date getUpdatedAt() {
     return updatedAt;
   }
 

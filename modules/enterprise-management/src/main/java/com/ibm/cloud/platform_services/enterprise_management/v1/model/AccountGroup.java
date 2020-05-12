@@ -12,13 +12,15 @@
  */
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
+import java.util.Date;
+
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The response from successfully calling get account.
+ * An account group resource.
  */
-public class AccountResponse extends GenericModel {
+public class AccountGroup extends GenericModel {
 
   protected String url;
   protected String id;
@@ -32,26 +34,23 @@ public class AccountResponse extends GenericModel {
   protected String enterprisePath;
   protected String name;
   protected String state;
-  @SerializedName("owner_iam_id")
-  protected String ownerIamId;
-  protected Boolean paid;
-  @SerializedName("owner_email")
-  protected String ownerEmail;
-  @SerializedName("is_enterprise_account")
-  protected Boolean isEnterpriseAccount;
+  @SerializedName("primary_contact_iam_id")
+  protected String primaryContactIamId;
+  @SerializedName("primary_contact_email")
+  protected String primaryContactEmail;
   @SerializedName("created_at")
-  protected String createdAt;
+  protected Date createdAt;
   @SerializedName("created_by")
   protected String createdBy;
   @SerializedName("updated_at")
-  protected String updatedAt;
+  protected Date updatedAt;
   @SerializedName("updated_by")
   protected String updatedBy;
 
   /**
    * Gets the url.
    *
-   * The URL of the account.
+   * The URL of the account group.
    *
    * @return the url
    */
@@ -62,7 +61,7 @@ public class AccountResponse extends GenericModel {
   /**
    * Gets the id.
    *
-   * The account ID.
+   * The account group ID.
    *
    * @return the id
    */
@@ -73,7 +72,7 @@ public class AccountResponse extends GenericModel {
   /**
    * Gets the crn.
    *
-   * The Cloud Resource Name (CRN) of the account.
+   * The Cloud Resource Name (CRN) of the account group.
    *
    * @return the crn
    */
@@ -84,7 +83,7 @@ public class AccountResponse extends GenericModel {
   /**
    * Gets the parent.
    *
-   * The CRN of the parent of the account.
+   * The CRN of the parent of the account group.
    *
    * @return the parent
    */
@@ -106,7 +105,7 @@ public class AccountResponse extends GenericModel {
   /**
    * Gets the enterpriseId.
    *
-   * The enterprise ID that the account is a part of.
+   * The enterprise ID that the account group is a part of.
    *
    * @return the enterpriseId
    */
@@ -117,7 +116,7 @@ public class AccountResponse extends GenericModel {
   /**
    * Gets the enterprisePath.
    *
-   * The path from the enterprise to this particular account.
+   * The path from the enterprise to this particular account group.
    *
    * @return the enterprisePath
    */
@@ -128,7 +127,7 @@ public class AccountResponse extends GenericModel {
   /**
    * Gets the name.
    *
-   * The name of the account.
+   * The name of the account group.
    *
    * @return the name
    */
@@ -139,7 +138,7 @@ public class AccountResponse extends GenericModel {
   /**
    * Gets the state.
    *
-   * The state of the account.
+   * The state of the account group.
    *
    * @return the state
    */
@@ -148,64 +147,42 @@ public class AccountResponse extends GenericModel {
   }
 
   /**
-   * Gets the ownerIamId.
+   * Gets the primaryContactIamId.
    *
-   * The IAM ID of the owner of the account.
+   * The IAM ID of the primary contact of the account group.
    *
-   * @return the ownerIamId
+   * @return the primaryContactIamId
    */
-  public String getOwnerIamId() {
-    return ownerIamId;
+  public String getPrimaryContactIamId() {
+    return primaryContactIamId;
   }
 
   /**
-   * Gets the paid.
+   * Gets the primaryContactEmail.
    *
-   * The type of account - whether it is free or paid.
+   * The email address of the primary contact of the account group.
    *
-   * @return the paid
+   * @return the primaryContactEmail
    */
-  public Boolean isPaid() {
-    return paid;
-  }
-
-  /**
-   * Gets the ownerEmail.
-   *
-   * The email address of the owner of the account.
-   *
-   * @return the ownerEmail
-   */
-  public String getOwnerEmail() {
-    return ownerEmail;
-  }
-
-  /**
-   * Gets the isEnterpriseAccount.
-   *
-   * The flag to indicate whether the account is an enterprise account or not.
-   *
-   * @return the isEnterpriseAccount
-   */
-  public Boolean isIsEnterpriseAccount() {
-    return isEnterpriseAccount;
+  public String getPrimaryContactEmail() {
+    return primaryContactEmail;
   }
 
   /**
    * Gets the createdAt.
    *
-   * The time stamp at which the account was created.
+   * The time stamp at which the account group was created.
    *
    * @return the createdAt
    */
-  public String getCreatedAt() {
+  public Date getCreatedAt() {
     return createdAt;
   }
 
   /**
    * Gets the createdBy.
    *
-   * The IAM ID of the user or service that created the account.
+   * The IAM ID of the user or service that created the account group.
    *
    * @return the createdBy
    */
@@ -216,18 +193,18 @@ public class AccountResponse extends GenericModel {
   /**
    * Gets the updatedAt.
    *
-   * The time stamp at which the account was last updated.
+   * The time stamp at which the account group was last updated.
    *
    * @return the updatedAt
    */
-  public String getUpdatedAt() {
+  public Date getUpdatedAt() {
     return updatedAt;
   }
 
   /**
    * Gets the updatedBy.
    *
-   * The IAM ID of the user or service that updated the account.
+   * The IAM ID of the user or service that updated the account group.
    *
    * @return the updatedBy
    */

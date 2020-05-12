@@ -45,7 +45,7 @@ public class UpdateEnterpriseOptionsTest {
     assertEquals(updateEnterpriseOptionsModel.domain(), "testString");
     assertEquals(updateEnterpriseOptionsModel.primaryContactIamId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testUpdateEnterpriseOptionsError() throws Throwable {
     new UpdateEnterpriseOptions.Builder().build();

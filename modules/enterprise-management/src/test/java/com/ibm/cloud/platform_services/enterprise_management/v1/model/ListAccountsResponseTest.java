@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountResources;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 

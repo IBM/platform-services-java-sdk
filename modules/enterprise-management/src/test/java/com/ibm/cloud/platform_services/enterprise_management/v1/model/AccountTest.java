@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupByIdOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,23 +26,31 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetAccountGroupByIdOptions model.
+ * Unit test class for the Account model.
  */
-public class GetAccountGroupByIdOptionsTest {
+public class AccountTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetAccountGroupByIdOptions() throws Throwable {
-    GetAccountGroupByIdOptions getAccountGroupByIdOptionsModel = new GetAccountGroupByIdOptions.Builder()
-      .accountGroupId("testString")
-      .build();
-    assertEquals(getAccountGroupByIdOptionsModel.accountGroupId(), "testString");
+  public void testAccount() throws Throwable {
+    Account accountModel = new Account();
+    assertNull(accountModel.getUrl());
+    assertNull(accountModel.getId());
+    assertNull(accountModel.getCrn());
+    assertNull(accountModel.getParent());
+    assertNull(accountModel.getEnterpriseAccountId());
+    assertNull(accountModel.getEnterpriseId());
+    assertNull(accountModel.getEnterprisePath());
+    assertNull(accountModel.getName());
+    assertNull(accountModel.getState());
+    assertNull(accountModel.getOwnerIamId());
+    assertNull(accountModel.isPaid());
+    assertNull(accountModel.getOwnerEmail());
+    assertNull(accountModel.isIsEnterpriseAccount());
+    assertNull(accountModel.getCreatedAt());
+    assertNull(accountModel.getCreatedBy());
+    assertNull(accountModel.getUpdatedAt());
+    assertNull(accountModel.getUpdatedBy());
   }
-  
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountGroupByIdOptionsError() throws Throwable {
-    new GetAccountGroupByIdOptions.Builder().build();
-  }
-
 }

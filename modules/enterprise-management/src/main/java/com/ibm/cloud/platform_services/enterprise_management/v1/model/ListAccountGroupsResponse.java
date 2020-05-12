@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The response from successfully calling list account groups.
+ * The list_account_groups operation response.
  */
 public class ListAccountGroupsResponse extends GenericModel {
 
@@ -26,7 +26,7 @@ public class ListAccountGroupsResponse extends GenericModel {
   protected Long rowsCount;
   @SerializedName("next_url")
   protected String nextUrl;
-  protected List<ListAccountGroupsResources> resources;
+  protected List<AccountGroup> resources;
 
   /**
    * Gets the rowsCount.
@@ -57,7 +57,7 @@ public class ListAccountGroupsResponse extends GenericModel {
    *
    * @return the resources
    */
-  public List<ListAccountGroupsResources> getResources() {
+  public List<AccountGroup> getResources() {
     return resources;
   }
 }

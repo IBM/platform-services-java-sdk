@@ -26,7 +26,7 @@ public class ListEnterprisesResponse extends GenericModel {
   protected Long rowsCount;
   @SerializedName("next_url")
   protected String nextUrl;
-  protected List<ListEnterpriseResources> resources;
+  protected List<Enterprise> resources;
 
   /**
    * Gets the rowsCount.
@@ -57,7 +57,7 @@ public class ListEnterprisesResponse extends GenericModel {
    *
    * @return the resources
    */
-  public List<ListEnterpriseResources> getResources() {
+  public List<Enterprise> getResources() {
     return resources;
   }
 }

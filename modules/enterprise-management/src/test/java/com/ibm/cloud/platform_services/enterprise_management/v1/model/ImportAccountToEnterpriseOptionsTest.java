@@ -45,7 +45,7 @@ public class ImportAccountToEnterpriseOptionsTest {
     assertEquals(importAccountToEnterpriseOptionsModel.parent(), "testString");
     assertEquals(importAccountToEnterpriseOptionsModel.billingUnitId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testImportAccountToEnterpriseOptionsError() throws Throwable {
     new ImportAccountToEnterpriseOptions.Builder().build();

@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.EnterpriseResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,27 +26,27 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the EnterpriseResponse model.
+ * Unit test class for the Enterprise model.
  */
-public class EnterpriseResponseTest {
+public class EnterpriseTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testEnterpriseResponse() throws Throwable {
-    EnterpriseResponse enterpriseResponseModel = new EnterpriseResponse();
-    assertNull(enterpriseResponseModel.getUrl());
-    assertNull(enterpriseResponseModel.getId());
-    assertNull(enterpriseResponseModel.getEnterpriseAccountId());
-    assertNull(enterpriseResponseModel.getCrn());
-    assertNull(enterpriseResponseModel.getName());
-    assertNull(enterpriseResponseModel.getDomain());
-    assertNull(enterpriseResponseModel.getState());
-    assertNull(enterpriseResponseModel.getPrimaryContactIamId());
-    assertNull(enterpriseResponseModel.getPrimaryContactEmail());
-    assertNull(enterpriseResponseModel.getCreatedAt());
-    assertNull(enterpriseResponseModel.getCreatedBy());
-    assertNull(enterpriseResponseModel.getUpdatedAt());
-    assertNull(enterpriseResponseModel.getUpdatedBy());
+  public void testEnterprise() throws Throwable {
+    Enterprise enterpriseModel = new Enterprise();
+    assertNull(enterpriseModel.getUrl());
+    assertNull(enterpriseModel.getId());
+    assertNull(enterpriseModel.getEnterpriseAccountId());
+    assertNull(enterpriseModel.getCrn());
+    assertNull(enterpriseModel.getName());
+    assertNull(enterpriseModel.getDomain());
+    assertNull(enterpriseModel.getState());
+    assertNull(enterpriseModel.getPrimaryContactIamId());
+    assertNull(enterpriseModel.getPrimaryContactEmail());
+    assertNull(enterpriseModel.getCreatedAt());
+    assertNull(enterpriseModel.getCreatedBy());
+    assertNull(enterpriseModel.getUpdatedAt());
+    assertNull(enterpriseModel.getUpdatedBy());
   }
 }

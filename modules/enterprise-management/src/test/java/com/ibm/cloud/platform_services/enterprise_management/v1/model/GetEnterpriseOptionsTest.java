@@ -39,7 +39,7 @@ public class GetEnterpriseOptionsTest {
       .build();
     assertEquals(getEnterpriseOptionsModel.enterpriseId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetEnterpriseOptionsError() throws Throwable {
     new GetEnterpriseOptions.Builder().build();

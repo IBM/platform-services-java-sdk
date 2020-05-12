@@ -47,6 +47,7 @@
         <module>modules/global-search</module>
         <module>modules/global-tagging</module>
         <module>modules/iam-access-groups</module>
+        <module>modules/resource-manager</module>
 
         <!-- This module should always be listed last -->
         <module>modules/coverage-reports</module>

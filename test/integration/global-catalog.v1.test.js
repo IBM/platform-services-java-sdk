@@ -20,7 +20,7 @@
 const GlobalCatalogV1 = require('../../dist/global-catalog/v1');
 const authHelper = require('../resources/auth-helper.js');
 
-const timeout = 25000;
+const timeout = 60000;
 const configFile = 'global_catalog.env';
 const describe = authHelper.prepareTests(configFile);
 

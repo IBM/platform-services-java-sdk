@@ -7,4 +7,5 @@
     ./global-search/v2.ts \
     ./global-tagging/v1.ts \
     ./iam-access-groups/v2.ts \
+    ./resource-manager/v2 \
     --target "ES5"

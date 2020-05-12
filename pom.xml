@@ -12,7 +12,7 @@
 
     <properties>
         <!-- This is the version associated with the Java core. -->
-        <sdk-core-version>8.1.5</sdk-core-version>
+        <sdk-core-version>8.2.0</sdk-core-version>
 
         <testng-version>7.1.0</testng-version>
         <okhttp3-version>3.13.1</okhttp3-version>
@@ -320,7 +320,6 @@
             </plugins>
         </pluginManagement>
         <plugins>
-
             <!-- Disable default maven-deploy-plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -346,9 +345,9 @@
                     <!-- Bintray credentials in settings.xml. -->
                     <serverId>bintray</serverId>
 
-                    <!--  We'll use the maven coordinates for the bintray package name -->
+                    <!-- We'll use the maven coordinates for the bintray package name -->
                     <bintrayPackage>${project.groupId}:${project.artifactId}</bintrayPackage>
-                    
+
                     <!-- Use the project's github url when creating each module's package in the bintray repo -->
                     <packageVcsUrl>${bintray.package.url}</packageVcsUrl>
 
@@ -361,6 +360,9 @@
                 <executions>
                     <!-- Activate "bintray:deploy" during "deploy" -->
                     <execution>
+                        <?m2e ignore?>
+                        <id>bintray-deploy</id>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
@@ -438,5 +440,13 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <developers>
+        <developer>
+            <name>IBM Cloud DevX SDK Development</name>
+            <email>devxsdk@us.ibm.com</email>
+            <url>https://www.ibm.com/</url>
+        </developer>
+    </developers>
 
 </project>

@@ -51,7 +51,7 @@ Service Name | Import Path
 [Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | ibm-platform-services/global-catalog/v1
 [Global Search](https://cloud.ibm.com/apidocs/search) | ibm-platform-services/global-search/v2
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | ibm-platform-services/global-tagging/v1
-[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | ibm-platform-services/iam-acess-groups/v2
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | ibm-platform-services/iam-access-groups/v2
 [Resource Manager](https://cloud.ibm.com/apidocs/iam-access-groups) | ibm-platform-services/resource-manager/v2
 
 ## Prerequisites

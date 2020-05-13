@@ -99,8 +99,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
             .description("test case description")
             .build();
 
-        Response<Case> response = service.createCase(createCaseOptionsModel).execute();
-        assertNotNull(response);
+        service.createCase(createCaseOptionsModel).execute();
     }
 
     @Test (expectedExceptions = {InternalServerErrorException.class})
@@ -124,8 +123,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
             .offering(offeringPayloadModel)
             .build();
 
-        Response<Case> response = service.createCase(createCaseOptionsModel).execute();
-        assertNotNull(response);
+        service.createCase(createCaseOptionsModel).execute();
     }
 
     @Test
@@ -200,8 +198,10 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
 
         Response<Case> response = service.getCase(getCaseOptionsModel).execute();
         assertNotNull(response);
+
         Case responseObj = response.getResult();
         assertEquals(newCaseNumber, responseObj.getNumber());
+        assertNotNull(responseObj.getDescription());
     }
 
     @Test (dependsOnMethods = {"testCreateCase"}, expectedExceptions = {BadRequestException.class})
@@ -214,10 +214,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
             .fields(new ArrayList<String>(Arrays.asList(fields)))
             .build();
 
-        Response<Case> response = service.getCase(getCaseOptionsModel).execute();
-        assertNotNull(response);
-        Case responseObj = response.getResult();
-        assertEquals(newCaseNumber, responseObj.getNumber());
+        service.getCase(getCaseOptionsModel).execute();
     }
 
     @Test (dependsOnMethods = {"testCreateCase"})
@@ -246,10 +243,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
             .comment(comment)
             .build();
 
-        Response<Comment> response = service.addComment(addCommentOptionsModel).execute();
-
-        Comment responseObj = response.getResult();
-        assertEquals(comment, responseObj.getValue());
+        service.addComment(addCommentOptionsModel).execute();
     }
 
     @Test (dependsOnMethods = {"testCreateCase"})

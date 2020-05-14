@@ -239,7 +239,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         String comment = "This is a test comment!";
 
         AddCommentOptions addCommentOptionsModel = new AddCommentOptions.Builder()
-            .caseNumber("uncorn-case-num")
+            .caseNumber("invalid-case-num")
             .comment(comment)
             .build();
 

@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/IBM/platform-services-java-sdk/compare/0.4.0...0.4.1) (2020-05-15)
+
+
+### Bug Fixes
+
+* **build:** disable integration tests in tagged-release builds ([#22](https://github.com/IBM/platform-services-java-sdk/issues/22)) ([30f0afe](https://github.com/IBM/platform-services-java-sdk/commit/30f0afef3368fbf03531867c564f402656533eb5))
+
 # [0.4.0](https://github.com/IBM/platform-services-java-sdk/compare/0.3.0...0.4.0) (2020-05-12)
 
 

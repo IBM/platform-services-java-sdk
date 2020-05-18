@@ -13,6 +13,7 @@
 package com.ibm.cloud.platform_services.case_management.v1;
 
 import com.ibm.cloud.platform_services.case_management.v1.CaseManagement;
+import com.ibm.cloud.platform_services.case_management.v1.model.AcceptPayload;
 import com.ibm.cloud.platform_services.case_management.v1.model.AddCommentOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.AddResourceOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.AddWatchlistOptions;
@@ -29,21 +30,18 @@ import com.ibm.cloud.platform_services.case_management.v1.model.DownloadFileOpti
 import com.ibm.cloud.platform_services.case_management.v1.model.GetCaseOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.Offering;
-import com.ibm.cloud.platform_services.case_management.v1.model.OfferingPayload;
-import com.ibm.cloud.platform_services.case_management.v1.model.OfferingPayloadType;
 import com.ibm.cloud.platform_services.case_management.v1.model.OfferingType;
 import com.ibm.cloud.platform_services.case_management.v1.model.PaginationLink;
 import com.ibm.cloud.platform_services.case_management.v1.model.RemoveWatchlistOptions;
+import com.ibm.cloud.platform_services.case_management.v1.model.ResolvePayload;
 import com.ibm.cloud.platform_services.case_management.v1.model.Resource;
 import com.ibm.cloud.platform_services.case_management.v1.model.ResourcePayload;
 import com.ibm.cloud.platform_services.case_management.v1.model.StatusPayload;
-import com.ibm.cloud.platform_services.case_management.v1.model.StatusPayloadAcceptPayload;
-import com.ibm.cloud.platform_services.case_management.v1.model.StatusPayloadResolvePayload;
-import com.ibm.cloud.platform_services.case_management.v1.model.StatusPayloadUnresolvePayload;
+import com.ibm.cloud.platform_services.case_management.v1.model.UnresolvePayload;
 import com.ibm.cloud.platform_services.case_management.v1.model.UpdateCaseStatusOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.UploadFileOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.User;
-import com.ibm.cloud.platform_services.case_management.v1.model.UserIdAndRealm;
+import com.ibm.cloud.platform_services.case_management.v1.model.Watchlist;
 import com.ibm.cloud.platform_services.case_management.v1.model.WatchlistAddResponse;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
@@ -120,7 +118,7 @@ public class CaseManagementTest extends PowerMockTestCase {
   @Test
   public void testGetCasesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"total_count\": 10, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"cases\": [{\"number\": \"number\", \"short_description\": \"shortDescription\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"updated_at\": \"updatedAt\", \"updated_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"contact_type\": \"Cloud Support Center\", \"contact\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"status\": \"status\", \"severity\": 8, \"support_tier\": \"Free\", \"resolution\": \"resolution\", \"close_notes\": \"closeNotes\", \"eu\": {\"support\": false, \"data_center\": \"dataCenter\"}, \"watchlist\": [{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}], \"attachments\": [{\"id\": \"id\", \"filename\": \"filename\", \"size_in_bytes\": 11, \"created_at\": \"createdAt\", \"url\": \"url\"}], \"offering\": {\"name\": \"name\", \"type\": {\"group\": \"group\", \"key\": \"key\", \"id\": \"id\", \"kind\": \"kind\"}}, \"resources\": [{\"crn\": \"crn\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"note\": \"note\"}], \"comments\": [{\"value\": \"value\", \"added_at\": \"addedAt\", \"added_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}}]}]}";
+    String mockResponseBody = "{\"total_count\": 10, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"cases\": [{\"number\": \"number\", \"short_description\": \"shortDescription\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"updated_at\": \"updatedAt\", \"updated_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"contact_type\": \"Cloud Support Center\", \"contact\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"status\": \"status\", \"severity\": 8, \"support_tier\": \"Free\", \"resolution\": \"resolution\", \"close_notes\": \"closeNotes\", \"eu\": {\"support\": false, \"data_center\": \"dataCenter\"}, \"watchlist\": [{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}], \"attachments\": [{\"id\": \"id\", \"filename\": \"filename\", \"size_in_bytes\": 11, \"created_at\": \"createdAt\", \"url\": \"url\"}], \"offering\": {\"name\": \"name\", \"type\": {\"group\": \"crn_service_name\", \"key\": \"key\", \"kind\": \"kind\", \"id\": \"id\"}}, \"resources\": [{\"crn\": \"crn\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"note\": \"note\"}], \"comments\": [{\"value\": \"value\", \"added_at\": \"addedAt\", \"added_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}}]}]}";
     String getCasesPath = "/cases";
 
     server.enqueue(new MockResponse()
@@ -169,7 +167,7 @@ public class CaseManagementTest extends PowerMockTestCase {
   @Test
   public void testCreateCaseWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"number\": \"number\", \"short_description\": \"shortDescription\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"updated_at\": \"updatedAt\", \"updated_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"contact_type\": \"Cloud Support Center\", \"contact\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"status\": \"status\", \"severity\": 8, \"support_tier\": \"Free\", \"resolution\": \"resolution\", \"close_notes\": \"closeNotes\", \"eu\": {\"support\": false, \"data_center\": \"dataCenter\"}, \"watchlist\": [{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}], \"attachments\": [{\"id\": \"id\", \"filename\": \"filename\", \"size_in_bytes\": 11, \"created_at\": \"createdAt\", \"url\": \"url\"}], \"offering\": {\"name\": \"name\", \"type\": {\"group\": \"group\", \"key\": \"key\", \"id\": \"id\", \"kind\": \"kind\"}}, \"resources\": [{\"crn\": \"crn\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"note\": \"note\"}], \"comments\": [{\"value\": \"value\", \"added_at\": \"addedAt\", \"added_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}}]}";
+    String mockResponseBody = "{\"number\": \"number\", \"short_description\": \"shortDescription\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"updated_at\": \"updatedAt\", \"updated_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"contact_type\": \"Cloud Support Center\", \"contact\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"status\": \"status\", \"severity\": 8, \"support_tier\": \"Free\", \"resolution\": \"resolution\", \"close_notes\": \"closeNotes\", \"eu\": {\"support\": false, \"data_center\": \"dataCenter\"}, \"watchlist\": [{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}], \"attachments\": [{\"id\": \"id\", \"filename\": \"filename\", \"size_in_bytes\": 11, \"created_at\": \"createdAt\", \"url\": \"url\"}], \"offering\": {\"name\": \"name\", \"type\": {\"group\": \"crn_service_name\", \"key\": \"key\", \"kind\": \"kind\", \"id\": \"id\"}}, \"resources\": [{\"crn\": \"crn\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"note\": \"note\"}], \"comments\": [{\"value\": \"value\", \"added_at\": \"addedAt\", \"added_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}}]}";
     String createCasePath = "/cases";
 
     server.enqueue(new MockResponse()
@@ -179,8 +177,8 @@ public class CaseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the OfferingPayloadType model
-    OfferingPayloadType offeringPayloadTypeModel = new OfferingPayloadType.Builder()
+    // Construct an instance of the OfferingType model
+    OfferingType offeringTypeModel = new OfferingType.Builder()
     .group("crn_service_name")
     .key("testString")
     .kind("testString")
@@ -193,10 +191,10 @@ public class CaseManagementTest extends PowerMockTestCase {
     .dataCenter(Long.valueOf("26"))
     .build();
 
-    // Construct an instance of the OfferingPayload model
-    OfferingPayload offeringPayloadModel = new OfferingPayload.Builder()
+    // Construct an instance of the Offering model
+    Offering offeringModel = new Offering.Builder()
     .name("testString")
-    .type(offeringPayloadTypeModel)
+    .type(offeringTypeModel)
     .build();
 
     // Construct an instance of the ResourcePayload model
@@ -207,10 +205,10 @@ public class CaseManagementTest extends PowerMockTestCase {
     .note("testString")
     .build();
 
-    // Construct an instance of the UserIdAndRealm model
-    UserIdAndRealm userIdAndRealmModel = new UserIdAndRealm.Builder()
+    // Construct an instance of the User model
+    User userModel = new User.Builder()
     .realm("IBMid")
-    .userId("testString")
+    .userId("abc@ibm.com")
     .build();
 
     // Construct an instance of the CreateCaseOptions model
@@ -220,9 +218,9 @@ public class CaseManagementTest extends PowerMockTestCase {
     .description("testString")
     .severity(Long.valueOf("1"))
     .eu(casePayloadEuModel)
-    .offering(offeringPayloadModel)
+    .offering(offeringModel)
     .resources(new ArrayList<ResourcePayload>(Arrays.asList(resourcePayloadModel)))
-    .watchlist(new ArrayList<UserIdAndRealm>(Arrays.asList(userIdAndRealmModel)))
+    .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
     .invoiceNumber("testString")
     .slaCreditRequest(true)
     .build();
@@ -262,7 +260,7 @@ public class CaseManagementTest extends PowerMockTestCase {
   @Test
   public void testGetCaseWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"number\": \"number\", \"short_description\": \"shortDescription\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"updated_at\": \"updatedAt\", \"updated_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"contact_type\": \"Cloud Support Center\", \"contact\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"status\": \"status\", \"severity\": 8, \"support_tier\": \"Free\", \"resolution\": \"resolution\", \"close_notes\": \"closeNotes\", \"eu\": {\"support\": false, \"data_center\": \"dataCenter\"}, \"watchlist\": [{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}], \"attachments\": [{\"id\": \"id\", \"filename\": \"filename\", \"size_in_bytes\": 11, \"created_at\": \"createdAt\", \"url\": \"url\"}], \"offering\": {\"name\": \"name\", \"type\": {\"group\": \"group\", \"key\": \"key\", \"id\": \"id\", \"kind\": \"kind\"}}, \"resources\": [{\"crn\": \"crn\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"note\": \"note\"}], \"comments\": [{\"value\": \"value\", \"added_at\": \"addedAt\", \"added_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}}]}";
+    String mockResponseBody = "{\"number\": \"number\", \"short_description\": \"shortDescription\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"updated_at\": \"updatedAt\", \"updated_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"contact_type\": \"Cloud Support Center\", \"contact\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"status\": \"status\", \"severity\": 8, \"support_tier\": \"Free\", \"resolution\": \"resolution\", \"close_notes\": \"closeNotes\", \"eu\": {\"support\": false, \"data_center\": \"dataCenter\"}, \"watchlist\": [{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}], \"attachments\": [{\"id\": \"id\", \"filename\": \"filename\", \"size_in_bytes\": 11, \"created_at\": \"createdAt\", \"url\": \"url\"}], \"offering\": {\"name\": \"name\", \"type\": {\"group\": \"crn_service_name\", \"key\": \"key\", \"kind\": \"kind\", \"id\": \"id\"}}, \"resources\": [{\"crn\": \"crn\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"note\": \"note\"}], \"comments\": [{\"value\": \"value\", \"added_at\": \"addedAt\", \"added_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}}]}";
     String getCasePath = "/cases/testString";
 
     server.enqueue(new MockResponse()
@@ -314,7 +312,7 @@ public class CaseManagementTest extends PowerMockTestCase {
   @Test
   public void testUpdateCaseStatusWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"number\": \"number\", \"short_description\": \"shortDescription\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"updated_at\": \"updatedAt\", \"updated_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"contact_type\": \"Cloud Support Center\", \"contact\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"status\": \"status\", \"severity\": 8, \"support_tier\": \"Free\", \"resolution\": \"resolution\", \"close_notes\": \"closeNotes\", \"eu\": {\"support\": false, \"data_center\": \"dataCenter\"}, \"watchlist\": [{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}], \"attachments\": [{\"id\": \"id\", \"filename\": \"filename\", \"size_in_bytes\": 11, \"created_at\": \"createdAt\", \"url\": \"url\"}], \"offering\": {\"name\": \"name\", \"type\": {\"group\": \"group\", \"key\": \"key\", \"id\": \"id\", \"kind\": \"kind\"}}, \"resources\": [{\"crn\": \"crn\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"note\": \"note\"}], \"comments\": [{\"value\": \"value\", \"added_at\": \"addedAt\", \"added_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}}]}";
+    String mockResponseBody = "{\"number\": \"number\", \"short_description\": \"shortDescription\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"updated_at\": \"updatedAt\", \"updated_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"contact_type\": \"Cloud Support Center\", \"contact\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}, \"status\": \"status\", \"severity\": 8, \"support_tier\": \"Free\", \"resolution\": \"resolution\", \"close_notes\": \"closeNotes\", \"eu\": {\"support\": false, \"data_center\": \"dataCenter\"}, \"watchlist\": [{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}], \"attachments\": [{\"id\": \"id\", \"filename\": \"filename\", \"size_in_bytes\": 11, \"created_at\": \"createdAt\", \"url\": \"url\"}], \"offering\": {\"name\": \"name\", \"type\": {\"group\": \"crn_service_name\", \"key\": \"key\", \"kind\": \"kind\", \"id\": \"id\"}}, \"resources\": [{\"crn\": \"crn\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"note\": \"note\"}], \"comments\": [{\"value\": \"value\", \"added_at\": \"addedAt\", \"added_by\": {\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}}]}";
     String updateCaseStatusPath = "/cases/testString/status";
 
     server.enqueue(new MockResponse()
@@ -324,8 +322,8 @@ public class CaseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the StatusPayloadResolvePayload model
-    StatusPayloadResolvePayload statusPayloadModel = new StatusPayloadResolvePayload.Builder()
+    // Construct an instance of the ResolvePayload model
+    ResolvePayload statusPayloadModel = new ResolvePayload.Builder()
     .action("resolve")
     .comment("testString")
     .resolutionCode(Long.valueOf("1"))
@@ -433,16 +431,16 @@ public class CaseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the UserIdAndRealm model
-    UserIdAndRealm userIdAndRealmModel = new UserIdAndRealm.Builder()
+    // Construct an instance of the User model
+    User userModel = new User.Builder()
     .realm("IBMid")
-    .userId("testString")
+    .userId("abc@ibm.com")
     .build();
 
     // Construct an instance of the AddWatchlistOptions model
     AddWatchlistOptions addWatchlistOptionsModel = new AddWatchlistOptions.Builder()
     .caseNumber("testString")
-    .watchlist(new ArrayList<UserIdAndRealm>(Arrays.asList(userIdAndRealmModel)))
+    .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -480,7 +478,7 @@ public class CaseManagementTest extends PowerMockTestCase {
   @Test
   public void testRemoveWatchlistWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "[{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}]";
+    String mockResponseBody = "{\"watchlist\": [{\"name\": \"name\", \"realm\": \"IBMid\", \"user_id\": \"abc@ibm.com\"}]}";
     String removeWatchlistPath = "/cases/testString/watchlist";
 
     server.enqueue(new MockResponse()
@@ -490,22 +488,22 @@ public class CaseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the UserIdAndRealm model
-    UserIdAndRealm userIdAndRealmModel = new UserIdAndRealm.Builder()
+    // Construct an instance of the User model
+    User userModel = new User.Builder()
     .realm("IBMid")
-    .userId("testString")
+    .userId("abc@ibm.com")
     .build();
 
     // Construct an instance of the RemoveWatchlistOptions model
     RemoveWatchlistOptions removeWatchlistOptionsModel = new RemoveWatchlistOptions.Builder()
     .caseNumber("testString")
-    .watchlist(new ArrayList<UserIdAndRealm>(Arrays.asList(userIdAndRealmModel)))
+    .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<List<User>> response = testService.removeWatchlist(removeWatchlistOptionsModel).execute();
+    Response<Watchlist> response = testService.removeWatchlist(removeWatchlistOptionsModel).execute();
     assertNotNull(response);
-    List<User> responseObj = response.getResult();
+    Watchlist responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request

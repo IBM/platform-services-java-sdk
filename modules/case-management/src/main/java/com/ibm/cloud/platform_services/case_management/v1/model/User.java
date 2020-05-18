@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * User.
+ * User info in a case.
  */
 public class User extends GenericModel {
 
@@ -38,13 +38,92 @@ public class User extends GenericModel {
   protected String userId;
 
   /**
+   * Builder.
+   */
+  public static class Builder {
+    private String realm;
+    private String userId;
+
+    private Builder(User user) {
+      this.realm = user.realm;
+      this.userId = user.userId;
+    }
+
+    /**
+     * Instantiates a new builder.
+     */
+    public Builder() {
+    }
+
+    /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param realm the realm
+     * @param userId the userId
+     */
+    public Builder(String realm, String userId) {
+      this.realm = realm;
+      this.userId = userId;
+    }
+
+    /**
+     * Builds a User.
+     *
+     * @return the new User instance
+     */
+    public User build() {
+      return new User(this);
+    }
+
+    /**
+     * Set the realm.
+     *
+     * @param realm the realm
+     * @return the User builder
+     */
+    public Builder realm(String realm) {
+      this.realm = realm;
+      return this;
+    }
+
+    /**
+     * Set the userId.
+     *
+     * @param userId the userId
+     * @return the User builder
+     */
+    public Builder userId(String userId) {
+      this.userId = userId;
+      return this;
+    }
+  }
+
+  protected User(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.realm,
+      "realm cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.userId,
+      "userId cannot be null");
+    realm = builder.realm;
+    userId = builder.userId;
+  }
+
+  /**
+   * New builder.
+   *
+   * @return a User builder
+   */
+  public Builder newBuilder() {
+    return new Builder(this);
+  }
+
+  /**
    * Gets the name.
    *
    * Full name of the user.
    *
    * @return the name
    */
-  public String getName() {
+  public String name() {
     return name;
   }
 
@@ -55,7 +134,7 @@ public class User extends GenericModel {
    *
    * @return the realm
    */
-  public String getRealm() {
+  public String realm() {
     return realm;
   }
 
@@ -66,7 +145,7 @@ public class User extends GenericModel {
    *
    * @return the userId
    */
-  public String getUserId() {
+  public String userId() {
     return userId;
   }
 }

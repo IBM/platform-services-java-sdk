@@ -92,6 +92,8 @@ public class CasePayloadEu extends GenericModel {
   /**
    * Gets the supported.
    *
+   * indicating whether the case is EU supported.
+   *
    * @return the supported
    */
   public Boolean supported() {

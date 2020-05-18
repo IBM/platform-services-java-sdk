@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.case_management.v1.model;
 
-import com.ibm.cloud.platform_services.case_management.v1.model.StatusPayloadAcceptPayload;
+import com.ibm.cloud.platform_services.case_management.v1.model.UnresolvePayload;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,32 +26,32 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the StatusPayloadAcceptPayload model.
+ * Unit test class for the UnresolvePayload model.
  */
-public class StatusPayloadAcceptPayloadTest {
+public class UnresolvePayloadTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testStatusPayloadAcceptPayload() throws Throwable {
-    StatusPayloadAcceptPayload statusPayloadAcceptPayloadModel = new StatusPayloadAcceptPayload.Builder()
-      .action("accept")
+  public void testUnresolvePayload() throws Throwable {
+    UnresolvePayload unresolvePayloadModel = new UnresolvePayload.Builder()
+      .action("unresolve")
       .comment("testString")
       .build();
-    assertEquals(statusPayloadAcceptPayloadModel.action(), "accept");
-    assertEquals(statusPayloadAcceptPayloadModel.comment(), "testString");
+    assertEquals(unresolvePayloadModel.action(), "unresolve");
+    assertEquals(unresolvePayloadModel.comment(), "testString");
 
-    String json = TestUtilities.serialize(statusPayloadAcceptPayloadModel);
+    String json = TestUtilities.serialize(unresolvePayloadModel);
 
-    StatusPayloadAcceptPayload statusPayloadAcceptPayloadModelNew = TestUtilities.deserialize(json, StatusPayloadAcceptPayload.class);
-    assertTrue(statusPayloadAcceptPayloadModelNew instanceof StatusPayloadAcceptPayload);
-    assertEquals(statusPayloadAcceptPayloadModelNew.action(), "accept");
-    assertEquals(statusPayloadAcceptPayloadModelNew.comment(), "testString");
+    UnresolvePayload unresolvePayloadModelNew = TestUtilities.deserialize(json, UnresolvePayload.class);
+    assertTrue(unresolvePayloadModelNew instanceof UnresolvePayload);
+    assertEquals(unresolvePayloadModelNew.action(), "unresolve");
+    assertEquals(unresolvePayloadModelNew.comment(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testStatusPayloadAcceptPayloadError() throws Throwable {
-    new StatusPayloadAcceptPayload.Builder().build();
+  public void testUnresolvePayloadError() throws Throwable {
+    new UnresolvePayload.Builder().build();
   }
 
 }

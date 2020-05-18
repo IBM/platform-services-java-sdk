@@ -15,7 +15,7 @@ package com.ibm.cloud.platform_services.case_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Resource.
+ * A resource record of a case.
  */
 public class Resource extends GenericModel {
 

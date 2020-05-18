@@ -13,9 +13,9 @@
 package com.ibm.cloud.platform_services.case_management.v1.model;
 
 /**
- * StatusPayloadUnresolvePayload.
+ * Payload to accept the proposed resolution of the case.
  */
-public class StatusPayloadUnresolvePayload extends StatusPayload {
+public class AcceptPayload extends StatusPayload {
 
   /**
    * action to perform on the case.
@@ -37,9 +37,9 @@ public class StatusPayloadUnresolvePayload extends StatusPayload {
     private String action;
     private String comment;
 
-    public Builder(StatusPayload statusPayloadUnresolvePayload) {
-      this.action = statusPayloadUnresolvePayload.action;
-      this.comment = statusPayloadUnresolvePayload.comment;
+    public Builder(StatusPayload acceptPayload) {
+      this.action = acceptPayload.action;
+      this.comment = acceptPayload.comment;
     }
 
     /**
@@ -52,27 +52,25 @@ public class StatusPayloadUnresolvePayload extends StatusPayload {
      * Instantiates a new builder with required properties.
      *
      * @param action the action
-     * @param comment the comment
      */
-    public Builder(String action, String comment) {
+    public Builder(String action) {
       this.action = action;
-      this.comment = comment;
     }
 
     /**
-     * Builds a StatusPayloadUnresolvePayload.
+     * Builds a AcceptPayload.
      *
-     * @return the new StatusPayloadUnresolvePayload instance
+     * @return the new AcceptPayload instance
      */
-    public StatusPayloadUnresolvePayload build() {
-      return new StatusPayloadUnresolvePayload(this);
+    public AcceptPayload build() {
+      return new AcceptPayload(this);
     }
 
     /**
      * Set the action.
      *
      * @param action the action
-     * @return the StatusPayloadUnresolvePayload builder
+     * @return the AcceptPayload builder
      */
     public Builder action(String action) {
       this.action = action;
@@ -83,7 +81,7 @@ public class StatusPayloadUnresolvePayload extends StatusPayload {
      * Set the comment.
      *
      * @param comment the comment
-     * @return the StatusPayloadUnresolvePayload builder
+     * @return the AcceptPayload builder
      */
     public Builder comment(String comment) {
       this.comment = comment;
@@ -91,11 +89,9 @@ public class StatusPayloadUnresolvePayload extends StatusPayload {
     }
   }
 
-  protected StatusPayloadUnresolvePayload(Builder builder) {
+  protected AcceptPayload(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.action,
       "action cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.comment,
-      "comment cannot be null");
     action = builder.action;
     comment = builder.comment;
   }
@@ -103,7 +99,7 @@ public class StatusPayloadUnresolvePayload extends StatusPayload {
   /**
    * New builder.
    *
-   * @return a StatusPayloadUnresolvePayload builder
+   * @return a AcceptPayload builder
    */
   public Builder newBuilder() {
     return new Builder(this);

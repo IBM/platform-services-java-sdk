@@ -22,6 +22,9 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class CreateCaseOptions extends GenericModel {
 
+  /**
+   * Case type.
+   */
   public interface Type {
     /** technical. */
     String TECHNICAL = "technical";
@@ -38,9 +41,9 @@ public class CreateCaseOptions extends GenericModel {
   protected String description;
   protected Long severity;
   protected CasePayloadEu eu;
-  protected OfferingPayload offering;
+  protected Offering offering;
   protected List<ResourcePayload> resources;
-  protected List<UserIdAndRealm> watchlist;
+  protected List<User> watchlist;
   protected String invoiceNumber;
   protected Boolean slaCreditRequest;
 
@@ -53,9 +56,9 @@ public class CreateCaseOptions extends GenericModel {
     private String description;
     private Long severity;
     private CasePayloadEu eu;
-    private OfferingPayload offering;
+    private Offering offering;
     private List<ResourcePayload> resources;
-    private List<UserIdAndRealm> watchlist;
+    private List<User> watchlist;
     private String invoiceNumber;
     private Boolean slaCreditRequest;
 
@@ -122,11 +125,11 @@ public class CreateCaseOptions extends GenericModel {
      * @param watchlist the new watchlist
      * @return the CreateCaseOptions builder
      */
-    public Builder addWatchlist(UserIdAndRealm watchlist) {
+    public Builder addWatchlist(User watchlist) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(watchlist,
         "watchlist cannot be null");
       if (this.watchlist == null) {
-        this.watchlist = new ArrayList<UserIdAndRealm>();
+        this.watchlist = new ArrayList<User>();
       }
       this.watchlist.add(watchlist);
       return this;
@@ -193,7 +196,7 @@ public class CreateCaseOptions extends GenericModel {
      * @param offering the offering
      * @return the CreateCaseOptions builder
      */
-    public Builder offering(OfferingPayload offering) {
+    public Builder offering(Offering offering) {
       this.offering = offering;
       return this;
     }
@@ -217,7 +220,7 @@ public class CreateCaseOptions extends GenericModel {
      * @param watchlist the watchlist
      * @return the CreateCaseOptions builder
      */
-    public Builder watchlist(List<UserIdAndRealm> watchlist) {
+    public Builder watchlist(List<User> watchlist) {
       this.watchlist = watchlist;
       return this;
     }
@@ -276,6 +279,8 @@ public class CreateCaseOptions extends GenericModel {
   /**
    * Gets the type.
    *
+   * Case type.
+   *
    * @return the type
    */
   public String type() {
@@ -307,6 +312,8 @@ public class CreateCaseOptions extends GenericModel {
   /**
    * Gets the severity.
    *
+   * Severity of the case. Smaller values mean higher severity.
+   *
    * @return the severity
    */
   public Long severity() {
@@ -328,9 +335,11 @@ public class CreateCaseOptions extends GenericModel {
   /**
    * Gets the offering.
    *
+   * Offering details.
+   *
    * @return the offering
    */
-  public OfferingPayload offering() {
+  public Offering offering() {
     return offering;
   }
 
@@ -354,7 +363,7 @@ public class CreateCaseOptions extends GenericModel {
    *
    * @return the watchlist
    */
-  public List<UserIdAndRealm> watchlist() {
+  public List<User> watchlist() {
     return watchlist;
   }
 

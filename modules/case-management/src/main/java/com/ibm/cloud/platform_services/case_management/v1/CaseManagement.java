@@ -30,7 +30,7 @@ import com.ibm.cloud.platform_services.case_management.v1.model.RemoveWatchlistO
 import com.ibm.cloud.platform_services.case_management.v1.model.Resource;
 import com.ibm.cloud.platform_services.case_management.v1.model.UpdateCaseStatusOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.UploadFileOptions;
-import com.ibm.cloud.platform_services.case_management.v1.model.User;
+import com.ibm.cloud.platform_services.case_management.v1.model.Watchlist;
 import com.ibm.cloud.platform_services.case_management.v1.model.WatchlistAddResponse;
 import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
@@ -43,7 +43,6 @@ import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.RequestUtils;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import okhttp3.MultipartBody;
@@ -313,9 +312,9 @@ public class CaseManagement extends BaseService {
    * Remove users from the watchlist of a case.
    *
    * @param removeWatchlistOptions the {@link RemoveWatchlistOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link List}
+   * @return a {@link ServiceCall} with a result of type {@link Watchlist}
    */
-  public ServiceCall<List<User>> removeWatchlist(RemoveWatchlistOptions removeWatchlistOptions) {
+  public ServiceCall<Watchlist> removeWatchlist(RemoveWatchlistOptions removeWatchlistOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(removeWatchlistOptions,
       "removeWatchlistOptions cannot be null");
     String[] pathSegments = { "cases", "watchlist" };
@@ -331,8 +330,8 @@ public class CaseManagement extends BaseService {
       contentJson.add("watchlist", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(removeWatchlistOptions.watchlist()));
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<List<User>> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<List<User>>() { }.getType());
+    ResponseConverter<Watchlist> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Watchlist>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

@@ -15,10 +15,10 @@ package com.ibm.cloud.platform_services.case_management.v1.model;
 
 import com.ibm.cloud.platform_services.case_management.v1.model.CasePayloadEu;
 import com.ibm.cloud.platform_services.case_management.v1.model.CreateCaseOptions;
-import com.ibm.cloud.platform_services.case_management.v1.model.OfferingPayload;
-import com.ibm.cloud.platform_services.case_management.v1.model.OfferingPayloadType;
+import com.ibm.cloud.platform_services.case_management.v1.model.Offering;
+import com.ibm.cloud.platform_services.case_management.v1.model.OfferingType;
 import com.ibm.cloud.platform_services.case_management.v1.model.ResourcePayload;
-import com.ibm.cloud.platform_services.case_management.v1.model.UserIdAndRealm;
+import com.ibm.cloud.platform_services.case_management.v1.model.User;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -41,16 +41,16 @@ public class CreateCaseOptionsTest {
 
   @Test
   public void testCreateCaseOptions() throws Throwable {
-    OfferingPayloadType offeringPayloadTypeModel = new OfferingPayloadType.Builder()
+    OfferingType offeringTypeModel = new OfferingType.Builder()
       .group("crn_service_name")
       .key("testString")
       .kind("testString")
       .id("testString")
       .build();
-    assertEquals(offeringPayloadTypeModel.group(), "crn_service_name");
-    assertEquals(offeringPayloadTypeModel.key(), "testString");
-    assertEquals(offeringPayloadTypeModel.kind(), "testString");
-    assertEquals(offeringPayloadTypeModel.id(), "testString");
+    assertEquals(offeringTypeModel.group(), "crn_service_name");
+    assertEquals(offeringTypeModel.key(), "testString");
+    assertEquals(offeringTypeModel.kind(), "testString");
+    assertEquals(offeringTypeModel.id(), "testString");
 
     CasePayloadEu casePayloadEuModel = new CasePayloadEu.Builder()
       .supported(true)
@@ -59,12 +59,12 @@ public class CreateCaseOptionsTest {
     assertEquals(casePayloadEuModel.supported(), Boolean.valueOf(true));
     assertEquals(casePayloadEuModel.dataCenter(), Long.valueOf("26"));
 
-    OfferingPayload offeringPayloadModel = new OfferingPayload.Builder()
+    Offering offeringModel = new Offering.Builder()
       .name("testString")
-      .type(offeringPayloadTypeModel)
+      .type(offeringTypeModel)
       .build();
-    assertEquals(offeringPayloadModel.name(), "testString");
-    assertEquals(offeringPayloadModel.type(), offeringPayloadTypeModel);
+    assertEquals(offeringModel.name(), "testString");
+    assertEquals(offeringModel.type(), offeringTypeModel);
 
     ResourcePayload resourcePayloadModel = new ResourcePayload.Builder()
       .crn("testString")
@@ -77,12 +77,12 @@ public class CreateCaseOptionsTest {
     assertEquals(resourcePayloadModel.id(), Double.valueOf("72.5"));
     assertEquals(resourcePayloadModel.note(), "testString");
 
-    UserIdAndRealm userIdAndRealmModel = new UserIdAndRealm.Builder()
+    User userModel = new User.Builder()
       .realm("IBMid")
-      .userId("testString")
+      .userId("abc@ibm.com")
       .build();
-    assertEquals(userIdAndRealmModel.realm(), "IBMid");
-    assertEquals(userIdAndRealmModel.userId(), "testString");
+    assertEquals(userModel.realm(), "IBMid");
+    assertEquals(userModel.userId(), "abc@ibm.com");
 
     CreateCaseOptions createCaseOptionsModel = new CreateCaseOptions.Builder()
       .type("technical")
@@ -90,9 +90,9 @@ public class CreateCaseOptionsTest {
       .description("testString")
       .severity(Long.valueOf("1"))
       .eu(casePayloadEuModel)
-      .offering(offeringPayloadModel)
+      .offering(offeringModel)
       .resources(new ArrayList<ResourcePayload>(Arrays.asList(resourcePayloadModel)))
-      .watchlist(new ArrayList<UserIdAndRealm>(Arrays.asList(userIdAndRealmModel)))
+      .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
       .invoiceNumber("testString")
       .slaCreditRequest(true)
       .build();
@@ -101,9 +101,9 @@ public class CreateCaseOptionsTest {
     assertEquals(createCaseOptionsModel.description(), "testString");
     assertEquals(createCaseOptionsModel.severity(), Long.valueOf("1"));
     assertEquals(createCaseOptionsModel.eu(), casePayloadEuModel);
-    assertEquals(createCaseOptionsModel.offering(), offeringPayloadModel);
+    assertEquals(createCaseOptionsModel.offering(), offeringModel);
     assertEquals(createCaseOptionsModel.resources(), new ArrayList<ResourcePayload>(Arrays.asList(resourcePayloadModel)));
-    assertEquals(createCaseOptionsModel.watchlist(), new ArrayList<UserIdAndRealm>(Arrays.asList(userIdAndRealmModel)));
+    assertEquals(createCaseOptionsModel.watchlist(), new ArrayList<User>(Arrays.asList(userModel)));
     assertEquals(createCaseOptionsModel.invoiceNumber(), "testString");
     assertEquals(createCaseOptionsModel.slaCreditRequest(), Boolean.valueOf(true));
   }

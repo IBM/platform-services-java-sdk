@@ -16,12 +16,12 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * StatusPayload.
+ * Payload to update status of the case.
  *
  * Classes which extend this class:
- * - StatusPayloadResolvePayload
- * - StatusPayloadUnresolvePayload
- * - StatusPayloadAcceptPayload
+ * - ResolvePayload
+ * - UnresolvePayload
+ * - AcceptPayload
  */
 public class StatusPayload extends GenericModel {
   @SuppressWarnings("unused")
@@ -29,9 +29,9 @@ public class StatusPayload extends GenericModel {
   protected static java.util.Map<String, Class<?>> discriminatorMapping;
   static {
     discriminatorMapping = new java.util.HashMap<>();
-    discriminatorMapping.put("resolve", StatusPayloadResolvePayload.class);
-    discriminatorMapping.put("unresolve", StatusPayloadUnresolvePayload.class);
-    discriminatorMapping.put("accept", StatusPayloadAcceptPayload.class);
+    discriminatorMapping.put("resolve", ResolvePayload.class);
+    discriminatorMapping.put("unresolve", UnresolvePayload.class);
+    discriminatorMapping.put("accept", AcceptPayload.class);
   }
 
   /**

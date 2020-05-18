@@ -115,6 +115,8 @@ public class AddCommentOptions extends GenericModel {
   /**
    * Gets the comment.
    *
+   * Comment to add to the case.
+   *
    * @return the comment
    */
   public String comment() {

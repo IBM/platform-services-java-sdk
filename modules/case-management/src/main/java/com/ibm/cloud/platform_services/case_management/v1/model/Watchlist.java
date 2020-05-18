@@ -18,23 +18,20 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The removeWatchlist options.
+ * Payload to add/remove users to/from the case watchlist.
  */
-public class RemoveWatchlistOptions extends GenericModel {
+public class Watchlist extends GenericModel {
 
-  protected String caseNumber;
   protected List<User> watchlist;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private String caseNumber;
     private List<User> watchlist;
 
-    private Builder(RemoveWatchlistOptions removeWatchlistOptions) {
-      this.caseNumber = removeWatchlistOptions.caseNumber;
-      this.watchlist = removeWatchlistOptions.watchlist;
+    private Builder(Watchlist watchlist) {
+      this.watchlist = watchlist.watchlist;
     }
 
     /**
@@ -44,28 +41,19 @@ public class RemoveWatchlistOptions extends GenericModel {
     }
 
     /**
-     * Instantiates a new builder with required properties.
+     * Builds a Watchlist.
      *
-     * @param caseNumber the caseNumber
+     * @return the new Watchlist instance
      */
-    public Builder(String caseNumber) {
-      this.caseNumber = caseNumber;
-    }
-
-    /**
-     * Builds a RemoveWatchlistOptions.
-     *
-     * @return the new RemoveWatchlistOptions instance
-     */
-    public RemoveWatchlistOptions build() {
-      return new RemoveWatchlistOptions(this);
+    public Watchlist build() {
+      return new Watchlist(this);
     }
 
     /**
      * Adds an watchlist to watchlist.
      *
      * @param watchlist the new watchlist
-     * @return the RemoveWatchlistOptions builder
+     * @return the Watchlist builder
      */
     public Builder addWatchlist(User watchlist) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(watchlist,
@@ -78,65 +66,29 @@ public class RemoveWatchlistOptions extends GenericModel {
     }
 
     /**
-     * Set the caseNumber.
-     *
-     * @param caseNumber the caseNumber
-     * @return the RemoveWatchlistOptions builder
-     */
-    public Builder caseNumber(String caseNumber) {
-      this.caseNumber = caseNumber;
-      return this;
-    }
-
-    /**
      * Set the watchlist.
      * Existing watchlist will be replaced.
      *
      * @param watchlist the watchlist
-     * @return the RemoveWatchlistOptions builder
+     * @return the Watchlist builder
      */
     public Builder watchlist(List<User> watchlist) {
       this.watchlist = watchlist;
       return this;
     }
-
-    /**
-     * Set the watchlist.
-     *
-     * @param watchlist the watchlist
-     * @return the RemoveWatchlistOptions builder
-     */
-    public Builder watchlist(Watchlist watchlist) {
-      this.watchlist = watchlist.watchlist();
-      return this;
-    }
   }
 
-  protected RemoveWatchlistOptions(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.caseNumber,
-      "caseNumber cannot be empty");
-    caseNumber = builder.caseNumber;
+  protected Watchlist(Builder builder) {
     watchlist = builder.watchlist;
   }
 
   /**
    * New builder.
    *
-   * @return a RemoveWatchlistOptions builder
+   * @return a Watchlist builder
    */
   public Builder newBuilder() {
     return new Builder(this);
-  }
-
-  /**
-   * Gets the caseNumber.
-   *
-   * Unique identifier of a case.
-   *
-   * @return the caseNumber
-   */
-  public String caseNumber() {
-    return caseNumber;
   }
 
   /**

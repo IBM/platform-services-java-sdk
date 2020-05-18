@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.case_management.v1.model;
 
-import com.ibm.cloud.platform_services.case_management.v1.model.StatusPayloadResolvePayload;
+import com.ibm.cloud.platform_services.case_management.v1.model.ResolvePayload;
 import com.ibm.cloud.platform_services.case_management.v1.model.UpdateCaseStatusOptions;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 
@@ -35,7 +35,7 @@ public class UpdateCaseStatusOptionsTest {
 
   @Test
   public void testUpdateCaseStatusOptions() throws Throwable {
-    StatusPayloadResolvePayload statusPayloadModel = new StatusPayloadResolvePayload.Builder()
+    ResolvePayload statusPayloadModel = new ResolvePayload.Builder()
       .action("resolve")
       .comment("testString")
       .resolutionCode(Long.valueOf("1"))

@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * CaseList.
+ * Response of a GET /cases request.
  */
 public class CaseList extends GenericModel {
 
@@ -44,6 +44,8 @@ public class CaseList extends GenericModel {
   /**
    * Gets the first.
    *
+   * Container for URL pointer to related pages of cases.
+   *
    * @return the first
    */
   public PaginationLink getFirst() {
@@ -52,6 +54,8 @@ public class CaseList extends GenericModel {
 
   /**
    * Gets the next.
+   *
+   * Container for URL pointer to related pages of cases.
    *
    * @return the next
    */
@@ -62,6 +66,8 @@ public class CaseList extends GenericModel {
   /**
    * Gets the previous.
    *
+   * Container for URL pointer to related pages of cases.
+   *
    * @return the previous
    */
   public PaginationLink getPrevious() {
@@ -71,6 +77,8 @@ public class CaseList extends GenericModel {
   /**
    * Gets the last.
    *
+   * Container for URL pointer to related pages of cases.
+   *
    * @return the last
    */
   public PaginationLink getLast() {
@@ -79,6 +87,8 @@ public class CaseList extends GenericModel {
 
   /**
    * Gets the cases.
+   *
+   * List of cases.
    *
    * @return the cases
    */

@@ -14,7 +14,7 @@
 package com.ibm.cloud.platform_services.case_management.v1.model;
 
 import com.ibm.cloud.platform_services.case_management.v1.model.RemoveWatchlistOptions;
-import com.ibm.cloud.platform_services.case_management.v1.model.UserIdAndRealm;
+import com.ibm.cloud.platform_services.case_management.v1.model.User;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -37,19 +37,19 @@ public class RemoveWatchlistOptionsTest {
 
   @Test
   public void testRemoveWatchlistOptions() throws Throwable {
-    UserIdAndRealm userIdAndRealmModel = new UserIdAndRealm.Builder()
+    User userModel = new User.Builder()
       .realm("IBMid")
-      .userId("testString")
+      .userId("abc@ibm.com")
       .build();
-    assertEquals(userIdAndRealmModel.realm(), "IBMid");
-    assertEquals(userIdAndRealmModel.userId(), "testString");
+    assertEquals(userModel.realm(), "IBMid");
+    assertEquals(userModel.userId(), "abc@ibm.com");
 
     RemoveWatchlistOptions removeWatchlistOptionsModel = new RemoveWatchlistOptions.Builder()
       .caseNumber("testString")
-      .watchlist(new ArrayList<UserIdAndRealm>(Arrays.asList(userIdAndRealmModel)))
+      .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
       .build();
     assertEquals(removeWatchlistOptionsModel.caseNumber(), "testString");
-    assertEquals(removeWatchlistOptionsModel.watchlist(), new ArrayList<UserIdAndRealm>(Arrays.asList(userIdAndRealmModel)));
+    assertEquals(removeWatchlistOptionsModel.watchlist(), new ArrayList<User>(Arrays.asList(userModel)));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

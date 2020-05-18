@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Comment.
+ * A comment in a case.
  */
 public class Comment extends GenericModel {
 
@@ -50,6 +50,8 @@ public class Comment extends GenericModel {
 
   /**
    * Gets the addedBy.
+   *
+   * User info in a case.
    *
    * @return the addedBy
    */

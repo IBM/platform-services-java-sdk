@@ -115,6 +115,8 @@ public class UpdateCaseStatusOptions extends GenericModel {
   /**
    * Gets the statusPayload.
    *
+   * Payload to update status of the case.
+   *
    * @return the statusPayload
    */
   public StatusPayload statusPayload() {

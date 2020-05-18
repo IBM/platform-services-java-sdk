@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Case.
+ * The support case.
  */
 public class Case extends GenericModel {
 
@@ -122,6 +122,8 @@ public class Case extends GenericModel {
   /**
    * Gets the createdBy.
    *
+   * User info in a case.
+   *
    * @return the createdBy
    */
   public User getCreatedBy() {
@@ -142,6 +144,8 @@ public class Case extends GenericModel {
   /**
    * Gets the updatedBy.
    *
+   * User info in a case.
+   *
    * @return the updatedBy
    */
   public User getUpdatedBy() {
@@ -161,6 +165,8 @@ public class Case extends GenericModel {
 
   /**
    * Gets the contact.
+   *
+   * User info in a case.
    *
    * @return the contact
    */
@@ -226,6 +232,8 @@ public class Case extends GenericModel {
   /**
    * Gets the eu.
    *
+   * EU support.
+   *
    * @return the eu
    */
   public CaseEu getEu() {
@@ -235,7 +243,7 @@ public class Case extends GenericModel {
   /**
    * Gets the watchlist.
    *
-   * User IDs in the watchlist.
+   * List of users in the case watchlist.
    *
    * @return the watchlist
    */
@@ -256,6 +264,8 @@ public class Case extends GenericModel {
 
   /**
    * Gets the offering.
+   *
+   * Offering details.
    *
    * @return the offering
    */

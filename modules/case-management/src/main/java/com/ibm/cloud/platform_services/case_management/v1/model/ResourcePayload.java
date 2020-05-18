@@ -15,7 +15,7 @@ package com.ibm.cloud.platform_services.case_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * ResourcePayload.
+ * Payload to add a resource to a case.
  */
 public class ResourcePayload extends GenericModel {
 

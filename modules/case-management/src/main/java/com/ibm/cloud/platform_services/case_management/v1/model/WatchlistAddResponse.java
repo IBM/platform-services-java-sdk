@@ -17,7 +17,7 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * WatchlistAddResponse.
+ * Response of a request adding to watchlist.
  */
 public class WatchlistAddResponse extends GenericModel {
 
@@ -27,7 +27,7 @@ public class WatchlistAddResponse extends GenericModel {
   /**
    * Gets the added.
    *
-   * User IDs in the watchlist.
+   * List of added user.
    *
    * @return the added
    */
@@ -38,7 +38,7 @@ public class WatchlistAddResponse extends GenericModel {
   /**
    * Gets the failed.
    *
-   * User IDs in the watchlist.
+   * List of failed to add user.
    *
    * @return the failed
    */

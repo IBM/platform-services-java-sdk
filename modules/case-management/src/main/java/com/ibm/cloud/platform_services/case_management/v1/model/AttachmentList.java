@@ -17,7 +17,7 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * AttachmentList.
+ * List of attachments in the case.
  */
 public class AttachmentList extends GenericModel {
 

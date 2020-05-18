@@ -35,8 +35,35 @@ public class OfferingTest {
 
   @Test
   public void testOffering() throws Throwable {
-    Offering offeringModel = new Offering();
-    assertNull(offeringModel.getName());
-    assertNull(offeringModel.getType());
+    OfferingType offeringTypeModel = new OfferingType.Builder()
+      .group("crn_service_name")
+      .key("testString")
+      .kind("testString")
+      .id("testString")
+      .build();
+    assertEquals(offeringTypeModel.group(), "crn_service_name");
+    assertEquals(offeringTypeModel.key(), "testString");
+    assertEquals(offeringTypeModel.kind(), "testString");
+    assertEquals(offeringTypeModel.id(), "testString");
+
+    Offering offeringModel = new Offering.Builder()
+      .name("testString")
+      .type(offeringTypeModel)
+      .build();
+    assertEquals(offeringModel.name(), "testString");
+    assertEquals(offeringModel.type(), offeringTypeModel);
+
+    String json = TestUtilities.serialize(offeringModel);
+
+    Offering offeringModelNew = TestUtilities.deserialize(json, Offering.class);
+    assertTrue(offeringModelNew instanceof Offering);
+    assertEquals(offeringModelNew.name(), "testString");
+    assertEquals(offeringModelNew.type().toString(), offeringTypeModel.toString());
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testOfferingError() throws Throwable {
+    new Offering.Builder().build();
+  }
+
 }

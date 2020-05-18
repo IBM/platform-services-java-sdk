@@ -14,11 +14,14 @@
 package com.ibm.cloud.platform_services.case_management.v1.model;
 
 import com.ibm.cloud.platform_services.case_management.v1.model.User;
+import com.ibm.cloud.platform_services.case_management.v1.model.Watchlist;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,14 +29,14 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the User model.
+ * Unit test class for the Watchlist model.
  */
-public class UserTest {
+public class WatchlistTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testUser() throws Throwable {
+  public void testWatchlist() throws Throwable {
     User userModel = new User.Builder()
       .realm("IBMid")
       .userId("abc@ibm.com")
@@ -41,17 +44,14 @@ public class UserTest {
     assertEquals(userModel.realm(), "IBMid");
     assertEquals(userModel.userId(), "abc@ibm.com");
 
-    String json = TestUtilities.serialize(userModel);
+    Watchlist watchlistModel = new Watchlist.Builder()
+      .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
+      .build();
+    assertEquals(watchlistModel.watchlist(), new ArrayList<User>(Arrays.asList(userModel)));
 
-    User userModelNew = TestUtilities.deserialize(json, User.class);
-    assertTrue(userModelNew instanceof User);
-    assertEquals(userModelNew.realm(), "IBMid");
-    assertEquals(userModelNew.userId(), "abc@ibm.com");
+    String json = TestUtilities.serialize(watchlistModel);
+
+    Watchlist watchlistModelNew = TestUtilities.deserialize(json, Watchlist.class);
+    assertTrue(watchlistModelNew instanceof Watchlist);
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUserError() throws Throwable {
-    new User.Builder().build();
-  }
-
 }

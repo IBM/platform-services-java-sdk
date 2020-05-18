@@ -13,9 +13,9 @@
 package com.ibm.cloud.platform_services.case_management.v1.model;
 
 /**
- * StatusPayloadAcceptPayload.
+ * Payload to resolve the case.
  */
-public class StatusPayloadAcceptPayload extends StatusPayload {
+public class ResolvePayload extends StatusPayload {
 
   /**
    * action to perform on the case.
@@ -36,10 +36,12 @@ public class StatusPayloadAcceptPayload extends StatusPayload {
   public static class Builder {
     private String action;
     private String comment;
+    private Long resolutionCode;
 
-    public Builder(StatusPayload statusPayloadAcceptPayload) {
-      this.action = statusPayloadAcceptPayload.action;
-      this.comment = statusPayloadAcceptPayload.comment;
+    public Builder(StatusPayload resolvePayload) {
+      this.action = resolvePayload.action;
+      this.comment = resolvePayload.comment;
+      this.resolutionCode = resolvePayload.resolutionCode;
     }
 
     /**
@@ -52,25 +54,27 @@ public class StatusPayloadAcceptPayload extends StatusPayload {
      * Instantiates a new builder with required properties.
      *
      * @param action the action
+     * @param resolutionCode the resolutionCode
      */
-    public Builder(String action) {
+    public Builder(String action, Long resolutionCode) {
       this.action = action;
+      this.resolutionCode = resolutionCode;
     }
 
     /**
-     * Builds a StatusPayloadAcceptPayload.
+     * Builds a ResolvePayload.
      *
-     * @return the new StatusPayloadAcceptPayload instance
+     * @return the new ResolvePayload instance
      */
-    public StatusPayloadAcceptPayload build() {
-      return new StatusPayloadAcceptPayload(this);
+    public ResolvePayload build() {
+      return new ResolvePayload(this);
     }
 
     /**
      * Set the action.
      *
      * @param action the action
-     * @return the StatusPayloadAcceptPayload builder
+     * @return the ResolvePayload builder
      */
     public Builder action(String action) {
       this.action = action;
@@ -81,25 +85,39 @@ public class StatusPayloadAcceptPayload extends StatusPayload {
      * Set the comment.
      *
      * @param comment the comment
-     * @return the StatusPayloadAcceptPayload builder
+     * @return the ResolvePayload builder
      */
     public Builder comment(String comment) {
       this.comment = comment;
       return this;
     }
+
+    /**
+     * Set the resolutionCode.
+     *
+     * @param resolutionCode the resolutionCode
+     * @return the ResolvePayload builder
+     */
+    public Builder resolutionCode(long resolutionCode) {
+      this.resolutionCode = resolutionCode;
+      return this;
+    }
   }
 
-  protected StatusPayloadAcceptPayload(Builder builder) {
+  protected ResolvePayload(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.action,
       "action cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.resolutionCode,
+      "resolutionCode cannot be null");
     action = builder.action;
     comment = builder.comment;
+    resolutionCode = builder.resolutionCode;
   }
 
   /**
    * New builder.
    *
-   * @return a StatusPayloadAcceptPayload builder
+   * @return a ResolvePayload builder
    */
   public Builder newBuilder() {
     return new Builder(this);

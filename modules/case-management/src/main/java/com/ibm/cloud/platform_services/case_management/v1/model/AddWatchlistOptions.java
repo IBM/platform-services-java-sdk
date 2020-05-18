@@ -23,14 +23,14 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class AddWatchlistOptions extends GenericModel {
 
   protected String caseNumber;
-  protected List<UserIdAndRealm> watchlist;
+  protected List<User> watchlist;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String caseNumber;
-    private List<UserIdAndRealm> watchlist;
+    private List<User> watchlist;
 
     private Builder(AddWatchlistOptions addWatchlistOptions) {
       this.caseNumber = addWatchlistOptions.caseNumber;
@@ -67,11 +67,11 @@ public class AddWatchlistOptions extends GenericModel {
      * @param watchlist the new watchlist
      * @return the AddWatchlistOptions builder
      */
-    public Builder addWatchlist(UserIdAndRealm watchlist) {
+    public Builder addWatchlist(User watchlist) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(watchlist,
         "watchlist cannot be null");
       if (this.watchlist == null) {
-        this.watchlist = new ArrayList<UserIdAndRealm>();
+        this.watchlist = new ArrayList<User>();
       }
       this.watchlist.add(watchlist);
       return this;
@@ -95,8 +95,19 @@ public class AddWatchlistOptions extends GenericModel {
      * @param watchlist the watchlist
      * @return the AddWatchlistOptions builder
      */
-    public Builder watchlist(List<UserIdAndRealm> watchlist) {
+    public Builder watchlist(List<User> watchlist) {
       this.watchlist = watchlist;
+      return this;
+    }
+
+    /**
+     * Set the watchlist.
+     *
+     * @param watchlist the watchlist
+     * @return the AddWatchlistOptions builder
+     */
+    public Builder watchlist(Watchlist watchlist) {
+      this.watchlist = watchlist.watchlist();
       return this;
     }
   }
@@ -135,7 +146,7 @@ public class AddWatchlistOptions extends GenericModel {
    *
    * @return the watchlist
    */
-  public List<UserIdAndRealm> watchlist() {
+  public List<User> watchlist() {
     return watchlist;
   }
 }

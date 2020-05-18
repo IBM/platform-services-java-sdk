@@ -15,7 +15,7 @@ package com.ibm.cloud.platform_services.case_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * PaginationLink.
+ * Container for URL pointer to related pages of cases.
  */
 public class PaginationLink extends GenericModel {
 
@@ -23,6 +23,8 @@ public class PaginationLink extends GenericModel {
 
   /**
    * Gets the href.
+   *
+   * URL to related pages of cases.
    *
    * @return the href
    */

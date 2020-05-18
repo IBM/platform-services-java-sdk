@@ -11,10 +11,10 @@
     </parent>
 
     <!-- >>> Replace this with the service module's artifactId (e.g. "example-service") -->
-    <artifactId>MODULE-ARTIFACTID</artifactId>
+    <artifactId>resource-manager</artifactId>
 
     <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
-    <name>MODULE-DESCRIPTION</name>
+    <name>Resource Manager</name>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -56,13 +56,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <developers>
-        <developer>
-            <name>IBM Cloud DevX SDK Development</name>
-            <email>devxsdk@us.ibm.com</email>
-            <url>https://www.ibm.com/</url>
-        </developer>
-    </developers>
-
 </project>

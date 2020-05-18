@@ -25,11 +25,12 @@ import com.ibm.cloud.platform_services.case_management.v1.model.DeleteFileOption
 import com.ibm.cloud.platform_services.case_management.v1.model.DownloadFileOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.GetCaseOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesOptions;
-import com.ibm.cloud.platform_services.case_management.v1.model.OfferingPayload;
-import com.ibm.cloud.platform_services.case_management.v1.model.OfferingPayloadType;
+import com.ibm.cloud.platform_services.case_management.v1.model.Offering;
+import com.ibm.cloud.platform_services.case_management.v1.model.OfferingType;
+import com.ibm.cloud.platform_services.case_management.v1.model.ResolvePayload;
+import com.ibm.cloud.platform_services.case_management.v1.model.UpdateCaseStatusOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.UploadFileOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.User;
-import com.ibm.cloud.platform_services.case_management.v1.model.UserIdAndRealm;
 import com.ibm.cloud.platform_services.case_management.v1.model.WatchlistAddResponse;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
@@ -105,14 +106,15 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
     @Test (expectedExceptions = {InternalServerErrorException.class})
     public void testCreateCaseWithEmptySubjectAndDescription() {
 
-        OfferingPayloadType offeringPayloadTypeModel = new OfferingPayloadType.Builder()
+        OfferingType offeringTypeModel = new OfferingType.Builder()
             .group("crn_service_name")
-            .key("tone-analyzer")
+            .key("cloud-object-storage")
+            .id("dff97f5c-bc5e-4455-b470-411c3edbe49c")
             .build();
 
-        OfferingPayload offeringPayloadModel = new OfferingPayload.Builder()
-            .name("Watson Tone Analyzer")
-            .type(offeringPayloadTypeModel)
+        Offering offeringModel = new Offering.Builder()
+            .name("Cloud Object Storage")
+            .type(offeringTypeModel)
             .build();
 
         // Subject and description are required
@@ -120,7 +122,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
             .type("technical")
             .subject("")
             .description("")
-            .offering(offeringPayloadModel)
+            .offering(offeringModel)
             .build();
 
         service.createCase(createCaseOptionsModel).execute();
@@ -133,22 +135,22 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         String description = "Please -ignore this is a test case.";
 
         // Offering info can be retrieved via /case-management/utilities/v1/offerings/technical
-        OfferingPayloadType offeringPayloadTypeModel = new OfferingPayloadType.Builder()
+        OfferingType offeringTypeModel = new OfferingType.Builder()
             .group("crn_service_name")
             .key("cloud-object-storage")
             .id("dff97f5c-bc5e-4455-b470-411c3edbe49c")
             .build();
 
-        OfferingPayload offeringPayloadModel = new OfferingPayload.Builder()
+        Offering offeringModel = new Offering.Builder()
             .name("Cloud Object Storage")
-            .type(offeringPayloadTypeModel)
+            .type(offeringTypeModel)
             .build();
 
         CreateCaseOptions createCaseOptionsModel = new CreateCaseOptions.Builder()
             .type("technical")
             .subject(caseSubject)
             .description(description)
-            .offering(offeringPayloadModel)
+            .offering(offeringModel)
             .severity(Long.valueOf("4"))
             .build();
 
@@ -250,11 +252,11 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
     public void testAddWatchListMember() {
 
         // Users can be retrieved via the User Management API.
-        UserIdAndRealm testUser = getWatchListModel();
+        User testUser = getWatchListModel();
 
         AddWatchlistOptions watchlistOptionsModel = new AddWatchlistOptions.Builder()
             .caseNumber(newCaseNumber)
-            .watchlist(new ArrayList<UserIdAndRealm>(Arrays.asList(testUser)))
+            .watchlist(new ArrayList<User>(Arrays.asList(testUser)))
             .build();
 
         Response<WatchlistAddResponse> response = service.addWatchlist(watchlistOptionsModel).execute();
@@ -267,7 +269,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         // Loop over all returned users and find the matching one by user id
         Boolean foundMatchingUser = false;
         for (User user : users) {
-            if (user.getUserId().contentEquals(testUser.userId())) {
+            if (user.userId().contentEquals(testUser.userId())) {
                 foundMatchingUser = true;
                 break;
             }
@@ -347,15 +349,35 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         service.addResource(addResourceOptionsModel).execute();
     }
 
+    @Test (dependsOnMethods = {"testDeleteFile", "testAddResource"})
+    public void testResolveCase() {
+
+        ResolvePayload statusPayloadModel = new ResolvePayload.Builder()
+            .action("resolve")
+            .comment("testString")
+            .resolutionCode(Long.valueOf("1"))
+            .build();
+
+        UpdateCaseStatusOptions updateCaseStatusOptionsModel = new UpdateCaseStatusOptions.Builder()
+            .caseNumber(newCaseNumber)
+            .statusPayload(statusPayloadModel)
+            .build();
+
+        Response<Case> response = service.updateCaseStatus(updateCaseStatusOptionsModel).execute();
+        assertNotNull(response);
+        Case responseObj = response.getResult();
+        assertNotNull(responseObj);
+    }
+
     /**
      * Returns a test user for testing watch-list functionality
      *
      * @return UserIdAndRealm
      */
-    protected UserIdAndRealm getWatchListModel() {
-        UserIdAndRealm userIdAndRealmModel = new UserIdAndRealm.Builder()
+    protected User getWatchListModel() {
+        User userModel = new User.Builder()
             .realm("IBMid").userId("abc@ibm.com").build();
 
-        return userIdAndRealmModel;
+        return userModel;
     }
 }

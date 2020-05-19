@@ -1,3 +1,10 @@
+## [0.4.2](https://github.com/IBM/platform-services-java-sdk/compare/0.4.1...0.4.2) (2020-05-19)
+
+
+### Bug Fixes
+
+* **build:** fix bintray deploy config; add sync script ([#23](https://github.com/IBM/platform-services-java-sdk/issues/23)) ([2b38fb8](https://github.com/IBM/platform-services-java-sdk/commit/2b38fb81d080f266640eb4b0d7cf0dd795071534))
+
 ## [0.4.1](https://github.com/IBM/platform-services-java-sdk/compare/0.4.0...0.4.1) (2020-05-15)
 
 

@@ -88,14 +88,8 @@
         </repository>
     </repositories>
 
-    <!-- We use an alternate deploy plugin which doesn't use 'distributionManagement' 
-    <distributionManagement> 
-        <repository> 
-            <id>bintray</id> 
-            <url>https://api.bintray.com/maven/${bintray.subject}/${bintray.repo}/${project.groupId}:${project.artifactId}/</url> 
-        </repository> 
-    </distributionManagement> 
-    -->
+    <!-- We use an alternate deploy plugin which doesn't use 'distributionManagement' -->
+    <distributionManagement></distributionManagement>
 
     <dependencyManagement>
         <dependencies>
@@ -318,6 +312,31 @@
                         </archive>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <!-- Disable use of bintray:deploy during "Maven -> Update Project" in eclipse -->
+                                    <pluginExecutionFilter>
+                                        <groupId>com.carrotgarden.maven</groupId>
+                                        <artifactId>bintray-maven-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>deploy</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore/>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -330,7 +349,7 @@
                 </configuration>
             </plugin>
 
-            <!-- Enable alternate bintray-maven-plugin -->
+            <!-- Enable alternate deploy plugin: bintray-maven-plugin -->
             <plugin>
                 <groupId>com.carrotgarden.maven</groupId>
                 <artifactId>bintray-maven-plugin</artifactId>
@@ -356,14 +375,13 @@
                     <performCleanup>false</performCleanup>
                     <performDeploy>true</performDeploy>
                     <performEnsure>true</performEnsure>
+                    <performPublish>false</performPublish>
                     <retryFailedDeploymentCount>2</retryFailedDeploymentCount>
                 </configuration>
                 <executions>
                     <!-- Activate "bintray:deploy" during "deploy" -->
                     <execution>
-                        <?m2e ignore?>
                         <id>bintray-deploy</id>
-                        <phase>deploy</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>

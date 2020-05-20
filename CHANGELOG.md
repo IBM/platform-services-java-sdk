@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.4.1...v0.5.0) (2020-05-20)
+
+
+### Features
+
+* **Case Management:** add service to project ([#18](https://github.com/IBM/platform-services-node-sdk/issues/18)) ([610718c](https://github.com/IBM/platform-services-node-sdk/commit/610718cac39d76fa0c24fdf1915ad9a7cc7a4cdb))
+
 ## [0.4.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.4.0...v0.4.1) (2020-05-15)
 
 

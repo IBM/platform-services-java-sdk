@@ -74,10 +74,12 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     String token = null;
     String parent = null;
     String enterpriseId = null;
-    String email = "aminttest+" + new Date().getTime() + "_" + Math.floor(Math.random() * 100000) + "@mail.test.ibm.com";
+    String email = "aminttest+" + new Date().getTime() + "_" + Math.floor(Math.random() * 100000)
+            + "@mail.test.ibm.com";
     String verificationCode = null;
     String activationToken = null;
-    String subscriptionEmail = "amIntTest+" + new Date().getTime() + "_" + Math.floor(Math.random() * 100000) + "@mail.test.ibm.com";
+    String subscriptionEmail = "amIntTest+" + new Date().getTime() + "_" + Math.floor(Math.random() * 100000)
+            + "@mail.test.ibm.com";
     String subscriptionId = null;
     String ownerIamId = null;
     String enterpriseAccountId = null;
@@ -85,7 +87,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     String crn = null;
     String crn2 = null;
     String newAccountId = null;
-
 
     /**
      * This method provides our config filename to the base class.
@@ -135,7 +136,8 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void generateIamServiceToken() throws Throwable {
-        String response = accountManagementService.generateIamServiceToken(config.get("IAM_API_KEY"), config.get("IAM_HOST"));
+        String response = accountManagementService.generateIamServiceToken(config.get("IAM_API_KEY"),
+                config.get("IAM_HOST"));
         JSONObject obj = new JSONObject(response);
         token = obj.getString("token_type") + " " + obj.getString("access_token");
         assertNotNull(response);
@@ -156,12 +158,14 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test03_PutConfirmVerificationCode() throws Throwable {
-        accountManagementService.confirmVerificationCode(subscriptionEmail, verificationCode, token, config.get("AM_HOST"));
+        accountManagementService.confirmVerificationCode(subscriptionEmail, verificationCode, token,
+                config.get("AM_HOST"));
     }
 
     @Test
     public void test04_CreateStandardAccount() throws Throwable {
-        String response = accountManagementService.createStandardAccount(subscriptionEmail, verificationCode, token, config.get("AM_HOST"));
+        String response = accountManagementService.createStandardAccount(subscriptionEmail, verificationCode, token,
+                config.get("AM_HOST"));
         JSONObject obj = new JSONObject(response);
         subsAccountId = obj.getString("id");
     }
@@ -186,8 +190,9 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
         Database db = client.database("activation", false);
         Thread.sleep(35000);
-        List<ViewResponse.Row<String, String>> result = db.getViewRequestBuilder("v1_green", "by_email").newRequest(Key
-                .Type.STRING, String.class).reduce(false).keys(subscriptionEmail).includeDocs(true).build().getResponse().getRows();
+        List<ViewResponse.Row<String, String>> result = db.getViewRequestBuilder("v1_green", "by_email")
+                .newRequest(Key.Type.STRING, String.class).reduce(false).keys(subscriptionEmail).includeDocs(true)
+                .build().getResponse().getRows();
         for (ViewResponse.Row<String, String> row : result) {
             assertNotNull(row.getDocument());
             activationToken = row.getId();
@@ -213,7 +218,8 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     @Test
     public void test09_CreateEnterpriseUsingSubscriptionAccount() throws Throwable {
         CreateEnterpriseOptions createEnterpriseOptions = new CreateEnterpriseOptions.Builder()
-                .name("IBM-" + new Date().getTime()).sourceAccountId(subsAccountId).primaryContactIamId(ownerIamId).domain("IBM-" + new Date().getTime() + ".com").build();
+                .name("IBM-" + new Date().getTime()).sourceAccountId(subsAccountId).primaryContactIamId(ownerIamId)
+                .domain("IBM-" + new Date().getTime() + ".com").build();
         Response<CreateEnterpriseResponse> response = service.createEnterprise(createEnterpriseOptions).execute();
         CreateEnterpriseResponse responseObj = response.getResult();
         assertNotNull(responseObj);
@@ -232,7 +238,8 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     @Test
     public void test11_GetAccountByIdUsingEnterprise() throws Throwable {
         Thread.sleep(35000);
-        GetAccountOptions getAccountByIdOptions = new GetAccountOptions.Builder().accountId(enterpriseAccountId).build();
+        GetAccountOptions getAccountByIdOptions = new GetAccountOptions.Builder().accountId(enterpriseAccountId)
+                .build();
         Response<Account> response = service.getAccount(getAccountByIdOptions).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
@@ -240,12 +247,10 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         assertNotNull(responseObj);
     }
 
-
     @Test
     public void test12_CreateAccountGroupWOptions() throws Throwable {
-        CreateAccountGroupOptions createAccountGroupOptionsModel = new CreateAccountGroupOptions.Builder().parent(
-                parent)
-                .name("testString").primaryContactIamId(ownerIamId).build();
+        CreateAccountGroupOptions createAccountGroupOptionsModel = new CreateAccountGroupOptions.Builder()
+                .parent(parent).name("testString").primaryContactIamId(ownerIamId).build();
 
         Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptionsModel)
                 .execute();
@@ -256,13 +261,10 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         accountGroupId = responseObj.getAccountGroupId();
     }
 
-
     @Test
     public void test13_ListAccountGroupsWOptions() throws Throwable {
-        ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder().parent(
-                parent)
-                .enterpriseId(enterpriseId).parentAccountGroupId(accountGroupId).limit(100)
-                .build();
+        ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder().parent(parent)
+                .enterpriseId(enterpriseId).parentAccountGroupId(accountGroupId).limit(100).build();
 
         Response<ListAccountGroupsResponse> response = service.listAccountGroups(listAccountGroupsOptions).execute();
         assertNotNull(response);
@@ -314,7 +316,8 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test20_CreateStandardAccount() throws Throwable {
-        String response = accountManagementService.createStandardAccount(email, verificationCode, token, config.get("AM_HOST"));
+        String response = accountManagementService.createStandardAccount(email, verificationCode, token,
+                config.get("AM_HOST"));
         JSONObject obj = new JSONObject(response);
         accountId = obj.getString("id");
     }
@@ -332,15 +335,14 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         } catch (MalformedURLException e) {
             System.out.println("The url is not well formed: " + url);
         }
-        CloudantClient client = ClientBuilder.url(url)
-                .username(config.get("DB_USER"))
-                .password(config.get("DB_PASS"))
+        CloudantClient client = ClientBuilder.url(url).username(config.get("DB_USER")).password(config.get("DB_PASS"))
                 .build();
 
         Database db = client.database("activation", false);
         Thread.sleep(35000);
-        List<ViewResponse.Row<String, String>> result = db.getViewRequestBuilder("v1_green", "by_email").newRequest(Key
-                .Type.STRING, String.class).reduce(false).keys(email).includeDocs(true).build().getResponse().getRows();
+        List<ViewResponse.Row<String, String>> result = db.getViewRequestBuilder("v1_green", "by_email")
+                .newRequest(Key.Type.STRING, String.class).reduce(false).keys(email).includeDocs(true).build()
+                .getResponse().getRows();
         for (ViewResponse.Row<String, String> row : result) {
             assertNotNull(row.getDocument());
             activationToken = row.getId();
@@ -370,8 +372,8 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test26_CreateNewAccountInEnterprise() throws Throwable {
-        CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder()
-                .parent(parent).name("IBM-" + new Date().getTime()).ownerIamId("IBMid-550006JKXX").build();
+        CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder().parent(parent)
+                .name("IBM-" + new Date().getTime()).ownerIamId("IBMid-550006JKXX").build();
         Response<CreateAccountResponse> response = service.createAccount(createAccountOptions).execute();
         CreateAccountResponse responseObj = response.getResult();
         newAccountId = responseObj.getAccountId();
@@ -381,8 +383,8 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test27_GetAccountsByQueryParameter() throws Throwable {
-        ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder()
-                .enterpriseId(enterpriseId).accountGroupId(accountGroupId).parent(parent).limit(100).build();
+        ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder().enterpriseId(enterpriseId)
+                .accountGroupId(accountGroupId).parent(parent).limit(100).build();
         Response<ListAccountsResponse> response = service.listAccounts(listAccountsOptions).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
@@ -390,9 +392,8 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test28_CreateAccountGroupWOptions() throws Throwable {
-        CreateAccountGroupOptions createAccountGroupOptionsModel = new CreateAccountGroupOptions.Builder().parent(
-                parent)
-                .name("testString").primaryContactIamId(ownerIamId).build();
+        CreateAccountGroupOptions createAccountGroupOptionsModel = new CreateAccountGroupOptions.Builder()
+                .parent(parent).name("testString").primaryContactIamId(ownerIamId).build();
 
         Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptionsModel)
                 .execute();
@@ -402,7 +403,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         assertNotNull(responseObj);
         accountGroupId2 = responseObj.getAccountGroupId();
     }
-
 
     @Test
     public void test29_GetAccountGroupByIdWOptions() throws Throwable {
@@ -419,8 +419,8 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void test30_MoveAccountWithEnterprise() throws Throwable {
-        UpdateAccountOptions updateAccountOptions = new UpdateAccountOptions.Builder()
-                .parent(crn).accountId(newAccountId).build();
+        UpdateAccountOptions updateAccountOptions = new UpdateAccountOptions.Builder().parent(crn)
+                .accountId(newAccountId).build();
         Response<Void> response = service.updateAccount(updateAccountOptions).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 202);

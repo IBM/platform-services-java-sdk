@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/IBM/platform-services-java-sdk/compare/0.4.2...0.5.0) (2020-05-20)
+
+
+### Features
+
+* **Case Management:** add service to project ([#13](https://github.com/IBM/platform-services-java-sdk/issues/13)) ([e4b444a](https://github.com/IBM/platform-services-java-sdk/commit/e4b444a127477951b1c18d03fa258faaea5709fc))
+
 ## [0.4.2](https://github.com/IBM/platform-services-java-sdk/compare/0.4.1...0.4.2) (2020-05-19)
 
 

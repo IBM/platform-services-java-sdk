@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/IBM/platform-services-java-sdk/compare/0.5.0...0.6.0) (2020-05-21)
+
+
+### Features
+
+* **Enterprise Management:** add service to project ([ba8a6d3](https://github.com/IBM/platform-services-java-sdk/commit/ba8a6d33b743ca16e84c999618cd7cb7619b7f1e))
+
 # [0.5.0](https://github.com/IBM/platform-services-java-sdk/compare/0.4.2...0.5.0) (2020-05-20)
 
 

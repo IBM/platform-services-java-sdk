@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.5.0...v0.6.0) (2020-05-21)
+
+
+### Features
+
+* **Enterprise Management:** add service to project ([811f059](https://github.com/IBM/platform-services-node-sdk/commit/811f059ef4d34b8aa0a19e03daa15a6d557a3e1a))
+
 # [0.5.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.4.1...v0.5.0) (2020-05-20)
 
 

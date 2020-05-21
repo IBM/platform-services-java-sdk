@@ -44,6 +44,7 @@
 
         <!-- Each of the service modules should be listed here -->
         <module>modules/case-management</module>
+        <module>modules/enterprise-management</module>
         <module>modules/global-catalog</module>
         <module>modules/global-search</module>
         <module>modules/global-tagging</module>

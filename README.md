@@ -46,6 +46,7 @@ Changes might occur which impact applications that use this SDK.
 Service Name | Artifact Id 
 --- | --- 
 [Case Management](https://cloud.ibm.com/apidocs/case-management) | case-management
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | enterprise-management
 [Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | global-catalog
 [Global Search](https://cloud.ibm.com/apidocs/search) | global-search
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | global-tagging

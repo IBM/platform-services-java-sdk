@@ -27,4 +27,4 @@ set -x
 
 echo "
 Executing curl command..."
-curl -X POST --data '{ "close": "1" }' -H "Content-Type: application/json" -L -k --max-time 300 --user ${basicauth} ${urlstring}
+curl -X POST --data '{ "close": "1" }' -H "Content-Type: application/json" -L -k --max-time 600 --user ${basicauth} ${urlstring}

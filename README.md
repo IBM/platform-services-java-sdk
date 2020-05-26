@@ -18,7 +18,7 @@ Java client library to interact with various
 
   You should regenerate the TOC after making changes to this file.
 
-      npx markdown-toc -i README.md
+      npx markdown-toc --maxdepth 4 -i README.md
   -->
 
 <!-- toc -->
@@ -26,10 +26,9 @@ Java client library to interact with various
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-    + [All the services](#all-the-services)
-    + [A single service](#a-single-service)
 - [Using the SDK](#using-the-sdk)
 - [Questions](#questions)
+- [Issues](#issues)
 - [Open source @ IBM](#open-source--ibm)
 - [Contributing](#contributing)
 - [License](#license)
@@ -43,15 +42,15 @@ The IBM Cloud Platform Services Java SDK allows developers to programmatically i
 Disclaimer: this SDK is being released initially as a **pre-release** version.
 Changes might occur which impact applications that use this SDK.
 
-Service Name | Artifact Id 
+Service Name | Artifact Coordinates
 --- | --- 
-[Case Management](https://cloud.ibm.com/apidocs/case-management) | case-management
-[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | enterprise-management
-[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | global-catalog
-[Global Search](https://cloud.ibm.com/apidocs/search) | global-search
-[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | global-tagging
-[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | iam-access-groups
-[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | resource-manager
+[Case Management](https://cloud.ibm.com/apidocs/case-management) | com.ibm.com:case-management:0.6.0
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | com.ibm.com:enterprise-management:0.6.0
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | com.ibm.com:global-catalog:0.6.0
+[Global Search](https://cloud.ibm.com/apidocs/search) | com.ibm.com:global-search:0.6.0
+[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | com.ibm.com:global-tagging:0.6.0
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | com.ibm.com:iam-access-groups:0.6.0
+[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | com.ibm.com:resource-manager:0.6.0
 
 ## Prerequisites
 
@@ -64,43 +63,34 @@ Service Name | Artifact Id
 ## Installation
 The current version of this SDK is: 0.6.0
 
-#### All the services
-To define a dependency on the entire set of services contained in the project, use a dependency like these:
+Each service's artifact coordinates are listed in the table above.
 
-##### Maven
+The project artifacts are published on the following public maven repositories:
+- [JCenter](https://bintray.com/bintray/jcenter) - For information on how to use the
+public JCenter maven repository, open [this link](https://bintray.com/bintray/jcenter)
+then click the `Set Me Up!` button.
+- [Maven Central](https://repo1.maven.org/maven2/) - This is the default public repository
+used by maven when searching for dependencies.  To use this repository within your
+gradle build, please see
+[this link](https://docs.gradle.org/current/userguide/declaring_repositories.html).
 
-```xml
-<dependency>
-	<groupId>com.ibm.cloud</groupId>
-	<artifactId>platform-services</artifactId>
-	<version>0.6.0</version>
-</dependency>
-```
-
-##### Gradle
-
-```gradle
-'com.ibm.cloud:platform-services:0.6.0'
-```
-
-#### A single service
-To define a dependency on a single service, use a dependency that contains the artifact id for the service, like this:
+To use a particular service, define a dependency that contains the
+artifact coordinates (group id, artifact id and version) for the service, like this:
 
 ##### Maven
 
 ```xml
 <dependency>
     <groupId>com.ibm.cloud</groupId>
-    <artifactId>global-search</artifactId>
+    <artifactId>case-management</artifactId>
     <version>0.6.0</version>
 </dependency>
 ```
 
 ##### Gradle
 ```gradle
-'com.ibm.cloud:global-search:0.6.0'
+'com.ibm.cloud:case-management:0.6.0'
 ```
-Each service's artifact id is listed in the table above.
 
 ## Using the SDK
 For general SDK usage information, please see [this link](https://github.com/IBM/ibm-cloud-sdk-common/blob/master/README.md)

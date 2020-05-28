@@ -19,16 +19,24 @@ cache:
 env:
   global:
     - MVN_ARGS="--settings build/.travis.settings.xml"
+    - BINTRAY_ORG=ibm-cloud-sdks
+    - BINTRAY_REPO=platform-services-java-sdk
 
 before_install:
+- env | grep TRAVIS
 - sudo apt-get update
 - sudo apt-get install python
 - nvm install 12
 - npm install -g npm@6.x
-- '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_3058bc69cb40_key -iv $encrypted_3058bc69cb40_iv -in ghost.env.enc -out ghost.env -d || true'
-- '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_66f264007c0d_key -iv $encrypted_66f264007c0d_iv -in iam_access_groups.env.enc -out iam_access_groups.env -d || true'
-- '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_94fa7fdf4df9_key -iv $encrypted_94fa7fdf4df9_iv -in global_catalog.env.enc -out global_catalog.env -d || true'
-- '[ "${TRAVIS_PULL_REQUEST}" == "false" ] && openssl aes-256-cbc -K $encrypted_acd9ca9788e3_key -iv $encrypted_acd9ca9788e3_iv -in resource_manager.env.enc -out resource_manager.env -d || true'
+- >-
+      [ -z "${TRAVIS_TAG}" ] && [ "${TRAVIS_PULL_REQUEST}" == "false" ]
+      && openssl aes-256-cbc -K $encrypted_3058bc69cb40_key -iv $encrypted_3058bc69cb40_iv -in ghost.env.enc -out ghost.env -d
+      && openssl aes-256-cbc -K $encrypted_66f264007c0d_key -iv $encrypted_66f264007c0d_iv -in iam_access_groups.env.enc -out iam_access_groups.env -d
+      && openssl aes-256-cbc -K $encrypted_94fa7fdf4df9_key -iv $encrypted_94fa7fdf4df9_iv -in global_catalog.env.enc -out global_catalog.env -d
+      && openssl aes-256-cbc -K $encrypted_acd9ca9788e3_key -iv $encrypted_acd9ca9788e3_iv -in resource_manager.env.enc -out resource_manager.env -d
+      && openssl aes-256-cbc -K $encrypted_dac53b985913_key -iv $encrypted_dac53b985913_iv -in case_management.env.enc -out case_management.env -d
+      && openssl aes-256-cbc -K $encrypted_25d847003bcf_key -iv $encrypted_25d847003bcf_iv -in enterprise-management.env.enc -out enterprise-management.env -d
+      || true
 
 install:
 - curl -s https://codecov.io/bash > $HOME/codecov-bash.sh && chmod +x $HOME/codecov-bash.sh
@@ -36,7 +44,6 @@ install:
 
 # For a tagged build, we'll set the maven artifact version #.
 before_script:
-- echo "TRAVIS_TAG = '${TRAVIS_TAG}'"
 - >-
       [ -n "${TRAVIS_TAG}" ]
       && mvn versions:set -DnewVersion=${TRAVIS_TAG} -DgenerateBackupPoms=false
@@ -59,21 +66,31 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-  # Publish jars on bintray for a tagged release.
+  # For a tagged release, publish jars on bintray and sync to maven central.
   - provider: script
-    script: "mvn deploy $MVN_ARGS -DskipTests"
+    script:
+      - mvn deploy $MVN_ARGS -DskipTests
+      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:platform-services $TRAVIS_TAG
+      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:platform-services-common $TRAVIS_TAG
+      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:case-management $TRAVIS_TAG
+      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:enterprise-management $TRAVIS_TAG
+      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:global-catalog $TRAVIS_TAG
+      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:global-search $TRAVIS_TAG
+      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:global-tagging $TRAVIS_TAG
+      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:iam-access-groups $TRAVIS_TAG
+      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:resource-manager $TRAVIS_TAG
     skip_cleanup: true
     on:
       tags: true
       jdk: openjdk8
-  # Publish javadocs to gh-pages only for a tagged-release.
+  # For a tagged release, publish javadocs to gh-pages.
   - provider: script
     script: "./build/publish-javadoc.sh"
     skip_cleanup: true
     on:
       tags: true
       jdk: openjdk8
-  # Upload code coverage reports to codecov.io for master or tagged release
+  # On master or for a tagged release, upload code coverage reports to codecov.io.
   - provider: script
     script: $HOME/codecov-bash.sh -s modules/coverage-reports/target/site/jacoco-aggregate -t $CODECOV_TOKEN
     skip_cleanup: true

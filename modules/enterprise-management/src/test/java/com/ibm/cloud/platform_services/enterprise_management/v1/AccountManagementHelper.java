@@ -165,14 +165,9 @@ public class AccountManagementHelper {
 
     public String patchAccountSubscription(String token, String accountId, String subscriptionId, String defaultServiceUrl) {
         try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            Date startDate = inputFormat.parse("2020-05-07T07:00:00.000Z");
-            Date endDate = inputFormat.parse("2020-09-07T07:00:00.000Z");
-
-
-            Map<String, Date> paymentMethod = new HashMap<>();
-            paymentMethod.put("start_date", startDate);
-            paymentMethod.put("end_date", endDate);
+            Map<String, String> paymentMethod = new HashMap<>();
+            paymentMethod.put("start_date", "2020-05-07T07:00:00.000Z");
+            paymentMethod.put("end_date", "2020-09-07T07:00:00.000Z");
 
             Map<String, Object> subscriptionsMap = new HashMap<>();
             subscriptionsMap.put("type", "TRIAL");
@@ -203,6 +198,8 @@ public class AccountManagementHelper {
                     .put("tags", new JSONArray(list))
                     .toString();
 
+            // System.out.println("Request body: " + jsonString);
+
             okhttp3.MediaType mediaType = MediaType.parse("application/json");
             okhttp3.RequestBody body = RequestBody.create(mediaType, jsonString);
             String[] pathSegments = {"/coe/v2/accounts", "bluemix_subscriptions"};
@@ -212,6 +209,7 @@ public class AccountManagementHelper {
             builder.header("Authorization", token);
             builder.body(body);
             String responseData = callIamApi(builder.build());
+            // System.out.println("Response: " + responseData);
             return responseData;
         } catch (Exception e) {
             throw new RuntimeException(e);

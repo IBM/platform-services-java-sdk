@@ -11,6 +11,9 @@
 Java client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
 
+Disclaimer: this SDK is being released initially as a **pre-release** version.
+Changes might occur which impact applications that use this SDK.
+
 <!--
   The TOC below is generated using the `markdown-toc` node package.
 
@@ -38,9 +41,6 @@ Java client library to interact with various
 ## Overview
 
 The IBM Cloud Platform Services Java SDK allows developers to programmatically interact with the following IBM Cloud services:
-
-Disclaimer: this SDK is being released initially as a **pre-release** version.
-Changes might occur which impact applications that use this SDK.
 
 Service Name | Artifact Coordinates
 --- | --- 

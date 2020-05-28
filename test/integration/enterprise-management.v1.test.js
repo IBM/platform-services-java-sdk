@@ -123,7 +123,7 @@ describe('EnterpriseManagementV1_integration', () => {
   });
 
   it('Create a Subscription Account - convert account to subscription', done => {
-    const payload_to_convert = am_coe_v2_account_apis_helper.get_activate_subscription_payload('2020-03-01T07:00:00.000Z', '2020-11-30T08:00:00.000', 10);
+    const payload_to_convert = am_coe_v2_account_apis_helper.get_activate_subscription_payload('2020-03-01T07:00:00.000Z', '2020-11-30T08:00:00.000Z', 10);
     delete payload_to_convert['softlayer_account_id'];
     am_coe_v2_account_apis_helper.patch_am_coe_v2_account_subscription(config.amHost, account_info.account_id, subscription_id, payload_to_convert, am_service_iam_token, null, (e, r, b) => {
       done();

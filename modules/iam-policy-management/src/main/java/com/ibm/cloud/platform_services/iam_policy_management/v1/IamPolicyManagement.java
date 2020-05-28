@@ -349,11 +349,11 @@ public class IamPolicyManagement extends BaseService {
       builder.header("Accept-Language", createRoleOptions.acceptLanguage());
     }
     final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("display_name", createRoleOptions.displayName());
+    contentJson.add("actions", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRoleOptions.actions()));
     contentJson.addProperty("name", createRoleOptions.name());
     contentJson.addProperty("account_id", createRoleOptions.accountId());
     contentJson.addProperty("service_name", createRoleOptions.serviceName());
-    contentJson.addProperty("display_name", createRoleOptions.displayName());
-    contentJson.add("actions", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRoleOptions.actions()));
     if (createRoleOptions.description() != null) {
       contentJson.addProperty("description", createRoleOptions.description());
     }

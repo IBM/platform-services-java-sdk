@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleListCustomRolesItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,26 +26,32 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the RoleListCustomRolesItem model.
+ * Unit test class for the SubjectAttribute model.
  */
-public class RoleListCustomRolesItemTest {
+public class SubjectAttributeTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testRoleListCustomRolesItem() throws Throwable {
-    RoleListCustomRolesItem roleListCustomRolesItemModel = new RoleListCustomRolesItem();
-    assertNull(roleListCustomRolesItemModel.getId());
-    assertNull(roleListCustomRolesItemModel.getName());
-    assertNull(roleListCustomRolesItemModel.getAccountId());
-    assertNull(roleListCustomRolesItemModel.getServiceName());
-    assertNull(roleListCustomRolesItemModel.getDisplayName());
-    assertNull(roleListCustomRolesItemModel.getDescription());
-    assertNull(roleListCustomRolesItemModel.getActions());
-    assertNull(roleListCustomRolesItemModel.getCreatedAt());
-    assertNull(roleListCustomRolesItemModel.getCreatedById());
-    assertNull(roleListCustomRolesItemModel.getLastModifiedAt());
-    assertNull(roleListCustomRolesItemModel.getLastModifiedById());
-    assertNull(roleListCustomRolesItemModel.getHref());
+  public void testSubjectAttribute() throws Throwable {
+    SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
+      .name("testString")
+      .value("testString")
+      .build();
+    assertEquals(subjectAttributeModel.name(), "testString");
+    assertEquals(subjectAttributeModel.value(), "testString");
+
+    String json = TestUtilities.serialize(subjectAttributeModel);
+
+    SubjectAttribute subjectAttributeModelNew = TestUtilities.deserialize(json, SubjectAttribute.class);
+    assertTrue(subjectAttributeModelNew instanceof SubjectAttribute);
+    assertEquals(subjectAttributeModelNew.name(), "testString");
+    assertEquals(subjectAttributeModelNew.value(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testSubjectAttributeError() throws Throwable {
+    new SubjectAttribute.Builder().build();
+  }
+
 }

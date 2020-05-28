@@ -25,9 +25,9 @@ public class UpdatePolicyOptions extends GenericModel {
   protected String policyId;
   protected String ifMatch;
   protected String type;
-  protected List<PolicyRequestSubjectsItem> subjects;
-  protected List<PolicyRequestRolesItem> roles;
-  protected List<PolicyRequestResourcesItem> resources;
+  protected List<PolicySubject> subjects;
+  protected List<PolicyRole> roles;
+  protected List<PolicyResource> resources;
 
   /**
    * Builder.
@@ -36,9 +36,9 @@ public class UpdatePolicyOptions extends GenericModel {
     private String policyId;
     private String ifMatch;
     private String type;
-    private List<PolicyRequestSubjectsItem> subjects;
-    private List<PolicyRequestRolesItem> roles;
-    private List<PolicyRequestResourcesItem> resources;
+    private List<PolicySubject> subjects;
+    private List<PolicyRole> roles;
+    private List<PolicyResource> resources;
 
     private Builder(UpdatePolicyOptions updatePolicyOptions) {
       this.policyId = updatePolicyOptions.policyId;
@@ -65,7 +65,7 @@ public class UpdatePolicyOptions extends GenericModel {
      * @param roles the roles
      * @param resources the resources
      */
-    public Builder(String policyId, String ifMatch, String type, List<PolicyRequestSubjectsItem> subjects, List<PolicyRequestRolesItem> roles, List<PolicyRequestResourcesItem> resources) {
+    public Builder(String policyId, String ifMatch, String type, List<PolicySubject> subjects, List<PolicyRole> roles, List<PolicyResource> resources) {
       this.policyId = policyId;
       this.ifMatch = ifMatch;
       this.type = type;
@@ -89,11 +89,11 @@ public class UpdatePolicyOptions extends GenericModel {
      * @param subjects the new subjects
      * @return the UpdatePolicyOptions builder
      */
-    public Builder addSubjects(PolicyRequestSubjectsItem subjects) {
+    public Builder addSubjects(PolicySubject subjects) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(subjects,
         "subjects cannot be null");
       if (this.subjects == null) {
-        this.subjects = new ArrayList<PolicyRequestSubjectsItem>();
+        this.subjects = new ArrayList<PolicySubject>();
       }
       this.subjects.add(subjects);
       return this;
@@ -105,11 +105,11 @@ public class UpdatePolicyOptions extends GenericModel {
      * @param roles the new roles
      * @return the UpdatePolicyOptions builder
      */
-    public Builder addRoles(PolicyRequestRolesItem roles) {
+    public Builder addRoles(PolicyRole roles) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(roles,
         "roles cannot be null");
       if (this.roles == null) {
-        this.roles = new ArrayList<PolicyRequestRolesItem>();
+        this.roles = new ArrayList<PolicyRole>();
       }
       this.roles.add(roles);
       return this;
@@ -121,11 +121,11 @@ public class UpdatePolicyOptions extends GenericModel {
      * @param resources the new resources
      * @return the UpdatePolicyOptions builder
      */
-    public Builder addResources(PolicyRequestResourcesItem resources) {
+    public Builder addResources(PolicyResource resources) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(resources,
         "resources cannot be null");
       if (this.resources == null) {
-        this.resources = new ArrayList<PolicyRequestResourcesItem>();
+        this.resources = new ArrayList<PolicyResource>();
       }
       this.resources.add(resources);
       return this;
@@ -171,7 +171,7 @@ public class UpdatePolicyOptions extends GenericModel {
      * @param subjects the subjects
      * @return the UpdatePolicyOptions builder
      */
-    public Builder subjects(List<PolicyRequestSubjectsItem> subjects) {
+    public Builder subjects(List<PolicySubject> subjects) {
       this.subjects = subjects;
       return this;
     }
@@ -183,7 +183,7 @@ public class UpdatePolicyOptions extends GenericModel {
      * @param roles the roles
      * @return the UpdatePolicyOptions builder
      */
-    public Builder roles(List<PolicyRequestRolesItem> roles) {
+    public Builder roles(List<PolicyRole> roles) {
       this.roles = roles;
       return this;
     }
@@ -195,7 +195,7 @@ public class UpdatePolicyOptions extends GenericModel {
      * @param resources the resources
      * @return the UpdatePolicyOptions builder
      */
-    public Builder resources(List<PolicyRequestResourcesItem> resources) {
+    public Builder resources(List<PolicyResource> resources) {
       this.resources = resources;
       return this;
     }
@@ -268,11 +268,11 @@ public class UpdatePolicyOptions extends GenericModel {
   /**
    * Gets the subjects.
    *
-   * The subject attribute values that must match in order for this policy to apply in a permission decision.
+   * The subjects associated with a policy.
    *
    * @return the subjects
    */
-  public List<PolicyRequestSubjectsItem> subjects() {
+  public List<PolicySubject> subjects() {
     return subjects;
   }
 
@@ -283,18 +283,18 @@ public class UpdatePolicyOptions extends GenericModel {
    *
    * @return the roles
    */
-  public List<PolicyRequestRolesItem> roles() {
+  public List<PolicyRole> roles() {
     return roles;
   }
 
   /**
    * Gets the resources.
    *
-   * The attributes of the resource. Note that only one resource is allowed in a policy.
+   * The resources associated with a policy.
    *
    * @return the resources
    */
-  public List<PolicyRequestResourcesItem> resources() {
+  public List<PolicyResource> resources() {
     return resources;
   }
 }

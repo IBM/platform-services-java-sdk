@@ -22,11 +22,11 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class CreateRoleOptions extends GenericModel {
 
+  protected String displayName;
+  protected List<String> actions;
   protected String name;
   protected String accountId;
   protected String serviceName;
-  protected String displayName;
-  protected List<String> actions;
   protected String description;
   protected String acceptLanguage;
 
@@ -34,20 +34,20 @@ public class CreateRoleOptions extends GenericModel {
    * Builder.
    */
   public static class Builder {
+    private String displayName;
+    private List<String> actions;
     private String name;
     private String accountId;
     private String serviceName;
-    private String displayName;
-    private List<String> actions;
     private String description;
     private String acceptLanguage;
 
     private Builder(CreateRoleOptions createRoleOptions) {
+      this.displayName = createRoleOptions.displayName;
+      this.actions = createRoleOptions.actions;
       this.name = createRoleOptions.name;
       this.accountId = createRoleOptions.accountId;
       this.serviceName = createRoleOptions.serviceName;
-      this.displayName = createRoleOptions.displayName;
-      this.actions = createRoleOptions.actions;
       this.description = createRoleOptions.description;
       this.acceptLanguage = createRoleOptions.acceptLanguage;
     }
@@ -61,18 +61,18 @@ public class CreateRoleOptions extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
+     * @param displayName the displayName
+     * @param actions the actions
      * @param name the name
      * @param accountId the accountId
      * @param serviceName the serviceName
-     * @param displayName the displayName
-     * @param actions the actions
      */
-    public Builder(String name, String accountId, String serviceName, String displayName, List<String> actions) {
+    public Builder(String displayName, List<String> actions, String name, String accountId, String serviceName) {
+      this.displayName = displayName;
+      this.actions = actions;
       this.name = name;
       this.accountId = accountId;
       this.serviceName = serviceName;
-      this.displayName = displayName;
-      this.actions = actions;
     }
 
     /**
@@ -97,6 +97,29 @@ public class CreateRoleOptions extends GenericModel {
         this.actions = new ArrayList<String>();
       }
       this.actions.add(actions);
+      return this;
+    }
+
+    /**
+     * Set the displayName.
+     *
+     * @param displayName the displayName
+     * @return the CreateRoleOptions builder
+     */
+    public Builder displayName(String displayName) {
+      this.displayName = displayName;
+      return this;
+    }
+
+    /**
+     * Set the actions.
+     * Existing actions will be replaced.
+     *
+     * @param actions the actions
+     * @return the CreateRoleOptions builder
+     */
+    public Builder actions(List<String> actions) {
+      this.actions = actions;
       return this;
     }
 
@@ -134,29 +157,6 @@ public class CreateRoleOptions extends GenericModel {
     }
 
     /**
-     * Set the displayName.
-     *
-     * @param displayName the displayName
-     * @return the CreateRoleOptions builder
-     */
-    public Builder displayName(String displayName) {
-      this.displayName = displayName;
-      return this;
-    }
-
-    /**
-     * Set the actions.
-     * Existing actions will be replaced.
-     *
-     * @param actions the actions
-     * @return the CreateRoleOptions builder
-     */
-    public Builder actions(List<String> actions) {
-      this.actions = actions;
-      return this;
-    }
-
-    /**
      * Set the description.
      *
      * @param description the description
@@ -180,21 +180,21 @@ public class CreateRoleOptions extends GenericModel {
   }
 
   protected CreateRoleOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.displayName,
+      "displayName cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.actions,
+      "actions cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,
       "name cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,
       "accountId cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.serviceName,
       "serviceName cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.displayName,
-      "displayName cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.actions,
-      "actions cannot be null");
+    displayName = builder.displayName;
+    actions = builder.actions;
     name = builder.name;
     accountId = builder.accountId;
     serviceName = builder.serviceName;
-    displayName = builder.displayName;
-    actions = builder.actions;
     description = builder.description;
     acceptLanguage = builder.acceptLanguage;
   }
@@ -206,6 +206,28 @@ public class CreateRoleOptions extends GenericModel {
    */
   public Builder newBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Gets the displayName.
+   *
+   * The display name of the role that is shown in the console.
+   *
+   * @return the displayName
+   */
+  public String displayName() {
+    return displayName;
+  }
+
+  /**
+   * Gets the actions.
+   *
+   * The actions of the role.
+   *
+   * @return the actions
+   */
+  public List<String> actions() {
+    return actions;
   }
 
   /**
@@ -239,28 +261,6 @@ public class CreateRoleOptions extends GenericModel {
    */
   public String serviceName() {
     return serviceName;
-  }
-
-  /**
-   * Gets the displayName.
-   *
-   * The display name of the role that is shown in the console.
-   *
-   * @return the displayName
-   */
-  public String displayName() {
-    return displayName;
-  }
-
-  /**
-   * Gets the actions.
-   *
-   * The actions of the role.
-   *
-   * @return the actions
-   */
-  public List<String> actions() {
-    return actions;
   }
 
   /**

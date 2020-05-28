@@ -14,12 +14,12 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyBaseResourcesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyBaseResourcesItemAttributesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyBaseSubjectsItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyBaseSubjectsItemAttributesItem;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRolesItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;

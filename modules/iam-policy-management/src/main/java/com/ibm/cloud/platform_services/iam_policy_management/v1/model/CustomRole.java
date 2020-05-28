@@ -19,21 +19,21 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * CustomRole.
+ * An additional set of properties associated with a role.
  */
 public class CustomRole extends GenericModel {
 
   protected String id;
+  @SerializedName("display_name")
+  protected String displayName;
+  protected String description;
+  protected List<String> actions;
+  protected String crn;
   protected String name;
   @SerializedName("account_id")
   protected String accountId;
   @SerializedName("service_name")
   protected String serviceName;
-  @SerializedName("display_name")
-  protected String displayName;
-  protected String description;
-  protected String crn;
-  protected List<String> actions;
   @SerializedName("created_at")
   protected Date createdAt;
   @SerializedName("created_by_id")
@@ -53,6 +53,50 @@ public class CustomRole extends GenericModel {
    */
   public String getId() {
     return id;
+  }
+
+  /**
+   * Gets the displayName.
+   *
+   * The display name of the role that is shown in the console.
+   *
+   * @return the displayName
+   */
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * The description of the role.
+   *
+   * @return the description
+   */
+  public String getDescription() {
+    return description;
+  }
+
+  /**
+   * Gets the actions.
+   *
+   * The actions of the role.
+   *
+   * @return the actions
+   */
+  public List<String> getActions() {
+    return actions;
+  }
+
+  /**
+   * Gets the crn.
+   *
+   * The role CRN.
+   *
+   * @return the crn
+   */
+  public String getCrn() {
+    return crn;
   }
 
   /**
@@ -86,50 +130,6 @@ public class CustomRole extends GenericModel {
    */
   public String getServiceName() {
     return serviceName;
-  }
-
-  /**
-   * Gets the displayName.
-   *
-   * The display name of the role that is shown in the console.
-   *
-   * @return the displayName
-   */
-  public String getDisplayName() {
-    return displayName;
-  }
-
-  /**
-   * Gets the description.
-   *
-   * The description of the role.
-   *
-   * @return the description
-   */
-  public String getDescription() {
-    return description;
-  }
-
-  /**
-   * Gets the crn.
-   *
-   * The role CRN.
-   *
-   * @return the crn
-   */
-  public String getCrn() {
-    return crn;
-  }
-
-  /**
-   * Gets the actions.
-   *
-   * The actions of the role.
-   *
-   * @return the actions
-   */
-  public List<String> getActions() {
-    return actions;
   }
 
   /**

@@ -37,19 +37,19 @@ public class CreateRoleOptionsTest {
   @Test
   public void testCreateRoleOptions() throws Throwable {
     CreateRoleOptions createRoleOptionsModel = new CreateRoleOptions.Builder()
+      .displayName("testString")
+      .actions(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .name("testString")
       .accountId("testString")
       .serviceName("testString")
-      .displayName("testString")
-      .actions(new ArrayList<String>(Arrays.asList("testString")))
       .description("testString")
       .acceptLanguage("testString")
       .build();
+    assertEquals(createRoleOptionsModel.displayName(), "testString");
+    assertEquals(createRoleOptionsModel.actions(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(createRoleOptionsModel.name(), "testString");
     assertEquals(createRoleOptionsModel.accountId(), "testString");
     assertEquals(createRoleOptionsModel.serviceName(), "testString");
-    assertEquals(createRoleOptionsModel.displayName(), "testString");
-    assertEquals(createRoleOptionsModel.actions(), new ArrayList<String>(Arrays.asList("testString")));
     assertEquals(createRoleOptionsModel.description(), "testString");
     assertEquals(createRoleOptionsModel.acceptLanguage(), "testString");
   }

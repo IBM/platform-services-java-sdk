@@ -19,15 +19,15 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Policy.
+ * The core set of properties associated with a policy.
  */
 public class Policy extends GenericModel {
 
   protected String id;
   protected String type;
-  protected List<PolicyBaseSubjectsItem> subjects;
-  protected List<PolicyRolesItem> roles;
-  protected List<PolicyBaseResourcesItem> resources;
+  protected List<PolicySubject> subjects;
+  protected List<PolicyRole> roles;
+  protected List<PolicyResource> resources;
   protected String href;
   @SerializedName("created_at")
   protected Date createdAt;
@@ -63,11 +63,11 @@ public class Policy extends GenericModel {
   /**
    * Gets the subjects.
    *
-   * The subject attribute values that must match in order for this policy to apply in a permission decision.
+   * The subjects associated with a policy.
    *
    * @return the subjects
    */
-  public List<PolicyBaseSubjectsItem> getSubjects() {
+  public List<PolicySubject> getSubjects() {
     return subjects;
   }
 
@@ -78,18 +78,18 @@ public class Policy extends GenericModel {
    *
    * @return the roles
    */
-  public List<PolicyRolesItem> getRoles() {
+  public List<PolicyRole> getRoles() {
     return roles;
   }
 
   /**
    * Gets the resources.
    *
-   * The attributes of the resource. Note that only one resource is allowed in a policy.
+   * The resources associated with a policy.
    *
    * @return the resources
    */
-  public List<PolicyBaseResourcesItem> getResources() {
+  public List<PolicyResource> getResources() {
     return resources;
   }
 

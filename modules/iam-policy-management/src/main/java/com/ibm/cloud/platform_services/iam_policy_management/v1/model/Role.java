@@ -15,35 +15,32 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The updateRole options.
+ * A role resource.
  */
-public class UpdateRoleOptions extends GenericModel {
+public class Role extends GenericModel {
 
-  protected String roleId;
-  protected String ifMatch;
+  @SerializedName("display_name")
   protected String displayName;
   protected String description;
   protected List<String> actions;
+  protected String crn;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private String roleId;
-    private String ifMatch;
     private String displayName;
     private String description;
     private List<String> actions;
 
-    private Builder(UpdateRoleOptions updateRoleOptions) {
-      this.roleId = updateRoleOptions.roleId;
-      this.ifMatch = updateRoleOptions.ifMatch;
-      this.displayName = updateRoleOptions.displayName;
-      this.description = updateRoleOptions.description;
-      this.actions = updateRoleOptions.actions;
+    private Builder(Role role) {
+      this.displayName = role.displayName;
+      this.description = role.description;
+      this.actions = role.actions;
     }
 
     /**
@@ -53,30 +50,19 @@ public class UpdateRoleOptions extends GenericModel {
     }
 
     /**
-     * Instantiates a new builder with required properties.
+     * Builds a Role.
      *
-     * @param roleId the roleId
-     * @param ifMatch the ifMatch
+     * @return the new Role instance
      */
-    public Builder(String roleId, String ifMatch) {
-      this.roleId = roleId;
-      this.ifMatch = ifMatch;
-    }
-
-    /**
-     * Builds a UpdateRoleOptions.
-     *
-     * @return the new UpdateRoleOptions instance
-     */
-    public UpdateRoleOptions build() {
-      return new UpdateRoleOptions(this);
+    public Role build() {
+      return new Role(this);
     }
 
     /**
      * Adds an actions to actions.
      *
      * @param actions the new actions
-     * @return the UpdateRoleOptions builder
+     * @return the Role builder
      */
     public Builder addActions(String actions) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(actions,
@@ -89,32 +75,10 @@ public class UpdateRoleOptions extends GenericModel {
     }
 
     /**
-     * Set the roleId.
-     *
-     * @param roleId the roleId
-     * @return the UpdateRoleOptions builder
-     */
-    public Builder roleId(String roleId) {
-      this.roleId = roleId;
-      return this;
-    }
-
-    /**
-     * Set the ifMatch.
-     *
-     * @param ifMatch the ifMatch
-     * @return the UpdateRoleOptions builder
-     */
-    public Builder ifMatch(String ifMatch) {
-      this.ifMatch = ifMatch;
-      return this;
-    }
-
-    /**
      * Set the displayName.
      *
      * @param displayName the displayName
-     * @return the UpdateRoleOptions builder
+     * @return the Role builder
      */
     public Builder displayName(String displayName) {
       this.displayName = displayName;
@@ -125,7 +89,7 @@ public class UpdateRoleOptions extends GenericModel {
      * Set the description.
      *
      * @param description the description
-     * @return the UpdateRoleOptions builder
+     * @return the Role builder
      */
     public Builder description(String description) {
       this.description = description;
@@ -137,34 +101,15 @@ public class UpdateRoleOptions extends GenericModel {
      * Existing actions will be replaced.
      *
      * @param actions the actions
-     * @return the UpdateRoleOptions builder
+     * @return the Role builder
      */
     public Builder actions(List<String> actions) {
       this.actions = actions;
       return this;
     }
-
-    /**
-     * Set the role.
-     *
-     * @param role the role
-     * @return the UpdateRoleOptions builder
-     */
-    public Builder role(Role role) {
-      this.displayName = role.displayName();
-      this.description = role.description();
-      this.actions = role.actions();
-      return this;
-    }
   }
 
-  protected UpdateRoleOptions(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.roleId,
-      "roleId cannot be empty");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ifMatch,
-      "ifMatch cannot be null");
-    roleId = builder.roleId;
-    ifMatch = builder.ifMatch;
+  protected Role(Builder builder) {
     displayName = builder.displayName;
     description = builder.description;
     actions = builder.actions;
@@ -173,33 +118,10 @@ public class UpdateRoleOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a UpdateRoleOptions builder
+   * @return a Role builder
    */
   public Builder newBuilder() {
     return new Builder(this);
-  }
-
-  /**
-   * Gets the roleId.
-   *
-   * The role ID.
-   *
-   * @return the roleId
-   */
-  public String roleId() {
-    return roleId;
-  }
-
-  /**
-   * Gets the ifMatch.
-   *
-   * The revision number for updating a role and must match the ETag value of the existing role. The Etag can be
-   * retrieved using the GET /v2/roles/{role_id} API and looking at the ETag response header.
-   *
-   * @return the ifMatch
-   */
-  public String ifMatch() {
-    return ifMatch;
   }
 
   /**
@@ -233,6 +155,17 @@ public class UpdateRoleOptions extends GenericModel {
    */
   public List<String> actions() {
     return actions;
+  }
+
+  /**
+   * Gets the crn.
+   *
+   * The role CRN.
+   *
+   * @return the crn
+   */
+  public String crn() {
+    return crn;
   }
 }
 

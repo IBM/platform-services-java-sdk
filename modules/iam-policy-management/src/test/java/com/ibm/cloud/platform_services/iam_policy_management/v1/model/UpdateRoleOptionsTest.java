@@ -41,13 +41,13 @@ public class UpdateRoleOptionsTest {
       .ifMatch("testString")
       .displayName("testString")
       .description("testString")
-      .actions(new ArrayList<String>(Arrays.asList("testString")))
+      .actions(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .build();
     assertEquals(updateRoleOptionsModel.roleId(), "testString");
     assertEquals(updateRoleOptionsModel.ifMatch(), "testString");
     assertEquals(updateRoleOptionsModel.displayName(), "testString");
     assertEquals(updateRoleOptionsModel.description(), "testString");
-    assertEquals(updateRoleOptionsModel.actions(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(updateRoleOptionsModel.actions(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

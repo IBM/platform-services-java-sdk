@@ -13,11 +13,11 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestResourcesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestResourcesItemAttributesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestRolesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestSubjectsItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestSubjectsItemAttributesItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 
@@ -41,51 +41,51 @@ public class UpdatePolicyOptionsTest {
 
   @Test
   public void testUpdatePolicyOptions() throws Throwable {
-    PolicyRequestResourcesItemAttributesItem policyRequestResourcesItemAttributesItemModel = new PolicyRequestResourcesItemAttributesItem.Builder()
+    ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
       .name("testString")
       .value("testString")
       .operator("testString")
       .build();
-    assertEquals(policyRequestResourcesItemAttributesItemModel.name(), "testString");
-    assertEquals(policyRequestResourcesItemAttributesItemModel.value(), "testString");
-    assertEquals(policyRequestResourcesItemAttributesItemModel.operator(), "testString");
+    assertEquals(resourceAttributeModel.name(), "testString");
+    assertEquals(resourceAttributeModel.value(), "testString");
+    assertEquals(resourceAttributeModel.operator(), "testString");
 
-    PolicyRequestSubjectsItemAttributesItem policyRequestSubjectsItemAttributesItemModel = new PolicyRequestSubjectsItemAttributesItem.Builder()
+    SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
       .name("testString")
       .value("testString")
       .build();
-    assertEquals(policyRequestSubjectsItemAttributesItemModel.name(), "testString");
-    assertEquals(policyRequestSubjectsItemAttributesItemModel.value(), "testString");
+    assertEquals(subjectAttributeModel.name(), "testString");
+    assertEquals(subjectAttributeModel.value(), "testString");
 
-    PolicyRequestResourcesItem policyRequestResourcesItemModel = new PolicyRequestResourcesItem.Builder()
-      .attributes(new ArrayList<PolicyRequestResourcesItemAttributesItem>(Arrays.asList(policyRequestResourcesItemAttributesItemModel)))
+    PolicyResource policyResourceModel = new PolicyResource.Builder()
+      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
       .build();
-    assertEquals(policyRequestResourcesItemModel.attributes(), new ArrayList<PolicyRequestResourcesItemAttributesItem>(Arrays.asList(policyRequestResourcesItemAttributesItemModel)));
+    assertEquals(policyResourceModel.attributes(), new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)));
 
-    PolicyRequestRolesItem policyRequestRolesItemModel = new PolicyRequestRolesItem.Builder()
+    PolicyRole policyRoleModel = new PolicyRole.Builder()
       .roleId("testString")
       .build();
-    assertEquals(policyRequestRolesItemModel.roleId(), "testString");
+    assertEquals(policyRoleModel.roleId(), "testString");
 
-    PolicyRequestSubjectsItem policyRequestSubjectsItemModel = new PolicyRequestSubjectsItem.Builder()
-      .attributes(new ArrayList<PolicyRequestSubjectsItemAttributesItem>(Arrays.asList(policyRequestSubjectsItemAttributesItemModel)))
+    PolicySubject policySubjectModel = new PolicySubject.Builder()
+      .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
       .build();
-    assertEquals(policyRequestSubjectsItemModel.attributes(), new ArrayList<PolicyRequestSubjectsItemAttributesItem>(Arrays.asList(policyRequestSubjectsItemAttributesItemModel)));
+    assertEquals(policySubjectModel.attributes(), new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)));
 
     UpdatePolicyOptions updatePolicyOptionsModel = new UpdatePolicyOptions.Builder()
       .policyId("testString")
       .ifMatch("testString")
       .type("testString")
-      .subjects(new ArrayList<PolicyRequestSubjectsItem>(Arrays.asList(policyRequestSubjectsItemModel)))
-      .roles(new ArrayList<PolicyRequestRolesItem>(Arrays.asList(policyRequestRolesItemModel)))
-      .resources(new ArrayList<PolicyRequestResourcesItem>(Arrays.asList(policyRequestResourcesItemModel)))
+      .subjects(new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)))
+      .roles(new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)))
+      .resources(new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)))
       .build();
     assertEquals(updatePolicyOptionsModel.policyId(), "testString");
     assertEquals(updatePolicyOptionsModel.ifMatch(), "testString");
     assertEquals(updatePolicyOptionsModel.type(), "testString");
-    assertEquals(updatePolicyOptionsModel.subjects(), new ArrayList<PolicyRequestSubjectsItem>(Arrays.asList(policyRequestSubjectsItemModel)));
-    assertEquals(updatePolicyOptionsModel.roles(), new ArrayList<PolicyRequestRolesItem>(Arrays.asList(policyRequestRolesItemModel)));
-    assertEquals(updatePolicyOptionsModel.resources(), new ArrayList<PolicyRequestResourcesItem>(Arrays.asList(policyRequestResourcesItemModel)));
+    assertEquals(updatePolicyOptionsModel.subjects(), new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)));
+    assertEquals(updatePolicyOptionsModel.roles(), new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)));
+    assertEquals(updatePolicyOptionsModel.resources(), new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

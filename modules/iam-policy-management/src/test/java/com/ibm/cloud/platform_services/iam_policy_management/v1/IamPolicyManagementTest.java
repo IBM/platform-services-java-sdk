@@ -23,21 +23,14 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOpt
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyBaseResourcesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyBaseResourcesItemAttributesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyBaseSubjectsItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyBaseSubjectsItemAttributesItem;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestResourcesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestResourcesItemAttributesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestRolesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestSubjectsItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestSubjectsItemAttributesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRolesItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Role;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleListCustomRolesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleListServiceRolesItem;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleListSystemRolesItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
@@ -185,40 +178,40 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the PolicyRequestResourcesItemAttributesItem model
-    PolicyRequestResourcesItemAttributesItem policyRequestResourcesItemAttributesItemModel = new PolicyRequestResourcesItemAttributesItem.Builder()
+    // Construct an instance of the ResourceAttribute model
+    ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
     .name("testString")
     .value("testString")
     .operator("testString")
     .build();
 
-    // Construct an instance of the PolicyRequestSubjectsItemAttributesItem model
-    PolicyRequestSubjectsItemAttributesItem policyRequestSubjectsItemAttributesItemModel = new PolicyRequestSubjectsItemAttributesItem.Builder()
+    // Construct an instance of the SubjectAttribute model
+    SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
     .name("testString")
     .value("testString")
     .build();
 
-    // Construct an instance of the PolicyRequestResourcesItem model
-    PolicyRequestResourcesItem policyRequestResourcesItemModel = new PolicyRequestResourcesItem.Builder()
-    .attributes(new ArrayList<PolicyRequestResourcesItemAttributesItem>(Arrays.asList(policyRequestResourcesItemAttributesItemModel)))
+    // Construct an instance of the PolicyResource model
+    PolicyResource policyResourceModel = new PolicyResource.Builder()
+    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
     .build();
 
-    // Construct an instance of the PolicyRequestRolesItem model
-    PolicyRequestRolesItem policyRequestRolesItemModel = new PolicyRequestRolesItem.Builder()
+    // Construct an instance of the PolicyRole model
+    PolicyRole policyRoleModel = new PolicyRole.Builder()
     .roleId("testString")
     .build();
 
-    // Construct an instance of the PolicyRequestSubjectsItem model
-    PolicyRequestSubjectsItem policyRequestSubjectsItemModel = new PolicyRequestSubjectsItem.Builder()
-    .attributes(new ArrayList<PolicyRequestSubjectsItemAttributesItem>(Arrays.asList(policyRequestSubjectsItemAttributesItemModel)))
+    // Construct an instance of the PolicySubject model
+    PolicySubject policySubjectModel = new PolicySubject.Builder()
+    .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
     .build();
 
     // Construct an instance of the CreatePolicyOptions model
     CreatePolicyOptions createPolicyOptionsModel = new CreatePolicyOptions.Builder()
     .type("testString")
-    .subjects(new ArrayList<PolicyRequestSubjectsItem>(Arrays.asList(policyRequestSubjectsItemModel)))
-    .roles(new ArrayList<PolicyRequestRolesItem>(Arrays.asList(policyRequestRolesItemModel)))
-    .resources(new ArrayList<PolicyRequestResourcesItem>(Arrays.asList(policyRequestResourcesItemModel)))
+    .subjects(new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)))
+    .roles(new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)))
+    .resources(new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)))
     .acceptLanguage("testString")
     .build();
 
@@ -267,32 +260,32 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the PolicyRequestResourcesItemAttributesItem model
-    PolicyRequestResourcesItemAttributesItem policyRequestResourcesItemAttributesItemModel = new PolicyRequestResourcesItemAttributesItem.Builder()
+    // Construct an instance of the ResourceAttribute model
+    ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
     .name("testString")
     .value("testString")
     .operator("testString")
     .build();
 
-    // Construct an instance of the PolicyRequestSubjectsItemAttributesItem model
-    PolicyRequestSubjectsItemAttributesItem policyRequestSubjectsItemAttributesItemModel = new PolicyRequestSubjectsItemAttributesItem.Builder()
+    // Construct an instance of the SubjectAttribute model
+    SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
     .name("testString")
     .value("testString")
     .build();
 
-    // Construct an instance of the PolicyRequestResourcesItem model
-    PolicyRequestResourcesItem policyRequestResourcesItemModel = new PolicyRequestResourcesItem.Builder()
-    .attributes(new ArrayList<PolicyRequestResourcesItemAttributesItem>(Arrays.asList(policyRequestResourcesItemAttributesItemModel)))
+    // Construct an instance of the PolicyResource model
+    PolicyResource policyResourceModel = new PolicyResource.Builder()
+    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
     .build();
 
-    // Construct an instance of the PolicyRequestRolesItem model
-    PolicyRequestRolesItem policyRequestRolesItemModel = new PolicyRequestRolesItem.Builder()
+    // Construct an instance of the PolicyRole model
+    PolicyRole policyRoleModel = new PolicyRole.Builder()
     .roleId("testString")
     .build();
 
-    // Construct an instance of the PolicyRequestSubjectsItem model
-    PolicyRequestSubjectsItem policyRequestSubjectsItemModel = new PolicyRequestSubjectsItem.Builder()
-    .attributes(new ArrayList<PolicyRequestSubjectsItemAttributesItem>(Arrays.asList(policyRequestSubjectsItemAttributesItemModel)))
+    // Construct an instance of the PolicySubject model
+    PolicySubject policySubjectModel = new PolicySubject.Builder()
+    .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
     .build();
 
     // Construct an instance of the UpdatePolicyOptions model
@@ -300,9 +293,9 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .policyId("testString")
     .ifMatch("testString")
     .type("testString")
-    .subjects(new ArrayList<PolicyRequestSubjectsItem>(Arrays.asList(policyRequestSubjectsItemModel)))
-    .roles(new ArrayList<PolicyRequestRolesItem>(Arrays.asList(policyRequestRolesItemModel)))
-    .resources(new ArrayList<PolicyRequestResourcesItem>(Arrays.asList(policyRequestResourcesItemModel)))
+    .subjects(new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)))
+    .roles(new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)))
+    .resources(new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -441,7 +434,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testListRolesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"custom_roles\": [{\"id\": \"id\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"display_name\": \"displayName\", \"description\": \"description\", \"crn\": \"crn\", \"actions\": [\"actions\"], \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}], \"service_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"crn\": \"crn\", \"actions\": [\"actions\"]}], \"system_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"crn\": \"crn\", \"actions\": [\"actions\"]}]}";
+    String mockResponseBody = "{\"custom_roles\": [{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}], \"service_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}], \"system_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}]}";
     String listRolesPath = "/v2/roles";
 
     server.enqueue(new MockResponse()
@@ -483,7 +476,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testCreateRoleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"display_name\": \"displayName\", \"description\": \"description\", \"crn\": \"crn\", \"actions\": [\"actions\"], \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
     String createRolePath = "/v2/roles";
 
     server.enqueue(new MockResponse()
@@ -495,11 +488,11 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
 
     // Construct an instance of the CreateRoleOptions model
     CreateRoleOptions createRoleOptionsModel = new CreateRoleOptions.Builder()
+    .displayName("testString")
+    .actions(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .name("testString")
     .accountId("testString")
     .serviceName("testString")
-    .displayName("testString")
-    .actions(new ArrayList<String>(Arrays.asList("testString")))
     .description("testString")
     .acceptLanguage("testString")
     .build();
@@ -539,7 +532,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testUpdateRoleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"display_name\": \"displayName\", \"description\": \"description\", \"crn\": \"crn\", \"actions\": [\"actions\"], \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
     String updateRolePath = "/v2/roles/testString";
 
     server.enqueue(new MockResponse()
@@ -555,7 +548,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .ifMatch("testString")
     .displayName("testString")
     .description("testString")
-    .actions(new ArrayList<String>(Arrays.asList("testString")))
+    .actions(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -594,7 +587,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testGetRoleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"display_name\": \"displayName\", \"description\": \"description\", \"crn\": \"crn\", \"actions\": [\"actions\"], \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
     String getRolePath = "/v2/roles/testString";
 
     server.enqueue(new MockResponse()

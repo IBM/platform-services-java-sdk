@@ -18,20 +18,20 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * PolicyRequestSubjectsItem.
+ * The subject attribute values that must match in order for this policy to apply in a permission decision.
  */
-public class PolicyRequestSubjectsItem extends GenericModel {
+public class PolicySubject extends GenericModel {
 
-  protected List<PolicyRequestSubjectsItemAttributesItem> attributes;
+  protected List<SubjectAttribute> attributes;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private List<PolicyRequestSubjectsItemAttributesItem> attributes;
+    private List<SubjectAttribute> attributes;
 
-    private Builder(PolicyRequestSubjectsItem policyRequestSubjectsItem) {
-      this.attributes = policyRequestSubjectsItem.attributes;
+    private Builder(PolicySubject policySubject) {
+      this.attributes = policySubject.attributes;
     }
 
     /**
@@ -41,34 +41,25 @@ public class PolicyRequestSubjectsItem extends GenericModel {
     }
 
     /**
-     * Instantiates a new builder with required properties.
+     * Builds a PolicySubject.
      *
-     * @param attributes the attributes
+     * @return the new PolicySubject instance
      */
-    public Builder(List<PolicyRequestSubjectsItemAttributesItem> attributes) {
-      this.attributes = attributes;
-    }
-
-    /**
-     * Builds a PolicyRequestSubjectsItem.
-     *
-     * @return the new PolicyRequestSubjectsItem instance
-     */
-    public PolicyRequestSubjectsItem build() {
-      return new PolicyRequestSubjectsItem(this);
+    public PolicySubject build() {
+      return new PolicySubject(this);
     }
 
     /**
      * Adds an attributes to attributes.
      *
      * @param attributes the new attributes
-     * @return the PolicyRequestSubjectsItem builder
+     * @return the PolicySubject builder
      */
-    public Builder addAttributes(PolicyRequestSubjectsItemAttributesItem attributes) {
+    public Builder addAttributes(SubjectAttribute attributes) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(attributes,
         "attributes cannot be null");
       if (this.attributes == null) {
-        this.attributes = new ArrayList<PolicyRequestSubjectsItemAttributesItem>();
+        this.attributes = new ArrayList<SubjectAttribute>();
       }
       this.attributes.add(attributes);
       return this;
@@ -79,24 +70,22 @@ public class PolicyRequestSubjectsItem extends GenericModel {
      * Existing attributes will be replaced.
      *
      * @param attributes the attributes
-     * @return the PolicyRequestSubjectsItem builder
+     * @return the PolicySubject builder
      */
-    public Builder attributes(List<PolicyRequestSubjectsItemAttributesItem> attributes) {
+    public Builder attributes(List<SubjectAttribute> attributes) {
       this.attributes = attributes;
       return this;
     }
   }
 
-  protected PolicyRequestSubjectsItem(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.attributes,
-      "attributes cannot be null");
+  protected PolicySubject(Builder builder) {
     attributes = builder.attributes;
   }
 
   /**
    * New builder.
    *
-   * @return a PolicyRequestSubjectsItem builder
+   * @return a PolicySubject builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -109,7 +98,7 @@ public class PolicyRequestSubjectsItem extends GenericModel {
    *
    * @return the attributes
    */
-  public List<PolicyRequestSubjectsItemAttributesItem> attributes() {
+  public List<SubjectAttribute> attributes() {
     return attributes;
   }
 }

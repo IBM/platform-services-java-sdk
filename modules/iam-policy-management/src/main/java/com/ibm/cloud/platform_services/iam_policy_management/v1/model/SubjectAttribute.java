@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * PolicyRequestSubjectsItemAttributesItem.
+ * An attribute associated with a subject.
  */
-public class PolicyRequestSubjectsItemAttributesItem extends GenericModel {
+public class SubjectAttribute extends GenericModel {
 
   protected String name;
   protected String value;
@@ -29,9 +29,9 @@ public class PolicyRequestSubjectsItemAttributesItem extends GenericModel {
     private String name;
     private String value;
 
-    private Builder(PolicyRequestSubjectsItemAttributesItem policyRequestSubjectsItemAttributesItem) {
-      this.name = policyRequestSubjectsItemAttributesItem.name;
-      this.value = policyRequestSubjectsItemAttributesItem.value;
+    private Builder(SubjectAttribute subjectAttribute) {
+      this.name = subjectAttribute.name;
+      this.value = subjectAttribute.value;
     }
 
     /**
@@ -52,19 +52,19 @@ public class PolicyRequestSubjectsItemAttributesItem extends GenericModel {
     }
 
     /**
-     * Builds a PolicyRequestSubjectsItemAttributesItem.
+     * Builds a SubjectAttribute.
      *
-     * @return the new PolicyRequestSubjectsItemAttributesItem instance
+     * @return the new SubjectAttribute instance
      */
-    public PolicyRequestSubjectsItemAttributesItem build() {
-      return new PolicyRequestSubjectsItemAttributesItem(this);
+    public SubjectAttribute build() {
+      return new SubjectAttribute(this);
     }
 
     /**
      * Set the name.
      *
      * @param name the name
-     * @return the PolicyRequestSubjectsItemAttributesItem builder
+     * @return the SubjectAttribute builder
      */
     public Builder name(String name) {
       this.name = name;
@@ -75,7 +75,7 @@ public class PolicyRequestSubjectsItemAttributesItem extends GenericModel {
      * Set the value.
      *
      * @param value the value
-     * @return the PolicyRequestSubjectsItemAttributesItem builder
+     * @return the SubjectAttribute builder
      */
     public Builder value(String value) {
       this.value = value;
@@ -83,7 +83,7 @@ public class PolicyRequestSubjectsItemAttributesItem extends GenericModel {
     }
   }
 
-  protected PolicyRequestSubjectsItemAttributesItem(Builder builder) {
+  protected SubjectAttribute(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,
       "name cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.value,
@@ -95,7 +95,7 @@ public class PolicyRequestSubjectsItemAttributesItem extends GenericModel {
   /**
    * New builder.
    *
-   * @return a PolicyRequestSubjectsItemAttributesItem builder
+   * @return a SubjectAttribute builder
    */
   public Builder newBuilder() {
     return new Builder(this);

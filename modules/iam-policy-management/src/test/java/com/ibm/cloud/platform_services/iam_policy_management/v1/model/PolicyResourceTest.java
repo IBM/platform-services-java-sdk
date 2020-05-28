@@ -13,12 +13,8 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -33,18 +29,31 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Policy model.
+ * Unit test class for the PolicyResource model.
  */
-public class PolicyTest {
+public class PolicyResourceTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPolicy() throws Throwable {
-    Policy policyModel = new Policy();
-    assertNull(policyModel.getType());
-    assertNull(policyModel.getSubjects());
-    assertNull(policyModel.getRoles());
-    assertNull(policyModel.getResources());
+  public void testPolicyResource() throws Throwable {
+    ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
+      .name("testString")
+      .value("testString")
+      .operator("testString")
+      .build();
+    assertEquals(resourceAttributeModel.name(), "testString");
+    assertEquals(resourceAttributeModel.value(), "testString");
+    assertEquals(resourceAttributeModel.operator(), "testString");
+
+    PolicyResource policyResourceModel = new PolicyResource.Builder()
+      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+      .build();
+    assertEquals(policyResourceModel.attributes(), new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)));
+
+    String json = TestUtilities.serialize(policyResourceModel);
+
+    PolicyResource policyResourceModelNew = TestUtilities.deserialize(json, PolicyResource.class);
+    assertTrue(policyResourceModelNew instanceof PolicyResource);
   }
 }

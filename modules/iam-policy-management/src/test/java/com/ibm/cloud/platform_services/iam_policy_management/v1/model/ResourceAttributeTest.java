@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRequestRolesItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,29 +26,35 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the PolicyRequestRolesItem model.
+ * Unit test class for the ResourceAttribute model.
  */
-public class PolicyRequestRolesItemTest {
+public class ResourceAttributeTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPolicyRequestRolesItem() throws Throwable {
-    PolicyRequestRolesItem policyRequestRolesItemModel = new PolicyRequestRolesItem.Builder()
-      .roleId("testString")
+  public void testResourceAttribute() throws Throwable {
+    ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
+      .name("testString")
+      .value("testString")
+      .operator("testString")
       .build();
-    assertEquals(policyRequestRolesItemModel.roleId(), "testString");
+    assertEquals(resourceAttributeModel.name(), "testString");
+    assertEquals(resourceAttributeModel.value(), "testString");
+    assertEquals(resourceAttributeModel.operator(), "testString");
 
-    String json = TestUtilities.serialize(policyRequestRolesItemModel);
+    String json = TestUtilities.serialize(resourceAttributeModel);
 
-    PolicyRequestRolesItem policyRequestRolesItemModelNew = TestUtilities.deserialize(json, PolicyRequestRolesItem.class);
-    assertTrue(policyRequestRolesItemModelNew instanceof PolicyRequestRolesItem);
-    assertEquals(policyRequestRolesItemModelNew.roleId(), "testString");
+    ResourceAttribute resourceAttributeModelNew = TestUtilities.deserialize(json, ResourceAttribute.class);
+    assertTrue(resourceAttributeModelNew instanceof ResourceAttribute);
+    assertEquals(resourceAttributeModelNew.name(), "testString");
+    assertEquals(resourceAttributeModelNew.value(), "testString");
+    assertEquals(resourceAttributeModelNew.operator(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testPolicyRequestRolesItemError() throws Throwable {
-    new PolicyRequestRolesItem.Builder().build();
+  public void testResourceAttributeError() throws Throwable {
+    new ResourceAttribute.Builder().build();
   }
 
 }

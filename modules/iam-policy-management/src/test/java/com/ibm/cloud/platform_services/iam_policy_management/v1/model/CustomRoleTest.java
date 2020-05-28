@@ -35,17 +35,11 @@ public class CustomRoleTest {
   @Test
   public void testCustomRole() throws Throwable {
     CustomRole customRoleModel = new CustomRole();
-    assertNull(customRoleModel.getId());
-    assertNull(customRoleModel.getName());
-    assertNull(customRoleModel.getAccountId());
-    assertNull(customRoleModel.getServiceName());
     assertNull(customRoleModel.getDisplayName());
     assertNull(customRoleModel.getDescription());
     assertNull(customRoleModel.getActions());
-    assertNull(customRoleModel.getCreatedAt());
-    assertNull(customRoleModel.getCreatedById());
-    assertNull(customRoleModel.getLastModifiedAt());
-    assertNull(customRoleModel.getLastModifiedById());
-    assertNull(customRoleModel.getHref());
+    assertNull(customRoleModel.getName());
+    assertNull(customRoleModel.getAccountId());
+    assertNull(customRoleModel.getServiceName());
   }
 }

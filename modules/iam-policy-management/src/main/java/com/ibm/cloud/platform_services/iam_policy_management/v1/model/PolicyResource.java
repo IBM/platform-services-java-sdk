@@ -18,20 +18,20 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * PolicyRequestResourcesItem.
+ * The attributes of the resource. Note that only one resource is allowed in a policy.
  */
-public class PolicyRequestResourcesItem extends GenericModel {
+public class PolicyResource extends GenericModel {
 
-  protected List<PolicyRequestResourcesItemAttributesItem> attributes;
+  protected List<ResourceAttribute> attributes;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private List<PolicyRequestResourcesItemAttributesItem> attributes;
+    private List<ResourceAttribute> attributes;
 
-    private Builder(PolicyRequestResourcesItem policyRequestResourcesItem) {
-      this.attributes = policyRequestResourcesItem.attributes;
+    private Builder(PolicyResource policyResource) {
+      this.attributes = policyResource.attributes;
     }
 
     /**
@@ -41,34 +41,25 @@ public class PolicyRequestResourcesItem extends GenericModel {
     }
 
     /**
-     * Instantiates a new builder with required properties.
+     * Builds a PolicyResource.
      *
-     * @param attributes the attributes
+     * @return the new PolicyResource instance
      */
-    public Builder(List<PolicyRequestResourcesItemAttributesItem> attributes) {
-      this.attributes = attributes;
-    }
-
-    /**
-     * Builds a PolicyRequestResourcesItem.
-     *
-     * @return the new PolicyRequestResourcesItem instance
-     */
-    public PolicyRequestResourcesItem build() {
-      return new PolicyRequestResourcesItem(this);
+    public PolicyResource build() {
+      return new PolicyResource(this);
     }
 
     /**
      * Adds an attributes to attributes.
      *
      * @param attributes the new attributes
-     * @return the PolicyRequestResourcesItem builder
+     * @return the PolicyResource builder
      */
-    public Builder addAttributes(PolicyRequestResourcesItemAttributesItem attributes) {
+    public Builder addAttributes(ResourceAttribute attributes) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(attributes,
         "attributes cannot be null");
       if (this.attributes == null) {
-        this.attributes = new ArrayList<PolicyRequestResourcesItemAttributesItem>();
+        this.attributes = new ArrayList<ResourceAttribute>();
       }
       this.attributes.add(attributes);
       return this;
@@ -79,24 +70,22 @@ public class PolicyRequestResourcesItem extends GenericModel {
      * Existing attributes will be replaced.
      *
      * @param attributes the attributes
-     * @return the PolicyRequestResourcesItem builder
+     * @return the PolicyResource builder
      */
-    public Builder attributes(List<PolicyRequestResourcesItemAttributesItem> attributes) {
+    public Builder attributes(List<ResourceAttribute> attributes) {
       this.attributes = attributes;
       return this;
     }
   }
 
-  protected PolicyRequestResourcesItem(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.attributes,
-      "attributes cannot be null");
+  protected PolicyResource(Builder builder) {
     attributes = builder.attributes;
   }
 
   /**
    * New builder.
    *
-   * @return a PolicyRequestResourcesItem builder
+   * @return a PolicyResource builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -109,7 +98,7 @@ public class PolicyRequestResourcesItem extends GenericModel {
    *
    * @return the attributes
    */
-  public List<PolicyRequestResourcesItemAttributesItem> attributes() {
+  public List<ResourceAttribute> attributes() {
     return attributes;
   }
 }

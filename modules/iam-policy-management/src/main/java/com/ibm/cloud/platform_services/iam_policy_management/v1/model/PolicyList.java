@@ -17,7 +17,7 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * PolicyList.
+ * A collection of policies.
  */
 public class PolicyList extends GenericModel {
 

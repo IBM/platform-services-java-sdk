@@ -18,16 +18,16 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * RoleList.
+ * A collection of roles returned by the 'list roles' operation.
  */
 public class RoleList extends GenericModel {
 
   @SerializedName("custom_roles")
-  protected List<RoleListCustomRolesItem> customRoles;
+  protected List<CustomRole> customRoles;
   @SerializedName("service_roles")
-  protected List<RoleListServiceRolesItem> serviceRoles;
+  protected List<Role> serviceRoles;
   @SerializedName("system_roles")
-  protected List<RoleListSystemRolesItem> systemRoles;
+  protected List<Role> systemRoles;
 
   /**
    * Gets the customRoles.
@@ -36,7 +36,7 @@ public class RoleList extends GenericModel {
    *
    * @return the customRoles
    */
-  public List<RoleListCustomRolesItem> getCustomRoles() {
+  public List<CustomRole> getCustomRoles() {
     return customRoles;
   }
 
@@ -47,7 +47,7 @@ public class RoleList extends GenericModel {
    *
    * @return the serviceRoles
    */
-  public List<RoleListServiceRolesItem> getServiceRoles() {
+  public List<Role> getServiceRoles() {
     return serviceRoles;
   }
 
@@ -58,7 +58,7 @@ public class RoleList extends GenericModel {
    *
    * @return the systemRoles
    */
-  public List<RoleListSystemRolesItem> getSystemRoles() {
+  public List<Role> getSystemRoles() {
     return systemRoles;
   }
 }

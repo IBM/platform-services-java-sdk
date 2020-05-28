@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * PolicyRequestResourcesItemAttributesItem.
+ * An attribute associated with a resource.
  */
-public class PolicyRequestResourcesItemAttributesItem extends GenericModel {
+public class ResourceAttribute extends GenericModel {
 
   protected String name;
   protected String value;
@@ -31,10 +31,10 @@ public class PolicyRequestResourcesItemAttributesItem extends GenericModel {
     private String value;
     private String operator;
 
-    private Builder(PolicyRequestResourcesItemAttributesItem policyRequestResourcesItemAttributesItem) {
-      this.name = policyRequestResourcesItemAttributesItem.name;
-      this.value = policyRequestResourcesItemAttributesItem.value;
-      this.operator = policyRequestResourcesItemAttributesItem.operator;
+    private Builder(ResourceAttribute resourceAttribute) {
+      this.name = resourceAttribute.name;
+      this.value = resourceAttribute.value;
+      this.operator = resourceAttribute.operator;
     }
 
     /**
@@ -55,19 +55,19 @@ public class PolicyRequestResourcesItemAttributesItem extends GenericModel {
     }
 
     /**
-     * Builds a PolicyRequestResourcesItemAttributesItem.
+     * Builds a ResourceAttribute.
      *
-     * @return the new PolicyRequestResourcesItemAttributesItem instance
+     * @return the new ResourceAttribute instance
      */
-    public PolicyRequestResourcesItemAttributesItem build() {
-      return new PolicyRequestResourcesItemAttributesItem(this);
+    public ResourceAttribute build() {
+      return new ResourceAttribute(this);
     }
 
     /**
      * Set the name.
      *
      * @param name the name
-     * @return the PolicyRequestResourcesItemAttributesItem builder
+     * @return the ResourceAttribute builder
      */
     public Builder name(String name) {
       this.name = name;
@@ -78,7 +78,7 @@ public class PolicyRequestResourcesItemAttributesItem extends GenericModel {
      * Set the value.
      *
      * @param value the value
-     * @return the PolicyRequestResourcesItemAttributesItem builder
+     * @return the ResourceAttribute builder
      */
     public Builder value(String value) {
       this.value = value;
@@ -89,7 +89,7 @@ public class PolicyRequestResourcesItemAttributesItem extends GenericModel {
      * Set the operator.
      *
      * @param operator the operator
-     * @return the PolicyRequestResourcesItemAttributesItem builder
+     * @return the ResourceAttribute builder
      */
     public Builder operator(String operator) {
       this.operator = operator;
@@ -97,7 +97,7 @@ public class PolicyRequestResourcesItemAttributesItem extends GenericModel {
     }
   }
 
-  protected PolicyRequestResourcesItemAttributesItem(Builder builder) {
+  protected ResourceAttribute(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,
       "name cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.value,
@@ -110,7 +110,7 @@ public class PolicyRequestResourcesItemAttributesItem extends GenericModel {
   /**
    * New builder.
    *
-   * @return a PolicyRequestResourcesItemAttributesItem builder
+   * @return a ResourceAttribute builder
    */
   public Builder newBuilder() {
     return new Builder(this);

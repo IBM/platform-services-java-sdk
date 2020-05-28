@@ -16,9 +16,9 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * PolicyRolesItem.
+ * A role associated with a policy.
  */
-public class PolicyRolesItem extends GenericModel {
+public class PolicyRole extends GenericModel {
 
   @SerializedName("role_id")
   protected String roleId;
@@ -27,13 +27,74 @@ public class PolicyRolesItem extends GenericModel {
   protected String description;
 
   /**
+   * Builder.
+   */
+  public static class Builder {
+    private String roleId;
+
+    private Builder(PolicyRole policyRole) {
+      this.roleId = policyRole.roleId;
+    }
+
+    /**
+     * Instantiates a new builder.
+     */
+    public Builder() {
+    }
+
+    /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param roleId the roleId
+     */
+    public Builder(String roleId) {
+      this.roleId = roleId;
+    }
+
+    /**
+     * Builds a PolicyRole.
+     *
+     * @return the new PolicyRole instance
+     */
+    public PolicyRole build() {
+      return new PolicyRole(this);
+    }
+
+    /**
+     * Set the roleId.
+     *
+     * @param roleId the roleId
+     * @return the PolicyRole builder
+     */
+    public Builder roleId(String roleId) {
+      this.roleId = roleId;
+      return this;
+    }
+  }
+
+  protected PolicyRole(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.roleId,
+      "roleId cannot be null");
+    roleId = builder.roleId;
+  }
+
+  /**
+   * New builder.
+   *
+   * @return a PolicyRole builder
+   */
+  public Builder newBuilder() {
+    return new Builder(this);
+  }
+
+  /**
    * Gets the roleId.
    *
    * The role cloud resource name granted by the policy.
    *
    * @return the roleId
    */
-  public String getRoleId() {
+  public String roleId() {
     return roleId;
   }
 
@@ -44,7 +105,7 @@ public class PolicyRolesItem extends GenericModel {
    *
    * @return the displayName
    */
-  public String getDisplayName() {
+  public String displayName() {
     return displayName;
   }
 
@@ -55,7 +116,7 @@ public class PolicyRolesItem extends GenericModel {
    *
    * @return the description
    */
-  public String getDescription() {
+  public String description() {
     return description;
   }
 }

@@ -61,10 +61,12 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     public void beforeTest() {
         Response<CatalogSearchResult> response = service.listCatalogs().execute();
 
-        for (int i = 0; i < response.getResult().getResources().size(); i++) {
-            String id = response.getResult().getResources().get(i).id();
-            DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
-            service.deleteCatalog(deleteOptions).execute();
+        if (response.getResult().getResources() != null) {
+            for (int i = 0; i < response.getResult().getResources().size(); i++) {
+                String id = response.getResult().getResources().get(i).id();
+                DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
+                service.deleteCatalog(deleteOptions).execute();
+            }
         }
     }
 
@@ -72,10 +74,12 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     public void afterTest() {
         Response<CatalogSearchResult> response = service.listCatalogs().execute();
 
-        for (int i = 0; i < response.getResult().getResources().size(); i++) {
-            String id = response.getResult().getResources().get(i).id();
-            DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
-            service.deleteCatalog(deleteOptions).execute();
+        if (response.getResult().getResources() != null) {
+            for (int i = 0; i < response.getResult().getResources().size(); i++) {
+                String id = response.getResult().getResources().get(i).id();
+                DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
+                service.deleteCatalog(deleteOptions).execute();
+            }
         }
     }
 

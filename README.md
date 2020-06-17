@@ -52,6 +52,7 @@ Service Name | Artifact Coordinates
 [Global Search](https://cloud.ibm.com/apidocs/search) | com.ibm.com:global-search:0.6.0
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | com.ibm.com:global-tagging:0.6.0
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | com.ibm.com:iam-access-groups:0.6.0
+[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | com.ibm.com:iam-policy-management:0.6.0
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | com.ibm.com:resource-manager:0.6.0
 
 ## Prerequisites

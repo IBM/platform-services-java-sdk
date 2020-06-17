@@ -257,7 +257,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
 
         PolicyList result = response.getResult();
-        assertNotNull(response.getResult());
+        assertNotNull(result);
 
         // Confirm the test policy is present
         boolean foundTestPolicy = false;
@@ -366,7 +366,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
 
         RoleList result = response.getResult();
-        assertNotNull(response.getResult());
+        assertNotNull(result);
 
         // Confirm the test role is present
         boolean foundTestRole = false;
@@ -383,34 +383,31 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     public void tearDown() {
         // Delete all the access policies and roles created during the test.
 
-        assertNotNull(testPolicyId);
-        assertNotNull(testCustomRoleId);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date now = new Date();
+        final int FIVE_MINUTES = 5 * 60 * 1000;
 
         // List all policies in the account
-        ListPoliciesOptions options = new ListPoliciesOptions.Builder()
+        ListPoliciesOptions policyOptions = new ListPoliciesOptions.Builder()
                 .accountId(testAccountId)
                 .build();
 
-        Response<PolicyList> response = service.listPolicies(options).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
+        Response<PolicyList> policyResponse = service.listPolicies(policyOptions).execute();
+        assertNotNull(policyResponse);
+        assertEquals(policyResponse.getStatusCode(), 200);
 
         // Iterate across the policies
-        PolicyList result = response.getResult();
-        assertNotNull(result);
-        for (Policy policy : result.getPolicies()) {
+        PolicyList policyList = policyResponse.getResult();
+        assertNotNull(policyList);
+        for (Policy policy : policyList.getPolicies()) {
 
-            // Delete the test policy (or any test polcies older than 5 minutes)
+            // Delete the test policy or any test polcies older than 5 minutes
             if (policy.getSubjects().get(0).attributes().get(0).value().contains(TEST_USER_PREFIX)) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-                dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                Date now = new Date();
-
-                final int FIVE_MINUTES = 5 * 60 * 1000;
                 long createdAt = policy.getCreatedAt().getTime();
                 long fiveMinutesAgo = now.getTime() - FIVE_MINUTES;
 
-                if (testPolicyId.equals(policy.getId()) || createdAt < fiveMinutesAgo) {
+                if ((testPolicyId != null || testPolicyId.equals(policy.getId())) || createdAt < fiveMinutesAgo) {
                     DeletePolicyOptions deleteOptions = new DeletePolicyOptions.Builder()
                             .policyId(policy.getId()).build();
                     Response<Void> deleteResponse = service.deletePolicy(deleteOptions).execute();
@@ -421,13 +418,32 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
             }
         }
 
-      // delete custom role created
-      DeleteRoleOptions deleteOptions = new DeleteRoleOptions.Builder()
-        .roleId(testCustomRoleId).build();
+        ListRolesOptions roleOptions = new ListRolesOptions.Builder()
+                .accountId(testAccountId)
+                .build();
 
-      Response<Void> deleteResponse = service.deleteRole(deleteOptions).execute();
-      assertNotNull(deleteResponse);
-      assertEquals(deleteResponse.getStatusCode(), 204);
-      System.out.println("Cleanup test role id: " + testCustomRoleId);
+        Response<RoleList> roleResponse = service.listRoles(roleOptions).execute();
+        assertNotNull(roleResponse);
+        assertEquals(roleResponse.getStatusCode(), 200);
+
+        RoleList rolesList = roleResponse.getResult();
+        assertNotNull(rolesList);
+
+        // Iterate across the list of custom roles
+        for (CustomRole role : rolesList.getCustomRoles()) {
+          long createdAt = role.getCreatedAt().getTime();
+          long fiveMinutesAgo = now.getTime() - FIVE_MINUTES;
+
+          // delete the role or any test role older than 5 minutes
+          if ((testCustomRoleId != null && testCustomRoleId.equals(role.getId())) || createdAt < fiveMinutesAgo) {
+              DeleteRoleOptions deleteOptions = new DeleteRoleOptions.Builder()
+                .roleId(role.getId()).build();
+
+              Response<Void> deleteResponse = service.deleteRole(deleteOptions).execute();
+              assertNotNull(deleteResponse);
+              assertEquals(deleteResponse.getStatusCode(), 204);
+              System.out.println("Cleanup test role id: " + role.getId());
+          }
+        }
     }
 }

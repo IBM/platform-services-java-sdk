@@ -47,7 +47,7 @@ public class IamPolicyManagement extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "iam_policy_management";
 
-  public static final String DEFAULT_SERVICE_URL = "https://iam.test.cloud.ibm.com";
+  public static final String DEFAULT_SERVICE_URL = "https://iam.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `IamPolicyManagement` client.

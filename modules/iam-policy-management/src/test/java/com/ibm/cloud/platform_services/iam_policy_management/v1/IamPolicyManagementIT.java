@@ -44,7 +44,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     Random random = new Random();
 
     private final String TEST_UNIQUE_ID = String.valueOf(random.nextInt(100000));
-    private final String TEST_USER_PREFIX = "IBMid-SDKJava";
+    private static final String TEST_USER_PREFIX = "IBMid-SDKJava";
     private final String TEST_USER_ID = TEST_USER_PREFIX + TEST_UNIQUE_ID;
     private static final String HEADER_ETAG = "ETag";
     private static final String TEST_VIEW_ROLE_CRN = "crn:v1:bluemix:public:iam::::role:Viewer";
@@ -56,7 +56,8 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     String testPolicyId = null;
     String testPolicyEtag = null;
 
-    private final String testCustomRoleName = "TestJavaNode" + TEST_UNIQUE_ID;
+    private static final String testCustomRoleNamePrefix = "TestJavaNode";
+    private final String testCustomRoleName = testCustomRoleNamePrefix + TEST_UNIQUE_ID;
     private final String testCustomRoleDisplayName = "SDK " + testCustomRoleName;
     private final String testCustomRoleDescription = "SDK " + testCustomRoleName;
     private final List<String> testCustomRoleActions = Arrays.asList("iam-groups.groups.read");
@@ -387,6 +388,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date now = new Date();
         final int FIVE_MINUTES = 5 * 60 * 1000;
+        long fiveMinutesAgo = now.getTime() - FIVE_MINUTES;
 
         // List all policies in the account
         ListPoliciesOptions policyOptions = new ListPoliciesOptions.Builder()
@@ -405,7 +407,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
             // Delete the test policy or any test polcies older than 5 minutes
             if (policy.getSubjects().get(0).attributes().get(0).value().contains(TEST_USER_PREFIX)) {
                 long createdAt = policy.getCreatedAt().getTime();
-                long fiveMinutesAgo = now.getTime() - FIVE_MINUTES;
 
                 if ((testPolicyId != null || testPolicyId.equals(policy.getId())) || createdAt < fiveMinutesAgo) {
                     DeletePolicyOptions deleteOptions = new DeletePolicyOptions.Builder()
@@ -431,18 +432,19 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         // Iterate across the list of custom roles
         for (CustomRole role : rolesList.getCustomRoles()) {
-          long createdAt = role.getCreatedAt().getTime();
-          long fiveMinutesAgo = now.getTime() - FIVE_MINUTES;
+          if (role.getName().contains(testCustomRoleNamePrefix)) {
+              long createdAt = role.getCreatedAt().getTime();
 
-          // delete the role or any test role older than 5 minutes
-          if ((testCustomRoleId != null && testCustomRoleId.equals(role.getId())) || createdAt < fiveMinutesAgo) {
-              DeleteRoleOptions deleteOptions = new DeleteRoleOptions.Builder()
-                .roleId(role.getId()).build();
+              // delete the role or any test role older than 5 minutes
+              if ((testCustomRoleId != null && testCustomRoleId.equals(role.getId())) || createdAt < fiveMinutesAgo) {
+                  DeleteRoleOptions deleteOptions = new DeleteRoleOptions.Builder()
+                    .roleId(role.getId()).build();
 
-              Response<Void> deleteResponse = service.deleteRole(deleteOptions).execute();
-              assertNotNull(deleteResponse);
-              assertEquals(deleteResponse.getStatusCode(), 204);
-              System.out.println("Cleanup test role id: " + role.getId());
+                  Response<Void> deleteResponse = service.deleteRole(deleteOptions).execute();
+                  assertNotNull(deleteResponse);
+                  assertEquals(deleteResponse.getStatusCode(), 204);
+                  System.out.println("Cleanup test role id: " + role.getId());
+              }
           }
         }
     }

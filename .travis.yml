@@ -70,24 +70,17 @@ deploy:
       branch: master
   # For a tagged release, publish jars on bintray and sync to maven central.
   - provider: script
-    script:
-      - mvn deploy $MVN_ARGS -DskipTests
-      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:platform-services $TRAVIS_TAG
-      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:platform-services-common $TRAVIS_TAG
-      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:case-management $TRAVIS_TAG
-      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:enterprise-management $TRAVIS_TAG
-      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:global-catalog $TRAVIS_TAG
-      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:global-search $TRAVIS_TAG
-      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:global-tagging $TRAVIS_TAG
-      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:iam-access-groups $TRAVIS_TAG
-      - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:resource-manager $TRAVIS_TAG
+    script: 
+    - >-
+          mvn deploy $MVN_ARGS -DskipTests 
+          && build/bintraySync.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO $TRAVIS_TAG
     skip_cleanup: true
     on:
       tags: true
       jdk: openjdk8
   # For a tagged release, publish javadocs to gh-pages.
   - provider: script
-    script: "./build/publish-javadoc.sh"
+    script: ./build/publish-javadoc.sh
     skip_cleanup: true
     on:
       tags: true

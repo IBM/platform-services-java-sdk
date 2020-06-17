@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.6.0...v0.7.0) (2020-06-17)
+
+
+### Features
+
+* **IAM Policy Management:** add service to project ([#19](https://github.com/IBM/platform-services-node-sdk/issues/19)) ([4489318](https://github.com/IBM/platform-services-node-sdk/commit/4489318e06ae8a20a5ab44822b347a4ba42e4a68))
+
 # [0.6.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.5.0...v0.6.0) (2020-05-21)
 
 

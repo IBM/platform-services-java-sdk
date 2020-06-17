@@ -37,11 +37,11 @@ public class CreateResourceAliasOptionsTest {
     CreateResourceAliasOptions createResourceAliasOptionsModel = new CreateResourceAliasOptions.Builder()
       .name("my-alias")
       .source("a8dff6d3-d287-4668-a81d-c87c55c2656d")
-      .target("crn:v1:staging:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5")
+      .target("crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5")
       .build();
     assertEquals(createResourceAliasOptionsModel.name(), "my-alias");
     assertEquals(createResourceAliasOptionsModel.source(), "a8dff6d3-d287-4668-a81d-c87c55c2656d");
-    assertEquals(createResourceAliasOptionsModel.target(), "crn:v1:staging:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5");
+    assertEquals(createResourceAliasOptionsModel.target(), "crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

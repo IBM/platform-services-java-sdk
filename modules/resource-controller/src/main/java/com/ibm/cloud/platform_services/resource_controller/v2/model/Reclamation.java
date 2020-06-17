@@ -31,7 +31,7 @@ public class Reclamation extends GenericModel {
   @SerializedName("entity_crn")
   protected String entityCrn;
   @SerializedName("resource_instance_id")
-  protected Object resourceInstanceId;
+  protected String resourceInstanceId;
   @SerializedName("resource_group_id")
   protected String resourceGroupId;
   @SerializedName("account_id")
@@ -104,7 +104,7 @@ public class Reclamation extends GenericModel {
    *
    * @return the resourceInstanceId
    */
-  public Object getResourceInstanceId() {
+  public String getResourceInstanceId() {
     return resourceInstanceId;
   }
 

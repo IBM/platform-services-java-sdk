@@ -825,7 +825,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the CreateResourceBindingOptions model
     CreateResourceBindingOptions createResourceBindingOptionsModel = new CreateResourceBindingOptions.Builder()
     .source("25eba2a9-beef-450b-82cf-f5ad5e36c6dd")
-    .target("crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c")
+    .target("crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c")
     .name("my-binding")
     .parameters(resourceBindingPostParametersModel)
     .role("Writer")
@@ -1086,7 +1086,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     CreateResourceAliasOptions createResourceAliasOptionsModel = new CreateResourceAliasOptions.Builder()
     .name("my-alias")
     .source("a8dff6d3-d287-4668-a81d-c87c55c2656d")
-    .target("crn:v1:staging:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5")
+    .target("crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -1275,7 +1275,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testListReclamationsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"entity_id\": \"entityId\", \"entity_type_id\": \"entityTypeId\", \"entity_crn\": \"entityCrn\", \"resource_instance_id\": \"anyValue\", \"resource_group_id\": \"resourceGroupId\", \"account_id\": \"accountId\", \"policy_id\": \"policyId\", \"state\": \"state\", \"target_time\": \"targetTime\", \"custom_properties\": {\"mapKey\": \"anyValue\"}, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}]}";
+    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"entity_id\": \"entityId\", \"entity_type_id\": \"entityTypeId\", \"entity_crn\": \"entityCrn\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_group_id\": \"resourceGroupId\", \"account_id\": \"accountId\", \"policy_id\": \"policyId\", \"state\": \"state\", \"target_time\": \"targetTime\", \"custom_properties\": {\"mapKey\": \"anyValue\"}, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}]}";
     String listReclamationsPath = "/v1/reclamations";
 
     server.enqueue(new MockResponse()
@@ -1316,7 +1316,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testRunReclamationActionWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"entity_id\": \"entityId\", \"entity_type_id\": \"entityTypeId\", \"entity_crn\": \"entityCrn\", \"resource_instance_id\": \"anyValue\", \"resource_group_id\": \"resourceGroupId\", \"account_id\": \"accountId\", \"policy_id\": \"policyId\", \"state\": \"state\", \"target_time\": \"targetTime\", \"custom_properties\": {\"mapKey\": \"anyValue\"}, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"entity_id\": \"entityId\", \"entity_type_id\": \"entityTypeId\", \"entity_crn\": \"entityCrn\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_group_id\": \"resourceGroupId\", \"account_id\": \"accountId\", \"policy_id\": \"policyId\", \"state\": \"state\", \"target_time\": \"targetTime\", \"custom_properties\": {\"mapKey\": \"anyValue\"}, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}";
     String runReclamationActionPath = "/v1/reclamations/testString/actions/testString";
 
     server.enqueue(new MockResponse()

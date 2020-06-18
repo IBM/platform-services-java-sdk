@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.7.0...v0.8.0) (2020-06-18)
+
+
+### Features
+
+* **Catalog Management:** add Catalog Management service to project ([#27](https://github.com/IBM/platform-services-node-sdk/issues/27)) ([efc8e3c](https://github.com/IBM/platform-services-node-sdk/commit/efc8e3c789cfe2ac508221ddec38bf7d0103c4fb))
+
 # [0.7.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.6.0...v0.7.0) (2020-06-17)
 
 

@@ -49,6 +49,7 @@ IBM Cloud services:
 Service Name | Import Path
 --- | --- 
 [Case Management](https://cloud.ibm.com/apidocs/case-management) | ibm-platform-services/case-management/v1
+[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | ibm-platform-services/catalog-management/v1
 [Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | ibm-platform-services/enterprise-management/v1
 [Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | ibm-platform-services/global-catalog/v1
 [Global Search](https://cloud.ibm.com/apidocs/search) | ibm-platform-services/global-search/v2

@@ -41,6 +41,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     private static final String expectedOfferingsURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings";
     private static final String fakeName = "bogus";
     private static final String fakeVersionLocator = "bogus.bogus";
+    private static final String expectedOfferingName = "test-offering";
+    private static final String expectedOfferingURL  = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
 
     public String getConfigFilename() {
         return "../../catalog_mgmt.env";
@@ -268,15 +270,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void testCreateOffering() {
-        final String expectedName = "test-offering";
-        final String expectedLabel = "test";
-        final String expectedURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
-
         CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedName).label(expectedLabel).build();
+        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
         Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
@@ -285,23 +283,19 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
         assertNotNull(offeringResponse);
         assertEquals(offeringResponse.getStatusCode(), 201);
-        assertEquals(offeringResult.name(), expectedName);
-        assertEquals(offeringResult.url(), String.format(expectedURL, catalogResult.id(), offeringResult.id()));
+        assertEquals(offeringResult.name(), expectedOfferingName);
+        assertEquals(offeringResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
         assertEquals(offeringResult.label(), expectedLabel);
     }
 
 
     @Test
     public void testGetOffering() {
-        final String expectedName = "test-offering";
-        final String expectedLabel = "test";
-        final String expectedURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
-
         CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedName).label(expectedLabel).build();
+        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
         Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
@@ -314,8 +308,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
         assertNotNull(getResponse);
         assertEquals(getResponse.getStatusCode(), 200);
-        assertEquals(getResult.name(), expectedName);
-        assertEquals(getResult.url(), String.format(expectedURL, catalogResult.id(), offeringResult.id()));
+        assertEquals(getResult.name(), expectedOfferingName);
+        assertEquals(getResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
         assertEquals(getResult.label(), expectedLabel);
     }
 
@@ -347,9 +341,6 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void testListOfferings() {
-        final String expectedName = "test-offering";
-        final String expectedLabel = "test";
-        final String expectedURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
         final Long expectedLimit = 100L;
         final Long expectedOffset = 0L;
         final Long expectedTotalCount = 1L;
@@ -362,7 +353,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedName).label(expectedLabel).build();
+        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
         Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
@@ -383,23 +374,20 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(listResult.getLast(), String.format(expectedLast, catalogResult.id()));
         assertEquals(listResult.getResources().size(), expectedResourceLen);
         assertEquals(listResult.getResources().get(0).id(), offeringResult.id());
-        assertEquals(listResult.getResources().get(0).url(), String.format(expectedURL, catalogResult.id(), offeringResult.id()));
+        assertEquals(listResult.getResources().get(0).url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
         assertEquals(listResult.getResources().get(0).label(), expectedLabel);
-        assertEquals(listResult.getResources().get(0).name(), expectedName);
+        assertEquals(listResult.getResources().get(0).name(), expectedOfferingName);
         assertEquals(listResult.getResources().get(0).catalogId(), catalogResult.id());
         assertEquals(listResult.getResources().get(0).catalogName(), expectedLabel);
     }
 
     @Test
     public void testDeleteOffering() {
-        final String expectedName = "test-offering";
-        final String expectedLabel = "test";
-
         CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedName).label(expectedLabel).build();
+        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
         Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
@@ -439,18 +427,15 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void testUpdateOffering() {
-        final String expectedName = "test-offering";
-        final String expectedLabel = "test";
         final String expectedLabelUpdate = "test-update";
         final String expectedShortDesc = "test-desc";
         final String expectedShortDescUpdate = "test-desc-update";
-        final String expectedURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
 
         CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedName).label(expectedLabel).build();
+        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
         Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
@@ -463,7 +448,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
         assertNotNull(replaceResponse);
         assertEquals(replaceResponse.getStatusCode(), 200);
-        assertEquals(replaceResult.url(), String.format(expectedURL, catalogResult.id(), offeringResult.id()));
+        assertEquals(replaceResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
         assertEquals(replaceResult.label(), expectedLabelUpdate);
         assertEquals(replaceResult.shortDescription(), expectedShortDescUpdate);
     }

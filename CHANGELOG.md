@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/IBM/platform-services-java-sdk/compare/0.6.0...0.7.0) (2020-06-17)
+
+
+### Features
+
+* **IAM Policy Management:** add service to project ([#21](https://github.com/IBM/platform-services-java-sdk/issues/21)) ([d9ccf25](https://github.com/IBM/platform-services-java-sdk/commit/d9ccf2553e1aad07dcaf1d8faedb7662700c45d7))
+
 # [0.6.0](https://github.com/IBM/platform-services-java-sdk/compare/0.5.0...0.6.0) (2020-05-21)
 
 

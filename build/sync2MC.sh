@@ -6,7 +6,7 @@ then
  Syntax:  
       $0 <bintray-user> <bintray-apikey> <bintray-repo-owner> <bintray-reponame> <bintray-packagename> <bintray-packageversion>>
  Example:
-      $0 user1 A1098765 my-bintray-org my-bintray-repo1 my-bintray-package 0.0.1
+      $0 btuser1 btapikey1 bintray-org1 bintray-repo1 my-bintray-package 0.0.1
 "
 
  exit 1
@@ -25,6 +25,4 @@ basicauth="${user}:${apikey}"
 
 set -x
 
-echo "
-Executing curl command..."
-curl -X POST --data '{ "close": "1" }' -H "Content-Type: application/json" -L -k --max-time 600 --user ${basicauth} ${urlstring}
+time curl -X POST --data '{ "close": "1" }' -H "Content-Type: application/json" -L -k --max-time 600 --user ${basicauth} ${urlstring}

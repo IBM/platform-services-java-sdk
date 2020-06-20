@@ -35,6 +35,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>catalog-management</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>enterprise-management</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -56,6 +61,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>iam-access-groups</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>iam-policy-management</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

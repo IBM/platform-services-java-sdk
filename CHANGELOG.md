@@ -1,3 +1,17 @@
+# [0.8.0](https://github.com/IBM/platform-services-java-sdk/compare/0.7.0...0.8.0) (2020-06-18)
+
+
+### Features
+
+* **Catalog Management:** add Catalog Management service to project ([#27](https://github.com/IBM/platform-services-java-sdk/issues/27)) ([1380165](https://github.com/IBM/platform-services-java-sdk/commit/13801653c100e22a97cdc17a3b04a0923287512a))
+
+# [0.7.0](https://github.com/IBM/platform-services-java-sdk/compare/0.6.0...0.7.0) (2020-06-17)
+
+
+### Features
+
+* **IAM Policy Management:** add service to project ([#21](https://github.com/IBM/platform-services-java-sdk/issues/21)) ([d9ccf25](https://github.com/IBM/platform-services-java-sdk/commit/d9ccf2553e1aad07dcaf1d8faedb7662700c45d7))
+
 # [0.6.0](https://github.com/IBM/platform-services-java-sdk/compare/0.5.0...0.6.0) (2020-05-21)
 
 

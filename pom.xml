@@ -44,11 +44,13 @@
 
         <!-- Each of the service modules should be listed here -->
         <module>modules/case-management</module>
+        <module>modules/catalog-management</module>
         <module>modules/enterprise-management</module>
         <module>modules/global-catalog</module>
         <module>modules/global-search</module>
         <module>modules/global-tagging</module>
         <module>modules/iam-access-groups</module>
+        <module>modules/iam-policy-management</module>
         <module>modules/resource-controller</module>
         <module>modules/resource-manager</module>
 

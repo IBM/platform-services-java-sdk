@@ -1130,7 +1130,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
         Boolean foundReclamation = false;
         for (Reclamation r : result.getResources()) {
-            if (r.getResourceInstanceId().toString().equals(testReclaimInstanceGuid)) {
+            if (r.getResourceInstanceId().equals(testReclaimInstanceGuid)) {
                 assertEquals(r.getResourceInstanceId(), testReclaimInstanceGuid);
                 assertEquals(r.getAccountId(), TEST_ACCOUNT_ID);
                 assertEquals(r.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);

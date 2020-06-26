@@ -17,20 +17,23 @@ import com.ibm.cloud.platform_services.open_service_broker.v1.model.BindResource
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Context;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.DeleteServiceBindingOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.DeleteServiceInstanceOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.GetLastOperationOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.GetServiceInstanceStateOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ListCatalogOptions;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.ListLastOperationOptions;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.Parameters;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Plans;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceBindingOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceInstanceOptions;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceStateOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceInstanceStateOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp1874644Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp1874650Root;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079872Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079874Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079876Root;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079894Root;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2448145Root;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Services;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.UpdateServiceInstanceOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.VolumeMount;
 import com.ibm.cloud.platform_services.open_service_broker.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
@@ -154,10 +157,10 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testReplaceStateWOptions() throws Throwable {
+  public void testReplaceServiceInstanceStateWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"active\": true, \"enabled\": false, \"last_active\": 10}";
-    String replaceStatePath = "/bluemix_v1/service_instances/testString";
+    String replaceServiceInstanceStatePath = "/bluemix_v1/service_instances/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -166,8 +169,8 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ReplaceStateOptions model
-    ReplaceStateOptions replaceStateOptionsModel = new ReplaceStateOptions.Builder()
+    // Construct an instance of the ReplaceServiceInstanceStateOptions model
+    ReplaceServiceInstanceStateOptions replaceServiceInstanceStateOptionsModel = new ReplaceServiceInstanceStateOptions.Builder()
     .instanceId("testString")
     .enabled(false)
     .initiatorId("null")
@@ -175,7 +178,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp2448145Root> response = testService.replaceState(replaceStateOptionsModel).execute();
+    Response<Resp2448145Root> response = testService.replaceServiceInstanceState(replaceServiceInstanceStateOptionsModel).execute();
     assertNotNull(response);
     Resp2448145Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -191,19 +194,19 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, replaceStatePath);
+    assertEquals(parsedPath, replaceServiceInstanceStatePath);
   }
 
-  // Test the replaceState operation with null options model parameter
+  // Test the replaceServiceInstanceState operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testReplaceStateNoOptions() throws Throwable {
+  public void testReplaceServiceInstanceStateNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.replaceState(null).execute();
+    testService.replaceServiceInstanceState(null).execute();
   }
 
   @Test
@@ -226,18 +229,12 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .platform("null")
     .build();
 
-    // Construct an instance of the Parameters model
-    Parameters parametersModel = new Parameters.Builder()
-    .parameter1(Long.valueOf("26"))
-    .parameter2("null")
-    .build();
-
     // Construct an instance of the ReplaceServiceInstanceOptions model
     ReplaceServiceInstanceOptions replaceServiceInstanceOptionsModel = new ReplaceServiceInstanceOptions.Builder()
     .instanceId("testString")
-    .context(new java.util.ArrayList<Context>(java.util.Arrays.asList(contextModel)))
+    .context(contextModel)
     .organizationGuid("null")
-    .parameters(new java.util.ArrayList<Parameters>(java.util.Arrays.asList(parametersModel)))
+    .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
     .planId("null")
     .serviceId("null")
     .spaceGuid("null")
@@ -280,7 +277,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
   @Test
   public void testUpdateServiceInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "\"operationResponse\"";
+    String mockResponseBody = "{\"operation\": \"operation\"}";
     String updateServiceInstancePath = "/v2/service_instances/testString";
 
     server.enqueue(new MockResponse()
@@ -297,27 +294,21 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .platform("null")
     .build();
 
-    // Construct an instance of the Parameters model
-    Parameters parametersModel = new Parameters.Builder()
-    .parameter1(Long.valueOf("26"))
-    .parameter2("null")
-    .build();
-
     // Construct an instance of the UpdateServiceInstanceOptions model
     UpdateServiceInstanceOptions updateServiceInstanceOptionsModel = new UpdateServiceInstanceOptions.Builder()
     .instanceId("testString")
-    .context(new java.util.ArrayList<Context>(java.util.Arrays.asList(contextModel)))
-    .parameters(parametersModel)
+    .context(contextModel)
+    .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
     .planId("null")
-    .previousValues(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .previousValues(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
     .serviceId("null")
-    .acceptsIncomplete("testString")
+    .acceptsIncomplete(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<String> response = testService.updateServiceInstance(updateServiceInstanceOptionsModel).execute();
+    Response<Resp2079874Root> response = testService.updateServiceInstance(updateServiceInstanceOptionsModel).execute();
     assertNotNull(response);
-    String responseObj = response.getResult();
+    Resp2079874Root responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -329,7 +320,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("accepts_incomplete"), "testString");
+    assertEquals(Boolean.valueOf(query.get("accepts_incomplete")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateServiceInstancePath);
@@ -350,7 +341,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
   @Test
   public void testDeleteServiceInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "\"operationResponse\"";
+    String mockResponseBody = "{\"operation\": \"operation\"}";
     String deleteServiceInstancePath = "/v2/service_instances/testString";
 
     server.enqueue(new MockResponse()
@@ -369,9 +360,9 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<String> response = testService.deleteServiceInstance(deleteServiceInstanceOptionsModel).execute();
+    Response<Resp2079874Root> response = testService.deleteServiceInstance(deleteServiceInstanceOptionsModel).execute();
     assertNotNull(response);
-    String responseObj = response.getResult();
+    Resp2079874Root responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -406,7 +397,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
   @Test
   public void testListCatalogWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "[{\"bindable\": true, \"description\": \"description\", \"id\": \"id\", \"name\": \"name\", \"plan_updateable\": true, \"plans\": [{\"description\": \"description\", \"free\": true, \"id\": \"id\", \"name\": \"name\"}]}]";
+    String mockResponseBody = "{\"services\": [{\"bindable\": true, \"description\": \"description\", \"id\": \"id\", \"name\": \"name\", \"plan_updateable\": true, \"plans\": [{\"description\": \"description\", \"free\": true, \"id\": \"id\", \"name\": \"name\"}]}]}";
     String listCatalogPath = "/v2/catalog";
 
     server.enqueue(new MockResponse()
@@ -420,9 +411,9 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     ListCatalogOptions listCatalogOptionsModel = new ListCatalogOptions();
 
     // Invoke operation with valid options model (positive test)
-    Response<List<Services>> response = testService.listCatalog(listCatalogOptionsModel).execute();
+    Response<Resp1874650Root> response = testService.listCatalog(listCatalogOptionsModel).execute();
     assertNotNull(response);
-    List<Services> responseObj = response.getResult();
+    Resp1874650Root responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -440,10 +431,10 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testListLastOperationWOptions() throws Throwable {
+  public void testGetLastOperationWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"description\": \"description\", \"state\": \"state\"}";
-    String listLastOperationPath = "/v2/service_instances/testString/last_operation";
+    String getLastOperationPath = "/v2/service_instances/testString/last_operation";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -452,8 +443,8 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ListLastOperationOptions model
-    ListLastOperationOptions listLastOperationOptionsModel = new ListLastOperationOptions.Builder()
+    // Construct an instance of the GetLastOperationOptions model
+    GetLastOperationOptions getLastOperationOptionsModel = new GetLastOperationOptions.Builder()
     .instanceId("testString")
     .operation("testString")
     .planId("testString")
@@ -461,7 +452,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp2079894Root> response = testService.listLastOperation(listLastOperationOptionsModel).execute();
+    Response<Resp2079894Root> response = testService.getLastOperation(getLastOperationOptionsModel).execute();
     assertNotNull(response);
     Resp2079894Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -480,25 +471,25 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     assertEquals(query.get("service_id"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listLastOperationPath);
+    assertEquals(parsedPath, getLastOperationPath);
   }
 
-  // Test the listLastOperation operation with null options model parameter
+  // Test the getLastOperation operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListLastOperationNoOptions() throws Throwable {
+  public void testGetLastOperationNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.listLastOperation(null).execute();
+    testService.getLastOperation(null).execute();
   }
 
   @Test
   public void testReplaceServiceBindingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "\"operationResponse\"";
+    String mockResponseBody = "{\"credentials\": {\"mapKey\": \"anyValue\"}, \"syslog_drain_url\": \"syslogDrainUrl\", \"route_service_url\": \"routeServiceUrl\", \"volume_mounts\": [{\"driver\": \"driver\", \"container_dir\": \"containerDir\", \"mode\": \"mode\", \"device_type\": \"deviceType\", \"device\": \"device\"}]}";
     String replaceServiceBindingPath = "/v2/service_instances/testString/service_bindings/testString";
 
     server.enqueue(new MockResponse()
@@ -513,22 +504,24 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .accountId("null")
     .serviceidCrn("null")
     .targetCrn("null")
+    .appGuid("null")
+    .route("null")
     .build();
 
     // Construct an instance of the ReplaceServiceBindingOptions model
     ReplaceServiceBindingOptions replaceServiceBindingOptionsModel = new ReplaceServiceBindingOptions.Builder()
     .bindingId("testString")
     .instanceId("testString")
-    .bindResource(new java.util.ArrayList<BindResource>(java.util.Arrays.asList(bindResourceModel)))
-    .parameters(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .bindResource(bindResourceModel)
+    .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
     .planId("null")
     .serviceId("null")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<String> response = testService.replaceServiceBinding(replaceServiceBindingOptionsModel).execute();
+    Response<Resp2079876Root> response = testService.replaceServiceBinding(replaceServiceBindingOptionsModel).execute();
     assertNotNull(response);
-    String responseObj = response.getResult();
+    Resp2079876Root responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -560,11 +553,10 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
   @Test
   public void testDeleteServiceBindingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "\"operationResponse\"";
+    String mockResponseBody = "";
     String deleteServiceBindingPath = "/v2/service_instances/testString/service_bindings/testString";
 
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
     .setResponseCode(200)
     .setBody(mockResponseBody));
 
@@ -579,10 +571,11 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<String> response = testService.deleteServiceBinding(deleteServiceBindingOptionsModel).execute();
+    Response<Void> response = testService.deleteServiceBinding(deleteServiceBindingOptionsModel).execute();
     assertNotNull(response);
-    String responseObj = response.getResult();
-    assertNotNull(responseObj);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
 
     // Verify the contents of the request
     RecordedRequest request = server.takeRequest();

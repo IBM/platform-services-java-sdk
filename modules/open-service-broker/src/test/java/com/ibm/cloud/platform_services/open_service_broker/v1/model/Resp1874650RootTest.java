@@ -13,12 +13,16 @@
 
 package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.Parameters;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Plans;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp1874650Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Services;
 import com.ibm.cloud.platform_services.open_service_broker.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,26 +30,15 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Parameters model.
+ * Unit test class for the Resp1874650Root model.
  */
-public class ParametersTest {
+public class Resp1874650RootTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testParameters() throws Throwable {
-    Parameters parametersModel = new Parameters.Builder()
-      .parameter1(Long.valueOf("26"))
-      .parameter2("null")
-      .build();
-    assertEquals(parametersModel.parameter1(), Long.valueOf("26"));
-    assertEquals(parametersModel.parameter2(), "null");
-
-    String json = TestUtilities.serialize(parametersModel);
-
-    Parameters parametersModelNew = TestUtilities.deserialize(json, Parameters.class);
-    assertTrue(parametersModelNew instanceof Parameters);
-    assertEquals(parametersModelNew.parameter1(), Long.valueOf("26"));
-    assertEquals(parametersModelNew.parameter2(), "null");
+  public void testResp1874650Root() throws Throwable {
+    Resp1874650Root resp1874650RootModel = new Resp1874650Root();
+    assertNull(resp1874650RootModel.getServices());
   }
 }

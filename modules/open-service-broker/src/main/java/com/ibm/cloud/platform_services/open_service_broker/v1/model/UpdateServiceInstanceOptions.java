@@ -12,8 +12,7 @@
  */
 package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
@@ -23,24 +22,24 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class UpdateServiceInstanceOptions extends GenericModel {
 
   protected String instanceId;
-  protected List<Context> context;
-  protected Parameters parameters;
+  protected Context context;
+  protected Map<String, String> parameters;
   protected String planId;
-  protected List<String> previousValues;
+  protected Map<String, String> previousValues;
   protected String serviceId;
-  protected String acceptsIncomplete;
+  protected Boolean acceptsIncomplete;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String instanceId;
-    private List<Context> context;
-    private Parameters parameters;
+    private Context context;
+    private Map<String, String> parameters;
     private String planId;
-    private List<String> previousValues;
+    private Map<String, String> previousValues;
     private String serviceId;
-    private String acceptsIncomplete;
+    private Boolean acceptsIncomplete;
 
     private Builder(UpdateServiceInstanceOptions updateServiceInstanceOptions) {
       this.instanceId = updateServiceInstanceOptions.instanceId;
@@ -77,38 +76,6 @@ public class UpdateServiceInstanceOptions extends GenericModel {
     }
 
     /**
-     * Adds an context to context.
-     *
-     * @param context the new context
-     * @return the UpdateServiceInstanceOptions builder
-     */
-    public Builder addContext(Context context) {
-      com.ibm.cloud.sdk.core.util.Validator.notNull(context,
-        "context cannot be null");
-      if (this.context == null) {
-        this.context = new ArrayList<Context>();
-      }
-      this.context.add(context);
-      return this;
-    }
-
-    /**
-     * Adds an previousValues to previousValues.
-     *
-     * @param previousValues the new previousValues
-     * @return the UpdateServiceInstanceOptions builder
-     */
-    public Builder addPreviousValues(String previousValues) {
-      com.ibm.cloud.sdk.core.util.Validator.notNull(previousValues,
-        "previousValues cannot be null");
-      if (this.previousValues == null) {
-        this.previousValues = new ArrayList<String>();
-      }
-      this.previousValues.add(previousValues);
-      return this;
-    }
-
-    /**
      * Set the instanceId.
      *
      * @param instanceId the instanceId
@@ -121,12 +88,11 @@ public class UpdateServiceInstanceOptions extends GenericModel {
 
     /**
      * Set the context.
-     * Existing context will be replaced.
      *
      * @param context the context
      * @return the UpdateServiceInstanceOptions builder
      */
-    public Builder context(List<Context> context) {
+    public Builder context(Context context) {
       this.context = context;
       return this;
     }
@@ -137,7 +103,7 @@ public class UpdateServiceInstanceOptions extends GenericModel {
      * @param parameters the parameters
      * @return the UpdateServiceInstanceOptions builder
      */
-    public Builder parameters(Parameters parameters) {
+    public Builder parameters(Map<String, String> parameters) {
       this.parameters = parameters;
       return this;
     }
@@ -155,12 +121,11 @@ public class UpdateServiceInstanceOptions extends GenericModel {
 
     /**
      * Set the previousValues.
-     * Existing previousValues will be replaced.
      *
      * @param previousValues the previousValues
      * @return the UpdateServiceInstanceOptions builder
      */
-    public Builder previousValues(List<String> previousValues) {
+    public Builder previousValues(Map<String, String> previousValues) {
       this.previousValues = previousValues;
       return this;
     }
@@ -182,7 +147,7 @@ public class UpdateServiceInstanceOptions extends GenericModel {
      * @param acceptsIncomplete the acceptsIncomplete
      * @return the UpdateServiceInstanceOptions builder
      */
-    public Builder acceptsIncomplete(String acceptsIncomplete) {
+    public Builder acceptsIncomplete(Boolean acceptsIncomplete) {
       this.acceptsIncomplete = acceptsIncomplete;
       return this;
     }
@@ -223,11 +188,11 @@ public class UpdateServiceInstanceOptions extends GenericModel {
   /**
    * Gets the context.
    *
-   * Contextual data under which the service instance is created.
+   * Platform specific contextual information under which the service instance is to be provisioned.
    *
    * @return the context
    */
-  public List<Context> context() {
+  public Context context() {
     return context;
   }
 
@@ -241,7 +206,7 @@ public class UpdateServiceInstanceOptions extends GenericModel {
    *
    * @return the parameters
    */
-  public Parameters parameters() {
+  public Map<String, String> parameters() {
     return parameters;
   }
 
@@ -266,7 +231,7 @@ public class UpdateServiceInstanceOptions extends GenericModel {
    *
    * @return the previousValues
    */
-  public List<String> previousValues() {
+  public Map<String, String> previousValues() {
     return previousValues;
   }
 
@@ -292,7 +257,7 @@ public class UpdateServiceInstanceOptions extends GenericModel {
    *
    * @return the acceptsIncomplete
    */
-  public String acceptsIncomplete() {
+  public Boolean acceptsIncomplete() {
     return acceptsIncomplete;
   }
 }

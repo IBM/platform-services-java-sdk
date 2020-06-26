@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The listLastOperation options.
+ * The getLastOperation options.
  */
-public class ListLastOperationOptions extends GenericModel {
+public class GetLastOperationOptions extends GenericModel {
 
   protected String instanceId;
   protected String operation;
@@ -33,11 +33,11 @@ public class ListLastOperationOptions extends GenericModel {
     private String planId;
     private String serviceId;
 
-    private Builder(ListLastOperationOptions listLastOperationOptions) {
-      this.instanceId = listLastOperationOptions.instanceId;
-      this.operation = listLastOperationOptions.operation;
-      this.planId = listLastOperationOptions.planId;
-      this.serviceId = listLastOperationOptions.serviceId;
+    private Builder(GetLastOperationOptions getLastOperationOptions) {
+      this.instanceId = getLastOperationOptions.instanceId;
+      this.operation = getLastOperationOptions.operation;
+      this.planId = getLastOperationOptions.planId;
+      this.serviceId = getLastOperationOptions.serviceId;
     }
 
     /**
@@ -56,19 +56,19 @@ public class ListLastOperationOptions extends GenericModel {
     }
 
     /**
-     * Builds a ListLastOperationOptions.
+     * Builds a GetLastOperationOptions.
      *
-     * @return the new ListLastOperationOptions instance
+     * @return the new GetLastOperationOptions instance
      */
-    public ListLastOperationOptions build() {
-      return new ListLastOperationOptions(this);
+    public GetLastOperationOptions build() {
+      return new GetLastOperationOptions(this);
     }
 
     /**
      * Set the instanceId.
      *
      * @param instanceId the instanceId
-     * @return the ListLastOperationOptions builder
+     * @return the GetLastOperationOptions builder
      */
     public Builder instanceId(String instanceId) {
       this.instanceId = instanceId;
@@ -79,7 +79,7 @@ public class ListLastOperationOptions extends GenericModel {
      * Set the operation.
      *
      * @param operation the operation
-     * @return the ListLastOperationOptions builder
+     * @return the GetLastOperationOptions builder
      */
     public Builder operation(String operation) {
       this.operation = operation;
@@ -90,7 +90,7 @@ public class ListLastOperationOptions extends GenericModel {
      * Set the planId.
      *
      * @param planId the planId
-     * @return the ListLastOperationOptions builder
+     * @return the GetLastOperationOptions builder
      */
     public Builder planId(String planId) {
       this.planId = planId;
@@ -101,7 +101,7 @@ public class ListLastOperationOptions extends GenericModel {
      * Set the serviceId.
      *
      * @param serviceId the serviceId
-     * @return the ListLastOperationOptions builder
+     * @return the GetLastOperationOptions builder
      */
     public Builder serviceId(String serviceId) {
       this.serviceId = serviceId;
@@ -109,7 +109,7 @@ public class ListLastOperationOptions extends GenericModel {
     }
   }
 
-  protected ListLastOperationOptions(Builder builder) {
+  protected GetLastOperationOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.instanceId,
       "instanceId cannot be empty");
     instanceId = builder.instanceId;
@@ -121,7 +121,7 @@ public class ListLastOperationOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ListLastOperationOptions builder
+   * @return a GetLastOperationOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

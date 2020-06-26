@@ -12,8 +12,6 @@
  */
 package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -25,8 +23,8 @@ public class ReplaceServiceBindingOptions extends GenericModel {
 
   protected String bindingId;
   protected String instanceId;
-  protected List<BindResource> bindResource;
-  protected Map<String, Object> parameters;
+  protected BindResource bindResource;
+  protected Map<String, String> parameters;
   protected String planId;
   protected String serviceId;
 
@@ -36,8 +34,8 @@ public class ReplaceServiceBindingOptions extends GenericModel {
   public static class Builder {
     private String bindingId;
     private String instanceId;
-    private List<BindResource> bindResource;
-    private Map<String, Object> parameters;
+    private BindResource bindResource;
+    private Map<String, String> parameters;
     private String planId;
     private String serviceId;
 
@@ -77,22 +75,6 @@ public class ReplaceServiceBindingOptions extends GenericModel {
     }
 
     /**
-     * Adds an bindResource to bindResource.
-     *
-     * @param bindResource the new bindResource
-     * @return the ReplaceServiceBindingOptions builder
-     */
-    public Builder addBindResource(BindResource bindResource) {
-      com.ibm.cloud.sdk.core.util.Validator.notNull(bindResource,
-        "bindResource cannot be null");
-      if (this.bindResource == null) {
-        this.bindResource = new ArrayList<BindResource>();
-      }
-      this.bindResource.add(bindResource);
-      return this;
-    }
-
-    /**
      * Set the bindingId.
      *
      * @param bindingId the bindingId
@@ -116,12 +98,11 @@ public class ReplaceServiceBindingOptions extends GenericModel {
 
     /**
      * Set the bindResource.
-     * Existing bindResource will be replaced.
      *
      * @param bindResource the bindResource
      * @return the ReplaceServiceBindingOptions builder
      */
-    public Builder bindResource(List<BindResource> bindResource) {
+    public Builder bindResource(BindResource bindResource) {
       this.bindResource = bindResource;
       return this;
     }
@@ -132,7 +113,7 @@ public class ReplaceServiceBindingOptions extends GenericModel {
      * @param parameters the parameters
      * @return the ReplaceServiceBindingOptions builder
      */
-    public Builder parameters(Map<String, Object> parameters) {
+    public Builder parameters(Map<String, String> parameters) {
       this.parameters = parameters;
       return this;
     }
@@ -212,18 +193,21 @@ public class ReplaceServiceBindingOptions extends GenericModel {
    *
    * @return the bindResource
    */
-  public List<BindResource> bindResource() {
+  public BindResource bindResource() {
     return bindResource;
   }
 
   /**
    * Gets the parameters.
    *
-   * Configuration options for the service binding.
+   * Configuration options for the service instance. An opaque object, controller treats this as a blob. Brokers should
+   * ensure that the client has provided valid configuration parameters and values for the operation. If this field is
+   * not present in the request message, then the broker MUST NOT change the parameters of the instance as a result of
+   * this request.
    *
    * @return the parameters
    */
-  public Map<String, Object> parameters() {
+  public Map<String, String> parameters() {
     return parameters;
   }
 

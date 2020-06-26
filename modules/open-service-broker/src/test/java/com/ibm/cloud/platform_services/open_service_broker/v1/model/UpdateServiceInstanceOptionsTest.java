@@ -14,15 +14,12 @@
 package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Context;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.Parameters;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.UpdateServiceInstanceOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,29 +44,22 @@ public class UpdateServiceInstanceOptionsTest {
     assertEquals(contextModel.crn(), "null");
     assertEquals(contextModel.platform(), "null");
 
-    Parameters parametersModel = new Parameters.Builder()
-      .parameter1(Long.valueOf("26"))
-      .parameter2("null")
-      .build();
-    assertEquals(parametersModel.parameter1(), Long.valueOf("26"));
-    assertEquals(parametersModel.parameter2(), "null");
-
     UpdateServiceInstanceOptions updateServiceInstanceOptionsModel = new UpdateServiceInstanceOptions.Builder()
       .instanceId("testString")
-      .context(new java.util.ArrayList<Context>(java.util.Arrays.asList(contextModel)))
-      .parameters(parametersModel)
+      .context(contextModel)
+      .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
       .planId("null")
-      .previousValues(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .previousValues(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
       .serviceId("null")
-      .acceptsIncomplete("testString")
+      .acceptsIncomplete(true)
       .build();
     assertEquals(updateServiceInstanceOptionsModel.instanceId(), "testString");
-    assertEquals(updateServiceInstanceOptionsModel.context(), new java.util.ArrayList<Context>(java.util.Arrays.asList(contextModel)));
-    assertEquals(updateServiceInstanceOptionsModel.parameters(), parametersModel);
+    assertEquals(updateServiceInstanceOptionsModel.context(), contextModel);
+    assertEquals(updateServiceInstanceOptionsModel.parameters(), new java.util.HashMap<String,String>(){{put("foo", "null"); }});
     assertEquals(updateServiceInstanceOptionsModel.planId(), "null");
-    assertEquals(updateServiceInstanceOptionsModel.previousValues(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(updateServiceInstanceOptionsModel.previousValues(), new java.util.HashMap<String,String>(){{put("foo", "null"); }});
     assertEquals(updateServiceInstanceOptionsModel.serviceId(), "null");
-    assertEquals(updateServiceInstanceOptionsModel.acceptsIncomplete(), "testString");
+    assertEquals(updateServiceInstanceOptionsModel.acceptsIncomplete(), Boolean.valueOf(true));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

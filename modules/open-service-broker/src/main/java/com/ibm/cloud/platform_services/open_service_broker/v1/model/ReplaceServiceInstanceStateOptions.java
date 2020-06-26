@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The replaceState options.
+ * The replaceServiceInstanceState options.
  */
-public class ReplaceStateOptions extends GenericModel {
+public class ReplaceServiceInstanceStateOptions extends GenericModel {
 
   protected String instanceId;
   protected Boolean enabled;
@@ -33,11 +33,11 @@ public class ReplaceStateOptions extends GenericModel {
     private String initiatorId;
     private String reasonCode;
 
-    private Builder(ReplaceStateOptions replaceStateOptions) {
-      this.instanceId = replaceStateOptions.instanceId;
-      this.enabled = replaceStateOptions.enabled;
-      this.initiatorId = replaceStateOptions.initiatorId;
-      this.reasonCode = replaceStateOptions.reasonCode;
+    private Builder(ReplaceServiceInstanceStateOptions replaceServiceInstanceStateOptions) {
+      this.instanceId = replaceServiceInstanceStateOptions.instanceId;
+      this.enabled = replaceServiceInstanceStateOptions.enabled;
+      this.initiatorId = replaceServiceInstanceStateOptions.initiatorId;
+      this.reasonCode = replaceServiceInstanceStateOptions.reasonCode;
     }
 
     /**
@@ -56,19 +56,19 @@ public class ReplaceStateOptions extends GenericModel {
     }
 
     /**
-     * Builds a ReplaceStateOptions.
+     * Builds a ReplaceServiceInstanceStateOptions.
      *
-     * @return the new ReplaceStateOptions instance
+     * @return the new ReplaceServiceInstanceStateOptions instance
      */
-    public ReplaceStateOptions build() {
-      return new ReplaceStateOptions(this);
+    public ReplaceServiceInstanceStateOptions build() {
+      return new ReplaceServiceInstanceStateOptions(this);
     }
 
     /**
      * Set the instanceId.
      *
      * @param instanceId the instanceId
-     * @return the ReplaceStateOptions builder
+     * @return the ReplaceServiceInstanceStateOptions builder
      */
     public Builder instanceId(String instanceId) {
       this.instanceId = instanceId;
@@ -79,7 +79,7 @@ public class ReplaceStateOptions extends GenericModel {
      * Set the enabled.
      *
      * @param enabled the enabled
-     * @return the ReplaceStateOptions builder
+     * @return the ReplaceServiceInstanceStateOptions builder
      */
     public Builder enabled(Boolean enabled) {
       this.enabled = enabled;
@@ -90,7 +90,7 @@ public class ReplaceStateOptions extends GenericModel {
      * Set the initiatorId.
      *
      * @param initiatorId the initiatorId
-     * @return the ReplaceStateOptions builder
+     * @return the ReplaceServiceInstanceStateOptions builder
      */
     public Builder initiatorId(String initiatorId) {
       this.initiatorId = initiatorId;
@@ -101,7 +101,7 @@ public class ReplaceStateOptions extends GenericModel {
      * Set the reasonCode.
      *
      * @param reasonCode the reasonCode
-     * @return the ReplaceStateOptions builder
+     * @return the ReplaceServiceInstanceStateOptions builder
      */
     public Builder reasonCode(String reasonCode) {
       this.reasonCode = reasonCode;
@@ -109,7 +109,7 @@ public class ReplaceStateOptions extends GenericModel {
     }
   }
 
-  protected ReplaceStateOptions(Builder builder) {
+  protected ReplaceServiceInstanceStateOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.instanceId,
       "instanceId cannot be empty");
     instanceId = builder.instanceId;
@@ -121,7 +121,7 @@ public class ReplaceStateOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ReplaceStateOptions builder
+   * @return a ReplaceServiceInstanceStateOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

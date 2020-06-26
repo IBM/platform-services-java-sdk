@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceStateOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.VolumeMount;
 import com.ibm.cloud.platform_services.open_service_broker.v1.utils.TestUtilities;
 
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -26,29 +26,19 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ReplaceStateOptions model.
+ * Unit test class for the VolumeMount model.
  */
-public class ReplaceStateOptionsTest {
+public class VolumeMountTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testReplaceStateOptions() throws Throwable {
-    ReplaceStateOptions replaceStateOptionsModel = new ReplaceStateOptions.Builder()
-      .instanceId("testString")
-      .enabled(false)
-      .initiatorId("null")
-      .reasonCode("null")
-      .build();
-    assertEquals(replaceStateOptionsModel.instanceId(), "testString");
-    assertEquals(replaceStateOptionsModel.enabled(), Boolean.valueOf(false));
-    assertEquals(replaceStateOptionsModel.initiatorId(), "null");
-    assertEquals(replaceStateOptionsModel.reasonCode(), "null");
+  public void testVolumeMount() throws Throwable {
+    VolumeMount volumeMountModel = new VolumeMount();
+    assertNull(volumeMountModel.getDriver());
+    assertNull(volumeMountModel.getContainerDir());
+    assertNull(volumeMountModel.getMode());
+    assertNull(volumeMountModel.getDeviceType());
+    assertNull(volumeMountModel.getDevice());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testReplaceStateOptionsError() throws Throwable {
-    new ReplaceStateOptions.Builder().build();
-  }
-
 }

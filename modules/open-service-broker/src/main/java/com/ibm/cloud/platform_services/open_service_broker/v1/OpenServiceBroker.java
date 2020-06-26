@@ -16,17 +16,19 @@ import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.DeleteServiceBindingOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.DeleteServiceInstanceOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.GetLastOperationOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.GetServiceInstanceStateOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ListCatalogOptions;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.ListLastOperationOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceBindingOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceInstanceOptions;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceStateOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceInstanceStateOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp1874644Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp1874650Root;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079872Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079874Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079876Root;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079894Root;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2448145Root;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.Services;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.UpdateServiceInstanceOptions;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
@@ -35,7 +37,6 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -131,29 +132,29 @@ public class OpenServiceBroker extends BaseService {
    * service, the broker should reject that request with any code other than `204`, and provide a user-facing message in
    * the description.
    *
-   * @param replaceStateOptions the {@link ReplaceStateOptions} containing the options for the call
+   * @param replaceServiceInstanceStateOptions the {@link ReplaceServiceInstanceStateOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Resp2448145Root}
    */
-  public ServiceCall<Resp2448145Root> replaceState(ReplaceStateOptions replaceStateOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceStateOptions,
-      "replaceStateOptions cannot be null");
+  public ServiceCall<Resp2448145Root> replaceServiceInstanceState(ReplaceServiceInstanceStateOptions replaceServiceInstanceStateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceServiceInstanceStateOptions,
+      "replaceServiceInstanceStateOptions cannot be null");
     String[] pathSegments = { "bluemix_v1/service_instances" };
-    String[] pathParameters = { replaceStateOptions.instanceId() };
+    String[] pathParameters = { replaceServiceInstanceStateOptions.instanceId() };
     RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "replaceState");
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "replaceServiceInstanceState");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     final JsonObject contentJson = new JsonObject();
-    if (replaceStateOptions.enabled() != null) {
-      contentJson.addProperty("enabled", replaceStateOptions.enabled());
+    if (replaceServiceInstanceStateOptions.enabled() != null) {
+      contentJson.addProperty("enabled", replaceServiceInstanceStateOptions.enabled());
     }
-    if (replaceStateOptions.initiatorId() != null) {
-      contentJson.addProperty("initiator_id", replaceStateOptions.initiatorId());
+    if (replaceServiceInstanceStateOptions.initiatorId() != null) {
+      contentJson.addProperty("initiator_id", replaceServiceInstanceStateOptions.initiatorId());
     }
-    if (replaceStateOptions.reasonCode() != null) {
-      contentJson.addProperty("reason_code", replaceStateOptions.reasonCode());
+    if (replaceServiceInstanceStateOptions.reasonCode() != null) {
+      contentJson.addProperty("reason_code", replaceServiceInstanceStateOptions.reasonCode());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Resp2448145Root> responseConverter =
@@ -229,9 +230,9 @@ public class OpenServiceBroker extends BaseService {
    * `"plan_updateable": true` in your brokers' catalog.json.
    *
    * @param updateServiceInstanceOptions the {@link UpdateServiceInstanceOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link String}
+   * @return a {@link ServiceCall} with a result of type {@link Resp2079874Root}
    */
-  public ServiceCall<String> updateServiceInstance(UpdateServiceInstanceOptions updateServiceInstanceOptions) {
+  public ServiceCall<Resp2079874Root> updateServiceInstance(UpdateServiceInstanceOptions updateServiceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateServiceInstanceOptions,
       "updateServiceInstanceOptions cannot be null");
     String[] pathSegments = { "v2/service_instances" };
@@ -243,7 +244,7 @@ public class OpenServiceBroker extends BaseService {
     }
     builder.header("Accept", "application/json");
     if (updateServiceInstanceOptions.acceptsIncomplete() != null) {
-      builder.query("accepts_incomplete", updateServiceInstanceOptions.acceptsIncomplete());
+      builder.query("accepts_incomplete", String.valueOf(updateServiceInstanceOptions.acceptsIncomplete()));
     }
     final JsonObject contentJson = new JsonObject();
     if (updateServiceInstanceOptions.context() != null) {
@@ -262,8 +263,8 @@ public class OpenServiceBroker extends BaseService {
       contentJson.addProperty("service_id", updateServiceInstanceOptions.serviceId());
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<String> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<String>() { }.getType());
+    ResponseConverter<Resp2079874Root> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Resp2079874Root>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -275,9 +276,9 @@ public class OpenServiceBroker extends BaseService {
    * are immediately reclaimed for future provisions.
    *
    * @param deleteServiceInstanceOptions the {@link DeleteServiceInstanceOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link String}
+   * @return a {@link ServiceCall} with a result of type {@link Resp2079874Root}
    */
-  public ServiceCall<String> deleteServiceInstance(DeleteServiceInstanceOptions deleteServiceInstanceOptions) {
+  public ServiceCall<Resp2079874Root> deleteServiceInstance(DeleteServiceInstanceOptions deleteServiceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteServiceInstanceOptions,
       "deleteServiceInstanceOptions cannot be null");
     String[] pathSegments = { "v2/service_instances" };
@@ -293,8 +294,8 @@ public class OpenServiceBroker extends BaseService {
     if (deleteServiceInstanceOptions.acceptsIncomplete() != null) {
       builder.query("accepts_incomplete", String.valueOf(deleteServiceInstanceOptions.acceptsIncomplete()));
     }
-    ResponseConverter<String> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<String>() { }.getType());
+    ResponseConverter<Resp2079874Root> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Resp2079874Root>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -311,9 +312,9 @@ public class OpenServiceBroker extends BaseService {
    * stored in the IBM Cloud catalog.
    *
    * @param listCatalogOptions the {@link ListCatalogOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link List}
+   * @return a {@link ServiceCall} with a result of type {@link Resp1874650Root}
    */
-  public ServiceCall<List<Services>> listCatalog(ListCatalogOptions listCatalogOptions) {
+  public ServiceCall<Resp1874650Root> listCatalog(ListCatalogOptions listCatalogOptions) {
     String[] pathSegments = { "v2/catalog" };
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "listCatalog");
@@ -321,8 +322,8 @@ public class OpenServiceBroker extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    ResponseConverter<List<Services>> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<List<Services>>() { }.getType());
+    ResponseConverter<Resp1874650Root> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Resp1874650Root>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -338,9 +339,9 @@ public class OpenServiceBroker extends BaseService {
    * displayed in the IBM Cloud console or the IBM Cloud CLI; the console and CLI will return what was set withn RMC and
    * stored in the IBM Cloud catalog.
    *
-   * @return a {@link ServiceCall} with a result of type {@link List}
+   * @return a {@link ServiceCall} with a result of type {@link Resp1874650Root}
    */
-  public ServiceCall<List<Services>> listCatalog() {
+  public ServiceCall<Resp1874650Root> listCatalog() {
     return listCatalog(null);
   }
 
@@ -357,28 +358,28 @@ public class OpenServiceBroker extends BaseService {
    * will cause the platform to cease polling. The value provided for description will be passed through to the platform
    * API client and can be used to provide additional detail for users about the progress of the operation.
    *
-   * @param listLastOperationOptions the {@link ListLastOperationOptions} containing the options for the call
+   * @param getLastOperationOptions the {@link GetLastOperationOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Resp2079894Root}
    */
-  public ServiceCall<Resp2079894Root> listLastOperation(ListLastOperationOptions listLastOperationOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(listLastOperationOptions,
-      "listLastOperationOptions cannot be null");
+  public ServiceCall<Resp2079894Root> getLastOperation(GetLastOperationOptions getLastOperationOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getLastOperationOptions,
+      "getLastOperationOptions cannot be null");
     String[] pathSegments = { "v2/service_instances", "last_operation" };
-    String[] pathParameters = { listLastOperationOptions.instanceId() };
+    String[] pathParameters = { getLastOperationOptions.instanceId() };
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "listLastOperation");
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "getLastOperation");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listLastOperationOptions.operation() != null) {
-      builder.query("operation", listLastOperationOptions.operation());
+    if (getLastOperationOptions.operation() != null) {
+      builder.query("operation", getLastOperationOptions.operation());
     }
-    if (listLastOperationOptions.planId() != null) {
-      builder.query("plan_id", listLastOperationOptions.planId());
+    if (getLastOperationOptions.planId() != null) {
+      builder.query("plan_id", getLastOperationOptions.planId());
     }
-    if (listLastOperationOptions.serviceId() != null) {
-      builder.query("service_id", listLastOperationOptions.serviceId());
+    if (getLastOperationOptions.serviceId() != null) {
+      builder.query("service_id", getLastOperationOptions.serviceId());
     }
     ResponseConverter<Resp2079894Root> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Resp2079894Root>() { }.getType());
@@ -400,9 +401,9 @@ public class OpenServiceBroker extends BaseService {
    * [binding](https://github.com/openservicebrokerapi/servicebroker/blob/v2.12/spec.md#binding).
    *
    * @param replaceServiceBindingOptions the {@link ReplaceServiceBindingOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link String}
+   * @return a {@link ServiceCall} with a result of type {@link Resp2079876Root}
    */
-  public ServiceCall<String> replaceServiceBinding(ReplaceServiceBindingOptions replaceServiceBindingOptions) {
+  public ServiceCall<Resp2079876Root> replaceServiceBinding(ReplaceServiceBindingOptions replaceServiceBindingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceServiceBindingOptions,
       "replaceServiceBindingOptions cannot be null");
     String[] pathSegments = { "v2/service_instances", "service_bindings" };
@@ -427,8 +428,8 @@ public class OpenServiceBroker extends BaseService {
       contentJson.addProperty("service_id", replaceServiceBindingOptions.serviceId());
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<String> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<String>() { }.getType());
+    ResponseConverter<Resp2079876Root> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Resp2079876Root>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -444,9 +445,9 @@ public class OpenServiceBroker extends BaseService {
    * **Note**: Brokers that do not provide any bindable services or plans do not need to implement this endpoint.
    *
    * @param deleteServiceBindingOptions the {@link DeleteServiceBindingOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link String}
+   * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<String> deleteServiceBinding(DeleteServiceBindingOptions deleteServiceBindingOptions) {
+  public ServiceCall<Void> deleteServiceBinding(DeleteServiceBindingOptions deleteServiceBindingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteServiceBindingOptions,
       "deleteServiceBindingOptions cannot be null");
     String[] pathSegments = { "v2/service_instances", "service_bindings" };
@@ -459,8 +460,7 @@ public class OpenServiceBroker extends BaseService {
     builder.header("Accept", "application/json");
     builder.query("plan_id", deleteServiceBindingOptions.planId());
     builder.query("service_id", deleteServiceBindingOptions.serviceId());
-    ResponseConverter<String> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<String>() { }.getType());
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 

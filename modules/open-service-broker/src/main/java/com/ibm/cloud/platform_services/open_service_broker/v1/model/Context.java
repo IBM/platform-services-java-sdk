@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Contextual data under which the service instance is created.
+ * Platform specific contextual information under which the service instance is to be provisioned.
  */
 public class Context extends GenericModel {
 

@@ -20,8 +20,6 @@ import com.ibm.cloud.platform_services.open_service_broker.v1.utils.TestUtilitie
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,23 +39,27 @@ public class ReplaceServiceBindingOptionsTest {
       .accountId("null")
       .serviceidCrn("null")
       .targetCrn("null")
+      .appGuid("null")
+      .route("null")
       .build();
     assertEquals(bindResourceModel.accountId(), "null");
     assertEquals(bindResourceModel.serviceidCrn(), "null");
     assertEquals(bindResourceModel.targetCrn(), "null");
+    assertEquals(bindResourceModel.appGuid(), "null");
+    assertEquals(bindResourceModel.route(), "null");
 
     ReplaceServiceBindingOptions replaceServiceBindingOptionsModel = new ReplaceServiceBindingOptions.Builder()
       .bindingId("testString")
       .instanceId("testString")
-      .bindResource(new java.util.ArrayList<BindResource>(java.util.Arrays.asList(bindResourceModel)))
-      .parameters(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+      .bindResource(bindResourceModel)
+      .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
       .planId("null")
       .serviceId("null")
       .build();
     assertEquals(replaceServiceBindingOptionsModel.bindingId(), "testString");
     assertEquals(replaceServiceBindingOptionsModel.instanceId(), "testString");
-    assertEquals(replaceServiceBindingOptionsModel.bindResource(), new java.util.ArrayList<BindResource>(java.util.Arrays.asList(bindResourceModel)));
-    assertEquals(replaceServiceBindingOptionsModel.parameters(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
+    assertEquals(replaceServiceBindingOptionsModel.bindResource(), bindResourceModel);
+    assertEquals(replaceServiceBindingOptionsModel.parameters(), new java.util.HashMap<String,String>(){{put("foo", "null"); }});
     assertEquals(replaceServiceBindingOptionsModel.planId(), "null");
     assertEquals(replaceServiceBindingOptionsModel.serviceId(), "null");
   }

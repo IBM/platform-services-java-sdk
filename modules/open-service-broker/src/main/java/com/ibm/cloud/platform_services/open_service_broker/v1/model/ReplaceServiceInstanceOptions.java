@@ -12,8 +12,7 @@
  */
 package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
@@ -23,9 +22,9 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class ReplaceServiceInstanceOptions extends GenericModel {
 
   protected String instanceId;
-  protected List<Context> context;
+  protected Context context;
   protected String organizationGuid;
-  protected List<Parameters> parameters;
+  protected Map<String, String> parameters;
   protected String planId;
   protected String serviceId;
   protected String spaceGuid;
@@ -36,9 +35,9 @@ public class ReplaceServiceInstanceOptions extends GenericModel {
    */
   public static class Builder {
     private String instanceId;
-    private List<Context> context;
+    private Context context;
     private String organizationGuid;
-    private List<Parameters> parameters;
+    private Map<String, String> parameters;
     private String planId;
     private String serviceId;
     private String spaceGuid;
@@ -80,38 +79,6 @@ public class ReplaceServiceInstanceOptions extends GenericModel {
     }
 
     /**
-     * Adds an context to context.
-     *
-     * @param context the new context
-     * @return the ReplaceServiceInstanceOptions builder
-     */
-    public Builder addContext(Context context) {
-      com.ibm.cloud.sdk.core.util.Validator.notNull(context,
-        "context cannot be null");
-      if (this.context == null) {
-        this.context = new ArrayList<Context>();
-      }
-      this.context.add(context);
-      return this;
-    }
-
-    /**
-     * Adds an parameters to parameters.
-     *
-     * @param parameters the new parameters
-     * @return the ReplaceServiceInstanceOptions builder
-     */
-    public Builder addParameters(Parameters parameters) {
-      com.ibm.cloud.sdk.core.util.Validator.notNull(parameters,
-        "parameters cannot be null");
-      if (this.parameters == null) {
-        this.parameters = new ArrayList<Parameters>();
-      }
-      this.parameters.add(parameters);
-      return this;
-    }
-
-    /**
      * Set the instanceId.
      *
      * @param instanceId the instanceId
@@ -124,12 +91,11 @@ public class ReplaceServiceInstanceOptions extends GenericModel {
 
     /**
      * Set the context.
-     * Existing context will be replaced.
      *
      * @param context the context
      * @return the ReplaceServiceInstanceOptions builder
      */
-    public Builder context(List<Context> context) {
+    public Builder context(Context context) {
       this.context = context;
       return this;
     }
@@ -147,12 +113,11 @@ public class ReplaceServiceInstanceOptions extends GenericModel {
 
     /**
      * Set the parameters.
-     * Existing parameters will be replaced.
      *
      * @param parameters the parameters
      * @return the ReplaceServiceInstanceOptions builder
      */
-    public Builder parameters(List<Parameters> parameters) {
+    public Builder parameters(Map<String, String> parameters) {
       this.parameters = parameters;
       return this;
     }
@@ -243,7 +208,7 @@ public class ReplaceServiceInstanceOptions extends GenericModel {
    *
    * @return the context
    */
-  public List<Context> context() {
+  public Context context() {
     return context;
   }
 
@@ -263,11 +228,14 @@ public class ReplaceServiceInstanceOptions extends GenericModel {
   /**
    * Gets the parameters.
    *
-   * A list of plans for this service that must contain at least one plan.
+   * Configuration options for the service instance. An opaque object, controller treats this as a blob. Brokers should
+   * ensure that the client has provided valid configuration parameters and values for the operation. If this field is
+   * not present in the request message, then the broker MUST NOT change the parameters of the instance as a result of
+   * this request.
    *
    * @return the parameters
    */
-  public List<Parameters> parameters() {
+  public Map<String, String> parameters() {
     return parameters;
   }
 

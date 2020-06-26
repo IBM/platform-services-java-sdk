@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Bind a resource.
+ * A JSON object that contains data for platform resources associated with the binding to be created.
  */
 public class BindResource extends GenericModel {
 
@@ -26,6 +26,9 @@ public class BindResource extends GenericModel {
   protected String serviceidCrn;
   @SerializedName("target_crn")
   protected String targetCrn;
+  @SerializedName("app_guid")
+  protected String appGuid;
+  protected String route;
 
   /**
    * Builder.
@@ -34,11 +37,15 @@ public class BindResource extends GenericModel {
     private String accountId;
     private String serviceidCrn;
     private String targetCrn;
+    private String appGuid;
+    private String route;
 
     private Builder(BindResource bindResource) {
       this.accountId = bindResource.accountId;
       this.serviceidCrn = bindResource.serviceidCrn;
       this.targetCrn = bindResource.targetCrn;
+      this.appGuid = bindResource.appGuid;
+      this.route = bindResource.route;
     }
 
     /**
@@ -88,12 +95,36 @@ public class BindResource extends GenericModel {
       this.targetCrn = targetCrn;
       return this;
     }
+
+    /**
+     * Set the appGuid.
+     *
+     * @param appGuid the appGuid
+     * @return the BindResource builder
+     */
+    public Builder appGuid(String appGuid) {
+      this.appGuid = appGuid;
+      return this;
+    }
+
+    /**
+     * Set the route.
+     *
+     * @param route the route
+     * @return the BindResource builder
+     */
+    public Builder route(String route) {
+      this.route = route;
+      return this;
+    }
   }
 
   protected BindResource(Builder builder) {
     accountId = builder.accountId;
     serviceidCrn = builder.serviceidCrn;
     targetCrn = builder.targetCrn;
+    appGuid = builder.appGuid;
+    route = builder.route;
   }
 
   /**
@@ -136,6 +167,28 @@ public class BindResource extends GenericModel {
    */
   public String targetCrn() {
     return targetCrn;
+  }
+
+  /**
+   * Gets the appGuid.
+   *
+   * GUID of an application associated with the binding. For credentials bindings.
+   *
+   * @return the appGuid
+   */
+  public String appGuid() {
+    return appGuid;
+  }
+
+  /**
+   * Gets the route.
+   *
+   * URL of the application to be intermediated. For route services bindings.
+   *
+   * @return the route
+   */
+  public String route() {
+    return route;
   }
 }
 

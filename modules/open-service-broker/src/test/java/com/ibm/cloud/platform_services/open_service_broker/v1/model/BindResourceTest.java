@@ -38,10 +38,14 @@ public class BindResourceTest {
       .accountId("null")
       .serviceidCrn("null")
       .targetCrn("null")
+      .appGuid("null")
+      .route("null")
       .build();
     assertEquals(bindResourceModel.accountId(), "null");
     assertEquals(bindResourceModel.serviceidCrn(), "null");
     assertEquals(bindResourceModel.targetCrn(), "null");
+    assertEquals(bindResourceModel.appGuid(), "null");
+    assertEquals(bindResourceModel.route(), "null");
 
     String json = TestUtilities.serialize(bindResourceModel);
 
@@ -50,5 +54,7 @@ public class BindResourceTest {
     assertEquals(bindResourceModelNew.accountId(), "null");
     assertEquals(bindResourceModelNew.serviceidCrn(), "null");
     assertEquals(bindResourceModelNew.targetCrn(), "null");
+    assertEquals(bindResourceModelNew.appGuid(), "null");
+    assertEquals(bindResourceModelNew.route(), "null");
   }
 }

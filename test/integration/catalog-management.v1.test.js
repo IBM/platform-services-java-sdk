@@ -18,20 +18,23 @@
 'use strict';
 
 const CatalogManagementV1 = require('../../dist/catalog-management/v1');
+const { readExternalSources } = require('ibm-cloud-sdk-core');
 const authHelper = require('../resources/auth-helper.js');
 const util = require('util');
 
 const timeout = 60000;
 const configFile = 'catalog_mgmt.env';
 const describe = authHelper.prepareTests(configFile);
+const timestamp = Math.floor(new Date() / 1000);
 
 describe('CatalogManagementV1_integration', () => {
   jest.setTimeout(timeout);
 
   let service;
+  let gitToken;
 
   const expectedAccount = '67d27f28d43948b2b3bda9138f251a13';
-  const expectedLabel = 'integration-test';
+  const expectedLabel = `integration-test${timestamp}`;
   const expectedShortDesc = 'test';
   const expectedURL = 'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s';
   const expectedOfferingsURL = 'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings';
@@ -42,6 +45,12 @@ describe('CatalogManagementV1_integration', () => {
 
   beforeAll(() => {
     service = CatalogManagementV1.newInstance();
+    expect(service).not.toBeNull();
+
+    const config = readExternalSources(CatalogManagementV1.DEFAULT_SERVICE_NAME);
+    expect(config).not.toBeNull();
+
+    gitToken = config.gitToken;
   });
 
   beforeEach(async done => {
@@ -51,7 +60,9 @@ describe('CatalogManagementV1_integration', () => {
 
     try {
       for (let i = 0; i < resources.length; i++) {
-        await service.deleteCatalog({ 'catalogIdentifier': resources[i].id });
+        if (resources[i].label == expectedLabel) {
+          await service.deleteCatalog({ 'catalogIdentifier': resources[i].id });
+        }
       }
     } catch (err) {
       done();
@@ -67,7 +78,9 @@ describe('CatalogManagementV1_integration', () => {
 
     try {
       for (let i = 0; i < resources.length; i++) {
-        await service.deleteCatalog({ 'catalogIdentifier': resources[i].id });
+        if (resources[i].label == expectedLabel) {
+          await service.deleteCatalog({ 'catalogIdentifier': resources[i].id });
+        }
       }
     } catch (err) {
       done();
@@ -113,12 +126,10 @@ describe('CatalogManagementV1_integration', () => {
 
     const { result } = response || {};
     expect(result).toBeDefined();
-    expect(result.account_filters.length).toEqual(1);
     expect(result.account_filters[0].include_all).toEqual(true);
     expect(result.account_filters[0].category_filters).toEqual(undefined);
     expect(result.account_filters[0].id_filters.include).toEqual(undefined);
     expect(result.account_filters[0].id_filters.exclude).toEqual(undefined);
-    expect(result.catalog_filters).toEqual(undefined);
 
     done();
   });
@@ -127,6 +138,8 @@ describe('CatalogManagementV1_integration', () => {
     let createResponse;
     let listResponse;
     let createResult;
+    let catalogCount = 0;
+    let catalogIndex = -1;
 
     try {
       createResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
@@ -137,6 +150,15 @@ describe('CatalogManagementV1_integration', () => {
       done(err);
     }
 
+    if (listResponse.result.resources != undefined) {
+      for (let i = 0; i < listResponse.result.resources.length; i++) {
+        if (listResponse.result.resources[i].label == expectedLabel) {
+          catalogCount++;
+          catalogIndex = i;
+        }
+      }
+    }
+
     expect(listResponse).toBeDefined();
     expect(listResponse.status).toEqual(200);
 
@@ -144,23 +166,22 @@ describe('CatalogManagementV1_integration', () => {
     expect(listResult).toBeDefined();
     expect(listResult.offset).toEqual(0);
     expect(listResult.limit).toEqual(0);
-    expect(listResult.total_count).toEqual(1);
+    expect(catalogCount).toEqual(1);
     expect(listResult.last).toEqual(undefined);
     expect(listResult.prev).toEqual(undefined);
     expect(listResult.next).toEqual(undefined);
 
     const resources = listResult.resources;
     expect(resources).toBeDefined();
-    expect(resources.length).toEqual(1);
-    expect(resources[0].label).toEqual(expectedLabel);
-    expect(resources[0].short_description).toEqual(expectedShortDesc);
-    expect(resources[0].url).toEqual(util.format(expectedURL, createResult.id));
-    expect(resources[0].offerings_url).toEqual(util.format(expectedOfferingsURL, createResult.id));
-    expect(resources[0].owning_account).toEqual(expectedAccount);
-    expect(resources[0].catalog_filters.include_all).toEqual(false);
-    expect(resources[0].catalog_filters.category_filters).toEqual(undefined);
-    expect(resources[0].catalog_filters.id_filters.include).toEqual(undefined);
-    expect(resources[0].catalog_filters.id_filters.exclude).toEqual(undefined);
+    expect(resources[catalogIndex].label).toEqual(expectedLabel);
+    expect(resources[catalogIndex].short_description).toEqual(expectedShortDesc);
+    expect(resources[catalogIndex].url).toEqual(util.format(expectedURL, createResult.id));
+    expect(resources[catalogIndex].offerings_url).toEqual(util.format(expectedOfferingsURL, createResult.id));
+    expect(resources[catalogIndex].owning_account).toEqual(expectedAccount);
+    expect(resources[catalogIndex].catalog_filters.include_all).toEqual(false);
+    expect(resources[catalogIndex].catalog_filters.category_filters).toEqual(undefined);
+    expect(resources[catalogIndex].catalog_filters.id_filters.include).toEqual(undefined);
+    expect(resources[catalogIndex].catalog_filters.id_filters.exclude).toEqual(undefined);
 
     done();
   });
@@ -612,7 +633,7 @@ describe('CatalogManagementV1_integration', () => {
     try {
       catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL });
+      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -659,9 +680,9 @@ describe('CatalogManagementV1_integration', () => {
     try {
       catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL });
+      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
       offeringResult = offeringResponse.result || {};
-      versionResponse = await service.importOfferingVersion({ 'catalogIdentifier': catalogResult.id, 'offeringId': offeringResult.id, 'zipurl': expectedOfferingZipURLUpdate });
+      versionResponse = await service.importOfferingVersion({ 'catalogIdentifier': catalogResult.id, 'offeringId': offeringResult.id, 'zipurl': expectedOfferingZipURLUpdate, 'xAuthToken': gitToken });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -738,13 +759,14 @@ describe('CatalogManagementV1_integration', () => {
     try {
       catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL });
+      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
       offeringResult = offeringResponse.result || {};
       reloadResponse = await service.reloadOffering({
         'catalogIdentifier': catalogResult.id,
         'offeringId': offeringResult.id,
         'zipurl': expectedOfferingZipURL,
         'targetVersion': expectedOfferingVersion,
+        'xAuthToken': gitToken,
       });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
@@ -789,14 +811,26 @@ describe('CatalogManagementV1_integration', () => {
     const catalogResult = catalogResponse.result || {};
 
     try {
-      await service.reloadOffering({ 'catalogIdentifier': catalogResult.id, 'offeringId': fakeName, 'zipurl': expectedOfferingZipURL, 'targetVersion': expectedOfferingVersion });
+      await service.reloadOffering({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': fakeName,
+        'zipurl': expectedOfferingZipURL,
+        'targetVersion': expectedOfferingVersion,
+        'xAuthToken': gitToken,
+      });
     } catch (err) {
       expect(err.status).toEqual(404);
     }
 
     try {
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
-      await service.reloadOffering({ 'catalogIdentifier': catalogResult.id, 'offeringId': fakeName, 'zipurl': expectedOfferingZipURL, 'targetVersion': expectedOfferingVersion });
+      await service.reloadOffering({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': fakeName,
+        'zipurl': expectedOfferingZipURL,
+        'targetVersion': expectedOfferingVersion,
+        'xAuthToken': gitToken,
+      });
     } catch (err) {
       expect(err.status).toEqual(403);
       done();
@@ -821,7 +855,7 @@ describe('CatalogManagementV1_integration', () => {
     try {
       catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL });
+      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
       offeringResult = offeringResponse.result || {};
       getResponse = await service.getVersion({ 'versionLocId': offeringResult.kinds[0].versions[0].version_locator });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
@@ -873,7 +907,7 @@ describe('CatalogManagementV1_integration', () => {
     try {
       catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL });
+      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
       offeringResult = offeringResponse.result || {};
       getResponse = await service.deleteVersion({ 'versionLocId': offeringResult.kinds[0].versions[0].version_locator });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
@@ -911,7 +945,7 @@ describe('CatalogManagementV1_integration', () => {
     try {
       catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL });
+      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
       offeringResult = offeringResponse.result || {};
       getResponse = await service.getVersionAbout({ 'versionLocId': offeringResult.kinds[0].versions[0].version_locator });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
@@ -957,9 +991,9 @@ describe('CatalogManagementV1_integration', () => {
     try {
       catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL });
+      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
       offeringResult = offeringResponse.result || {};
-      versionResponse = await service.importOfferingVersion({ 'catalogIdentifier': catalogResult.id, 'offeringId': offeringResult.id, 'zipurl': expectedOfferingZipURLUpdate });
+      versionResponse = await service.importOfferingVersion({ 'catalogIdentifier': catalogResult.id, 'offeringId': offeringResult.id, 'zipurl': expectedOfferingZipURLUpdate, 'xAuthToken': gitToken });
       versionResult = versionResponse.result || {};
       updateResponse = await service.getVersionUpdates({ 'versionLocId': offeringResult.kinds[0].versions[0].version_locator });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });

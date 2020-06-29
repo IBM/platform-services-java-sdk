@@ -17,6 +17,7 @@ import static org.testng.Assert.*;
 import static org.testng.AssertJUnit.assertNotNull;
 
 import com.ibm.cloud.sdk.core.service.exception.UnauthorizedException;
+import com.ibm.cloud.sdk.core.util.CredentialUtils;
 import org.testng.annotations.*;
 
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
@@ -27,6 +28,7 @@ import com.ibm.cloud.sdk.core.service.exception.ForbiddenException;
 import com.ibm.cloud.sdk.core.http.Response;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Integration test class for the CatalogManagement service.
@@ -34,8 +36,9 @@ import java.util.List;
 public class CatalogManagementIT extends SdkIntegrationTestBase {
     CatalogManagement service = null;
 
+    private static final long timestamp = System.currentTimeMillis() / 1000L;
+    private static final String expectedLabel = String.format("integration-test-%d", timestamp);
     private static final String expectedAccount = "67d27f28d43948b2b3bda9138f251a13";
-    private static final String expectedLabel = "integration-test";
     private static final String expectedShortDesc = "test";
     private static final String expectedURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s";
     private static final String expectedOfferingsURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings";
@@ -43,6 +46,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     private static final String fakeVersionLocator = "bogus.bogus";
     private static final String expectedOfferingName = "test-offering";
     private static final String expectedOfferingURL  = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
+
+    private String gitToken;
 
     public String getConfigFilename() {
         return "../../catalog_mgmt.env";
@@ -57,6 +62,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         service = CatalogManagement.newInstance();
         assertNotNull(service);
         assertNotNull(service.getServiceUrl());
+
+        Map<String, String> config = CredentialUtils.getServiceProperties(CatalogManagement.DEFAULT_SERVICE_NAME);
+
+        gitToken = config.get("GIT_TOKEN");
+        assertNotNull(gitToken);
     }
 
     @BeforeMethod
@@ -65,9 +75,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
         if (response.getResult().getResources() != null) {
             for (int i = 0; i < response.getResult().getResources().size(); i++) {
-                String id = response.getResult().getResources().get(i).id();
-                DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
-                service.deleteCatalog(deleteOptions).execute();
+                if (response.getResult().getResources().get(i).label().equals(expectedLabel)) {
+                    String id = response.getResult().getResources().get(i).id();
+                    DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
+                    service.deleteCatalog(deleteOptions).execute();
+                }
             }
         }
     }
@@ -78,9 +90,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
         if (response.getResult().getResources() != null) {
             for (int i = 0; i < response.getResult().getResources().size(); i++) {
-                String id = response.getResult().getResources().get(i).id();
-                DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
-                service.deleteCatalog(deleteOptions).execute();
+                if (response.getResult().getResources().get(i).label().equals(expectedLabel)) {
+                    String id = response.getResult().getResources().get(i).id();
+                    DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
+                    service.deleteCatalog(deleteOptions).execute();
+                }
             }
         }
     }
@@ -106,22 +120,32 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
         assertNotNull(result);
         assertEquals(response.getStatusCode(), 200);
-        assertEquals(result.getAccountFilters().size(), 1);
         assertTrue(result.getAccountFilters().get(0).includeAll());
         assertEquals(result.getAccountFilters().get(0).categoryFilters(), null);
         assertEquals(result.getAccountFilters().get(0).idFilters().include(), null);
         assertEquals(result.getAccountFilters().get(0).idFilters().exclude(), null);
-        assertEquals(result.getCatalogFilters(), null);
     }
 
     @Test
     public void testListCatalogs() {
+        int catalogCount = 0;
+        int catalogIndex = -1;
+
         CreateCatalogOptions createOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
         Response<Catalog> createResponse = service.createCatalog(createOptions).execute();
         Catalog createResult = createResponse.getResult();
 
         Response<CatalogSearchResult> listResponse = service.listCatalogs().execute();
         CatalogSearchResult result = listResponse.getResult();
+
+        if (result != null) {
+            for (int i = 0; i < result.getResources().size(); i++) {
+                if (result.getResources().get(i).label().equals(expectedLabel)) {
+                    catalogCount++;
+                    catalogIndex = i;
+                }
+            }
+        }
 
         DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(createResult.id()).build();
         service.deleteCatalog(deleteOptions).execute();
@@ -130,21 +154,20 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(listResponse.getStatusCode(), 200);
         assertEquals(result.getOffset(), Long.valueOf(0));
         assertEquals(result.getLimit(), Long.valueOf(0));
-        assertEquals(result.getTotalCount(), Long.valueOf(1));
+        assertEquals(catalogCount, 1);
         assertEquals(result.getLast(), null);
         assertEquals(result.getPrev(), null);
         assertEquals(result.getNext(), null);
-        assertEquals(result.getResources().size(), 1);
 
-        assertEquals(result.getResources().get(0).label(), expectedLabel);
-        assertEquals(result.getResources().get(0).shortDescription(), expectedShortDesc);
-        assertEquals(result.getResources().get(0).url(), String.format(expectedURL, createResult.id()));
-        assertEquals(result.getResources().get(0).offeringsUrl(), String.format(expectedOfferingsURL, createResult.id()));
-        assertEquals(result.getResources().get(0).owningAccount(), expectedAccount);
-        assertFalse(result.getResources().get(0).catalogFilters().includeAll());
-        assertEquals(result.getResources().get(0).catalogFilters().categoryFilters(), null);
-        assertEquals(result.getResources().get(0).catalogFilters().idFilters().include(), null);
-        assertEquals(result.getResources().get(0).catalogFilters().idFilters().exclude(), null);
+        assertEquals(result.getResources().get(catalogIndex).label(), expectedLabel);
+        assertEquals(result.getResources().get(catalogIndex).shortDescription(), expectedShortDesc);
+        assertEquals(result.getResources().get(catalogIndex).url(), String.format(expectedURL, createResult.id()));
+        assertEquals(result.getResources().get(catalogIndex).offeringsUrl(), String.format(expectedOfferingsURL, createResult.id()));
+        assertEquals(result.getResources().get(catalogIndex).owningAccount(), expectedAccount);
+        assertFalse(result.getResources().get(catalogIndex).catalogFilters().includeAll());
+        assertEquals(result.getResources().get(catalogIndex).catalogFilters().categoryFilters(), null);
+        assertEquals(result.getResources().get(catalogIndex).catalogFilters().idFilters().include(), null);
+        assertEquals(result.getResources().get(catalogIndex).catalogFilters().idFilters().exclude(), null);
     }
 
     @Test
@@ -511,7 +534,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).build();
+        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
         Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
@@ -551,11 +574,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).build();
+        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
         Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
-        ImportOfferingVersionOptions newOfferingOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).zipurl(expectedOfferingZipURLUpdate).build();
+        ImportOfferingVersionOptions newOfferingOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).zipurl(expectedOfferingZipURLUpdate).xAuthToken(gitToken).build();
         Response<Offering> newOfferingResponse = service.importOfferingVersion(newOfferingOptions).execute();
         Offering newOfferingResult = newOfferingResponse.getResult();
 
@@ -588,7 +611,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         Catalog catalogResult = catalogResponse.getResult();
 
         try {
-            ImportOfferingVersionOptions offeringOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).zipurl(expectedOfferingZipURLUpdate).build();
+            ImportOfferingVersionOptions offeringOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).zipurl(expectedOfferingZipURLUpdate).xAuthToken(gitToken).build();
             service.importOfferingVersion(offeringOptions).execute();
             fail("Expected NotFoundException.");
         } catch (NotFoundException e) {
@@ -599,7 +622,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         service.deleteCatalog(deleteOptions).execute();
 
         try {
-            ImportOfferingVersionOptions offeringOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).zipurl(expectedOfferingZipURLUpdate).build();
+            ImportOfferingVersionOptions offeringOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).zipurl(expectedOfferingZipURLUpdate).xAuthToken(gitToken).build();
             service.importOfferingVersion(offeringOptions).execute();
             fail("Expected NotFoundException.");
         } catch (ForbiddenException e) {
@@ -623,11 +646,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).build();
+        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
         Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
-        ReloadOfferingOptions reloadOfferingOptions = new ReloadOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).zipurl(expectedOfferingZipURL).targetVersion(expectedOfferingVersion).build();
+        ReloadOfferingOptions reloadOfferingOptions = new ReloadOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).zipurl(expectedOfferingZipURL).targetVersion(expectedOfferingVersion).xAuthToken(gitToken).build();
         Response<Offering> reloadOfferingResponse = service.reloadOffering(reloadOfferingOptions).execute();
         Offering reloadOfferingResult = reloadOfferingResponse.getResult();
 
@@ -694,7 +717,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).build();
+        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
         Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
@@ -739,7 +762,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).build();
+        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
         Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
@@ -772,7 +795,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).build();
+        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
         Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
@@ -809,11 +832,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
         Catalog catalogResult = catalogResponse.getResult();
 
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).build();
+        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
         Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
         Offering offeringResult = offeringResponse.getResult();
 
-        ImportOfferingVersionOptions newOfferingOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).zipurl(expectedOfferingZipURLUpdate).build();
+        ImportOfferingVersionOptions newOfferingOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).zipurl(expectedOfferingZipURLUpdate).xAuthToken(gitToken).build();
         Response<Offering> newOfferingResponse = service.importOfferingVersion(newOfferingOptions).execute();
         Offering newOfferingResult = newOfferingResponse.getResult();
 

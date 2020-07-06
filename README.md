@@ -54,6 +54,7 @@ Service Name | Artifact Coordinates
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | com.ibm.com:global-tagging:0.8.0
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | com.ibm.com:iam-access-groups:0.8.0
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | com.ibm.com:iam-policy-management:0.8.0
+[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | com.ibm.com:open-service-broker:0.8.0
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | com.ibm.com:resource-manager:0.8.0
 
 ## Prerequisites

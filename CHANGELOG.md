@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/IBM/platform-services-java-sdk/compare/0.8.0...0.9.0) (2020-07-06)
+
+
+### Features
+
+* **Open Service Broker:** add service to project ([#31](https://github.com/IBM/platform-services-java-sdk/issues/31)) ([831788e](https://github.com/IBM/platform-services-java-sdk/commit/831788ec8192d638484a464a3d19522e73491065))
+
 # [0.8.0](https://github.com/IBM/platform-services-java-sdk/compare/0.7.0...0.8.0) (2020-06-18)
 
 

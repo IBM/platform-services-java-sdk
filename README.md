@@ -56,6 +56,7 @@ Service Name | Import Path
 [Global Tagging](https://cloud.ibm.com/apidocs/tagging) | ibm-platform-services/global-tagging/v1
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | ibm-platform-services/iam-access-groups/v2
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | ibm-platform-services/iam-policy-management/v1
+[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | ibm-platform-services/open-service-broker/v1
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ibm-platform-services/resource-manager/v2
 
 ## Prerequisites

@@ -8,15 +8,18 @@ lib/*.js
 # service-name/*.js // UNCOMMENT AND ADD YOUR OWN SERVICE FILES
 case-management/*.js
 catalog-management/*.js
+enterprise-management/*.js
 global-catalog/*.js
 global-search/*.js
 global-tagging/*.js
 iam-access-groups/*.js
 iam-policy-management/*.js
+open-service-broker/*.js
+resource-manager/*.js
+
 resource-controller/*.js
 usage-metering/*.js
 usage-reports/*.js
-resource-manager/*.js
 
 # file holding service credentials
 test/resources/auth.js

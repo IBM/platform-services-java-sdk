@@ -31,7 +31,7 @@ import { getSdkHeaders } from '../lib/common';
 
 class GlobalSearchV2 extends BaseService {
 
-  static DEFAULT_SERVICE_URL: string = 'https://api.global-search-tagging.cloud.ibm.com/';
+  static DEFAULT_SERVICE_URL: string = 'https://api.global-search-tagging.cloud.ibm.com';
   static DEFAULT_SERVICE_NAME: string = 'global_search';
 
   /*************************

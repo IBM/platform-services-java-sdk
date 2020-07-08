@@ -32,7 +32,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://api.global-search-tagging.cloud.ibm.com/',
+  url: 'https://api.global-search-tagging.cloud.ibm.com',
 };
 
 const globalSearch = new GlobalSearchV2(service);
@@ -109,8 +109,8 @@ describe('GlobalSearchV2', () => {
         const searchCursor = 'testString';
         const transactionId = 'testString';
         const accountId = 'testString';
-        const limit = 38;
-        const timeout = 38;
+        const limit = 1;
+        const timeout = 0;
         const sort = ['testString'];
         const params = {
           query: query,

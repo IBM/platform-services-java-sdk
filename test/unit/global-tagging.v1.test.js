@@ -31,7 +31,7 @@ const {
 
 const service = {
   authenticator: new NoAuthAuthenticator(),
-  url: 'https://tags.global-search-tagging.cloud.ibm.com/',
+  url: 'https://tags.global-search-tagging.cloud.ibm.com',
 };
 
 const globalTagging = new GlobalTaggingV1(service);
@@ -106,8 +106,8 @@ describe('GlobalTaggingV1', () => {
         const providers = ['ghost'];
         const attachedTo = 'testString';
         const fullData = true;
-        const offset = 38;
-        const limit = 38;
+        const offset = 0;
+        const limit = 1;
         const orderByName = 'asc';
         const timeout = 38;
         const attachedOnly = true;

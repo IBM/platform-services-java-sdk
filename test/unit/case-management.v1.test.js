@@ -382,7 +382,7 @@ describe('CaseManagementV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateCaseStatus
         const caseNumber = 'testString';
-        const statusPayload = statusPayloadModel;
+        const statusPayload = { action: 'resolve', comment: 'It was actually a mistake', resolution_code: 1 };
         const params = {
           caseNumber: caseNumber,
           statusPayload: statusPayload,
@@ -409,7 +409,7 @@ describe('CaseManagementV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const caseNumber = 'testString';
-        const statusPayload = statusPayloadModel;
+        const statusPayload = { action: 'resolve', comment: 'It was actually a mistake', resolution_code: 1 };
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -455,7 +455,7 @@ describe('CaseManagementV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation addComment
         const caseNumber = 'testString';
-        const comment = 'testString';
+        const comment = 'This is a test comment';
         const params = {
           caseNumber: caseNumber,
           comment: comment,
@@ -482,7 +482,7 @@ describe('CaseManagementV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const caseNumber = 'testString';
-        const comment = 'testString';
+        const comment = 'This is a test comment';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {

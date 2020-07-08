@@ -166,7 +166,7 @@ class GlobalCatalogV1 extends BaseService {
    * See the display name in OverviewUI for a user-readable name.
    * @param {string} params.kind - The type of catalog entry, **service**, **template**, **dashboard**, which determines
    * the type and shape of the object.
-   * @param {OverviewUI} params.overviewUi - Overview is nested in the top level. The key value pair is
+   * @param {JsonObject} params.overviewUi - Overview is nested in the top level. The key value pair is
    * `[_language_]overview_ui`.
    * @param {Image} params.images - Image annotation for this catalog entry. The image is a URL.
    * @param {boolean} params.disabled - Boolean value that determines the global visibility for the catalog entry, and
@@ -315,7 +315,7 @@ class GlobalCatalogV1 extends BaseService {
    * See the display name in OverviewUI for a user-readable name.
    * @param {string} params.kind - The type of catalog entry, **service**, **template**, **dashboard**, which determines
    * the type and shape of the object.
-   * @param {OverviewUI} params.overviewUi - Overview is nested in the top level. The key value pair is
+   * @param {JsonObject} params.overviewUi - Overview is nested in the top level. The key value pair is
    * `[_language_]overview_ui`.
    * @param {Image} params.images - Image annotation for this catalog entry. The image is a URL.
    * @param {boolean} params.disabled - Boolean value that determines the global visibility for the catalog entry, and
@@ -1113,7 +1113,7 @@ namespace GlobalCatalogV1 {
      */
     kind: CreateCatalogEntryConstants.Kind | string;
     /** Overview is nested in the top level. The key value pair is `[_language_]overview_ui`. */
-    overviewUi: OverviewUI;
+    overviewUi: JsonObject;
     /** Image annotation for this catalog entry. The image is a URL. */
     images: Image;
     /** Boolean value that determines the global visibility for the catalog entry, and its children. If it is not
@@ -1197,7 +1197,7 @@ namespace GlobalCatalogV1 {
      */
     kind: UpdateCatalogEntryConstants.Kind | string;
     /** Overview is nested in the top level. The key value pair is `[_language_]overview_ui`. */
-    overviewUi: OverviewUI;
+    overviewUi: JsonObject;
     /** Image annotation for this catalog entry. The image is a URL. */
     images: Image;
     /** Boolean value that determines the global visibility for the catalog entry, and its children. If it is not
@@ -1589,7 +1589,7 @@ namespace GlobalCatalogV1 {
      */
     kind: string;
     /** Overview is nested in the top level. The key value pair is `[_language_]overview_ui`. */
-    overview_ui: OverviewUI;
+    overview_ui: JsonObject;
     /** Image annotation for this catalog entry. The image is a URL. */
     images: Image;
     /** The ID of the parent catalog entry if it exists. */
@@ -1611,11 +1611,17 @@ namespace GlobalCatalogV1 {
     /** Catalog entry's unique ID. It's the same across all catalog instances. */
     id?: string;
     catalog_crn?: any;
+    /** URL to get details about this object. */
     url?: any;
+    /** URL to get details about children of this object. */
     children_url?: any;
+    /** tags to indicate the locations this service is deployable to. */
     geo_tags?: any;
+    /** tags to indicate the type of pricing plans this service supports. */
     pricing_tags?: any;
+    /** Date created. */
     created?: any;
+    /** Date last updated. */
     updated?: any;
   }
 
@@ -1737,12 +1743,6 @@ namespace GlobalCatalogV1 {
     resources?: CatalogEntry[];
   }
 
-  /** Language specific translation of translation properties, like label and description. */
-  export interface I18N {
-    /** I18N accepts additional properties. */
-    [propName: string]: any;
-  }
-
   /** Image annotation for this catalog entry. The image is a URL. */
   export interface Image {
     /** URL for the large, default image. */
@@ -1853,12 +1853,6 @@ namespace GlobalCatalogV1 {
     description: string;
     /** The translated description that will be featured. */
     featured_description?: string;
-  }
-
-  /** Overview is nested in the top level. The key value pair is `[_language_]overview_ui`. */
-  export interface OverviewUI {
-    /** OverviewUI accepts additional properties. */
-    [propName: string]: any;
   }
 
   /** Plan-related metadata. */
@@ -2012,7 +2006,7 @@ namespace GlobalCatalogV1 {
   /** Information related to the UI presentation associated with a catalog entry. */
   export interface UIMetaData {
     /** Language specific translation of translation properties, like label and description. */
-    strings?: I18N;
+    strings?: JsonObject;
     /** UI based URLs. */
     urls?: URLS;
     /** Describes how the embeddable dashboard is rendered. */

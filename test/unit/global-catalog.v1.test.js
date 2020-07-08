@@ -178,11 +178,6 @@ describe('GlobalCatalogV1', () => {
         featured_description: 'testString',
       };
 
-      // OverviewUI
-      const overviewUiModel = {
-        foo: overviewModel,
-      };
-
       // Image
       const imageModel = {
         image: 'testString',
@@ -214,15 +209,6 @@ describe('GlobalCatalogV1', () => {
         Price: 72.5,
       };
 
-      // UIMetaMedia
-      const uiMetaMediaModel = {
-        caption: 'testString',
-        thumbnail_url: 'testString',
-        type: 'testString',
-        URL: 'testString',
-        source: bulletsModel,
-      };
-
       // Amount
       const amountModel = {
         country: 'testString',
@@ -230,15 +216,13 @@ describe('GlobalCatalogV1', () => {
         prices: [priceModel],
       };
 
-      // Strings
-      const stringsModel = {
-        bullets: [bulletsModel],
-        media: [uiMetaMediaModel],
-        not_creatable_msg: 'testString',
-        not_creatable__robot_msg: 'testString',
-        deprecation_warning: 'testString',
-        popup_warning_message: 'testString',
-        instruction: 'testString',
+      // UIMetaMedia
+      const uiMetaMediaModel = {
+        caption: 'testString',
+        thumbnail_url: 'testString',
+        type: 'testString',
+        URL: 'testString',
+        source: bulletsModel,
       };
 
       // Broker
@@ -251,11 +235,6 @@ describe('GlobalCatalogV1', () => {
       const drMetaDataModel = {
         dr: true,
         description: 'testString',
-      };
-
-      // I18N
-      const i18NModel = {
-        foo: stringsModel,
       };
 
       // SourceMetaData
@@ -271,6 +250,17 @@ describe('GlobalCatalogV1', () => {
         deployment_id: 'testString',
         unit: 'testString',
         amount: [amountModel],
+      };
+
+      // Strings
+      const stringsModel = {
+        bullets: [bulletsModel],
+        media: [uiMetaMediaModel],
+        not_creatable_msg: 'testString',
+        not_creatable__robot_msg: 'testString',
+        deprecation_warning: 'testString',
+        popup_warning_message: 'testString',
+        instruction: 'testString',
       };
 
       // URLS
@@ -385,7 +375,7 @@ describe('GlobalCatalogV1', () => {
 
       // UIMetaData
       const uiMetaDataModel = {
-        strings: i18NModel,
+        strings: { 'key1' : stringsModel },
         urls: urlsModel,
         embeddable_dashboard: 'testString',
         embeddable_dashboard_full_width: true,
@@ -422,7 +412,7 @@ describe('GlobalCatalogV1', () => {
         // Construct the params object for operation createCatalogEntry
         const name = 'testString';
         const kind = 'service';
-        const overviewUi = overviewUiModel;
+        const overviewUi = { 'key1' : overviewModel };
         const images = imageModel;
         const disabled = true;
         const tags = ['testString'];
@@ -482,7 +472,7 @@ describe('GlobalCatalogV1', () => {
         // parameters
         const name = 'testString';
         const kind = 'service';
-        const overviewUi = overviewUiModel;
+        const overviewUi = { 'key1' : overviewModel };
         const images = imageModel;
         const disabled = true;
         const tags = ['testString'];
@@ -629,11 +619,6 @@ describe('GlobalCatalogV1', () => {
         featured_description: 'testString',
       };
 
-      // OverviewUI
-      const overviewUiModel = {
-        foo: overviewModel,
-      };
-
       // Image
       const imageModel = {
         image: 'testString',
@@ -665,15 +650,6 @@ describe('GlobalCatalogV1', () => {
         Price: 72.5,
       };
 
-      // UIMetaMedia
-      const uiMetaMediaModel = {
-        caption: 'testString',
-        thumbnail_url: 'testString',
-        type: 'testString',
-        URL: 'testString',
-        source: bulletsModel,
-      };
-
       // Amount
       const amountModel = {
         country: 'testString',
@@ -681,15 +657,13 @@ describe('GlobalCatalogV1', () => {
         prices: [priceModel],
       };
 
-      // Strings
-      const stringsModel = {
-        bullets: [bulletsModel],
-        media: [uiMetaMediaModel],
-        not_creatable_msg: 'testString',
-        not_creatable__robot_msg: 'testString',
-        deprecation_warning: 'testString',
-        popup_warning_message: 'testString',
-        instruction: 'testString',
+      // UIMetaMedia
+      const uiMetaMediaModel = {
+        caption: 'testString',
+        thumbnail_url: 'testString',
+        type: 'testString',
+        URL: 'testString',
+        source: bulletsModel,
       };
 
       // Broker
@@ -702,11 +676,6 @@ describe('GlobalCatalogV1', () => {
       const drMetaDataModel = {
         dr: true,
         description: 'testString',
-      };
-
-      // I18N
-      const i18NModel = {
-        foo: stringsModel,
       };
 
       // SourceMetaData
@@ -722,6 +691,17 @@ describe('GlobalCatalogV1', () => {
         deployment_id: 'testString',
         unit: 'testString',
         amount: [amountModel],
+      };
+
+      // Strings
+      const stringsModel = {
+        bullets: [bulletsModel],
+        media: [uiMetaMediaModel],
+        not_creatable_msg: 'testString',
+        not_creatable__robot_msg: 'testString',
+        deprecation_warning: 'testString',
+        popup_warning_message: 'testString',
+        instruction: 'testString',
       };
 
       // URLS
@@ -836,7 +816,7 @@ describe('GlobalCatalogV1', () => {
 
       // UIMetaData
       const uiMetaDataModel = {
-        strings: i18NModel,
+        strings: { 'key1' : stringsModel },
         urls: urlsModel,
         embeddable_dashboard: 'testString',
         embeddable_dashboard_full_width: true,
@@ -874,7 +854,7 @@ describe('GlobalCatalogV1', () => {
         const id = 'testString';
         const name = 'testString';
         const kind = 'service';
-        const overviewUi = overviewUiModel;
+        const overviewUi = { 'key1' : overviewModel };
         const images = imageModel;
         const disabled = true;
         const tags = ['testString'];
@@ -937,7 +917,7 @@ describe('GlobalCatalogV1', () => {
         const id = 'testString';
         const name = 'testString';
         const kind = 'service';
-        const overviewUi = overviewUiModel;
+        const overviewUi = { 'key1' : overviewModel };
         const images = imageModel;
         const disabled = true;
         const tags = ['testString'];
@@ -1470,7 +1450,7 @@ describe('GlobalCatalogV1', () => {
         const ascending = 'testString';
         const startat = 'testString';
         const offset = 38;
-        const limit = 38;
+        const limit = 200;
         const params = {
           id: id,
           account: account,

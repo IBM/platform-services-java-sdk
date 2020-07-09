@@ -38,21 +38,21 @@ public class SearchOptionsTest {
   public void testSearchOptions() throws Throwable {
     SearchOptions searchOptionsModel = new SearchOptions.Builder()
       .query("testString")
-      .fields(new ArrayList<String>(Arrays.asList("testString")))
+      .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .searchCursor("testString")
       .transactionId("testString")
       .accountId("testString")
-      .limit(Long.valueOf("26"))
-      .timeout(Long.valueOf("26"))
-      .sort(new ArrayList<String>(Arrays.asList("testString")))
+      .limit(Long.valueOf("1"))
+      .timeout(Long.valueOf("0"))
+      .sort(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .build();
     assertEquals(searchOptionsModel.query(), "testString");
-    assertEquals(searchOptionsModel.fields(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(searchOptionsModel.fields(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(searchOptionsModel.searchCursor(), "testString");
     assertEquals(searchOptionsModel.transactionId(), "testString");
     assertEquals(searchOptionsModel.accountId(), "testString");
-    assertEquals(searchOptionsModel.limit(), Long.valueOf("26"));
-    assertEquals(searchOptionsModel.timeout(), Long.valueOf("26"));
-    assertEquals(searchOptionsModel.sort(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(searchOptionsModel.limit(), Long.valueOf("1"));
+    assertEquals(searchOptionsModel.timeout(), Long.valueOf("0"));
+    assertEquals(searchOptionsModel.sort(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
   }
 }

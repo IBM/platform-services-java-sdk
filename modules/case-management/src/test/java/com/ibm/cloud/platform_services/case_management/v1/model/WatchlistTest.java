@@ -45,9 +45,9 @@ public class WatchlistTest {
     assertEquals(userModel.userId(), "abc@ibm.com");
 
     Watchlist watchlistModel = new Watchlist.Builder()
-      .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
+      .watchlist(new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)))
       .build();
-    assertEquals(watchlistModel.watchlist(), new ArrayList<User>(Arrays.asList(userModel)));
+    assertEquals(watchlistModel.watchlist(), new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)));
 
     String json = TestUtilities.serialize(watchlistModel);
 

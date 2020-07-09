@@ -91,8 +91,8 @@ public class CreateCaseOptionsTest {
       .severity(Long.valueOf("1"))
       .eu(casePayloadEuModel)
       .offering(offeringModel)
-      .resources(new ArrayList<ResourcePayload>(Arrays.asList(resourcePayloadModel)))
-      .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
+      .resources(new java.util.ArrayList<ResourcePayload>(java.util.Arrays.asList(resourcePayloadModel)))
+      .watchlist(new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)))
       .invoiceNumber("testString")
       .slaCreditRequest(true)
       .build();
@@ -102,8 +102,8 @@ public class CreateCaseOptionsTest {
     assertEquals(createCaseOptionsModel.severity(), Long.valueOf("1"));
     assertEquals(createCaseOptionsModel.eu(), casePayloadEuModel);
     assertEquals(createCaseOptionsModel.offering(), offeringModel);
-    assertEquals(createCaseOptionsModel.resources(), new ArrayList<ResourcePayload>(Arrays.asList(resourcePayloadModel)));
-    assertEquals(createCaseOptionsModel.watchlist(), new ArrayList<User>(Arrays.asList(userModel)));
+    assertEquals(createCaseOptionsModel.resources(), new java.util.ArrayList<ResourcePayload>(java.util.Arrays.asList(resourcePayloadModel)));
+    assertEquals(createCaseOptionsModel.watchlist(), new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)));
     assertEquals(createCaseOptionsModel.invoiceNumber(), "testString");
     assertEquals(createCaseOptionsModel.slaCreditRequest(), Boolean.valueOf(true));
   }

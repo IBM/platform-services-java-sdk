@@ -53,7 +53,7 @@ public class ListAccessGroupsOptionsTest {
     assertEquals(listAccessGroupsOptionsModel.showFederated(), Boolean.valueOf(true));
     assertEquals(listAccessGroupsOptionsModel.hidePublicAccess(), Boolean.valueOf(true));
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testListAccessGroupsOptionsError() throws Throwable {
     new ListAccessGroupsOptions.Builder().build();

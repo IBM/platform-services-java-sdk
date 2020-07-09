@@ -51,7 +51,7 @@ public class RuleConditionsTest {
     assertEquals(ruleConditionsModelNew.operator(), "testString");
     assertEquals(ruleConditionsModelNew.value(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testRuleConditionsError() throws Throwable {
     new RuleConditions.Builder().build();

@@ -43,7 +43,7 @@ public class DeleteAccessGroupOptionsTest {
     assertEquals(deleteAccessGroupOptionsModel.transactionId(), "testString");
     assertEquals(deleteAccessGroupOptionsModel.force(), Boolean.valueOf(true));
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testDeleteAccessGroupOptionsError() throws Throwable {
     new DeleteAccessGroupOptions.Builder().build();

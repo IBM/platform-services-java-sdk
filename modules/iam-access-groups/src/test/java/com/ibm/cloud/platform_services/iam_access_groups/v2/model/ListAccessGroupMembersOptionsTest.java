@@ -51,7 +51,7 @@ public class ListAccessGroupMembersOptionsTest {
     assertEquals(listAccessGroupMembersOptionsModel.verbose(), Boolean.valueOf(true));
     assertEquals(listAccessGroupMembersOptionsModel.sort(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testListAccessGroupMembersOptionsError() throws Throwable {
     new ListAccessGroupMembersOptions.Builder().build();

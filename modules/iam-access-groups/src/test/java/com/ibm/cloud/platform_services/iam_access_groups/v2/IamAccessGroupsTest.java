@@ -92,7 +92,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
-  
+
   protected MockWebServer server;
   protected IamAccessGroups testService;
 
@@ -581,7 +581,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     // Construct an instance of the AddMembersToAccessGroupOptions model
     AddMembersToAccessGroupOptions addMembersToAccessGroupOptionsModel = new AddMembersToAccessGroupOptions.Builder()
     .accessGroupId("testString")
-    .members(new ArrayList<AddGroupMembersRequestMembersItem>(Arrays.asList(addGroupMembersRequestMembersItemModel)))
+    .members(new java.util.ArrayList<AddGroupMembersRequestMembersItem>(java.util.Arrays.asList(addGroupMembersRequestMembersItemModel)))
     .transactionId("testString")
     .build();
 
@@ -746,7 +746,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     // Construct an instance of the RemoveMembersFromAccessGroupOptions model
     RemoveMembersFromAccessGroupOptions removeMembersFromAccessGroupOptionsModel = new RemoveMembersFromAccessGroupOptions.Builder()
     .accessGroupId("testString")
-    .members(new ArrayList<String>(Arrays.asList("testString")))
+    .members(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .transactionId("testString")
     .build();
 
@@ -853,7 +853,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .accountId("testString")
     .iamId("testString")
     .type("testString")
-    .groups(new ArrayList<String>(Arrays.asList("testString")))
+    .groups(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .transactionId("testString")
     .build();
 
@@ -915,7 +915,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .accessGroupId("testString")
     .expiration(Long.valueOf("26"))
     .realmName("testString")
-    .conditions(new ArrayList<RuleConditions>(Arrays.asList(ruleConditionsModel)))
+    .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
     .name("testString")
     .transactionId("testString")
     .build();
@@ -1082,7 +1082,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .ifMatch("testString")
     .expiration(Long.valueOf("26"))
     .realmName("testString")
-    .conditions(new ArrayList<RuleConditions>(Arrays.asList(ruleConditionsModel)))
+    .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
     .name("testString")
     .transactionId("testString")
     .build();

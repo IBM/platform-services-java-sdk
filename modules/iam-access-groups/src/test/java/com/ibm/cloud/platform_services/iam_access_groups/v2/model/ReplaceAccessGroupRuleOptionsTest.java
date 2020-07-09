@@ -52,7 +52,7 @@ public class ReplaceAccessGroupRuleOptionsTest {
       .ifMatch("testString")
       .expiration(Long.valueOf("26"))
       .realmName("testString")
-      .conditions(new ArrayList<RuleConditions>(Arrays.asList(ruleConditionsModel)))
+      .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
       .name("testString")
       .transactionId("testString")
       .build();
@@ -61,11 +61,11 @@ public class ReplaceAccessGroupRuleOptionsTest {
     assertEquals(replaceAccessGroupRuleOptionsModel.ifMatch(), "testString");
     assertEquals(replaceAccessGroupRuleOptionsModel.expiration(), Long.valueOf("26"));
     assertEquals(replaceAccessGroupRuleOptionsModel.realmName(), "testString");
-    assertEquals(replaceAccessGroupRuleOptionsModel.conditions(), new ArrayList<RuleConditions>(Arrays.asList(ruleConditionsModel)));
+    assertEquals(replaceAccessGroupRuleOptionsModel.conditions(), new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)));
     assertEquals(replaceAccessGroupRuleOptionsModel.name(), "testString");
     assertEquals(replaceAccessGroupRuleOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testReplaceAccessGroupRuleOptionsError() throws Throwable {
     new ReplaceAccessGroupRuleOptions.Builder().build();

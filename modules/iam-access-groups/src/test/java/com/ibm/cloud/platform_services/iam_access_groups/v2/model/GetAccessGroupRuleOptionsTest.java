@@ -43,7 +43,7 @@ public class GetAccessGroupRuleOptionsTest {
     assertEquals(getAccessGroupRuleOptionsModel.ruleId(), "testString");
     assertEquals(getAccessGroupRuleOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetAccessGroupRuleOptionsError() throws Throwable {
     new GetAccessGroupRuleOptions.Builder().build();

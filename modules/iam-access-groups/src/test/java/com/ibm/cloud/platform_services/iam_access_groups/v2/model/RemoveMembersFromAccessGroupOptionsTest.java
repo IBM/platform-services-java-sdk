@@ -38,14 +38,14 @@ public class RemoveMembersFromAccessGroupOptionsTest {
   public void testRemoveMembersFromAccessGroupOptions() throws Throwable {
     RemoveMembersFromAccessGroupOptions removeMembersFromAccessGroupOptionsModel = new RemoveMembersFromAccessGroupOptions.Builder()
       .accessGroupId("testString")
-      .members(new ArrayList<String>(Arrays.asList("testString")))
+      .members(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .transactionId("testString")
       .build();
     assertEquals(removeMembersFromAccessGroupOptionsModel.accessGroupId(), "testString");
-    assertEquals(removeMembersFromAccessGroupOptionsModel.members(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(removeMembersFromAccessGroupOptionsModel.members(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(removeMembersFromAccessGroupOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testRemoveMembersFromAccessGroupOptionsError() throws Throwable {
     new RemoveMembersFromAccessGroupOptions.Builder().build();

@@ -43,7 +43,7 @@ public class RemoveAccessGroupRuleOptionsTest {
     assertEquals(removeAccessGroupRuleOptionsModel.ruleId(), "testString");
     assertEquals(removeAccessGroupRuleOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testRemoveAccessGroupRuleOptionsError() throws Throwable {
     new RemoveAccessGroupRuleOptions.Builder().build();

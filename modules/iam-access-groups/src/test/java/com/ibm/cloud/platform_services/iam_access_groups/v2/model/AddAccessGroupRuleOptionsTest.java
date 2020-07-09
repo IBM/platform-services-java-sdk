@@ -50,18 +50,18 @@ public class AddAccessGroupRuleOptionsTest {
       .accessGroupId("testString")
       .expiration(Long.valueOf("26"))
       .realmName("testString")
-      .conditions(new ArrayList<RuleConditions>(Arrays.asList(ruleConditionsModel)))
+      .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
       .name("testString")
       .transactionId("testString")
       .build();
     assertEquals(addAccessGroupRuleOptionsModel.accessGroupId(), "testString");
     assertEquals(addAccessGroupRuleOptionsModel.expiration(), Long.valueOf("26"));
     assertEquals(addAccessGroupRuleOptionsModel.realmName(), "testString");
-    assertEquals(addAccessGroupRuleOptionsModel.conditions(), new ArrayList<RuleConditions>(Arrays.asList(ruleConditionsModel)));
+    assertEquals(addAccessGroupRuleOptionsModel.conditions(), new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)));
     assertEquals(addAccessGroupRuleOptionsModel.name(), "testString");
     assertEquals(addAccessGroupRuleOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testAddAccessGroupRuleOptionsError() throws Throwable {
     new AddAccessGroupRuleOptions.Builder().build();

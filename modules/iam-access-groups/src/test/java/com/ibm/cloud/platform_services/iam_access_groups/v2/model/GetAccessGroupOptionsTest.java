@@ -43,7 +43,7 @@ public class GetAccessGroupOptionsTest {
     assertEquals(getAccessGroupOptionsModel.transactionId(), "testString");
     assertEquals(getAccessGroupOptionsModel.showFederated(), Boolean.valueOf(true));
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetAccessGroupOptionsError() throws Throwable {
     new GetAccessGroupOptions.Builder().build();

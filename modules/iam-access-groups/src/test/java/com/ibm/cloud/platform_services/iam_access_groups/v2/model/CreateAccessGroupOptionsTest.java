@@ -45,7 +45,7 @@ public class CreateAccessGroupOptionsTest {
     assertEquals(createAccessGroupOptionsModel.description(), "testString");
     assertEquals(createAccessGroupOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testCreateAccessGroupOptionsError() throws Throwable {
     new CreateAccessGroupOptions.Builder().build();

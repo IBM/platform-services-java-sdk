@@ -68,7 +68,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
-  
+
   protected MockWebServer server;
   protected GlobalTagging testService;
 
@@ -114,11 +114,11 @@ public class GlobalTaggingTest extends PowerMockTestCase {
 
     // Construct an instance of the ListTagsOptions model
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
-    .providers(new ArrayList<String>(Arrays.asList("ghost")))
+    .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
     .attachedTo("testString")
     .fullData(true)
-    .offset(Long.valueOf("26"))
-    .limit(Long.valueOf("26"))
+    .offset(Long.valueOf("0"))
+    .limit(Long.valueOf("1"))
     .orderByName("asc")
     .timeout(Long.valueOf("26"))
     .attachedOnly(true)
@@ -139,11 +139,11 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Arrays.asList(query.get("providers")), new ArrayList<String>(Arrays.asList("ghost")));
+    assertEquals(Arrays.asList(query.get("providers")), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
     assertEquals(query.get("attached_to"), "testString");
     assertEquals(Boolean.valueOf(query.get("full_data")), Boolean.valueOf(true));
-    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("0"));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1"));
     assertEquals(query.get("order_by_name"), "asc");
     assertEquals(Long.valueOf(query.get("timeout")), Long.valueOf("26"));
     assertEquals(Boolean.valueOf(query.get("attached_only")), Boolean.valueOf(true));
@@ -207,7 +207,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     // Construct an instance of the DeleteTagOptions model
     DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
     .tagName("testString")
-    .providers(new ArrayList<String>(Arrays.asList("ghost")))
+    .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -225,7 +225,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Arrays.asList(query.get("providers")), new ArrayList<String>(Arrays.asList("ghost")));
+    assertEquals(Arrays.asList(query.get("providers")), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteTagPath);
@@ -264,9 +264,9 @@ public class GlobalTaggingTest extends PowerMockTestCase {
 
     // Construct an instance of the AttachTagOptions model
     AttachTagOptions attachTagOptionsModel = new AttachTagOptions.Builder()
-    .resources(new ArrayList<Resource>(Arrays.asList(resourceModel)))
+    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
     .tagName("testString")
-    .tagNames(new ArrayList<String>(Arrays.asList("testString")))
+    .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -322,9 +322,9 @@ public class GlobalTaggingTest extends PowerMockTestCase {
 
     // Construct an instance of the DetachTagOptions model
     DetachTagOptions detachTagOptionsModel = new DetachTagOptions.Builder()
-    .resources(new ArrayList<Resource>(Arrays.asList(resourceModel)))
+    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
     .tagName("testString")
-    .tagNames(new ArrayList<String>(Arrays.asList("testString")))
+    .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .build();
 
     // Invoke operation with valid options model (positive test)

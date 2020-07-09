@@ -48,7 +48,7 @@ public class ResourceTest {
     assertEquals(resourceModelNew.resourceId(), "testString");
     assertEquals(resourceModelNew.resourceType(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testResourceError() throws Throwable {
     new Resource.Builder().build();

@@ -45,7 +45,7 @@ public class GlobalTagging extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "global_tagging";
 
-  public static final String DEFAULT_SERVICE_URL = "https://tags.global-search-tagging.cloud.ibm.com/";
+  public static final String DEFAULT_SERVICE_URL = "https://tags.global-search-tagging.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `GlobalTagging` client.

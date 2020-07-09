@@ -13,25 +13,50 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 import static org.testng.AssertJUnit.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.nio.charset.StandardCharsets;
-
-import org.testng.annotations.*;
-
-import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.*;
-import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
-import com.ibm.cloud.sdk.core.service.exception.ConflictException;
-import com.ibm.cloud.sdk.core.service.exception.ForbiddenException;
-import com.ibm.cloud.sdk.core.http.Response;
+import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Artifact;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Artifacts;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntry;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.CreateCatalogEntryOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.DeleteArtifactOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.DeleteCatalogEntryOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.EntrySearchResult;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.GetArtifactOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.GetCatalogEntryOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.GetChildObjectsOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.GetPricingOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.GetVisibilityOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Image;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.ListArtifactsOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Overview;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Provider;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.RestoreCatalogEntryOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.UpdateCatalogEntryOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.UpdateVisibilityOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.UploadArtifactOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.Visibility;
+import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
+import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.exception.ConflictException;
+import com.ibm.cloud.sdk.core.service.exception.ForbiddenException;
+import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 
 /**
  * Integration test class for the GlobalCatalog service.
@@ -99,8 +124,8 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
                 .longDescription("longUpdated")
                 .description("descUpdated")
                 .build();
-        OverviewUI overview = new OverviewUI();
-        OverviewUI overviewUpdated = new OverviewUI();
+        Map<String, Overview> overview = new HashMap<>();
+        Map<String, Overview> overviewUpdated = new HashMap<>();
         overview.put("en", overviewValueDefault);
         overviewUpdated.put("en", overviewValueUpdated);
         Image image = new Image.Builder()

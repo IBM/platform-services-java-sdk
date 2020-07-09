@@ -13,6 +13,7 @@
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -38,7 +39,7 @@ public class CatalogEntry extends GenericModel {
   protected String name;
   protected String kind;
   @SerializedName("overview_ui")
-  protected OverviewUI overviewUi;
+  protected Map<String, Overview> overviewUi;
   protected Image images;
   @SerializedName("parent_id")
   protected String parentId;
@@ -92,7 +93,7 @@ public class CatalogEntry extends GenericModel {
    *
    * @return the overviewUi
    */
-  public OverviewUI getOverviewUi() {
+  public Map<String, Overview> getOverviewUi() {
     return overviewUi;
   }
 
@@ -208,6 +209,8 @@ public class CatalogEntry extends GenericModel {
   /**
    * Gets the url.
    *
+   * URL to get details about this object.
+   *
    * @return the url
    */
   public Object getUrl() {
@@ -216,6 +219,8 @@ public class CatalogEntry extends GenericModel {
 
   /**
    * Gets the childrenUrl.
+   *
+   * URL to get details about children of this object.
    *
    * @return the childrenUrl
    */
@@ -226,6 +231,8 @@ public class CatalogEntry extends GenericModel {
   /**
    * Gets the geoTags.
    *
+   * tags to indicate the locations this service is deployable to.
+   *
    * @return the geoTags
    */
   public Object getGeoTags() {
@@ -234,6 +241,8 @@ public class CatalogEntry extends GenericModel {
 
   /**
    * Gets the pricingTags.
+   *
+   * tags to indicate the type of pricing plans this service supports.
    *
    * @return the pricingTags
    */
@@ -244,6 +253,8 @@ public class CatalogEntry extends GenericModel {
   /**
    * Gets the created.
    *
+   * Date created.
+   *
    * @return the created
    */
   public Object getCreated() {
@@ -252,6 +263,8 @@ public class CatalogEntry extends GenericModel {
 
   /**
    * Gets the updated.
+   *
+   * Date last updated.
    *
    * @return the updated
    */

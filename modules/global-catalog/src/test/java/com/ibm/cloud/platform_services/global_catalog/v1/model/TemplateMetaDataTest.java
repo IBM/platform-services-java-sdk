@@ -47,7 +47,7 @@ public class TemplateMetaDataTest {
     assertEquals(sourceMetaDataModel.url(), "testString");
 
     TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
-      .services(new ArrayList<String>(Arrays.asList("testString")))
+      .services(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .defaultMemory(Long.valueOf("26"))
       .startCmd("testString")
       .source(sourceMetaDataModel)
@@ -58,7 +58,7 @@ public class TemplateMetaDataTest {
       .buildpack("testString")
       .environmentVariables(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
       .build();
-    assertEquals(templateMetaDataModel.services(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(templateMetaDataModel.services(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(templateMetaDataModel.defaultMemory(), Long.valueOf("26"));
     assertEquals(templateMetaDataModel.startCmd(), "testString");
     assertEquals(templateMetaDataModel.source(), sourceMetaDataModel);

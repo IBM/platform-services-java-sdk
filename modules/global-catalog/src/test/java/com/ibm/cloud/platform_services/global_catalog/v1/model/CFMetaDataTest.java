@@ -44,7 +44,7 @@ public class CFMetaDataTest {
       .bindable(true)
       .asyncProvisioningSupported(true)
       .asyncUnprovisioningSupported(true)
-      .requires(new ArrayList<String>(Arrays.asList("testString")))
+      .requires(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .planUpdateable(true)
       .state("testString")
       .serviceCheckEnabled(true)
@@ -59,7 +59,7 @@ public class CFMetaDataTest {
     assertEquals(cfMetaDataModel.bindable(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.asyncProvisioningSupported(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.asyncUnprovisioningSupported(), Boolean.valueOf(true));
-    assertEquals(cfMetaDataModel.requires(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(cfMetaDataModel.requires(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(cfMetaDataModel.planUpdateable(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.state(), "testString");
     assertEquals(cfMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));

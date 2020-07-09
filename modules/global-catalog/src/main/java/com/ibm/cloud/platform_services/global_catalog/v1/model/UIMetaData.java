@@ -15,6 +15,7 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -24,7 +25,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class UIMetaData extends GenericModel {
 
-  protected I18N strings;
+  protected Map<String, Strings> strings;
   protected URLS urls;
   @SerializedName("embeddable_dashboard")
   protected String embeddableDashboard;
@@ -52,7 +53,7 @@ public class UIMetaData extends GenericModel {
    * Builder.
    */
   public static class Builder {
-    private I18N strings;
+    private Map<String, Strings> strings;
     private URLS urls;
     private String embeddableDashboard;
     private Boolean embeddableDashboardFullWidth;
@@ -119,7 +120,7 @@ public class UIMetaData extends GenericModel {
      * @param strings the strings
      * @return the UIMetaData builder
      */
-    public Builder strings(I18N strings) {
+    public Builder strings(Map<String, Strings> strings) {
       this.strings = strings;
       return this;
     }
@@ -290,7 +291,7 @@ public class UIMetaData extends GenericModel {
    *
    * @return the strings
    */
-  public I18N strings() {
+  public Map<String, Strings> strings() {
     return strings;
   }
 

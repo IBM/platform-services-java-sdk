@@ -14,6 +14,7 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
@@ -38,7 +39,7 @@ public class UpdateCatalogEntryOptions extends GenericModel {
   protected String id;
   protected String name;
   protected String kind;
-  protected OverviewUI overviewUi;
+  protected Map<String, Overview> overviewUi;
   protected Image images;
   protected Boolean disabled;
   protected List<String> tags;
@@ -57,7 +58,7 @@ public class UpdateCatalogEntryOptions extends GenericModel {
     private String id;
     private String name;
     private String kind;
-    private OverviewUI overviewUi;
+    private Map<String, Overview> overviewUi;
     private Image images;
     private Boolean disabled;
     private List<String> tags;
@@ -104,7 +105,7 @@ public class UpdateCatalogEntryOptions extends GenericModel {
      * @param tags the tags
      * @param provider the provider
      */
-    public Builder(String id, String name, String kind, OverviewUI overviewUi, Image images, Boolean disabled, List<String> tags, Provider provider) {
+    public Builder(String id, String name, String kind, Map<String, Overview> overviewUi, Image images, Boolean disabled, List<String> tags, Provider provider) {
       this.id = id;
       this.name = name;
       this.kind = kind;
@@ -179,7 +180,7 @@ public class UpdateCatalogEntryOptions extends GenericModel {
      * @param overviewUi the overviewUi
      * @return the UpdateCatalogEntryOptions builder
      */
-    public Builder overviewUi(OverviewUI overviewUi) {
+    public Builder overviewUi(Map<String, Overview> overviewUi) {
       this.overviewUi = overviewUi;
       return this;
     }
@@ -380,7 +381,7 @@ public class UpdateCatalogEntryOptions extends GenericModel {
    *
    * @return the overviewUi
    */
-  public OverviewUI overviewUi() {
+  public Map<String, Overview> overviewUi() {
     return overviewUi;
   }
 

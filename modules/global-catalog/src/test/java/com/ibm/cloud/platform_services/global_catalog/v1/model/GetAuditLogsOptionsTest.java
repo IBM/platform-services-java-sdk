@@ -40,14 +40,14 @@ public class GetAuditLogsOptionsTest {
       .ascending("testString")
       .startat("testString")
       .offset(Long.valueOf("26"))
-      .limit(Long.valueOf("26"))
+      .limit(Long.valueOf("200"))
       .build();
     assertEquals(getAuditLogsOptionsModel.id(), "testString");
     assertEquals(getAuditLogsOptionsModel.account(), "testString");
     assertEquals(getAuditLogsOptionsModel.ascending(), "testString");
     assertEquals(getAuditLogsOptionsModel.startat(), "testString");
     assertEquals(getAuditLogsOptionsModel.offset(), Long.valueOf("26"));
-    assertEquals(getAuditLogsOptionsModel.limit(), Long.valueOf("26"));
+    assertEquals(getAuditLogsOptionsModel.limit(), Long.valueOf("200"));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

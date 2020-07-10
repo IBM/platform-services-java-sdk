@@ -14,7 +14,6 @@
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Bullets;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.I18N;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Strings;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaMedia;
@@ -66,25 +65,21 @@ public class UIMetaDataTest {
     assertEquals(uiMetaMediaModel.source(), bulletsModel);
 
     Strings stringsModel = new Strings.Builder()
-      .bullets(new ArrayList<Bullets>(Arrays.asList(bulletsModel)))
-      .media(new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)))
+      .bullets(new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)))
+      .media(new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)))
       .notCreatableMsg("testString")
       .notCreatableRobotMsg("testString")
       .deprecationWarning("testString")
       .popupWarningMessage("testString")
       .instruction("testString")
       .build();
-    assertEquals(stringsModel.bullets(), new ArrayList<Bullets>(Arrays.asList(bulletsModel)));
-    assertEquals(stringsModel.media(), new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)));
+    assertEquals(stringsModel.bullets(), new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)));
+    assertEquals(stringsModel.media(), new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)));
     assertEquals(stringsModel.notCreatableMsg(), "testString");
     assertEquals(stringsModel.notCreatableRobotMsg(), "testString");
     assertEquals(stringsModel.deprecationWarning(), "testString");
     assertEquals(stringsModel.popupWarningMessage(), "testString");
     assertEquals(stringsModel.instruction(), "testString");
-
-    I18N i18NModel = new I18N();
-    i18NModel.put("foo", stringsModel);
-    assertEquals(i18NModel.get("foo"), stringsModel);
 
     URLS urlsModel = new URLS.Builder()
       .docUrl("testString")
@@ -114,11 +109,11 @@ public class UIMetaDataTest {
     assertEquals(urlsModel.apidocsurl(), "testString");
 
     UIMetaData uiMetaDataModel = new UIMetaData.Builder()
-      .strings(i18NModel)
+      .strings(new java.util.HashMap<String,Strings>(){{put("foo", stringsModel); }})
       .urls(urlsModel)
       .embeddableDashboard("testString")
       .embeddableDashboardFullWidth(true)
-      .navigationOrder(new ArrayList<String>(Arrays.asList("testString")))
+      .navigationOrder(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .notCreatable(true)
       .primaryOfferingId("testString")
       .accessibleDuringProvision(true)
@@ -128,11 +123,11 @@ public class UIMetaDataTest {
       .hideLiteMetering(true)
       .noUpgradeNextStep(true)
       .build();
-    assertEquals(uiMetaDataModel.strings(), i18NModel);
+    assertEquals(uiMetaDataModel.strings(), new java.util.HashMap<String,Strings>(){{put("foo", stringsModel); }});
     assertEquals(uiMetaDataModel.urls(), urlsModel);
     assertEquals(uiMetaDataModel.embeddableDashboard(), "testString");
     assertEquals(uiMetaDataModel.embeddableDashboardFullWidth(), Boolean.valueOf(true));
-    assertEquals(uiMetaDataModel.navigationOrder(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(uiMetaDataModel.navigationOrder(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(uiMetaDataModel.notCreatable(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.primaryOfferingId(), "testString");
     assertEquals(uiMetaDataModel.accessibleDuringProvision(), Boolean.valueOf(true));
@@ -146,7 +141,6 @@ public class UIMetaDataTest {
 
     UIMetaData uiMetaDataModelNew = TestUtilities.deserialize(json, UIMetaData.class);
     assertTrue(uiMetaDataModelNew instanceof UIMetaData);
-    assertEquals(uiMetaDataModelNew.strings().toString(), i18NModel.toString());
     assertEquals(uiMetaDataModelNew.urls().toString(), urlsModel.toString());
     assertEquals(uiMetaDataModelNew.embeddableDashboard(), "testString");
     assertEquals(uiMetaDataModelNew.embeddableDashboardFullWidth(), Boolean.valueOf(true));

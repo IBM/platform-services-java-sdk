@@ -43,7 +43,7 @@ public class RemoveMemberFromAllAccessGroupsOptionsTest {
     assertEquals(removeMemberFromAllAccessGroupsOptionsModel.iamId(), "testString");
     assertEquals(removeMemberFromAllAccessGroupsOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testRemoveMemberFromAllAccessGroupsOptionsError() throws Throwable {
     new RemoveMemberFromAllAccessGroupsOptions.Builder().build();

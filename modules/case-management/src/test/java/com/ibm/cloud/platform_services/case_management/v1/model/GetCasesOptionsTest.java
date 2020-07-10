@@ -41,14 +41,14 @@ public class GetCasesOptionsTest {
       .limit(Long.valueOf("26"))
       .search("testString")
       .sort("number")
-      .status(new ArrayList<String>(Arrays.asList("new")))
-      .fields(new ArrayList<String>(Arrays.asList("number")))
+      .status(new java.util.ArrayList<String>(java.util.Arrays.asList("new")))
+      .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("number")))
       .build();
     assertEquals(getCasesOptionsModel.offset(), Long.valueOf("26"));
     assertEquals(getCasesOptionsModel.limit(), Long.valueOf("26"));
     assertEquals(getCasesOptionsModel.search(), "testString");
     assertEquals(getCasesOptionsModel.sort(), "number");
-    assertEquals(getCasesOptionsModel.status(), new ArrayList<String>(Arrays.asList("new")));
-    assertEquals(getCasesOptionsModel.fields(), new ArrayList<String>(Arrays.asList("number")));
+    assertEquals(getCasesOptionsModel.status(), new java.util.ArrayList<String>(java.util.Arrays.asList("new")));
+    assertEquals(getCasesOptionsModel.fields(), new java.util.ArrayList<String>(java.util.Arrays.asList("number")));
   }
 }

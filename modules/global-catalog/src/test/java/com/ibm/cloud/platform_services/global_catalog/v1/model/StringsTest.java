@@ -63,16 +63,16 @@ public class StringsTest {
     assertEquals(uiMetaMediaModel.source(), bulletsModel);
 
     Strings stringsModel = new Strings.Builder()
-      .bullets(new ArrayList<Bullets>(Arrays.asList(bulletsModel)))
-      .media(new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)))
+      .bullets(new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)))
+      .media(new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)))
       .notCreatableMsg("testString")
       .notCreatableRobotMsg("testString")
       .deprecationWarning("testString")
       .popupWarningMessage("testString")
       .instruction("testString")
       .build();
-    assertEquals(stringsModel.bullets(), new ArrayList<Bullets>(Arrays.asList(bulletsModel)));
-    assertEquals(stringsModel.media(), new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)));
+    assertEquals(stringsModel.bullets(), new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)));
+    assertEquals(stringsModel.media(), new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)));
     assertEquals(stringsModel.notCreatableMsg(), "testString");
     assertEquals(stringsModel.notCreatableRobotMsg(), "testString");
     assertEquals(stringsModel.deprecationWarning(), "testString");

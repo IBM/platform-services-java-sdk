@@ -45,15 +45,15 @@ public class AttachTagOptionsTest {
     assertEquals(resourceModel.resourceType(), "testString");
 
     AttachTagOptions attachTagOptionsModel = new AttachTagOptions.Builder()
-      .resources(new ArrayList<Resource>(Arrays.asList(resourceModel)))
+      .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
       .tagName("testString")
-      .tagNames(new ArrayList<String>(Arrays.asList("testString")))
+      .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .build();
-    assertEquals(attachTagOptionsModel.resources(), new ArrayList<Resource>(Arrays.asList(resourceModel)));
+    assertEquals(attachTagOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
     assertEquals(attachTagOptionsModel.tagName(), "testString");
-    assertEquals(attachTagOptionsModel.tagNames(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(attachTagOptionsModel.tagNames(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testAttachTagOptionsError() throws Throwable {
     new AttachTagOptions.Builder().build();

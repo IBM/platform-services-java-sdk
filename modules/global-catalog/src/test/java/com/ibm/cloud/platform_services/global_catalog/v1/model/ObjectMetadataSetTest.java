@@ -21,7 +21,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.CFMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Callbacks;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.DRMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.DeploymentBase;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.I18N;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataSet;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.PlanMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Price;
@@ -74,6 +73,15 @@ public class ObjectMetadataSetTest {
     assertEquals(priceModel.quantityTier(), Long.valueOf("26"));
     assertEquals(priceModel.price(), Double.valueOf("72.5"));
 
+    Amount amountModel = new Amount.Builder()
+      .country("testString")
+      .currency("testString")
+      .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
+      .build();
+    assertEquals(amountModel.country(), "testString");
+    assertEquals(amountModel.currency(), "testString");
+    assertEquals(amountModel.prices(), new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)));
+
     UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
       .caption("testString")
       .thumbnailUrl("testString")
@@ -86,32 +94,6 @@ public class ObjectMetadataSetTest {
     assertEquals(uiMetaMediaModel.type(), "testString");
     assertEquals(uiMetaMediaModel.url(), "testString");
     assertEquals(uiMetaMediaModel.source(), bulletsModel);
-
-    Amount amountModel = new Amount.Builder()
-      .country("testString")
-      .currency("testString")
-      .prices(new ArrayList<Price>(Arrays.asList(priceModel)))
-      .build();
-    assertEquals(amountModel.country(), "testString");
-    assertEquals(amountModel.currency(), "testString");
-    assertEquals(amountModel.prices(), new ArrayList<Price>(Arrays.asList(priceModel)));
-
-    Strings stringsModel = new Strings.Builder()
-      .bullets(new ArrayList<Bullets>(Arrays.asList(bulletsModel)))
-      .media(new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)))
-      .notCreatableMsg("testString")
-      .notCreatableRobotMsg("testString")
-      .deprecationWarning("testString")
-      .popupWarningMessage("testString")
-      .instruction("testString")
-      .build();
-    assertEquals(stringsModel.bullets(), new ArrayList<Bullets>(Arrays.asList(bulletsModel)));
-    assertEquals(stringsModel.media(), new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)));
-    assertEquals(stringsModel.notCreatableMsg(), "testString");
-    assertEquals(stringsModel.notCreatableRobotMsg(), "testString");
-    assertEquals(stringsModel.deprecationWarning(), "testString");
-    assertEquals(stringsModel.popupWarningMessage(), "testString");
-    assertEquals(stringsModel.instruction(), "testString");
 
     Broker brokerModel = new Broker.Builder()
       .name("testString")
@@ -127,10 +109,6 @@ public class ObjectMetadataSetTest {
     assertEquals(drMetaDataModel.dr(), Boolean.valueOf(true));
     assertEquals(drMetaDataModel.description(), "testString");
 
-    I18N i18NModel = new I18N();
-    i18NModel.put("foo", stringsModel);
-    assertEquals(i18NModel.get("foo"), stringsModel);
-
     SourceMetaData sourceMetaDataModel = new SourceMetaData.Builder()
       .path("testString")
       .type("testString")
@@ -144,12 +122,29 @@ public class ObjectMetadataSetTest {
       .planId("testString")
       .deploymentId("testString")
       .unit("testString")
-      .amount(new ArrayList<Amount>(Arrays.asList(amountModel)))
+      .amount(new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)))
       .build();
     assertEquals(startingPriceModel.planId(), "testString");
     assertEquals(startingPriceModel.deploymentId(), "testString");
     assertEquals(startingPriceModel.unit(), "testString");
-    assertEquals(startingPriceModel.amount(), new ArrayList<Amount>(Arrays.asList(amountModel)));
+    assertEquals(startingPriceModel.amount(), new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)));
+
+    Strings stringsModel = new Strings.Builder()
+      .bullets(new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)))
+      .media(new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)))
+      .notCreatableMsg("testString")
+      .notCreatableRobotMsg("testString")
+      .deprecationWarning("testString")
+      .popupWarningMessage("testString")
+      .instruction("testString")
+      .build();
+    assertEquals(stringsModel.bullets(), new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)));
+    assertEquals(stringsModel.media(), new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)));
+    assertEquals(stringsModel.notCreatableMsg(), "testString");
+    assertEquals(stringsModel.notCreatableRobotMsg(), "testString");
+    assertEquals(stringsModel.deprecationWarning(), "testString");
+    assertEquals(stringsModel.popupWarningMessage(), "testString");
+    assertEquals(stringsModel.instruction(), "testString");
 
     URLS urlsModel = new URLS.Builder()
       .docUrl("testString")
@@ -193,7 +188,7 @@ public class ObjectMetadataSetTest {
       .bindable(true)
       .asyncProvisioningSupported(true)
       .asyncUnprovisioningSupported(true)
-      .requires(new ArrayList<String>(Arrays.asList("testString")))
+      .requires(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .planUpdateable(true)
       .state("testString")
       .serviceCheckEnabled(true)
@@ -208,7 +203,7 @@ public class ObjectMetadataSetTest {
     assertEquals(cfMetaDataModel.bindable(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.asyncProvisioningSupported(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.asyncUnprovisioningSupported(), Boolean.valueOf(true));
-    assertEquals(cfMetaDataModel.requires(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(cfMetaDataModel.requires(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(cfMetaDataModel.planUpdateable(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.state(), "testString");
     assertEquals(cfMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));
@@ -304,7 +299,7 @@ public class ObjectMetadataSetTest {
     assertEquals(slaMetaDataModel.dr(), drMetaDataModel);
 
     TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
-      .services(new ArrayList<String>(Arrays.asList("testString")))
+      .services(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .defaultMemory(Long.valueOf("26"))
       .startCmd("testString")
       .source(sourceMetaDataModel)
@@ -315,7 +310,7 @@ public class ObjectMetadataSetTest {
       .buildpack("testString")
       .environmentVariables(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
       .build();
-    assertEquals(templateMetaDataModel.services(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(templateMetaDataModel.services(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(templateMetaDataModel.defaultMemory(), Long.valueOf("26"));
     assertEquals(templateMetaDataModel.startCmd(), "testString");
     assertEquals(templateMetaDataModel.source(), sourceMetaDataModel);
@@ -327,11 +322,11 @@ public class ObjectMetadataSetTest {
     assertEquals(templateMetaDataModel.environmentVariables(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
 
     UIMetaData uiMetaDataModel = new UIMetaData.Builder()
-      .strings(i18NModel)
+      .strings(new java.util.HashMap<String,Strings>(){{put("foo", stringsModel); }})
       .urls(urlsModel)
       .embeddableDashboard("testString")
       .embeddableDashboardFullWidth(true)
-      .navigationOrder(new ArrayList<String>(Arrays.asList("testString")))
+      .navigationOrder(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .notCreatable(true)
       .primaryOfferingId("testString")
       .accessibleDuringProvision(true)
@@ -341,11 +336,11 @@ public class ObjectMetadataSetTest {
       .hideLiteMetering(true)
       .noUpgradeNextStep(true)
       .build();
-    assertEquals(uiMetaDataModel.strings(), i18NModel);
+    assertEquals(uiMetaDataModel.strings(), new java.util.HashMap<String,Strings>(){{put("foo", stringsModel); }});
     assertEquals(uiMetaDataModel.urls(), urlsModel);
     assertEquals(uiMetaDataModel.embeddableDashboard(), "testString");
     assertEquals(uiMetaDataModel.embeddableDashboardFullWidth(), Boolean.valueOf(true));
-    assertEquals(uiMetaDataModel.navigationOrder(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(uiMetaDataModel.navigationOrder(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(uiMetaDataModel.notCreatable(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.primaryOfferingId(), "testString");
     assertEquals(uiMetaDataModel.accessibleDuringProvision(), Boolean.valueOf(true));
@@ -362,7 +357,7 @@ public class ObjectMetadataSetTest {
       .alias(aliasMetaDataModel)
       .template(templateMetaDataModel)
       .ui(uiMetaDataModel)
-      .compliance(new ArrayList<String>(Arrays.asList("testString")))
+      .compliance(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .sla(slaMetaDataModel)
       .callbacks(callbacksModel)
       .originalName("testString")
@@ -377,7 +372,7 @@ public class ObjectMetadataSetTest {
     assertEquals(objectMetadataSetModel.alias(), aliasMetaDataModel);
     assertEquals(objectMetadataSetModel.template(), templateMetaDataModel);
     assertEquals(objectMetadataSetModel.ui(), uiMetaDataModel);
-    assertEquals(objectMetadataSetModel.compliance(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(objectMetadataSetModel.compliance(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(objectMetadataSetModel.sla(), slaMetaDataModel);
     assertEquals(objectMetadataSetModel.callbacks(), callbacksModel);
     assertEquals(objectMetadataSetModel.originalName(), "testString");

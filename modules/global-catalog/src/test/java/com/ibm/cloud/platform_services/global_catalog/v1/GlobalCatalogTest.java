@@ -38,7 +38,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.GetCatalogEntryOp
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetChildObjectsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetPricingOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetVisibilityOptions;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.I18N;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Image;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ListArtifactsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ListCatalogEntriesOptions;
@@ -46,7 +45,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.Message;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Metrics;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataSet;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Overview;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.OverviewUI;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.PlanMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Price;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.PricingGet;
@@ -142,7 +140,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
   @Test
   public void testListCatalogEntriesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"count\": 5, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}]}";
+    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"count\": 5, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {\"mapKey\": {\"display_name\": \"displayName\", \"long_description\": \"longDescription\", \"description\": \"description\", \"featured_description\": \"featuredDescription\"}}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {\"mapKey\": {\"bullets\": [{\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}], \"media\": [{\"caption\": \"caption\", \"thumbnail_url\": \"thumbnailUrl\", \"type\": \"type\", \"URL\": \"url\", \"source\": {\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}}], \"not_creatable_msg\": \"notCreatableMsg\", \"not_creatable__robot_msg\": \"notCreatableRobotMsg\", \"deprecation_warning\": \"deprecationWarning\", \"popup_warning_message\": \"popupWarningMessage\", \"instruction\": \"instruction\"}}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}]}";
     String listCatalogEntriesPath = "/";
 
     server.enqueue(new MockResponse()
@@ -193,7 +191,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
   @Test
   public void testCreateCatalogEntryWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}";
+    String mockResponseBody = "{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {\"mapKey\": {\"display_name\": \"displayName\", \"long_description\": \"longDescription\", \"description\": \"description\", \"featured_description\": \"featuredDescription\"}}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {\"mapKey\": {\"bullets\": [{\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}], \"media\": [{\"caption\": \"caption\", \"thumbnail_url\": \"thumbnailUrl\", \"type\": \"type\", \"URL\": \"url\", \"source\": {\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}}], \"not_creatable_msg\": \"notCreatableMsg\", \"not_creatable__robot_msg\": \"notCreatableRobotMsg\", \"deprecation_warning\": \"deprecationWarning\", \"popup_warning_message\": \"popupWarningMessage\", \"instruction\": \"instruction\"}}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}";
     String createCatalogEntryPath = "/";
 
     server.enqueue(new MockResponse()
@@ -217,6 +215,13 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .price(Double.valueOf("72.5"))
     .build();
 
+    // Construct an instance of the Amount model
+    Amount amountModel = new Amount.Builder()
+    .country("testString")
+    .currency("testString")
+    .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
+    .build();
+
     // Construct an instance of the UIMetaMedia model
     UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
     .caption("testString")
@@ -224,24 +229,6 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .type("testString")
     .url("testString")
     .source(bulletsModel)
-    .build();
-
-    // Construct an instance of the Amount model
-    Amount amountModel = new Amount.Builder()
-    .country("testString")
-    .currency("testString")
-    .prices(new ArrayList<Price>(Arrays.asList(priceModel)))
-    .build();
-
-    // Construct an instance of the Strings model
-    Strings stringsModel = new Strings.Builder()
-    .bullets(new ArrayList<Bullets>(Arrays.asList(bulletsModel)))
-    .media(new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)))
-    .notCreatableMsg("testString")
-    .notCreatableRobotMsg("testString")
-    .deprecationWarning("testString")
-    .popupWarningMessage("testString")
-    .instruction("testString")
     .build();
 
     // Construct an instance of the Broker model
@@ -256,10 +243,6 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .description("testString")
     .build();
 
-    // Construct an instance of the I18N model
-    I18N i18NModel = new I18N();
-    i18NModel.put("foo", stringsModel);
-
     // Construct an instance of the SourceMetaData model
     SourceMetaData sourceMetaDataModel = new SourceMetaData.Builder()
     .path("testString")
@@ -272,7 +255,18 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .planId("testString")
     .deploymentId("testString")
     .unit("testString")
-    .amount(new ArrayList<Amount>(Arrays.asList(amountModel)))
+    .amount(new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)))
+    .build();
+
+    // Construct an instance of the Strings model
+    Strings stringsModel = new Strings.Builder()
+    .bullets(new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)))
+    .media(new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)))
+    .notCreatableMsg("testString")
+    .notCreatableRobotMsg("testString")
+    .deprecationWarning("testString")
+    .popupWarningMessage("testString")
+    .instruction("testString")
     .build();
 
     // Construct an instance of the URLS model
@@ -306,7 +300,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .bindable(true)
     .asyncProvisioningSupported(true)
     .asyncUnprovisioningSupported(true)
-    .requires(new ArrayList<String>(Arrays.asList("testString")))
+    .requires(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .planUpdateable(true)
     .state("testString")
     .serviceCheckEnabled(true)
@@ -342,14 +336,6 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .targetNetwork("testString")
     .build();
 
-    // Construct an instance of the Overview model
-    Overview overviewModel = new Overview.Builder()
-    .displayName("testString")
-    .longDescription("testString")
-    .description("testString")
-    .featuredDescription("testString")
-    .build();
-
     // Construct an instance of the PlanMetaData model
     PlanMetaData planMetaDataModel = new PlanMetaData.Builder()
     .bindable(true)
@@ -381,7 +367,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
 
     // Construct an instance of the TemplateMetaData model
     TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
-    .services(new ArrayList<String>(Arrays.asList("testString")))
+    .services(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .defaultMemory(Long.valueOf("26"))
     .startCmd("testString")
     .source(sourceMetaDataModel)
@@ -395,11 +381,11 @@ public class GlobalCatalogTest extends PowerMockTestCase {
 
     // Construct an instance of the UIMetaData model
     UIMetaData uiMetaDataModel = new UIMetaData.Builder()
-    .strings(i18NModel)
+    .strings(new java.util.HashMap<String,Strings>(){{put("foo", stringsModel); }})
     .urls(urlsModel)
     .embeddableDashboard("testString")
     .embeddableDashboardFullWidth(true)
-    .navigationOrder(new ArrayList<String>(Arrays.asList("testString")))
+    .navigationOrder(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .notCreatable(true)
     .primaryOfferingId("testString")
     .accessibleDuringProvision(true)
@@ -426,7 +412,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .alias(aliasMetaDataModel)
     .template(templateMetaDataModel)
     .ui(uiMetaDataModel)
-    .compliance(new ArrayList<String>(Arrays.asList("testString")))
+    .compliance(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .sla(slaMetaDataModel)
     .callbacks(callbacksModel)
     .originalName("testString")
@@ -436,9 +422,13 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .deployment(deploymentBaseModel)
     .build();
 
-    // Construct an instance of the OverviewUI model
-    OverviewUI overviewUiModel = new OverviewUI();
-    overviewUiModel.put("foo", overviewModel);
+    // Construct an instance of the Overview model
+    Overview overviewModel = new Overview.Builder()
+    .displayName("testString")
+    .longDescription("testString")
+    .description("testString")
+    .featuredDescription("testString")
+    .build();
 
     // Construct an instance of the Provider model
     Provider providerModel = new Provider.Builder()
@@ -453,10 +443,10 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     CreateCatalogEntryOptions createCatalogEntryOptionsModel = new CreateCatalogEntryOptions.Builder()
     .name("testString")
     .kind("service")
-    .overviewUi(overviewUiModel)
+    .overviewUi(new java.util.HashMap<String,Overview>(){{put("foo", overviewModel); }})
     .images(imageModel)
     .disabled(true)
-    .tags(new ArrayList<String>(Arrays.asList("testString")))
+    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .provider(providerModel)
     .id("testString")
     .parentId("testString")
@@ -502,7 +492,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
   @Test
   public void testGetCatalogEntryWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}";
+    String mockResponseBody = "{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {\"mapKey\": {\"display_name\": \"displayName\", \"long_description\": \"longDescription\", \"description\": \"description\", \"featured_description\": \"featuredDescription\"}}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {\"mapKey\": {\"bullets\": [{\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}], \"media\": [{\"caption\": \"caption\", \"thumbnail_url\": \"thumbnailUrl\", \"type\": \"type\", \"URL\": \"url\", \"source\": {\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}}], \"not_creatable_msg\": \"notCreatableMsg\", \"not_creatable__robot_msg\": \"notCreatableRobotMsg\", \"deprecation_warning\": \"deprecationWarning\", \"popup_warning_message\": \"popupWarningMessage\", \"instruction\": \"instruction\"}}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}";
     String getCatalogEntryPath = "/testString";
 
     server.enqueue(new MockResponse()
@@ -562,7 +552,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
   @Test
   public void testUpdateCatalogEntryWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}";
+    String mockResponseBody = "{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {\"mapKey\": {\"display_name\": \"displayName\", \"long_description\": \"longDescription\", \"description\": \"description\", \"featured_description\": \"featuredDescription\"}}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {\"mapKey\": {\"bullets\": [{\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}], \"media\": [{\"caption\": \"caption\", \"thumbnail_url\": \"thumbnailUrl\", \"type\": \"type\", \"URL\": \"url\", \"source\": {\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}}], \"not_creatable_msg\": \"notCreatableMsg\", \"not_creatable__robot_msg\": \"notCreatableRobotMsg\", \"deprecation_warning\": \"deprecationWarning\", \"popup_warning_message\": \"popupWarningMessage\", \"instruction\": \"instruction\"}}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}";
     String updateCatalogEntryPath = "/testString";
 
     server.enqueue(new MockResponse()
@@ -586,6 +576,13 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .price(Double.valueOf("72.5"))
     .build();
 
+    // Construct an instance of the Amount model
+    Amount amountModel = new Amount.Builder()
+    .country("testString")
+    .currency("testString")
+    .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
+    .build();
+
     // Construct an instance of the UIMetaMedia model
     UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
     .caption("testString")
@@ -593,24 +590,6 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .type("testString")
     .url("testString")
     .source(bulletsModel)
-    .build();
-
-    // Construct an instance of the Amount model
-    Amount amountModel = new Amount.Builder()
-    .country("testString")
-    .currency("testString")
-    .prices(new ArrayList<Price>(Arrays.asList(priceModel)))
-    .build();
-
-    // Construct an instance of the Strings model
-    Strings stringsModel = new Strings.Builder()
-    .bullets(new ArrayList<Bullets>(Arrays.asList(bulletsModel)))
-    .media(new ArrayList<UIMetaMedia>(Arrays.asList(uiMetaMediaModel)))
-    .notCreatableMsg("testString")
-    .notCreatableRobotMsg("testString")
-    .deprecationWarning("testString")
-    .popupWarningMessage("testString")
-    .instruction("testString")
     .build();
 
     // Construct an instance of the Broker model
@@ -625,10 +604,6 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .description("testString")
     .build();
 
-    // Construct an instance of the I18N model
-    I18N i18NModel = new I18N();
-    i18NModel.put("foo", stringsModel);
-
     // Construct an instance of the SourceMetaData model
     SourceMetaData sourceMetaDataModel = new SourceMetaData.Builder()
     .path("testString")
@@ -641,7 +616,18 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .planId("testString")
     .deploymentId("testString")
     .unit("testString")
-    .amount(new ArrayList<Amount>(Arrays.asList(amountModel)))
+    .amount(new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)))
+    .build();
+
+    // Construct an instance of the Strings model
+    Strings stringsModel = new Strings.Builder()
+    .bullets(new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)))
+    .media(new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)))
+    .notCreatableMsg("testString")
+    .notCreatableRobotMsg("testString")
+    .deprecationWarning("testString")
+    .popupWarningMessage("testString")
+    .instruction("testString")
     .build();
 
     // Construct an instance of the URLS model
@@ -675,7 +661,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .bindable(true)
     .asyncProvisioningSupported(true)
     .asyncUnprovisioningSupported(true)
-    .requires(new ArrayList<String>(Arrays.asList("testString")))
+    .requires(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .planUpdateable(true)
     .state("testString")
     .serviceCheckEnabled(true)
@@ -711,14 +697,6 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .targetNetwork("testString")
     .build();
 
-    // Construct an instance of the Overview model
-    Overview overviewModel = new Overview.Builder()
-    .displayName("testString")
-    .longDescription("testString")
-    .description("testString")
-    .featuredDescription("testString")
-    .build();
-
     // Construct an instance of the PlanMetaData model
     PlanMetaData planMetaDataModel = new PlanMetaData.Builder()
     .bindable(true)
@@ -750,7 +728,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
 
     // Construct an instance of the TemplateMetaData model
     TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
-    .services(new ArrayList<String>(Arrays.asList("testString")))
+    .services(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .defaultMemory(Long.valueOf("26"))
     .startCmd("testString")
     .source(sourceMetaDataModel)
@@ -764,11 +742,11 @@ public class GlobalCatalogTest extends PowerMockTestCase {
 
     // Construct an instance of the UIMetaData model
     UIMetaData uiMetaDataModel = new UIMetaData.Builder()
-    .strings(i18NModel)
+    .strings(new java.util.HashMap<String,Strings>(){{put("foo", stringsModel); }})
     .urls(urlsModel)
     .embeddableDashboard("testString")
     .embeddableDashboardFullWidth(true)
-    .navigationOrder(new ArrayList<String>(Arrays.asList("testString")))
+    .navigationOrder(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .notCreatable(true)
     .primaryOfferingId("testString")
     .accessibleDuringProvision(true)
@@ -795,7 +773,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .alias(aliasMetaDataModel)
     .template(templateMetaDataModel)
     .ui(uiMetaDataModel)
-    .compliance(new ArrayList<String>(Arrays.asList("testString")))
+    .compliance(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .sla(slaMetaDataModel)
     .callbacks(callbacksModel)
     .originalName("testString")
@@ -805,9 +783,13 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .deployment(deploymentBaseModel)
     .build();
 
-    // Construct an instance of the OverviewUI model
-    OverviewUI overviewUiModel = new OverviewUI();
-    overviewUiModel.put("foo", overviewModel);
+    // Construct an instance of the Overview model
+    Overview overviewModel = new Overview.Builder()
+    .displayName("testString")
+    .longDescription("testString")
+    .description("testString")
+    .featuredDescription("testString")
+    .build();
 
     // Construct an instance of the Provider model
     Provider providerModel = new Provider.Builder()
@@ -823,10 +805,10 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .id("testString")
     .name("testString")
     .kind("service")
-    .overviewUi(overviewUiModel)
+    .overviewUi(new java.util.HashMap<String,Overview>(){{put("foo", overviewModel); }})
     .images(imageModel)
     .disabled(true)
-    .tags(new ArrayList<String>(Arrays.asList("testString")))
+    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .provider(providerModel)
     .parentId("testString")
     .group(true)
@@ -927,7 +909,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
   @Test
   public void testGetChildObjectsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"count\": 5, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}]}";
+    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"count\": 5, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"name\": \"name\", \"kind\": \"service\", \"overview_ui\": {\"mapKey\": {\"display_name\": \"displayName\", \"long_description\": \"longDescription\", \"description\": \"description\", \"featured_description\": \"featuredDescription\"}}, \"images\": {\"image\": \"image\", \"small_image\": \"smallImage\", \"medium_image\": \"mediumImage\", \"feature_image\": \"featureImage\"}, \"parent_id\": \"parentId\", \"disabled\": true, \"tags\": [\"tags\"], \"group\": false, \"provider\": {\"email\": \"email\", \"name\": \"name\", \"contact\": \"contact\", \"support_email\": \"supportEmail\", \"phone\": \"phone\"}, \"active\": true, \"metadata\": {\"rc_compatible\": true, \"service\": {\"type\": \"type\", \"iam_compatible\": false, \"unique_api_key\": true, \"provisionable\": false, \"bindable\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"requires\": [\"requires\"], \"plan_updateable\": true, \"state\": \"state\", \"service_check_enabled\": false, \"test_check_interval\": 17, \"service_key_supported\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"plan\": {\"bindable\": true, \"reservable\": true, \"allow_internal_users\": true, \"async_provisioning_supported\": true, \"async_unprovisioning_supported\": true, \"test_check_interval\": 17, \"single_scope_instance\": \"singleScopeInstance\", \"service_check_enabled\": false, \"cf_guid\": {\"mapKey\": \"inner\"}}, \"alias\": {\"type\": \"type\", \"plan_id\": \"planId\"}, \"template\": {\"services\": [\"services\"], \"default_memory\": 13, \"start_cmd\": \"startCmd\", \"source\": {\"path\": \"path\", \"type\": \"type\", \"url\": \"url\"}, \"runtime_catalog_id\": \"runtimeCatalogId\", \"cf_runtime_id\": \"cfRuntimeId\", \"template_id\": \"templateId\", \"executable_file\": \"executableFile\", \"buildpack\": \"buildpack\", \"environment_variables\": {\"mapKey\": \"inner\"}}, \"ui\": {\"strings\": {\"mapKey\": {\"bullets\": [{\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}], \"media\": [{\"caption\": \"caption\", \"thumbnail_url\": \"thumbnailUrl\", \"type\": \"type\", \"URL\": \"url\", \"source\": {\"title\": \"title\", \"description\": \"description\", \"icon\": \"icon\", \"quantity\": 8}}], \"not_creatable_msg\": \"notCreatableMsg\", \"not_creatable__robot_msg\": \"notCreatableRobotMsg\", \"deprecation_warning\": \"deprecationWarning\", \"popup_warning_message\": \"popupWarningMessage\", \"instruction\": \"instruction\"}}, \"urls\": {\"doc_url\": \"docUrl\", \"instructions_url\": \"instructionsUrl\", \"api_url\": \"apiUrl\", \"create_url\": \"createUrl\", \"sdk_download_url\": \"sdkDownloadUrl\", \"terms_url\": \"termsUrl\", \"custom_create_page_url\": \"customCreatePageUrl\", \"catalog_details_url\": \"catalogDetailsUrl\", \"deprecation_doc_url\": \"deprecationDocUrl\", \"dashboard_url\": \"dashboardUrl\", \"registration_url\": \"registrationUrl\", \"apidocsurl\": \"apidocsurl\"}, \"embeddable_dashboard\": \"embeddableDashboard\", \"embeddable_dashboard_full_width\": true, \"navigation_order\": [\"navigationOrder\"], \"not_creatable\": true, \"primary_offering_id\": \"primaryOfferingId\", \"accessible_during_provision\": false, \"side_by_side_index\": 15, \"end_of_service_time\": \"2019-01-01T12:00:00\", \"hidden\": true, \"hide_lite_metering\": true, \"no_upgrade_next_step\": false}, \"compliance\": [\"compliance\"], \"sla\": {\"terms\": \"terms\", \"tenancy\": \"tenancy\", \"provisioning\": \"provisioning\", \"responsiveness\": \"responsiveness\", \"dr\": {\"dr\": true, \"description\": \"description\"}}, \"callbacks\": {\"controller_url\": \"controllerUrl\", \"broker_url\": \"brokerUrl\", \"broker_proxy_url\": \"brokerProxyUrl\", \"dashboard_url\": \"dashboardUrl\", \"dashboard_data_url\": \"dashboardDataUrl\", \"dashboard_detail_tab_url\": \"dashboardDetailTabUrl\", \"dashboard_detail_tab_ext_url\": \"dashboardDetailTabExtUrl\", \"service_monitor_api\": \"serviceMonitorApi\", \"service_monitor_app\": \"serviceMonitorApp\", \"api_endpoint\": {\"mapKey\": \"inner\"}}, \"original_name\": \"originalName\", \"version\": \"version\", \"other\": {\"mapKey\": \"anyValue\"}, \"pricing\": {\"type\": \"type\", \"origin\": \"origin\", \"starting_price\": {\"plan_id\": \"planId\", \"deployment_id\": \"deploymentId\", \"unit\": \"unit\", \"amount\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}, \"metrics\": [{\"part_ref\": \"partRef\", \"metric_id\": \"metricId\", \"tier_model\": \"tierModel\", \"charge_unit\": \"chargeUnit\", \"charge_unit_name\": \"chargeUnitName\", \"charge_unit_quantity\": \"chargeUnitQuantity\", \"resource_display_name\": \"resourceDisplayName\", \"charge_unit_display_name\": \"chargeUnitDisplayName\", \"usage_cap_qty\": 11, \"display_cap\": 10, \"effective_from\": \"2019-01-01T12:00:00\", \"effective_until\": \"2019-01-01T12:00:00\", \"amounts\": [{\"country\": \"country\", \"currency\": \"currency\", \"prices\": [{\"quantity_tier\": 12, \"Price\": 5}]}]}]}, \"deployment\": {\"location\": \"location\", \"location_url\": \"locationUrl\", \"original_location\": \"originalLocation\", \"target_crn\": \"targetCrn\", \"service_crn\": \"serviceCrn\", \"mccp_id\": \"mccpId\", \"broker\": {\"name\": \"name\", \"guid\": \"guid\"}, \"supports_rc_migration\": false, \"target_network\": \"targetNetwork\"}}, \"id\": \"id\", \"catalog_crn\": \"anyValue\", \"url\": \"anyValue\", \"children_url\": \"anyValue\", \"geo_tags\": \"anyValue\", \"pricing_tags\": \"anyValue\", \"created\": \"anyValue\", \"updated\": \"anyValue\"}]}";
     String getChildObjectsPath = "/testString/testString";
 
     server.enqueue(new MockResponse()
@@ -1230,7 +1212,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .ascending("testString")
     .startat("testString")
     .offset(Long.valueOf("26"))
-    .limit(Long.valueOf("26"))
+    .limit(Long.valueOf("200"))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -1252,7 +1234,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     assertEquals(query.get("ascending"), "testString");
     assertEquals(query.get("startat"), "testString");
     assertEquals(Long.valueOf(query.get("_offset")), Long.valueOf("26"));
-    assertEquals(Long.valueOf(query.get("_limit")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("_limit")), Long.valueOf("200"));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getAuditLogsPath);
@@ -1325,7 +1307,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
   @Test
   public void testGetArtifactWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "Contents of response byte-stream...";
+    String mockResponseBody = "This is a mock binary response.";
     String getArtifactPath = "/testString/artifacts/testString";
 
     server.enqueue(new MockResponse()

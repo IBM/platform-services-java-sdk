@@ -44,7 +44,7 @@ public class GlobalSearch extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "global_search";
 
-  public static final String DEFAULT_SERVICE_URL = "https://api.global-search-tagging.cloud.ibm.com/";
+  public static final String DEFAULT_SERVICE_URL = "https://api.global-search-tagging.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `GlobalSearch` client.

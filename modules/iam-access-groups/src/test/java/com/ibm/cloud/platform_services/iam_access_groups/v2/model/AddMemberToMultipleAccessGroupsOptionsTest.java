@@ -40,16 +40,16 @@ public class AddMemberToMultipleAccessGroupsOptionsTest {
       .accountId("testString")
       .iamId("testString")
       .type("testString")
-      .groups(new ArrayList<String>(Arrays.asList("testString")))
+      .groups(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .transactionId("testString")
       .build();
     assertEquals(addMemberToMultipleAccessGroupsOptionsModel.accountId(), "testString");
     assertEquals(addMemberToMultipleAccessGroupsOptionsModel.iamId(), "testString");
     assertEquals(addMemberToMultipleAccessGroupsOptionsModel.type(), "testString");
-    assertEquals(addMemberToMultipleAccessGroupsOptionsModel.groups(), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(addMemberToMultipleAccessGroupsOptionsModel.groups(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(addMemberToMultipleAccessGroupsOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testAddMemberToMultipleAccessGroupsOptionsError() throws Throwable {
     new AddMemberToMultipleAccessGroupsOptions.Builder().build();

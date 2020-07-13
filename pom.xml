@@ -12,7 +12,7 @@
 
     <properties>
         <!-- This is the version associated with the Java core. -->
-        <sdk-core-version>8.3.0</sdk-core-version>
+        <sdk-core-version>8.4.0</sdk-core-version>
 
         <testng-version>7.1.0</testng-version>
         <okhttp3-version>3.13.1</okhttp3-version>

@@ -51,6 +51,7 @@
         <module>modules/global-tagging</module>
         <module>modules/iam-access-groups</module>
         <module>modules/iam-policy-management</module>
+        <module>modules/open-service-broker</module>
         <module>modules/resource-controller</module>
         <module>modules/resource-manager</module>
 

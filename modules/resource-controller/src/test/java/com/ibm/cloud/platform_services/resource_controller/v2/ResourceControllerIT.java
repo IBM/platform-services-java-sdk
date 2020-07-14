@@ -1121,7 +1121,8 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test47ListReclamationsForAccountId() {
         ListReclamationsOptions options = new ListReclamationsOptions.Builder()
-            .accountId(TEST_ACCOUNT_ID)
+            // .accountId(TEST_ACCOUNT_ID)
+            .resourceInstanceId(testReclaimInstanceGuid) //checking reclamations with instance guid for more test reliability 
             .build();
 
         Response<ReclamationsList> response = service.listReclamations(options)

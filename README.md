@@ -55,6 +55,7 @@ Service Name | Artifact Coordinates
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | com.ibm.com:iam-access-groups:0.9.1
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | com.ibm.com:iam-policy-management:0.9.1
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | com.ibm.com:open-service-broker:0.9.1
+[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | com.ibm.com:resource-controller:0.9.1
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | com.ibm.com:resource-manager:0.9.1
 
 ## Prerequisites

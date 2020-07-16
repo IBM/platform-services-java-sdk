@@ -28,6 +28,7 @@ import java.util.Date;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
@@ -271,6 +272,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertTrue(foundTestPolicy);
     }
 
+    @Ignore
     @Test
     public void testCreateCustomRole() {
 
@@ -299,6 +301,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         testCustomRoleId = result.getId();
     }
 
+    @Ignore
     @Test(dependsOnMethods = {"testCreateCustomRole"})
     public void testGetCustomRole() {
         assertNotNull(testCustomRoleId);
@@ -327,6 +330,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         testCustomRoleEtag = values.get(0);
     }
 
+    @Ignore
     @Test(dependsOnMethods = {"testGetCustomRole"})
     public void testUpdateCustomRole() {
         assertNotNull(testCustomRoleId);
@@ -355,6 +359,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(result.getActions(), testCustomRoleActions);
     }
 
+    @Ignore
     @Test(dependsOnMethods = {"testUpdateCustomRole"})
     public void testListRoles() throws Exception, InterruptedException {
         assertNotNull(testCustomRoleId);

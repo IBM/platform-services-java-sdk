@@ -43,7 +43,7 @@ public class IsMemberOfAccessGroupOptionsTest {
     assertEquals(isMemberOfAccessGroupOptionsModel.iamId(), "testString");
     assertEquals(isMemberOfAccessGroupOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testIsMemberOfAccessGroupOptionsError() throws Throwable {
     new IsMemberOfAccessGroupOptions.Builder().build();

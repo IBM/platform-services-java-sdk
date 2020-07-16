@@ -37,20 +37,20 @@ public class ListTagsOptionsTest {
   @Test
   public void testListTagsOptions() throws Throwable {
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
-      .providers(new ArrayList<String>(Arrays.asList("ghost")))
+      .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
       .attachedTo("testString")
       .fullData(true)
-      .offset(Long.valueOf("26"))
-      .limit(Long.valueOf("26"))
+      .offset(Long.valueOf("0"))
+      .limit(Long.valueOf("1"))
       .orderByName("asc")
       .timeout(Long.valueOf("26"))
       .attachedOnly(true)
       .build();
-    assertEquals(listTagsOptionsModel.providers(), new ArrayList<String>(Arrays.asList("ghost")));
+    assertEquals(listTagsOptionsModel.providers(), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
     assertEquals(listTagsOptionsModel.attachedTo(), "testString");
     assertEquals(listTagsOptionsModel.fullData(), Boolean.valueOf(true));
-    assertEquals(listTagsOptionsModel.offset(), Long.valueOf("26"));
-    assertEquals(listTagsOptionsModel.limit(), Long.valueOf("26"));
+    assertEquals(listTagsOptionsModel.offset(), Long.valueOf("0"));
+    assertEquals(listTagsOptionsModel.limit(), Long.valueOf("1"));
     assertEquals(listTagsOptionsModel.orderByName(), "asc");
     assertEquals(listTagsOptionsModel.timeout(), Long.valueOf("26"));
     assertEquals(listTagsOptionsModel.attachedOnly(), Boolean.valueOf(true));

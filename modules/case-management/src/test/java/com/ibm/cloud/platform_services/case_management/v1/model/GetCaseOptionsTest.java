@@ -38,10 +38,10 @@ public class GetCaseOptionsTest {
   public void testGetCaseOptions() throws Throwable {
     GetCaseOptions getCaseOptionsModel = new GetCaseOptions.Builder()
       .caseNumber("testString")
-      .fields(new ArrayList<String>(Arrays.asList("number")))
+      .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("number")))
       .build();
     assertEquals(getCaseOptionsModel.caseNumber(), "testString");
-    assertEquals(getCaseOptionsModel.fields(), new ArrayList<String>(Arrays.asList("number")));
+    assertEquals(getCaseOptionsModel.fields(), new java.util.ArrayList<String>(java.util.Arrays.asList("number")));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

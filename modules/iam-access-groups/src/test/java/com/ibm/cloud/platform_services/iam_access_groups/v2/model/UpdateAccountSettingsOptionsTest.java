@@ -43,7 +43,7 @@ public class UpdateAccountSettingsOptionsTest {
     assertEquals(updateAccountSettingsOptionsModel.publicAccessEnabled(), Boolean.valueOf(true));
     assertEquals(updateAccountSettingsOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testUpdateAccountSettingsOptionsError() throws Throwable {
     new UpdateAccountSettingsOptions.Builder().build();

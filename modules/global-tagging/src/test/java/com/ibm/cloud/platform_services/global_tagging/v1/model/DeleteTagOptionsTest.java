@@ -38,12 +38,12 @@ public class DeleteTagOptionsTest {
   public void testDeleteTagOptions() throws Throwable {
     DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
       .tagName("testString")
-      .providers(new ArrayList<String>(Arrays.asList("ghost")))
+      .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
       .build();
     assertEquals(deleteTagOptionsModel.tagName(), "testString");
-    assertEquals(deleteTagOptionsModel.providers(), new ArrayList<String>(Arrays.asList("ghost")));
+    assertEquals(deleteTagOptionsModel.providers(), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testDeleteTagOptionsError() throws Throwable {
     new DeleteTagOptions.Builder().build();

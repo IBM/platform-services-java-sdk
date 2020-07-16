@@ -46,10 +46,10 @@ public class RemoveWatchlistOptionsTest {
 
     RemoveWatchlistOptions removeWatchlistOptionsModel = new RemoveWatchlistOptions.Builder()
       .caseNumber("testString")
-      .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
+      .watchlist(new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)))
       .build();
     assertEquals(removeWatchlistOptionsModel.caseNumber(), "testString");
-    assertEquals(removeWatchlistOptionsModel.watchlist(), new ArrayList<User>(Arrays.asList(userModel)));
+    assertEquals(removeWatchlistOptionsModel.watchlist(), new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

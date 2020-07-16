@@ -46,10 +46,10 @@ public class AddWatchlistOptionsTest {
 
     AddWatchlistOptions addWatchlistOptionsModel = new AddWatchlistOptions.Builder()
       .caseNumber("testString")
-      .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
+      .watchlist(new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)))
       .build();
     assertEquals(addWatchlistOptionsModel.caseNumber(), "testString");
-    assertEquals(addWatchlistOptionsModel.watchlist(), new ArrayList<User>(Arrays.asList(userModel)));
+    assertEquals(addWatchlistOptionsModel.watchlist(), new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

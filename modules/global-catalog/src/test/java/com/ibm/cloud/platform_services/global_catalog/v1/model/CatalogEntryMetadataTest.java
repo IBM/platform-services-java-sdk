@@ -23,7 +23,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetad
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataDeployment;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntryMetadataPricing;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.DRMetaData;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.I18N;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Metrics;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.PlanMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Price;

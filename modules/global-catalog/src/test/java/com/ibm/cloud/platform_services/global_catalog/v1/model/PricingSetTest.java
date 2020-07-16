@@ -49,22 +49,22 @@ public class PricingSetTest {
     Amount amountModel = new Amount.Builder()
       .country("testString")
       .currency("testString")
-      .prices(new ArrayList<Price>(Arrays.asList(priceModel)))
+      .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
       .build();
     assertEquals(amountModel.country(), "testString");
     assertEquals(amountModel.currency(), "testString");
-    assertEquals(amountModel.prices(), new ArrayList<Price>(Arrays.asList(priceModel)));
+    assertEquals(amountModel.prices(), new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)));
 
     StartingPrice startingPriceModel = new StartingPrice.Builder()
       .planId("testString")
       .deploymentId("testString")
       .unit("testString")
-      .amount(new ArrayList<Amount>(Arrays.asList(amountModel)))
+      .amount(new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)))
       .build();
     assertEquals(startingPriceModel.planId(), "testString");
     assertEquals(startingPriceModel.deploymentId(), "testString");
     assertEquals(startingPriceModel.unit(), "testString");
-    assertEquals(startingPriceModel.amount(), new ArrayList<Amount>(Arrays.asList(amountModel)));
+    assertEquals(startingPriceModel.amount(), new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)));
 
     PricingSet pricingSetModel = new PricingSet.Builder()
       .type("testString")

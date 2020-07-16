@@ -47,11 +47,11 @@ public class AmountTest {
     Amount amountModel = new Amount.Builder()
       .country("testString")
       .currency("testString")
-      .prices(new ArrayList<Price>(Arrays.asList(priceModel)))
+      .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
       .build();
     assertEquals(amountModel.country(), "testString");
     assertEquals(amountModel.currency(), "testString");
-    assertEquals(amountModel.prices(), new ArrayList<Price>(Arrays.asList(priceModel)));
+    assertEquals(amountModel.prices(), new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)));
 
     String json = TestUtilities.serialize(amountModel);
 

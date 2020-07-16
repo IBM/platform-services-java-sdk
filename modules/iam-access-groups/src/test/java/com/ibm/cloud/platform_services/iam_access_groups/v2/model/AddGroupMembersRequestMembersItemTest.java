@@ -48,7 +48,7 @@ public class AddGroupMembersRequestMembersItemTest {
     assertEquals(addGroupMembersRequestMembersItemModelNew.iamId(), "testString");
     assertEquals(addGroupMembersRequestMembersItemModelNew.type(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testAddGroupMembersRequestMembersItemError() throws Throwable {
     new AddGroupMembersRequestMembersItem.Builder().build();

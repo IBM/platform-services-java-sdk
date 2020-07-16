@@ -59,7 +59,7 @@ public class GlobalSearchTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
-  
+
   protected MockWebServer server;
   protected GlobalSearch testService;
 
@@ -106,13 +106,13 @@ public class GlobalSearchTest extends PowerMockTestCase {
     // Construct an instance of the SearchOptions model
     SearchOptions searchOptionsModel = new SearchOptions.Builder()
     .query("testString")
-    .fields(new ArrayList<String>(Arrays.asList("testString")))
+    .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .searchCursor("testString")
     .transactionId("testString")
     .accountId("testString")
-    .limit(Long.valueOf("26"))
-    .timeout(Long.valueOf("26"))
-    .sort(new ArrayList<String>(Arrays.asList("testString")))
+    .limit(Long.valueOf("1"))
+    .timeout(Long.valueOf("0"))
+    .sort(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -131,9 +131,9 @@ public class GlobalSearchTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(query.get("account_id"), "testString");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
-    assertEquals(Long.valueOf(query.get("timeout")), Long.valueOf("26"));
-    assertEquals(Arrays.asList(query.get("sort")), new ArrayList<String>(Arrays.asList("testString")));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1"));
+    assertEquals(Long.valueOf(query.get("timeout")), Long.valueOf("0"));
+    assertEquals(Arrays.asList(query.get("sort")), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, searchPath);

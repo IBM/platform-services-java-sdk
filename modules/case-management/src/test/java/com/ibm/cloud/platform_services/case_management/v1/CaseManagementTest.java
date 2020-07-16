@@ -134,8 +134,8 @@ public class CaseManagementTest extends PowerMockTestCase {
     .limit(Long.valueOf("26"))
     .search("testString")
     .sort("number")
-    .status(new ArrayList<String>(Arrays.asList("new")))
-    .fields(new ArrayList<String>(Arrays.asList("number")))
+    .status(new java.util.ArrayList<String>(java.util.Arrays.asList("new")))
+    .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("number")))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -157,8 +157,8 @@ public class CaseManagementTest extends PowerMockTestCase {
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
     assertEquals(query.get("search"), "testString");
     assertEquals(query.get("sort"), "number");
-    assertEquals(Arrays.asList(query.get("status")), new ArrayList<String>(Arrays.asList("new")));
-    assertEquals(Arrays.asList(query.get("fields")), new ArrayList<String>(Arrays.asList("number")));
+    assertEquals(Arrays.asList(query.get("status")), new java.util.ArrayList<String>(java.util.Arrays.asList("new")));
+    assertEquals(Arrays.asList(query.get("fields")), new java.util.ArrayList<String>(java.util.Arrays.asList("number")));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getCasesPath);
@@ -219,8 +219,8 @@ public class CaseManagementTest extends PowerMockTestCase {
     .severity(Long.valueOf("1"))
     .eu(casePayloadEuModel)
     .offering(offeringModel)
-    .resources(new ArrayList<ResourcePayload>(Arrays.asList(resourcePayloadModel)))
-    .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
+    .resources(new java.util.ArrayList<ResourcePayload>(java.util.Arrays.asList(resourcePayloadModel)))
+    .watchlist(new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)))
     .invoiceNumber("testString")
     .slaCreditRequest(true)
     .build();
@@ -273,7 +273,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     // Construct an instance of the GetCaseOptions model
     GetCaseOptions getCaseOptionsModel = new GetCaseOptions.Builder()
     .caseNumber("testString")
-    .fields(new ArrayList<String>(Arrays.asList("number")))
+    .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("number")))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -291,7 +291,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Arrays.asList(query.get("fields")), new ArrayList<String>(Arrays.asList("number")));
+    assertEquals(Arrays.asList(query.get("fields")), new java.util.ArrayList<String>(java.util.Arrays.asList("number")));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getCasePath);
@@ -383,7 +383,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     // Construct an instance of the AddCommentOptions model
     AddCommentOptions addCommentOptionsModel = new AddCommentOptions.Builder()
     .caseNumber("testString")
-    .comment("testString")
+    .comment("This is a test comment")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -440,7 +440,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     // Construct an instance of the AddWatchlistOptions model
     AddWatchlistOptions addWatchlistOptionsModel = new AddWatchlistOptions.Builder()
     .caseNumber("testString")
-    .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
+    .watchlist(new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -497,7 +497,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     // Construct an instance of the RemoveWatchlistOptions model
     RemoveWatchlistOptions removeWatchlistOptionsModel = new RemoveWatchlistOptions.Builder()
     .caseNumber("testString")
-    .watchlist(new ArrayList<User>(Arrays.asList(userModel)))
+    .watchlist(new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -640,7 +640,7 @@ public class CaseManagementTest extends PowerMockTestCase {
   @Test
   public void testDownloadFileWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "Contents of response byte-stream...";
+    String mockResponseBody = "This is a mock binary response.";
     String downloadFilePath = "/cases/testString/attachments/testString";
 
     server.enqueue(new MockResponse()

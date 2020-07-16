@@ -47,7 +47,7 @@ public class UpdateAccessGroupOptionsTest {
     assertEquals(updateAccessGroupOptionsModel.description(), "testString");
     assertEquals(updateAccessGroupOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testUpdateAccessGroupOptionsError() throws Throwable {
     new UpdateAccessGroupOptions.Builder().build();

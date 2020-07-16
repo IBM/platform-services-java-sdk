@@ -41,7 +41,7 @@ public class GetAccountSettingsOptionsTest {
     assertEquals(getAccountSettingsOptionsModel.accountId(), "testString");
     assertEquals(getAccountSettingsOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetAccountSettingsOptionsError() throws Throwable {
     new GetAccountSettingsOptions.Builder().build();

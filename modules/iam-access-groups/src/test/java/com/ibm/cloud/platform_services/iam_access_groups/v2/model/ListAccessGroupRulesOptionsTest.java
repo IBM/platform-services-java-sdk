@@ -41,7 +41,7 @@ public class ListAccessGroupRulesOptionsTest {
     assertEquals(listAccessGroupRulesOptionsModel.accessGroupId(), "testString");
     assertEquals(listAccessGroupRulesOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testListAccessGroupRulesOptionsError() throws Throwable {
     new ListAccessGroupRulesOptions.Builder().build();

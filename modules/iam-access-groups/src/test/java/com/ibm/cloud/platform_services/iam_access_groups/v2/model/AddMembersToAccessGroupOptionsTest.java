@@ -46,14 +46,14 @@ public class AddMembersToAccessGroupOptionsTest {
 
     AddMembersToAccessGroupOptions addMembersToAccessGroupOptionsModel = new AddMembersToAccessGroupOptions.Builder()
       .accessGroupId("testString")
-      .members(new ArrayList<AddGroupMembersRequestMembersItem>(Arrays.asList(addGroupMembersRequestMembersItemModel)))
+      .members(new java.util.ArrayList<AddGroupMembersRequestMembersItem>(java.util.Arrays.asList(addGroupMembersRequestMembersItemModel)))
       .transactionId("testString")
       .build();
     assertEquals(addMembersToAccessGroupOptionsModel.accessGroupId(), "testString");
-    assertEquals(addMembersToAccessGroupOptionsModel.members(), new ArrayList<AddGroupMembersRequestMembersItem>(Arrays.asList(addGroupMembersRequestMembersItemModel)));
+    assertEquals(addMembersToAccessGroupOptionsModel.members(), new java.util.ArrayList<AddGroupMembersRequestMembersItem>(java.util.Arrays.asList(addGroupMembersRequestMembersItemModel)));
     assertEquals(addMembersToAccessGroupOptionsModel.transactionId(), "testString");
   }
-  
+
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testAddMembersToAccessGroupOptionsError() throws Throwable {
     new AddMembersToAccessGroupOptions.Builder().build();

@@ -1,3 +1,10 @@
+## [0.9.1](https://github.com/IBM/platform-services-java-sdk/compare/0.9.0...0.9.1) (2020-07-10)
+
+
+### Bug Fixes
+
+* regen services using latest SDK generator and API definitions ([#34](https://github.com/IBM/platform-services-java-sdk/issues/34)) ([4e6680f](https://github.com/IBM/platform-services-java-sdk/commit/4e6680f8a1515beab8c2cfa6d633b1032339c21b))
+
 # [0.9.0](https://github.com/IBM/platform-services-java-sdk/compare/0.8.0...0.9.0) (2020-07-06)
 
 

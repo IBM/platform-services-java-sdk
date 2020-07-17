@@ -1,3 +1,10 @@
+# [0.10.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.9.0...v0.10.0) (2020-07-17)
+
+
+### Features
+
+* **Resource Controller:** add service to project ([#26](https://github.com/IBM/platform-services-node-sdk/issues/26)) ([1579030](https://github.com/IBM/platform-services-node-sdk/commit/1579030f1e62dda3fbd98ea971d3adb6e2816447))
+
 # [0.9.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.8.0...v0.9.0) (2020-07-06)
 
 

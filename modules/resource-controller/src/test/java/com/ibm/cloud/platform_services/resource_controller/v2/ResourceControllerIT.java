@@ -40,8 +40,8 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     private static final String TEST_ACCOUNT_ID = "bc2b2fca0af84354a916dc1de6eee42e";
     private static final String TEST_RESOURCE_GROUP_ID = "13aa3ee48c3b44ddb64c05c79f7ab8ef";
     private static final String TEST_ORG_ID = "d35d4f0e-5076-4c89-9361-2522894b6548";
-    private static final String TEST_SPACE_ID = "336ba5f3-f185-488e-ac8d-02195eebb2f3";
-    private static final String TEST_APP_ID = "bf692181-1f0e-46be-9faf-eb0857f4d1d5";
+    private static final String TEST_SPACE_ID = "aedabf7e-60f0-410c-ae92-5c17aa0ab7d4";
+    private static final String TEST_APP_ID = "da510b99-d78d-4860-8afd-8650ecc5f49d";
     private static final String TEST_REGION_ID1 = "global";
     private static final String TEST_PLAN_ID1 = "a10e4820-3685-11e9-b210-d663bd873d93";
     private static final String TEST_REGION_ID2 = "global";

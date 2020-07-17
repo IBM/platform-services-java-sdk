@@ -17,22 +17,39 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertNotNull;
 
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.*;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
@@ -272,7 +289,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertTrue(foundTestPolicy);
     }
 
-    @Ignore
     @Test
     public void testCreateCustomRole() {
 
@@ -301,7 +317,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         testCustomRoleId = result.getId();
     }
 
-    @Ignore
     @Test(dependsOnMethods = {"testCreateCustomRole"})
     public void testGetCustomRole() {
         assertNotNull(testCustomRoleId);
@@ -330,7 +345,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         testCustomRoleEtag = values.get(0);
     }
 
-    @Ignore
     @Test(dependsOnMethods = {"testGetCustomRole"})
     public void testUpdateCustomRole() {
         assertNotNull(testCustomRoleId);
@@ -359,7 +373,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(result.getActions(), testCustomRoleActions);
     }
 
-    @Ignore
     @Test(dependsOnMethods = {"testUpdateCustomRole"})
     public void testListRoles() throws Exception, InterruptedException {
         assertNotNull(testCustomRoleId);

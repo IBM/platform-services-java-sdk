@@ -13,22 +13,54 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 import static org.testng.AssertJUnit.assertNotNull;
-
-import com.ibm.cloud.sdk.core.service.exception.UnauthorizedException;
-import com.ibm.cloud.sdk.core.util.CredentialUtils;
-import org.testng.annotations.*;
-
-import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.*;
-
-import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
-import com.ibm.cloud.sdk.core.service.exception.ForbiddenException;
-import com.ibm.cloud.sdk.core.http.Response;
 
 import java.util.List;
 import java.util.Map;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Account;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFilters;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Catalog;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogSearchResult;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateCatalogOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteCatalogOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteVersionOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionAboutOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionUpdatesOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingVersionOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseEntitlements;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseProviders;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ListLicenseEntitlementsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOfferingsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Offering;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingSearchResult;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ReloadOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceCatalogOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchLicenseOfferingsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchLicenseVersionsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionUpdateDescriptor;
+import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
+import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.exception.ForbiddenException;
+import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
+import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 /**
  * Integration test class for the CatalogManagement service.
@@ -249,14 +281,13 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(replaceResponse.getStatusCode(), 200);
         assertEquals(replaceResult.label(), expectedLabelUpdated);
         assertEquals(replaceResult.shortDescription(), expectedShortDescUpdated);
-// Temporarily skipping assertions due to test failures
-//        assertEquals(replaceResult.url(), String.format(expectedURL, replaceResult.id()));
-//        assertEquals(replaceResult.offeringsUrl(), String.format(expectedOfferingsURL, replaceResult.id()));
-//        assertEquals(replaceResult.owningAccount(), expectedAccount);
-//        assertTrue(replaceResult.catalogFilters().includeAll());
-//        assertEquals(replaceResult.catalogFilters().categoryFilters(), null);
-//        assertEquals(replaceResult.catalogFilters().idFilters().include(), null);
-//        assertEquals(replaceResult.catalogFilters().idFilters().exclude(), null);
+        assertEquals(replaceResult.url(), String.format(expectedURL, replaceResult.id()));
+        assertEquals(replaceResult.offeringsUrl(), String.format(expectedOfferingsURL, replaceResult.id()));
+        assertEquals(replaceResult.owningAccount(), expectedAccount);
+        assertTrue(replaceResult.catalogFilters().includeAll());
+        assertEquals(replaceResult.catalogFilters().categoryFilters(), null);
+        assertEquals(replaceResult.catalogFilters().idFilters().include(), null);
+        assertEquals(replaceResult.catalogFilters().idFilters().exclude(), null);
     }
 
     @Test

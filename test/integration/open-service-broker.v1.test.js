@@ -170,8 +170,8 @@ describe('OpenServiceBrokerV1_integration', () => {
     expect(response.result).toBeDefined();
 
     const result = response.result;
-    expect(result.active).toBeTruthy();
-    expect(result.enabled).toBeTruthy();
+    expect(result.active).toBeDefined();
+    expect(result.enabled).toBeDefined();
 
     done();
   });
@@ -201,8 +201,8 @@ describe('OpenServiceBrokerV1_integration', () => {
     expect(response.result).toBeDefined();
 
     const result = response.result;
-    expect(result.active).toBeTruthy();
-    expect(result.enabled).toBeTruthy();
+    expect(result.active).toBeDefined();
+    expect(result.enabled).toBeDefined();
 
     done();
   });

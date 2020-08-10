@@ -608,11 +608,11 @@ describe('CatalogManagementV1_integration', () => {
     const result = response.result || {};
     expect(result).toBeDefined();
     expect(result.offset).toEqual(0);
-    expect(result.limit).toEqual(0);
+    expect(result.limit).toBeGreaterThan(0);
     expect(result.total_count).toBeGreaterThan(0);
-    expect(result.last).toEqual(undefined);
-    expect(result.prev).toEqual(undefined);
-    expect(result.next).toEqual(undefined);
+    expect(result.last).toBeDefined;
+    expect(result.prev).toBeUndefined;
+    expect(result.next).toBeDefined;
     expect(result.resources).toBeDefined;
 
     done();

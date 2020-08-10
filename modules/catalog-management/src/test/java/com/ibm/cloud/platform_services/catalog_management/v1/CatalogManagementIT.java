@@ -16,6 +16,7 @@ package com.ibm.cloud.platform_services.catalog_management.v1;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 import static org.testng.AssertJUnit.assertNotNull;
@@ -542,11 +543,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertNotNull(result);
         assertEquals(listResponse.getStatusCode(), 200);
         assertEquals(result.getOffset(), Long.valueOf(0));
-        assertEquals(result.getLimit(), Long.valueOf(0));
+        assertNotEquals(result.getLimit(), Long.valueOf(0));
         assertNotEquals(result.getTotalCount(), 0);
-        assertEquals(result.getLast(), null);
-        assertEquals(result.getPrev(), null);
-        assertEquals(result.getNext(), null);
+        assertNotNull(result.getLast());
+        assertNull(result.getPrev());
+        assertNotNull(result.getNext());
         assertNotEquals(result.getResources().size(), 0);
     }
 

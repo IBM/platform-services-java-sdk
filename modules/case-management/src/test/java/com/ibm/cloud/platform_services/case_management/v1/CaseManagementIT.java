@@ -103,7 +103,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         service.createCase(createCaseOptionsModel).execute();
     }
 
-    @Test (expectedExceptions = {InternalServerErrorException.class})
+    @Test (expectedExceptions = {BadRequestException.class})
     public void testCreateCaseWithEmptySubjectAndDescription() {
 
         OfferingType offeringTypeModel = new OfferingType.Builder()

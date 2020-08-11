@@ -13,6 +13,20 @@
 
 package com.ibm.cloud.platform_services.user_management.v1;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
+
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.platform_services.user_management.v1.model.Attribute;
 import com.ibm.cloud.platform_services.user_management.v1.model.GetUserProfileOptions;
@@ -34,20 +48,6 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
-
-import java.io.InputStream;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
 
 /**
  * Integration test class for the UserManagement service.
@@ -249,8 +249,6 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       // Validate response
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 204);
-
-      Void Result = response.getResult();
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -270,8 +268,6 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       // Validate response
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 204);
-
-      Void Result = response.getResult();
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

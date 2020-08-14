@@ -33,11 +33,21 @@ import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
 import com.ibm.cloud.sdk.core.http.ServiceCall;
 import com.ibm.cloud.sdk.core.security.Authenticator;
+import com.ibm.cloud.sdk.core.security.BearerTokenAuthenticator;
+import okhttp3.ResponseBody;
+import com.ibm.cloud.sdk.core.http.HttpClientSingleton;
+import okhttp3.Call;
+import okhttp3.Request;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
 import java.util.Map;
 import java.util.Map.Entry;
+import com.ibm.cloud.sdk.core.http.HttpHeaders;
+import org.json.JSONObject;
+import java.io.IOException;
+
+
 
 /**
  * Manage the lifecycle of your users using User Management APIs.
@@ -48,7 +58,7 @@ public class UserManagement extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "user_management";
 
-  public static final String DEFAULT_SERVICE_URL = "https://user-management.cloud.ibm.com";
+  public static final String DEFAULT_SERVICE_URL = "https://user-management.test.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `UserManagement` client.
@@ -73,6 +83,46 @@ public class UserManagement extends BaseService {
     service.configureService(serviceName);
     return service;
   }
+
+/**
+    @param serviceName
+    @param token
+    @param defaultIamUrl
+   * @return an instance of the `UserManagement` client using external configuration
+   */
+  public static UserManagement newInstance2(String serviceName, String token, String defaultIamUrl) {
+    System.out.println("*******");
+    String response = generateIamServiceToken(token, defaultIamUrl);
+    JSONObject obj = new JSONObject(response);
+    String userToken = obj.getString("token_type") + " " + obj.getString("access_token");
+    Authenticator authenticator = new BearerTokenAuthenticator(userToken);
+    UserManagement service = new UserManagement(serviceName, authenticator);
+    service.configureService(serviceName);
+    return service;
+  }
+
+  public static String generateIamServiceToken(String token, String defaultIamUrl) {
+        RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(defaultIamUrl
+          + "identity/token?grant_type=password&username=aminttest%2Btemplate_test_owner@mail.test.ibm.com&password=Bluemix1234$&response_type=cloud_iam&bss_account=1aa434630b594b8a88b961a44c9eb2a9", new String[0]));
+        builder.header(HttpHeaders.AUTHORIZATION, token);
+        String tokenData = callIamApi(builder.build());
+        return tokenData;
+    }
+
+  private static String callIamApi(Request request) {
+        String res = null;
+        Call call = HttpClientSingleton.getInstance().createHttpClient().newCall(request);
+        try {
+            okhttp3.Response response = call.execute();
+            final int code = response.code();
+            final ResponseBody body = response.body();
+            res = body.string();
+            body.close();
+            return res;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
   /**
    * Constructs an instance of the `UserManagement` client.

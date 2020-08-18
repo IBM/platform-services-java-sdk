@@ -57,10 +57,11 @@ import org.json.JSONArray;
  */
 public class UserManagementIT extends SdkIntegrationTestBase {
   public UserManagement service = null;
-  public UserManagement inviteService = null;
+  public UserManagement alternateService = null;
   public static Map<String, String> config = null;
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
+  public String userId = null;
   /**
    * This method provides our config filename to the base class.
    */
@@ -76,19 +77,19 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       return;
     }
 
-    service = UserManagement.newInstance();
+    service = UserManagement.newInstance("USERMGMT1");
     assertNotNull(service);
     assertNotNull(service.getServiceUrl());
 
+    alternateService = UserManagement.newInstance("USERMGMT2");
+    assertNotNull(alternateService);
+    assertNotNull(alternateService.getServiceUrl());
+
     // Load up our test-specific config properties.
-    config = CredentialUtils.getServiceProperties(UserManagement.DEFAULT_SERVICE_NAME);
+    config = CredentialUtils.getServiceProperties("USERMGMT1");
     assertNotNull(config);
     assertFalse(config.isEmpty());
     assertEquals(service.getServiceUrl(), config.get("URL"));
-
-    inviteService = UserManagement.newInstance2(UserManagement.DEFAULT_SERVICE_NAME, config.get("IAM_BASIC_AUTH"), config.get("IAM_HOST"));
-    assertNotNull(inviteService);
-    assertNotNull(inviteService.getServiceUrl());
 
     System.out.println("Setup complete.");
   }
@@ -132,11 +133,8 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       Response<UserSettings> response = service.updateUserSettings(updateUserSettingsOptions).execute();
       // Validate response
       assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-
+      assertEquals(response.getStatusCode(), 204);
       UserSettings userSettingsResult = response.getResult();
-
-      assertNotNull(userSettingsResult);
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -188,11 +186,14 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       .value("*")
       .build();
 
+       Attribute[] attributeArray = new Attribute[]{attributeModel, attributeModel2};
+
       Resource resourceModel = new Resource.Builder()
-      .attributes(new java.util.ArrayList<Attribute>(java.util.Arrays.asList(attributeModel)))
+      .attributes(new java.util.ArrayList<Attribute>(java.util.Arrays.asList(attributeArray)))
       .build();
 
       InviteUserIamPolicy inviteUserIamPolicyModel = new InviteUserIamPolicy.Builder()
+      .type("access")
       .roles(new java.util.ArrayList<Role>(java.util.Arrays.asList(roleModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
       .build();
@@ -205,16 +206,18 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       .build();
 
       // Invoke operation
-      Response<UserList> response = inviteService.inviteUsers(inviteUsersOptions).execute();
+      Response<UserList> response = alternateService.inviteUsers(inviteUsersOptions).execute();
       // Validate response
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
 
       UserList userListResult = response.getResult();
 
-      System.out.println(userListResult);
-
       assertNotNull(userListResult);
+
+      List<UserProfile> profile = userListResult.getResources();
+      userId = profile.get(0).getId();
+
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -275,7 +278,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
     try {
       RemoveUsersOptions removeUsersOptions = new RemoveUsersOptions.Builder()
       .accountId("1aa434630b594b8a88b961a44c9eb2a9")
-      .iamId("testString")
+      .iamId(userId)
       .build();
 
       // Invoke operation

@@ -21,7 +21,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  * Invite a user to an IAM policy.
  */
 public class InviteUserIamPolicy extends GenericModel {
-
+  protected String type;
   protected List<Role> roles;
   protected List<Resource> resources;
 
@@ -29,6 +29,7 @@ public class InviteUserIamPolicy extends GenericModel {
    * Builder.
    */
   public static class Builder {
+    private String type;
     private List<Role> roles;
     private List<Resource> resources;
 
@@ -85,6 +86,18 @@ public class InviteUserIamPolicy extends GenericModel {
     }
 
     /**
+     * Set the type.
+     * Existing resources will be replaced.
+     *
+     * @param type the type
+     * @return the InviteUserIamPolicy builder
+     */
+    public Builder type(String type) {
+      this.type = type;
+      return this;
+    }
+
+    /**
      * Set the roles.
      * Existing roles will be replaced.
      *
@@ -110,6 +123,7 @@ public class InviteUserIamPolicy extends GenericModel {
   }
 
   protected InviteUserIamPolicy(Builder builder) {
+    type = builder.type;
     roles = builder.roles;
     resources = builder.resources;
   }
@@ -143,6 +157,17 @@ public class InviteUserIamPolicy extends GenericModel {
    */
   public List<Resource> resources() {
     return resources;
+  }
+
+  /**
+   * Gets the type.
+   *
+   * type
+   *
+   * @return the type
+   */
+  public String type() {
+    return type;
   }
 }
 

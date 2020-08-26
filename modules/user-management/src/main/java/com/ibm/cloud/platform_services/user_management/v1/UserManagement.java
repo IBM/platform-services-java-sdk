@@ -48,7 +48,7 @@ public class UserManagement extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "user_management";
 
-  public static final String DEFAULT_SERVICE_URL = "https://user-management.test.cloud.ibm.com";
+  public static final String DEFAULT_SERVICE_URL = "https://user-management.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `UserManagement` client.

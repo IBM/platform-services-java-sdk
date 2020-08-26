@@ -48,21 +48,26 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import org.json.JSONObject;
+import org.json.JSONArray;
+
 
 /**
  * Integration test class for the UserManagement service.
  */
 public class UserManagementIT extends SdkIntegrationTestBase {
   public UserManagement service = null;
+  public UserManagement alternateService = null;
   public static Map<String, String> config = null;
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
+  public String userId = null;
   /**
    * This method provides our config filename to the base class.
    */
 
   public String getConfigFilename() {
-    return "../../user_management_v1.env";
+    return "../../user_management.env";
   }
 
   @BeforeClass
@@ -72,12 +77,16 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       return;
     }
 
-    service = UserManagement.newInstance();
+    service = UserManagement.newInstance("USERMGMT1");
     assertNotNull(service);
     assertNotNull(service.getServiceUrl());
 
+    alternateService = UserManagement.newInstance("USERMGMT2");
+    assertNotNull(alternateService);
+    assertNotNull(alternateService.getServiceUrl());
+
     // Load up our test-specific config properties.
-    config = CredentialUtils.getServiceProperties(UserManagement.DEFAULT_SERVICE_NAME);
+    config = CredentialUtils.getServiceProperties("USERMGMT1");
     assertNotNull(config);
     assertFalse(config.isEmpty());
     assertEquals(service.getServiceUrl(), config.get("URL"));
@@ -89,8 +98,8 @@ public class UserManagementIT extends SdkIntegrationTestBase {
   public void testGetUserSettings() throws Exception {
     try {
       GetUserSettingsOptions getUserSettingsOptions = new GetUserSettingsOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
+      .accountId("1aa434630b594b8a88b961a44c9eb2a9")
+      .iamId("IBMid-550008BJPR")
       .build();
 
       // Invoke operation
@@ -112,8 +121,8 @@ public class UserManagementIT extends SdkIntegrationTestBase {
   public void testUpdateUserSettings() throws Exception {
     try {
       UpdateUserSettingsOptions updateUserSettingsOptions = new UpdateUserSettingsOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
+      .accountId("1aa434630b594b8a88b961a44c9eb2a9")
+      .iamId("IBMid-550008BJPR")
       .language("testString")
       .notificationLanguage("testString")
       .allowedIpAddresses("32.96.110.50,172.16.254.1")
@@ -124,11 +133,8 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       Response<UserSettings> response = service.updateUserSettings(updateUserSettingsOptions).execute();
       // Validate response
       assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-
+      assertEquals(response.getStatusCode(), 204);
       UserSettings userSettingsResult = response.getResult();
-
-      assertNotNull(userSettingsResult);
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -139,8 +145,8 @@ public class UserManagementIT extends SdkIntegrationTestBase {
   public void testListUsers() throws Exception {
     try {
       ListUsersOptions listUsersOptions = new ListUsersOptions.Builder()
-      .accountId("testString")
-      .state("testString")
+      .accountId("1aa434630b594b8a88b961a44c9eb2a9")
+      .state("ACTIVE")
       .build();
 
       // Invoke operation
@@ -162,37 +168,45 @@ public class UserManagementIT extends SdkIntegrationTestBase {
   public void testInviteUsers() throws Exception {
     try {
       InviteUser inviteUserModel = new InviteUser.Builder()
-      .email("testString")
-      .accountRole("testString")
+      .email("aminttest+linked_account_owner_11@mail.test.ibm.com")
+      .accountRole("Member")
       .build();
 
       Role roleModel = new Role.Builder()
-      .roleId("testString")
+      .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
       .build();
 
       Attribute attributeModel = new Attribute.Builder()
-      .name("testString")
-      .value("testString")
+      .name("accountId")
+      .value("1aa434630b594b8a88b961a44c9eb2a9")
       .build();
 
+      Attribute attributeModel2 = new Attribute.Builder()
+      .name("resourceGroupId")
+      .value("*")
+      .build();
+
+       Attribute[] attributeArray = new Attribute[]{attributeModel, attributeModel2};
+
       Resource resourceModel = new Resource.Builder()
-      .attributes(new java.util.ArrayList<Attribute>(java.util.Arrays.asList(attributeModel)))
+      .attributes(new java.util.ArrayList<Attribute>(java.util.Arrays.asList(attributeArray)))
       .build();
 
       InviteUserIamPolicy inviteUserIamPolicyModel = new InviteUserIamPolicy.Builder()
+      .type("access")
       .roles(new java.util.ArrayList<Role>(java.util.Arrays.asList(roleModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
       .build();
 
       InviteUsersOptions inviteUsersOptions = new InviteUsersOptions.Builder()
-      .accountId("testString")
+      .accountId("1aa434630b594b8a88b961a44c9eb2a9")
       .users(new java.util.ArrayList<InviteUser>(java.util.Arrays.asList(inviteUserModel)))
       .iamPolicy(new java.util.ArrayList<InviteUserIamPolicy>(java.util.Arrays.asList(inviteUserIamPolicyModel)))
-      .accessGroups(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .accessGroups(new java.util.ArrayList<String>(java.util.Arrays.asList("AccessGroupId-51675919-2bd7-4ce3-86e4-5faff8065574")))
       .build();
 
       // Invoke operation
-      Response<UserList> response = service.inviteUsers(inviteUsersOptions).execute();
+      Response<UserList> response = alternateService.inviteUsers(inviteUsersOptions).execute();
       // Validate response
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -200,6 +214,10 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       UserList userListResult = response.getResult();
 
       assertNotNull(userListResult);
+
+      List<UserProfile> profile = userListResult.getResources();
+      userId = profile.get(0).getId();
+
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -210,8 +228,8 @@ public class UserManagementIT extends SdkIntegrationTestBase {
   public void testGetUserProfile() throws Exception {
     try {
       GetUserProfileOptions getUserProfileOptions = new GetUserProfileOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
+      .accountId("1aa434630b594b8a88b961a44c9eb2a9")
+      .iamId("IBMid-550008BJPR")
       .build();
 
       // Invoke operation
@@ -233,12 +251,12 @@ public class UserManagementIT extends SdkIntegrationTestBase {
   public void testUpdateUserProfiles() throws Exception {
     try {
       UpdateUserProfilesOptions updateUserProfilesOptions = new UpdateUserProfilesOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
+      .accountId("1aa434630b594b8a88b961a44c9eb2a9")
+      .iamId("IBMid-550008BJPR")
       .firstname("testString")
       .lastname("testString")
-      .state("testString")
-      .email("testString")
+      .state("ACTIVE")
+      .email("do_not_delete_user_without_iam_policy_stage@mail.test.ibm.com")
       .phonenumber("testString")
       .altphonenumber("testString")
       .photo("testString")
@@ -259,8 +277,8 @@ public class UserManagementIT extends SdkIntegrationTestBase {
   public void testRemoveUsers() throws Exception {
     try {
       RemoveUsersOptions removeUsersOptions = new RemoveUsersOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
+      .accountId("1aa434630b594b8a88b961a44c9eb2a9")
+      .iamId(userId)
       .build();
 
       // Invoke operation

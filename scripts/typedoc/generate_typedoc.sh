@@ -12,5 +12,7 @@
     ./iam-access-groups/v2.ts \
     ./iam-policy-management/v1.ts \
     ./open-service-broker/v1.ts \
+    ./resource-controller/v2 \
     ./resource-manager/v2 \
+    ./user-management/v1 \
     --target "ES5"

@@ -59,6 +59,7 @@ Service Name | Import Path
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | ibm-platform-services/open-service-broker/v1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | ibm-platform-services/resource-controller/v2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ibm-platform-services/resource-manager/v2
+[User Management](https://cloud.ibm.com/apidocs/user-management) | ibm-platform-services/user-management/v1
 
 ## Prerequisites
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.

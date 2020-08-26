@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.10.0...v0.11.0) (2020-08-26)
+
+
+### Features
+
+* **User Management:** add service to project ([#41](https://github.com/IBM/platform-services-node-sdk/issues/41)) ([0344967](https://github.com/IBM/platform-services-node-sdk/commit/0344967f85967b9573449a7704959099f66b66a7))
+
 # [0.10.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.9.0...v0.10.0) (2020-07-17)
 
 

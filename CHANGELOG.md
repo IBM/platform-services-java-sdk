@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/IBM/platform-services-java-sdk/compare/0.10.0...0.11.0) (2020-08-26)
+
+
+### Features
+
+* **User Management:** add service to project ([#41](https://github.com/IBM/platform-services-java-sdk/issues/41)) ([95bea0c](https://github.com/IBM/platform-services-java-sdk/commit/95bea0c9bf4e12551edbcc5594350daa8bb14b27))
+
 # [0.10.0](https://github.com/IBM/platform-services-java-sdk/compare/0.9.1...0.10.0) (2020-07-16)
 
 

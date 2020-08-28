@@ -78,11 +78,12 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
     private boolean verbose = true;
 
     private final static String TEST_LABEL = "JavaSDKIntegrationTest";
-    private final static String ACCOUNT_ID = "44890a2fd24641a5a111738e358686cc";
-    private final static String SERVICE_NAME = "config-gov-sdk-integration-test-service";
 
-    private final static String ENTERPRISE_SCOPE_ID = "1c55c73ad220436eb05b87c2d099dd13";
-    private final static String SUBACCT_SCOPE_ID = "946443f19a4041c6ac75c159cd8e018a";
+    // Test-related config properties.
+    private static String ACCOUNT_ID;
+    private static String TEST_SERVICE_NAME;
+    private static String ENTERPRISE_SCOPE_ID;
+    private static String SUBACCT_SCOPE_ID;
 
     // Generate a txn-id to be used during this test run.
     private String transactionId = UUID.randomUUID().toString();
@@ -138,6 +139,16 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
         assertNotNull(config);
         assertFalse(config.isEmpty());
         assertEquals(service.getServiceUrl(), config.get("URL"));
+
+        // Retrieve and verify some additional test-related config properties.
+        ACCOUNT_ID = config.get("ACCOUNT_ID");
+        TEST_SERVICE_NAME = config.get("TEST_SERVICE_NAME");
+        ENTERPRISE_SCOPE_ID = config.get("ENTERPRISE_SCOPE_ID");
+        SUBACCT_SCOPE_ID = config.get("SUBACCT_SCOPE_ID");
+        assertNotNull(ACCOUNT_ID);
+        assertNotNull(TEST_SERVICE_NAME);
+        assertNotNull(ENTERPRISE_SCOPE_ID);
+        assertNotNull(SUBACCT_SCOPE_ID);
 
         log("Service URL: " + service.getServiceUrl());
         log("Transaction ID: " + transactionId);
@@ -854,18 +865,18 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
 
     private Attachment getAttachment(String ruleId, String attachmentId) {
         try {
-        GetAttachmentOptions getAttachmentOptions = new GetAttachmentOptions.Builder()
-                .ruleId(ruleId)
-                .attachmentId(attachmentId)
-                .build();
+            GetAttachmentOptions getAttachmentOptions = new GetAttachmentOptions.Builder()
+                    .ruleId(ruleId)
+                    .attachmentId(attachmentId)
+                    .build();
 
-        Response<Attachment> response = service.getAttachment(getAttachmentOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
+            Response<Attachment> response = service.getAttachment(getAttachmentOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
 
-        Attachment result = response.getResult();
-        assertNotNull(result);
-        return result;
+            Attachment result = response.getResult();
+            assertNotNull(result);
+            return result;
         } catch (NotFoundException e) {
             return null;
         } catch (Throwable t) {
@@ -941,7 +952,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
         List<RuleTargetAttribute> targetAttributes = Arrays.asList(ruleTargetAttributeModel);
 
         TargetResource targetResourceModel = new TargetResource.Builder()
-                .serviceName(SERVICE_NAME)
+                .serviceName(TEST_SERVICE_NAME)
                 .resourceKind("bucket")
                 .additionalTargetAttributes(targetAttributes)
                 .build();
@@ -977,6 +988,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                 .action(EnforcementAction.Action.DISALLOW)
                 .build();
 
+        // Sample rules.
         sampleRule1 = new RuleRequest.Builder()
                 .accountId(ACCOUNT_ID)
                 .name("Java Test Rule #1")
@@ -1014,7 +1026,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                 .labels(new ArrayList<>(Arrays.asList(TEST_LABEL)))
                 .build();
 
-
+        // Sample rule scopes.
         enterpriseScope = new RuleScope.Builder()
                 .note("enterprise")
                 .scopeId(ENTERPRISE_SCOPE_ID)
@@ -1032,6 +1044,5 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                 .scopeId(SUBACCT_SCOPE_ID)
                 .scopeType("enterprise.BOGUS")
                 .build();
-
     }
 }

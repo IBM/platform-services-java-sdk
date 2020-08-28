@@ -368,6 +368,25 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Test(dependsOnMethods = { "testCreateRule1" })
+    public void testGetRuleInvalidRuleId() throws Exception {
+        try {
+
+            GetRuleOptions getRuleOptions = new GetRuleOptions.Builder()
+                    .ruleId("BOGUS_ID")
+                    .transactionId(transactionId)
+                    .build();
+
+            service.getRule(getRuleOptions).execute();
+            fail("Invalid get should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            // log(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
+            //        e.getMessage(), e.getDebuggingInfo()));
+            assertEquals(e.getStatusCode(), 404);
+            assertTrue(e.getMessage().contains("not found"));
+        }
+    }
+
     @Test(dependsOnMethods = { "testGetRule" })
     public void testUpdateRule() throws Exception {
         try {

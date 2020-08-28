@@ -31,6 +31,7 @@
         <maven-buildnumber-plugin-version>1.4</maven-buildnumber-plugin-version>
         <powermock-version>2.0.5</powermock-version>
         <mockito-version>3.2.4</mockito-version>
+        <slf4j-version>1.7.28</slf4j-version>
 
         <!-- Deployment-related properties -->
         <bintray.org>ibm-cloud-sdks</bintray.org>
@@ -56,6 +57,8 @@
         <module>modules/resource-controller</module>
         <module>modules/resource-manager</module>
         <module>modules/user-management</module>
+
+        <module>modules/examples</module>
 
         <!-- This module should always be listed last -->
         <module>modules/coverage-reports</module>
@@ -153,6 +156,12 @@
                 <artifactId>powermock-module-testng</artifactId>
                 <version>${powermock-version}</version>
                 <scope>test</scope>
+            </dependency>
+            <!-- Depedency needed to build examples -->
+            <dependency> 
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+                <version>${slf4j-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

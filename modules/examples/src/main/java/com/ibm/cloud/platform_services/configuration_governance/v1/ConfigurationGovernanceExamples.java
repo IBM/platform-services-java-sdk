@@ -13,10 +13,20 @@
 
 package com.ibm.cloud.platform_services.configuration_governance.v1;
 
+import java.util.Map;
+import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.ibm.cloud.platform_services.configuration_governance.v1.model.Attachment;
+import com.ibm.cloud.platform_services.configuration_governance.v1.model.AttachmentList;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.AttachmentRequest;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateAttachmentsOptions;
+import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateAttachmentsResponse;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRuleRequest;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRulesOptions;
+import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRulesResponse;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.DeleteAttachmentOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.DeleteRuleOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.EnforcementAction;
@@ -24,234 +34,290 @@ import com.ibm.cloud.platform_services.configuration_governance.v1.model.GetAtta
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.GetRuleOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.ListAttachmentsOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.ListRulesOptions;
+import com.ibm.cloud.platform_services.configuration_governance.v1.model.Rule;
+import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleList;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequest;
+import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequiredConfig;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequiredConfigSingleProperty;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleScope;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleTargetAttribute;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.TargetResource;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.UpdateAttachmentOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.UpdateRuleOptions;
+import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
+//
+// This class provides an example of how to use the Configuration Governance service.
+//
+// The following configuration properties are assumed to be defined:
+// CONFIGURATION_GOVERNANCE_URL=<service url>
+// CONFIGURATION_GOVERNANCE_AUTHTYPE=iam
+// CONFIGURATION_GOVERNANCE_APIKEY=<IAM api key of user with authority to create rules>
+// CONFIGURATION_GOVERNANCE_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+// CONFIGURATION_GOVERNANCE_ACCOUNT_ID=<the id of the account under which rules/attachments should be created>
+// CONFIGURATION_GOVERNANCE_EXAMPLE_SERVICE_NAME=<the name of the service to be associated with the example rule>
+// CONFIGURATION_GOVERNANCE_ENTERPRISE_SCOPE_ID=<the id of the "enterprise" scope to be used in the examples>
+// CONFIGURATION_GOVERNANCE_SUBACCT_SCOPE_ID=<the id of the "leaf account" scope to be used in the examples>
+//
+// These configuration properties can be exported as environment variables, or stored
+// in a "credentials" file and then:
+// export IBM_CREDENTIALS_FILE=<name of credentials file>
+//
 public class ConfigurationGovernanceExamples {
   private static final Logger logger = LoggerFactory.getLogger(ConfigurationGovernanceExamples.class);
   protected ConfigurationGovernanceExamples() { }
 
-  @SuppressWarnings("checkstyle:methodlength")
+  private static String accountId;
+  private static String serviceName;
+  private static String enterpriseScopeId;
+  private static String subacctScopeId;
+
+  // Variables used to hold various values shared between operations.
+  private static String ruleIdLink;
+  private static Rule ruleToUpdateLink;
+  private static String ruleToUpdateEtagLink;
+
+  private static String attachmentIdLink;
+  private static Attachment attachmentToUpdateLink;
+  private static String attachmentToUpdateEtagLink;
+
+  static {
+      System.setProperty("IBM_CREDENTIALS_FILE", "../../configuration_governance.env");
+  }
+
   public static void main(String[] args) throws Exception {
+
+    // Construct service instance using configuration properties.
     ConfigurationGovernance service = ConfigurationGovernance.newInstance();
 
+    // Retrieve configuration properties whose names start with the default service name,
+    Map<String, String> config = CredentialUtils.getServiceProperties(ConfigurationGovernance.DEFAULT_SERVICE_NAME);
+    accountId = config.get("ACCOUNT_ID");
+    serviceName = config.get("EXAMPLE_SERVICE_NAME");
+    enterpriseScopeId = config.get("ENTERPRISE_SCOPE_ID");
+    subacctScopeId = config.get("SUBACCT_SCOPE_ID");
+
     try {
-    // begin-create_rules
-      RuleTargetAttribute ruleTargetAttributeModel = new RuleTargetAttribute.Builder()
-      .name("resource_id")
-      .operator("string_equals")
-      .value("f0f8f7994e754ff38f9d370201966561")
-      .build();
+      // begin-create_rules
       TargetResource targetResourceModel = new TargetResource.Builder()
-      .serviceName("iam-groups")
-      .resourceKind("zone")
-      .additionalTargetAttributes(new java.util.ArrayList<RuleTargetAttribute>(java.util.Arrays.asList(ruleTargetAttributeModel)))
-      .build();
-      RuleRequiredConfigSingleProperty ruleRequiredConfigModel = new RuleRequiredConfigSingleProperty.Builder()
-      .property("public_access_enabled")
-      .operator("is_true")
-      .build();
-      EnforcementAction enforcementActionModel = new EnforcementAction.Builder()
-      .action("disallow")
-      .build();
+        .serviceName(serviceName)
+        .resourceKind("service")
+        .build();
+      RuleRequiredConfig ruleRequiredConfigModel = new RuleRequiredConfigSingleProperty.Builder()
+        .description("Ensure public access is disabled")
+        .property("public_access_enabled")
+        .operator("is_false")
+        .build();
+      EnforcementAction disallowEnforcementActionModel = new EnforcementAction.Builder()
+        .action("disallow")
+        .build();
+      EnforcementAction auditLogEnforcementActionModel = new EnforcementAction.Builder()
+        .action("audit_log")
+        .build();
       RuleRequest ruleRequestModel = new RuleRequest.Builder()
-      .name("testString")
-      .description("testString")
-      .version("1.0.0")
-      .target(targetResourceModel)
-      .requiredConfig(ruleRequiredConfigModel)
-      .enforcementActions(new java.util.ArrayList<EnforcementAction>(java.util.Arrays.asList(enforcementActionModel)))
-      .labels(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .build();
+        .accountId(accountId)
+        .name("Disable public access")
+        .description("Ensure that public acess to account resources is disabled.")
+        .target(targetResourceModel)
+        .requiredConfig(ruleRequiredConfigModel)
+        .addEnforcementAction(disallowEnforcementActionModel)
+        .addEnforcementAction(auditLogEnforcementActionModel)
+        .addLabel("test_label")
+        .build();
       CreateRuleRequest createRuleRequestModel = new CreateRuleRequest.Builder()
-      .requestId("3cebc877-58e7-44a5-a292-32114fa73558")
-      .rule(ruleRequestModel)
-      .build();
+        .rule(ruleRequestModel)
+        .build();
       CreateRulesOptions createRulesOptions = new CreateRulesOptions.Builder()
-      .rules(new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)))
-      .build();
+        .addRule(createRuleRequestModel)
+        .transactionId(UUID.randomUUID().toString())
+        .build();
 
-      service.createRules(createRulesOptions).execute().getResult();
-    // end-create_rules
+      CreateRulesResponse result = service.createRules(createRulesOptions).execute().getResult();
+      System.out.println("createRules() result:\n" + result.toString());
+      // end-create_rules
+
+      // Retrieve the id of the new rule to use in other operations below.
+      ruleIdLink = result.getRules().get(0).getRule().getRuleId();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-    // begin-list_rules
+      // begin-list_rules
       ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
-      .accountId("testString")
-      .attached(true)
-      .labels("SOC2,ITCS300")
-      .scopes("scope_id")
-      .build();
+        .accountId(accountId)
+        .labels("test_label")
+        .build();
 
-      service.listRules(listRulesOptions).execute().getResult();
-    // end-list_rules
+      RuleList result = service.listRules(listRulesOptions).execute().getResult();
+      System.out.println("listRules() result:\n" + result.toString());
+      // end-list_rules
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-    // begin-get_rule
+      // begin-get_rule
       GetRuleOptions getRuleOptions = new GetRuleOptions.Builder()
-      .ruleId("testString")
-      .build();
+        .ruleId(ruleIdLink)
+        .build();
 
-      service.getRule(getRuleOptions).execute().getResult();
-    // end-get_rule
+      Response<Rule> response = service.getRule(getRuleOptions).execute();
+      Rule result = response.getResult();
+      System.out.println("getRule() result:\n" + result.toString());
+      // end-get_rule
+
+      // Save the rule and its Etag header value so we can update it below.
+      ruleToUpdateLink = result;
+      ruleToUpdateEtagLink = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-    // begin-update_rule
-      RuleTargetAttribute ruleTargetAttributeModel = new RuleTargetAttribute.Builder()
-      .name("testString")
-      .operator("string_equals")
-      .build();
-      TargetResource targetResourceModel = new TargetResource.Builder()
-      .serviceName("iam-groups")
-      .resourceKind("service")
-      .additionalTargetAttributes(new java.util.ArrayList<RuleTargetAttribute>(java.util.Arrays.asList(ruleTargetAttributeModel)))
-      .build();
-      RuleRequiredConfigSingleProperty ruleRequiredConfigModel = new RuleRequiredConfigSingleProperty.Builder()
-      .property("public_access_enabled")
-      .operator("is_false")
-      .build();
-      EnforcementAction enforcementActionModel = new EnforcementAction.Builder()
-      .action("audit_log")
-      .build();
+      // begin-update_rule
+      // Update the existing rule's description.
       UpdateRuleOptions updateRuleOptions = new UpdateRuleOptions.Builder()
-      .ruleId("testString")
-      .ifMatch("testString")
-      .name("Disable public access")
-      .description("Ensure that public access to account resources is disabled.")
-      .target(targetResourceModel)
-      .requiredConfig(ruleRequiredConfigModel)
-      .enforcementActions(new java.util.ArrayList<EnforcementAction>(java.util.Arrays.asList(enforcementActionModel)))
-      .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
-      .version("1.0.0")
-      .ruleType("user_defined")
-      .labels(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .build();
+        .ruleId(ruleIdLink)
+        .ifMatch(ruleToUpdateEtagLink)
+        .name(ruleToUpdateLink.getName())
+        .description("This is an updated description.")
+        .target(ruleToUpdateLink.getTarget())
+        .requiredConfig(ruleToUpdateLink.getRequiredConfig())
+        .enforcementActions(ruleToUpdateLink.getEnforcementActions())
+        .accountId(ruleToUpdateLink.getAccountId())
+        .ruleType(ruleToUpdateLink.getRuleType())
+        .labels(ruleToUpdateLink.getLabels())
+        .build();
 
-      service.updateRule(updateRuleOptions).execute().getResult();
-    // end-update_rule
+      Rule result = service.updateRule(updateRuleOptions).execute().getResult();
+      System.out.println("updateRule() result:\n" + result.toString());
+      // end-update_rule
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-    // begin-create_attachments
-      RuleScope ruleScopeModel = new RuleScope.Builder()
-      .note("My enterprise")
-      .scopeId("282cf433ac91493ba860480d92519990")
-      .scopeType("enterprise")
-      .build();
+      // begin-create_attachments
+      RuleScope enterpriseScopeModel = new RuleScope.Builder()
+        .note("My enterprise")
+        .scopeId(enterpriseScopeId)
+        .scopeType("enterprise")
+        .build();
+      RuleScope leafAccountScopeModel = new RuleScope.Builder()
+        .note("leaf account")
+        .scopeId(subacctScopeId)
+        .scopeType("enterprise.account")
+        .build();
       AttachmentRequest attachmentRequestModel = new AttachmentRequest.Builder()
-      .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
-      .includedScope(ruleScopeModel)
-      .excludedScopes(new java.util.ArrayList<RuleScope>(java.util.Arrays.asList(ruleScopeModel)))
-      .build();
+        .accountId(accountId)
+        .includedScope(enterpriseScopeModel)
+        .addExcludedScope(leafAccountScopeModel)
+        .build();
       CreateAttachmentsOptions createAttachmentsOptions = new CreateAttachmentsOptions.Builder()
-      .ruleId("testString")
-      .attachments(new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)))
-      .build();
+        .ruleId(ruleIdLink)
+        .addAttachment(attachmentRequestModel)
+        .build();
 
-      service.createAttachments(createAttachmentsOptions).execute().getResult();
-    // end-create_attachments
+      CreateAttachmentsResponse result = service.createAttachments(createAttachmentsOptions).execute().getResult();
+      System.out.println("createAttachments() result:\n" + result.toString());
+      // end-create_attachments
+
+      // Retrieve the id of the new attachment to use in other operations below.
+      attachmentIdLink = result.getAttachments().get(0).getAttachmentId();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-    // begin-list_attachments
+      // begin-list_attachments
       ListAttachmentsOptions listAttachmentsOptions = new ListAttachmentsOptions.Builder()
-      .ruleId("testString")
-      .build();
+        .ruleId(ruleIdLink)
+        .build();
 
-      service.listAttachments(listAttachmentsOptions).execute().getResult();
-    // end-list_attachments
+      AttachmentList result = service.listAttachments(listAttachmentsOptions).execute().getResult();
+      System.out.println("listAttachments() result:\n" + result.toString());
+      // end-list_attachments
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-    // begin-get_attachment
+      // begin-get_attachment
       GetAttachmentOptions getAttachmentOptions = new GetAttachmentOptions.Builder()
-      .ruleId("testString")
-      .attachmentId("testString")
-      .build();
+        .ruleId(ruleIdLink)
+        .attachmentId(attachmentIdLink)
+        .build();
 
-      service.getAttachment(getAttachmentOptions).execute().getResult();
-    // end-get_attachment
+      Response<Attachment> response = service.getAttachment(getAttachmentOptions).execute();
+      Attachment result = response.getResult();
+      System.out.println("getAttachment() result:\n" + result.toString());
+      // end-get_attachment
+
+      // Save the attachment and its Etag header value so we can update it below.
+      attachmentToUpdateLink = result;
+      attachmentToUpdateEtagLink = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-    // begin-update_attachment
-      RuleScope ruleScopeModel = new RuleScope.Builder()
-      .scopeId("testString")
-      .scopeType("enterprise")
-      .build();
+      // begin-update_attachment
+      RuleScope updatedIncludedScope = attachmentToUpdateLink.getIncludedScope().newBuilder()
+        .note("This is a new note.")
+        .build();
       UpdateAttachmentOptions updateAttachmentOptions = new UpdateAttachmentOptions.Builder()
-      .ruleId("testString")
-      .attachmentId("testString")
-      .ifMatch("testString")
-      .accountId("testString")
-      .includedScope(ruleScopeModel)
-      .build();
+        .ruleId(ruleIdLink)
+        .attachmentId(attachmentIdLink)
+        .ifMatch(attachmentToUpdateEtagLink)
+        .accountId(attachmentToUpdateLink.getAccountId())
+        .includedScope(updatedIncludedScope)
+        .excludedScopes(attachmentToUpdateLink.getExcludedScopes())
+        .build();
 
-      service.updateAttachment(updateAttachmentOptions).execute().getResult();
-    // end-update_attachment
+      Attachment result = service.updateAttachment(updateAttachmentOptions).execute().getResult();
+      System.out.println("updateAttachment() result:\n" + result.toString());
+      // end-update_attachment
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-    // begin-delete_rule
-      DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
-      .ruleId("testString")
-      .build();
-
-      service.deleteRule(deleteRuleOptions).execute().getResult();
-    // end-delete_rule
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-    // begin-delete_attachment
+      // begin-delete_attachment
       DeleteAttachmentOptions deleteAttachmentOptions = new DeleteAttachmentOptions.Builder()
-      .ruleId("testString")
-      .attachmentId("testString")
-      .build();
+        .ruleId(ruleIdLink)
+        .attachmentId(attachmentIdLink)
+        .build();
 
-      service.deleteAttachment(deleteAttachmentOptions).execute().getResult();
-    // end-delete_attachment
+      Response<Void> response = service.deleteAttachment(deleteAttachmentOptions).execute();
+      System.out.println("deleteAttachment() status code: " + response.getStatusCode());
+      // end-delete_attachment
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
+    try {
+      // begin-delete_rule
+      DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
+        .ruleId(ruleIdLink)
+        .build();
+
+      Response<Void> response = service.deleteRule(deleteRuleOptions).execute();
+      System.out.println("deleteRule() status code: " + response.getStatusCode());
+      // end-delete_rule
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
   }
 }

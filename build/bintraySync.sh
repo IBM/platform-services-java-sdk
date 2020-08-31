@@ -23,6 +23,7 @@ com.ibm.cloud:platform-services
 com.ibm.cloud:platform-services-common
 com.ibm.cloud:case-management
 com.ibm.cloud:catalog-management
+com.ibm.cloud:configuration-governance
 com.ibm.cloud:enterprise-management
 com.ibm.cloud:global-catalog
 com.ibm.cloud:global-search

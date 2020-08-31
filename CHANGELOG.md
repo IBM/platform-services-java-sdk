@@ -1,3 +1,10 @@
+# [0.12.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.11.0...v0.12.0) (2020-08-31)
+
+
+### Features
+
+* **Configuration Governance:** add service to project ([#42](https://github.com/IBM/platform-services-node-sdk/issues/42)) ([467c0ad](https://github.com/IBM/platform-services-node-sdk/commit/467c0adf6ef073c341a54efc749c93c5a0ac2246))
+
 # [0.11.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.10.0...v0.11.0) (2020-08-26)
 
 

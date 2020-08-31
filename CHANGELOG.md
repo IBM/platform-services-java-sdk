@@ -1,3 +1,10 @@
+# [0.12.0](https://github.com/IBM/platform-services-java-sdk/compare/0.11.0...0.12.0) (2020-08-31)
+
+
+### Features
+
+* **Configuration Governance:** add service to project ([#43](https://github.com/IBM/platform-services-java-sdk/issues/43)) ([ec341cb](https://github.com/IBM/platform-services-java-sdk/commit/ec341cb6ad8652acf3df13f26c612eab7eedb024))
+
 # [0.11.0](https://github.com/IBM/platform-services-java-sdk/compare/0.10.0...0.11.0) (2020-08-26)
 
 

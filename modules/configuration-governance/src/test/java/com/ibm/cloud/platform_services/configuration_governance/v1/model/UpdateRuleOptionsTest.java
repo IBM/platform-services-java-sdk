@@ -14,11 +14,9 @@
 package com.ibm.cloud.platform_services.configuration_governance.v1.model;
 
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.EnforcementAction;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleImport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequiredConfigSingleProperty;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleTargetAttribute;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.TargetResource;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.UISupport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.UpdateRuleOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -73,20 +71,6 @@ public class UpdateRuleOptionsTest {
       .build();
     assertEquals(enforcementActionModel.action(), "disallow");
 
-    UISupport uiSupportModel = new UISupport.Builder()
-      .displayName("testString")
-      .description("testString")
-      .build();
-    assertEquals(uiSupportModel.displayName(), "testString");
-    assertEquals(uiSupportModel.description(), "testString");
-
-    RuleImport ruleImportModel = new RuleImport.Builder()
-      .name("testString")
-      .uiSupport(uiSupportModel)
-      .build();
-    assertEquals(ruleImportModel.name(), "testString");
-    assertEquals(ruleImportModel.uiSupport(), uiSupportModel);
-
     UpdateRuleOptions updateRuleOptionsModel = new UpdateRuleOptions.Builder()
       .ruleId("testString")
       .ifMatch("testString")
@@ -96,9 +80,7 @@ public class UpdateRuleOptionsTest {
       .requiredConfig(ruleRequiredConfigModel)
       .enforcementActions(new java.util.ArrayList<EnforcementAction>(java.util.Arrays.asList(enforcementActionModel)))
       .accountId("testString")
-      .version("1.0.0")
       .ruleType("user_defined")
-      .imports(new java.util.ArrayList<RuleImport>(java.util.Arrays.asList(ruleImportModel)))
       .labels(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .transactionId("testString")
       .build();
@@ -110,9 +92,7 @@ public class UpdateRuleOptionsTest {
     assertEquals(updateRuleOptionsModel.requiredConfig(), ruleRequiredConfigModel);
     assertEquals(updateRuleOptionsModel.enforcementActions(), new java.util.ArrayList<EnforcementAction>(java.util.Arrays.asList(enforcementActionModel)));
     assertEquals(updateRuleOptionsModel.accountId(), "testString");
-    assertEquals(updateRuleOptionsModel.version(), "1.0.0");
     assertEquals(updateRuleOptionsModel.ruleType(), "user_defined");
-    assertEquals(updateRuleOptionsModel.imports(), new java.util.ArrayList<RuleImport>(java.util.Arrays.asList(ruleImportModel)));
     assertEquals(updateRuleOptionsModel.labels(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(updateRuleOptionsModel.transactionId(), "testString");
   }

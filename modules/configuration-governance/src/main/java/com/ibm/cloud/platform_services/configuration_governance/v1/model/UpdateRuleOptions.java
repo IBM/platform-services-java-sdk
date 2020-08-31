@@ -23,13 +23,11 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class UpdateRuleOptions extends GenericModel {
 
   /**
-   * The type of rule. Rules that you create are `user_defined`. Rules that are created by IBM are `service_defined`.
+   * The type of rule. Rules that you create are `user_defined`.
    */
   public interface RuleType {
     /** user_defined. */
     String USER_DEFINED = "user_defined";
-    /** service_defined. */
-    String SERVICE_DEFINED = "service_defined";
   }
 
   protected String ruleId;
@@ -40,9 +38,7 @@ public class UpdateRuleOptions extends GenericModel {
   protected RuleRequiredConfig requiredConfig;
   protected List<EnforcementAction> enforcementActions;
   protected String accountId;
-  protected String version;
   protected String ruleType;
-  protected List<RuleImport> imports;
   protected List<String> labels;
   protected String transactionId;
 
@@ -58,9 +54,7 @@ public class UpdateRuleOptions extends GenericModel {
     private RuleRequiredConfig requiredConfig;
     private List<EnforcementAction> enforcementActions;
     private String accountId;
-    private String version;
     private String ruleType;
-    private List<RuleImport> imports;
     private List<String> labels;
     private String transactionId;
 
@@ -73,9 +67,7 @@ public class UpdateRuleOptions extends GenericModel {
       this.requiredConfig = updateRuleOptions.requiredConfig;
       this.enforcementActions = updateRuleOptions.enforcementActions;
       this.accountId = updateRuleOptions.accountId;
-      this.version = updateRuleOptions.version;
       this.ruleType = updateRuleOptions.ruleType;
-      this.imports = updateRuleOptions.imports;
       this.labels = updateRuleOptions.labels;
       this.transactionId = updateRuleOptions.transactionId;
     }
@@ -129,22 +121,6 @@ public class UpdateRuleOptions extends GenericModel {
         this.enforcementActions = new ArrayList<EnforcementAction>();
       }
       this.enforcementActions.add(enforcementAction);
-      return this;
-    }
-
-    /**
-     * Adds an xImport to imports.
-     *
-     * @param xImport the new xImport
-     * @return the UpdateRuleOptions builder
-     */
-    public Builder addXImport(RuleImport xImport) {
-      com.ibm.cloud.sdk.core.util.Validator.notNull(xImport,
-        "xImport cannot be null");
-      if (this.imports == null) {
-        this.imports = new ArrayList<RuleImport>();
-      }
-      this.imports.add(xImport);
       return this;
     }
 
@@ -254,17 +230,6 @@ public class UpdateRuleOptions extends GenericModel {
     }
 
     /**
-     * Set the version.
-     *
-     * @param version the version
-     * @return the UpdateRuleOptions builder
-     */
-    public Builder version(String version) {
-      this.version = version;
-      return this;
-    }
-
-    /**
      * Set the ruleType.
      *
      * @param ruleType the ruleType
@@ -272,18 +237,6 @@ public class UpdateRuleOptions extends GenericModel {
      */
     public Builder ruleType(String ruleType) {
       this.ruleType = ruleType;
-      return this;
-    }
-
-    /**
-     * Set the imports.
-     * Existing imports will be replaced.
-     *
-     * @param imports the imports
-     * @return the UpdateRuleOptions builder
-     */
-    public Builder imports(List<RuleImport> imports) {
-      this.imports = imports;
       return this;
     }
 
@@ -334,9 +287,7 @@ public class UpdateRuleOptions extends GenericModel {
     requiredConfig = builder.requiredConfig;
     enforcementActions = builder.enforcementActions;
     accountId = builder.accountId;
-    version = builder.version;
     ruleType = builder.ruleType;
-    imports = builder.imports;
     labels = builder.labels;
     transactionId = builder.transactionId;
   }
@@ -443,37 +394,14 @@ public class UpdateRuleOptions extends GenericModel {
   }
 
   /**
-   * Gets the version.
-   *
-   * A field that you can use to store and manage a custom version for this rule.
-   *
-   * @return the version
-   */
-  public String version() {
-    return version;
-  }
-
-  /**
    * Gets the ruleType.
    *
-   * The type of rule. Rules that you create are `user_defined`. Rules that are created by IBM are `service_defined`.
+   * The type of rule. Rules that you create are `user_defined`.
    *
    * @return the ruleType
    */
   public String ruleType() {
     return ruleType;
-  }
-
-  /**
-   * Gets the imports.
-   *
-   * Parameters that are imported by IBM as metadata to create
-   * `service_defined` rules.
-   *
-   * @return the imports
-   */
-  public List<RuleImport> imports() {
-    return imports;
   }
 
   /**

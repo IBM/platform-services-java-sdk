@@ -16,12 +16,10 @@ package com.ibm.cloud.platform_services.configuration_governance.v1.model;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRuleRequest;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRulesOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.EnforcementAction;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleImport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequest;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequiredConfigSingleProperty;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleTargetAttribute;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.TargetResource;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.UISupport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -41,20 +39,6 @@ public class CreateRulesOptionsTest {
 
   @Test
   public void testCreateRulesOptions() throws Throwable {
-    UISupport uiSupportModel = new UISupport.Builder()
-      .displayName("testString")
-      .description("testString")
-      .build();
-    assertEquals(uiSupportModel.displayName(), "testString");
-    assertEquals(uiSupportModel.description(), "testString");
-
-    RuleImport ruleImportModel = new RuleImport.Builder()
-      .name("testString")
-      .uiSupport(uiSupportModel)
-      .build();
-    assertEquals(ruleImportModel.name(), "testString");
-    assertEquals(ruleImportModel.uiSupport(), uiSupportModel);
-
     RuleTargetAttribute ruleTargetAttributeModel = new RuleTargetAttribute.Builder()
       .name("resource_id")
       .operator("string_equals")
@@ -93,9 +77,7 @@ public class CreateRulesOptionsTest {
       .accountId("testString")
       .name("testString")
       .description("testString")
-      .version("1.0.0")
       .ruleType("user_defined")
-      .imports(new java.util.ArrayList<RuleImport>(java.util.Arrays.asList(ruleImportModel)))
       .target(targetResourceModel)
       .requiredConfig(ruleRequiredConfigModel)
       .enforcementActions(new java.util.ArrayList<EnforcementAction>(java.util.Arrays.asList(enforcementActionModel)))
@@ -104,9 +86,7 @@ public class CreateRulesOptionsTest {
     assertEquals(ruleRequestModel.accountId(), "testString");
     assertEquals(ruleRequestModel.name(), "testString");
     assertEquals(ruleRequestModel.description(), "testString");
-    assertEquals(ruleRequestModel.version(), "1.0.0");
     assertEquals(ruleRequestModel.ruleType(), "user_defined");
-    assertEquals(ruleRequestModel.imports(), new java.util.ArrayList<RuleImport>(java.util.Arrays.asList(ruleImportModel)));
     assertEquals(ruleRequestModel.target(), targetResourceModel);
     assertEquals(ruleRequestModel.requiredConfig(), ruleRequiredConfigModel);
     assertEquals(ruleRequestModel.enforcementActions(), new java.util.ArrayList<EnforcementAction>(java.util.Arrays.asList(enforcementActionModel)));

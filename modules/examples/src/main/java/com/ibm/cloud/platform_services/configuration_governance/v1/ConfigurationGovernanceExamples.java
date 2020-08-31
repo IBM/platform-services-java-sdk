@@ -25,6 +25,7 @@ import com.ibm.cloud.platform_services.configuration_governance.v1.model.Attachm
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateAttachmentsOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateAttachmentsResponse;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRuleRequest;
+import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRuleResponse;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRulesOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRulesResponse;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.DeleteAttachmentOptions;
@@ -133,7 +134,17 @@ public class ConfigurationGovernanceExamples {
         .transactionId(UUID.randomUUID().toString())
         .build();
 
-      CreateRulesResponse result = service.createRules(createRulesOptions).execute().getResult();
+      Response<CreateRulesResponse> response = service.createRules(createRulesOptions).execute();
+      CreateRulesResponse result = response.getResult();
+      if (response.getStatusCode() == 207) {
+          for (CreateRuleResponse responseEntry : result.getRules()) {
+              if (responseEntry.getStatusCode() > 299) {
+                  throw new RuntimeException(String.format("%s: %s",
+                          responseEntry.getErrors().get(0).getCode(),
+                          responseEntry.getErrors().get(0).getMessage()));
+              }
+          }
+      }
       System.out.println("createRules() result:\n" + result.toString());
       // end-create_rules
 

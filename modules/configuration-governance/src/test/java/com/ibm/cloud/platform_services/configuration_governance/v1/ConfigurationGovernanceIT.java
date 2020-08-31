@@ -50,7 +50,6 @@ import com.ibm.cloud.platform_services.configuration_governance.v1.model.ListRul
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.Rule;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.Rule.RuleType;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleConditionSingleProperty;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleImport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleList;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequest;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequiredConfig;
@@ -59,7 +58,6 @@ import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleReq
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleScope;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleTargetAttribute;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.TargetResource;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.UISupport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.UpdateAttachmentOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.UpdateRuleOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
@@ -405,9 +403,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                     .requiredConfig(rule1.getRequiredConfig())
                     .enforcementActions(rule1.getEnforcementActions())
                     .accountId(rule1.getAccountId())
-                    .version(rule1.getVersion() + " - Updated!")
                     .ruleType(rule1.getRuleType())
-                    .imports(rule1.getImports())
                     .labels(rule1.getLabels())
                     .transactionId(transactionId)
                     .build();
@@ -443,9 +439,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                     .requiredConfig(rule1.getRequiredConfig())
                     .enforcementActions(rule1.getEnforcementActions())
                     .accountId(rule1.getAccountId())
-                    .version(rule1.getVersion() + " - Updated!")
                     .ruleType(rule1.getRuleType())
-                    .imports(rule1.getImports())
                     .labels(rule1.getLabels())
                     .transactionId(transactionId)
                     .build();
@@ -954,16 +948,6 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
 
     private void initSampleData() {
 
-        UISupport uiSupportModel = new UISupport.Builder()
-                .displayName("Bogus Rule")
-                .description("Sample rule used for testing")
-                .build();
-
-        RuleImport ruleImportModel = new RuleImport.Builder()
-                .name("sampleImport")
-                .uiSupport(uiSupportModel)
-                .build();
-
         RuleTargetAttribute ruleTargetAttributeModel = new RuleTargetAttribute.Builder()
                 .name("resource_id")
                 .operator(RuleTargetAttribute.Operator.IS_NOT_EMPTY)
@@ -1012,9 +996,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                 .accountId(ACCOUNT_ID)
                 .name("Java Test Rule #1")
                 .description("This is the description for Java Test Rule #1.")
-                .version("0.0.1")
                 .ruleType(RuleType.USER_DEFINED)
-                .imports(new ArrayList<>(Arrays.asList(ruleImportModel)))
                 .target(targetResourceModel)
                 .requiredConfig(ruleRequiredConfigModel1)
                 .enforcementActions(new ArrayList<>(Arrays.asList(enforcementActionModel)))
@@ -1025,7 +1007,6 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                 .accountId(ACCOUNT_ID)
                 .name("Java Test Rule #2")
                 .description("This is the description for Java Test Rule #2.")
-                .version("0.1.3")
                 .ruleType(RuleType.USER_DEFINED)
                 .target(targetResourceModel)
                 .requiredConfig(ruleRequiredConfigModel2)
@@ -1037,8 +1018,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                 .accountId(ACCOUNT_ID)
                 .name("Java Test Rule #2")
                 .description("This is the description for Java Test Rule #2.")
-                .version("0.1.3")
-                .ruleType(RuleType.SERVICE_DEFINED)
+                .ruleType("service_defined")
                 .target(targetResourceModel)
                 .requiredConfig(ruleRequiredConfigModel2)
                 .enforcementActions(new ArrayList<>(Arrays.asList(enforcementActionModel)))

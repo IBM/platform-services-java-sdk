@@ -35,7 +35,6 @@ import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleCon
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleConditionAndLvl2;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleConditionOrLvl2;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleConditionSingleProperty;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleImport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleList;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequest;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequiredConfig;
@@ -48,7 +47,6 @@ import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleSco
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleSingleProperty;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleTargetAttribute;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.TargetResource;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.UISupport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.UpdateAttachmentOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.UpdateRuleOptions;
 import com.ibm.cloud.platform_services.configuration_governance.v1.utils.TestUtilities;
@@ -119,7 +117,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   @Test
   public void testCreateRulesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rules\": [{\"request_id\": \"3cebc877-58e7-44a5-a292-32114fa73558\", \"status_code\": 201, \"rule\": {\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"version\": \"1.0.0\", \"rule_type\": \"user_defined\", \"imports\": [{\"name\": \"name\", \"ui_support\": {\"display_name\": \"displayName\", \"description\": \"description\"}}], \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}, \"errors\": [{\"code\": \"bad_request\", \"message\": \"The rule is missing an account ID\"}], \"trace\": \"861263b4-cee3-4514-8d8c-05d17308e6eb\"}]}";
+    String mockResponseBody = "{\"rules\": [{\"request_id\": \"3cebc877-58e7-44a5-a292-32114fa73558\", \"status_code\": 201, \"rule\": {\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}, \"errors\": [{\"code\": \"bad_request\", \"message\": \"The rule is missing an account ID\"}], \"trace\": \"861263b4-cee3-4514-8d8c-05d17308e6eb\"}]}";
     String createRulesPath = java.net.URLEncoder.encode("/config/v1/rules", "UTF-8").replace("%2F", "/");
 
     server.enqueue(new MockResponse()
@@ -129,35 +127,23 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the UISupport model
-    UISupport uiSupportModel = new UISupport.Builder()
-    .displayName("testString")
-    .description("testString")
-    .build();
-
-    // Construct an instance of the RuleImport model
-    RuleImport ruleImportModel = new RuleImport.Builder()
-    .name("testString")
-    .uiSupport(uiSupportModel)
-    .build();
-
     // Construct an instance of the RuleTargetAttribute model
     RuleTargetAttribute ruleTargetAttributeModel = new RuleTargetAttribute.Builder()
-    .name("resource_id")
+    .name("testString")
     .operator("string_equals")
-    .value("f0f8f7994e754ff38f9d370201966561")
+    .value("testString")
     .build();
 
     // Construct an instance of the TargetResource model
     TargetResource targetResourceModel = new TargetResource.Builder()
     .serviceName("iam-groups")
-    .resourceKind("zone")
+    .resourceKind("service")
     .additionalTargetAttributes(new java.util.ArrayList<RuleTargetAttribute>(java.util.Arrays.asList(ruleTargetAttributeModel)))
     .build();
 
     // Construct an instance of the RuleRequiredConfigSingleProperty model
     RuleRequiredConfigSingleProperty ruleRequiredConfigModel = new RuleRequiredConfigSingleProperty.Builder()
-    .description("testString")
+    .description("Public access check")
     .property("public_access_enabled")
     .operator("is_true")
     .value("testString")
@@ -165,17 +151,15 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the EnforcementAction model
     EnforcementAction enforcementActionModel = new EnforcementAction.Builder()
-    .action("disallow")
+    .action("audit_log")
     .build();
 
     // Construct an instance of the RuleRequest model
     RuleRequest ruleRequestModel = new RuleRequest.Builder()
-    .accountId("testString")
-    .name("testString")
-    .description("testString")
-    .version("1.0.0")
+    .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
+    .name("Disable public access")
+    .description("Ensure that public access to account resources is disabled.")
     .ruleType("user_defined")
-    .imports(new java.util.ArrayList<RuleImport>(java.util.Arrays.asList(ruleImportModel)))
     .target(targetResourceModel)
     .requiredConfig(ruleRequiredConfigModel)
     .enforcementActions(new java.util.ArrayList<EnforcementAction>(java.util.Arrays.asList(enforcementActionModel)))
@@ -229,7 +213,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   @Test
   public void testListRulesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 1000, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"rules\": [{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"version\": \"1.0.0\", \"rule_type\": \"user_defined\", \"imports\": [{\"name\": \"name\", \"ui_support\": {\"display_name\": \"displayName\", \"description\": \"description\"}}], \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}]}";
+    String mockResponseBody = "{\"offset\": 6, \"limit\": 1000, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"rules\": [{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}]}";
     String listRulesPath = java.net.URLEncoder.encode("/config/v1/rules", "UTF-8").replace("%2F", "/");
 
     server.enqueue(new MockResponse()
@@ -241,7 +225,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the ListRulesOptions model
     ListRulesOptions listRulesOptionsModel = new ListRulesOptions.Builder()
-    .accountId("testString")
+    .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
     .transactionId("testString")
     .attached(true)
     .labels("SOC2,ITCS300")
@@ -265,7 +249,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("account_id"), "531fc3e28bfc43c5a2cea07786d93f5c");
     assertEquals(Boolean.valueOf(query.get("attached")), Boolean.valueOf(true));
     assertEquals(query.get("labels"), "SOC2,ITCS300");
     assertEquals(query.get("scopes"), "scope_id");
@@ -291,7 +275,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   @Test
   public void testGetRuleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"version\": \"1.0.0\", \"rule_type\": \"user_defined\", \"imports\": [{\"name\": \"name\", \"ui_support\": {\"display_name\": \"displayName\", \"description\": \"description\"}}], \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
     String getRulePath = java.net.URLEncoder.encode("/config/v1/rules/testString", "UTF-8").replace("%2F", "/");
 
     server.enqueue(new MockResponse()
@@ -342,7 +326,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   @Test
   public void testUpdateRuleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"version\": \"1.0.0\", \"rule_type\": \"user_defined\", \"imports\": [{\"name\": \"name\", \"ui_support\": {\"display_name\": \"displayName\", \"description\": \"description\"}}], \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
     String updateRulePath = java.net.URLEncoder.encode("/config/v1/rules/testString", "UTF-8").replace("%2F", "/");
 
     server.enqueue(new MockResponse()
@@ -354,15 +338,15 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the RuleTargetAttribute model
     RuleTargetAttribute ruleTargetAttributeModel = new RuleTargetAttribute.Builder()
-    .name("resource_id")
+    .name("testString")
     .operator("string_equals")
-    .value("f0f8f7994e754ff38f9d370201966561")
+    .value("testString")
     .build();
 
     // Construct an instance of the TargetResource model
     TargetResource targetResourceModel = new TargetResource.Builder()
     .serviceName("iam-groups")
-    .resourceKind("zone")
+    .resourceKind("service")
     .additionalTargetAttributes(new java.util.ArrayList<RuleTargetAttribute>(java.util.Arrays.asList(ruleTargetAttributeModel)))
     .build();
 
@@ -370,25 +354,13 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RuleRequiredConfigSingleProperty ruleRequiredConfigModel = new RuleRequiredConfigSingleProperty.Builder()
     .description("testString")
     .property("public_access_enabled")
-    .operator("is_true")
+    .operator("is_false")
     .value("testString")
     .build();
 
     // Construct an instance of the EnforcementAction model
     EnforcementAction enforcementActionModel = new EnforcementAction.Builder()
     .action("audit_log")
-    .build();
-
-    // Construct an instance of the UISupport model
-    UISupport uiSupportModel = new UISupport.Builder()
-    .displayName("testString")
-    .description("testString")
-    .build();
-
-    // Construct an instance of the RuleImport model
-    RuleImport ruleImportModel = new RuleImport.Builder()
-    .name("testString")
-    .uiSupport(uiSupportModel)
     .build();
 
     // Construct an instance of the UpdateRuleOptions model
@@ -401,9 +373,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     .requiredConfig(ruleRequiredConfigModel)
     .enforcementActions(new java.util.ArrayList<EnforcementAction>(java.util.Arrays.asList(enforcementActionModel)))
     .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
-    .version("1.0.0")
     .ruleType("user_defined")
-    .imports(new java.util.ArrayList<RuleImport>(java.util.Arrays.asList(ruleImportModel)))
     .labels(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .transactionId("testString")
     .build();
@@ -507,14 +477,14 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the RuleScope model
     RuleScope ruleScopeModel = new RuleScope.Builder()
-    .note("testString")
-    .scopeId("testString")
+    .note("My enterprise")
+    .scopeId("282cf433ac91493ba860480d92519990")
     .scopeType("enterprise")
     .build();
 
     // Construct an instance of the AttachmentRequest model
     AttachmentRequest attachmentRequestModel = new AttachmentRequest.Builder()
-    .accountId("testString")
+    .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
     .includedScope(ruleScopeModel)
     .excludedScopes(new java.util.ArrayList<RuleScope>(java.util.Arrays.asList(ruleScopeModel)))
     .build();
@@ -680,8 +650,8 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the RuleScope model
     RuleScope ruleScopeModel = new RuleScope.Builder()
-    .note("testString")
-    .scopeId("testString")
+    .note("My enterprise")
+    .scopeId("282cf433ac91493ba860480d92519990")
     .scopeType("enterprise")
     .build();
 
@@ -690,7 +660,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     .ruleId("testString")
     .attachmentId("testString")
     .ifMatch("testString")
-    .accountId("testString")
+    .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
     .includedScope(ruleScopeModel)
     .excludedScopes(new java.util.ArrayList<RuleScope>(java.util.Arrays.asList(ruleScopeModel)))
     .transactionId("testString")

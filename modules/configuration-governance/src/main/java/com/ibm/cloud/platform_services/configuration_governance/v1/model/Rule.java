@@ -23,23 +23,19 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class Rule extends GenericModel {
 
   /**
-   * The type of rule. Rules that you create are `user_defined`. Rules that are created by IBM are `service_defined`.
+   * The type of rule. Rules that you create are `user_defined`.
    */
   public interface RuleType {
     /** user_defined. */
     String USER_DEFINED = "user_defined";
-    /** service_defined. */
-    String SERVICE_DEFINED = "service_defined";
   }
 
   @SerializedName("account_id")
   protected String accountId;
   protected String name;
   protected String description;
-  protected String version;
   @SerializedName("rule_type")
   protected String ruleType;
-  protected List<RuleImport> imports;
   protected TargetResource target;
   @SerializedName("required_config")
   protected RuleRequiredConfig requiredConfig;
@@ -93,37 +89,14 @@ public class Rule extends GenericModel {
   }
 
   /**
-   * Gets the version.
-   *
-   * A field that you can use to store and manage a custom version for this rule.
-   *
-   * @return the version
-   */
-  public String getVersion() {
-    return version;
-  }
-
-  /**
    * Gets the ruleType.
    *
-   * The type of rule. Rules that you create are `user_defined`. Rules that are created by IBM are `service_defined`.
+   * The type of rule. Rules that you create are `user_defined`.
    *
    * @return the ruleType
    */
   public String getRuleType() {
     return ruleType;
-  }
-
-  /**
-   * Gets the imports.
-   *
-   * Parameters that are imported by IBM as metadata to create
-   * `service_defined` rules.
-   *
-   * @return the imports
-   */
-  public List<RuleImport> getImports() {
-    return imports;
   }
 
   /**

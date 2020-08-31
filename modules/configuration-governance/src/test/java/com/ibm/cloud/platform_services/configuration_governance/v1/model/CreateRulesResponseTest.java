@@ -17,12 +17,10 @@ import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateR
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRulesResponse;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.EnforcementAction;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.Rule;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleImport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequiredConfigSingleProperty;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleResponseError;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleTargetAttribute;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.TargetResource;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.UISupport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;

@@ -15,11 +15,9 @@ package com.ibm.cloud.platform_services.configuration_governance.v1.model;
 
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.EnforcementAction;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.Rule;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleImport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequiredConfigSingleProperty;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleTargetAttribute;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.TargetResource;
-import com.ibm.cloud.platform_services.configuration_governance.v1.model.UISupport;
 import com.ibm.cloud.platform_services.configuration_governance.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -43,9 +41,7 @@ public class RuleTest {
     assertNull(ruleModel.getAccountId());
     assertNull(ruleModel.getName());
     assertNull(ruleModel.getDescription());
-    assertNull(ruleModel.getVersion());
     assertNull(ruleModel.getRuleType());
-    assertNull(ruleModel.getImports());
     assertNull(ruleModel.getTarget());
     assertNull(ruleModel.getRequiredConfig());
     assertNull(ruleModel.getEnforcementActions());

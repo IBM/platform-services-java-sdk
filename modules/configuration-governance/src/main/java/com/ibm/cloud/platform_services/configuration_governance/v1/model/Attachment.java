@@ -80,6 +80,8 @@ public class Attachment extends GenericModel {
   /**
    * Gets the excludedScopes.
    *
+   * The extent at which the rule can be excluded from the included scope.
+   *
    * @return the excludedScopes
    */
   public List<RuleScope> getExcludedScopes() {

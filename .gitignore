@@ -8,6 +8,7 @@ lib/*.js
 # service-name/*.js // UNCOMMENT AND ADD YOUR OWN SERVICE FILES
 case-management/*.js
 catalog-management/*.js
+configuration-governance/*.js
 enterprise-management/*.js
 global-catalog/*.js
 global-search/*.js

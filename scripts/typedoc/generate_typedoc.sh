@@ -5,6 +5,7 @@
     --out ./doc \
     ./case-management/v1.ts \
     ./catalog-management/v1.ts \
+    ./configuration-governance/v1.ts \
     ./enterprise-management/v1.ts \
     ./global-catalog/v1.ts \
     ./global-search/v2.ts \

@@ -1,0 +1,64 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.ibm.cloud</groupId>
+        <artifactId>platform-services</artifactId>
+	<version>99-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
+    </parent>
+
+    <artifactId>platform-services-examples</artifactId>
+    <packaging>jar</packaging>
+    <name>IBM Cloud Platform Services Code Examples</name>
+
+    <dependencies>
+        <!--
+	        There should be a dependency for each module whose request example class
+	        exists in this "examples" module.
+	        Add new "dependency" entries here as needed when you add a request examples class
+	        for a new service.
+	        Note: the "artifactId" values below should reflect the "artifactId" value specified
+	        in each module's pom.xml file (i.e. not the module's directory name).
+        -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>configuration-governance</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency> 
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+    </properties>
+    <build>
+  <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+      </plugin>
+      <!-- No need to deploy this artifact -->
+      <plugin>
+        <groupId>com.carrotgarden.maven</groupId>
+        <artifactId>bintray-maven-plugin</artifactId>
+        <configuration>
+             <skip>true</skip>
+        </configuration>
+      </plugin>
+  </plugins>
+</build>
+    
+    <developers>
+        <developer>
+            <name>IBM Cloud DevX SDK Development</name>
+            <email>devxsdk@us.ibm.com</email>
+            <url>https://www.ibm.com/</url>
+        </developer>
+    </developers>
+</project>

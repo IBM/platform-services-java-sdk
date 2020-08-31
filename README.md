@@ -48,6 +48,7 @@ Service Name | Artifact Coordinates
 --- | --- 
 [Case Management](https://cloud.ibm.com/apidocs/case-management) | com.ibm.cloud:case-management:0.11.0
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | com.ibm.cloud:catalog-management:0.11.0
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | com.ibm.cloud:configuration-governance:0.11.0
 [Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | com.ibm.cloud:enterprise-management:0.11.0
 [Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | com.ibm.cloud:global-catalog:0.11.0
 [Global Search](https://cloud.ibm.com/apidocs/search) | com.ibm.cloud:global-search:0.11.0

@@ -23,30 +23,24 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
+import com.ibm.cloud.sdk.core.util.RequestUtils;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -54,14 +48,14 @@ import static org.testng.Assert.*;
  * Unit test class for the GlobalSearch service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class GlobalSearchTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected GlobalSearch testService;
+  protected GlobalSearch globalSearchService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -75,9 +69,9 @@ public class GlobalSearchTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = GlobalSearch.newInstance(serviceName);
+    globalSearchService = GlobalSearch.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    globalSearchService.setServiceUrl(url);
   }
 
   /**
@@ -116,7 +110,7 @@ public class GlobalSearchTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ScanResult> response = testService.search(searchOptionsModel).execute();
+    Response<ScanResult> response = globalSearchService.search(searchOptionsModel).execute();
     assertNotNull(response);
     ScanResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -133,7 +127,7 @@ public class GlobalSearchTest extends PowerMockTestCase {
     assertEquals(query.get("account_id"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1"));
     assertEquals(Long.valueOf(query.get("timeout")), Long.valueOf("0"));
-    assertEquals(Arrays.asList(query.get("sort")), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(query.get("sort"), RequestUtils.join(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")), ","));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, searchPath);
@@ -156,7 +150,7 @@ public class GlobalSearchTest extends PowerMockTestCase {
     GetSupportedTypesOptions getSupportedTypesOptionsModel = new GetSupportedTypesOptions();
 
     // Invoke operation with valid options model (positive test)
-    Response<SupportedTypesList> response = testService.getSupportedTypes(getSupportedTypesOptionsModel).execute();
+    Response<SupportedTypesList> response = globalSearchService.getSupportedTypes(getSupportedTypesOptionsModel).execute();
     assertNotNull(response);
     SupportedTypesList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -191,6 +185,6 @@ public class GlobalSearchTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    globalSearchService = null;
   }
 }

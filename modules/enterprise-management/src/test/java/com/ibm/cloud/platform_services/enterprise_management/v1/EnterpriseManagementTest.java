@@ -40,28 +40,21 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -69,14 +62,14 @@ import static org.testng.Assert.*;
  * Unit test class for the EnterpriseManagement service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class EnterpriseManagementTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected EnterpriseManagement testService;
+  protected EnterpriseManagement enterpriseManagementService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -90,9 +83,9 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = EnterpriseManagement.newInstance(serviceName);
+    enterpriseManagementService = EnterpriseManagement.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    enterpriseManagementService.setServiceUrl(url);
   }
 
   /**
@@ -126,7 +119,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CreateAccountGroupResponse> response = testService.createAccountGroup(createAccountGroupOptionsModel).execute();
+    Response<CreateAccountGroupResponse> response = enterpriseManagementService.createAccountGroup(createAccountGroupOptionsModel).execute();
     assertNotNull(response);
     CreateAccountGroupResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -154,7 +147,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createAccountGroup(null).execute();
+    enterpriseManagementService.createAccountGroup(null).execute();
   }
 
   @Test
@@ -179,7 +172,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ListAccountGroupsResponse> response = testService.listAccountGroups(listAccountGroupsOptionsModel).execute();
+    Response<ListAccountGroupsResponse> response = enterpriseManagementService.listAccountGroups(listAccountGroupsOptionsModel).execute();
     assertNotNull(response);
     ListAccountGroupsResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -221,7 +214,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AccountGroup> response = testService.getAccountGroup(getAccountGroupOptionsModel).execute();
+    Response<AccountGroup> response = enterpriseManagementService.getAccountGroup(getAccountGroupOptionsModel).execute();
     assertNotNull(response);
     AccountGroup responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -249,7 +242,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getAccountGroup(null).execute();
+    enterpriseManagementService.getAccountGroup(null).execute();
   }
 
   @Test
@@ -272,7 +265,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.updateAccountGroup(updateAccountGroupOptionsModel).execute();
+    Response<Void> response = enterpriseManagementService.updateAccountGroup(updateAccountGroupOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -301,7 +294,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateAccountGroup(null).execute();
+    enterpriseManagementService.updateAccountGroup(null).execute();
   }
 
   @Test
@@ -325,7 +318,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.importAccountToEnterprise(importAccountToEnterpriseOptionsModel).execute();
+    Response<Void> response = enterpriseManagementService.importAccountToEnterprise(importAccountToEnterpriseOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -354,7 +347,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.importAccountToEnterprise(null).execute();
+    enterpriseManagementService.importAccountToEnterprise(null).execute();
   }
 
   @Test
@@ -378,7 +371,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CreateAccountResponse> response = testService.createAccount(createAccountOptionsModel).execute();
+    Response<CreateAccountResponse> response = enterpriseManagementService.createAccount(createAccountOptionsModel).execute();
     assertNotNull(response);
     CreateAccountResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -406,7 +399,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createAccount(null).execute();
+    enterpriseManagementService.createAccount(null).execute();
   }
 
   @Test
@@ -431,7 +424,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ListAccountsResponse> response = testService.listAccounts(listAccountsOptionsModel).execute();
+    Response<ListAccountsResponse> response = enterpriseManagementService.listAccounts(listAccountsOptionsModel).execute();
     assertNotNull(response);
     ListAccountsResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -473,7 +466,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Account> response = testService.getAccount(getAccountOptionsModel).execute();
+    Response<Account> response = enterpriseManagementService.getAccount(getAccountOptionsModel).execute();
     assertNotNull(response);
     Account responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -501,7 +494,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getAccount(null).execute();
+    enterpriseManagementService.getAccount(null).execute();
   }
 
   @Test
@@ -523,7 +516,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.updateAccount(updateAccountOptionsModel).execute();
+    Response<Void> response = enterpriseManagementService.updateAccount(updateAccountOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -552,7 +545,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateAccount(null).execute();
+    enterpriseManagementService.updateAccount(null).execute();
   }
 
   @Test
@@ -577,7 +570,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CreateEnterpriseResponse> response = testService.createEnterprise(createEnterpriseOptionsModel).execute();
+    Response<CreateEnterpriseResponse> response = enterpriseManagementService.createEnterprise(createEnterpriseOptionsModel).execute();
     assertNotNull(response);
     CreateEnterpriseResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -605,7 +598,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createEnterprise(null).execute();
+    enterpriseManagementService.createEnterprise(null).execute();
   }
 
   @Test
@@ -630,7 +623,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ListEnterprisesResponse> response = testService.listEnterprises(listEnterprisesOptionsModel).execute();
+    Response<ListEnterprisesResponse> response = enterpriseManagementService.listEnterprises(listEnterprisesOptionsModel).execute();
     assertNotNull(response);
     ListEnterprisesResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -672,7 +665,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Enterprise> response = testService.getEnterprise(getEnterpriseOptionsModel).execute();
+    Response<Enterprise> response = enterpriseManagementService.getEnterprise(getEnterpriseOptionsModel).execute();
     assertNotNull(response);
     Enterprise responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -700,7 +693,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getEnterprise(null).execute();
+    enterpriseManagementService.getEnterprise(null).execute();
   }
 
   @Test
@@ -724,7 +717,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.updateEnterprise(updateEnterpriseOptionsModel).execute();
+    Response<Void> response = enterpriseManagementService.updateEnterprise(updateEnterpriseOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -753,7 +746,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateEnterprise(null).execute();
+    enterpriseManagementService.updateEnterprise(null).execute();
   }
 
   /** Initialize the server */
@@ -772,6 +765,6 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    enterpriseManagementService = null;
   }
 }

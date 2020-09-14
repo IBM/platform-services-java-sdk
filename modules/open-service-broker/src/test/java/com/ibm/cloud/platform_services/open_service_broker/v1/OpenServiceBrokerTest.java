@@ -39,30 +39,23 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -70,14 +63,14 @@ import static org.testng.Assert.*;
  * Unit test class for the OpenServiceBroker service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class OpenServiceBrokerTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected OpenServiceBroker testService;
+  protected OpenServiceBroker openServiceBrokerService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -91,9 +84,9 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = OpenServiceBroker.newInstance(serviceName);
+    openServiceBrokerService = OpenServiceBroker.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    openServiceBrokerService.setServiceUrl(url);
   }
 
   /**
@@ -125,7 +118,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp1874644Root> response = testService.getServiceInstanceState(getServiceInstanceStateOptionsModel).execute();
+    Response<Resp1874644Root> response = openServiceBrokerService.getServiceInstanceState(getServiceInstanceStateOptionsModel).execute();
     assertNotNull(response);
     Resp1874644Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -153,7 +146,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getServiceInstanceState(null).execute();
+    openServiceBrokerService.getServiceInstanceState(null).execute();
   }
 
   @Test
@@ -178,7 +171,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp2448145Root> response = testService.replaceServiceInstanceState(replaceServiceInstanceStateOptionsModel).execute();
+    Response<Resp2448145Root> response = openServiceBrokerService.replaceServiceInstanceState(replaceServiceInstanceStateOptionsModel).execute();
     assertNotNull(response);
     Resp2448145Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -206,7 +199,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.replaceServiceInstanceState(null).execute();
+    openServiceBrokerService.replaceServiceInstanceState(null).execute();
   }
 
   @Test
@@ -234,7 +227,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .instanceId("testString")
     .context(contextModel)
     .organizationGuid("null")
-    .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
+    .parameters(new java.util.HashMap<String, String>() { { put("foo", "null"); } })
     .planId("null")
     .serviceId("null")
     .spaceGuid("null")
@@ -242,7 +235,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp2079872Root> response = testService.replaceServiceInstance(replaceServiceInstanceOptionsModel).execute();
+    Response<Resp2079872Root> response = openServiceBrokerService.replaceServiceInstance(replaceServiceInstanceOptionsModel).execute();
     assertNotNull(response);
     Resp2079872Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -271,7 +264,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.replaceServiceInstance(null).execute();
+    openServiceBrokerService.replaceServiceInstance(null).execute();
   }
 
   @Test
@@ -298,15 +291,15 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     UpdateServiceInstanceOptions updateServiceInstanceOptionsModel = new UpdateServiceInstanceOptions.Builder()
     .instanceId("testString")
     .context(contextModel)
-    .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
+    .parameters(new java.util.HashMap<String, String>() { { put("foo", "null"); } })
     .planId("null")
-    .previousValues(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
+    .previousValues(new java.util.HashMap<String, String>() { { put("foo", "null"); } })
     .serviceId("null")
     .acceptsIncomplete(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp2079874Root> response = testService.updateServiceInstance(updateServiceInstanceOptionsModel).execute();
+    Response<Resp2079874Root> response = openServiceBrokerService.updateServiceInstance(updateServiceInstanceOptionsModel).execute();
     assertNotNull(response);
     Resp2079874Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -335,7 +328,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateServiceInstance(null).execute();
+    openServiceBrokerService.updateServiceInstance(null).execute();
   }
 
   @Test
@@ -360,7 +353,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp2079874Root> response = testService.deleteServiceInstance(deleteServiceInstanceOptionsModel).execute();
+    Response<Resp2079874Root> response = openServiceBrokerService.deleteServiceInstance(deleteServiceInstanceOptionsModel).execute();
     assertNotNull(response);
     Resp2079874Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -391,7 +384,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteServiceInstance(null).execute();
+    openServiceBrokerService.deleteServiceInstance(null).execute();
   }
 
   @Test
@@ -411,7 +404,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     ListCatalogOptions listCatalogOptionsModel = new ListCatalogOptions();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp1874650Root> response = testService.listCatalog(listCatalogOptionsModel).execute();
+    Response<Resp1874650Root> response = openServiceBrokerService.listCatalog(listCatalogOptionsModel).execute();
     assertNotNull(response);
     Resp1874650Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -452,7 +445,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp2079894Root> response = testService.getLastOperation(getLastOperationOptionsModel).execute();
+    Response<Resp2079894Root> response = openServiceBrokerService.getLastOperation(getLastOperationOptionsModel).execute();
     assertNotNull(response);
     Resp2079894Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -483,7 +476,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getLastOperation(null).execute();
+    openServiceBrokerService.getLastOperation(null).execute();
   }
 
   @Test
@@ -513,13 +506,13 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .bindingId("testString")
     .instanceId("testString")
     .bindResource(bindResourceModel)
-    .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
+    .parameters(new java.util.HashMap<String, String>() { { put("foo", "null"); } })
     .planId("null")
     .serviceId("null")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resp2079876Root> response = testService.replaceServiceBinding(replaceServiceBindingOptionsModel).execute();
+    Response<Resp2079876Root> response = openServiceBrokerService.replaceServiceBinding(replaceServiceBindingOptionsModel).execute();
     assertNotNull(response);
     Resp2079876Root responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -547,7 +540,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.replaceServiceBinding(null).execute();
+    openServiceBrokerService.replaceServiceBinding(null).execute();
   }
 
   @Test
@@ -571,7 +564,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteServiceBinding(deleteServiceBindingOptionsModel).execute();
+    Response<Void> response = openServiceBrokerService.deleteServiceBinding(deleteServiceBindingOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -602,7 +595,7 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteServiceBinding(null).execute();
+    openServiceBrokerService.deleteServiceBinding(null).execute();
   }
 
   /** Initialize the server */
@@ -621,6 +614,6 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    openServiceBrokerService = null;
   }
 }

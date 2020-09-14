@@ -16,13 +16,10 @@ package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Context;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.UpdateServiceInstanceOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -47,17 +44,17 @@ public class UpdateServiceInstanceOptionsTest {
     UpdateServiceInstanceOptions updateServiceInstanceOptionsModel = new UpdateServiceInstanceOptions.Builder()
       .instanceId("testString")
       .context(contextModel)
-      .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
+      .parameters(new java.util.HashMap<String, String>() { { put("foo", "null"); } })
       .planId("null")
-      .previousValues(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
+      .previousValues(new java.util.HashMap<String, String>() { { put("foo", "null"); } })
       .serviceId("null")
       .acceptsIncomplete(true)
       .build();
     assertEquals(updateServiceInstanceOptionsModel.instanceId(), "testString");
     assertEquals(updateServiceInstanceOptionsModel.context(), contextModel);
-    assertEquals(updateServiceInstanceOptionsModel.parameters(), new java.util.HashMap<String,String>(){{put("foo", "null"); }});
+    assertEquals(updateServiceInstanceOptionsModel.parameters(), new java.util.HashMap<String, String>() { { put("foo", "null"); } });
     assertEquals(updateServiceInstanceOptionsModel.planId(), "null");
-    assertEquals(updateServiceInstanceOptionsModel.previousValues(), new java.util.HashMap<String,String>(){{put("foo", "null"); }});
+    assertEquals(updateServiceInstanceOptionsModel.previousValues(), new java.util.HashMap<String, String>() { { put("foo", "null"); } });
     assertEquals(updateServiceInstanceOptionsModel.serviceId(), "null");
     assertEquals(updateServiceInstanceOptionsModel.acceptsIncomplete(), Boolean.valueOf(true));
   }

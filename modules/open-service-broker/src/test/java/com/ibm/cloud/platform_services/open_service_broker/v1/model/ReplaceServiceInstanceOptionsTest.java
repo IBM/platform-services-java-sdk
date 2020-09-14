@@ -16,13 +16,10 @@ package com.ibm.cloud.platform_services.open_service_broker.v1.model;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Context;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceInstanceOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -48,7 +45,7 @@ public class ReplaceServiceInstanceOptionsTest {
       .instanceId("testString")
       .context(contextModel)
       .organizationGuid("null")
-      .parameters(new java.util.HashMap<String,String>(){{put("foo", "null"); }})
+      .parameters(new java.util.HashMap<String, String>() { { put("foo", "null"); } })
       .planId("null")
       .serviceId("null")
       .spaceGuid("null")
@@ -57,7 +54,7 @@ public class ReplaceServiceInstanceOptionsTest {
     assertEquals(replaceServiceInstanceOptionsModel.instanceId(), "testString");
     assertEquals(replaceServiceInstanceOptionsModel.context(), contextModel);
     assertEquals(replaceServiceInstanceOptionsModel.organizationGuid(), "null");
-    assertEquals(replaceServiceInstanceOptionsModel.parameters(), new java.util.HashMap<String,String>(){{put("foo", "null"); }});
+    assertEquals(replaceServiceInstanceOptionsModel.parameters(), new java.util.HashMap<String, String>() { { put("foo", "null"); } });
     assertEquals(replaceServiceInstanceOptionsModel.planId(), "null");
     assertEquals(replaceServiceInstanceOptionsModel.serviceId(), "null");
     assertEquals(replaceServiceInstanceOptionsModel.spaceGuid(), "null");

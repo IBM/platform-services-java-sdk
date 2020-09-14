@@ -31,30 +31,23 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -62,14 +55,14 @@ import static org.testng.Assert.*;
  * Unit test class for the ResourceManager service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class ResourceManagerTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected ResourceManager testService;
+  protected ResourceManager resourceManagerService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -83,9 +76,9 @@ public class ResourceManagerTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = ResourceManager.newInstance(serviceName);
+    resourceManagerService = ResourceManager.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    resourceManagerService.setServiceUrl(url);
   }
 
   /**
@@ -118,7 +111,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ResourceGroupList> response = testService.listResourceGroups(listResourceGroupsOptionsModel).execute();
+    Response<ResourceGroupList> response = resourceManagerService.listResourceGroups(listResourceGroupsOptionsModel).execute();
     assertNotNull(response);
     ResourceGroupList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -159,7 +152,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ResCreateResourceGroup> response = testService.createResourceGroup(createResourceGroupOptionsModel).execute();
+    Response<ResCreateResourceGroup> response = resourceManagerService.createResourceGroup(createResourceGroupOptionsModel).execute();
     assertNotNull(response);
     ResCreateResourceGroup responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -197,7 +190,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ResourceGroup> response = testService.getResourceGroup(getResourceGroupOptionsModel).execute();
+    Response<ResourceGroup> response = resourceManagerService.getResourceGroup(getResourceGroupOptionsModel).execute();
     assertNotNull(response);
     ResourceGroup responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -225,7 +218,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getResourceGroup(null).execute();
+    resourceManagerService.getResourceGroup(null).execute();
   }
 
   @Test
@@ -249,7 +242,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ResourceGroup> response = testService.updateResourceGroup(updateResourceGroupOptionsModel).execute();
+    Response<ResourceGroup> response = resourceManagerService.updateResourceGroup(updateResourceGroupOptionsModel).execute();
     assertNotNull(response);
     ResourceGroup responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -277,7 +270,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateResourceGroup(null).execute();
+    resourceManagerService.updateResourceGroup(null).execute();
   }
 
   @Test
@@ -298,7 +291,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteResourceGroup(deleteResourceGroupOptionsModel).execute();
+    Response<Void> response = resourceManagerService.deleteResourceGroup(deleteResourceGroupOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -327,7 +320,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteResourceGroup(null).execute();
+    resourceManagerService.deleteResourceGroup(null).execute();
   }
 
   @Test
@@ -347,7 +340,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     ListQuotaDefinitionsOptions listQuotaDefinitionsOptionsModel = new ListQuotaDefinitionsOptions();
 
     // Invoke operation with valid options model (positive test)
-    Response<QuotaDefinitionList> response = testService.listQuotaDefinitions(listQuotaDefinitionsOptionsModel).execute();
+    Response<QuotaDefinitionList> response = resourceManagerService.listQuotaDefinitions(listQuotaDefinitionsOptionsModel).execute();
     assertNotNull(response);
     QuotaDefinitionList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -385,7 +378,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<QuotaDefinition> response = testService.getQuotaDefinition(getQuotaDefinitionOptionsModel).execute();
+    Response<QuotaDefinition> response = resourceManagerService.getQuotaDefinition(getQuotaDefinitionOptionsModel).execute();
     assertNotNull(response);
     QuotaDefinition responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -413,7 +406,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getQuotaDefinition(null).execute();
+    resourceManagerService.getQuotaDefinition(null).execute();
   }
 
   /** Initialize the server */
@@ -432,6 +425,6 @@ public class ResourceManagerTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    resourceManagerService = null;
   }
 }

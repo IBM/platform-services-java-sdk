@@ -10,6 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ */
+
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
 import com.google.gson.JsonObject;
@@ -43,6 +48,7 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -107,8 +113,7 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<CreateAccountGroupResponse> createAccountGroup(CreateAccountGroupOptions createAccountGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountGroupOptions,
       "createAccountGroupOptions cannot be null");
-    String[] pathSegments = { "account-groups" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "createAccountGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -142,26 +147,26 @@ public class EnterpriseManagement extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link ListAccountGroupsResponse}
    */
   public ServiceCall<ListAccountGroupsResponse> listAccountGroups(ListAccountGroupsOptions listAccountGroupsOptions) {
-    String[] pathSegments = { "account-groups" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listAccountGroupsOptions == null) {
+      listAccountGroupsOptions = new ListAccountGroupsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "listAccountGroups");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listAccountGroupsOptions != null) {
-      if (listAccountGroupsOptions.enterpriseId() != null) {
-        builder.query("enterprise_id", listAccountGroupsOptions.enterpriseId());
-      }
-      if (listAccountGroupsOptions.parentAccountGroupId() != null) {
-        builder.query("parent_account_group_id", listAccountGroupsOptions.parentAccountGroupId());
-      }
-      if (listAccountGroupsOptions.parent() != null) {
-        builder.query("parent", listAccountGroupsOptions.parent());
-      }
-      if (listAccountGroupsOptions.limit() != null) {
-        builder.query("limit", String.valueOf(listAccountGroupsOptions.limit()));
-      }
+    if (listAccountGroupsOptions.enterpriseId() != null) {
+      builder.query("enterprise_id", String.valueOf(listAccountGroupsOptions.enterpriseId()));
+    }
+    if (listAccountGroupsOptions.parentAccountGroupId() != null) {
+      builder.query("parent_account_group_id", String.valueOf(listAccountGroupsOptions.parentAccountGroupId()));
+    }
+    if (listAccountGroupsOptions.parent() != null) {
+      builder.query("parent", String.valueOf(listAccountGroupsOptions.parent()));
+    }
+    if (listAccountGroupsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listAccountGroupsOptions.limit()));
     }
     ResponseConverter<ListAccountGroupsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ListAccountGroupsResponse>() { }.getType());
@@ -200,15 +205,14 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<AccountGroup> getAccountGroup(GetAccountGroupOptions getAccountGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountGroupOptions,
       "getAccountGroupOptions cannot be null");
-    String[] pathSegments = { "account-groups" };
-    String[] pathParameters = { getAccountGroupOptions.accountGroupId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_group_id", getAccountGroupOptions.accountGroupId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups/{account_group_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccountGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<AccountGroup> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountGroup>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -226,9 +230,9 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<Void> updateAccountGroup(UpdateAccountGroupOptions updateAccountGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountGroupOptions,
       "updateAccountGroupOptions cannot be null");
-    String[] pathSegments = { "account-groups" };
-    String[] pathParameters = { updateAccountGroupOptions.accountGroupId() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_group_id", updateAccountGroupOptions.accountGroupId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups/{account_group_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "updateAccountGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -262,9 +266,10 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<Void> importAccountToEnterprise(ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(importAccountToEnterpriseOptions,
       "importAccountToEnterpriseOptions cannot be null");
-    String[] pathSegments = { "enterprises", "import/accounts" };
-    String[] pathParameters = { importAccountToEnterpriseOptions.enterpriseId(), importAccountToEnterpriseOptions.accountId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("enterprise_id", importAccountToEnterpriseOptions.enterpriseId());
+    pathParamsMap.put("account_id", importAccountToEnterpriseOptions.accountId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises/{enterprise_id}/import/accounts/{account_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "importAccountToEnterprise");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -295,8 +300,7 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<CreateAccountResponse> createAccount(CreateAccountOptions createAccountOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountOptions,
       "createAccountOptions cannot be null");
-    String[] pathSegments = { "accounts" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/accounts"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "createAccount");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -330,26 +334,26 @@ public class EnterpriseManagement extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link ListAccountsResponse}
    */
   public ServiceCall<ListAccountsResponse> listAccounts(ListAccountsOptions listAccountsOptions) {
-    String[] pathSegments = { "accounts" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listAccountsOptions == null) {
+      listAccountsOptions = new ListAccountsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/accounts"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "listAccounts");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listAccountsOptions != null) {
-      if (listAccountsOptions.enterpriseId() != null) {
-        builder.query("enterprise_id", listAccountsOptions.enterpriseId());
-      }
-      if (listAccountsOptions.accountGroupId() != null) {
-        builder.query("account_group_id", listAccountsOptions.accountGroupId());
-      }
-      if (listAccountsOptions.parent() != null) {
-        builder.query("parent", listAccountsOptions.parent());
-      }
-      if (listAccountsOptions.limit() != null) {
-        builder.query("limit", String.valueOf(listAccountsOptions.limit()));
-      }
+    if (listAccountsOptions.enterpriseId() != null) {
+      builder.query("enterprise_id", String.valueOf(listAccountsOptions.enterpriseId()));
+    }
+    if (listAccountsOptions.accountGroupId() != null) {
+      builder.query("account_group_id", String.valueOf(listAccountsOptions.accountGroupId()));
+    }
+    if (listAccountsOptions.parent() != null) {
+      builder.query("parent", String.valueOf(listAccountsOptions.parent()));
+    }
+    if (listAccountsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listAccountsOptions.limit()));
     }
     ResponseConverter<ListAccountsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ListAccountsResponse>() { }.getType());
@@ -388,15 +392,14 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<Account> getAccount(GetAccountOptions getAccountOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountOptions,
       "getAccountOptions cannot be null");
-    String[] pathSegments = { "accounts" };
-    String[] pathParameters = { getAccountOptions.accountId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getAccountOptions.accountId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/accounts/{account_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccount");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Account> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Account>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -413,9 +416,9 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<Void> updateAccount(UpdateAccountOptions updateAccountOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountOptions,
       "updateAccountOptions cannot be null");
-    String[] pathSegments = { "accounts" };
-    String[] pathParameters = { updateAccountOptions.accountId() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", updateAccountOptions.accountId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/accounts/{account_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "updateAccount");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -443,8 +446,7 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<CreateEnterpriseResponse> createEnterprise(CreateEnterpriseOptions createEnterpriseOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createEnterpriseOptions,
       "createEnterpriseOptions cannot be null");
-    String[] pathSegments = { "enterprises" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "createEnterprise");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -480,26 +482,26 @@ public class EnterpriseManagement extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link ListEnterprisesResponse}
    */
   public ServiceCall<ListEnterprisesResponse> listEnterprises(ListEnterprisesOptions listEnterprisesOptions) {
-    String[] pathSegments = { "enterprises" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listEnterprisesOptions == null) {
+      listEnterprisesOptions = new ListEnterprisesOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "listEnterprises");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listEnterprisesOptions != null) {
-      if (listEnterprisesOptions.enterpriseAccountId() != null) {
-        builder.query("enterprise_account_id", listEnterprisesOptions.enterpriseAccountId());
-      }
-      if (listEnterprisesOptions.accountGroupId() != null) {
-        builder.query("account_group_id", listEnterprisesOptions.accountGroupId());
-      }
-      if (listEnterprisesOptions.accountId() != null) {
-        builder.query("account_id", listEnterprisesOptions.accountId());
-      }
-      if (listEnterprisesOptions.limit() != null) {
-        builder.query("limit", String.valueOf(listEnterprisesOptions.limit()));
-      }
+    if (listEnterprisesOptions.enterpriseAccountId() != null) {
+      builder.query("enterprise_account_id", String.valueOf(listEnterprisesOptions.enterpriseAccountId()));
+    }
+    if (listEnterprisesOptions.accountGroupId() != null) {
+      builder.query("account_group_id", String.valueOf(listEnterprisesOptions.accountGroupId()));
+    }
+    if (listEnterprisesOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listEnterprisesOptions.accountId()));
+    }
+    if (listEnterprisesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listEnterprisesOptions.limit()));
     }
     ResponseConverter<ListEnterprisesResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ListEnterprisesResponse>() { }.getType());
@@ -537,15 +539,14 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<Enterprise> getEnterprise(GetEnterpriseOptions getEnterpriseOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getEnterpriseOptions,
       "getEnterpriseOptions cannot be null");
-    String[] pathSegments = { "enterprises" };
-    String[] pathParameters = { getEnterpriseOptions.enterpriseId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("enterprise_id", getEnterpriseOptions.enterpriseId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises/{enterprise_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getEnterprise");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Enterprise> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Enterprise>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -563,9 +564,9 @@ public class EnterpriseManagement extends BaseService {
   public ServiceCall<Void> updateEnterprise(UpdateEnterpriseOptions updateEnterpriseOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateEnterpriseOptions,
       "updateEnterpriseOptions cannot be null");
-    String[] pathSegments = { "enterprises" };
-    String[] pathParameters = { updateEnterpriseOptions.enterpriseId() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("enterprise_id", updateEnterpriseOptions.enterpriseId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises/{enterprise_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "updateEnterprise");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());

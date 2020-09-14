@@ -10,6 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ */
+
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
 
 import com.google.gson.JsonObject;
@@ -35,6 +40,7 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -100,8 +106,7 @@ public class IamPolicyManagement extends BaseService {
   public ServiceCall<PolicyList> listPolicies(ListPoliciesOptions listPoliciesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listPoliciesOptions,
       "listPoliciesOptions cannot be null");
-    String[] pathSegments = { "v1/policies" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policies"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "listPolicies");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -110,18 +115,18 @@ public class IamPolicyManagement extends BaseService {
     if (listPoliciesOptions.acceptLanguage() != null) {
       builder.header("Accept-Language", listPoliciesOptions.acceptLanguage());
     }
-    builder.query("account_id", listPoliciesOptions.accountId());
+    builder.query("account_id", String.valueOf(listPoliciesOptions.accountId()));
     if (listPoliciesOptions.iamId() != null) {
-      builder.query("iam_id", listPoliciesOptions.iamId());
+      builder.query("iam_id", String.valueOf(listPoliciesOptions.iamId()));
     }
     if (listPoliciesOptions.accessGroupId() != null) {
-      builder.query("access_group_id", listPoliciesOptions.accessGroupId());
+      builder.query("access_group_id", String.valueOf(listPoliciesOptions.accessGroupId()));
     }
     if (listPoliciesOptions.type() != null) {
-      builder.query("type", listPoliciesOptions.type());
+      builder.query("type", String.valueOf(listPoliciesOptions.type()));
     }
     if (listPoliciesOptions.serviceType() != null) {
-      builder.query("service_type", listPoliciesOptions.serviceType());
+      builder.query("service_type", String.valueOf(listPoliciesOptions.serviceType()));
     }
     ResponseConverter<PolicyList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyList>() { }.getType());
@@ -158,8 +163,7 @@ public class IamPolicyManagement extends BaseService {
   public ServiceCall<Policy> createPolicy(CreatePolicyOptions createPolicyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createPolicyOptions,
       "createPolicyOptions cannot be null");
-    String[] pathSegments = { "v1/policies" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policies"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "createPolicy");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -206,9 +210,9 @@ public class IamPolicyManagement extends BaseService {
   public ServiceCall<Policy> updatePolicy(UpdatePolicyOptions updatePolicyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updatePolicyOptions,
       "updatePolicyOptions cannot be null");
-    String[] pathSegments = { "v1/policies" };
-    String[] pathParameters = { updatePolicyOptions.policyId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("policy_id", updatePolicyOptions.policyId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policies/{policy_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "updatePolicy");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -237,15 +241,14 @@ public class IamPolicyManagement extends BaseService {
   public ServiceCall<Policy> getPolicy(GetPolicyOptions getPolicyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getPolicyOptions,
       "getPolicyOptions cannot be null");
-    String[] pathSegments = { "v1/policies" };
-    String[] pathParameters = { getPolicyOptions.policyId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("policy_id", getPolicyOptions.policyId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policies/{policy_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "getPolicy");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Policy> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Policy>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -263,14 +266,13 @@ public class IamPolicyManagement extends BaseService {
   public ServiceCall<Void> deletePolicy(DeletePolicyOptions deletePolicyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deletePolicyOptions,
       "deletePolicyOptions cannot be null");
-    String[] pathSegments = { "v1/policies" };
-    String[] pathParameters = { deletePolicyOptions.policyId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("policy_id", deletePolicyOptions.policyId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policies/{policy_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deletePolicy");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -287,23 +289,23 @@ public class IamPolicyManagement extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link RoleList}
    */
   public ServiceCall<RoleList> listRoles(ListRolesOptions listRolesOptions) {
-    String[] pathSegments = { "v2/roles" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listRolesOptions == null) {
+      listRolesOptions = new ListRolesOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/roles"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "listRoles");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listRolesOptions != null) {
-      if (listRolesOptions.acceptLanguage() != null) {
-        builder.header("Accept-Language", listRolesOptions.acceptLanguage());
-      }
-      if (listRolesOptions.accountId() != null) {
-        builder.query("account_id", listRolesOptions.accountId());
-      }
-      if (listRolesOptions.serviceName() != null) {
-        builder.query("service_name", listRolesOptions.serviceName());
-      }
+    if (listRolesOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", listRolesOptions.acceptLanguage());
+    }
+    if (listRolesOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listRolesOptions.accountId()));
+    }
+    if (listRolesOptions.serviceName() != null) {
+      builder.query("service_name", String.valueOf(listRolesOptions.serviceName()));
     }
     ResponseConverter<RoleList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleList>() { }.getType());
@@ -338,8 +340,7 @@ public class IamPolicyManagement extends BaseService {
   public ServiceCall<CustomRole> createRole(CreateRoleOptions createRoleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createRoleOptions,
       "createRoleOptions cannot be null");
-    String[] pathSegments = { "v2/roles" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/roles"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "createRole");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -375,9 +376,9 @@ public class IamPolicyManagement extends BaseService {
   public ServiceCall<CustomRole> updateRole(UpdateRoleOptions updateRoleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateRoleOptions,
       "updateRoleOptions cannot be null");
-    String[] pathSegments = { "v2/roles" };
-    String[] pathParameters = { updateRoleOptions.roleId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_id", updateRoleOptions.roleId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/roles/{role_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "updateRole");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -411,15 +412,14 @@ public class IamPolicyManagement extends BaseService {
   public ServiceCall<CustomRole> getRole(GetRoleOptions getRoleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getRoleOptions,
       "getRoleOptions cannot be null");
-    String[] pathSegments = { "v2/roles" };
-    String[] pathParameters = { getRoleOptions.roleId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_id", getRoleOptions.roleId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/roles/{role_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "getRole");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<CustomRole> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CustomRole>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -436,14 +436,13 @@ public class IamPolicyManagement extends BaseService {
   public ServiceCall<Void> deleteRole(DeleteRoleOptions deleteRoleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteRoleOptions,
       "deleteRoleOptions cannot be null");
-    String[] pathSegments = { "v2/roles" };
-    String[] pathParameters = { deleteRoleOptions.roleId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_id", deleteRoleOptions.roleId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/roles/{role_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deleteRole");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }

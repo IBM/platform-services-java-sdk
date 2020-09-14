@@ -38,30 +38,23 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -69,14 +62,14 @@ import static org.testng.Assert.*;
  * Unit test class for the IamPolicyManagement service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class IamPolicyManagementTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected IamPolicyManagement testService;
+  protected IamPolicyManagement iamPolicyManagementService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -90,9 +83,9 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = IamPolicyManagement.newInstance(serviceName);
+    iamPolicyManagementService = IamPolicyManagement.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    iamPolicyManagementService.setServiceUrl(url);
   }
 
   /**
@@ -129,7 +122,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<PolicyList> response = testService.listPolicies(listPoliciesOptionsModel).execute();
+    Response<PolicyList> response = iamPolicyManagementService.listPolicies(listPoliciesOptionsModel).execute();
     assertNotNull(response);
     PolicyList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -162,7 +155,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.listPolicies(null).execute();
+    iamPolicyManagementService.listPolicies(null).execute();
   }
 
   @Test
@@ -178,22 +171,15 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ResourceAttribute model
-    ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
-    .name("testString")
-    .value("testString")
-    .operator("testString")
-    .build();
-
     // Construct an instance of the SubjectAttribute model
     SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
     .name("testString")
     .value("testString")
     .build();
 
-    // Construct an instance of the PolicyResource model
-    PolicyResource policyResourceModel = new PolicyResource.Builder()
-    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+    // Construct an instance of the PolicySubject model
+    PolicySubject policySubjectModel = new PolicySubject.Builder()
+    .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
     .build();
 
     // Construct an instance of the PolicyRole model
@@ -201,9 +187,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .roleId("testString")
     .build();
 
-    // Construct an instance of the PolicySubject model
-    PolicySubject policySubjectModel = new PolicySubject.Builder()
-    .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
+    // Construct an instance of the ResourceAttribute model
+    ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
+    .name("testString")
+    .value("testString")
+    .operator("testString")
+    .build();
+
+    // Construct an instance of the PolicyResource model
+    PolicyResource policyResourceModel = new PolicyResource.Builder()
+    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
     .build();
 
     // Construct an instance of the CreatePolicyOptions model
@@ -216,7 +209,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Policy> response = testService.createPolicy(createPolicyOptionsModel).execute();
+    Response<Policy> response = iamPolicyManagementService.createPolicy(createPolicyOptionsModel).execute();
     assertNotNull(response);
     Policy responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -244,7 +237,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createPolicy(null).execute();
+    iamPolicyManagementService.createPolicy(null).execute();
   }
 
   @Test
@@ -260,22 +253,15 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ResourceAttribute model
-    ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
-    .name("testString")
-    .value("testString")
-    .operator("testString")
-    .build();
-
     // Construct an instance of the SubjectAttribute model
     SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
     .name("testString")
     .value("testString")
     .build();
 
-    // Construct an instance of the PolicyResource model
-    PolicyResource policyResourceModel = new PolicyResource.Builder()
-    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+    // Construct an instance of the PolicySubject model
+    PolicySubject policySubjectModel = new PolicySubject.Builder()
+    .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
     .build();
 
     // Construct an instance of the PolicyRole model
@@ -283,9 +269,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .roleId("testString")
     .build();
 
-    // Construct an instance of the PolicySubject model
-    PolicySubject policySubjectModel = new PolicySubject.Builder()
-    .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
+    // Construct an instance of the ResourceAttribute model
+    ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
+    .name("testString")
+    .value("testString")
+    .operator("testString")
+    .build();
+
+    // Construct an instance of the PolicyResource model
+    PolicyResource policyResourceModel = new PolicyResource.Builder()
+    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
     .build();
 
     // Construct an instance of the UpdatePolicyOptions model
@@ -299,7 +292,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Policy> response = testService.updatePolicy(updatePolicyOptionsModel).execute();
+    Response<Policy> response = iamPolicyManagementService.updatePolicy(updatePolicyOptionsModel).execute();
     assertNotNull(response);
     Policy responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -328,7 +321,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updatePolicy(null).execute();
+    iamPolicyManagementService.updatePolicy(null).execute();
   }
 
   @Test
@@ -350,7 +343,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Policy> response = testService.getPolicy(getPolicyOptionsModel).execute();
+    Response<Policy> response = iamPolicyManagementService.getPolicy(getPolicyOptionsModel).execute();
     assertNotNull(response);
     Policy responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -378,7 +371,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getPolicy(null).execute();
+    iamPolicyManagementService.getPolicy(null).execute();
   }
 
   @Test
@@ -399,7 +392,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deletePolicy(deletePolicyOptionsModel).execute();
+    Response<Void> response = iamPolicyManagementService.deletePolicy(deletePolicyOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -428,7 +421,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deletePolicy(null).execute();
+    iamPolicyManagementService.deletePolicy(null).execute();
   }
 
   @Test
@@ -452,7 +445,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<RoleList> response = testService.listRoles(listRolesOptionsModel).execute();
+    Response<RoleList> response = iamPolicyManagementService.listRoles(listRolesOptionsModel).execute();
     assertNotNull(response);
     RoleList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -498,7 +491,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CustomRole> response = testService.createRole(createRoleOptionsModel).execute();
+    Response<CustomRole> response = iamPolicyManagementService.createRole(createRoleOptionsModel).execute();
     assertNotNull(response);
     CustomRole responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -526,7 +519,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createRole(null).execute();
+    iamPolicyManagementService.createRole(null).execute();
   }
 
   @Test
@@ -552,7 +545,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CustomRole> response = testService.updateRole(updateRoleOptionsModel).execute();
+    Response<CustomRole> response = iamPolicyManagementService.updateRole(updateRoleOptionsModel).execute();
     assertNotNull(response);
     CustomRole responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -581,7 +574,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateRole(null).execute();
+    iamPolicyManagementService.updateRole(null).execute();
   }
 
   @Test
@@ -603,7 +596,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CustomRole> response = testService.getRole(getRoleOptionsModel).execute();
+    Response<CustomRole> response = iamPolicyManagementService.getRole(getRoleOptionsModel).execute();
     assertNotNull(response);
     CustomRole responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -631,7 +624,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getRole(null).execute();
+    iamPolicyManagementService.getRole(null).execute();
   }
 
   @Test
@@ -652,7 +645,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteRole(deleteRoleOptionsModel).execute();
+    Response<Void> response = iamPolicyManagementService.deleteRole(deleteRoleOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -681,7 +674,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteRole(null).execute();
+    iamPolicyManagementService.deleteRole(null).execute();
   }
 
   /** Initialize the server */
@@ -700,6 +693,6 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    iamPolicyManagementService = null;
   }
 }

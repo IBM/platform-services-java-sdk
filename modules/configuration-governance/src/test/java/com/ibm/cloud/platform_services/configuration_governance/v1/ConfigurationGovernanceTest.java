@@ -118,7 +118,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testCreateRulesWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"rules\": [{\"request_id\": \"3cebc877-58e7-44a5-a292-32114fa73558\", \"status_code\": 201, \"rule\": {\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}, \"errors\": [{\"code\": \"bad_request\", \"message\": \"The rule is missing an account ID\"}], \"trace\": \"861263b4-cee3-4514-8d8c-05d17308e6eb\"}]}";
-    String createRulesPath = java.net.URLEncoder.encode("/config/v1/rules", "UTF-8").replace("%2F", "/");
+    String createRulesPath = "/config/v1/rules";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -129,9 +129,9 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the RuleTargetAttribute model
     RuleTargetAttribute ruleTargetAttributeModel = new RuleTargetAttribute.Builder()
-    .name("testString")
+    .name("resource_id")
     .operator("string_equals")
-    .value("testString")
+    .value("f0f8f7994e754ff38f9d370201966561")
     .build();
 
     // Construct an instance of the TargetResource model
@@ -141,17 +141,23 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     .additionalTargetAttributes(new java.util.ArrayList<RuleTargetAttribute>(java.util.Arrays.asList(ruleTargetAttributeModel)))
     .build();
 
-    // Construct an instance of the RuleRequiredConfigSingleProperty model
-    RuleRequiredConfigSingleProperty ruleRequiredConfigModel = new RuleRequiredConfigSingleProperty.Builder()
-    .description("Public access check")
+    // Construct an instance of the RuleConditionSingleProperty model
+    RuleConditionSingleProperty ruleConditionModel = new RuleConditionSingleProperty.Builder()
+    .description("testString")
     .property("public_access_enabled")
-    .operator("is_true")
+    .operator("is_false")
     .value("testString")
+    .build();
+
+    // Construct an instance of the RuleRequiredConfigMultiplePropertiesConditionAnd model
+    RuleRequiredConfigMultiplePropertiesConditionAnd ruleRequiredConfigModel = new RuleRequiredConfigMultiplePropertiesConditionAnd.Builder()
+    .description("Public access check")
+    .and(new java.util.ArrayList<RuleCondition>(java.util.Arrays.asList(ruleConditionModel)))
     .build();
 
     // Construct an instance of the EnforcementAction model
     EnforcementAction enforcementActionModel = new EnforcementAction.Builder()
-    .action("audit_log")
+    .action("disallow")
     .build();
 
     // Construct an instance of the RuleRequest model
@@ -214,7 +220,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testListRulesWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"offset\": 6, \"limit\": 1000, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"rules\": [{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}]}";
-    String listRulesPath = java.net.URLEncoder.encode("/config/v1/rules", "UTF-8").replace("%2F", "/");
+    String listRulesPath = "/config/v1/rules";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -276,7 +282,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testGetRuleWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
-    String getRulePath = java.net.URLEncoder.encode("/config/v1/rules/testString", "UTF-8").replace("%2F", "/");
+    String getRulePath = "/config/v1/rules/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -327,7 +333,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testUpdateRuleWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
-    String updateRulePath = java.net.URLEncoder.encode("/config/v1/rules/testString", "UTF-8").replace("%2F", "/");
+    String updateRulePath = "/config/v1/rules/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -415,7 +421,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testDeleteRuleWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String deleteRulePath = java.net.URLEncoder.encode("/config/v1/rules/testString", "UTF-8").replace("%2F", "/");
+    String deleteRulePath = "/config/v1/rules/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -466,7 +472,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testCreateAttachmentsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"attachments\": [{\"attachment_id\": \"attachment-fc7b9a77-1c85-406c-b346-f3f5bb9aa7e2\", \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"account_id\": \"accountId\", \"included_scope\": {\"note\": \"note\", \"scope_id\": \"scopeId\", \"scope_type\": \"enterprise\"}, \"excluded_scopes\": [{\"note\": \"note\", \"scope_id\": \"scopeId\", \"scope_type\": \"enterprise\"}]}]}";
-    String createAttachmentsPath = java.net.URLEncoder.encode("/config/v1/rules/testString/attachments", "UTF-8").replace("%2F", "/");
+    String createAttachmentsPath = "/config/v1/rules/testString/attachments";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -532,7 +538,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testListAttachmentsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"offset\": 6, \"limit\": 1000, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"attachments\": [{\"attachment_id\": \"attachment-fc7b9a77-1c85-406c-b346-f3f5bb9aa7e2\", \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"account_id\": \"accountId\", \"included_scope\": {\"note\": \"note\", \"scope_id\": \"scopeId\", \"scope_type\": \"enterprise\"}, \"excluded_scopes\": [{\"note\": \"note\", \"scope_id\": \"scopeId\", \"scope_type\": \"enterprise\"}]}]}";
-    String listAttachmentsPath = java.net.URLEncoder.encode("/config/v1/rules/testString/attachments", "UTF-8").replace("%2F", "/");
+    String listAttachmentsPath = "/config/v1/rules/testString/attachments";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -587,7 +593,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testGetAttachmentWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"attachment_id\": \"attachment-fc7b9a77-1c85-406c-b346-f3f5bb9aa7e2\", \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"account_id\": \"accountId\", \"included_scope\": {\"note\": \"note\", \"scope_id\": \"scopeId\", \"scope_type\": \"enterprise\"}, \"excluded_scopes\": [{\"note\": \"note\", \"scope_id\": \"scopeId\", \"scope_type\": \"enterprise\"}]}";
-    String getAttachmentPath = java.net.URLEncoder.encode("/config/v1/rules/testString/attachments/testString", "UTF-8").replace("%2F", "/");
+    String getAttachmentPath = "/config/v1/rules/testString/attachments/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -639,7 +645,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testUpdateAttachmentWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"attachment_id\": \"attachment-fc7b9a77-1c85-406c-b346-f3f5bb9aa7e2\", \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"account_id\": \"accountId\", \"included_scope\": {\"note\": \"note\", \"scope_id\": \"scopeId\", \"scope_type\": \"enterprise\"}, \"excluded_scopes\": [{\"note\": \"note\", \"scope_id\": \"scopeId\", \"scope_type\": \"enterprise\"}]}";
-    String updateAttachmentPath = java.net.URLEncoder.encode("/config/v1/rules/testString/attachments/testString", "UTF-8").replace("%2F", "/");
+    String updateAttachmentPath = "/config/v1/rules/testString/attachments/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -703,7 +709,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   public void testDeleteAttachmentWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String deleteAttachmentPath = java.net.URLEncoder.encode("/config/v1/rules/testString/attachments/testString", "UTF-8").replace("%2F", "/");
+    String deleteAttachmentPath = "/config/v1/rules/testString/attachments/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)

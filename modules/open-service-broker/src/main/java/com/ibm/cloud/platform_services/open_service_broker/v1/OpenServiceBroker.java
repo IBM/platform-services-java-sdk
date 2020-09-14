@@ -10,6 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ */
+
 package com.ibm.cloud.platform_services.open_service_broker.v1;
 
 import com.google.gson.JsonObject;
@@ -37,6 +42,7 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -105,15 +111,14 @@ public class OpenServiceBroker extends BaseService {
   public ServiceCall<Resp1874644Root> getServiceInstanceState(GetServiceInstanceStateOptions getServiceInstanceStateOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getServiceInstanceStateOptions,
       "getServiceInstanceStateOptions cannot be null");
-    String[] pathSegments = { "bluemix_v1/service_instances" };
-    String[] pathParameters = { getServiceInstanceStateOptions.instanceId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("instance_id", getServiceInstanceStateOptions.instanceId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/bluemix_v1/service_instances/{instance_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "getServiceInstanceState");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Resp1874644Root> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Resp1874644Root>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -138,9 +143,9 @@ public class OpenServiceBroker extends BaseService {
   public ServiceCall<Resp2448145Root> replaceServiceInstanceState(ReplaceServiceInstanceStateOptions replaceServiceInstanceStateOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceServiceInstanceStateOptions,
       "replaceServiceInstanceStateOptions cannot be null");
-    String[] pathSegments = { "bluemix_v1/service_instances" };
-    String[] pathParameters = { replaceServiceInstanceStateOptions.instanceId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("instance_id", replaceServiceInstanceStateOptions.instanceId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/bluemix_v1/service_instances/{instance_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "replaceServiceInstanceState");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -183,9 +188,9 @@ public class OpenServiceBroker extends BaseService {
   public ServiceCall<Resp2079872Root> replaceServiceInstance(ReplaceServiceInstanceOptions replaceServiceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceServiceInstanceOptions,
       "replaceServiceInstanceOptions cannot be null");
-    String[] pathSegments = { "v2/service_instances" };
-    String[] pathParameters = { replaceServiceInstanceOptions.instanceId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("instance_id", replaceServiceInstanceOptions.instanceId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/service_instances/{instance_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "replaceServiceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -235,9 +240,9 @@ public class OpenServiceBroker extends BaseService {
   public ServiceCall<Resp2079874Root> updateServiceInstance(UpdateServiceInstanceOptions updateServiceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateServiceInstanceOptions,
       "updateServiceInstanceOptions cannot be null");
-    String[] pathSegments = { "v2/service_instances" };
-    String[] pathParameters = { updateServiceInstanceOptions.instanceId() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("instance_id", updateServiceInstanceOptions.instanceId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/service_instances/{instance_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "updateServiceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -281,16 +286,16 @@ public class OpenServiceBroker extends BaseService {
   public ServiceCall<Resp2079874Root> deleteServiceInstance(DeleteServiceInstanceOptions deleteServiceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteServiceInstanceOptions,
       "deleteServiceInstanceOptions cannot be null");
-    String[] pathSegments = { "v2/service_instances" };
-    String[] pathParameters = { deleteServiceInstanceOptions.instanceId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("instance_id", deleteServiceInstanceOptions.instanceId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/service_instances/{instance_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "deleteServiceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.query("service_id", deleteServiceInstanceOptions.serviceId());
-    builder.query("plan_id", deleteServiceInstanceOptions.planId());
+    builder.query("service_id", String.valueOf(deleteServiceInstanceOptions.serviceId()));
+    builder.query("plan_id", String.valueOf(deleteServiceInstanceOptions.planId()));
     if (deleteServiceInstanceOptions.acceptsIncomplete() != null) {
       builder.query("accepts_incomplete", String.valueOf(deleteServiceInstanceOptions.acceptsIncomplete()));
     }
@@ -315,8 +320,7 @@ public class OpenServiceBroker extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link Resp1874650Root}
    */
   public ServiceCall<Resp1874650Root> listCatalog(ListCatalogOptions listCatalogOptions) {
-    String[] pathSegments = { "v2/catalog" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/catalog"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "listCatalog");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -364,22 +368,22 @@ public class OpenServiceBroker extends BaseService {
   public ServiceCall<Resp2079894Root> getLastOperation(GetLastOperationOptions getLastOperationOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getLastOperationOptions,
       "getLastOperationOptions cannot be null");
-    String[] pathSegments = { "v2/service_instances", "last_operation" };
-    String[] pathParameters = { getLastOperationOptions.instanceId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("instance_id", getLastOperationOptions.instanceId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/service_instances/{instance_id}/last_operation", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "getLastOperation");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (getLastOperationOptions.operation() != null) {
-      builder.query("operation", getLastOperationOptions.operation());
+      builder.query("operation", String.valueOf(getLastOperationOptions.operation()));
     }
     if (getLastOperationOptions.planId() != null) {
-      builder.query("plan_id", getLastOperationOptions.planId());
+      builder.query("plan_id", String.valueOf(getLastOperationOptions.planId()));
     }
     if (getLastOperationOptions.serviceId() != null) {
-      builder.query("service_id", getLastOperationOptions.serviceId());
+      builder.query("service_id", String.valueOf(getLastOperationOptions.serviceId()));
     }
     ResponseConverter<Resp2079894Root> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Resp2079894Root>() { }.getType());
@@ -406,9 +410,10 @@ public class OpenServiceBroker extends BaseService {
   public ServiceCall<Resp2079876Root> replaceServiceBinding(ReplaceServiceBindingOptions replaceServiceBindingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceServiceBindingOptions,
       "replaceServiceBindingOptions cannot be null");
-    String[] pathSegments = { "v2/service_instances", "service_bindings" };
-    String[] pathParameters = { replaceServiceBindingOptions.bindingId(), replaceServiceBindingOptions.instanceId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("binding_id", replaceServiceBindingOptions.bindingId());
+    pathParamsMap.put("instance_id", replaceServiceBindingOptions.instanceId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/service_instances/{instance_id}/service_bindings/{binding_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "replaceServiceBinding");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -450,16 +455,17 @@ public class OpenServiceBroker extends BaseService {
   public ServiceCall<Void> deleteServiceBinding(DeleteServiceBindingOptions deleteServiceBindingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteServiceBindingOptions,
       "deleteServiceBindingOptions cannot be null");
-    String[] pathSegments = { "v2/service_instances", "service_bindings" };
-    String[] pathParameters = { deleteServiceBindingOptions.bindingId(), deleteServiceBindingOptions.instanceId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("binding_id", deleteServiceBindingOptions.bindingId());
+    pathParamsMap.put("instance_id", deleteServiceBindingOptions.instanceId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/service_instances/{instance_id}/service_bindings/{binding_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("open_service_broker", "v1", "deleteServiceBinding");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.query("plan_id", deleteServiceBindingOptions.planId());
-    builder.query("service_id", deleteServiceBindingOptions.serviceId());
+    builder.query("plan_id", String.valueOf(deleteServiceBindingOptions.planId()));
+    builder.query("service_id", String.valueOf(deleteServiceBindingOptions.serviceId()));
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }

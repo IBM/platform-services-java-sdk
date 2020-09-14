@@ -10,6 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ */
+
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
 
 import com.google.gson.JsonObject;
@@ -50,6 +55,7 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -115,8 +121,7 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Group> createAccessGroup(CreateAccessGroupOptions createAccessGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createAccessGroupOptions,
       "createAccessGroupOptions cannot be null");
-    String[] pathSegments = { "groups" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "createAccessGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -125,7 +130,7 @@ public class IamAccessGroups extends BaseService {
     if (createAccessGroupOptions.transactionId() != null) {
       builder.header("Transaction-Id", createAccessGroupOptions.transactionId());
     }
-    builder.query("account_id", createAccessGroupOptions.accountId());
+    builder.query("account_id", String.valueOf(createAccessGroupOptions.accountId()));
     final JsonObject contentJson = new JsonObject();
     contentJson.addProperty("name", createAccessGroupOptions.name());
     if (createAccessGroupOptions.description() != null) {
@@ -151,8 +156,7 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<GroupsList> listAccessGroups(ListAccessGroupsOptions listAccessGroupsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listAccessGroupsOptions,
       "listAccessGroupsOptions cannot be null");
-    String[] pathSegments = { "groups" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "listAccessGroups");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -161,9 +165,9 @@ public class IamAccessGroups extends BaseService {
     if (listAccessGroupsOptions.transactionId() != null) {
       builder.header("Transaction-Id", listAccessGroupsOptions.transactionId());
     }
-    builder.query("account_id", listAccessGroupsOptions.accountId());
+    builder.query("account_id", String.valueOf(listAccessGroupsOptions.accountId()));
     if (listAccessGroupsOptions.iamId() != null) {
-      builder.query("iam_id", listAccessGroupsOptions.iamId());
+      builder.query("iam_id", String.valueOf(listAccessGroupsOptions.iamId()));
     }
     if (listAccessGroupsOptions.limit() != null) {
       builder.query("limit", String.valueOf(listAccessGroupsOptions.limit()));
@@ -172,7 +176,7 @@ public class IamAccessGroups extends BaseService {
       builder.query("offset", String.valueOf(listAccessGroupsOptions.offset()));
     }
     if (listAccessGroupsOptions.sort() != null) {
-      builder.query("sort", listAccessGroupsOptions.sort());
+      builder.query("sort", String.valueOf(listAccessGroupsOptions.sort()));
     }
     if (listAccessGroupsOptions.showFederated() != null) {
       builder.query("show_federated", String.valueOf(listAccessGroupsOptions.showFederated()));
@@ -198,9 +202,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Group> getAccessGroup(GetAccessGroupOptions getAccessGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAccessGroupOptions,
       "getAccessGroupOptions cannot be null");
-    String[] pathSegments = { "groups" };
-    String[] pathParameters = { getAccessGroupOptions.accessGroupId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", getAccessGroupOptions.accessGroupId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "getAccessGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -229,9 +233,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Group> updateAccessGroup(UpdateAccessGroupOptions updateAccessGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccessGroupOptions,
       "updateAccessGroupOptions cannot be null");
-    String[] pathSegments = { "groups" };
-    String[] pathParameters = { updateAccessGroupOptions.accessGroupId() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", updateAccessGroupOptions.accessGroupId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "updateAccessGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -267,9 +271,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Void> deleteAccessGroup(DeleteAccessGroupOptions deleteAccessGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAccessGroupOptions,
       "deleteAccessGroupOptions cannot be null");
-    String[] pathSegments = { "groups" };
-    String[] pathParameters = { deleteAccessGroupOptions.accessGroupId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", deleteAccessGroupOptions.accessGroupId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "deleteAccessGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -295,8 +299,7 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<AccountSettings> getAccountSettings(GetAccountSettingsOptions getAccountSettingsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountSettingsOptions,
       "getAccountSettingsOptions cannot be null");
-    String[] pathSegments = { "groups/settings" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/settings"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "getAccountSettings");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -305,7 +308,7 @@ public class IamAccessGroups extends BaseService {
     if (getAccountSettingsOptions.transactionId() != null) {
       builder.header("Transaction-Id", getAccountSettingsOptions.transactionId());
     }
-    builder.query("account_id", getAccountSettingsOptions.accountId());
+    builder.query("account_id", String.valueOf(getAccountSettingsOptions.accountId()));
     ResponseConverter<AccountSettings> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettings>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -324,8 +327,7 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<AccountSettings> updateAccountSettings(UpdateAccountSettingsOptions updateAccountSettingsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountSettingsOptions,
       "updateAccountSettingsOptions cannot be null");
-    String[] pathSegments = { "groups/settings" };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/settings"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "updateAccountSettings");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -334,7 +336,7 @@ public class IamAccessGroups extends BaseService {
     if (updateAccountSettingsOptions.transactionId() != null) {
       builder.header("Transaction-Id", updateAccountSettingsOptions.transactionId());
     }
-    builder.query("account_id", updateAccountSettingsOptions.accountId());
+    builder.query("account_id", String.valueOf(updateAccountSettingsOptions.accountId()));
     final JsonObject contentJson = new JsonObject();
     if (updateAccountSettingsOptions.publicAccessEnabled() != null) {
       contentJson.addProperty("public_access_enabled", updateAccountSettingsOptions.publicAccessEnabled());
@@ -358,9 +360,10 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Void> isMemberOfAccessGroup(IsMemberOfAccessGroupOptions isMemberOfAccessGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(isMemberOfAccessGroupOptions,
       "isMemberOfAccessGroupOptions cannot be null");
-    String[] pathSegments = { "groups", "members" };
-    String[] pathParameters = { isMemberOfAccessGroupOptions.accessGroupId(), isMemberOfAccessGroupOptions.iamId() };
-    RequestBuilder builder = RequestBuilder.head(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", isMemberOfAccessGroupOptions.accessGroupId());
+    pathParamsMap.put("iam_id", isMemberOfAccessGroupOptions.iamId());
+    RequestBuilder builder = RequestBuilder.head(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/members/{iam_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "isMemberOfAccessGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -386,9 +389,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<AddGroupMembersResponse> addMembersToAccessGroup(AddMembersToAccessGroupOptions addMembersToAccessGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(addMembersToAccessGroupOptions,
       "addMembersToAccessGroupOptions cannot be null");
-    String[] pathSegments = { "groups", "members" };
-    String[] pathParameters = { addMembersToAccessGroupOptions.accessGroupId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", addMembersToAccessGroupOptions.accessGroupId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/members", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "addMembersToAccessGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -421,9 +424,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<GroupMembersList> listAccessGroupMembers(ListAccessGroupMembersOptions listAccessGroupMembersOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listAccessGroupMembersOptions,
       "listAccessGroupMembersOptions cannot be null");
-    String[] pathSegments = { "groups", "members" };
-    String[] pathParameters = { listAccessGroupMembersOptions.accessGroupId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", listAccessGroupMembersOptions.accessGroupId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/members", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "listAccessGroupMembers");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -439,13 +442,13 @@ public class IamAccessGroups extends BaseService {
       builder.query("offset", String.valueOf(listAccessGroupMembersOptions.offset()));
     }
     if (listAccessGroupMembersOptions.type() != null) {
-      builder.query("type", listAccessGroupMembersOptions.type());
+      builder.query("type", String.valueOf(listAccessGroupMembersOptions.type()));
     }
     if (listAccessGroupMembersOptions.verbose() != null) {
       builder.query("verbose", String.valueOf(listAccessGroupMembersOptions.verbose()));
     }
     if (listAccessGroupMembersOptions.sort() != null) {
-      builder.query("sort", listAccessGroupMembersOptions.sort());
+      builder.query("sort", String.valueOf(listAccessGroupMembersOptions.sort()));
     }
     ResponseConverter<GroupMembersList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<GroupMembersList>() { }.getType());
@@ -464,9 +467,10 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Void> removeMemberFromAccessGroup(RemoveMemberFromAccessGroupOptions removeMemberFromAccessGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(removeMemberFromAccessGroupOptions,
       "removeMemberFromAccessGroupOptions cannot be null");
-    String[] pathSegments = { "groups", "members" };
-    String[] pathParameters = { removeMemberFromAccessGroupOptions.accessGroupId(), removeMemberFromAccessGroupOptions.iamId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", removeMemberFromAccessGroupOptions.accessGroupId());
+    pathParamsMap.put("iam_id", removeMemberFromAccessGroupOptions.iamId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/members/{iam_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "removeMemberFromAccessGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -491,9 +495,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<DeleteGroupBulkMembersResponse> removeMembersFromAccessGroup(RemoveMembersFromAccessGroupOptions removeMembersFromAccessGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(removeMembersFromAccessGroupOptions,
       "removeMembersFromAccessGroupOptions cannot be null");
-    String[] pathSegments = { "groups", "members/delete" };
-    String[] pathParameters = { removeMembersFromAccessGroupOptions.accessGroupId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", removeMembersFromAccessGroupOptions.accessGroupId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/members/delete", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "removeMembersFromAccessGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -525,9 +529,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<DeleteFromAllGroupsResponse> removeMemberFromAllAccessGroups(RemoveMemberFromAllAccessGroupsOptions removeMemberFromAllAccessGroupsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(removeMemberFromAllAccessGroupsOptions,
       "removeMemberFromAllAccessGroupsOptions cannot be null");
-    String[] pathSegments = { "groups/_allgroups/members" };
-    String[] pathParameters = { removeMemberFromAllAccessGroupsOptions.iamId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("iam_id", removeMemberFromAllAccessGroupsOptions.iamId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/_allgroups/members/{iam_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "removeMemberFromAllAccessGroups");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -536,7 +540,7 @@ public class IamAccessGroups extends BaseService {
     if (removeMemberFromAllAccessGroupsOptions.transactionId() != null) {
       builder.header("Transaction-Id", removeMemberFromAllAccessGroupsOptions.transactionId());
     }
-    builder.query("account_id", removeMemberFromAllAccessGroupsOptions.accountId());
+    builder.query("account_id", String.valueOf(removeMemberFromAllAccessGroupsOptions.accountId()));
     ResponseConverter<DeleteFromAllGroupsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<DeleteFromAllGroupsResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -555,9 +559,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<AddMembershipMultipleGroupsResponse> addMemberToMultipleAccessGroups(AddMemberToMultipleAccessGroupsOptions addMemberToMultipleAccessGroupsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(addMemberToMultipleAccessGroupsOptions,
       "addMemberToMultipleAccessGroupsOptions cannot be null");
-    String[] pathSegments = { "groups/_allgroups/members" };
-    String[] pathParameters = { addMemberToMultipleAccessGroupsOptions.iamId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("iam_id", addMemberToMultipleAccessGroupsOptions.iamId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/_allgroups/members/{iam_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "addMemberToMultipleAccessGroups");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -566,7 +570,7 @@ public class IamAccessGroups extends BaseService {
     if (addMemberToMultipleAccessGroupsOptions.transactionId() != null) {
       builder.header("Transaction-Id", addMemberToMultipleAccessGroupsOptions.transactionId());
     }
-    builder.query("account_id", addMemberToMultipleAccessGroupsOptions.accountId());
+    builder.query("account_id", String.valueOf(addMemberToMultipleAccessGroupsOptions.accountId()));
     final JsonObject contentJson = new JsonObject();
     if (addMemberToMultipleAccessGroupsOptions.type() != null) {
       contentJson.addProperty("type", addMemberToMultipleAccessGroupsOptions.type());
@@ -595,9 +599,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Rule> addAccessGroupRule(AddAccessGroupRuleOptions addAccessGroupRuleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(addAccessGroupRuleOptions,
       "addAccessGroupRuleOptions cannot be null");
-    String[] pathSegments = { "groups", "rules" };
-    String[] pathParameters = { addAccessGroupRuleOptions.accessGroupId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", addAccessGroupRuleOptions.accessGroupId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/rules", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "addAccessGroupRule");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -631,9 +635,9 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<RulesList> listAccessGroupRules(ListAccessGroupRulesOptions listAccessGroupRulesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listAccessGroupRulesOptions,
       "listAccessGroupRulesOptions cannot be null");
-    String[] pathSegments = { "groups", "rules" };
-    String[] pathParameters = { listAccessGroupRulesOptions.accessGroupId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", listAccessGroupRulesOptions.accessGroupId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/rules", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "listAccessGroupRules");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -659,9 +663,10 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Rule> getAccessGroupRule(GetAccessGroupRuleOptions getAccessGroupRuleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAccessGroupRuleOptions,
       "getAccessGroupRuleOptions cannot be null");
-    String[] pathSegments = { "groups", "rules" };
-    String[] pathParameters = { getAccessGroupRuleOptions.accessGroupId(), getAccessGroupRuleOptions.ruleId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", getAccessGroupRuleOptions.accessGroupId());
+    pathParamsMap.put("rule_id", getAccessGroupRuleOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/rules/{rule_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "getAccessGroupRule");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -687,9 +692,10 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Rule> replaceAccessGroupRule(ReplaceAccessGroupRuleOptions replaceAccessGroupRuleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceAccessGroupRuleOptions,
       "replaceAccessGroupRuleOptions cannot be null");
-    String[] pathSegments = { "groups", "rules" };
-    String[] pathParameters = { replaceAccessGroupRuleOptions.accessGroupId(), replaceAccessGroupRuleOptions.ruleId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", replaceAccessGroupRuleOptions.accessGroupId());
+    pathParamsMap.put("rule_id", replaceAccessGroupRuleOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/rules/{rule_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "replaceAccessGroupRule");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -724,9 +730,10 @@ public class IamAccessGroups extends BaseService {
   public ServiceCall<Void> removeAccessGroupRule(RemoveAccessGroupRuleOptions removeAccessGroupRuleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(removeAccessGroupRuleOptions,
       "removeAccessGroupRuleOptions cannot be null");
-    String[] pathSegments = { "groups", "rules" };
-    String[] pathParameters = { removeAccessGroupRuleOptions.accessGroupId(), removeAccessGroupRuleOptions.ruleId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("access_group_id", removeAccessGroupRuleOptions.accessGroupId());
+    pathParamsMap.put("rule_id", removeAccessGroupRuleOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/{access_group_id}/rules/{rule_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "removeAccessGroupRule");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());

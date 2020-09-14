@@ -10,6 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ */
+
 package com.ibm.cloud.platform_services.case_management.v1;
 
 import com.google.gson.JsonObject;
@@ -43,6 +48,7 @@ import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.RequestUtils;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import okhttp3.MultipartBody;
@@ -104,32 +110,32 @@ public class CaseManagement extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link CaseList}
    */
   public ServiceCall<CaseList> getCases(GetCasesOptions getCasesOptions) {
-    String[] pathSegments = { "cases" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (getCasesOptions == null) {
+      getCasesOptions = new GetCasesOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "getCases");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (getCasesOptions != null) {
-      if (getCasesOptions.offset() != null) {
-        builder.query("offset", String.valueOf(getCasesOptions.offset()));
-      }
-      if (getCasesOptions.limit() != null) {
-        builder.query("limit", String.valueOf(getCasesOptions.limit()));
-      }
-      if (getCasesOptions.search() != null) {
-        builder.query("search", getCasesOptions.search());
-      }
-      if (getCasesOptions.sort() != null) {
-        builder.query("sort", getCasesOptions.sort());
-      }
-      if (getCasesOptions.status() != null) {
-        builder.query("status", RequestUtils.join(getCasesOptions.status(), ","));
-      }
-      if (getCasesOptions.fields() != null) {
-        builder.query("fields", RequestUtils.join(getCasesOptions.fields(), ","));
-      }
+    if (getCasesOptions.offset() != null) {
+      builder.query("offset", String.valueOf(getCasesOptions.offset()));
+    }
+    if (getCasesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(getCasesOptions.limit()));
+    }
+    if (getCasesOptions.search() != null) {
+      builder.query("search", String.valueOf(getCasesOptions.search()));
+    }
+    if (getCasesOptions.sort() != null) {
+      builder.query("sort", String.valueOf(getCasesOptions.sort()));
+    }
+    if (getCasesOptions.status() != null) {
+      builder.query("status", RequestUtils.join(getCasesOptions.status(), ","));
+    }
+    if (getCasesOptions.fields() != null) {
+      builder.query("fields", RequestUtils.join(getCasesOptions.fields(), ","));
     }
     ResponseConverter<CaseList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CaseList>() { }.getType());
@@ -158,8 +164,7 @@ public class CaseManagement extends BaseService {
   public ServiceCall<Case> createCase(CreateCaseOptions createCaseOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createCaseOptions,
       "createCaseOptions cannot be null");
-    String[] pathSegments = { "cases" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "createCase");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -207,9 +212,9 @@ public class CaseManagement extends BaseService {
   public ServiceCall<Case> getCase(GetCaseOptions getCaseOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getCaseOptions,
       "getCaseOptions cannot be null");
-    String[] pathSegments = { "cases" };
-    String[] pathParameters = { getCaseOptions.caseNumber() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("case_number", getCaseOptions.caseNumber());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases/{case_number}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "getCase");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -234,9 +239,9 @@ public class CaseManagement extends BaseService {
   public ServiceCall<Case> updateCaseStatus(UpdateCaseStatusOptions updateCaseStatusOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateCaseStatusOptions,
       "updateCaseStatusOptions cannot be null");
-    String[] pathSegments = { "cases", "status" };
-    String[] pathParameters = { updateCaseStatusOptions.caseNumber() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("case_number", updateCaseStatusOptions.caseNumber());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases/{case_number}/status", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "updateCaseStatus");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -259,9 +264,9 @@ public class CaseManagement extends BaseService {
   public ServiceCall<Comment> addComment(AddCommentOptions addCommentOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(addCommentOptions,
       "addCommentOptions cannot be null");
-    String[] pathSegments = { "cases", "comments" };
-    String[] pathParameters = { addCommentOptions.caseNumber() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("case_number", addCommentOptions.caseNumber());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases/{case_number}/comments", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "addComment");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -288,9 +293,9 @@ public class CaseManagement extends BaseService {
   public ServiceCall<WatchlistAddResponse> addWatchlist(AddWatchlistOptions addWatchlistOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(addWatchlistOptions,
       "addWatchlistOptions cannot be null");
-    String[] pathSegments = { "cases", "watchlist" };
-    String[] pathParameters = { addWatchlistOptions.caseNumber() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("case_number", addWatchlistOptions.caseNumber());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases/{case_number}/watchlist", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "addWatchlist");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -317,9 +322,9 @@ public class CaseManagement extends BaseService {
   public ServiceCall<Watchlist> removeWatchlist(RemoveWatchlistOptions removeWatchlistOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(removeWatchlistOptions,
       "removeWatchlistOptions cannot be null");
-    String[] pathSegments = { "cases", "watchlist" };
-    String[] pathParameters = { removeWatchlistOptions.caseNumber() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("case_number", removeWatchlistOptions.caseNumber());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases/{case_number}/watchlist", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "removeWatchlist");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -347,9 +352,9 @@ public class CaseManagement extends BaseService {
   public ServiceCall<Resource> addResource(AddResourceOptions addResourceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(addResourceOptions,
       "addResourceOptions cannot be null");
-    String[] pathSegments = { "cases", "resources" };
-    String[] pathParameters = { addResourceOptions.caseNumber() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("case_number", addResourceOptions.caseNumber());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases/{case_number}/resources", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "addResource");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -386,9 +391,9 @@ public class CaseManagement extends BaseService {
   public ServiceCall<Attachment> uploadFile(UploadFileOptions uploadFileOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(uploadFileOptions,
       "uploadFileOptions cannot be null");
-    String[] pathSegments = { "cases", "attachments" };
-    String[] pathParameters = { uploadFileOptions.caseNumber() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("case_number", uploadFileOptions.caseNumber());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases/{case_number}/attachments", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "uploadFile");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -417,15 +422,15 @@ public class CaseManagement extends BaseService {
   public ServiceCall<InputStream> downloadFile(DownloadFileOptions downloadFileOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(downloadFileOptions,
       "downloadFileOptions cannot be null");
-    String[] pathSegments = { "cases", "attachments" };
-    String[] pathParameters = { downloadFileOptions.caseNumber(), downloadFileOptions.fileId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("case_number", downloadFileOptions.caseNumber());
+    pathParamsMap.put("file_id", downloadFileOptions.fileId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases/{case_number}/attachments/{file_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "downloadFile");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/octet-stream");
-
     ResponseConverter<InputStream> responseConverter = ResponseConverterUtils.getInputStream();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -441,15 +446,15 @@ public class CaseManagement extends BaseService {
   public ServiceCall<AttachmentList> deleteFile(DeleteFileOptions deleteFileOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteFileOptions,
       "deleteFileOptions cannot be null");
-    String[] pathSegments = { "cases", "attachments" };
-    String[] pathParameters = { deleteFileOptions.caseNumber(), deleteFileOptions.fileId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("case_number", deleteFileOptions.caseNumber());
+    pathParamsMap.put("file_id", deleteFileOptions.fileId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/cases/{case_number}/attachments/{file_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("case_management", "v1", "deleteFile");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<AttachmentList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AttachmentList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);

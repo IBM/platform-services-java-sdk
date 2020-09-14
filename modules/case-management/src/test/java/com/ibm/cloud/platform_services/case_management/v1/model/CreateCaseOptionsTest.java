@@ -20,15 +20,12 @@ import com.ibm.cloud.platform_services.case_management.v1.model.OfferingType;
 import com.ibm.cloud.platform_services.case_management.v1.model.ResourcePayload;
 import com.ibm.cloud.platform_services.case_management.v1.model.User;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -41,6 +38,13 @@ public class CreateCaseOptionsTest {
 
   @Test
   public void testCreateCaseOptions() throws Throwable {
+    CasePayloadEu casePayloadEuModel = new CasePayloadEu.Builder()
+      .supported(true)
+      .dataCenter(Long.valueOf("26"))
+      .build();
+    assertEquals(casePayloadEuModel.supported(), Boolean.valueOf(true));
+    assertEquals(casePayloadEuModel.dataCenter(), Long.valueOf("26"));
+
     OfferingType offeringTypeModel = new OfferingType.Builder()
       .group("crn_service_name")
       .key("testString")
@@ -51,13 +55,6 @@ public class CreateCaseOptionsTest {
     assertEquals(offeringTypeModel.key(), "testString");
     assertEquals(offeringTypeModel.kind(), "testString");
     assertEquals(offeringTypeModel.id(), "testString");
-
-    CasePayloadEu casePayloadEuModel = new CasePayloadEu.Builder()
-      .supported(true)
-      .dataCenter(Long.valueOf("26"))
-      .build();
-    assertEquals(casePayloadEuModel.supported(), Boolean.valueOf(true));
-    assertEquals(casePayloadEuModel.dataCenter(), Long.valueOf("26"));
 
     Offering offeringModel = new Offering.Builder()
       .name("testString")

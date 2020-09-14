@@ -48,30 +48,24 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
+import com.ibm.cloud.sdk.core.util.RequestUtils;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -79,14 +73,14 @@ import static org.testng.Assert.*;
  * Unit test class for the CaseManagement service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class CaseManagementTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected CaseManagement testService;
+  protected CaseManagement caseManagementService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -100,9 +94,9 @@ public class CaseManagementTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = CaseManagement.newInstance(serviceName);
+    caseManagementService = CaseManagement.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    caseManagementService.setServiceUrl(url);
   }
 
   /**
@@ -139,7 +133,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CaseList> response = testService.getCases(getCasesOptionsModel).execute();
+    Response<CaseList> response = caseManagementService.getCases(getCasesOptionsModel).execute();
     assertNotNull(response);
     CaseList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -157,8 +151,8 @@ public class CaseManagementTest extends PowerMockTestCase {
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
     assertEquals(query.get("search"), "testString");
     assertEquals(query.get("sort"), "number");
-    assertEquals(Arrays.asList(query.get("status")), new java.util.ArrayList<String>(java.util.Arrays.asList("new")));
-    assertEquals(Arrays.asList(query.get("fields")), new java.util.ArrayList<String>(java.util.Arrays.asList("number")));
+    assertEquals(query.get("status"), RequestUtils.join(new java.util.ArrayList<String>(java.util.Arrays.asList("new")), ","));
+    assertEquals(query.get("fields"), RequestUtils.join(new java.util.ArrayList<String>(java.util.Arrays.asList("number")), ","));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getCasesPath);
@@ -177,18 +171,18 @@ public class CaseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
+    // Construct an instance of the CasePayloadEu model
+    CasePayloadEu casePayloadEuModel = new CasePayloadEu.Builder()
+    .supported(true)
+    .dataCenter(Long.valueOf("26"))
+    .build();
+
     // Construct an instance of the OfferingType model
     OfferingType offeringTypeModel = new OfferingType.Builder()
     .group("crn_service_name")
     .key("testString")
     .kind("testString")
     .id("testString")
-    .build();
-
-    // Construct an instance of the CasePayloadEu model
-    CasePayloadEu casePayloadEuModel = new CasePayloadEu.Builder()
-    .supported(true)
-    .dataCenter(Long.valueOf("26"))
     .build();
 
     // Construct an instance of the Offering model
@@ -226,7 +220,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Case> response = testService.createCase(createCaseOptionsModel).execute();
+    Response<Case> response = caseManagementService.createCase(createCaseOptionsModel).execute();
     assertNotNull(response);
     Case responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -254,7 +248,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createCase(null).execute();
+    caseManagementService.createCase(null).execute();
   }
 
   @Test
@@ -277,7 +271,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Case> response = testService.getCase(getCaseOptionsModel).execute();
+    Response<Case> response = caseManagementService.getCase(getCaseOptionsModel).execute();
     assertNotNull(response);
     Case responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -291,7 +285,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Arrays.asList(query.get("fields")), new java.util.ArrayList<String>(java.util.Arrays.asList("number")));
+    assertEquals(query.get("fields"), RequestUtils.join(new java.util.ArrayList<String>(java.util.Arrays.asList("number")), ","));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getCasePath);
@@ -306,7 +300,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getCase(null).execute();
+    caseManagementService.getCase(null).execute();
   }
 
   @Test
@@ -325,7 +319,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     // Construct an instance of the ResolvePayload model
     ResolvePayload statusPayloadModel = new ResolvePayload.Builder()
     .action("resolve")
-    .comment("testString")
+    .comment("It was actually a mistake")
     .resolutionCode(Long.valueOf("1"))
     .build();
 
@@ -336,7 +330,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Case> response = testService.updateCaseStatus(updateCaseStatusOptionsModel).execute();
+    Response<Case> response = caseManagementService.updateCaseStatus(updateCaseStatusOptionsModel).execute();
     assertNotNull(response);
     Case responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -364,7 +358,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateCaseStatus(null).execute();
+    caseManagementService.updateCaseStatus(null).execute();
   }
 
   @Test
@@ -387,7 +381,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Comment> response = testService.addComment(addCommentOptionsModel).execute();
+    Response<Comment> response = caseManagementService.addComment(addCommentOptionsModel).execute();
     assertNotNull(response);
     Comment responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -415,7 +409,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.addComment(null).execute();
+    caseManagementService.addComment(null).execute();
   }
 
   @Test
@@ -444,7 +438,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<WatchlistAddResponse> response = testService.addWatchlist(addWatchlistOptionsModel).execute();
+    Response<WatchlistAddResponse> response = caseManagementService.addWatchlist(addWatchlistOptionsModel).execute();
     assertNotNull(response);
     WatchlistAddResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -472,7 +466,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.addWatchlist(null).execute();
+    caseManagementService.addWatchlist(null).execute();
   }
 
   @Test
@@ -501,7 +495,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Watchlist> response = testService.removeWatchlist(removeWatchlistOptionsModel).execute();
+    Response<Watchlist> response = caseManagementService.removeWatchlist(removeWatchlistOptionsModel).execute();
     assertNotNull(response);
     Watchlist responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -529,7 +523,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.removeWatchlist(null).execute();
+    caseManagementService.removeWatchlist(null).execute();
   }
 
   @Test
@@ -555,7 +549,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Resource> response = testService.addResource(addResourceOptionsModel).execute();
+    Response<Resource> response = caseManagementService.addResource(addResourceOptionsModel).execute();
     assertNotNull(response);
     Resource responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -583,7 +577,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.addResource(null).execute();
+    caseManagementService.addResource(null).execute();
   }
 
   @Test
@@ -606,7 +600,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Attachment> response = testService.uploadFile(uploadFileOptionsModel).execute();
+    Response<Attachment> response = caseManagementService.uploadFile(uploadFileOptionsModel).execute();
     assertNotNull(response);
     Attachment responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -634,7 +628,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.uploadFile(null).execute();
+    caseManagementService.uploadFile(null).execute();
   }
 
   @Test
@@ -657,7 +651,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<InputStream> response = testService.downloadFile(downloadFileOptionsModel).execute();
+    Response<InputStream> response = caseManagementService.downloadFile(downloadFileOptionsModel).execute();
     assertNotNull(response);
     InputStream responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -685,7 +679,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.downloadFile(null).execute();
+    caseManagementService.downloadFile(null).execute();
   }
 
   @Test
@@ -708,7 +702,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AttachmentList> response = testService.deleteFile(deleteFileOptionsModel).execute();
+    Response<AttachmentList> response = caseManagementService.deleteFile(deleteFileOptionsModel).execute();
     assertNotNull(response);
     AttachmentList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -736,7 +730,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteFile(null).execute();
+    caseManagementService.deleteFile(null).execute();
   }
 
   /** Initialize the server */
@@ -755,6 +749,6 @@ public class CaseManagementTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    caseManagementService = null;
   }
 }

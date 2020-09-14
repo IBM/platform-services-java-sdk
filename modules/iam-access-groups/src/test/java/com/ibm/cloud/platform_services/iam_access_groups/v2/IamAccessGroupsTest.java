@@ -56,30 +56,23 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -87,14 +80,14 @@ import static org.testng.Assert.*;
  * Unit test class for the IamAccessGroups service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class IamAccessGroupsTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected IamAccessGroups testService;
+  protected IamAccessGroups iamAccessGroupsService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -108,9 +101,9 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = IamAccessGroups.newInstance(serviceName);
+    iamAccessGroupsService = IamAccessGroups.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    iamAccessGroupsService.setServiceUrl(url);
   }
 
   /**
@@ -145,7 +138,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Group> response = testService.createAccessGroup(createAccessGroupOptionsModel).execute();
+    Response<Group> response = iamAccessGroupsService.createAccessGroup(createAccessGroupOptionsModel).execute();
     assertNotNull(response);
     Group responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -174,7 +167,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createAccessGroup(null).execute();
+    iamAccessGroupsService.createAccessGroup(null).execute();
   }
 
   @Test
@@ -203,7 +196,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<GroupsList> response = testService.listAccessGroups(listAccessGroupsOptionsModel).execute();
+    Response<GroupsList> response = iamAccessGroupsService.listAccessGroups(listAccessGroupsOptionsModel).execute();
     assertNotNull(response);
     GroupsList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -238,7 +231,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.listAccessGroups(null).execute();
+    iamAccessGroupsService.listAccessGroups(null).execute();
   }
 
   @Test
@@ -262,7 +255,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Group> response = testService.getAccessGroup(getAccessGroupOptionsModel).execute();
+    Response<Group> response = iamAccessGroupsService.getAccessGroup(getAccessGroupOptionsModel).execute();
     assertNotNull(response);
     Group responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -291,7 +284,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getAccessGroup(null).execute();
+    iamAccessGroupsService.getAccessGroup(null).execute();
   }
 
   @Test
@@ -317,7 +310,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Group> response = testService.updateAccessGroup(updateAccessGroupOptionsModel).execute();
+    Response<Group> response = iamAccessGroupsService.updateAccessGroup(updateAccessGroupOptionsModel).execute();
     assertNotNull(response);
     Group responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -346,7 +339,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateAccessGroup(null).execute();
+    iamAccessGroupsService.updateAccessGroup(null).execute();
   }
 
   @Test
@@ -369,7 +362,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteAccessGroup(deleteAccessGroupOptionsModel).execute();
+    Response<Void> response = iamAccessGroupsService.deleteAccessGroup(deleteAccessGroupOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -399,7 +392,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteAccessGroup(null).execute();
+    iamAccessGroupsService.deleteAccessGroup(null).execute();
   }
 
   @Test
@@ -422,7 +415,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AccountSettings> response = testService.getAccountSettings(getAccountSettingsOptionsModel).execute();
+    Response<AccountSettings> response = iamAccessGroupsService.getAccountSettings(getAccountSettingsOptionsModel).execute();
     assertNotNull(response);
     AccountSettings responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -451,7 +444,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getAccountSettings(null).execute();
+    iamAccessGroupsService.getAccountSettings(null).execute();
   }
 
   @Test
@@ -475,7 +468,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AccountSettings> response = testService.updateAccountSettings(updateAccountSettingsOptionsModel).execute();
+    Response<AccountSettings> response = iamAccessGroupsService.updateAccountSettings(updateAccountSettingsOptionsModel).execute();
     assertNotNull(response);
     AccountSettings responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -504,7 +497,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateAccountSettings(null).execute();
+    iamAccessGroupsService.updateAccountSettings(null).execute();
   }
 
   @Test
@@ -527,7 +520,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.isMemberOfAccessGroup(isMemberOfAccessGroupOptionsModel).execute();
+    Response<Void> response = iamAccessGroupsService.isMemberOfAccessGroup(isMemberOfAccessGroupOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -556,7 +549,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.isMemberOfAccessGroup(null).execute();
+    iamAccessGroupsService.isMemberOfAccessGroup(null).execute();
   }
 
   @Test
@@ -586,7 +579,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AddGroupMembersResponse> response = testService.addMembersToAccessGroup(addMembersToAccessGroupOptionsModel).execute();
+    Response<AddGroupMembersResponse> response = iamAccessGroupsService.addMembersToAccessGroup(addMembersToAccessGroupOptionsModel).execute();
     assertNotNull(response);
     AddGroupMembersResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -614,7 +607,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.addMembersToAccessGroup(null).execute();
+    iamAccessGroupsService.addMembersToAccessGroup(null).execute();
   }
 
   @Test
@@ -642,7 +635,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<GroupMembersList> response = testService.listAccessGroupMembers(listAccessGroupMembersOptionsModel).execute();
+    Response<GroupMembersList> response = iamAccessGroupsService.listAccessGroupMembers(listAccessGroupMembersOptionsModel).execute();
     assertNotNull(response);
     GroupMembersList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -675,7 +668,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.listAccessGroupMembers(null).execute();
+    iamAccessGroupsService.listAccessGroupMembers(null).execute();
   }
 
   @Test
@@ -698,7 +691,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.removeMemberFromAccessGroup(removeMemberFromAccessGroupOptionsModel).execute();
+    Response<Void> response = iamAccessGroupsService.removeMemberFromAccessGroup(removeMemberFromAccessGroupOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -727,7 +720,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.removeMemberFromAccessGroup(null).execute();
+    iamAccessGroupsService.removeMemberFromAccessGroup(null).execute();
   }
 
   @Test
@@ -751,7 +744,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<DeleteGroupBulkMembersResponse> response = testService.removeMembersFromAccessGroup(removeMembersFromAccessGroupOptionsModel).execute();
+    Response<DeleteGroupBulkMembersResponse> response = iamAccessGroupsService.removeMembersFromAccessGroup(removeMembersFromAccessGroupOptionsModel).execute();
     assertNotNull(response);
     DeleteGroupBulkMembersResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -779,7 +772,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.removeMembersFromAccessGroup(null).execute();
+    iamAccessGroupsService.removeMembersFromAccessGroup(null).execute();
   }
 
   @Test
@@ -803,7 +796,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<DeleteFromAllGroupsResponse> response = testService.removeMemberFromAllAccessGroups(removeMemberFromAllAccessGroupsOptionsModel).execute();
+    Response<DeleteFromAllGroupsResponse> response = iamAccessGroupsService.removeMemberFromAllAccessGroups(removeMemberFromAllAccessGroupsOptionsModel).execute();
     assertNotNull(response);
     DeleteFromAllGroupsResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -832,7 +825,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.removeMemberFromAllAccessGroups(null).execute();
+    iamAccessGroupsService.removeMemberFromAllAccessGroups(null).execute();
   }
 
   @Test
@@ -858,7 +851,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AddMembershipMultipleGroupsResponse> response = testService.addMemberToMultipleAccessGroups(addMemberToMultipleAccessGroupsOptionsModel).execute();
+    Response<AddMembershipMultipleGroupsResponse> response = iamAccessGroupsService.addMemberToMultipleAccessGroups(addMemberToMultipleAccessGroupsOptionsModel).execute();
     assertNotNull(response);
     AddMembershipMultipleGroupsResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -887,7 +880,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.addMemberToMultipleAccessGroups(null).execute();
+    iamAccessGroupsService.addMemberToMultipleAccessGroups(null).execute();
   }
 
   @Test
@@ -921,7 +914,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Rule> response = testService.addAccessGroupRule(addAccessGroupRuleOptionsModel).execute();
+    Response<Rule> response = iamAccessGroupsService.addAccessGroupRule(addAccessGroupRuleOptionsModel).execute();
     assertNotNull(response);
     Rule responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -949,7 +942,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.addAccessGroupRule(null).execute();
+    iamAccessGroupsService.addAccessGroupRule(null).execute();
   }
 
   @Test
@@ -972,7 +965,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<RulesList> response = testService.listAccessGroupRules(listAccessGroupRulesOptionsModel).execute();
+    Response<RulesList> response = iamAccessGroupsService.listAccessGroupRules(listAccessGroupRulesOptionsModel).execute();
     assertNotNull(response);
     RulesList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1000,7 +993,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.listAccessGroupRules(null).execute();
+    iamAccessGroupsService.listAccessGroupRules(null).execute();
   }
 
   @Test
@@ -1024,7 +1017,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Rule> response = testService.getAccessGroupRule(getAccessGroupRuleOptionsModel).execute();
+    Response<Rule> response = iamAccessGroupsService.getAccessGroupRule(getAccessGroupRuleOptionsModel).execute();
     assertNotNull(response);
     Rule responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1052,7 +1045,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getAccessGroupRule(null).execute();
+    iamAccessGroupsService.getAccessGroupRule(null).execute();
   }
 
   @Test
@@ -1088,7 +1081,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Rule> response = testService.replaceAccessGroupRule(replaceAccessGroupRuleOptionsModel).execute();
+    Response<Rule> response = iamAccessGroupsService.replaceAccessGroupRule(replaceAccessGroupRuleOptionsModel).execute();
     assertNotNull(response);
     Rule responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1117,7 +1110,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.replaceAccessGroupRule(null).execute();
+    iamAccessGroupsService.replaceAccessGroupRule(null).execute();
   }
 
   @Test
@@ -1140,7 +1133,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.removeAccessGroupRule(removeAccessGroupRuleOptionsModel).execute();
+    Response<Void> response = iamAccessGroupsService.removeAccessGroupRule(removeAccessGroupRuleOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -1169,7 +1162,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.removeAccessGroupRule(null).execute();
+    iamAccessGroupsService.removeAccessGroupRule(null).execute();
   }
 
   /** Initialize the server */
@@ -1188,6 +1181,6 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    iamAccessGroupsService = null;
   }
 }

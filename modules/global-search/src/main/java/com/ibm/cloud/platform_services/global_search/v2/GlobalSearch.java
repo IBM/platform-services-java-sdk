@@ -10,6 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ */
+
 package com.ibm.cloud.platform_services.global_search.v2;
 
 import com.google.gson.JsonObject;
@@ -103,8 +108,7 @@ public class GlobalSearch extends BaseService {
   public ServiceCall<ScanResult> search(SearchOptions searchOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(searchOptions,
       "searchOptions cannot be null");
-    String[] pathSegments = { "v3/resources/search" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v3/resources/search"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_search", "v2", "search");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -114,7 +118,7 @@ public class GlobalSearch extends BaseService {
       builder.header("transaction-id", searchOptions.transactionId());
     }
     if (searchOptions.accountId() != null) {
-      builder.query("account_id", searchOptions.accountId());
+      builder.query("account_id", String.valueOf(searchOptions.accountId()));
     }
     if (searchOptions.limit() != null) {
       builder.query("limit", String.valueOf(searchOptions.limit()));
@@ -171,8 +175,7 @@ public class GlobalSearch extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link SupportedTypesList}
    */
   public ServiceCall<SupportedTypesList> getSupportedTypes(GetSupportedTypesOptions getSupportedTypesOptions) {
-    String[] pathSegments = { "v2/resources/supported_types" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resources/supported_types"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_search", "v2", "getSupportedTypes");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());

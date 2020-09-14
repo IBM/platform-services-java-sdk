@@ -16,15 +16,12 @@ package com.ibm.cloud.platform_services.resource_manager.v2.model;
 import com.ibm.cloud.platform_services.resource_manager.v2.model.ResourceGroup;
 import com.ibm.cloud.platform_services.resource_manager.v2.model.ResourceGroupList;
 import com.ibm.cloud.platform_services.resource_manager.v2.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 

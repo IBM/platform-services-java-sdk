@@ -16,15 +16,12 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.SourceMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.TemplateMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -56,7 +53,7 @@ public class TemplateMetaDataTest {
       .templateId("testString")
       .executableFile("testString")
       .buildpack("testString")
-      .environmentVariables(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+      .environmentVariables(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
       .build();
     assertEquals(templateMetaDataModel.services(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(templateMetaDataModel.defaultMemory(), Long.valueOf("26"));
@@ -67,7 +64,7 @@ public class TemplateMetaDataTest {
     assertEquals(templateMetaDataModel.templateId(), "testString");
     assertEquals(templateMetaDataModel.executableFile(), "testString");
     assertEquals(templateMetaDataModel.buildpack(), "testString");
-    assertEquals(templateMetaDataModel.environmentVariables(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
+    assertEquals(templateMetaDataModel.environmentVariables(), new java.util.HashMap<String, String>() { { put("foo", "testString"); } });
 
     String json = TestUtilities.serialize(templateMetaDataModel);
 

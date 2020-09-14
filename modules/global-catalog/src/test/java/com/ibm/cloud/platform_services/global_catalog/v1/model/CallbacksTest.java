@@ -15,13 +15,10 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Callbacks;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -44,7 +41,7 @@ public class CallbacksTest {
       .dashboardDetailTabExtUrl("testString")
       .serviceMonitorApi("testString")
       .serviceMonitorApp("testString")
-      .apiEndpoint(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+      .apiEndpoint(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
       .build();
     assertEquals(callbacksModel.controllerUrl(), "testString");
     assertEquals(callbacksModel.brokerUrl(), "testString");
@@ -55,7 +52,7 @@ public class CallbacksTest {
     assertEquals(callbacksModel.dashboardDetailTabExtUrl(), "testString");
     assertEquals(callbacksModel.serviceMonitorApi(), "testString");
     assertEquals(callbacksModel.serviceMonitorApp(), "testString");
-    assertEquals(callbacksModel.apiEndpoint(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
+    assertEquals(callbacksModel.apiEndpoint(), new java.util.HashMap<String, String>() { { put("foo", "testString"); } });
 
     String json = TestUtilities.serialize(callbacksModel);
 

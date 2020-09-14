@@ -15,15 +15,12 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CFMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -50,7 +47,7 @@ public class CFMetaDataTest {
       .serviceCheckEnabled(true)
       .testCheckInterval(Long.valueOf("26"))
       .serviceKeySupported(true)
-      .cfGuid(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+      .cfGuid(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
       .build();
     assertEquals(cfMetaDataModel.type(), "testString");
     assertEquals(cfMetaDataModel.iamCompatible(), Boolean.valueOf(true));
@@ -65,7 +62,7 @@ public class CFMetaDataTest {
     assertEquals(cfMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.testCheckInterval(), Long.valueOf("26"));
     assertEquals(cfMetaDataModel.serviceKeySupported(), Boolean.valueOf(true));
-    assertEquals(cfMetaDataModel.cfGuid(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
+    assertEquals(cfMetaDataModel.cfGuid(), new java.util.HashMap<String, String>() { { put("foo", "testString"); } });
 
     String json = TestUtilities.serialize(cfMetaDataModel);
 

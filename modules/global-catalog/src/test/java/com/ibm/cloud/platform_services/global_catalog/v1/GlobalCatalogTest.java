@@ -70,30 +70,23 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -101,14 +94,14 @@ import static org.testng.Assert.*;
  * Unit test class for the GlobalCatalog service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class GlobalCatalogTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected GlobalCatalog testService;
+  protected GlobalCatalog globalCatalogService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -122,9 +115,9 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = GlobalCatalog.newInstance(serviceName);
+    globalCatalogService = GlobalCatalog.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    globalCatalogService.setServiceUrl(url);
   }
 
   /**
@@ -162,7 +155,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<EntrySearchResult> response = testService.listCatalogEntries(listCatalogEntriesOptionsModel).execute();
+    Response<EntrySearchResult> response = globalCatalogService.listCatalogEntries(listCatalogEntriesOptionsModel).execute();
     assertNotNull(response);
     EntrySearchResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -201,46 +194,66 @@ public class GlobalCatalogTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the Bullets model
-    Bullets bulletsModel = new Bullets.Builder()
-    .title("testString")
+    // Construct an instance of the Overview model
+    Overview overviewModel = new Overview.Builder()
+    .displayName("testString")
+    .longDescription("testString")
     .description("testString")
-    .icon("testString")
-    .quantity(Long.valueOf("26"))
+    .featuredDescription("testString")
     .build();
 
-    // Construct an instance of the Price model
-    Price priceModel = new Price.Builder()
-    .quantityTier(Long.valueOf("26"))
-    .price(Double.valueOf("72.5"))
+    // Construct an instance of the Image model
+    Image imageModel = new Image.Builder()
+    .image("testString")
+    .smallImage("testString")
+    .mediumImage("testString")
+    .featureImage("testString")
     .build();
 
-    // Construct an instance of the Amount model
-    Amount amountModel = new Amount.Builder()
-    .country("testString")
-    .currency("testString")
-    .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
-    .build();
-
-    // Construct an instance of the UIMetaMedia model
-    UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
-    .caption("testString")
-    .thumbnailUrl("testString")
-    .type("testString")
-    .url("testString")
-    .source(bulletsModel)
-    .build();
-
-    // Construct an instance of the Broker model
-    Broker brokerModel = new Broker.Builder()
+    // Construct an instance of the Provider model
+    Provider providerModel = new Provider.Builder()
+    .email("testString")
     .name("testString")
-    .guid("testString")
+    .contact("testString")
+    .supportEmail("testString")
+    .phone("testString")
     .build();
 
-    // Construct an instance of the DRMetaData model
-    DRMetaData drMetaDataModel = new DRMetaData.Builder()
-    .dr(true)
-    .description("testString")
+    // Construct an instance of the CFMetaData model
+    CFMetaData cfMetaDataModel = new CFMetaData.Builder()
+    .type("testString")
+    .iamCompatible(true)
+    .uniqueApiKey(true)
+    .provisionable(true)
+    .bindable(true)
+    .asyncProvisioningSupported(true)
+    .asyncUnprovisioningSupported(true)
+    .requires(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .planUpdateable(true)
+    .state("testString")
+    .serviceCheckEnabled(true)
+    .testCheckInterval(Long.valueOf("26"))
+    .serviceKeySupported(true)
+    .cfGuid(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+    .build();
+
+    // Construct an instance of the PlanMetaData model
+    PlanMetaData planMetaDataModel = new PlanMetaData.Builder()
+    .bindable(true)
+    .reservable(true)
+    .allowInternalUsers(true)
+    .asyncProvisioningSupported(true)
+    .asyncUnprovisioningSupported(true)
+    .testCheckInterval(Long.valueOf("26"))
+    .singleScopeInstance("testString")
+    .serviceCheckEnabled(true)
+    .cfGuid(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+    .build();
+
+    // Construct an instance of the AliasMetaData model
+    AliasMetaData aliasMetaDataModel = new AliasMetaData.Builder()
+    .type("testString")
+    .planId("testString")
     .build();
 
     // Construct an instance of the SourceMetaData model
@@ -250,12 +263,35 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .url("testString")
     .build();
 
-    // Construct an instance of the StartingPrice model
-    StartingPrice startingPriceModel = new StartingPrice.Builder()
-    .planId("testString")
-    .deploymentId("testString")
-    .unit("testString")
-    .amount(new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)))
+    // Construct an instance of the TemplateMetaData model
+    TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
+    .services(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .defaultMemory(Long.valueOf("26"))
+    .startCmd("testString")
+    .source(sourceMetaDataModel)
+    .runtimeCatalogId("testString")
+    .cfRuntimeId("testString")
+    .templateId("testString")
+    .executableFile("testString")
+    .buildpack("testString")
+    .environmentVariables(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+    .build();
+
+    // Construct an instance of the Bullets model
+    Bullets bulletsModel = new Bullets.Builder()
+    .title("testString")
+    .description("testString")
+    .icon("testString")
+    .quantity(Long.valueOf("26"))
+    .build();
+
+    // Construct an instance of the UIMetaMedia model
+    UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
+    .caption("testString")
+    .thumbnailUrl("testString")
+    .type("testString")
+    .url("testString")
+    .source(bulletsModel)
     .build();
 
     // Construct an instance of the Strings model
@@ -285,28 +321,36 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .apidocsurl("testString")
     .build();
 
-    // Construct an instance of the AliasMetaData model
-    AliasMetaData aliasMetaDataModel = new AliasMetaData.Builder()
-    .type("testString")
-    .planId("testString")
+    // Construct an instance of the UIMetaData model
+    UIMetaData uiMetaDataModel = new UIMetaData.Builder()
+    .strings(new java.util.HashMap<String, Strings>() { { put("foo", stringsModel); } })
+    .urls(urlsModel)
+    .embeddableDashboard("testString")
+    .embeddableDashboardFullWidth(true)
+    .navigationOrder(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .notCreatable(true)
+    .primaryOfferingId("testString")
+    .accessibleDuringProvision(true)
+    .sideBySideIndex(Long.valueOf("26"))
+    .endOfServiceTime(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .hidden(true)
+    .hideLiteMetering(true)
+    .noUpgradeNextStep(true)
     .build();
 
-    // Construct an instance of the CFMetaData model
-    CFMetaData cfMetaDataModel = new CFMetaData.Builder()
-    .type("testString")
-    .iamCompatible(true)
-    .uniqueApiKey(true)
-    .provisionable(true)
-    .bindable(true)
-    .asyncProvisioningSupported(true)
-    .asyncUnprovisioningSupported(true)
-    .requires(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .planUpdateable(true)
-    .state("testString")
-    .serviceCheckEnabled(true)
-    .testCheckInterval(Long.valueOf("26"))
-    .serviceKeySupported(true)
-    .cfGuid(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+    // Construct an instance of the DRMetaData model
+    DRMetaData drMetaDataModel = new DRMetaData.Builder()
+    .dr(true)
+    .description("testString")
+    .build();
+
+    // Construct an instance of the SLAMetaData model
+    SLAMetaData slaMetaDataModel = new SLAMetaData.Builder()
+    .terms("testString")
+    .tenancy("testString")
+    .provisioning("testString")
+    .responsiveness("testString")
+    .dr(drMetaDataModel)
     .build();
 
     // Construct an instance of the Callbacks model
@@ -320,7 +364,41 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .dashboardDetailTabExtUrl("testString")
     .serviceMonitorApi("testString")
     .serviceMonitorApp("testString")
-    .apiEndpoint(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+    .apiEndpoint(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+    .build();
+
+    // Construct an instance of the Price model
+    Price priceModel = new Price.Builder()
+    .quantityTier(Long.valueOf("26"))
+    .price(Double.valueOf("72.5"))
+    .build();
+
+    // Construct an instance of the Amount model
+    Amount amountModel = new Amount.Builder()
+    .country("testString")
+    .currency("testString")
+    .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
+    .build();
+
+    // Construct an instance of the StartingPrice model
+    StartingPrice startingPriceModel = new StartingPrice.Builder()
+    .planId("testString")
+    .deploymentId("testString")
+    .unit("testString")
+    .amount(new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)))
+    .build();
+
+    // Construct an instance of the PricingSet model
+    PricingSet pricingSetModel = new PricingSet.Builder()
+    .type("testString")
+    .origin("testString")
+    .startingPrice(startingPriceModel)
+    .build();
+
+    // Construct an instance of the Broker model
+    Broker brokerModel = new Broker.Builder()
+    .name("testString")
+    .guid("testString")
     .build();
 
     // Construct an instance of the DeploymentBase model
@@ -336,74 +414,6 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .targetNetwork("testString")
     .build();
 
-    // Construct an instance of the PlanMetaData model
-    PlanMetaData planMetaDataModel = new PlanMetaData.Builder()
-    .bindable(true)
-    .reservable(true)
-    .allowInternalUsers(true)
-    .asyncProvisioningSupported(true)
-    .asyncUnprovisioningSupported(true)
-    .testCheckInterval(Long.valueOf("26"))
-    .singleScopeInstance("testString")
-    .serviceCheckEnabled(true)
-    .cfGuid(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
-    .build();
-
-    // Construct an instance of the PricingSet model
-    PricingSet pricingSetModel = new PricingSet.Builder()
-    .type("testString")
-    .origin("testString")
-    .startingPrice(startingPriceModel)
-    .build();
-
-    // Construct an instance of the SLAMetaData model
-    SLAMetaData slaMetaDataModel = new SLAMetaData.Builder()
-    .terms("testString")
-    .tenancy("testString")
-    .provisioning("testString")
-    .responsiveness("testString")
-    .dr(drMetaDataModel)
-    .build();
-
-    // Construct an instance of the TemplateMetaData model
-    TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
-    .services(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .defaultMemory(Long.valueOf("26"))
-    .startCmd("testString")
-    .source(sourceMetaDataModel)
-    .runtimeCatalogId("testString")
-    .cfRuntimeId("testString")
-    .templateId("testString")
-    .executableFile("testString")
-    .buildpack("testString")
-    .environmentVariables(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
-    .build();
-
-    // Construct an instance of the UIMetaData model
-    UIMetaData uiMetaDataModel = new UIMetaData.Builder()
-    .strings(new java.util.HashMap<String,Strings>(){{put("foo", stringsModel); }})
-    .urls(urlsModel)
-    .embeddableDashboard("testString")
-    .embeddableDashboardFullWidth(true)
-    .navigationOrder(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .notCreatable(true)
-    .primaryOfferingId("testString")
-    .accessibleDuringProvision(true)
-    .sideBySideIndex(Long.valueOf("26"))
-    .endOfServiceTime(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .hidden(true)
-    .hideLiteMetering(true)
-    .noUpgradeNextStep(true)
-    .build();
-
-    // Construct an instance of the Image model
-    Image imageModel = new Image.Builder()
-    .image("testString")
-    .smallImage("testString")
-    .mediumImage("testString")
-    .featureImage("testString")
-    .build();
-
     // Construct an instance of the ObjectMetadataSet model
     ObjectMetadataSet objectMetadataSetModel = new ObjectMetadataSet.Builder()
     .rcCompatible(true)
@@ -417,33 +427,16 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .callbacks(callbacksModel)
     .originalName("testString")
     .version("testString")
-    .other(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .other(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .pricing(pricingSetModel)
     .deployment(deploymentBaseModel)
-    .build();
-
-    // Construct an instance of the Overview model
-    Overview overviewModel = new Overview.Builder()
-    .displayName("testString")
-    .longDescription("testString")
-    .description("testString")
-    .featuredDescription("testString")
-    .build();
-
-    // Construct an instance of the Provider model
-    Provider providerModel = new Provider.Builder()
-    .email("testString")
-    .name("testString")
-    .contact("testString")
-    .supportEmail("testString")
-    .phone("testString")
     .build();
 
     // Construct an instance of the CreateCatalogEntryOptions model
     CreateCatalogEntryOptions createCatalogEntryOptionsModel = new CreateCatalogEntryOptions.Builder()
     .name("testString")
     .kind("service")
-    .overviewUi(new java.util.HashMap<String,Overview>(){{put("foo", overviewModel); }})
+    .overviewUi(new java.util.HashMap<String, Overview>() { { put("foo", overviewModel); } })
     .images(imageModel)
     .disabled(true)
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
@@ -457,7 +450,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CatalogEntry> response = testService.createCatalogEntry(createCatalogEntryOptionsModel).execute();
+    Response<CatalogEntry> response = globalCatalogService.createCatalogEntry(createCatalogEntryOptionsModel).execute();
     assertNotNull(response);
     CatalogEntry responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -486,7 +479,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createCatalogEntry(null).execute();
+    globalCatalogService.createCatalogEntry(null).execute();
   }
 
   @Test
@@ -513,7 +506,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CatalogEntry> response = testService.getCatalogEntry(getCatalogEntryOptionsModel).execute();
+    Response<CatalogEntry> response = globalCatalogService.getCatalogEntry(getCatalogEntryOptionsModel).execute();
     assertNotNull(response);
     CatalogEntry responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -546,7 +539,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getCatalogEntry(null).execute();
+    globalCatalogService.getCatalogEntry(null).execute();
   }
 
   @Test
@@ -562,46 +555,66 @@ public class GlobalCatalogTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the Bullets model
-    Bullets bulletsModel = new Bullets.Builder()
-    .title("testString")
+    // Construct an instance of the Overview model
+    Overview overviewModel = new Overview.Builder()
+    .displayName("testString")
+    .longDescription("testString")
     .description("testString")
-    .icon("testString")
-    .quantity(Long.valueOf("26"))
+    .featuredDescription("testString")
     .build();
 
-    // Construct an instance of the Price model
-    Price priceModel = new Price.Builder()
-    .quantityTier(Long.valueOf("26"))
-    .price(Double.valueOf("72.5"))
+    // Construct an instance of the Image model
+    Image imageModel = new Image.Builder()
+    .image("testString")
+    .smallImage("testString")
+    .mediumImage("testString")
+    .featureImage("testString")
     .build();
 
-    // Construct an instance of the Amount model
-    Amount amountModel = new Amount.Builder()
-    .country("testString")
-    .currency("testString")
-    .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
-    .build();
-
-    // Construct an instance of the UIMetaMedia model
-    UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
-    .caption("testString")
-    .thumbnailUrl("testString")
-    .type("testString")
-    .url("testString")
-    .source(bulletsModel)
-    .build();
-
-    // Construct an instance of the Broker model
-    Broker brokerModel = new Broker.Builder()
+    // Construct an instance of the Provider model
+    Provider providerModel = new Provider.Builder()
+    .email("testString")
     .name("testString")
-    .guid("testString")
+    .contact("testString")
+    .supportEmail("testString")
+    .phone("testString")
     .build();
 
-    // Construct an instance of the DRMetaData model
-    DRMetaData drMetaDataModel = new DRMetaData.Builder()
-    .dr(true)
-    .description("testString")
+    // Construct an instance of the CFMetaData model
+    CFMetaData cfMetaDataModel = new CFMetaData.Builder()
+    .type("testString")
+    .iamCompatible(true)
+    .uniqueApiKey(true)
+    .provisionable(true)
+    .bindable(true)
+    .asyncProvisioningSupported(true)
+    .asyncUnprovisioningSupported(true)
+    .requires(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .planUpdateable(true)
+    .state("testString")
+    .serviceCheckEnabled(true)
+    .testCheckInterval(Long.valueOf("26"))
+    .serviceKeySupported(true)
+    .cfGuid(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+    .build();
+
+    // Construct an instance of the PlanMetaData model
+    PlanMetaData planMetaDataModel = new PlanMetaData.Builder()
+    .bindable(true)
+    .reservable(true)
+    .allowInternalUsers(true)
+    .asyncProvisioningSupported(true)
+    .asyncUnprovisioningSupported(true)
+    .testCheckInterval(Long.valueOf("26"))
+    .singleScopeInstance("testString")
+    .serviceCheckEnabled(true)
+    .cfGuid(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+    .build();
+
+    // Construct an instance of the AliasMetaData model
+    AliasMetaData aliasMetaDataModel = new AliasMetaData.Builder()
+    .type("testString")
+    .planId("testString")
     .build();
 
     // Construct an instance of the SourceMetaData model
@@ -611,12 +624,35 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .url("testString")
     .build();
 
-    // Construct an instance of the StartingPrice model
-    StartingPrice startingPriceModel = new StartingPrice.Builder()
-    .planId("testString")
-    .deploymentId("testString")
-    .unit("testString")
-    .amount(new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)))
+    // Construct an instance of the TemplateMetaData model
+    TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
+    .services(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .defaultMemory(Long.valueOf("26"))
+    .startCmd("testString")
+    .source(sourceMetaDataModel)
+    .runtimeCatalogId("testString")
+    .cfRuntimeId("testString")
+    .templateId("testString")
+    .executableFile("testString")
+    .buildpack("testString")
+    .environmentVariables(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+    .build();
+
+    // Construct an instance of the Bullets model
+    Bullets bulletsModel = new Bullets.Builder()
+    .title("testString")
+    .description("testString")
+    .icon("testString")
+    .quantity(Long.valueOf("26"))
+    .build();
+
+    // Construct an instance of the UIMetaMedia model
+    UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
+    .caption("testString")
+    .thumbnailUrl("testString")
+    .type("testString")
+    .url("testString")
+    .source(bulletsModel)
     .build();
 
     // Construct an instance of the Strings model
@@ -646,28 +682,36 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .apidocsurl("testString")
     .build();
 
-    // Construct an instance of the AliasMetaData model
-    AliasMetaData aliasMetaDataModel = new AliasMetaData.Builder()
-    .type("testString")
-    .planId("testString")
+    // Construct an instance of the UIMetaData model
+    UIMetaData uiMetaDataModel = new UIMetaData.Builder()
+    .strings(new java.util.HashMap<String, Strings>() { { put("foo", stringsModel); } })
+    .urls(urlsModel)
+    .embeddableDashboard("testString")
+    .embeddableDashboardFullWidth(true)
+    .navigationOrder(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .notCreatable(true)
+    .primaryOfferingId("testString")
+    .accessibleDuringProvision(true)
+    .sideBySideIndex(Long.valueOf("26"))
+    .endOfServiceTime(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .hidden(true)
+    .hideLiteMetering(true)
+    .noUpgradeNextStep(true)
     .build();
 
-    // Construct an instance of the CFMetaData model
-    CFMetaData cfMetaDataModel = new CFMetaData.Builder()
-    .type("testString")
-    .iamCompatible(true)
-    .uniqueApiKey(true)
-    .provisionable(true)
-    .bindable(true)
-    .asyncProvisioningSupported(true)
-    .asyncUnprovisioningSupported(true)
-    .requires(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .planUpdateable(true)
-    .state("testString")
-    .serviceCheckEnabled(true)
-    .testCheckInterval(Long.valueOf("26"))
-    .serviceKeySupported(true)
-    .cfGuid(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+    // Construct an instance of the DRMetaData model
+    DRMetaData drMetaDataModel = new DRMetaData.Builder()
+    .dr(true)
+    .description("testString")
+    .build();
+
+    // Construct an instance of the SLAMetaData model
+    SLAMetaData slaMetaDataModel = new SLAMetaData.Builder()
+    .terms("testString")
+    .tenancy("testString")
+    .provisioning("testString")
+    .responsiveness("testString")
+    .dr(drMetaDataModel)
     .build();
 
     // Construct an instance of the Callbacks model
@@ -681,7 +725,41 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .dashboardDetailTabExtUrl("testString")
     .serviceMonitorApi("testString")
     .serviceMonitorApp("testString")
-    .apiEndpoint(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+    .apiEndpoint(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+    .build();
+
+    // Construct an instance of the Price model
+    Price priceModel = new Price.Builder()
+    .quantityTier(Long.valueOf("26"))
+    .price(Double.valueOf("72.5"))
+    .build();
+
+    // Construct an instance of the Amount model
+    Amount amountModel = new Amount.Builder()
+    .country("testString")
+    .currency("testString")
+    .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
+    .build();
+
+    // Construct an instance of the StartingPrice model
+    StartingPrice startingPriceModel = new StartingPrice.Builder()
+    .planId("testString")
+    .deploymentId("testString")
+    .unit("testString")
+    .amount(new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)))
+    .build();
+
+    // Construct an instance of the PricingSet model
+    PricingSet pricingSetModel = new PricingSet.Builder()
+    .type("testString")
+    .origin("testString")
+    .startingPrice(startingPriceModel)
+    .build();
+
+    // Construct an instance of the Broker model
+    Broker brokerModel = new Broker.Builder()
+    .name("testString")
+    .guid("testString")
     .build();
 
     // Construct an instance of the DeploymentBase model
@@ -697,74 +775,6 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .targetNetwork("testString")
     .build();
 
-    // Construct an instance of the PlanMetaData model
-    PlanMetaData planMetaDataModel = new PlanMetaData.Builder()
-    .bindable(true)
-    .reservable(true)
-    .allowInternalUsers(true)
-    .asyncProvisioningSupported(true)
-    .asyncUnprovisioningSupported(true)
-    .testCheckInterval(Long.valueOf("26"))
-    .singleScopeInstance("testString")
-    .serviceCheckEnabled(true)
-    .cfGuid(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
-    .build();
-
-    // Construct an instance of the PricingSet model
-    PricingSet pricingSetModel = new PricingSet.Builder()
-    .type("testString")
-    .origin("testString")
-    .startingPrice(startingPriceModel)
-    .build();
-
-    // Construct an instance of the SLAMetaData model
-    SLAMetaData slaMetaDataModel = new SLAMetaData.Builder()
-    .terms("testString")
-    .tenancy("testString")
-    .provisioning("testString")
-    .responsiveness("testString")
-    .dr(drMetaDataModel)
-    .build();
-
-    // Construct an instance of the TemplateMetaData model
-    TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
-    .services(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .defaultMemory(Long.valueOf("26"))
-    .startCmd("testString")
-    .source(sourceMetaDataModel)
-    .runtimeCatalogId("testString")
-    .cfRuntimeId("testString")
-    .templateId("testString")
-    .executableFile("testString")
-    .buildpack("testString")
-    .environmentVariables(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
-    .build();
-
-    // Construct an instance of the UIMetaData model
-    UIMetaData uiMetaDataModel = new UIMetaData.Builder()
-    .strings(new java.util.HashMap<String,Strings>(){{put("foo", stringsModel); }})
-    .urls(urlsModel)
-    .embeddableDashboard("testString")
-    .embeddableDashboardFullWidth(true)
-    .navigationOrder(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .notCreatable(true)
-    .primaryOfferingId("testString")
-    .accessibleDuringProvision(true)
-    .sideBySideIndex(Long.valueOf("26"))
-    .endOfServiceTime(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .hidden(true)
-    .hideLiteMetering(true)
-    .noUpgradeNextStep(true)
-    .build();
-
-    // Construct an instance of the Image model
-    Image imageModel = new Image.Builder()
-    .image("testString")
-    .smallImage("testString")
-    .mediumImage("testString")
-    .featureImage("testString")
-    .build();
-
     // Construct an instance of the ObjectMetadataSet model
     ObjectMetadataSet objectMetadataSetModel = new ObjectMetadataSet.Builder()
     .rcCompatible(true)
@@ -778,26 +788,9 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .callbacks(callbacksModel)
     .originalName("testString")
     .version("testString")
-    .other(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .other(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .pricing(pricingSetModel)
     .deployment(deploymentBaseModel)
-    .build();
-
-    // Construct an instance of the Overview model
-    Overview overviewModel = new Overview.Builder()
-    .displayName("testString")
-    .longDescription("testString")
-    .description("testString")
-    .featuredDescription("testString")
-    .build();
-
-    // Construct an instance of the Provider model
-    Provider providerModel = new Provider.Builder()
-    .email("testString")
-    .name("testString")
-    .contact("testString")
-    .supportEmail("testString")
-    .phone("testString")
     .build();
 
     // Construct an instance of the UpdateCatalogEntryOptions model
@@ -805,7 +798,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .id("testString")
     .name("testString")
     .kind("service")
-    .overviewUi(new java.util.HashMap<String,Overview>(){{put("foo", overviewModel); }})
+    .overviewUi(new java.util.HashMap<String, Overview>() { { put("foo", overviewModel); } })
     .images(imageModel)
     .disabled(true)
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
@@ -819,7 +812,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CatalogEntry> response = testService.updateCatalogEntry(updateCatalogEntryOptionsModel).execute();
+    Response<CatalogEntry> response = globalCatalogService.updateCatalogEntry(updateCatalogEntryOptionsModel).execute();
     assertNotNull(response);
     CatalogEntry responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -849,7 +842,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateCatalogEntry(null).execute();
+    globalCatalogService.updateCatalogEntry(null).execute();
   }
 
   @Test
@@ -872,7 +865,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteCatalogEntry(deleteCatalogEntryOptionsModel).execute();
+    Response<Void> response = globalCatalogService.deleteCatalogEntry(deleteCatalogEntryOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -903,7 +896,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteCatalogEntry(null).execute();
+    globalCatalogService.deleteCatalogEntry(null).execute();
   }
 
   @Test
@@ -933,7 +926,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<EntrySearchResult> response = testService.getChildObjects(getChildObjectsOptionsModel).execute();
+    Response<EntrySearchResult> response = globalCatalogService.getChildObjects(getChildObjectsOptionsModel).execute();
     assertNotNull(response);
     EntrySearchResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -968,7 +961,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getChildObjects(null).execute();
+    globalCatalogService.getChildObjects(null).execute();
   }
 
   @Test
@@ -990,7 +983,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.restoreCatalogEntry(restoreCatalogEntryOptionsModel).execute();
+    Response<Void> response = globalCatalogService.restoreCatalogEntry(restoreCatalogEntryOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -1020,7 +1013,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.restoreCatalogEntry(null).execute();
+    globalCatalogService.restoreCatalogEntry(null).execute();
   }
 
   @Test
@@ -1043,7 +1036,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Visibility> response = testService.getVisibility(getVisibilityOptionsModel).execute();
+    Response<Visibility> response = globalCatalogService.getVisibility(getVisibilityOptionsModel).execute();
     assertNotNull(response);
     Visibility responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1072,7 +1065,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getVisibility(null).execute();
+    globalCatalogService.getVisibility(null).execute();
   }
 
   @Test
@@ -1107,7 +1100,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.updateVisibility(updateVisibilityOptionsModel).execute();
+    Response<Void> response = globalCatalogService.updateVisibility(updateVisibilityOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -1137,7 +1130,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateVisibility(null).execute();
+    globalCatalogService.updateVisibility(null).execute();
   }
 
   @Test
@@ -1160,7 +1153,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<PricingGet> response = testService.getPricing(getPricingOptionsModel).execute();
+    Response<PricingGet> response = globalCatalogService.getPricing(getPricingOptionsModel).execute();
     assertNotNull(response);
     PricingGet responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1189,7 +1182,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getPricing(null).execute();
+    globalCatalogService.getPricing(null).execute();
   }
 
   @Test
@@ -1216,7 +1209,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AuditSearchResult> response = testService.getAuditLogs(getAuditLogsOptionsModel).execute();
+    Response<AuditSearchResult> response = globalCatalogService.getAuditLogs(getAuditLogsOptionsModel).execute();
     assertNotNull(response);
     AuditSearchResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1249,7 +1242,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getAuditLogs(null).execute();
+    globalCatalogService.getAuditLogs(null).execute();
   }
 
   @Test
@@ -1272,7 +1265,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Artifacts> response = testService.listArtifacts(listArtifactsOptionsModel).execute();
+    Response<Artifacts> response = globalCatalogService.listArtifacts(listArtifactsOptionsModel).execute();
     assertNotNull(response);
     Artifacts responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1301,7 +1294,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.listArtifacts(null).execute();
+    globalCatalogService.listArtifacts(null).execute();
   }
 
   @Test
@@ -1326,7 +1319,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<InputStream> response = testService.getArtifact(getArtifactOptionsModel).execute();
+    Response<InputStream> response = globalCatalogService.getArtifact(getArtifactOptionsModel).execute();
     assertNotNull(response);
     InputStream responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1355,7 +1348,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getArtifact(null).execute();
+    globalCatalogService.getArtifact(null).execute();
   }
 
   @Test
@@ -1380,7 +1373,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.uploadArtifact(uploadArtifactOptionsModel).execute();
+    Response<Void> response = globalCatalogService.uploadArtifact(uploadArtifactOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -1410,7 +1403,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.uploadArtifact(null).execute();
+    globalCatalogService.uploadArtifact(null).execute();
   }
 
   @Test
@@ -1433,7 +1426,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteArtifact(deleteArtifactOptionsModel).execute();
+    Response<Void> response = globalCatalogService.deleteArtifact(deleteArtifactOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -1463,7 +1456,7 @@ public class GlobalCatalogTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteArtifact(null).execute();
+    globalCatalogService.deleteArtifact(null).execute();
   }
 
   /** Initialize the server */
@@ -1482,6 +1475,6 @@ public class GlobalCatalogTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    globalCatalogService = null;
   }
 }

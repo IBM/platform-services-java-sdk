@@ -15,13 +15,10 @@ package com.ibm.cloud.platform_services.resource_controller.v2.model;
 
 import com.ibm.cloud.platform_services.resource_controller.v2.model.UpdateResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -37,13 +34,13 @@ public class UpdateResourceInstanceOptionsTest {
     UpdateResourceInstanceOptions updateResourceInstanceOptionsModel = new UpdateResourceInstanceOptions.Builder()
       .id("testString")
       .name("my-new-instance-name")
-      .parameters(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+      .parameters(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
       .resourcePlanId("a8dff6d3-d287-4668-a81d-c87c55c2656d")
       .allowCleanup(true)
       .build();
     assertEquals(updateResourceInstanceOptionsModel.id(), "testString");
     assertEquals(updateResourceInstanceOptionsModel.name(), "my-new-instance-name");
-    assertEquals(updateResourceInstanceOptionsModel.parameters(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
+    assertEquals(updateResourceInstanceOptionsModel.parameters(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
     assertEquals(updateResourceInstanceOptionsModel.resourcePlanId(), "a8dff6d3-d287-4668-a81d-c87c55c2656d");
     assertEquals(updateResourceInstanceOptionsModel.allowCleanup(), Boolean.valueOf(true));
   }

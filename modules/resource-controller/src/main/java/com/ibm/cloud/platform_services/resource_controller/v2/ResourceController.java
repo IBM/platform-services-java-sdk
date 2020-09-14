@@ -10,6 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ */
+
 package com.ibm.cloud.platform_services.resource_controller.v2;
 
 import com.google.gson.JsonObject;
@@ -55,6 +60,7 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -116,44 +122,44 @@ public class ResourceController extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstancesList}
    */
   public ServiceCall<ResourceInstancesList> listResourceInstances(ListResourceInstancesOptions listResourceInstancesOptions) {
-    String[] pathSegments = { "v2/resource_instances" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listResourceInstancesOptions == null) {
+      listResourceInstancesOptions = new ListResourceInstancesOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "listResourceInstances");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listResourceInstancesOptions != null) {
-      if (listResourceInstancesOptions.guid() != null) {
-        builder.query("guid", listResourceInstancesOptions.guid());
-      }
-      if (listResourceInstancesOptions.name() != null) {
-        builder.query("name", listResourceInstancesOptions.name());
-      }
-      if (listResourceInstancesOptions.resourceGroupId() != null) {
-        builder.query("resource_group_id", listResourceInstancesOptions.resourceGroupId());
-      }
-      if (listResourceInstancesOptions.resourceId() != null) {
-        builder.query("resource_id", listResourceInstancesOptions.resourceId());
-      }
-      if (listResourceInstancesOptions.resourcePlanId() != null) {
-        builder.query("resource_plan_id", listResourceInstancesOptions.resourcePlanId());
-      }
-      if (listResourceInstancesOptions.type() != null) {
-        builder.query("type", listResourceInstancesOptions.type());
-      }
-      if (listResourceInstancesOptions.subType() != null) {
-        builder.query("sub_type", listResourceInstancesOptions.subType());
-      }
-      if (listResourceInstancesOptions.limit() != null) {
-        builder.query("limit", listResourceInstancesOptions.limit());
-      }
-      if (listResourceInstancesOptions.updatedFrom() != null) {
-        builder.query("updated_from", listResourceInstancesOptions.updatedFrom());
-      }
-      if (listResourceInstancesOptions.updatedTo() != null) {
-        builder.query("updated_to", listResourceInstancesOptions.updatedTo());
-      }
+    if (listResourceInstancesOptions.guid() != null) {
+      builder.query("guid", String.valueOf(listResourceInstancesOptions.guid()));
+    }
+    if (listResourceInstancesOptions.name() != null) {
+      builder.query("name", String.valueOf(listResourceInstancesOptions.name()));
+    }
+    if (listResourceInstancesOptions.resourceGroupId() != null) {
+      builder.query("resource_group_id", String.valueOf(listResourceInstancesOptions.resourceGroupId()));
+    }
+    if (listResourceInstancesOptions.resourceId() != null) {
+      builder.query("resource_id", String.valueOf(listResourceInstancesOptions.resourceId()));
+    }
+    if (listResourceInstancesOptions.resourcePlanId() != null) {
+      builder.query("resource_plan_id", String.valueOf(listResourceInstancesOptions.resourcePlanId()));
+    }
+    if (listResourceInstancesOptions.type() != null) {
+      builder.query("type", String.valueOf(listResourceInstancesOptions.type()));
+    }
+    if (listResourceInstancesOptions.subType() != null) {
+      builder.query("sub_type", String.valueOf(listResourceInstancesOptions.subType()));
+    }
+    if (listResourceInstancesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceInstancesOptions.limit()));
+    }
+    if (listResourceInstancesOptions.updatedFrom() != null) {
+      builder.query("updated_from", String.valueOf(listResourceInstancesOptions.updatedFrom()));
+    }
+    if (listResourceInstancesOptions.updatedTo() != null) {
+      builder.query("updated_to", String.valueOf(listResourceInstancesOptions.updatedTo()));
     }
     ResponseConverter<ResourceInstancesList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceInstancesList>() { }.getType());
@@ -182,8 +188,7 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceInstance> createResourceInstance(CreateResourceInstanceOptions createResourceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createResourceInstanceOptions,
       "createResourceInstanceOptions cannot be null");
-    String[] pathSegments = { "v2/resource_instances" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "createResourceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -223,15 +228,14 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceInstance> getResourceInstance(GetResourceInstanceOptions getResourceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getResourceInstanceOptions,
       "getResourceInstanceOptions cannot be null");
-    String[] pathSegments = { "v2/resource_instances" };
-    String[] pathParameters = { getResourceInstanceOptions.id() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getResourceInstanceOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "getResourceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<ResourceInstance> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceInstance>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -248,14 +252,13 @@ public class ResourceController extends BaseService {
   public ServiceCall<Void> deleteResourceInstance(DeleteResourceInstanceOptions deleteResourceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteResourceInstanceOptions,
       "deleteResourceInstanceOptions cannot be null");
-    String[] pathSegments = { "v2/resource_instances" };
-    String[] pathParameters = { deleteResourceInstanceOptions.id() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", deleteResourceInstanceOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "deleteResourceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -271,9 +274,9 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceInstance> updateResourceInstance(UpdateResourceInstanceOptions updateResourceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateResourceInstanceOptions,
       "updateResourceInstanceOptions cannot be null");
-    String[] pathSegments = { "v2/resource_instances" };
-    String[] pathParameters = { updateResourceInstanceOptions.id() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", updateResourceInstanceOptions.id());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "updateResourceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -310,15 +313,14 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceInstance> lockResourceInstance(LockResourceInstanceOptions lockResourceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(lockResourceInstanceOptions,
       "lockResourceInstanceOptions cannot be null");
-    String[] pathSegments = { "v2/resource_instances", "lock" };
-    String[] pathParameters = { lockResourceInstanceOptions.id() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", lockResourceInstanceOptions.id());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances/{id}/lock", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "lockResourceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<ResourceInstance> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceInstance>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -335,15 +337,14 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceInstance> unlockResourceInstance(UnlockResourceInstanceOptions unlockResourceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(unlockResourceInstanceOptions,
       "unlockResourceInstanceOptions cannot be null");
-    String[] pathSegments = { "v2/resource_instances", "lock" };
-    String[] pathParameters = { unlockResourceInstanceOptions.id() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", unlockResourceInstanceOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances/{id}/lock", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "unlockResourceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<ResourceInstance> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceInstance>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -358,35 +359,35 @@ public class ResourceController extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link ResourceKeysList}
    */
   public ServiceCall<ResourceKeysList> listResourceKeys(ListResourceKeysOptions listResourceKeysOptions) {
-    String[] pathSegments = { "v2/resource_keys" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listResourceKeysOptions == null) {
+      listResourceKeysOptions = new ListResourceKeysOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_keys"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "listResourceKeys");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listResourceKeysOptions != null) {
-      if (listResourceKeysOptions.guid() != null) {
-        builder.query("guid", listResourceKeysOptions.guid());
-      }
-      if (listResourceKeysOptions.name() != null) {
-        builder.query("name", listResourceKeysOptions.name());
-      }
-      if (listResourceKeysOptions.resourceGroupId() != null) {
-        builder.query("resource_group_id", listResourceKeysOptions.resourceGroupId());
-      }
-      if (listResourceKeysOptions.resourceId() != null) {
-        builder.query("resource_id", listResourceKeysOptions.resourceId());
-      }
-      if (listResourceKeysOptions.limit() != null) {
-        builder.query("limit", listResourceKeysOptions.limit());
-      }
-      if (listResourceKeysOptions.updatedFrom() != null) {
-        builder.query("updated_from", listResourceKeysOptions.updatedFrom());
-      }
-      if (listResourceKeysOptions.updatedTo() != null) {
-        builder.query("updated_to", listResourceKeysOptions.updatedTo());
-      }
+    if (listResourceKeysOptions.guid() != null) {
+      builder.query("guid", String.valueOf(listResourceKeysOptions.guid()));
+    }
+    if (listResourceKeysOptions.name() != null) {
+      builder.query("name", String.valueOf(listResourceKeysOptions.name()));
+    }
+    if (listResourceKeysOptions.resourceGroupId() != null) {
+      builder.query("resource_group_id", String.valueOf(listResourceKeysOptions.resourceGroupId()));
+    }
+    if (listResourceKeysOptions.resourceId() != null) {
+      builder.query("resource_id", String.valueOf(listResourceKeysOptions.resourceId()));
+    }
+    if (listResourceKeysOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceKeysOptions.limit()));
+    }
+    if (listResourceKeysOptions.updatedFrom() != null) {
+      builder.query("updated_from", String.valueOf(listResourceKeysOptions.updatedFrom()));
+    }
+    if (listResourceKeysOptions.updatedTo() != null) {
+      builder.query("updated_to", String.valueOf(listResourceKeysOptions.updatedTo()));
     }
     ResponseConverter<ResourceKeysList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceKeysList>() { }.getType());
@@ -415,8 +416,7 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceKey> createResourceKey(CreateResourceKeyOptions createResourceKeyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createResourceKeyOptions,
       "createResourceKeyOptions cannot be null");
-    String[] pathSegments = { "v2/resource_keys" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_keys"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "createResourceKey");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -448,15 +448,14 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceKey> getResourceKey(GetResourceKeyOptions getResourceKeyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getResourceKeyOptions,
       "getResourceKeyOptions cannot be null");
-    String[] pathSegments = { "v2/resource_keys" };
-    String[] pathParameters = { getResourceKeyOptions.id() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getResourceKeyOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_keys/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "getResourceKey");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<ResourceKey> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceKey>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -473,14 +472,13 @@ public class ResourceController extends BaseService {
   public ServiceCall<Void> deleteResourceKey(DeleteResourceKeyOptions deleteResourceKeyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteResourceKeyOptions,
       "deleteResourceKeyOptions cannot be null");
-    String[] pathSegments = { "v2/resource_keys" };
-    String[] pathParameters = { deleteResourceKeyOptions.id() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", deleteResourceKeyOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_keys/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "deleteResourceKey");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -496,9 +494,9 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceKey> updateResourceKey(UpdateResourceKeyOptions updateResourceKeyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateResourceKeyOptions,
       "updateResourceKeyOptions cannot be null");
-    String[] pathSegments = { "v2/resource_keys" };
-    String[] pathParameters = { updateResourceKeyOptions.id() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", updateResourceKeyOptions.id());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_keys/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "updateResourceKey");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -521,38 +519,38 @@ public class ResourceController extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link ResourceBindingsList}
    */
   public ServiceCall<ResourceBindingsList> listResourceBindings(ListResourceBindingsOptions listResourceBindingsOptions) {
-    String[] pathSegments = { "v2/resource_bindings" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listResourceBindingsOptions == null) {
+      listResourceBindingsOptions = new ListResourceBindingsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_bindings"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "listResourceBindings");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listResourceBindingsOptions != null) {
-      if (listResourceBindingsOptions.guid() != null) {
-        builder.query("guid", listResourceBindingsOptions.guid());
-      }
-      if (listResourceBindingsOptions.name() != null) {
-        builder.query("name", listResourceBindingsOptions.name());
-      }
-      if (listResourceBindingsOptions.resourceGroupId() != null) {
-        builder.query("resource_group_id", listResourceBindingsOptions.resourceGroupId());
-      }
-      if (listResourceBindingsOptions.resourceId() != null) {
-        builder.query("resource_id", listResourceBindingsOptions.resourceId());
-      }
-      if (listResourceBindingsOptions.regionBindingId() != null) {
-        builder.query("region_binding_id", listResourceBindingsOptions.regionBindingId());
-      }
-      if (listResourceBindingsOptions.limit() != null) {
-        builder.query("limit", listResourceBindingsOptions.limit());
-      }
-      if (listResourceBindingsOptions.updatedFrom() != null) {
-        builder.query("updated_from", listResourceBindingsOptions.updatedFrom());
-      }
-      if (listResourceBindingsOptions.updatedTo() != null) {
-        builder.query("updated_to", listResourceBindingsOptions.updatedTo());
-      }
+    if (listResourceBindingsOptions.guid() != null) {
+      builder.query("guid", String.valueOf(listResourceBindingsOptions.guid()));
+    }
+    if (listResourceBindingsOptions.name() != null) {
+      builder.query("name", String.valueOf(listResourceBindingsOptions.name()));
+    }
+    if (listResourceBindingsOptions.resourceGroupId() != null) {
+      builder.query("resource_group_id", String.valueOf(listResourceBindingsOptions.resourceGroupId()));
+    }
+    if (listResourceBindingsOptions.resourceId() != null) {
+      builder.query("resource_id", String.valueOf(listResourceBindingsOptions.resourceId()));
+    }
+    if (listResourceBindingsOptions.regionBindingId() != null) {
+      builder.query("region_binding_id", String.valueOf(listResourceBindingsOptions.regionBindingId()));
+    }
+    if (listResourceBindingsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceBindingsOptions.limit()));
+    }
+    if (listResourceBindingsOptions.updatedFrom() != null) {
+      builder.query("updated_from", String.valueOf(listResourceBindingsOptions.updatedFrom()));
+    }
+    if (listResourceBindingsOptions.updatedTo() != null) {
+      builder.query("updated_to", String.valueOf(listResourceBindingsOptions.updatedTo()));
     }
     ResponseConverter<ResourceBindingsList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceBindingsList>() { }.getType());
@@ -581,8 +579,7 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceBinding> createResourceBinding(CreateResourceBindingOptions createResourceBindingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createResourceBindingOptions,
       "createResourceBindingOptions cannot be null");
-    String[] pathSegments = { "v2/resource_bindings" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_bindings"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "createResourceBinding");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -617,15 +614,14 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceBinding> getResourceBinding(GetResourceBindingOptions getResourceBindingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getResourceBindingOptions,
       "getResourceBindingOptions cannot be null");
-    String[] pathSegments = { "v2/resource_bindings" };
-    String[] pathParameters = { getResourceBindingOptions.id() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getResourceBindingOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_bindings/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "getResourceBinding");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<ResourceBinding> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceBinding>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -642,14 +638,13 @@ public class ResourceController extends BaseService {
   public ServiceCall<Void> deleteResourceBinding(DeleteResourceBindingOptions deleteResourceBindingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteResourceBindingOptions,
       "deleteResourceBindingOptions cannot be null");
-    String[] pathSegments = { "v2/resource_bindings" };
-    String[] pathParameters = { deleteResourceBindingOptions.id() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", deleteResourceBindingOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_bindings/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "deleteResourceBinding");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -665,9 +660,9 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceBinding> updateResourceBinding(UpdateResourceBindingOptions updateResourceBindingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateResourceBindingOptions,
       "updateResourceBindingOptions cannot be null");
-    String[] pathSegments = { "v2/resource_bindings" };
-    String[] pathParameters = { updateResourceBindingOptions.id() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", updateResourceBindingOptions.id());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_bindings/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "updateResourceBinding");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -690,41 +685,41 @@ public class ResourceController extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link ResourceAliasesList}
    */
   public ServiceCall<ResourceAliasesList> listResourceAliases(ListResourceAliasesOptions listResourceAliasesOptions) {
-    String[] pathSegments = { "v2/resource_aliases" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listResourceAliasesOptions == null) {
+      listResourceAliasesOptions = new ListResourceAliasesOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_aliases"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "listResourceAliases");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listResourceAliasesOptions != null) {
-      if (listResourceAliasesOptions.guid() != null) {
-        builder.query("guid", listResourceAliasesOptions.guid());
-      }
-      if (listResourceAliasesOptions.name() != null) {
-        builder.query("name", listResourceAliasesOptions.name());
-      }
-      if (listResourceAliasesOptions.resourceInstanceId() != null) {
-        builder.query("resource_instance_id", listResourceAliasesOptions.resourceInstanceId());
-      }
-      if (listResourceAliasesOptions.regionInstanceId() != null) {
-        builder.query("region_instance_id", listResourceAliasesOptions.regionInstanceId());
-      }
-      if (listResourceAliasesOptions.resourceId() != null) {
-        builder.query("resource_id", listResourceAliasesOptions.resourceId());
-      }
-      if (listResourceAliasesOptions.resourceGroupId() != null) {
-        builder.query("resource_group_id", listResourceAliasesOptions.resourceGroupId());
-      }
-      if (listResourceAliasesOptions.limit() != null) {
-        builder.query("limit", listResourceAliasesOptions.limit());
-      }
-      if (listResourceAliasesOptions.updatedFrom() != null) {
-        builder.query("updated_from", listResourceAliasesOptions.updatedFrom());
-      }
-      if (listResourceAliasesOptions.updatedTo() != null) {
-        builder.query("updated_to", listResourceAliasesOptions.updatedTo());
-      }
+    if (listResourceAliasesOptions.guid() != null) {
+      builder.query("guid", String.valueOf(listResourceAliasesOptions.guid()));
+    }
+    if (listResourceAliasesOptions.name() != null) {
+      builder.query("name", String.valueOf(listResourceAliasesOptions.name()));
+    }
+    if (listResourceAliasesOptions.resourceInstanceId() != null) {
+      builder.query("resource_instance_id", String.valueOf(listResourceAliasesOptions.resourceInstanceId()));
+    }
+    if (listResourceAliasesOptions.regionInstanceId() != null) {
+      builder.query("region_instance_id", String.valueOf(listResourceAliasesOptions.regionInstanceId()));
+    }
+    if (listResourceAliasesOptions.resourceId() != null) {
+      builder.query("resource_id", String.valueOf(listResourceAliasesOptions.resourceId()));
+    }
+    if (listResourceAliasesOptions.resourceGroupId() != null) {
+      builder.query("resource_group_id", String.valueOf(listResourceAliasesOptions.resourceGroupId()));
+    }
+    if (listResourceAliasesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceAliasesOptions.limit()));
+    }
+    if (listResourceAliasesOptions.updatedFrom() != null) {
+      builder.query("updated_from", String.valueOf(listResourceAliasesOptions.updatedFrom()));
+    }
+    if (listResourceAliasesOptions.updatedTo() != null) {
+      builder.query("updated_to", String.valueOf(listResourceAliasesOptions.updatedTo()));
     }
     ResponseConverter<ResourceAliasesList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceAliasesList>() { }.getType());
@@ -753,8 +748,7 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceAlias> createResourceAlias(CreateResourceAliasOptions createResourceAliasOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createResourceAliasOptions,
       "createResourceAliasOptions cannot be null");
-    String[] pathSegments = { "v2/resource_aliases" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_aliases"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "createResourceAlias");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -781,15 +775,14 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceAlias> getResourceAlias(GetResourceAliasOptions getResourceAliasOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getResourceAliasOptions,
       "getResourceAliasOptions cannot be null");
-    String[] pathSegments = { "v2/resource_aliases" };
-    String[] pathParameters = { getResourceAliasOptions.id() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getResourceAliasOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_aliases/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "getResourceAlias");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<ResourceAlias> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceAlias>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -806,14 +799,13 @@ public class ResourceController extends BaseService {
   public ServiceCall<Void> deleteResourceAlias(DeleteResourceAliasOptions deleteResourceAliasOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteResourceAliasOptions,
       "deleteResourceAliasOptions cannot be null");
-    String[] pathSegments = { "v2/resource_aliases" };
-    String[] pathParameters = { deleteResourceAliasOptions.id() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", deleteResourceAliasOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_aliases/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "deleteResourceAlias");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -829,9 +821,9 @@ public class ResourceController extends BaseService {
   public ServiceCall<ResourceAlias> updateResourceAlias(UpdateResourceAliasOptions updateResourceAliasOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateResourceAliasOptions,
       "updateResourceAliasOptions cannot be null");
-    String[] pathSegments = { "v2/resource_aliases" };
-    String[] pathParameters = { updateResourceAliasOptions.id() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", updateResourceAliasOptions.id());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_aliases/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "updateResourceAlias");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -854,20 +846,20 @@ public class ResourceController extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link ReclamationsList}
    */
   public ServiceCall<ReclamationsList> listReclamations(ListReclamationsOptions listReclamationsOptions) {
-    String[] pathSegments = { "v1/reclamations" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listReclamationsOptions == null) {
+      listReclamationsOptions = new ListReclamationsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/reclamations"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "listReclamations");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listReclamationsOptions != null) {
-      if (listReclamationsOptions.accountId() != null) {
-        builder.query("account_id", listReclamationsOptions.accountId());
-      }
-      if (listReclamationsOptions.resourceInstanceId() != null) {
-        builder.query("resource_instance_id", listReclamationsOptions.resourceInstanceId());
-      }
+    if (listReclamationsOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listReclamationsOptions.accountId()));
+    }
+    if (listReclamationsOptions.resourceInstanceId() != null) {
+      builder.query("resource_instance_id", String.valueOf(listReclamationsOptions.resourceInstanceId()));
     }
     ResponseConverter<ReclamationsList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ReclamationsList>() { }.getType());
@@ -897,9 +889,10 @@ public class ResourceController extends BaseService {
   public ServiceCall<Reclamation> runReclamationAction(RunReclamationActionOptions runReclamationActionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(runReclamationActionOptions,
       "runReclamationActionOptions cannot be null");
-    String[] pathSegments = { "v1/reclamations", "actions" };
-    String[] pathParameters = { runReclamationActionOptions.id(), runReclamationActionOptions.actionName() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", runReclamationActionOptions.id());
+    pathParamsMap.put("action_name", runReclamationActionOptions.actionName());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/reclamations/{id}/actions/{action_name}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "runReclamationAction");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());

@@ -17,13 +17,10 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.Credentials;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKey;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKeysList;
 import com.ibm.cloud.platform_services.resource_controller.v2.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 

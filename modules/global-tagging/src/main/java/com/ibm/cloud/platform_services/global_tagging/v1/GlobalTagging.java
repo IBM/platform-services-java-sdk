@@ -10,6 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ */
+
 package com.ibm.cloud.platform_services.global_tagging.v1;
 
 import com.google.gson.JsonObject;
@@ -31,6 +36,7 @@ import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.RequestUtils;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -93,38 +99,38 @@ public class GlobalTagging extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link TagList}
    */
   public ServiceCall<TagList> listTags(ListTagsOptions listTagsOptions) {
-    String[] pathSegments = { "v3/tags" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listTagsOptions == null) {
+      listTagsOptions = new ListTagsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v3/tags"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_tagging", "v1", "listTags");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listTagsOptions != null) {
-      if (listTagsOptions.providers() != null) {
-        builder.query("providers", RequestUtils.join(listTagsOptions.providers(), ","));
-      }
-      if (listTagsOptions.attachedTo() != null) {
-        builder.query("attached_to", listTagsOptions.attachedTo());
-      }
-      if (listTagsOptions.fullData() != null) {
-        builder.query("full_data", String.valueOf(listTagsOptions.fullData()));
-      }
-      if (listTagsOptions.offset() != null) {
-        builder.query("offset", String.valueOf(listTagsOptions.offset()));
-      }
-      if (listTagsOptions.limit() != null) {
-        builder.query("limit", String.valueOf(listTagsOptions.limit()));
-      }
-      if (listTagsOptions.orderByName() != null) {
-        builder.query("order_by_name", listTagsOptions.orderByName());
-      }
-      if (listTagsOptions.timeout() != null) {
-        builder.query("timeout", String.valueOf(listTagsOptions.timeout()));
-      }
-      if (listTagsOptions.attachedOnly() != null) {
-        builder.query("attached_only", String.valueOf(listTagsOptions.attachedOnly()));
-      }
+    if (listTagsOptions.providers() != null) {
+      builder.query("providers", RequestUtils.join(listTagsOptions.providers(), ","));
+    }
+    if (listTagsOptions.attachedTo() != null) {
+      builder.query("attached_to", String.valueOf(listTagsOptions.attachedTo()));
+    }
+    if (listTagsOptions.fullData() != null) {
+      builder.query("full_data", String.valueOf(listTagsOptions.fullData()));
+    }
+    if (listTagsOptions.offset() != null) {
+      builder.query("offset", String.valueOf(listTagsOptions.offset()));
+    }
+    if (listTagsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listTagsOptions.limit()));
+    }
+    if (listTagsOptions.orderByName() != null) {
+      builder.query("order_by_name", String.valueOf(listTagsOptions.orderByName()));
+    }
+    if (listTagsOptions.timeout() != null) {
+      builder.query("timeout", String.valueOf(listTagsOptions.timeout()));
+    }
+    if (listTagsOptions.attachedOnly() != null) {
+      builder.query("attached_only", String.valueOf(listTagsOptions.attachedOnly()));
     }
     ResponseConverter<TagList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TagList>() { }.getType());
@@ -152,17 +158,17 @@ public class GlobalTagging extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link DeleteTagsResult}
    */
   public ServiceCall<DeleteTagsResult> deleteTagAll(DeleteTagAllOptions deleteTagAllOptions) {
-    String[] pathSegments = { "v3/tags" };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (deleteTagAllOptions == null) {
+      deleteTagAllOptions = new DeleteTagAllOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v3/tags"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_tagging", "v1", "deleteTagAll");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (deleteTagAllOptions != null) {
-      if (deleteTagAllOptions.providers() != null) {
-        builder.query("providers", deleteTagAllOptions.providers());
-      }
+    if (deleteTagAllOptions.providers() != null) {
+      builder.query("providers", String.valueOf(deleteTagAllOptions.providers()));
     }
     ResponseConverter<DeleteTagsResult> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<DeleteTagsResult>() { }.getType());
@@ -191,9 +197,9 @@ public class GlobalTagging extends BaseService {
   public ServiceCall<DeleteTagResults> deleteTag(DeleteTagOptions deleteTagOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteTagOptions,
       "deleteTagOptions cannot be null");
-    String[] pathSegments = { "v3/tags" };
-    String[] pathParameters = { deleteTagOptions.tagName() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("tag_name", deleteTagOptions.tagName());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v3/tags/{tag_name}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_tagging", "v1", "deleteTag");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -221,8 +227,7 @@ public class GlobalTagging extends BaseService {
   public ServiceCall<TagResults> attachTag(AttachTagOptions attachTagOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(attachTagOptions,
       "attachTagOptions cannot be null");
-    String[] pathSegments = { "v3/tags/attach" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v3/tags/attach"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_tagging", "v1", "attachTag");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -257,8 +262,7 @@ public class GlobalTagging extends BaseService {
   public ServiceCall<TagResults> detachTag(DetachTagOptions detachTagOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(detachTagOptions,
       "detachTagOptions cannot be null");
-    String[] pathSegments = { "v3/tags/detach" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v3/tags/detach"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_tagging", "v1", "detachTag");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());

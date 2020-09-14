@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-68ee7c8f-20200829-062726
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
  */
 
 package com.ibm.cloud.platform_services.configuration_governance.v1;
@@ -42,6 +42,7 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -107,8 +108,7 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<CreateRulesResponse> createRules(CreateRulesOptions createRulesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createRulesOptions,
       "createRulesOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "createRules");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -136,8 +136,7 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<RuleList> listRules(ListRulesOptions listRulesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listRulesOptions,
       "listRulesOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "listRules");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -146,15 +145,15 @@ public class ConfigurationGovernance extends BaseService {
     if (listRulesOptions.transactionId() != null) {
       builder.header("Transaction-Id", listRulesOptions.transactionId());
     }
-    builder.query("account_id", listRulesOptions.accountId());
+    builder.query("account_id", String.valueOf(listRulesOptions.accountId()));
     if (listRulesOptions.attached() != null) {
       builder.query("attached", String.valueOf(listRulesOptions.attached()));
     }
     if (listRulesOptions.labels() != null) {
-      builder.query("labels", listRulesOptions.labels());
+      builder.query("labels", String.valueOf(listRulesOptions.labels()));
     }
     if (listRulesOptions.scopes() != null) {
-      builder.query("scopes", listRulesOptions.scopes());
+      builder.query("scopes", String.valueOf(listRulesOptions.scopes()));
     }
     if (listRulesOptions.limit() != null) {
       builder.query("limit", String.valueOf(listRulesOptions.limit()));
@@ -178,9 +177,9 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<Rule> getRule(GetRuleOptions getRuleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getRuleOptions,
       "getRuleOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules" };
-    String[] pathParameters = { getRuleOptions.ruleId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("rule_id", getRuleOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules/{rule_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "getRule");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -205,9 +204,9 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<Rule> updateRule(UpdateRuleOptions updateRuleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateRuleOptions,
       "updateRuleOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules" };
-    String[] pathParameters = { updateRuleOptions.ruleId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("rule_id", updateRuleOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules/{rule_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "updateRule");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -249,9 +248,9 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<Void> deleteRule(DeleteRuleOptions deleteRuleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteRuleOptions,
       "deleteRuleOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules" };
-    String[] pathParameters = { deleteRuleOptions.ruleId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("rule_id", deleteRuleOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules/{rule_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "deleteRule");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -278,9 +277,9 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<CreateAttachmentsResponse> createAttachments(CreateAttachmentsOptions createAttachmentsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createAttachmentsOptions,
       "createAttachmentsOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules", "attachments" };
-    String[] pathParameters = { createAttachmentsOptions.ruleId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("rule_id", createAttachmentsOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules/{rule_id}/attachments", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "createAttachments");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -308,9 +307,9 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<AttachmentList> listAttachments(ListAttachmentsOptions listAttachmentsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listAttachmentsOptions,
       "listAttachmentsOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules", "attachments" };
-    String[] pathParameters = { listAttachmentsOptions.ruleId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("rule_id", listAttachmentsOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules/{rule_id}/attachments", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "listAttachments");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -341,9 +340,10 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<Attachment> getAttachment(GetAttachmentOptions getAttachmentOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAttachmentOptions,
       "getAttachmentOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules", "attachments" };
-    String[] pathParameters = { getAttachmentOptions.ruleId(), getAttachmentOptions.attachmentId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("rule_id", getAttachmentOptions.ruleId());
+    pathParamsMap.put("attachment_id", getAttachmentOptions.attachmentId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules/{rule_id}/attachments/{attachment_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "getAttachment");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -368,9 +368,10 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<Attachment> updateAttachment(UpdateAttachmentOptions updateAttachmentOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateAttachmentOptions,
       "updateAttachmentOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules", "attachments" };
-    String[] pathParameters = { updateAttachmentOptions.ruleId(), updateAttachmentOptions.attachmentId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("rule_id", updateAttachmentOptions.ruleId());
+    pathParamsMap.put("attachment_id", updateAttachmentOptions.attachmentId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules/{rule_id}/attachments/{attachment_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "updateAttachment");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -403,9 +404,10 @@ public class ConfigurationGovernance extends BaseService {
   public ServiceCall<Void> deleteAttachment(DeleteAttachmentOptions deleteAttachmentOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAttachmentOptions,
       "deleteAttachmentOptions cannot be null");
-    String[] pathSegments = { "config/v1/rules", "attachments" };
-    String[] pathParameters = { deleteAttachmentOptions.ruleId(), deleteAttachmentOptions.attachmentId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("rule_id", deleteAttachmentOptions.ruleId());
+    pathParamsMap.put("attachment_id", deleteAttachmentOptions.attachmentId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/config/v1/rules/{rule_id}/attachments/{attachment_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("configuration_governance", "v1", "deleteAttachment");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());

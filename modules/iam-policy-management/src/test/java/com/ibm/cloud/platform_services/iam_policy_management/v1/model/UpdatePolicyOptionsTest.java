@@ -20,15 +20,12 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAt
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -41,6 +38,23 @@ public class UpdatePolicyOptionsTest {
 
   @Test
   public void testUpdatePolicyOptions() throws Throwable {
+    SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
+      .name("testString")
+      .value("testString")
+      .build();
+    assertEquals(subjectAttributeModel.name(), "testString");
+    assertEquals(subjectAttributeModel.value(), "testString");
+
+    PolicySubject policySubjectModel = new PolicySubject.Builder()
+      .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
+      .build();
+    assertEquals(policySubjectModel.attributes(), new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)));
+
+    PolicyRole policyRoleModel = new PolicyRole.Builder()
+      .roleId("testString")
+      .build();
+    assertEquals(policyRoleModel.roleId(), "testString");
+
     ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
       .name("testString")
       .value("testString")
@@ -50,27 +64,10 @@ public class UpdatePolicyOptionsTest {
     assertEquals(resourceAttributeModel.value(), "testString");
     assertEquals(resourceAttributeModel.operator(), "testString");
 
-    SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
-      .name("testString")
-      .value("testString")
-      .build();
-    assertEquals(subjectAttributeModel.name(), "testString");
-    assertEquals(subjectAttributeModel.value(), "testString");
-
     PolicyResource policyResourceModel = new PolicyResource.Builder()
       .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
       .build();
     assertEquals(policyResourceModel.attributes(), new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)));
-
-    PolicyRole policyRoleModel = new PolicyRole.Builder()
-      .roleId("testString")
-      .build();
-    assertEquals(policyRoleModel.roleId(), "testString");
-
-    PolicySubject policySubjectModel = new PolicySubject.Builder()
-      .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
-      .build();
-    assertEquals(policySubjectModel.attributes(), new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)));
 
     UpdatePolicyOptions updatePolicyOptionsModel = new UpdatePolicyOptions.Builder()
       .policyId("testString")

@@ -17,15 +17,12 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Role;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 

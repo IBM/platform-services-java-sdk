@@ -15,13 +15,10 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import com.ibm.cloud.platform_services.global_catalog.v1.model.PlanMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -43,7 +40,7 @@ public class PlanMetaDataTest {
       .testCheckInterval(Long.valueOf("26"))
       .singleScopeInstance("testString")
       .serviceCheckEnabled(true)
-      .cfGuid(new java.util.HashMap<String,String>(){{put("foo", "testString"); }})
+      .cfGuid(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
       .build();
     assertEquals(planMetaDataModel.bindable(), Boolean.valueOf(true));
     assertEquals(planMetaDataModel.reservable(), Boolean.valueOf(true));
@@ -53,7 +50,7 @@ public class PlanMetaDataTest {
     assertEquals(planMetaDataModel.testCheckInterval(), Long.valueOf("26"));
     assertEquals(planMetaDataModel.singleScopeInstance(), "testString");
     assertEquals(planMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));
-    assertEquals(planMetaDataModel.cfGuid(), new java.util.HashMap<String,String>(){{put("foo", "testString"); }});
+    assertEquals(planMetaDataModel.cfGuid(), new java.util.HashMap<String, String>() { { put("foo", "testString"); } });
 
     String json = TestUtilities.serialize(planMetaDataModel);
 

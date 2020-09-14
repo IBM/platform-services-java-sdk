@@ -10,6 +10,11 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ */
+
 package com.ibm.cloud.platform_services.global_catalog.v1;
 
 import com.google.gson.JsonObject;
@@ -43,6 +48,7 @@ import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -107,35 +113,35 @@ public class GlobalCatalog extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link EntrySearchResult}
    */
   public ServiceCall<EntrySearchResult> listCatalogEntries(ListCatalogEntriesOptions listCatalogEntriesOptions) {
-    String[] pathSegments = { "" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (listCatalogEntriesOptions == null) {
+      listCatalogEntriesOptions = new ListCatalogEntriesOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "listCatalogEntries");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listCatalogEntriesOptions != null) {
-      if (listCatalogEntriesOptions.account() != null) {
-        builder.query("account", listCatalogEntriesOptions.account());
-      }
-      if (listCatalogEntriesOptions.include() != null) {
-        builder.query("include", listCatalogEntriesOptions.include());
-      }
-      if (listCatalogEntriesOptions.q() != null) {
-        builder.query("q", listCatalogEntriesOptions.q());
-      }
-      if (listCatalogEntriesOptions.sortBy() != null) {
-        builder.query("sort-by", listCatalogEntriesOptions.sortBy());
-      }
-      if (listCatalogEntriesOptions.descending() != null) {
-        builder.query("descending", listCatalogEntriesOptions.descending());
-      }
-      if (listCatalogEntriesOptions.languages() != null) {
-        builder.query("languages", listCatalogEntriesOptions.languages());
-      }
-      if (listCatalogEntriesOptions.complete() != null) {
-        builder.query("complete", listCatalogEntriesOptions.complete());
-      }
+    if (listCatalogEntriesOptions.account() != null) {
+      builder.query("account", String.valueOf(listCatalogEntriesOptions.account()));
+    }
+    if (listCatalogEntriesOptions.include() != null) {
+      builder.query("include", String.valueOf(listCatalogEntriesOptions.include()));
+    }
+    if (listCatalogEntriesOptions.q() != null) {
+      builder.query("q", String.valueOf(listCatalogEntriesOptions.q()));
+    }
+    if (listCatalogEntriesOptions.sortBy() != null) {
+      builder.query("sort-by", String.valueOf(listCatalogEntriesOptions.sortBy()));
+    }
+    if (listCatalogEntriesOptions.descending() != null) {
+      builder.query("descending", String.valueOf(listCatalogEntriesOptions.descending()));
+    }
+    if (listCatalogEntriesOptions.languages() != null) {
+      builder.query("languages", String.valueOf(listCatalogEntriesOptions.languages()));
+    }
+    if (listCatalogEntriesOptions.complete() != null) {
+      builder.query("complete", String.valueOf(listCatalogEntriesOptions.complete()));
     }
     ResponseConverter<EntrySearchResult> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EntrySearchResult>() { }.getType());
@@ -166,15 +172,14 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<CatalogEntry> createCatalogEntry(CreateCatalogEntryOptions createCatalogEntryOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createCatalogEntryOptions,
       "createCatalogEntryOptions cannot be null");
-    String[] pathSegments = { "" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "createCatalogEntry");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (createCatalogEntryOptions.account() != null) {
-      builder.query("account", createCatalogEntryOptions.account());
+      builder.query("account", String.valueOf(createCatalogEntryOptions.account()));
     }
     final JsonObject contentJson = new JsonObject();
     contentJson.addProperty("name", createCatalogEntryOptions.name());
@@ -215,25 +220,25 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<CatalogEntry> getCatalogEntry(GetCatalogEntryOptions getCatalogEntryOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getCatalogEntryOptions,
       "getCatalogEntryOptions cannot be null");
-    String[] pathSegments = { "" };
-    String[] pathParameters = { getCatalogEntryOptions.id() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getCatalogEntryOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "getCatalogEntry");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (getCatalogEntryOptions.account() != null) {
-      builder.query("account", getCatalogEntryOptions.account());
+      builder.query("account", String.valueOf(getCatalogEntryOptions.account()));
     }
     if (getCatalogEntryOptions.include() != null) {
-      builder.query("include", getCatalogEntryOptions.include());
+      builder.query("include", String.valueOf(getCatalogEntryOptions.include()));
     }
     if (getCatalogEntryOptions.languages() != null) {
-      builder.query("languages", getCatalogEntryOptions.languages());
+      builder.query("languages", String.valueOf(getCatalogEntryOptions.languages()));
     }
     if (getCatalogEntryOptions.complete() != null) {
-      builder.query("complete", getCatalogEntryOptions.complete());
+      builder.query("complete", String.valueOf(getCatalogEntryOptions.complete()));
     }
     if (getCatalogEntryOptions.depth() != null) {
       builder.query("depth", String.valueOf(getCatalogEntryOptions.depth()));
@@ -255,19 +260,19 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<CatalogEntry> updateCatalogEntry(UpdateCatalogEntryOptions updateCatalogEntryOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateCatalogEntryOptions,
       "updateCatalogEntryOptions cannot be null");
-    String[] pathSegments = { "" };
-    String[] pathParameters = { updateCatalogEntryOptions.id() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", updateCatalogEntryOptions.id());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "updateCatalogEntry");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (updateCatalogEntryOptions.account() != null) {
-      builder.query("account", updateCatalogEntryOptions.account());
+      builder.query("account", String.valueOf(updateCatalogEntryOptions.account()));
     }
     if (updateCatalogEntryOptions.move() != null) {
-      builder.query("move", updateCatalogEntryOptions.move());
+      builder.query("move", String.valueOf(updateCatalogEntryOptions.move()));
     }
     final JsonObject contentJson = new JsonObject();
     contentJson.addProperty("name", updateCatalogEntryOptions.name());
@@ -308,15 +313,15 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<Void> deleteCatalogEntry(DeleteCatalogEntryOptions deleteCatalogEntryOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteCatalogEntryOptions,
       "deleteCatalogEntryOptions cannot be null");
-    String[] pathSegments = { "" };
-    String[] pathParameters = { deleteCatalogEntryOptions.id() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", deleteCatalogEntryOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "deleteCatalogEntry");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     if (deleteCatalogEntryOptions.account() != null) {
-      builder.query("account", deleteCatalogEntryOptions.account());
+      builder.query("account", String.valueOf(deleteCatalogEntryOptions.account()));
     }
     if (deleteCatalogEntryOptions.force() != null) {
       builder.query("force", String.valueOf(deleteCatalogEntryOptions.force()));
@@ -336,34 +341,35 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<EntrySearchResult> getChildObjects(GetChildObjectsOptions getChildObjectsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getChildObjectsOptions,
       "getChildObjectsOptions cannot be null");
-    String[] pathSegments = { "", "" };
-    String[] pathParameters = { getChildObjectsOptions.id(), getChildObjectsOptions.kind() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getChildObjectsOptions.id());
+    pathParamsMap.put("kind", getChildObjectsOptions.kind());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}/{kind}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "getChildObjects");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (getChildObjectsOptions.account() != null) {
-      builder.query("account", getChildObjectsOptions.account());
+      builder.query("account", String.valueOf(getChildObjectsOptions.account()));
     }
     if (getChildObjectsOptions.include() != null) {
-      builder.query("include", getChildObjectsOptions.include());
+      builder.query("include", String.valueOf(getChildObjectsOptions.include()));
     }
     if (getChildObjectsOptions.q() != null) {
-      builder.query("q", getChildObjectsOptions.q());
+      builder.query("q", String.valueOf(getChildObjectsOptions.q()));
     }
     if (getChildObjectsOptions.sortBy() != null) {
-      builder.query("sort-by", getChildObjectsOptions.sortBy());
+      builder.query("sort-by", String.valueOf(getChildObjectsOptions.sortBy()));
     }
     if (getChildObjectsOptions.descending() != null) {
-      builder.query("descending", getChildObjectsOptions.descending());
+      builder.query("descending", String.valueOf(getChildObjectsOptions.descending()));
     }
     if (getChildObjectsOptions.languages() != null) {
-      builder.query("languages", getChildObjectsOptions.languages());
+      builder.query("languages", String.valueOf(getChildObjectsOptions.languages()));
     }
     if (getChildObjectsOptions.complete() != null) {
-      builder.query("complete", getChildObjectsOptions.complete());
+      builder.query("complete", String.valueOf(getChildObjectsOptions.complete()));
     }
     ResponseConverter<EntrySearchResult> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EntrySearchResult>() { }.getType());
@@ -381,15 +387,15 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<Void> restoreCatalogEntry(RestoreCatalogEntryOptions restoreCatalogEntryOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(restoreCatalogEntryOptions,
       "restoreCatalogEntryOptions cannot be null");
-    String[] pathSegments = { "", "restore" };
-    String[] pathParameters = { restoreCatalogEntryOptions.id() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", restoreCatalogEntryOptions.id());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}/restore", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "restoreCatalogEntry");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     if (restoreCatalogEntryOptions.account() != null) {
-      builder.query("account", restoreCatalogEntryOptions.account());
+      builder.query("account", String.valueOf(restoreCatalogEntryOptions.account()));
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
@@ -408,16 +414,16 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<Visibility> getVisibility(GetVisibilityOptions getVisibilityOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getVisibilityOptions,
       "getVisibilityOptions cannot be null");
-    String[] pathSegments = { "", "visibility" };
-    String[] pathParameters = { getVisibilityOptions.id() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getVisibilityOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}/visibility", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "getVisibility");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (getVisibilityOptions.account() != null) {
-      builder.query("account", getVisibilityOptions.account());
+      builder.query("account", String.valueOf(getVisibilityOptions.account()));
     }
     ResponseConverter<Visibility> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Visibility>() { }.getType());
@@ -436,15 +442,15 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<Void> updateVisibility(UpdateVisibilityOptions updateVisibilityOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateVisibilityOptions,
       "updateVisibilityOptions cannot be null");
-    String[] pathSegments = { "", "visibility" };
-    String[] pathParameters = { updateVisibilityOptions.id() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", updateVisibilityOptions.id());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}/visibility", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "updateVisibility");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     if (updateVisibilityOptions.account() != null) {
-      builder.query("account", updateVisibilityOptions.account());
+      builder.query("account", String.valueOf(updateVisibilityOptions.account()));
     }
     final JsonObject contentJson = new JsonObject();
     if (updateVisibilityOptions.extendable() != null) {
@@ -473,16 +479,16 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<PricingGet> getPricing(GetPricingOptions getPricingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getPricingOptions,
       "getPricingOptions cannot be null");
-    String[] pathSegments = { "", "pricing" };
-    String[] pathParameters = { getPricingOptions.id() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getPricingOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}/pricing", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "getPricing");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (getPricingOptions.account() != null) {
-      builder.query("account", getPricingOptions.account());
+      builder.query("account", String.valueOf(getPricingOptions.account()));
     }
     ResponseConverter<PricingGet> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PricingGet>() { }.getType());
@@ -500,22 +506,22 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<AuditSearchResult> getAuditLogs(GetAuditLogsOptions getAuditLogsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAuditLogsOptions,
       "getAuditLogsOptions cannot be null");
-    String[] pathSegments = { "", "logs" };
-    String[] pathParameters = { getAuditLogsOptions.id() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getAuditLogsOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}/logs", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "getAuditLogs");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (getAuditLogsOptions.account() != null) {
-      builder.query("account", getAuditLogsOptions.account());
+      builder.query("account", String.valueOf(getAuditLogsOptions.account()));
     }
     if (getAuditLogsOptions.ascending() != null) {
-      builder.query("ascending", getAuditLogsOptions.ascending());
+      builder.query("ascending", String.valueOf(getAuditLogsOptions.ascending()));
     }
     if (getAuditLogsOptions.startat() != null) {
-      builder.query("startat", getAuditLogsOptions.startat());
+      builder.query("startat", String.valueOf(getAuditLogsOptions.startat()));
     }
     if (getAuditLogsOptions.offset() != null) {
       builder.query("_offset", String.valueOf(getAuditLogsOptions.offset()));
@@ -539,16 +545,16 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<Artifacts> listArtifacts(ListArtifactsOptions listArtifactsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listArtifactsOptions,
       "listArtifactsOptions cannot be null");
-    String[] pathSegments = { "", "artifacts" };
-    String[] pathParameters = { listArtifactsOptions.objectId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("object_id", listArtifactsOptions.objectId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{object_id}/artifacts", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "listArtifacts");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (listArtifactsOptions.account() != null) {
-      builder.query("account", listArtifactsOptions.account());
+      builder.query("account", String.valueOf(listArtifactsOptions.account()));
     }
     ResponseConverter<Artifacts> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Artifacts>() { }.getType());
@@ -566,9 +572,10 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<InputStream> getArtifact(GetArtifactOptions getArtifactOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getArtifactOptions,
       "getArtifactOptions cannot be null");
-    String[] pathSegments = { "", "artifacts" };
-    String[] pathParameters = { getArtifactOptions.objectId(), getArtifactOptions.artifactId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("object_id", getArtifactOptions.objectId());
+    pathParamsMap.put("artifact_id", getArtifactOptions.artifactId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{object_id}/artifacts/{artifact_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "getArtifact");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -577,7 +584,7 @@ public class GlobalCatalog extends BaseService {
       builder.header("Accept", getArtifactOptions.accept());
     }
     if (getArtifactOptions.account() != null) {
-      builder.query("account", getArtifactOptions.account());
+      builder.query("account", String.valueOf(getArtifactOptions.account()));
     }
     ResponseConverter<InputStream> responseConverter = ResponseConverterUtils.getInputStream();
     return createServiceCall(builder.build(), responseConverter);
@@ -594,9 +601,10 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<Void> uploadArtifact(UploadArtifactOptions uploadArtifactOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(uploadArtifactOptions,
       "uploadArtifactOptions cannot be null");
-    String[] pathSegments = { "", "artifacts" };
-    String[] pathParameters = { uploadArtifactOptions.objectId(), uploadArtifactOptions.artifactId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("object_id", uploadArtifactOptions.objectId());
+    pathParamsMap.put("artifact_id", uploadArtifactOptions.artifactId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{object_id}/artifacts/{artifact_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "uploadArtifact");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -605,7 +613,7 @@ public class GlobalCatalog extends BaseService {
       builder.header("Content-Type", uploadArtifactOptions.contentType());
     }
     if (uploadArtifactOptions.account() != null) {
-      builder.query("account", uploadArtifactOptions.account());
+      builder.query("account", String.valueOf(uploadArtifactOptions.account()));
     }
     builder.bodyContent(uploadArtifactOptions.contentType(), null,
       null, uploadArtifactOptions.artifact());
@@ -624,15 +632,16 @@ public class GlobalCatalog extends BaseService {
   public ServiceCall<Void> deleteArtifact(DeleteArtifactOptions deleteArtifactOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteArtifactOptions,
       "deleteArtifactOptions cannot be null");
-    String[] pathSegments = { "", "artifacts" };
-    String[] pathParameters = { deleteArtifactOptions.objectId(), deleteArtifactOptions.artifactId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("object_id", deleteArtifactOptions.objectId());
+    pathParamsMap.put("artifact_id", deleteArtifactOptions.artifactId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{object_id}/artifacts/{artifact_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "deleteArtifact");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     if (deleteArtifactOptions.account() != null) {
-      builder.query("account", deleteArtifactOptions.account());
+      builder.query("account", String.valueOf(deleteArtifactOptions.account()));
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);

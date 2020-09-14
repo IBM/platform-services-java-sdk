@@ -32,30 +32,24 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
+import com.ibm.cloud.sdk.core.util.RequestUtils;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -63,14 +57,14 @@ import static org.testng.Assert.*;
  * Unit test class for the GlobalTagging service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class GlobalTaggingTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected GlobalTagging testService;
+  protected GlobalTagging globalTaggingService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -84,9 +78,9 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = GlobalTagging.newInstance(serviceName);
+    globalTaggingService = GlobalTagging.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    globalTaggingService.setServiceUrl(url);
   }
 
   /**
@@ -125,7 +119,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<TagList> response = testService.listTags(listTagsOptionsModel).execute();
+    Response<TagList> response = globalTaggingService.listTags(listTagsOptionsModel).execute();
     assertNotNull(response);
     TagList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -139,7 +133,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Arrays.asList(query.get("providers")), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
+    assertEquals(query.get("providers"), RequestUtils.join(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")), ","));
     assertEquals(query.get("attached_to"), "testString");
     assertEquals(Boolean.valueOf(query.get("full_data")), Boolean.valueOf(true));
     assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("0"));
@@ -171,7 +165,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<DeleteTagsResult> response = testService.deleteTagAll(deleteTagAllOptionsModel).execute();
+    Response<DeleteTagsResult> response = globalTaggingService.deleteTagAll(deleteTagAllOptionsModel).execute();
     assertNotNull(response);
     DeleteTagsResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -211,7 +205,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<DeleteTagResults> response = testService.deleteTag(deleteTagOptionsModel).execute();
+    Response<DeleteTagResults> response = globalTaggingService.deleteTag(deleteTagOptionsModel).execute();
     assertNotNull(response);
     DeleteTagResults responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -225,7 +219,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Arrays.asList(query.get("providers")), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
+    assertEquals(query.get("providers"), RequestUtils.join(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")), ","));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteTagPath);
@@ -240,7 +234,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteTag(null).execute();
+    globalTaggingService.deleteTag(null).execute();
   }
 
   @Test
@@ -270,7 +264,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<TagResults> response = testService.attachTag(attachTagOptionsModel).execute();
+    Response<TagResults> response = globalTaggingService.attachTag(attachTagOptionsModel).execute();
     assertNotNull(response);
     TagResults responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -298,7 +292,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.attachTag(null).execute();
+    globalTaggingService.attachTag(null).execute();
   }
 
   @Test
@@ -328,7 +322,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<TagResults> response = testService.detachTag(detachTagOptionsModel).execute();
+    Response<TagResults> response = globalTaggingService.detachTag(detachTagOptionsModel).execute();
     assertNotNull(response);
     TagResults responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -356,7 +350,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.detachTag(null).execute();
+    globalTaggingService.detachTag(null).execute();
   }
 
   /** Initialize the server */
@@ -375,6 +369,6 @@ public class GlobalTaggingTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    globalTaggingService = null;
   }
 }

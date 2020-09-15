@@ -34,10 +34,10 @@ const service = {
   url: 'ibm.com/123456',
 };
 
-const openServiceBroker = new OpenServiceBrokerV1(service);
+const openServiceBrokerService = new OpenServiceBrokerV1(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(openServiceBroker, 'createRequest');
+const createRequestMock = jest.spyOn(openServiceBrokerService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -108,7 +108,7 @@ describe('OpenServiceBrokerV1', () => {
           instanceId: instanceId,
         };
 
-        const getServiceInstanceStateResult = openServiceBroker.getServiceInstanceState(params);
+        const getServiceInstanceStateResult = openServiceBrokerService.getServiceInstanceState(params);
 
         // all methods should return a Promise
         expectToBePromise(getServiceInstanceStateResult);
@@ -138,7 +138,7 @@ describe('OpenServiceBrokerV1', () => {
           },
         };
 
-        openServiceBroker.getServiceInstanceState(params);
+        openServiceBrokerService.getServiceInstanceState(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -147,7 +147,7 @@ describe('OpenServiceBrokerV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await openServiceBroker.getServiceInstanceState({});
+          await openServiceBrokerService.getServiceInstanceState({});
         } catch (e) {
           err = e;
         }
@@ -157,7 +157,7 @@ describe('OpenServiceBrokerV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getServiceInstanceStatePromise = openServiceBroker.getServiceInstanceState();
+        const getServiceInstanceStatePromise = openServiceBrokerService.getServiceInstanceState();
         expectToBePromise(getServiceInstanceStatePromise);
 
         getServiceInstanceStatePromise.catch(err => {
@@ -182,7 +182,7 @@ describe('OpenServiceBrokerV1', () => {
           reasonCode: reasonCode,
         };
 
-        const replaceServiceInstanceStateResult = openServiceBroker.replaceServiceInstanceState(params);
+        const replaceServiceInstanceStateResult = openServiceBrokerService.replaceServiceInstanceState(params);
 
         // all methods should return a Promise
         expectToBePromise(replaceServiceInstanceStateResult);
@@ -215,7 +215,7 @@ describe('OpenServiceBrokerV1', () => {
           },
         };
 
-        openServiceBroker.replaceServiceInstanceState(params);
+        openServiceBrokerService.replaceServiceInstanceState(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -224,7 +224,7 @@ describe('OpenServiceBrokerV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await openServiceBroker.replaceServiceInstanceState({});
+          await openServiceBrokerService.replaceServiceInstanceState({});
         } catch (e) {
           err = e;
         }
@@ -234,7 +234,7 @@ describe('OpenServiceBrokerV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const replaceServiceInstanceStatePromise = openServiceBroker.replaceServiceInstanceState();
+        const replaceServiceInstanceStatePromise = openServiceBrokerService.replaceServiceInstanceState();
         expectToBePromise(replaceServiceInstanceStatePromise);
 
         replaceServiceInstanceStatePromise.catch(err => {
@@ -263,7 +263,7 @@ describe('OpenServiceBrokerV1', () => {
         const serviceId = 'null';
         const spaceGuid = 'null';
         const context = contextModel;
-        const parameters = { 'key1' : 'null' };
+        const parameters = { 'key1': 'null' };
         const acceptsIncomplete = true;
         const params = {
           instanceId: instanceId,
@@ -276,7 +276,7 @@ describe('OpenServiceBrokerV1', () => {
           acceptsIncomplete: acceptsIncomplete,
         };
 
-        const replaceServiceInstanceResult = openServiceBroker.replaceServiceInstance(params);
+        const replaceServiceInstanceResult = openServiceBrokerService.replaceServiceInstance(params);
 
         // all methods should return a Promise
         expectToBePromise(replaceServiceInstanceResult);
@@ -313,7 +313,7 @@ describe('OpenServiceBrokerV1', () => {
           },
         };
 
-        openServiceBroker.replaceServiceInstance(params);
+        openServiceBrokerService.replaceServiceInstance(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -322,7 +322,7 @@ describe('OpenServiceBrokerV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await openServiceBroker.replaceServiceInstance({});
+          await openServiceBrokerService.replaceServiceInstance({});
         } catch (e) {
           err = e;
         }
@@ -332,7 +332,7 @@ describe('OpenServiceBrokerV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const replaceServiceInstancePromise = openServiceBroker.replaceServiceInstance();
+        const replaceServiceInstancePromise = openServiceBrokerService.replaceServiceInstance();
         expectToBePromise(replaceServiceInstancePromise);
 
         replaceServiceInstancePromise.catch(err => {
@@ -358,9 +358,9 @@ describe('OpenServiceBrokerV1', () => {
         const instanceId = 'testString';
         const serviceId = 'null';
         const context = contextModel;
-        const parameters = { 'key1' : 'null' };
+        const parameters = { 'key1': 'null' };
         const planId = 'null';
-        const previousValues = { 'key1' : 'null' };
+        const previousValues = { 'key1': 'null' };
         const acceptsIncomplete = true;
         const params = {
           instanceId: instanceId,
@@ -372,7 +372,7 @@ describe('OpenServiceBrokerV1', () => {
           acceptsIncomplete: acceptsIncomplete,
         };
 
-        const updateServiceInstanceResult = openServiceBroker.updateServiceInstance(params);
+        const updateServiceInstanceResult = openServiceBrokerService.updateServiceInstance(params);
 
         // all methods should return a Promise
         expectToBePromise(updateServiceInstanceResult);
@@ -408,7 +408,7 @@ describe('OpenServiceBrokerV1', () => {
           },
         };
 
-        openServiceBroker.updateServiceInstance(params);
+        openServiceBrokerService.updateServiceInstance(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -417,7 +417,7 @@ describe('OpenServiceBrokerV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await openServiceBroker.updateServiceInstance({});
+          await openServiceBrokerService.updateServiceInstance({});
         } catch (e) {
           err = e;
         }
@@ -427,7 +427,7 @@ describe('OpenServiceBrokerV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateServiceInstancePromise = openServiceBroker.updateServiceInstance();
+        const updateServiceInstancePromise = openServiceBrokerService.updateServiceInstance();
         expectToBePromise(updateServiceInstancePromise);
 
         updateServiceInstancePromise.catch(err => {
@@ -452,7 +452,7 @@ describe('OpenServiceBrokerV1', () => {
           acceptsIncomplete: acceptsIncomplete,
         };
 
-        const deleteServiceInstanceResult = openServiceBroker.deleteServiceInstance(params);
+        const deleteServiceInstanceResult = openServiceBrokerService.deleteServiceInstance(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteServiceInstanceResult);
@@ -489,7 +489,7 @@ describe('OpenServiceBrokerV1', () => {
           },
         };
 
-        openServiceBroker.deleteServiceInstance(params);
+        openServiceBrokerService.deleteServiceInstance(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -498,7 +498,7 @@ describe('OpenServiceBrokerV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await openServiceBroker.deleteServiceInstance({});
+          await openServiceBrokerService.deleteServiceInstance({});
         } catch (e) {
           err = e;
         }
@@ -508,7 +508,7 @@ describe('OpenServiceBrokerV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteServiceInstancePromise = openServiceBroker.deleteServiceInstance();
+        const deleteServiceInstancePromise = openServiceBrokerService.deleteServiceInstance();
         expectToBePromise(deleteServiceInstancePromise);
 
         deleteServiceInstancePromise.catch(err => {
@@ -524,7 +524,7 @@ describe('OpenServiceBrokerV1', () => {
         // Construct the params object for operation listCatalog
         const params = {};
 
-        const listCatalogResult = openServiceBroker.listCatalog(params);
+        const listCatalogResult = openServiceBrokerService.listCatalog(params);
 
         // all methods should return a Promise
         expectToBePromise(listCatalogResult);
@@ -551,13 +551,13 @@ describe('OpenServiceBrokerV1', () => {
           },
         };
 
-        openServiceBroker.listCatalog(params);
+        openServiceBrokerService.listCatalog(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        openServiceBroker.listCatalog({});
+        openServiceBrokerService.listCatalog({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -577,7 +577,7 @@ describe('OpenServiceBrokerV1', () => {
           serviceId: serviceId,
         };
 
-        const getLastOperationResult = openServiceBroker.getLastOperation(params);
+        const getLastOperationResult = openServiceBrokerService.getLastOperation(params);
 
         // all methods should return a Promise
         expectToBePromise(getLastOperationResult);
@@ -610,7 +610,7 @@ describe('OpenServiceBrokerV1', () => {
           },
         };
 
-        openServiceBroker.getLastOperation(params);
+        openServiceBrokerService.getLastOperation(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -619,7 +619,7 @@ describe('OpenServiceBrokerV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await openServiceBroker.getLastOperation({});
+          await openServiceBrokerService.getLastOperation({});
         } catch (e) {
           err = e;
         }
@@ -629,7 +629,7 @@ describe('OpenServiceBrokerV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getLastOperationPromise = openServiceBroker.getLastOperation();
+        const getLastOperationPromise = openServiceBrokerService.getLastOperation();
         expectToBePromise(getLastOperationPromise);
 
         getLastOperationPromise.catch(err => {
@@ -659,7 +659,7 @@ describe('OpenServiceBrokerV1', () => {
         const planId = 'null';
         const serviceId = 'null';
         const bindResource = bindResourceModel;
-        const parameters = { 'key1' : 'null' };
+        const parameters = { 'key1': 'null' };
         const params = {
           bindingId: bindingId,
           instanceId: instanceId,
@@ -669,7 +669,7 @@ describe('OpenServiceBrokerV1', () => {
           parameters: parameters,
         };
 
-        const replaceServiceBindingResult = openServiceBroker.replaceServiceBinding(params);
+        const replaceServiceBindingResult = openServiceBrokerService.replaceServiceBinding(params);
 
         // all methods should return a Promise
         expectToBePromise(replaceServiceBindingResult);
@@ -706,7 +706,7 @@ describe('OpenServiceBrokerV1', () => {
           },
         };
 
-        openServiceBroker.replaceServiceBinding(params);
+        openServiceBrokerService.replaceServiceBinding(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -715,7 +715,7 @@ describe('OpenServiceBrokerV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await openServiceBroker.replaceServiceBinding({});
+          await openServiceBrokerService.replaceServiceBinding({});
         } catch (e) {
           err = e;
         }
@@ -725,7 +725,7 @@ describe('OpenServiceBrokerV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const replaceServiceBindingPromise = openServiceBroker.replaceServiceBinding();
+        const replaceServiceBindingPromise = openServiceBrokerService.replaceServiceBinding();
         expectToBePromise(replaceServiceBindingPromise);
 
         replaceServiceBindingPromise.catch(err => {
@@ -750,7 +750,7 @@ describe('OpenServiceBrokerV1', () => {
           serviceId: serviceId,
         };
 
-        const deleteServiceBindingResult = openServiceBroker.deleteServiceBinding(params);
+        const deleteServiceBindingResult = openServiceBrokerService.deleteServiceBinding(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteServiceBindingResult);
@@ -789,7 +789,7 @@ describe('OpenServiceBrokerV1', () => {
           },
         };
 
-        openServiceBroker.deleteServiceBinding(params);
+        openServiceBrokerService.deleteServiceBinding(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -798,7 +798,7 @@ describe('OpenServiceBrokerV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await openServiceBroker.deleteServiceBinding({});
+          await openServiceBrokerService.deleteServiceBinding({});
         } catch (e) {
           err = e;
         }
@@ -808,7 +808,7 @@ describe('OpenServiceBrokerV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteServiceBindingPromise = openServiceBroker.deleteServiceBinding();
+        const deleteServiceBindingPromise = openServiceBrokerService.deleteServiceBinding();
         expectToBePromise(deleteServiceBindingPromise);
 
         deleteServiceBindingPromise.catch(err => {

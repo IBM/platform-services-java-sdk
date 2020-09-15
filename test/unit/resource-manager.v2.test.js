@@ -34,10 +34,10 @@ const service = {
   url: 'https://resource-controller.cloud.ibm.com/v2',
 };
 
-const resourceManager = new ResourceManagerV2(service);
+const resourceManagerService = new ResourceManagerV2(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(resourceManager, 'createRequest');
+const createRequestMock = jest.spyOn(resourceManagerService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -110,7 +110,7 @@ describe('ResourceManagerV2', () => {
           date: date,
         };
 
-        const listResourceGroupsResult = resourceManager.listResourceGroups(params);
+        const listResourceGroupsResult = resourceManagerService.listResourceGroups(params);
 
         // all methods should return a Promise
         expectToBePromise(listResourceGroupsResult);
@@ -139,13 +139,13 @@ describe('ResourceManagerV2', () => {
           },
         };
 
-        resourceManager.listResourceGroups(params);
+        resourceManagerService.listResourceGroups(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        resourceManager.listResourceGroups({});
+        resourceManagerService.listResourceGroups({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -161,7 +161,7 @@ describe('ResourceManagerV2', () => {
           accountId: accountId,
         };
 
-        const createResourceGroupResult = resourceManager.createResourceGroup(params);
+        const createResourceGroupResult = resourceManagerService.createResourceGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(createResourceGroupResult);
@@ -190,13 +190,13 @@ describe('ResourceManagerV2', () => {
           },
         };
 
-        resourceManager.createResourceGroup(params);
+        resourceManagerService.createResourceGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        resourceManager.createResourceGroup({});
+        resourceManagerService.createResourceGroup({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -210,7 +210,7 @@ describe('ResourceManagerV2', () => {
           id: id,
         };
 
-        const getResourceGroupResult = resourceManager.getResourceGroup(params);
+        const getResourceGroupResult = resourceManagerService.getResourceGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(getResourceGroupResult);
@@ -240,7 +240,7 @@ describe('ResourceManagerV2', () => {
           },
         };
 
-        resourceManager.getResourceGroup(params);
+        resourceManagerService.getResourceGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -249,7 +249,7 @@ describe('ResourceManagerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceManager.getResourceGroup({});
+          await resourceManagerService.getResourceGroup({});
         } catch (e) {
           err = e;
         }
@@ -259,7 +259,7 @@ describe('ResourceManagerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getResourceGroupPromise = resourceManager.getResourceGroup();
+        const getResourceGroupPromise = resourceManagerService.getResourceGroup();
         expectToBePromise(getResourceGroupPromise);
 
         getResourceGroupPromise.catch(err => {
@@ -282,7 +282,7 @@ describe('ResourceManagerV2', () => {
           state: state,
         };
 
-        const updateResourceGroupResult = resourceManager.updateResourceGroup(params);
+        const updateResourceGroupResult = resourceManagerService.updateResourceGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(updateResourceGroupResult);
@@ -314,7 +314,7 @@ describe('ResourceManagerV2', () => {
           },
         };
 
-        resourceManager.updateResourceGroup(params);
+        resourceManagerService.updateResourceGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -323,7 +323,7 @@ describe('ResourceManagerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceManager.updateResourceGroup({});
+          await resourceManagerService.updateResourceGroup({});
         } catch (e) {
           err = e;
         }
@@ -333,7 +333,7 @@ describe('ResourceManagerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateResourceGroupPromise = resourceManager.updateResourceGroup();
+        const updateResourceGroupPromise = resourceManagerService.updateResourceGroup();
         expectToBePromise(updateResourceGroupPromise);
 
         updateResourceGroupPromise.catch(err => {
@@ -352,7 +352,7 @@ describe('ResourceManagerV2', () => {
           id: id,
         };
 
-        const deleteResourceGroupResult = resourceManager.deleteResourceGroup(params);
+        const deleteResourceGroupResult = resourceManagerService.deleteResourceGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteResourceGroupResult);
@@ -382,7 +382,7 @@ describe('ResourceManagerV2', () => {
           },
         };
 
-        resourceManager.deleteResourceGroup(params);
+        resourceManagerService.deleteResourceGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -391,7 +391,7 @@ describe('ResourceManagerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceManager.deleteResourceGroup({});
+          await resourceManagerService.deleteResourceGroup({});
         } catch (e) {
           err = e;
         }
@@ -401,7 +401,7 @@ describe('ResourceManagerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteResourceGroupPromise = resourceManager.deleteResourceGroup();
+        const deleteResourceGroupPromise = resourceManagerService.deleteResourceGroup();
         expectToBePromise(deleteResourceGroupPromise);
 
         deleteResourceGroupPromise.catch(err => {
@@ -417,7 +417,7 @@ describe('ResourceManagerV2', () => {
         // Construct the params object for operation listQuotaDefinitions
         const params = {};
 
-        const listQuotaDefinitionsResult = resourceManager.listQuotaDefinitions(params);
+        const listQuotaDefinitionsResult = resourceManagerService.listQuotaDefinitions(params);
 
         // all methods should return a Promise
         expectToBePromise(listQuotaDefinitionsResult);
@@ -444,13 +444,13 @@ describe('ResourceManagerV2', () => {
           },
         };
 
-        resourceManager.listQuotaDefinitions(params);
+        resourceManagerService.listQuotaDefinitions(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        resourceManager.listQuotaDefinitions({});
+        resourceManagerService.listQuotaDefinitions({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -464,7 +464,7 @@ describe('ResourceManagerV2', () => {
           id: id,
         };
 
-        const getQuotaDefinitionResult = resourceManager.getQuotaDefinition(params);
+        const getQuotaDefinitionResult = resourceManagerService.getQuotaDefinition(params);
 
         // all methods should return a Promise
         expectToBePromise(getQuotaDefinitionResult);
@@ -494,7 +494,7 @@ describe('ResourceManagerV2', () => {
           },
         };
 
-        resourceManager.getQuotaDefinition(params);
+        resourceManagerService.getQuotaDefinition(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -503,7 +503,7 @@ describe('ResourceManagerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceManager.getQuotaDefinition({});
+          await resourceManagerService.getQuotaDefinition({});
         } catch (e) {
           err = e;
         }
@@ -513,7 +513,7 @@ describe('ResourceManagerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getQuotaDefinitionPromise = resourceManager.getQuotaDefinition();
+        const getQuotaDefinitionPromise = resourceManagerService.getQuotaDefinition();
         expectToBePromise(getQuotaDefinitionPromise);
 
         getQuotaDefinitionPromise.catch(err => {

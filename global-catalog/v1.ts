@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -122,7 +127,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>>}
    */
   public listCatalogEntries(params?: GlobalCatalogV1.ListCatalogEntriesParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -185,7 +190,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>>}
    */
   public createCatalogEntry(params: GlobalCatalogV1.CreateCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider', 'id'];
 
     return new Promise((resolve, reject) => {
@@ -262,7 +267,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>>}
    */
   public getCatalogEntry(params: GlobalCatalogV1.GetCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -337,7 +342,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>>}
    */
   public updateCatalogEntry(params: GlobalCatalogV1.UpdateCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id', 'name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider'];
 
     return new Promise((resolve, reject) => {
@@ -409,7 +414,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
   public deleteCatalogEntry(params: GlobalCatalogV1.DeleteCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -475,7 +480,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>>}
    */
   public getChildObjects(params: GlobalCatalogV1.GetChildObjectsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id', 'kind'];
 
     return new Promise((resolve, reject) => {
@@ -533,7 +538,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
   public restoreCatalogEntry(params: GlobalCatalogV1.RestoreCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -589,7 +594,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Visibility>>}
    */
   public getVisibility(params: GlobalCatalogV1.GetVisibilityParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Visibility>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -644,7 +649,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
   public updateVisibility(params: GlobalCatalogV1.UpdateVisibilityParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -707,7 +712,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.PricingGet>>}
    */
   public getPricing(params: GlobalCatalogV1.GetPricingParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.PricingGet>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -772,7 +777,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.AuditSearchResult>>}
    */
   public getAuditLogs(params: GlobalCatalogV1.GetAuditLogsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.AuditSearchResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -831,7 +836,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Artifacts>>}
    */
   public listArtifacts(params: GlobalCatalogV1.ListArtifactsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Artifacts>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['objectId'];
 
     return new Promise((resolve, reject) => {
@@ -884,7 +889,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<NodeJS.ReadableStream|Buffer>>}
    */
   public getArtifact(params: GlobalCatalogV1.GetArtifactParams): Promise<GlobalCatalogV1.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['objectId', 'artifactId'];
 
     return new Promise((resolve, reject) => {
@@ -940,7 +945,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
   public uploadArtifact(params: GlobalCatalogV1.UploadArtifactParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['objectId', 'artifactId'];
 
     return new Promise((resolve, reject) => {
@@ -995,7 +1000,7 @@ class GlobalCatalogV1 extends BaseService {
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
   public deleteArtifact(params: GlobalCatalogV1.DeleteArtifactParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['objectId', 'artifactId'];
 
     return new Promise((resolve, reject) => {

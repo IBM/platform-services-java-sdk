@@ -34,10 +34,10 @@ const service = {
   url: 'https://tags.global-search-tagging.cloud.ibm.com',
 };
 
-const globalTagging = new GlobalTaggingV1(service);
+const globalTaggingService = new GlobalTaggingV1(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(globalTagging, 'createRequest');
+const createRequestMock = jest.spyOn(globalTaggingService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -122,7 +122,7 @@ describe('GlobalTaggingV1', () => {
           attachedOnly: attachedOnly,
         };
 
-        const listTagsResult = globalTagging.listTags(params);
+        const listTagsResult = globalTaggingService.listTags(params);
 
         // all methods should return a Promise
         expectToBePromise(listTagsResult);
@@ -157,13 +157,13 @@ describe('GlobalTaggingV1', () => {
           },
         };
 
-        globalTagging.listTags(params);
+        globalTaggingService.listTags(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        globalTagging.listTags({});
+        globalTaggingService.listTags({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -177,7 +177,7 @@ describe('GlobalTaggingV1', () => {
           providers: providers,
         };
 
-        const deleteTagAllResult = globalTagging.deleteTagAll(params);
+        const deleteTagAllResult = globalTaggingService.deleteTagAll(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteTagAllResult);
@@ -205,13 +205,13 @@ describe('GlobalTaggingV1', () => {
           },
         };
 
-        globalTagging.deleteTagAll(params);
+        globalTaggingService.deleteTagAll(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        globalTagging.deleteTagAll({});
+        globalTaggingService.deleteTagAll({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -227,7 +227,7 @@ describe('GlobalTaggingV1', () => {
           providers: providers,
         };
 
-        const deleteTagResult = globalTagging.deleteTag(params);
+        const deleteTagResult = globalTaggingService.deleteTag(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteTagResult);
@@ -258,7 +258,7 @@ describe('GlobalTaggingV1', () => {
           },
         };
 
-        globalTagging.deleteTag(params);
+        globalTaggingService.deleteTag(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -267,7 +267,7 @@ describe('GlobalTaggingV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalTagging.deleteTag({});
+          await globalTaggingService.deleteTag({});
         } catch (e) {
           err = e;
         }
@@ -277,7 +277,7 @@ describe('GlobalTaggingV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteTagPromise = globalTagging.deleteTag();
+        const deleteTagPromise = globalTaggingService.deleteTag();
         expectToBePromise(deleteTagPromise);
 
         deleteTagPromise.catch(err => {
@@ -308,7 +308,7 @@ describe('GlobalTaggingV1', () => {
           tagNames: tagNames,
         };
 
-        const attachTagResult = globalTagging.attachTag(params);
+        const attachTagResult = globalTaggingService.attachTag(params);
 
         // all methods should return a Promise
         expectToBePromise(attachTagResult);
@@ -340,7 +340,7 @@ describe('GlobalTaggingV1', () => {
           },
         };
 
-        globalTagging.attachTag(params);
+        globalTaggingService.attachTag(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -349,7 +349,7 @@ describe('GlobalTaggingV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalTagging.attachTag({});
+          await globalTaggingService.attachTag({});
         } catch (e) {
           err = e;
         }
@@ -359,7 +359,7 @@ describe('GlobalTaggingV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const attachTagPromise = globalTagging.attachTag();
+        const attachTagPromise = globalTaggingService.attachTag();
         expectToBePromise(attachTagPromise);
 
         attachTagPromise.catch(err => {
@@ -390,7 +390,7 @@ describe('GlobalTaggingV1', () => {
           tagNames: tagNames,
         };
 
-        const detachTagResult = globalTagging.detachTag(params);
+        const detachTagResult = globalTaggingService.detachTag(params);
 
         // all methods should return a Promise
         expectToBePromise(detachTagResult);
@@ -422,7 +422,7 @@ describe('GlobalTaggingV1', () => {
           },
         };
 
-        globalTagging.detachTag(params);
+        globalTaggingService.detachTag(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -431,7 +431,7 @@ describe('GlobalTaggingV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalTagging.detachTag({});
+          await globalTaggingService.detachTag({});
         } catch (e) {
           err = e;
         }
@@ -441,7 +441,7 @@ describe('GlobalTaggingV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const detachTagPromise = globalTagging.detachTag();
+        const detachTagPromise = globalTaggingService.detachTag();
         expectToBePromise(detachTagPromise);
 
         detachTagPromise.catch(err => {

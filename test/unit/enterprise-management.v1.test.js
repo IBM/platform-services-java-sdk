@@ -34,10 +34,10 @@ const service = {
   url: 'https://enterprise.cloud.ibm.com/v1',
 };
 
-const enterpriseManagement = new EnterpriseManagementV1(service);
+const enterpriseManagementService = new EnterpriseManagementV1(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(enterpriseManagement, 'createRequest');
+const createRequestMock = jest.spyOn(enterpriseManagementService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -112,7 +112,7 @@ describe('EnterpriseManagementV1', () => {
           primaryContactIamId: primaryContactIamId,
         };
 
-        const createAccountGroupResult = enterpriseManagement.createAccountGroup(params);
+        const createAccountGroupResult = enterpriseManagementService.createAccountGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(createAccountGroupResult);
@@ -148,7 +148,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.createAccountGroup(params);
+        enterpriseManagementService.createAccountGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -157,7 +157,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.createAccountGroup({});
+          await enterpriseManagementService.createAccountGroup({});
         } catch (e) {
           err = e;
         }
@@ -167,7 +167,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createAccountGroupPromise = enterpriseManagement.createAccountGroup();
+        const createAccountGroupPromise = enterpriseManagementService.createAccountGroup();
         expectToBePromise(createAccountGroupPromise);
 
         createAccountGroupPromise.catch(err => {
@@ -192,7 +192,7 @@ describe('EnterpriseManagementV1', () => {
           limit: limit,
         };
 
-        const listAccountGroupsResult = enterpriseManagement.listAccountGroups(params);
+        const listAccountGroupsResult = enterpriseManagementService.listAccountGroups(params);
 
         // all methods should return a Promise
         expectToBePromise(listAccountGroupsResult);
@@ -223,13 +223,13 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.listAccountGroups(params);
+        enterpriseManagementService.listAccountGroups(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        enterpriseManagement.listAccountGroups({});
+        enterpriseManagementService.listAccountGroups({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -243,7 +243,7 @@ describe('EnterpriseManagementV1', () => {
           accountGroupId: accountGroupId,
         };
 
-        const getAccountGroupResult = enterpriseManagement.getAccountGroup(params);
+        const getAccountGroupResult = enterpriseManagementService.getAccountGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(getAccountGroupResult);
@@ -273,7 +273,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.getAccountGroup(params);
+        enterpriseManagementService.getAccountGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -282,7 +282,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.getAccountGroup({});
+          await enterpriseManagementService.getAccountGroup({});
         } catch (e) {
           err = e;
         }
@@ -292,7 +292,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getAccountGroupPromise = enterpriseManagement.getAccountGroup();
+        const getAccountGroupPromise = enterpriseManagementService.getAccountGroup();
         expectToBePromise(getAccountGroupPromise);
 
         getAccountGroupPromise.catch(err => {
@@ -315,7 +315,7 @@ describe('EnterpriseManagementV1', () => {
           primaryContactIamId: primaryContactIamId,
         };
 
-        const updateAccountGroupResult = enterpriseManagement.updateAccountGroup(params);
+        const updateAccountGroupResult = enterpriseManagementService.updateAccountGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(updateAccountGroupResult);
@@ -347,7 +347,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.updateAccountGroup(params);
+        enterpriseManagementService.updateAccountGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -356,7 +356,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.updateAccountGroup({});
+          await enterpriseManagementService.updateAccountGroup({});
         } catch (e) {
           err = e;
         }
@@ -366,7 +366,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateAccountGroupPromise = enterpriseManagement.updateAccountGroup();
+        const updateAccountGroupPromise = enterpriseManagementService.updateAccountGroup();
         expectToBePromise(updateAccountGroupPromise);
 
         updateAccountGroupPromise.catch(err => {
@@ -391,7 +391,7 @@ describe('EnterpriseManagementV1', () => {
           billingUnitId: billingUnitId,
         };
 
-        const importAccountToEnterpriseResult = enterpriseManagement.importAccountToEnterprise(params);
+        const importAccountToEnterpriseResult = enterpriseManagementService.importAccountToEnterprise(params);
 
         // all methods should return a Promise
         expectToBePromise(importAccountToEnterpriseResult);
@@ -426,7 +426,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.importAccountToEnterprise(params);
+        enterpriseManagementService.importAccountToEnterprise(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -435,7 +435,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.importAccountToEnterprise({});
+          await enterpriseManagementService.importAccountToEnterprise({});
         } catch (e) {
           err = e;
         }
@@ -445,7 +445,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const importAccountToEnterprisePromise = enterpriseManagement.importAccountToEnterprise();
+        const importAccountToEnterprisePromise = enterpriseManagementService.importAccountToEnterprise();
         expectToBePromise(importAccountToEnterprisePromise);
 
         importAccountToEnterprisePromise.catch(err => {
@@ -468,7 +468,7 @@ describe('EnterpriseManagementV1', () => {
           ownerIamId: ownerIamId,
         };
 
-        const createAccountResult = enterpriseManagement.createAccount(params);
+        const createAccountResult = enterpriseManagementService.createAccount(params);
 
         // all methods should return a Promise
         expectToBePromise(createAccountResult);
@@ -504,7 +504,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.createAccount(params);
+        enterpriseManagementService.createAccount(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -513,7 +513,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.createAccount({});
+          await enterpriseManagementService.createAccount({});
         } catch (e) {
           err = e;
         }
@@ -523,7 +523,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createAccountPromise = enterpriseManagement.createAccount();
+        const createAccountPromise = enterpriseManagementService.createAccount();
         expectToBePromise(createAccountPromise);
 
         createAccountPromise.catch(err => {
@@ -548,7 +548,7 @@ describe('EnterpriseManagementV1', () => {
           limit: limit,
         };
 
-        const listAccountsResult = enterpriseManagement.listAccounts(params);
+        const listAccountsResult = enterpriseManagementService.listAccounts(params);
 
         // all methods should return a Promise
         expectToBePromise(listAccountsResult);
@@ -579,13 +579,13 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.listAccounts(params);
+        enterpriseManagementService.listAccounts(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        enterpriseManagement.listAccounts({});
+        enterpriseManagementService.listAccounts({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -599,7 +599,7 @@ describe('EnterpriseManagementV1', () => {
           accountId: accountId,
         };
 
-        const getAccountResult = enterpriseManagement.getAccount(params);
+        const getAccountResult = enterpriseManagementService.getAccount(params);
 
         // all methods should return a Promise
         expectToBePromise(getAccountResult);
@@ -629,7 +629,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.getAccount(params);
+        enterpriseManagementService.getAccount(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -638,7 +638,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.getAccount({});
+          await enterpriseManagementService.getAccount({});
         } catch (e) {
           err = e;
         }
@@ -648,7 +648,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getAccountPromise = enterpriseManagement.getAccount();
+        const getAccountPromise = enterpriseManagementService.getAccount();
         expectToBePromise(getAccountPromise);
 
         getAccountPromise.catch(err => {
@@ -669,7 +669,7 @@ describe('EnterpriseManagementV1', () => {
           parent: parent,
         };
 
-        const updateAccountResult = enterpriseManagement.updateAccount(params);
+        const updateAccountResult = enterpriseManagementService.updateAccount(params);
 
         // all methods should return a Promise
         expectToBePromise(updateAccountResult);
@@ -702,7 +702,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.updateAccount(params);
+        enterpriseManagementService.updateAccount(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -711,7 +711,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.updateAccount({});
+          await enterpriseManagementService.updateAccount({});
         } catch (e) {
           err = e;
         }
@@ -721,7 +721,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateAccountPromise = enterpriseManagement.updateAccount();
+        const updateAccountPromise = enterpriseManagementService.updateAccount();
         expectToBePromise(updateAccountPromise);
 
         updateAccountPromise.catch(err => {
@@ -746,7 +746,7 @@ describe('EnterpriseManagementV1', () => {
           domain: domain,
         };
 
-        const createEnterpriseResult = enterpriseManagement.createEnterprise(params);
+        const createEnterpriseResult = enterpriseManagementService.createEnterprise(params);
 
         // all methods should return a Promise
         expectToBePromise(createEnterpriseResult);
@@ -783,7 +783,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.createEnterprise(params);
+        enterpriseManagementService.createEnterprise(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -792,7 +792,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.createEnterprise({});
+          await enterpriseManagementService.createEnterprise({});
         } catch (e) {
           err = e;
         }
@@ -802,7 +802,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createEnterprisePromise = enterpriseManagement.createEnterprise();
+        const createEnterprisePromise = enterpriseManagementService.createEnterprise();
         expectToBePromise(createEnterprisePromise);
 
         createEnterprisePromise.catch(err => {
@@ -827,7 +827,7 @@ describe('EnterpriseManagementV1', () => {
           limit: limit,
         };
 
-        const listEnterprisesResult = enterpriseManagement.listEnterprises(params);
+        const listEnterprisesResult = enterpriseManagementService.listEnterprises(params);
 
         // all methods should return a Promise
         expectToBePromise(listEnterprisesResult);
@@ -858,13 +858,13 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.listEnterprises(params);
+        enterpriseManagementService.listEnterprises(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        enterpriseManagement.listEnterprises({});
+        enterpriseManagementService.listEnterprises({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -878,7 +878,7 @@ describe('EnterpriseManagementV1', () => {
           enterpriseId: enterpriseId,
         };
 
-        const getEnterpriseResult = enterpriseManagement.getEnterprise(params);
+        const getEnterpriseResult = enterpriseManagementService.getEnterprise(params);
 
         // all methods should return a Promise
         expectToBePromise(getEnterpriseResult);
@@ -908,7 +908,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.getEnterprise(params);
+        enterpriseManagementService.getEnterprise(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -917,7 +917,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.getEnterprise({});
+          await enterpriseManagementService.getEnterprise({});
         } catch (e) {
           err = e;
         }
@@ -927,7 +927,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getEnterprisePromise = enterpriseManagement.getEnterprise();
+        const getEnterprisePromise = enterpriseManagementService.getEnterprise();
         expectToBePromise(getEnterprisePromise);
 
         getEnterprisePromise.catch(err => {
@@ -952,7 +952,7 @@ describe('EnterpriseManagementV1', () => {
           primaryContactIamId: primaryContactIamId,
         };
 
-        const updateEnterpriseResult = enterpriseManagement.updateEnterprise(params);
+        const updateEnterpriseResult = enterpriseManagementService.updateEnterprise(params);
 
         // all methods should return a Promise
         expectToBePromise(updateEnterpriseResult);
@@ -985,7 +985,7 @@ describe('EnterpriseManagementV1', () => {
           },
         };
 
-        enterpriseManagement.updateEnterprise(params);
+        enterpriseManagementService.updateEnterprise(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -994,7 +994,7 @@ describe('EnterpriseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await enterpriseManagement.updateEnterprise({});
+          await enterpriseManagementService.updateEnterprise({});
         } catch (e) {
           err = e;
         }
@@ -1004,7 +1004,7 @@ describe('EnterpriseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateEnterprisePromise = enterpriseManagement.updateEnterprise();
+        const updateEnterprisePromise = enterpriseManagementService.updateEnterprise();
         expectToBePromise(updateEnterprisePromise);
 
         updateEnterprisePromise.catch(err => {

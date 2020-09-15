@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -105,7 +110,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.PolicyList>>}
    */
   public listPolicies(params: IamPolicyManagementV1.ListPoliciesParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.PolicyList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
     return new Promise((resolve, reject) => {
@@ -176,7 +181,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>>}
    */
   public createPolicy(params: IamPolicyManagementV1.CreatePolicyParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['type', 'subjects', 'roles', 'resources'];
 
     return new Promise((resolve, reject) => {
@@ -247,7 +252,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>>}
    */
   public updatePolicy(params: IamPolicyManagementV1.UpdatePolicyParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['policyId', 'ifMatch', 'type', 'subjects', 'roles', 'resources'];
 
     return new Promise((resolve, reject) => {
@@ -300,7 +305,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>>}
    */
   public getPolicy(params: IamPolicyManagementV1.GetPolicyParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['policyId'];
 
     return new Promise((resolve, reject) => {
@@ -344,7 +349,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Empty>>}
    */
   public deletePolicy(params: IamPolicyManagementV1.DeletePolicyParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['policyId'];
 
     return new Promise((resolve, reject) => {
@@ -395,7 +400,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.RoleList>>}
    */
   public listRoles(params?: IamPolicyManagementV1.ListRolesParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.RoleList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -444,7 +449,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.CustomRole>>}
    */
   public createRole(params: IamPolicyManagementV1.CreateRoleParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.CustomRole>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['displayName', 'actions', 'name', 'accountId', 'serviceName'];
 
     return new Promise((resolve, reject) => {
@@ -501,7 +506,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.CustomRole>>}
    */
   public updateRole(params: IamPolicyManagementV1.UpdateRoleParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.CustomRole>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['roleId', 'ifMatch'];
 
     return new Promise((resolve, reject) => {
@@ -553,7 +558,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.CustomRole>>}
    */
   public getRole(params: IamPolicyManagementV1.GetRoleParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.CustomRole>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['roleId'];
 
     return new Promise((resolve, reject) => {
@@ -596,7 +601,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Empty>>}
    */
   public deleteRole(params: IamPolicyManagementV1.DeleteRoleParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['roleId'];
 
     return new Promise((resolve, reject) => {

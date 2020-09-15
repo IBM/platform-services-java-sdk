@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -103,7 +108,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountGroupResponse>>}
    */
   public createAccountGroup(params: EnterpriseManagementV1.CreateAccountGroupParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountGroupResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['parent', 'name', 'primaryContactIamId'];
 
     return new Promise((resolve, reject) => {
@@ -164,7 +169,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountGroupsResponse>>}
    */
   public listAccountGroups(params?: EnterpriseManagementV1.ListAccountGroupsParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountGroupsResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -205,7 +210,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.AccountGroup>>}
    */
   public getAccountGroup(params: EnterpriseManagementV1.GetAccountGroupParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.AccountGroup>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountGroupId'];
 
     return new Promise((resolve, reject) => {
@@ -252,7 +257,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>>}
    */
   public updateAccountGroup(params: EnterpriseManagementV1.UpdateAccountGroupParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountGroupId'];
 
     return new Promise((resolve, reject) => {
@@ -316,7 +321,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>>}
    */
   public importAccountToEnterprise(params: EnterpriseManagementV1.ImportAccountToEnterpriseParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['enterpriseId', 'accountId'];
 
     return new Promise((resolve, reject) => {
@@ -373,7 +378,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountResponse>>}
    */
   public createAccount(params: EnterpriseManagementV1.CreateAccountParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['parent', 'name', 'ownerIamId'];
 
     return new Promise((resolve, reject) => {
@@ -433,7 +438,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountsResponse>>}
    */
   public listAccounts(params?: EnterpriseManagementV1.ListAccountsParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountsResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -474,7 +479,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Account>>}
    */
   public getAccount(params: EnterpriseManagementV1.GetAccountParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Account>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
     return new Promise((resolve, reject) => {
@@ -518,7 +523,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>>}
    */
   public updateAccount(params: EnterpriseManagementV1.UpdateAccountParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'parent'];
 
     return new Promise((resolve, reject) => {
@@ -580,7 +585,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateEnterpriseResponse>>}
    */
   public createEnterprise(params: EnterpriseManagementV1.CreateEnterpriseParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateEnterpriseResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['sourceAccountId', 'name', 'primaryContactIamId'];
 
     return new Promise((resolve, reject) => {
@@ -638,7 +643,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListEnterprisesResponse>>}
    */
   public listEnterprises(params?: EnterpriseManagementV1.ListEnterprisesParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListEnterprisesResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -679,7 +684,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Enterprise>>}
    */
   public getEnterprise(params: EnterpriseManagementV1.GetEnterpriseParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Enterprise>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['enterpriseId'];
 
     return new Promise((resolve, reject) => {
@@ -727,7 +732,7 @@ class EnterpriseManagementV1 extends BaseService {
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>>}
    */
   public updateEnterprise(params: EnterpriseManagementV1.UpdateEnterpriseParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['enterpriseId'];
 
     return new Promise((resolve, reject) => {

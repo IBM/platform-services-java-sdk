@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -104,7 +109,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * @returns {Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp1874644Root>>}
    */
   public getServiceInstanceState(params: OpenServiceBrokerV1.GetServiceInstanceStateParams): Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp1874644Root>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['instanceId'];
 
     return new Promise((resolve, reject) => {
@@ -165,7 +170,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * @returns {Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2448145Root>>}
    */
   public replaceServiceInstanceState(params: OpenServiceBrokerV1.ReplaceServiceInstanceStateParams): Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2448145Root>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['instanceId'];
 
     return new Promise((resolve, reject) => {
@@ -252,7 +257,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * @returns {Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079872Root>>}
    */
   public replaceServiceInstance(params: OpenServiceBrokerV1.ReplaceServiceInstanceParams): Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079872Root>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['instanceId'];
 
     return new Promise((resolve, reject) => {
@@ -333,7 +338,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * @returns {Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079874Root>>}
    */
   public updateServiceInstance(params: OpenServiceBrokerV1.UpdateServiceInstanceParams): Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079874Root>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['instanceId'];
 
     return new Promise((resolve, reject) => {
@@ -401,7 +406,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * @returns {Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079874Root>>}
    */
   public deleteServiceInstance(params: OpenServiceBrokerV1.DeleteServiceInstanceParams): Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079874Root>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['serviceId', 'planId', 'instanceId'];
 
     return new Promise((resolve, reject) => {
@@ -461,7 +466,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * @returns {Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp1874650Root>>}
    */
   public listCatalog(params?: OpenServiceBrokerV1.ListCatalogParams): Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp1874650Root>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const sdkHeaders = getSdkHeaders(OpenServiceBrokerV1.DEFAULT_SERVICE_NAME, 'v1', 'listCatalog');
@@ -513,7 +518,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * @returns {Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079894Root>>}
    */
   public getLastOperation(params: OpenServiceBrokerV1.GetLastOperationParams): Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079894Root>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['instanceId'];
 
     return new Promise((resolve, reject) => {
@@ -588,7 +593,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * @returns {Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079876Root>>}
    */
   public replaceServiceBinding(params: OpenServiceBrokerV1.ReplaceServiceBindingParams): Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Resp2079876Root>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['bindingId', 'instanceId'];
 
     return new Promise((resolve, reject) => {
@@ -653,7 +658,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * @returns {Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Empty>>}
    */
   public deleteServiceBinding(params: OpenServiceBrokerV1.DeleteServiceBindingParams): Promise<OpenServiceBrokerV1.Response<OpenServiceBrokerV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['bindingId', 'instanceId', 'planId', 'serviceId'];
 
     return new Promise((resolve, reject) => {

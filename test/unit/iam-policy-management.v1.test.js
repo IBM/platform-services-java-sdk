@@ -35,10 +35,10 @@ const service = {
   url: 'https://iam.cloud.ibm.com',
 };
 
-const iamPolicyManagement = new IamPolicyManagementV1(service);
+const iamPolicyManagementService = new IamPolicyManagementV1(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(iamPolicyManagement, 'createRequest');
+const createRequestMock = jest.spyOn(iamPolicyManagementService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -119,7 +119,7 @@ describe('IamPolicyManagementV1', () => {
           serviceType: serviceType,
         };
 
-        const listPoliciesResult = iamPolicyManagement.listPolicies(params);
+        const listPoliciesResult = iamPolicyManagementService.listPolicies(params);
 
         // all methods should return a Promise
         expectToBePromise(listPoliciesResult);
@@ -154,7 +154,7 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.listPolicies(params);
+        iamPolicyManagementService.listPolicies(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -163,7 +163,7 @@ describe('IamPolicyManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamPolicyManagement.listPolicies({});
+          await iamPolicyManagementService.listPolicies({});
         } catch (e) {
           err = e;
         }
@@ -173,7 +173,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const listPoliciesPromise = iamPolicyManagement.listPolicies();
+        const listPoliciesPromise = iamPolicyManagementService.listPolicies();
         expectToBePromise(listPoliciesPromise);
 
         listPoliciesPromise.catch(err => {
@@ -230,7 +230,7 @@ describe('IamPolicyManagementV1', () => {
           acceptLanguage: acceptLanguage,
         };
 
-        const createPolicyResult = iamPolicyManagement.createPolicy(params);
+        const createPolicyResult = iamPolicyManagementService.createPolicy(params);
 
         // all methods should return a Promise
         expectToBePromise(createPolicyResult);
@@ -270,7 +270,7 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.createPolicy(params);
+        iamPolicyManagementService.createPolicy(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -279,7 +279,7 @@ describe('IamPolicyManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamPolicyManagement.createPolicy({});
+          await iamPolicyManagementService.createPolicy({});
         } catch (e) {
           err = e;
         }
@@ -289,7 +289,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createPolicyPromise = iamPolicyManagement.createPolicy();
+        const createPolicyPromise = iamPolicyManagementService.createPolicy();
         expectToBePromise(createPolicyPromise);
 
         createPolicyPromise.catch(err => {
@@ -348,7 +348,7 @@ describe('IamPolicyManagementV1', () => {
           resources: resources,
         };
 
-        const updatePolicyResult = iamPolicyManagement.updatePolicy(params);
+        const updatePolicyResult = iamPolicyManagementService.updatePolicy(params);
 
         // all methods should return a Promise
         expectToBePromise(updatePolicyResult);
@@ -393,7 +393,7 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.updatePolicy(params);
+        iamPolicyManagementService.updatePolicy(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -402,7 +402,7 @@ describe('IamPolicyManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamPolicyManagement.updatePolicy({});
+          await iamPolicyManagementService.updatePolicy({});
         } catch (e) {
           err = e;
         }
@@ -412,7 +412,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updatePolicyPromise = iamPolicyManagement.updatePolicy();
+        const updatePolicyPromise = iamPolicyManagementService.updatePolicy();
         expectToBePromise(updatePolicyPromise);
 
         updatePolicyPromise.catch(err => {
@@ -431,7 +431,7 @@ describe('IamPolicyManagementV1', () => {
           policyId: policyId,
         };
 
-        const getPolicyResult = iamPolicyManagement.getPolicy(params);
+        const getPolicyResult = iamPolicyManagementService.getPolicy(params);
 
         // all methods should return a Promise
         expectToBePromise(getPolicyResult);
@@ -461,7 +461,7 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.getPolicy(params);
+        iamPolicyManagementService.getPolicy(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -470,7 +470,7 @@ describe('IamPolicyManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamPolicyManagement.getPolicy({});
+          await iamPolicyManagementService.getPolicy({});
         } catch (e) {
           err = e;
         }
@@ -480,7 +480,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getPolicyPromise = iamPolicyManagement.getPolicy();
+        const getPolicyPromise = iamPolicyManagementService.getPolicy();
         expectToBePromise(getPolicyPromise);
 
         getPolicyPromise.catch(err => {
@@ -499,7 +499,7 @@ describe('IamPolicyManagementV1', () => {
           policyId: policyId,
         };
 
-        const deletePolicyResult = iamPolicyManagement.deletePolicy(params);
+        const deletePolicyResult = iamPolicyManagementService.deletePolicy(params);
 
         // all methods should return a Promise
         expectToBePromise(deletePolicyResult);
@@ -529,7 +529,7 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.deletePolicy(params);
+        iamPolicyManagementService.deletePolicy(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -538,7 +538,7 @@ describe('IamPolicyManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamPolicyManagement.deletePolicy({});
+          await iamPolicyManagementService.deletePolicy({});
         } catch (e) {
           err = e;
         }
@@ -548,7 +548,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deletePolicyPromise = iamPolicyManagement.deletePolicy();
+        const deletePolicyPromise = iamPolicyManagementService.deletePolicy();
         expectToBePromise(deletePolicyPromise);
 
         deletePolicyPromise.catch(err => {
@@ -571,7 +571,7 @@ describe('IamPolicyManagementV1', () => {
           serviceName: serviceName,
         };
 
-        const listRolesResult = iamPolicyManagement.listRoles(params);
+        const listRolesResult = iamPolicyManagementService.listRoles(params);
 
         // all methods should return a Promise
         expectToBePromise(listRolesResult);
@@ -601,13 +601,13 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.listRoles(params);
+        iamPolicyManagementService.listRoles(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        iamPolicyManagement.listRoles({});
+        iamPolicyManagementService.listRoles({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -633,7 +633,7 @@ describe('IamPolicyManagementV1', () => {
           acceptLanguage: acceptLanguage,
         };
 
-        const createRoleResult = iamPolicyManagement.createRole(params);
+        const createRoleResult = iamPolicyManagementService.createRole(params);
 
         // all methods should return a Promise
         expectToBePromise(createRoleResult);
@@ -677,7 +677,7 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.createRole(params);
+        iamPolicyManagementService.createRole(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -686,7 +686,7 @@ describe('IamPolicyManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamPolicyManagement.createRole({});
+          await iamPolicyManagementService.createRole({});
         } catch (e) {
           err = e;
         }
@@ -696,7 +696,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createRolePromise = iamPolicyManagement.createRole();
+        const createRolePromise = iamPolicyManagementService.createRole();
         expectToBePromise(createRolePromise);
 
         createRolePromise.catch(err => {
@@ -723,7 +723,7 @@ describe('IamPolicyManagementV1', () => {
           actions: actions,
         };
 
-        const updateRoleResult = iamPolicyManagement.updateRole(params);
+        const updateRoleResult = iamPolicyManagementService.updateRole(params);
 
         // all methods should return a Promise
         expectToBePromise(updateRoleResult);
@@ -759,7 +759,7 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.updateRole(params);
+        iamPolicyManagementService.updateRole(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -768,7 +768,7 @@ describe('IamPolicyManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamPolicyManagement.updateRole({});
+          await iamPolicyManagementService.updateRole({});
         } catch (e) {
           err = e;
         }
@@ -778,7 +778,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateRolePromise = iamPolicyManagement.updateRole();
+        const updateRolePromise = iamPolicyManagementService.updateRole();
         expectToBePromise(updateRolePromise);
 
         updateRolePromise.catch(err => {
@@ -797,7 +797,7 @@ describe('IamPolicyManagementV1', () => {
           roleId: roleId,
         };
 
-        const getRoleResult = iamPolicyManagement.getRole(params);
+        const getRoleResult = iamPolicyManagementService.getRole(params);
 
         // all methods should return a Promise
         expectToBePromise(getRoleResult);
@@ -827,7 +827,7 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.getRole(params);
+        iamPolicyManagementService.getRole(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -836,7 +836,7 @@ describe('IamPolicyManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamPolicyManagement.getRole({});
+          await iamPolicyManagementService.getRole({});
         } catch (e) {
           err = e;
         }
@@ -846,7 +846,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getRolePromise = iamPolicyManagement.getRole();
+        const getRolePromise = iamPolicyManagementService.getRole();
         expectToBePromise(getRolePromise);
 
         getRolePromise.catch(err => {
@@ -865,7 +865,7 @@ describe('IamPolicyManagementV1', () => {
           roleId: roleId,
         };
 
-        const deleteRoleResult = iamPolicyManagement.deleteRole(params);
+        const deleteRoleResult = iamPolicyManagementService.deleteRole(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteRoleResult);
@@ -895,7 +895,7 @@ describe('IamPolicyManagementV1', () => {
           },
         };
 
-        iamPolicyManagement.deleteRole(params);
+        iamPolicyManagementService.deleteRole(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -904,7 +904,7 @@ describe('IamPolicyManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamPolicyManagement.deleteRole({});
+          await iamPolicyManagementService.deleteRole({});
         } catch (e) {
           err = e;
         }
@@ -914,7 +914,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteRolePromise = iamPolicyManagement.deleteRole();
+        const deleteRolePromise = iamPolicyManagementService.deleteRole();
         expectToBePromise(deleteRolePromise);
 
         deleteRolePromise.catch(err => {

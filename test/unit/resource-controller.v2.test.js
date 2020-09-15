@@ -35,10 +35,10 @@ const service = {
   url: 'https://resource-controller.cloud.ibm.com',
 };
 
-const resourceController = new ResourceControllerV2(service);
+const resourceControllerService = new ResourceControllerV2(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(resourceController, 'createRequest');
+const createRequestMock = jest.spyOn(resourceControllerService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -127,7 +127,7 @@ describe('ResourceControllerV2', () => {
           updatedTo: updatedTo,
         };
 
-        const listResourceInstancesResult = resourceController.listResourceInstances(params);
+        const listResourceInstancesResult = resourceControllerService.listResourceInstances(params);
 
         // all methods should return a Promise
         expectToBePromise(listResourceInstancesResult);
@@ -164,13 +164,13 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.listResourceInstances(params);
+        resourceControllerService.listResourceInstances(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        resourceController.listResourceInstances({});
+        resourceControllerService.listResourceInstances({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -185,7 +185,7 @@ describe('ResourceControllerV2', () => {
         const resourcePlanId = 'cloudant-standard';
         const tags = ['testString'];
         const allowCleanup = true;
-        const parameters = { 'key1' : 'any' };
+        const parameters = { 'key1': 'testString' };
         const entityLock = 'testString';
         const params = {
           name: name,
@@ -198,7 +198,7 @@ describe('ResourceControllerV2', () => {
           entityLock: entityLock,
         };
 
-        const createResourceInstanceResult = resourceController.createResourceInstance(params);
+        const createResourceInstanceResult = resourceControllerService.createResourceInstance(params);
 
         // all methods should return a Promise
         expectToBePromise(createResourceInstanceResult);
@@ -241,7 +241,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.createResourceInstance(params);
+        resourceControllerService.createResourceInstance(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -250,7 +250,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.createResourceInstance({});
+          await resourceControllerService.createResourceInstance({});
         } catch (e) {
           err = e;
         }
@@ -260,7 +260,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createResourceInstancePromise = resourceController.createResourceInstance();
+        const createResourceInstancePromise = resourceControllerService.createResourceInstance();
         expectToBePromise(createResourceInstancePromise);
 
         createResourceInstancePromise.catch(err => {
@@ -279,7 +279,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const getResourceInstanceResult = resourceController.getResourceInstance(params);
+        const getResourceInstanceResult = resourceControllerService.getResourceInstance(params);
 
         // all methods should return a Promise
         expectToBePromise(getResourceInstanceResult);
@@ -309,7 +309,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.getResourceInstance(params);
+        resourceControllerService.getResourceInstance(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -318,7 +318,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.getResourceInstance({});
+          await resourceControllerService.getResourceInstance({});
         } catch (e) {
           err = e;
         }
@@ -328,7 +328,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getResourceInstancePromise = resourceController.getResourceInstance();
+        const getResourceInstancePromise = resourceControllerService.getResourceInstance();
         expectToBePromise(getResourceInstancePromise);
 
         getResourceInstancePromise.catch(err => {
@@ -347,7 +347,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const deleteResourceInstanceResult = resourceController.deleteResourceInstance(params);
+        const deleteResourceInstanceResult = resourceControllerService.deleteResourceInstance(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteResourceInstanceResult);
@@ -377,7 +377,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.deleteResourceInstance(params);
+        resourceControllerService.deleteResourceInstance(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -386,7 +386,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.deleteResourceInstance({});
+          await resourceControllerService.deleteResourceInstance({});
         } catch (e) {
           err = e;
         }
@@ -396,7 +396,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteResourceInstancePromise = resourceController.deleteResourceInstance();
+        const deleteResourceInstancePromise = resourceControllerService.deleteResourceInstance();
         expectToBePromise(deleteResourceInstancePromise);
 
         deleteResourceInstancePromise.catch(err => {
@@ -412,7 +412,7 @@ describe('ResourceControllerV2', () => {
         // Construct the params object for operation updateResourceInstance
         const id = 'testString';
         const name = 'my-new-instance-name';
-        const parameters = { 'key1' : 'any' };
+        const parameters = { 'key1': 'testString' };
         const resourcePlanId = 'a8dff6d3-d287-4668-a81d-c87c55c2656d';
         const allowCleanup = true;
         const params = {
@@ -423,7 +423,7 @@ describe('ResourceControllerV2', () => {
           allowCleanup: allowCleanup,
         };
 
-        const updateResourceInstanceResult = resourceController.updateResourceInstance(params);
+        const updateResourceInstanceResult = resourceControllerService.updateResourceInstance(params);
 
         // all methods should return a Promise
         expectToBePromise(updateResourceInstanceResult);
@@ -457,7 +457,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.updateResourceInstance(params);
+        resourceControllerService.updateResourceInstance(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -466,7 +466,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.updateResourceInstance({});
+          await resourceControllerService.updateResourceInstance({});
         } catch (e) {
           err = e;
         }
@@ -476,7 +476,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateResourceInstancePromise = resourceController.updateResourceInstance();
+        const updateResourceInstancePromise = resourceControllerService.updateResourceInstance();
         expectToBePromise(updateResourceInstancePromise);
 
         updateResourceInstancePromise.catch(err => {
@@ -495,7 +495,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const lockResourceInstanceResult = resourceController.lockResourceInstance(params);
+        const lockResourceInstanceResult = resourceControllerService.lockResourceInstance(params);
 
         // all methods should return a Promise
         expectToBePromise(lockResourceInstanceResult);
@@ -525,7 +525,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.lockResourceInstance(params);
+        resourceControllerService.lockResourceInstance(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -534,7 +534,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.lockResourceInstance({});
+          await resourceControllerService.lockResourceInstance({});
         } catch (e) {
           err = e;
         }
@@ -544,7 +544,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const lockResourceInstancePromise = resourceController.lockResourceInstance();
+        const lockResourceInstancePromise = resourceControllerService.lockResourceInstance();
         expectToBePromise(lockResourceInstancePromise);
 
         lockResourceInstancePromise.catch(err => {
@@ -563,7 +563,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const unlockResourceInstanceResult = resourceController.unlockResourceInstance(params);
+        const unlockResourceInstanceResult = resourceControllerService.unlockResourceInstance(params);
 
         // all methods should return a Promise
         expectToBePromise(unlockResourceInstanceResult);
@@ -593,7 +593,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.unlockResourceInstance(params);
+        resourceControllerService.unlockResourceInstance(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -602,7 +602,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.unlockResourceInstance({});
+          await resourceControllerService.unlockResourceInstance({});
         } catch (e) {
           err = e;
         }
@@ -612,7 +612,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const unlockResourceInstancePromise = resourceController.unlockResourceInstance();
+        const unlockResourceInstancePromise = resourceControllerService.unlockResourceInstance();
         expectToBePromise(unlockResourceInstancePromise);
 
         unlockResourceInstancePromise.catch(err => {
@@ -643,7 +643,7 @@ describe('ResourceControllerV2', () => {
           updatedTo: updatedTo,
         };
 
-        const listResourceKeysResult = resourceController.listResourceKeys(params);
+        const listResourceKeysResult = resourceControllerService.listResourceKeys(params);
 
         // all methods should return a Promise
         expectToBePromise(listResourceKeysResult);
@@ -677,13 +677,13 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.listResourceKeys(params);
+        resourceControllerService.listResourceKeys(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        resourceController.listResourceKeys({});
+        resourceControllerService.listResourceKeys({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -710,7 +710,7 @@ describe('ResourceControllerV2', () => {
           role: role,
         };
 
-        const createResourceKeyResult = resourceController.createResourceKey(params);
+        const createResourceKeyResult = resourceControllerService.createResourceKey(params);
 
         // all methods should return a Promise
         expectToBePromise(createResourceKeyResult);
@@ -745,7 +745,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.createResourceKey(params);
+        resourceControllerService.createResourceKey(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -754,7 +754,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.createResourceKey({});
+          await resourceControllerService.createResourceKey({});
         } catch (e) {
           err = e;
         }
@@ -764,7 +764,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createResourceKeyPromise = resourceController.createResourceKey();
+        const createResourceKeyPromise = resourceControllerService.createResourceKey();
         expectToBePromise(createResourceKeyPromise);
 
         createResourceKeyPromise.catch(err => {
@@ -783,7 +783,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const getResourceKeyResult = resourceController.getResourceKey(params);
+        const getResourceKeyResult = resourceControllerService.getResourceKey(params);
 
         // all methods should return a Promise
         expectToBePromise(getResourceKeyResult);
@@ -813,7 +813,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.getResourceKey(params);
+        resourceControllerService.getResourceKey(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -822,7 +822,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.getResourceKey({});
+          await resourceControllerService.getResourceKey({});
         } catch (e) {
           err = e;
         }
@@ -832,7 +832,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getResourceKeyPromise = resourceController.getResourceKey();
+        const getResourceKeyPromise = resourceControllerService.getResourceKey();
         expectToBePromise(getResourceKeyPromise);
 
         getResourceKeyPromise.catch(err => {
@@ -851,7 +851,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const deleteResourceKeyResult = resourceController.deleteResourceKey(params);
+        const deleteResourceKeyResult = resourceControllerService.deleteResourceKey(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteResourceKeyResult);
@@ -881,7 +881,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.deleteResourceKey(params);
+        resourceControllerService.deleteResourceKey(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -890,7 +890,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.deleteResourceKey({});
+          await resourceControllerService.deleteResourceKey({});
         } catch (e) {
           err = e;
         }
@@ -900,7 +900,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteResourceKeyPromise = resourceController.deleteResourceKey();
+        const deleteResourceKeyPromise = resourceControllerService.deleteResourceKey();
         expectToBePromise(deleteResourceKeyPromise);
 
         deleteResourceKeyPromise.catch(err => {
@@ -921,7 +921,7 @@ describe('ResourceControllerV2', () => {
           name: name,
         };
 
-        const updateResourceKeyResult = resourceController.updateResourceKey(params);
+        const updateResourceKeyResult = resourceControllerService.updateResourceKey(params);
 
         // all methods should return a Promise
         expectToBePromise(updateResourceKeyResult);
@@ -954,7 +954,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.updateResourceKey(params);
+        resourceControllerService.updateResourceKey(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -963,7 +963,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.updateResourceKey({});
+          await resourceControllerService.updateResourceKey({});
         } catch (e) {
           err = e;
         }
@@ -973,7 +973,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateResourceKeyPromise = resourceController.updateResourceKey();
+        const updateResourceKeyPromise = resourceControllerService.updateResourceKey();
         expectToBePromise(updateResourceKeyPromise);
 
         updateResourceKeyPromise.catch(err => {
@@ -1006,7 +1006,7 @@ describe('ResourceControllerV2', () => {
           updatedTo: updatedTo,
         };
 
-        const listResourceBindingsResult = resourceController.listResourceBindings(params);
+        const listResourceBindingsResult = resourceControllerService.listResourceBindings(params);
 
         // all methods should return a Promise
         expectToBePromise(listResourceBindingsResult);
@@ -1041,13 +1041,13 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.listResourceBindings(params);
+        resourceControllerService.listResourceBindings(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        resourceController.listResourceBindings({});
+        resourceControllerService.listResourceBindings({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -1076,7 +1076,7 @@ describe('ResourceControllerV2', () => {
           role: role,
         };
 
-        const createResourceBindingResult = resourceController.createResourceBinding(params);
+        const createResourceBindingResult = resourceControllerService.createResourceBinding(params);
 
         // all methods should return a Promise
         expectToBePromise(createResourceBindingResult);
@@ -1112,7 +1112,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.createResourceBinding(params);
+        resourceControllerService.createResourceBinding(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1121,7 +1121,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.createResourceBinding({});
+          await resourceControllerService.createResourceBinding({});
         } catch (e) {
           err = e;
         }
@@ -1131,7 +1131,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createResourceBindingPromise = resourceController.createResourceBinding();
+        const createResourceBindingPromise = resourceControllerService.createResourceBinding();
         expectToBePromise(createResourceBindingPromise);
 
         createResourceBindingPromise.catch(err => {
@@ -1150,7 +1150,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const getResourceBindingResult = resourceController.getResourceBinding(params);
+        const getResourceBindingResult = resourceControllerService.getResourceBinding(params);
 
         // all methods should return a Promise
         expectToBePromise(getResourceBindingResult);
@@ -1180,7 +1180,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.getResourceBinding(params);
+        resourceControllerService.getResourceBinding(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1189,7 +1189,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.getResourceBinding({});
+          await resourceControllerService.getResourceBinding({});
         } catch (e) {
           err = e;
         }
@@ -1199,7 +1199,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getResourceBindingPromise = resourceController.getResourceBinding();
+        const getResourceBindingPromise = resourceControllerService.getResourceBinding();
         expectToBePromise(getResourceBindingPromise);
 
         getResourceBindingPromise.catch(err => {
@@ -1218,7 +1218,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const deleteResourceBindingResult = resourceController.deleteResourceBinding(params);
+        const deleteResourceBindingResult = resourceControllerService.deleteResourceBinding(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteResourceBindingResult);
@@ -1248,7 +1248,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.deleteResourceBinding(params);
+        resourceControllerService.deleteResourceBinding(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1257,7 +1257,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.deleteResourceBinding({});
+          await resourceControllerService.deleteResourceBinding({});
         } catch (e) {
           err = e;
         }
@@ -1267,7 +1267,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteResourceBindingPromise = resourceController.deleteResourceBinding();
+        const deleteResourceBindingPromise = resourceControllerService.deleteResourceBinding();
         expectToBePromise(deleteResourceBindingPromise);
 
         deleteResourceBindingPromise.catch(err => {
@@ -1288,7 +1288,7 @@ describe('ResourceControllerV2', () => {
           name: name,
         };
 
-        const updateResourceBindingResult = resourceController.updateResourceBinding(params);
+        const updateResourceBindingResult = resourceControllerService.updateResourceBinding(params);
 
         // all methods should return a Promise
         expectToBePromise(updateResourceBindingResult);
@@ -1321,7 +1321,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.updateResourceBinding(params);
+        resourceControllerService.updateResourceBinding(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1330,7 +1330,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.updateResourceBinding({});
+          await resourceControllerService.updateResourceBinding({});
         } catch (e) {
           err = e;
         }
@@ -1340,7 +1340,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateResourceBindingPromise = resourceController.updateResourceBinding();
+        const updateResourceBindingPromise = resourceControllerService.updateResourceBinding();
         expectToBePromise(updateResourceBindingPromise);
 
         updateResourceBindingPromise.catch(err => {
@@ -1375,7 +1375,7 @@ describe('ResourceControllerV2', () => {
           updatedTo: updatedTo,
         };
 
-        const listResourceAliasesResult = resourceController.listResourceAliases(params);
+        const listResourceAliasesResult = resourceControllerService.listResourceAliases(params);
 
         // all methods should return a Promise
         expectToBePromise(listResourceAliasesResult);
@@ -1411,13 +1411,13 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.listResourceAliases(params);
+        resourceControllerService.listResourceAliases(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        resourceController.listResourceAliases({});
+        resourceControllerService.listResourceAliases({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -1435,7 +1435,7 @@ describe('ResourceControllerV2', () => {
           target: target,
         };
 
-        const createResourceAliasResult = resourceController.createResourceAlias(params);
+        const createResourceAliasResult = resourceControllerService.createResourceAlias(params);
 
         // all methods should return a Promise
         expectToBePromise(createResourceAliasResult);
@@ -1471,7 +1471,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.createResourceAlias(params);
+        resourceControllerService.createResourceAlias(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1480,7 +1480,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.createResourceAlias({});
+          await resourceControllerService.createResourceAlias({});
         } catch (e) {
           err = e;
         }
@@ -1490,7 +1490,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createResourceAliasPromise = resourceController.createResourceAlias();
+        const createResourceAliasPromise = resourceControllerService.createResourceAlias();
         expectToBePromise(createResourceAliasPromise);
 
         createResourceAliasPromise.catch(err => {
@@ -1509,7 +1509,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const getResourceAliasResult = resourceController.getResourceAlias(params);
+        const getResourceAliasResult = resourceControllerService.getResourceAlias(params);
 
         // all methods should return a Promise
         expectToBePromise(getResourceAliasResult);
@@ -1539,7 +1539,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.getResourceAlias(params);
+        resourceControllerService.getResourceAlias(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1548,7 +1548,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.getResourceAlias({});
+          await resourceControllerService.getResourceAlias({});
         } catch (e) {
           err = e;
         }
@@ -1558,7 +1558,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getResourceAliasPromise = resourceController.getResourceAlias();
+        const getResourceAliasPromise = resourceControllerService.getResourceAlias();
         expectToBePromise(getResourceAliasPromise);
 
         getResourceAliasPromise.catch(err => {
@@ -1577,7 +1577,7 @@ describe('ResourceControllerV2', () => {
           id: id,
         };
 
-        const deleteResourceAliasResult = resourceController.deleteResourceAlias(params);
+        const deleteResourceAliasResult = resourceControllerService.deleteResourceAlias(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteResourceAliasResult);
@@ -1607,7 +1607,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.deleteResourceAlias(params);
+        resourceControllerService.deleteResourceAlias(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1616,7 +1616,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.deleteResourceAlias({});
+          await resourceControllerService.deleteResourceAlias({});
         } catch (e) {
           err = e;
         }
@@ -1626,7 +1626,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteResourceAliasPromise = resourceController.deleteResourceAlias();
+        const deleteResourceAliasPromise = resourceControllerService.deleteResourceAlias();
         expectToBePromise(deleteResourceAliasPromise);
 
         deleteResourceAliasPromise.catch(err => {
@@ -1647,7 +1647,7 @@ describe('ResourceControllerV2', () => {
           name: name,
         };
 
-        const updateResourceAliasResult = resourceController.updateResourceAlias(params);
+        const updateResourceAliasResult = resourceControllerService.updateResourceAlias(params);
 
         // all methods should return a Promise
         expectToBePromise(updateResourceAliasResult);
@@ -1680,7 +1680,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.updateResourceAlias(params);
+        resourceControllerService.updateResourceAlias(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1689,7 +1689,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.updateResourceAlias({});
+          await resourceControllerService.updateResourceAlias({});
         } catch (e) {
           err = e;
         }
@@ -1699,7 +1699,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateResourceAliasPromise = resourceController.updateResourceAlias();
+        const updateResourceAliasPromise = resourceControllerService.updateResourceAlias();
         expectToBePromise(updateResourceAliasPromise);
 
         updateResourceAliasPromise.catch(err => {
@@ -1720,7 +1720,7 @@ describe('ResourceControllerV2', () => {
           resourceInstanceId: resourceInstanceId,
         };
 
-        const listReclamationsResult = resourceController.listReclamations(params);
+        const listReclamationsResult = resourceControllerService.listReclamations(params);
 
         // all methods should return a Promise
         expectToBePromise(listReclamationsResult);
@@ -1749,13 +1749,13 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.listReclamations(params);
+        resourceControllerService.listReclamations(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        resourceController.listReclamations({});
+        resourceControllerService.listReclamations({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -1775,7 +1775,7 @@ describe('ResourceControllerV2', () => {
           comment: comment,
         };
 
-        const runReclamationActionResult = resourceController.runReclamationAction(params);
+        const runReclamationActionResult = resourceControllerService.runReclamationAction(params);
 
         // all methods should return a Promise
         expectToBePromise(runReclamationActionResult);
@@ -1810,7 +1810,7 @@ describe('ResourceControllerV2', () => {
           },
         };
 
-        resourceController.runReclamationAction(params);
+        resourceControllerService.runReclamationAction(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1819,7 +1819,7 @@ describe('ResourceControllerV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await resourceController.runReclamationAction({});
+          await resourceControllerService.runReclamationAction({});
         } catch (e) {
           err = e;
         }
@@ -1829,7 +1829,7 @@ describe('ResourceControllerV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const runReclamationActionPromise = resourceController.runReclamationAction();
+        const runReclamationActionPromise = resourceControllerService.runReclamationAction();
         expectToBePromise(runReclamationActionPromise);
 
         runReclamationActionPromise.catch(err => {

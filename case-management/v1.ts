@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -104,7 +109,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.CaseList>>}
    */
   public getCases(params?: CaseManagementV1.GetCasesParams): Promise<CaseManagementV1.Response<CaseManagementV1.CaseList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -160,7 +165,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Case>>}
    */
   public createCase(params: CaseManagementV1.CreateCaseParams): Promise<CaseManagementV1.Response<CaseManagementV1.Case>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['type', 'subject', 'description'];
 
     return new Promise((resolve, reject) => {
@@ -214,7 +219,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Case>>}
    */
   public getCase(params: CaseManagementV1.GetCaseParams): Promise<CaseManagementV1.Response<CaseManagementV1.Case>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['caseNumber'];
 
     return new Promise((resolve, reject) => {
@@ -263,7 +268,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Case>>}
    */
   public updateCaseStatus(params: CaseManagementV1.UpdateCaseStatusParams): Promise<CaseManagementV1.Response<CaseManagementV1.Case>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['caseNumber', 'statusPayload'];
 
     return new Promise((resolve, reject) => {
@@ -310,7 +315,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Comment>>}
    */
   public addComment(params: CaseManagementV1.AddCommentParams): Promise<CaseManagementV1.Response<CaseManagementV1.Comment>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['caseNumber', 'comment'];
 
     return new Promise((resolve, reject) => {
@@ -362,7 +367,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.WatchlistAddResponse>>}
    */
   public addWatchlist(params: CaseManagementV1.AddWatchlistParams): Promise<CaseManagementV1.Response<CaseManagementV1.WatchlistAddResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['caseNumber'];
 
     return new Promise((resolve, reject) => {
@@ -412,7 +417,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Watchlist>>}
    */
   public removeWatchlist(params: CaseManagementV1.RemoveWatchlistParams): Promise<CaseManagementV1.Response<CaseManagementV1.Watchlist>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['caseNumber'];
 
     return new Promise((resolve, reject) => {
@@ -467,7 +472,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Resource>>}
    */
   public addResource(params: CaseManagementV1.AddResourceParams): Promise<CaseManagementV1.Response<CaseManagementV1.Resource>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['caseNumber'];
 
     return new Promise((resolve, reject) => {
@@ -521,7 +526,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Attachment>>}
    */
   public uploadFile(params: CaseManagementV1.UploadFileParams): Promise<CaseManagementV1.Response<CaseManagementV1.Attachment>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['caseNumber', 'file'];
 
     return new Promise((resolve, reject) => {
@@ -571,7 +576,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<NodeJS.ReadableStream|Buffer>>}
    */
   public downloadFile(params: CaseManagementV1.DownloadFileParams): Promise<CaseManagementV1.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['caseNumber', 'fileId'];
 
     return new Promise((resolve, reject) => {
@@ -617,7 +622,7 @@ class CaseManagementV1 extends BaseService {
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.AttachmentList>>}
    */
   public deleteFile(params: CaseManagementV1.DeleteFileParams): Promise<CaseManagementV1.Response<CaseManagementV1.AttachmentList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['caseNumber', 'fileId'];
 
     return new Promise((resolve, reject) => {

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -124,7 +129,7 @@ class GlobalSearchV2 extends BaseService {
    * @returns {Promise<GlobalSearchV2.Response<GlobalSearchV2.ScanResult>>}
    */
   public search(params?: GlobalSearchV2.SearchParams): Promise<GlobalSearchV2.Response<GlobalSearchV2.ScanResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const body = {
@@ -176,7 +181,7 @@ class GlobalSearchV2 extends BaseService {
    * @returns {Promise<GlobalSearchV2.Response<GlobalSearchV2.SupportedTypesList>>}
    */
   public getSupportedTypes(params?: GlobalSearchV2.GetSupportedTypesParams): Promise<GlobalSearchV2.Response<GlobalSearchV2.SupportedTypesList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const sdkHeaders = getSdkHeaders(GlobalSearchV2.DEFAULT_SERVICE_NAME, 'v2', 'getSupportedTypes');

@@ -35,10 +35,10 @@ const service = {
   url: 'https://api.global-search-tagging.cloud.ibm.com',
 };
 
-const globalSearch = new GlobalSearchV2(service);
+const globalSearchService = new GlobalSearchV2(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(globalSearch, 'createRequest');
+const createRequestMock = jest.spyOn(globalSearchService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -123,7 +123,7 @@ describe('GlobalSearchV2', () => {
           sort: sort,
         };
 
-        const searchResult = globalSearch.search(params);
+        const searchResult = globalSearchService.search(params);
 
         // all methods should return a Promise
         expectToBePromise(searchResult);
@@ -158,13 +158,13 @@ describe('GlobalSearchV2', () => {
           },
         };
 
-        globalSearch.search(params);
+        globalSearchService.search(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        globalSearch.search({});
+        globalSearchService.search({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -175,7 +175,7 @@ describe('GlobalSearchV2', () => {
         // Construct the params object for operation getSupportedTypes
         const params = {};
 
-        const getSupportedTypesResult = globalSearch.getSupportedTypes(params);
+        const getSupportedTypesResult = globalSearchService.getSupportedTypes(params);
 
         // all methods should return a Promise
         expectToBePromise(getSupportedTypesResult);
@@ -202,13 +202,13 @@ describe('GlobalSearchV2', () => {
           },
         };
 
-        globalSearch.getSupportedTypes(params);
+        globalSearchService.getSupportedTypes(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        globalSearch.getSupportedTypes({});
+        globalSearchService.getSupportedTypes({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });

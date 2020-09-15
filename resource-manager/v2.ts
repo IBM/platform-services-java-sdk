@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -98,7 +103,7 @@ class ResourceManagerV2 extends BaseService {
    * @returns {Promise<ResourceManagerV2.Response<ResourceManagerV2.ResourceGroupList>>}
    */
   public listResourceGroups(params?: ResourceManagerV2.ListResourceGroupsParams): Promise<ResourceManagerV2.Response<ResourceManagerV2.ResourceGroupList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -137,7 +142,7 @@ class ResourceManagerV2 extends BaseService {
    * @returns {Promise<ResourceManagerV2.Response<ResourceManagerV2.ResCreateResourceGroup>>}
    */
   public createResourceGroup(params?: ResourceManagerV2.CreateResourceGroupParams): Promise<ResourceManagerV2.Response<ResourceManagerV2.ResCreateResourceGroup>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const body = {
@@ -176,7 +181,7 @@ class ResourceManagerV2 extends BaseService {
    * @returns {Promise<ResourceManagerV2.Response<ResourceManagerV2.ResourceGroup>>}
    */
   public getResourceGroup(params: ResourceManagerV2.GetResourceGroupParams): Promise<ResourceManagerV2.Response<ResourceManagerV2.ResourceGroup>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -221,7 +226,7 @@ class ResourceManagerV2 extends BaseService {
    * @returns {Promise<ResourceManagerV2.Response<ResourceManagerV2.ResourceGroup>>}
    */
   public updateResourceGroup(params: ResourceManagerV2.UpdateResourceGroupParams): Promise<ResourceManagerV2.Response<ResourceManagerV2.ResourceGroup>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -271,7 +276,7 @@ class ResourceManagerV2 extends BaseService {
    * @returns {Promise<ResourceManagerV2.Response<ResourceManagerV2.Empty>>}
    */
   public deleteResourceGroup(params: ResourceManagerV2.DeleteResourceGroupParams): Promise<ResourceManagerV2.Response<ResourceManagerV2.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -316,7 +321,7 @@ class ResourceManagerV2 extends BaseService {
    * @returns {Promise<ResourceManagerV2.Response<ResourceManagerV2.QuotaDefinitionList>>}
    */
   public listQuotaDefinitions(params?: ResourceManagerV2.ListQuotaDefinitionsParams): Promise<ResourceManagerV2.Response<ResourceManagerV2.QuotaDefinitionList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const sdkHeaders = getSdkHeaders(ResourceManagerV2.DEFAULT_SERVICE_NAME, 'v2', 'listQuotaDefinitions');
@@ -348,7 +353,7 @@ class ResourceManagerV2 extends BaseService {
    * @returns {Promise<ResourceManagerV2.Response<ResourceManagerV2.QuotaDefinition>>}
    */
   public getQuotaDefinition(params: ResourceManagerV2.GetQuotaDefinitionParams): Promise<ResourceManagerV2.Response<ResourceManagerV2.QuotaDefinition>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {

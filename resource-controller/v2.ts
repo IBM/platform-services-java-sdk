@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -111,7 +116,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstancesList>>}
    */
   public listResourceInstances(params?: ResourceControllerV2.ListResourceInstancesParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstancesList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -171,7 +176,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
   public createResourceInstance(params: ResourceControllerV2.CreateResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['name', 'target', 'resourceGroup', 'resourcePlanId'];
 
     return new Promise((resolve, reject) => {
@@ -222,7 +227,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
   public getResourceInstance(params: ResourceControllerV2.GetResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -265,7 +270,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>>}
    */
   public deleteResourceInstance(params: ResourceControllerV2.DeleteResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -314,7 +319,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
   public updateResourceInstance(params: ResourceControllerV2.UpdateResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -367,7 +372,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
   public lockResourceInstance(params: ResourceControllerV2.LockResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -410,7 +415,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
   public unlockResourceInstance(params: ResourceControllerV2.UnlockResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -465,7 +470,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>>}
    */
   public listResourceKeys(params?: ResourceControllerV2.ListResourceKeysParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -513,7 +518,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>>}
    */
   public createResourceKey(params: ResourceControllerV2.CreateResourceKeyParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['name', 'source'];
 
     return new Promise((resolve, reject) => {
@@ -560,7 +565,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>>}
    */
   public getResourceKey(params: ResourceControllerV2.GetResourceKeyParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -603,7 +608,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>>}
    */
   public deleteResourceKey(params: ResourceControllerV2.DeleteResourceKeyParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -647,7 +652,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>>}
    */
   public updateResourceKey(params: ResourceControllerV2.UpdateResourceKeyParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id', 'name'];
 
     return new Promise((resolve, reject) => {
@@ -709,7 +714,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>>}
    */
   public listResourceBindings(params?: ResourceControllerV2.ListResourceBindingsParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -761,7 +766,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>>}
    */
   public createResourceBinding(params: ResourceControllerV2.CreateResourceBindingParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['source', 'target'];
 
     return new Promise((resolve, reject) => {
@@ -809,7 +814,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>>}
    */
   public getResourceBinding(params: ResourceControllerV2.GetResourceBindingParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -852,7 +857,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>>}
    */
   public deleteResourceBinding(params: ResourceControllerV2.DeleteResourceBindingParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -896,7 +901,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>>}
    */
   public updateResourceBinding(params: ResourceControllerV2.UpdateResourceBindingParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id', 'name'];
 
     return new Promise((resolve, reject) => {
@@ -959,7 +964,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>>}
    */
   public listResourceAliases(params?: ResourceControllerV2.ListResourceAliasesParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -1008,7 +1013,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>>}
    */
   public createResourceAlias(params: ResourceControllerV2.CreateResourceAliasParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['name', 'source', 'target'];
 
     return new Promise((resolve, reject) => {
@@ -1054,7 +1059,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>>}
    */
   public getResourceAlias(params: ResourceControllerV2.GetResourceAliasParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -1097,7 +1102,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>>}
    */
   public deleteResourceAlias(params: ResourceControllerV2.DeleteResourceAliasParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
     return new Promise((resolve, reject) => {
@@ -1141,7 +1146,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>>}
    */
   public updateResourceAlias(params: ResourceControllerV2.UpdateResourceAliasParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id', 'name'];
 
     return new Promise((resolve, reject) => {
@@ -1195,7 +1200,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ReclamationsList>>}
    */
   public listReclamations(params?: ResourceControllerV2.ListReclamationsParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ReclamationsList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -1238,7 +1243,7 @@ class ResourceControllerV2 extends BaseService {
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Reclamation>>}
    */
   public runReclamationAction(params: ResourceControllerV2.RunReclamationActionParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Reclamation>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['id', 'actionName'];
 
     return new Promise((resolve, reject) => {

@@ -105,9 +105,9 @@ describe('ConfigurationGovernanceV1', () => {
 
       // RuleTargetAttribute
       const ruleTargetAttributeModel = {
-        name: 'testString',
+        name: 'resource_id',
         operator: 'string_equals',
-        value: 'testString',
+        value: 'f0f8f7994e754ff38f9d370201966561',
       };
 
       // TargetResource
@@ -127,7 +127,7 @@ describe('ConfigurationGovernanceV1', () => {
 
       // EnforcementAction
       const enforcementActionModel = {
-        action: 'audit_log',
+        action: 'disallow',
       };
 
       // RuleRequest

@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -105,7 +110,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Group>>}
    */
   public createAccessGroup(params: IamAccessGroupsV2.CreateAccessGroupParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Group>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'name'];
 
     return new Promise((resolve, reject) => {
@@ -168,7 +173,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.GroupsList>>}
    */
   public listAccessGroups(params: IamAccessGroupsV2.ListAccessGroupsParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.GroupsList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
     return new Promise((resolve, reject) => {
@@ -223,7 +228,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Group>>}
    */
   public getAccessGroup(params: IamAccessGroupsV2.GetAccessGroupParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Group>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
     return new Promise((resolve, reject) => {
@@ -280,7 +285,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Group>>}
    */
   public updateAccessGroup(params: IamAccessGroupsV2.UpdateAccessGroupParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Group>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'ifMatch'];
 
     return new Promise((resolve, reject) => {
@@ -336,7 +341,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>>}
    */
   public deleteAccessGroup(params: IamAccessGroupsV2.DeleteAccessGroupParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
     return new Promise((resolve, reject) => {
@@ -389,7 +394,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>>}
    */
   public getAccountSettings(params: IamAccessGroupsV2.GetAccountSettingsParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
     return new Promise((resolve, reject) => {
@@ -439,7 +444,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>>}
    */
   public updateAccountSettings(params: IamAccessGroupsV2.UpdateAccountSettingsParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
     return new Promise((resolve, reject) => {
@@ -497,7 +502,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>>}
    */
   public isMemberOfAccessGroup(params: IamAccessGroupsV2.IsMemberOfAccessGroupParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'iamId'];
 
     return new Promise((resolve, reject) => {
@@ -547,7 +552,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AddGroupMembersResponse>>}
    */
   public addMembersToAccessGroup(params: IamAccessGroupsV2.AddMembersToAccessGroupParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AddGroupMembersResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
     return new Promise((resolve, reject) => {
@@ -606,7 +611,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.GroupMembersList>>}
    */
   public listAccessGroupMembers(params: IamAccessGroupsV2.ListAccessGroupMembersParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.GroupMembersList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
     return new Promise((resolve, reject) => {
@@ -662,7 +667,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>>}
    */
   public removeMemberFromAccessGroup(params: IamAccessGroupsV2.RemoveMemberFromAccessGroupParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'iamId'];
 
     return new Promise((resolve, reject) => {
@@ -711,7 +716,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.DeleteGroupBulkMembersResponse>>}
    */
   public removeMembersFromAccessGroup(params: IamAccessGroupsV2.RemoveMembersFromAccessGroupParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.DeleteGroupBulkMembersResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
     return new Promise((resolve, reject) => {
@@ -765,7 +770,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.DeleteFromAllGroupsResponse>>}
    */
   public removeMemberFromAllAccessGroups(params: IamAccessGroupsV2.RemoveMemberFromAllAccessGroupsParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.DeleteFromAllGroupsResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
     return new Promise((resolve, reject) => {
@@ -820,7 +825,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AddMembershipMultipleGroupsResponse>>}
    */
   public addMemberToMultipleAccessGroups(params: IamAccessGroupsV2.AddMemberToMultipleAccessGroupsParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AddMembershipMultipleGroupsResponse>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
     return new Promise((resolve, reject) => {
@@ -889,7 +894,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Rule>>}
    */
   public addAccessGroupRule(params: IamAccessGroupsV2.AddAccessGroupRuleParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Rule>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'expiration', 'realmName', 'conditions'];
 
     return new Promise((resolve, reject) => {
@@ -944,7 +949,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.RulesList>>}
    */
   public listAccessGroupRules(params: IamAccessGroupsV2.ListAccessGroupRulesParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.RulesList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
     return new Promise((resolve, reject) => {
@@ -991,7 +996,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Rule>>}
    */
   public getAccessGroupRule(params: IamAccessGroupsV2.GetAccessGroupRuleParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Rule>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'ruleId'];
 
     return new Promise((resolve, reject) => {
@@ -1045,7 +1050,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Rule>>}
    */
   public replaceAccessGroupRule(params: IamAccessGroupsV2.ReplaceAccessGroupRuleParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Rule>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'ruleId', 'ifMatch', 'expiration', 'realmName', 'conditions'];
 
     return new Promise((resolve, reject) => {
@@ -1103,7 +1108,7 @@ class IamAccessGroupsV2 extends BaseService {
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>>}
    */
   public removeAccessGroupRule(params: IamAccessGroupsV2.RemoveAccessGroupRuleParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'ruleId'];
 
     return new Promise((resolve, reject) => {

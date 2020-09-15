@@ -35,10 +35,10 @@ const service = {
   url: 'https://globalcatalog.cloud.ibm.com/api/v1',
 };
 
-const globalCatalog = new GlobalCatalogV1(service);
+const globalCatalogService = new GlobalCatalogV1(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(globalCatalog, 'createRequest');
+const createRequestMock = jest.spyOn(globalCatalogService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -121,7 +121,7 @@ describe('GlobalCatalogV1', () => {
           complete: complete,
         };
 
-        const listCatalogEntriesResult = globalCatalog.listCatalogEntries(params);
+        const listCatalogEntriesResult = globalCatalogService.listCatalogEntries(params);
 
         // all methods should return a Promise
         expectToBePromise(listCatalogEntriesResult);
@@ -155,13 +155,13 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.listCatalogEntries(params);
+        globalCatalogService.listCatalogEntries(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        globalCatalog.listCatalogEntries({});
+        globalCatalogService.listCatalogEntries({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -195,46 +195,41 @@ describe('GlobalCatalogV1', () => {
         phone: 'testString',
       };
 
-      // Bullets
-      const bulletsModel = {
-        title: 'testString',
-        description: 'testString',
-        icon: 'testString',
-        quantity: 38,
-      };
-
-      // Price
-      const priceModel = {
-        quantity_tier: 38,
-        Price: 72.5,
-      };
-
-      // Amount
-      const amountModel = {
-        country: 'testString',
-        currency: 'testString',
-        prices: [priceModel],
-      };
-
-      // UIMetaMedia
-      const uiMetaMediaModel = {
-        caption: 'testString',
-        thumbnail_url: 'testString',
+      // CFMetaData
+      const cfMetaDataModel = {
         type: 'testString',
-        URL: 'testString',
-        source: bulletsModel,
+        iam_compatible: true,
+        unique_api_key: true,
+        provisionable: true,
+        bindable: true,
+        async_provisioning_supported: true,
+        async_unprovisioning_supported: true,
+        requires: ['testString'],
+        plan_updateable: true,
+        state: 'testString',
+        service_check_enabled: true,
+        test_check_interval: 38,
+        service_key_supported: true,
+        cf_guid: { 'key1': 'testString' },
       };
 
-      // Broker
-      const brokerModel = {
-        name: 'testString',
-        guid: 'testString',
+      // PlanMetaData
+      const planMetaDataModel = {
+        bindable: true,
+        reservable: true,
+        allow_internal_users: true,
+        async_provisioning_supported: true,
+        async_unprovisioning_supported: true,
+        test_check_interval: 38,
+        single_scope_instance: 'testString',
+        service_check_enabled: true,
+        cf_guid: { 'key1': 'testString' },
       };
 
-      // DRMetaData
-      const drMetaDataModel = {
-        dr: true,
-        description: 'testString',
+      // AliasMetaData
+      const aliasMetaDataModel = {
+        type: 'testString',
+        plan_id: 'testString',
       };
 
       // SourceMetaData
@@ -244,12 +239,35 @@ describe('GlobalCatalogV1', () => {
         url: 'testString',
       };
 
-      // StartingPrice
-      const startingPriceModel = {
-        plan_id: 'testString',
-        deployment_id: 'testString',
-        unit: 'testString',
-        amount: [amountModel],
+      // TemplateMetaData
+      const templateMetaDataModel = {
+        services: ['testString'],
+        default_memory: 38,
+        start_cmd: 'testString',
+        source: sourceMetaDataModel,
+        runtime_catalog_id: 'testString',
+        cf_runtime_id: 'testString',
+        template_id: 'testString',
+        executable_file: 'testString',
+        buildpack: 'testString',
+        environment_variables: { 'key1': 'testString' },
+      };
+
+      // Bullets
+      const bulletsModel = {
+        title: 'testString',
+        description: 'testString',
+        icon: 'testString',
+        quantity: 38,
+      };
+
+      // UIMetaMedia
+      const uiMetaMediaModel = {
+        caption: 'testString',
+        thumbnail_url: 'testString',
+        type: 'testString',
+        URL: 'testString',
+        source: bulletsModel,
       };
 
       // Strings
@@ -279,28 +297,36 @@ describe('GlobalCatalogV1', () => {
         apidocsurl: 'testString',
       };
 
-      // AliasMetaData
-      const aliasMetaDataModel = {
-        type: 'testString',
-        plan_id: 'testString',
+      // UIMetaData
+      const uiMetaDataModel = {
+        strings: { 'key1': stringsModel },
+        urls: urlsModel,
+        embeddable_dashboard: 'testString',
+        embeddable_dashboard_full_width: true,
+        navigation_order: ['testString'],
+        not_creatable: true,
+        primary_offering_id: 'testString',
+        accessible_during_provision: true,
+        side_by_side_index: 38,
+        end_of_service_time: '2019-01-01T12:00:00',
+        hidden: true,
+        hide_lite_metering: true,
+        no_upgrade_next_step: true,
       };
 
-      // CFMetaData
-      const cfMetaDataModel = {
-        type: 'testString',
-        iam_compatible: true,
-        unique_api_key: true,
-        provisionable: true,
-        bindable: true,
-        async_provisioning_supported: true,
-        async_unprovisioning_supported: true,
-        requires: ['testString'],
-        plan_updateable: true,
-        state: 'testString',
-        service_check_enabled: true,
-        test_check_interval: 38,
-        service_key_supported: true,
-        cf_guid: { 'key1' : 'testString' },
+      // DRMetaData
+      const drMetaDataModel = {
+        dr: true,
+        description: 'testString',
+      };
+
+      // SLAMetaData
+      const slaMetaDataModel = {
+        terms: 'testString',
+        tenancy: 'testString',
+        provisioning: 'testString',
+        responsiveness: 'testString',
+        dr: drMetaDataModel,
       };
 
       // Callbacks
@@ -314,7 +340,41 @@ describe('GlobalCatalogV1', () => {
         dashboard_detail_tab_ext_url: 'testString',
         service_monitor_api: 'testString',
         service_monitor_app: 'testString',
-        api_endpoint: { 'key1' : 'testString' },
+        api_endpoint: { 'key1': 'testString' },
+      };
+
+      // Price
+      const priceModel = {
+        quantity_tier: 38,
+        Price: 72.5,
+      };
+
+      // Amount
+      const amountModel = {
+        country: 'testString',
+        currency: 'testString',
+        prices: [priceModel],
+      };
+
+      // StartingPrice
+      const startingPriceModel = {
+        plan_id: 'testString',
+        deployment_id: 'testString',
+        unit: 'testString',
+        amount: [amountModel],
+      };
+
+      // PricingSet
+      const pricingSetModel = {
+        type: 'testString',
+        origin: 'testString',
+        starting_price: startingPriceModel,
+      };
+
+      // Broker
+      const brokerModel = {
+        name: 'testString',
+        guid: 'testString',
       };
 
       // DeploymentBase
@@ -330,66 +390,6 @@ describe('GlobalCatalogV1', () => {
         target_network: 'testString',
       };
 
-      // PlanMetaData
-      const planMetaDataModel = {
-        bindable: true,
-        reservable: true,
-        allow_internal_users: true,
-        async_provisioning_supported: true,
-        async_unprovisioning_supported: true,
-        test_check_interval: 38,
-        single_scope_instance: 'testString',
-        service_check_enabled: true,
-        cf_guid: { 'key1' : 'testString' },
-      };
-
-      // PricingSet
-      const pricingSetModel = {
-        type: 'testString',
-        origin: 'testString',
-        starting_price: startingPriceModel,
-      };
-
-      // SLAMetaData
-      const slaMetaDataModel = {
-        terms: 'testString',
-        tenancy: 'testString',
-        provisioning: 'testString',
-        responsiveness: 'testString',
-        dr: drMetaDataModel,
-      };
-
-      // TemplateMetaData
-      const templateMetaDataModel = {
-        services: ['testString'],
-        default_memory: 38,
-        start_cmd: 'testString',
-        source: sourceMetaDataModel,
-        runtime_catalog_id: 'testString',
-        cf_runtime_id: 'testString',
-        template_id: 'testString',
-        executable_file: 'testString',
-        buildpack: 'testString',
-        environment_variables: { 'key1' : 'testString' },
-      };
-
-      // UIMetaData
-      const uiMetaDataModel = {
-        strings: { 'key1' : stringsModel },
-        urls: urlsModel,
-        embeddable_dashboard: 'testString',
-        embeddable_dashboard_full_width: true,
-        navigation_order: ['testString'],
-        not_creatable: true,
-        primary_offering_id: 'testString',
-        accessible_during_provision: true,
-        side_by_side_index: 38,
-        end_of_service_time: '2019-01-01T12:00:00',
-        hidden: true,
-        hide_lite_metering: true,
-        no_upgrade_next_step: true,
-      };
-
       // ObjectMetadataSet
       const objectMetadataSetModel = {
         rc_compatible: true,
@@ -403,7 +403,7 @@ describe('GlobalCatalogV1', () => {
         callbacks: callbacksModel,
         original_name: 'testString',
         version: 'testString',
-        other: { 'key1' : { foo: 'bar' } },
+        other: { 'key1': { foo: 'bar' } },
         pricing: pricingSetModel,
         deployment: deploymentBaseModel,
       };
@@ -412,7 +412,7 @@ describe('GlobalCatalogV1', () => {
         // Construct the params object for operation createCatalogEntry
         const name = 'testString';
         const kind = 'service';
-        const overviewUi = { 'key1' : overviewModel };
+        const overviewUi = { 'key1': overviewModel };
         const images = imageModel;
         const disabled = true;
         const tags = ['testString'];
@@ -439,7 +439,7 @@ describe('GlobalCatalogV1', () => {
           account: account,
         };
 
-        const createCatalogEntryResult = globalCatalog.createCatalogEntry(params);
+        const createCatalogEntryResult = globalCatalogService.createCatalogEntry(params);
 
         // all methods should return a Promise
         expectToBePromise(createCatalogEntryResult);
@@ -472,7 +472,7 @@ describe('GlobalCatalogV1', () => {
         // parameters
         const name = 'testString';
         const kind = 'service';
-        const overviewUi = { 'key1' : overviewModel };
+        const overviewUi = { 'key1': overviewModel };
         const images = imageModel;
         const disabled = true;
         const tags = ['testString'];
@@ -495,7 +495,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.createCatalogEntry(params);
+        globalCatalogService.createCatalogEntry(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -504,7 +504,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.createCatalogEntry({});
+          await globalCatalogService.createCatalogEntry({});
         } catch (e) {
           err = e;
         }
@@ -514,7 +514,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createCatalogEntryPromise = globalCatalog.createCatalogEntry();
+        const createCatalogEntryPromise = globalCatalogService.createCatalogEntry();
         expectToBePromise(createCatalogEntryPromise);
 
         createCatalogEntryPromise.catch(err => {
@@ -543,7 +543,7 @@ describe('GlobalCatalogV1', () => {
           depth: depth,
         };
 
-        const getCatalogEntryResult = globalCatalog.getCatalogEntry(params);
+        const getCatalogEntryResult = globalCatalogService.getCatalogEntry(params);
 
         // all methods should return a Promise
         expectToBePromise(getCatalogEntryResult);
@@ -578,7 +578,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.getCatalogEntry(params);
+        globalCatalogService.getCatalogEntry(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -587,7 +587,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.getCatalogEntry({});
+          await globalCatalogService.getCatalogEntry({});
         } catch (e) {
           err = e;
         }
@@ -597,7 +597,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getCatalogEntryPromise = globalCatalog.getCatalogEntry();
+        const getCatalogEntryPromise = globalCatalogService.getCatalogEntry();
         expectToBePromise(getCatalogEntryPromise);
 
         getCatalogEntryPromise.catch(err => {
@@ -636,46 +636,41 @@ describe('GlobalCatalogV1', () => {
         phone: 'testString',
       };
 
-      // Bullets
-      const bulletsModel = {
-        title: 'testString',
-        description: 'testString',
-        icon: 'testString',
-        quantity: 38,
-      };
-
-      // Price
-      const priceModel = {
-        quantity_tier: 38,
-        Price: 72.5,
-      };
-
-      // Amount
-      const amountModel = {
-        country: 'testString',
-        currency: 'testString',
-        prices: [priceModel],
-      };
-
-      // UIMetaMedia
-      const uiMetaMediaModel = {
-        caption: 'testString',
-        thumbnail_url: 'testString',
+      // CFMetaData
+      const cfMetaDataModel = {
         type: 'testString',
-        URL: 'testString',
-        source: bulletsModel,
+        iam_compatible: true,
+        unique_api_key: true,
+        provisionable: true,
+        bindable: true,
+        async_provisioning_supported: true,
+        async_unprovisioning_supported: true,
+        requires: ['testString'],
+        plan_updateable: true,
+        state: 'testString',
+        service_check_enabled: true,
+        test_check_interval: 38,
+        service_key_supported: true,
+        cf_guid: { 'key1': 'testString' },
       };
 
-      // Broker
-      const brokerModel = {
-        name: 'testString',
-        guid: 'testString',
+      // PlanMetaData
+      const planMetaDataModel = {
+        bindable: true,
+        reservable: true,
+        allow_internal_users: true,
+        async_provisioning_supported: true,
+        async_unprovisioning_supported: true,
+        test_check_interval: 38,
+        single_scope_instance: 'testString',
+        service_check_enabled: true,
+        cf_guid: { 'key1': 'testString' },
       };
 
-      // DRMetaData
-      const drMetaDataModel = {
-        dr: true,
-        description: 'testString',
+      // AliasMetaData
+      const aliasMetaDataModel = {
+        type: 'testString',
+        plan_id: 'testString',
       };
 
       // SourceMetaData
@@ -685,12 +680,35 @@ describe('GlobalCatalogV1', () => {
         url: 'testString',
       };
 
-      // StartingPrice
-      const startingPriceModel = {
-        plan_id: 'testString',
-        deployment_id: 'testString',
-        unit: 'testString',
-        amount: [amountModel],
+      // TemplateMetaData
+      const templateMetaDataModel = {
+        services: ['testString'],
+        default_memory: 38,
+        start_cmd: 'testString',
+        source: sourceMetaDataModel,
+        runtime_catalog_id: 'testString',
+        cf_runtime_id: 'testString',
+        template_id: 'testString',
+        executable_file: 'testString',
+        buildpack: 'testString',
+        environment_variables: { 'key1': 'testString' },
+      };
+
+      // Bullets
+      const bulletsModel = {
+        title: 'testString',
+        description: 'testString',
+        icon: 'testString',
+        quantity: 38,
+      };
+
+      // UIMetaMedia
+      const uiMetaMediaModel = {
+        caption: 'testString',
+        thumbnail_url: 'testString',
+        type: 'testString',
+        URL: 'testString',
+        source: bulletsModel,
       };
 
       // Strings
@@ -720,28 +738,36 @@ describe('GlobalCatalogV1', () => {
         apidocsurl: 'testString',
       };
 
-      // AliasMetaData
-      const aliasMetaDataModel = {
-        type: 'testString',
-        plan_id: 'testString',
+      // UIMetaData
+      const uiMetaDataModel = {
+        strings: { 'key1': stringsModel },
+        urls: urlsModel,
+        embeddable_dashboard: 'testString',
+        embeddable_dashboard_full_width: true,
+        navigation_order: ['testString'],
+        not_creatable: true,
+        primary_offering_id: 'testString',
+        accessible_during_provision: true,
+        side_by_side_index: 38,
+        end_of_service_time: '2019-01-01T12:00:00',
+        hidden: true,
+        hide_lite_metering: true,
+        no_upgrade_next_step: true,
       };
 
-      // CFMetaData
-      const cfMetaDataModel = {
-        type: 'testString',
-        iam_compatible: true,
-        unique_api_key: true,
-        provisionable: true,
-        bindable: true,
-        async_provisioning_supported: true,
-        async_unprovisioning_supported: true,
-        requires: ['testString'],
-        plan_updateable: true,
-        state: 'testString',
-        service_check_enabled: true,
-        test_check_interval: 38,
-        service_key_supported: true,
-        cf_guid: { 'key1' : 'testString' },
+      // DRMetaData
+      const drMetaDataModel = {
+        dr: true,
+        description: 'testString',
+      };
+
+      // SLAMetaData
+      const slaMetaDataModel = {
+        terms: 'testString',
+        tenancy: 'testString',
+        provisioning: 'testString',
+        responsiveness: 'testString',
+        dr: drMetaDataModel,
       };
 
       // Callbacks
@@ -755,7 +781,41 @@ describe('GlobalCatalogV1', () => {
         dashboard_detail_tab_ext_url: 'testString',
         service_monitor_api: 'testString',
         service_monitor_app: 'testString',
-        api_endpoint: { 'key1' : 'testString' },
+        api_endpoint: { 'key1': 'testString' },
+      };
+
+      // Price
+      const priceModel = {
+        quantity_tier: 38,
+        Price: 72.5,
+      };
+
+      // Amount
+      const amountModel = {
+        country: 'testString',
+        currency: 'testString',
+        prices: [priceModel],
+      };
+
+      // StartingPrice
+      const startingPriceModel = {
+        plan_id: 'testString',
+        deployment_id: 'testString',
+        unit: 'testString',
+        amount: [amountModel],
+      };
+
+      // PricingSet
+      const pricingSetModel = {
+        type: 'testString',
+        origin: 'testString',
+        starting_price: startingPriceModel,
+      };
+
+      // Broker
+      const brokerModel = {
+        name: 'testString',
+        guid: 'testString',
       };
 
       // DeploymentBase
@@ -771,66 +831,6 @@ describe('GlobalCatalogV1', () => {
         target_network: 'testString',
       };
 
-      // PlanMetaData
-      const planMetaDataModel = {
-        bindable: true,
-        reservable: true,
-        allow_internal_users: true,
-        async_provisioning_supported: true,
-        async_unprovisioning_supported: true,
-        test_check_interval: 38,
-        single_scope_instance: 'testString',
-        service_check_enabled: true,
-        cf_guid: { 'key1' : 'testString' },
-      };
-
-      // PricingSet
-      const pricingSetModel = {
-        type: 'testString',
-        origin: 'testString',
-        starting_price: startingPriceModel,
-      };
-
-      // SLAMetaData
-      const slaMetaDataModel = {
-        terms: 'testString',
-        tenancy: 'testString',
-        provisioning: 'testString',
-        responsiveness: 'testString',
-        dr: drMetaDataModel,
-      };
-
-      // TemplateMetaData
-      const templateMetaDataModel = {
-        services: ['testString'],
-        default_memory: 38,
-        start_cmd: 'testString',
-        source: sourceMetaDataModel,
-        runtime_catalog_id: 'testString',
-        cf_runtime_id: 'testString',
-        template_id: 'testString',
-        executable_file: 'testString',
-        buildpack: 'testString',
-        environment_variables: { 'key1' : 'testString' },
-      };
-
-      // UIMetaData
-      const uiMetaDataModel = {
-        strings: { 'key1' : stringsModel },
-        urls: urlsModel,
-        embeddable_dashboard: 'testString',
-        embeddable_dashboard_full_width: true,
-        navigation_order: ['testString'],
-        not_creatable: true,
-        primary_offering_id: 'testString',
-        accessible_during_provision: true,
-        side_by_side_index: 38,
-        end_of_service_time: '2019-01-01T12:00:00',
-        hidden: true,
-        hide_lite_metering: true,
-        no_upgrade_next_step: true,
-      };
-
       // ObjectMetadataSet
       const objectMetadataSetModel = {
         rc_compatible: true,
@@ -844,7 +844,7 @@ describe('GlobalCatalogV1', () => {
         callbacks: callbacksModel,
         original_name: 'testString',
         version: 'testString',
-        other: { 'key1' : { foo: 'bar' } },
+        other: { 'key1': { foo: 'bar' } },
         pricing: pricingSetModel,
         deployment: deploymentBaseModel,
       };
@@ -854,7 +854,7 @@ describe('GlobalCatalogV1', () => {
         const id = 'testString';
         const name = 'testString';
         const kind = 'service';
-        const overviewUi = { 'key1' : overviewModel };
+        const overviewUi = { 'key1': overviewModel };
         const images = imageModel;
         const disabled = true;
         const tags = ['testString'];
@@ -882,7 +882,7 @@ describe('GlobalCatalogV1', () => {
           move: move,
         };
 
-        const updateCatalogEntryResult = globalCatalog.updateCatalogEntry(params);
+        const updateCatalogEntryResult = globalCatalogService.updateCatalogEntry(params);
 
         // all methods should return a Promise
         expectToBePromise(updateCatalogEntryResult);
@@ -917,7 +917,7 @@ describe('GlobalCatalogV1', () => {
         const id = 'testString';
         const name = 'testString';
         const kind = 'service';
-        const overviewUi = { 'key1' : overviewModel };
+        const overviewUi = { 'key1': overviewModel };
         const images = imageModel;
         const disabled = true;
         const tags = ['testString'];
@@ -939,7 +939,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.updateCatalogEntry(params);
+        globalCatalogService.updateCatalogEntry(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -948,7 +948,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.updateCatalogEntry({});
+          await globalCatalogService.updateCatalogEntry({});
         } catch (e) {
           err = e;
         }
@@ -958,7 +958,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateCatalogEntryPromise = globalCatalog.updateCatalogEntry();
+        const updateCatalogEntryPromise = globalCatalogService.updateCatalogEntry();
         expectToBePromise(updateCatalogEntryPromise);
 
         updateCatalogEntryPromise.catch(err => {
@@ -981,7 +981,7 @@ describe('GlobalCatalogV1', () => {
           force: force,
         };
 
-        const deleteCatalogEntryResult = globalCatalog.deleteCatalogEntry(params);
+        const deleteCatalogEntryResult = globalCatalogService.deleteCatalogEntry(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteCatalogEntryResult);
@@ -1013,7 +1013,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.deleteCatalogEntry(params);
+        globalCatalogService.deleteCatalogEntry(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1022,7 +1022,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.deleteCatalogEntry({});
+          await globalCatalogService.deleteCatalogEntry({});
         } catch (e) {
           err = e;
         }
@@ -1032,7 +1032,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteCatalogEntryPromise = globalCatalog.deleteCatalogEntry();
+        const deleteCatalogEntryPromise = globalCatalogService.deleteCatalogEntry();
         expectToBePromise(deleteCatalogEntryPromise);
 
         deleteCatalogEntryPromise.catch(err => {
@@ -1067,7 +1067,7 @@ describe('GlobalCatalogV1', () => {
           complete: complete,
         };
 
-        const getChildObjectsResult = globalCatalog.getChildObjects(params);
+        const getChildObjectsResult = globalCatalogService.getChildObjects(params);
 
         // all methods should return a Promise
         expectToBePromise(getChildObjectsResult);
@@ -1107,7 +1107,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.getChildObjects(params);
+        globalCatalogService.getChildObjects(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1116,7 +1116,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.getChildObjects({});
+          await globalCatalogService.getChildObjects({});
         } catch (e) {
           err = e;
         }
@@ -1126,7 +1126,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getChildObjectsPromise = globalCatalog.getChildObjects();
+        const getChildObjectsPromise = globalCatalogService.getChildObjects();
         expectToBePromise(getChildObjectsPromise);
 
         getChildObjectsPromise.catch(err => {
@@ -1147,7 +1147,7 @@ describe('GlobalCatalogV1', () => {
           account: account,
         };
 
-        const restoreCatalogEntryResult = globalCatalog.restoreCatalogEntry(params);
+        const restoreCatalogEntryResult = globalCatalogService.restoreCatalogEntry(params);
 
         // all methods should return a Promise
         expectToBePromise(restoreCatalogEntryResult);
@@ -1178,7 +1178,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.restoreCatalogEntry(params);
+        globalCatalogService.restoreCatalogEntry(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1187,7 +1187,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.restoreCatalogEntry({});
+          await globalCatalogService.restoreCatalogEntry({});
         } catch (e) {
           err = e;
         }
@@ -1197,7 +1197,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const restoreCatalogEntryPromise = globalCatalog.restoreCatalogEntry();
+        const restoreCatalogEntryPromise = globalCatalogService.restoreCatalogEntry();
         expectToBePromise(restoreCatalogEntryPromise);
 
         restoreCatalogEntryPromise.catch(err => {
@@ -1218,7 +1218,7 @@ describe('GlobalCatalogV1', () => {
           account: account,
         };
 
-        const getVisibilityResult = globalCatalog.getVisibility(params);
+        const getVisibilityResult = globalCatalogService.getVisibility(params);
 
         // all methods should return a Promise
         expectToBePromise(getVisibilityResult);
@@ -1249,7 +1249,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.getVisibility(params);
+        globalCatalogService.getVisibility(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1258,7 +1258,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.getVisibility({});
+          await globalCatalogService.getVisibility({});
         } catch (e) {
           err = e;
         }
@@ -1268,7 +1268,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getVisibilityPromise = globalCatalog.getVisibility();
+        const getVisibilityPromise = globalCatalogService.getVisibility();
         expectToBePromise(getVisibilityPromise);
 
         getVisibilityPromise.catch(err => {
@@ -1307,7 +1307,7 @@ describe('GlobalCatalogV1', () => {
           account: account,
         };
 
-        const updateVisibilityResult = globalCatalog.updateVisibility(params);
+        const updateVisibilityResult = globalCatalogService.updateVisibility(params);
 
         // all methods should return a Promise
         expectToBePromise(updateVisibilityResult);
@@ -1341,7 +1341,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.updateVisibility(params);
+        globalCatalogService.updateVisibility(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1350,7 +1350,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.updateVisibility({});
+          await globalCatalogService.updateVisibility({});
         } catch (e) {
           err = e;
         }
@@ -1360,7 +1360,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateVisibilityPromise = globalCatalog.updateVisibility();
+        const updateVisibilityPromise = globalCatalogService.updateVisibility();
         expectToBePromise(updateVisibilityPromise);
 
         updateVisibilityPromise.catch(err => {
@@ -1381,7 +1381,7 @@ describe('GlobalCatalogV1', () => {
           account: account,
         };
 
-        const getPricingResult = globalCatalog.getPricing(params);
+        const getPricingResult = globalCatalogService.getPricing(params);
 
         // all methods should return a Promise
         expectToBePromise(getPricingResult);
@@ -1412,7 +1412,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.getPricing(params);
+        globalCatalogService.getPricing(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1421,7 +1421,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.getPricing({});
+          await globalCatalogService.getPricing({});
         } catch (e) {
           err = e;
         }
@@ -1431,7 +1431,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getPricingPromise = globalCatalog.getPricing();
+        const getPricingPromise = globalCatalogService.getPricing();
         expectToBePromise(getPricingPromise);
 
         getPricingPromise.catch(err => {
@@ -1460,7 +1460,7 @@ describe('GlobalCatalogV1', () => {
           limit: limit,
         };
 
-        const getAuditLogsResult = globalCatalog.getAuditLogs(params);
+        const getAuditLogsResult = globalCatalogService.getAuditLogs(params);
 
         // all methods should return a Promise
         expectToBePromise(getAuditLogsResult);
@@ -1495,7 +1495,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.getAuditLogs(params);
+        globalCatalogService.getAuditLogs(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1504,7 +1504,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.getAuditLogs({});
+          await globalCatalogService.getAuditLogs({});
         } catch (e) {
           err = e;
         }
@@ -1514,7 +1514,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getAuditLogsPromise = globalCatalog.getAuditLogs();
+        const getAuditLogsPromise = globalCatalogService.getAuditLogs();
         expectToBePromise(getAuditLogsPromise);
 
         getAuditLogsPromise.catch(err => {
@@ -1535,7 +1535,7 @@ describe('GlobalCatalogV1', () => {
           account: account,
         };
 
-        const listArtifactsResult = globalCatalog.listArtifacts(params);
+        const listArtifactsResult = globalCatalogService.listArtifacts(params);
 
         // all methods should return a Promise
         expectToBePromise(listArtifactsResult);
@@ -1566,7 +1566,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.listArtifacts(params);
+        globalCatalogService.listArtifacts(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1575,7 +1575,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.listArtifacts({});
+          await globalCatalogService.listArtifacts({});
         } catch (e) {
           err = e;
         }
@@ -1585,7 +1585,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const listArtifactsPromise = globalCatalog.listArtifacts();
+        const listArtifactsPromise = globalCatalogService.listArtifacts();
         expectToBePromise(listArtifactsPromise);
 
         listArtifactsPromise.catch(err => {
@@ -1610,7 +1610,7 @@ describe('GlobalCatalogV1', () => {
           account: account,
         };
 
-        const getArtifactResult = globalCatalog.getArtifact(params);
+        const getArtifactResult = globalCatalogService.getArtifact(params);
 
         // all methods should return a Promise
         expectToBePromise(getArtifactResult);
@@ -1646,7 +1646,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.getArtifact(params);
+        globalCatalogService.getArtifact(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1655,7 +1655,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.getArtifact({});
+          await globalCatalogService.getArtifact({});
         } catch (e) {
           err = e;
         }
@@ -1665,7 +1665,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getArtifactPromise = globalCatalog.getArtifact();
+        const getArtifactPromise = globalCatalogService.getArtifact();
         expectToBePromise(getArtifactPromise);
 
         getArtifactPromise.catch(err => {
@@ -1692,7 +1692,7 @@ describe('GlobalCatalogV1', () => {
           account: account,
         };
 
-        const uploadArtifactResult = globalCatalog.uploadArtifact(params);
+        const uploadArtifactResult = globalCatalogService.uploadArtifact(params);
 
         // all methods should return a Promise
         expectToBePromise(uploadArtifactResult);
@@ -1728,7 +1728,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.uploadArtifact(params);
+        globalCatalogService.uploadArtifact(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1737,7 +1737,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.uploadArtifact({});
+          await globalCatalogService.uploadArtifact({});
         } catch (e) {
           err = e;
         }
@@ -1747,7 +1747,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const uploadArtifactPromise = globalCatalog.uploadArtifact();
+        const uploadArtifactPromise = globalCatalogService.uploadArtifact();
         expectToBePromise(uploadArtifactPromise);
 
         uploadArtifactPromise.catch(err => {
@@ -1770,7 +1770,7 @@ describe('GlobalCatalogV1', () => {
           account: account,
         };
 
-        const deleteArtifactResult = globalCatalog.deleteArtifact(params);
+        const deleteArtifactResult = globalCatalogService.deleteArtifact(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteArtifactResult);
@@ -1804,7 +1804,7 @@ describe('GlobalCatalogV1', () => {
           },
         };
 
-        globalCatalog.deleteArtifact(params);
+        globalCatalogService.deleteArtifact(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1813,7 +1813,7 @@ describe('GlobalCatalogV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await globalCatalog.deleteArtifact({});
+          await globalCatalogService.deleteArtifact({});
         } catch (e) {
           err = e;
         }
@@ -1823,7 +1823,7 @@ describe('GlobalCatalogV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteArtifactPromise = globalCatalog.deleteArtifact();
+        const deleteArtifactPromise = globalCatalogService.deleteArtifact();
         expectToBePromise(deleteArtifactPromise);
 
         deleteArtifactPromise.catch(err => {

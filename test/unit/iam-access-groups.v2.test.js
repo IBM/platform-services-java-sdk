@@ -34,10 +34,10 @@ const service = {
   url: 'https://iam.cloud.ibm.com/v2',
 };
 
-const iamAccessGroups = new IamAccessGroupsV2(service);
+const iamAccessGroupsService = new IamAccessGroupsV2(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(iamAccessGroups, 'createRequest');
+const createRequestMock = jest.spyOn(iamAccessGroupsService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -114,7 +114,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const createAccessGroupResult = iamAccessGroups.createAccessGroup(params);
+        const createAccessGroupResult = iamAccessGroupsService.createAccessGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(createAccessGroupResult);
@@ -149,7 +149,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.createAccessGroup(params);
+        iamAccessGroupsService.createAccessGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -158,7 +158,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.createAccessGroup({});
+          await iamAccessGroupsService.createAccessGroup({});
         } catch (e) {
           err = e;
         }
@@ -168,7 +168,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createAccessGroupPromise = iamAccessGroups.createAccessGroup();
+        const createAccessGroupPromise = iamAccessGroupsService.createAccessGroup();
         expectToBePromise(createAccessGroupPromise);
 
         createAccessGroupPromise.catch(err => {
@@ -201,7 +201,7 @@ describe('IamAccessGroupsV2', () => {
           hidePublicAccess: hidePublicAccess,
         };
 
-        const listAccessGroupsResult = iamAccessGroups.listAccessGroups(params);
+        const listAccessGroupsResult = iamAccessGroupsService.listAccessGroups(params);
 
         // all methods should return a Promise
         expectToBePromise(listAccessGroupsResult);
@@ -238,7 +238,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.listAccessGroups(params);
+        iamAccessGroupsService.listAccessGroups(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -247,7 +247,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.listAccessGroups({});
+          await iamAccessGroupsService.listAccessGroups({});
         } catch (e) {
           err = e;
         }
@@ -257,7 +257,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const listAccessGroupsPromise = iamAccessGroups.listAccessGroups();
+        const listAccessGroupsPromise = iamAccessGroupsService.listAccessGroups();
         expectToBePromise(listAccessGroupsPromise);
 
         listAccessGroupsPromise.catch(err => {
@@ -280,7 +280,7 @@ describe('IamAccessGroupsV2', () => {
           showFederated: showFederated,
         };
 
-        const getAccessGroupResult = iamAccessGroups.getAccessGroup(params);
+        const getAccessGroupResult = iamAccessGroupsService.getAccessGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(getAccessGroupResult);
@@ -312,7 +312,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.getAccessGroup(params);
+        iamAccessGroupsService.getAccessGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -321,7 +321,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.getAccessGroup({});
+          await iamAccessGroupsService.getAccessGroup({});
         } catch (e) {
           err = e;
         }
@@ -331,7 +331,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getAccessGroupPromise = iamAccessGroups.getAccessGroup();
+        const getAccessGroupPromise = iamAccessGroupsService.getAccessGroup();
         expectToBePromise(getAccessGroupPromise);
 
         getAccessGroupPromise.catch(err => {
@@ -358,7 +358,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const updateAccessGroupResult = iamAccessGroups.updateAccessGroup(params);
+        const updateAccessGroupResult = iamAccessGroupsService.updateAccessGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(updateAccessGroupResult);
@@ -394,7 +394,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.updateAccessGroup(params);
+        iamAccessGroupsService.updateAccessGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -403,7 +403,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.updateAccessGroup({});
+          await iamAccessGroupsService.updateAccessGroup({});
         } catch (e) {
           err = e;
         }
@@ -413,7 +413,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateAccessGroupPromise = iamAccessGroups.updateAccessGroup();
+        const updateAccessGroupPromise = iamAccessGroupsService.updateAccessGroup();
         expectToBePromise(updateAccessGroupPromise);
 
         updateAccessGroupPromise.catch(err => {
@@ -436,7 +436,7 @@ describe('IamAccessGroupsV2', () => {
           force: force,
         };
 
-        const deleteAccessGroupResult = iamAccessGroups.deleteAccessGroup(params);
+        const deleteAccessGroupResult = iamAccessGroupsService.deleteAccessGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteAccessGroupResult);
@@ -468,7 +468,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.deleteAccessGroup(params);
+        iamAccessGroupsService.deleteAccessGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -477,7 +477,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.deleteAccessGroup({});
+          await iamAccessGroupsService.deleteAccessGroup({});
         } catch (e) {
           err = e;
         }
@@ -487,7 +487,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteAccessGroupPromise = iamAccessGroups.deleteAccessGroup();
+        const deleteAccessGroupPromise = iamAccessGroupsService.deleteAccessGroup();
         expectToBePromise(deleteAccessGroupPromise);
 
         deleteAccessGroupPromise.catch(err => {
@@ -508,7 +508,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const getAccountSettingsResult = iamAccessGroups.getAccountSettings(params);
+        const getAccountSettingsResult = iamAccessGroupsService.getAccountSettings(params);
 
         // all methods should return a Promise
         expectToBePromise(getAccountSettingsResult);
@@ -539,7 +539,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.getAccountSettings(params);
+        iamAccessGroupsService.getAccountSettings(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -548,7 +548,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.getAccountSettings({});
+          await iamAccessGroupsService.getAccountSettings({});
         } catch (e) {
           err = e;
         }
@@ -558,7 +558,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getAccountSettingsPromise = iamAccessGroups.getAccountSettings();
+        const getAccountSettingsPromise = iamAccessGroupsService.getAccountSettings();
         expectToBePromise(getAccountSettingsPromise);
 
         getAccountSettingsPromise.catch(err => {
@@ -581,7 +581,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const updateAccountSettingsResult = iamAccessGroups.updateAccountSettings(params);
+        const updateAccountSettingsResult = iamAccessGroupsService.updateAccountSettings(params);
 
         // all methods should return a Promise
         expectToBePromise(updateAccountSettingsResult);
@@ -613,7 +613,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.updateAccountSettings(params);
+        iamAccessGroupsService.updateAccountSettings(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -622,7 +622,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.updateAccountSettings({});
+          await iamAccessGroupsService.updateAccountSettings({});
         } catch (e) {
           err = e;
         }
@@ -632,7 +632,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateAccountSettingsPromise = iamAccessGroups.updateAccountSettings();
+        const updateAccountSettingsPromise = iamAccessGroupsService.updateAccountSettings();
         expectToBePromise(updateAccountSettingsPromise);
 
         updateAccountSettingsPromise.catch(err => {
@@ -655,7 +655,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const isMemberOfAccessGroupResult = iamAccessGroups.isMemberOfAccessGroup(params);
+        const isMemberOfAccessGroupResult = iamAccessGroupsService.isMemberOfAccessGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(isMemberOfAccessGroupResult);
@@ -689,7 +689,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.isMemberOfAccessGroup(params);
+        iamAccessGroupsService.isMemberOfAccessGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -698,7 +698,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.isMemberOfAccessGroup({});
+          await iamAccessGroupsService.isMemberOfAccessGroup({});
         } catch (e) {
           err = e;
         }
@@ -708,7 +708,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const isMemberOfAccessGroupPromise = iamAccessGroups.isMemberOfAccessGroup();
+        const isMemberOfAccessGroupPromise = iamAccessGroupsService.isMemberOfAccessGroup();
         expectToBePromise(isMemberOfAccessGroupPromise);
 
         isMemberOfAccessGroupPromise.catch(err => {
@@ -739,7 +739,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const addMembersToAccessGroupResult = iamAccessGroups.addMembersToAccessGroup(params);
+        const addMembersToAccessGroupResult = iamAccessGroupsService.addMembersToAccessGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(addMembersToAccessGroupResult);
@@ -771,7 +771,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.addMembersToAccessGroup(params);
+        iamAccessGroupsService.addMembersToAccessGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -780,7 +780,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.addMembersToAccessGroup({});
+          await iamAccessGroupsService.addMembersToAccessGroup({});
         } catch (e) {
           err = e;
         }
@@ -790,7 +790,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const addMembersToAccessGroupPromise = iamAccessGroups.addMembersToAccessGroup();
+        const addMembersToAccessGroupPromise = iamAccessGroupsService.addMembersToAccessGroup();
         expectToBePromise(addMembersToAccessGroupPromise);
 
         addMembersToAccessGroupPromise.catch(err => {
@@ -821,7 +821,7 @@ describe('IamAccessGroupsV2', () => {
           sort: sort,
         };
 
-        const listAccessGroupMembersResult = iamAccessGroups.listAccessGroupMembers(params);
+        const listAccessGroupMembersResult = iamAccessGroupsService.listAccessGroupMembers(params);
 
         // all methods should return a Promise
         expectToBePromise(listAccessGroupMembersResult);
@@ -857,7 +857,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.listAccessGroupMembers(params);
+        iamAccessGroupsService.listAccessGroupMembers(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -866,7 +866,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.listAccessGroupMembers({});
+          await iamAccessGroupsService.listAccessGroupMembers({});
         } catch (e) {
           err = e;
         }
@@ -876,7 +876,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const listAccessGroupMembersPromise = iamAccessGroups.listAccessGroupMembers();
+        const listAccessGroupMembersPromise = iamAccessGroupsService.listAccessGroupMembers();
         expectToBePromise(listAccessGroupMembersPromise);
 
         listAccessGroupMembersPromise.catch(err => {
@@ -899,7 +899,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const removeMemberFromAccessGroupResult = iamAccessGroups.removeMemberFromAccessGroup(params);
+        const removeMemberFromAccessGroupResult = iamAccessGroupsService.removeMemberFromAccessGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(removeMemberFromAccessGroupResult);
@@ -933,7 +933,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.removeMemberFromAccessGroup(params);
+        iamAccessGroupsService.removeMemberFromAccessGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -942,7 +942,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.removeMemberFromAccessGroup({});
+          await iamAccessGroupsService.removeMemberFromAccessGroup({});
         } catch (e) {
           err = e;
         }
@@ -952,7 +952,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const removeMemberFromAccessGroupPromise = iamAccessGroups.removeMemberFromAccessGroup();
+        const removeMemberFromAccessGroupPromise = iamAccessGroupsService.removeMemberFromAccessGroup();
         expectToBePromise(removeMemberFromAccessGroupPromise);
 
         removeMemberFromAccessGroupPromise.catch(err => {
@@ -975,7 +975,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const removeMembersFromAccessGroupResult = iamAccessGroups.removeMembersFromAccessGroup(params);
+        const removeMembersFromAccessGroupResult = iamAccessGroupsService.removeMembersFromAccessGroup(params);
 
         // all methods should return a Promise
         expectToBePromise(removeMembersFromAccessGroupResult);
@@ -1007,7 +1007,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.removeMembersFromAccessGroup(params);
+        iamAccessGroupsService.removeMembersFromAccessGroup(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1016,7 +1016,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.removeMembersFromAccessGroup({});
+          await iamAccessGroupsService.removeMembersFromAccessGroup({});
         } catch (e) {
           err = e;
         }
@@ -1026,7 +1026,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const removeMembersFromAccessGroupPromise = iamAccessGroups.removeMembersFromAccessGroup();
+        const removeMembersFromAccessGroupPromise = iamAccessGroupsService.removeMembersFromAccessGroup();
         expectToBePromise(removeMembersFromAccessGroupPromise);
 
         removeMembersFromAccessGroupPromise.catch(err => {
@@ -1049,7 +1049,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const removeMemberFromAllAccessGroupsResult = iamAccessGroups.removeMemberFromAllAccessGroups(params);
+        const removeMemberFromAllAccessGroupsResult = iamAccessGroupsService.removeMemberFromAllAccessGroups(params);
 
         // all methods should return a Promise
         expectToBePromise(removeMemberFromAllAccessGroupsResult);
@@ -1083,7 +1083,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.removeMemberFromAllAccessGroups(params);
+        iamAccessGroupsService.removeMemberFromAllAccessGroups(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1092,7 +1092,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.removeMemberFromAllAccessGroups({});
+          await iamAccessGroupsService.removeMemberFromAllAccessGroups({});
         } catch (e) {
           err = e;
         }
@@ -1102,7 +1102,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const removeMemberFromAllAccessGroupsPromise = iamAccessGroups.removeMemberFromAllAccessGroups();
+        const removeMemberFromAllAccessGroupsPromise = iamAccessGroupsService.removeMemberFromAllAccessGroups();
         expectToBePromise(removeMemberFromAllAccessGroupsPromise);
 
         removeMemberFromAllAccessGroupsPromise.catch(err => {
@@ -1129,7 +1129,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const addMemberToMultipleAccessGroupsResult = iamAccessGroups.addMemberToMultipleAccessGroups(params);
+        const addMemberToMultipleAccessGroupsResult = iamAccessGroupsService.addMemberToMultipleAccessGroups(params);
 
         // all methods should return a Promise
         expectToBePromise(addMemberToMultipleAccessGroupsResult);
@@ -1165,7 +1165,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.addMemberToMultipleAccessGroups(params);
+        iamAccessGroupsService.addMemberToMultipleAccessGroups(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1174,7 +1174,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.addMemberToMultipleAccessGroups({});
+          await iamAccessGroupsService.addMemberToMultipleAccessGroups({});
         } catch (e) {
           err = e;
         }
@@ -1184,7 +1184,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const addMemberToMultipleAccessGroupsPromise = iamAccessGroups.addMemberToMultipleAccessGroups();
+        const addMemberToMultipleAccessGroupsPromise = iamAccessGroupsService.addMemberToMultipleAccessGroups();
         expectToBePromise(addMemberToMultipleAccessGroupsPromise);
 
         addMemberToMultipleAccessGroupsPromise.catch(err => {
@@ -1222,7 +1222,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const addAccessGroupRuleResult = iamAccessGroups.addAccessGroupRule(params);
+        const addAccessGroupRuleResult = iamAccessGroupsService.addAccessGroupRule(params);
 
         // all methods should return a Promise
         expectToBePromise(addAccessGroupRuleResult);
@@ -1263,7 +1263,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.addAccessGroupRule(params);
+        iamAccessGroupsService.addAccessGroupRule(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1272,7 +1272,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.addAccessGroupRule({});
+          await iamAccessGroupsService.addAccessGroupRule({});
         } catch (e) {
           err = e;
         }
@@ -1282,7 +1282,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const addAccessGroupRulePromise = iamAccessGroups.addAccessGroupRule();
+        const addAccessGroupRulePromise = iamAccessGroupsService.addAccessGroupRule();
         expectToBePromise(addAccessGroupRulePromise);
 
         addAccessGroupRulePromise.catch(err => {
@@ -1303,7 +1303,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const listAccessGroupRulesResult = iamAccessGroups.listAccessGroupRules(params);
+        const listAccessGroupRulesResult = iamAccessGroupsService.listAccessGroupRules(params);
 
         // all methods should return a Promise
         expectToBePromise(listAccessGroupRulesResult);
@@ -1334,7 +1334,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.listAccessGroupRules(params);
+        iamAccessGroupsService.listAccessGroupRules(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1343,7 +1343,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.listAccessGroupRules({});
+          await iamAccessGroupsService.listAccessGroupRules({});
         } catch (e) {
           err = e;
         }
@@ -1353,7 +1353,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const listAccessGroupRulesPromise = iamAccessGroups.listAccessGroupRules();
+        const listAccessGroupRulesPromise = iamAccessGroupsService.listAccessGroupRules();
         expectToBePromise(listAccessGroupRulesPromise);
 
         listAccessGroupRulesPromise.catch(err => {
@@ -1376,7 +1376,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const getAccessGroupRuleResult = iamAccessGroups.getAccessGroupRule(params);
+        const getAccessGroupRuleResult = iamAccessGroupsService.getAccessGroupRule(params);
 
         // all methods should return a Promise
         expectToBePromise(getAccessGroupRuleResult);
@@ -1410,7 +1410,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.getAccessGroupRule(params);
+        iamAccessGroupsService.getAccessGroupRule(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1419,7 +1419,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.getAccessGroupRule({});
+          await iamAccessGroupsService.getAccessGroupRule({});
         } catch (e) {
           err = e;
         }
@@ -1429,7 +1429,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getAccessGroupRulePromise = iamAccessGroups.getAccessGroupRule();
+        const getAccessGroupRulePromise = iamAccessGroupsService.getAccessGroupRule();
         expectToBePromise(getAccessGroupRulePromise);
 
         getAccessGroupRulePromise.catch(err => {
@@ -1471,7 +1471,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const replaceAccessGroupRuleResult = iamAccessGroups.replaceAccessGroupRule(params);
+        const replaceAccessGroupRuleResult = iamAccessGroupsService.replaceAccessGroupRule(params);
 
         // all methods should return a Promise
         expectToBePromise(replaceAccessGroupRuleResult);
@@ -1518,7 +1518,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.replaceAccessGroupRule(params);
+        iamAccessGroupsService.replaceAccessGroupRule(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1527,7 +1527,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.replaceAccessGroupRule({});
+          await iamAccessGroupsService.replaceAccessGroupRule({});
         } catch (e) {
           err = e;
         }
@@ -1537,7 +1537,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const replaceAccessGroupRulePromise = iamAccessGroups.replaceAccessGroupRule();
+        const replaceAccessGroupRulePromise = iamAccessGroupsService.replaceAccessGroupRule();
         expectToBePromise(replaceAccessGroupRulePromise);
 
         replaceAccessGroupRulePromise.catch(err => {
@@ -1560,7 +1560,7 @@ describe('IamAccessGroupsV2', () => {
           transactionId: transactionId,
         };
 
-        const removeAccessGroupRuleResult = iamAccessGroups.removeAccessGroupRule(params);
+        const removeAccessGroupRuleResult = iamAccessGroupsService.removeAccessGroupRule(params);
 
         // all methods should return a Promise
         expectToBePromise(removeAccessGroupRuleResult);
@@ -1594,7 +1594,7 @@ describe('IamAccessGroupsV2', () => {
           },
         };
 
-        iamAccessGroups.removeAccessGroupRule(params);
+        iamAccessGroupsService.removeAccessGroupRule(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1603,7 +1603,7 @@ describe('IamAccessGroupsV2', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await iamAccessGroups.removeAccessGroupRule({});
+          await iamAccessGroupsService.removeAccessGroupRule({});
         } catch (e) {
           err = e;
         }
@@ -1613,7 +1613,7 @@ describe('IamAccessGroupsV2', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const removeAccessGroupRulePromise = iamAccessGroups.removeAccessGroupRule();
+        const removeAccessGroupRulePromise = iamAccessGroupsService.removeAccessGroupRule();
         expectToBePromise(removeAccessGroupRulePromise);
 
         removeAccessGroupRulePromise.catch(err => {

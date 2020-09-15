@@ -34,10 +34,10 @@ const service = {
   url: 'https://support-center.cloud.ibm.com/case-management/v1',
 };
 
-const caseManagement = new CaseManagementV1(service);
+const caseManagementService = new CaseManagementV1(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(caseManagement, 'createRequest');
+const createRequestMock = jest.spyOn(caseManagementService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -118,7 +118,7 @@ describe('CaseManagementV1', () => {
           fields: fields,
         };
 
-        const getCasesResult = caseManagement.getCases(params);
+        const getCasesResult = caseManagementService.getCases(params);
 
         // all methods should return a Promise
         expectToBePromise(getCasesResult);
@@ -151,13 +151,13 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.getCases(params);
+        caseManagementService.getCases(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        caseManagement.getCases({});
+        caseManagementService.getCases({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -225,7 +225,7 @@ describe('CaseManagementV1', () => {
           slaCreditRequest: slaCreditRequest,
         };
 
-        const createCaseResult = caseManagement.createCase(params);
+        const createCaseResult = caseManagementService.createCase(params);
 
         // all methods should return a Promise
         expectToBePromise(createCaseResult);
@@ -268,7 +268,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.createCase(params);
+        caseManagementService.createCase(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -277,7 +277,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.createCase({});
+          await caseManagementService.createCase({});
         } catch (e) {
           err = e;
         }
@@ -287,7 +287,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createCasePromise = caseManagement.createCase();
+        const createCasePromise = caseManagementService.createCase();
         expectToBePromise(createCasePromise);
 
         createCasePromise.catch(err => {
@@ -308,7 +308,7 @@ describe('CaseManagementV1', () => {
           fields: fields,
         };
 
-        const getCaseResult = caseManagement.getCase(params);
+        const getCaseResult = caseManagementService.getCase(params);
 
         // all methods should return a Promise
         expectToBePromise(getCaseResult);
@@ -339,7 +339,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.getCase(params);
+        caseManagementService.getCase(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -348,7 +348,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.getCase({});
+          await caseManagementService.getCase({});
         } catch (e) {
           err = e;
         }
@@ -358,7 +358,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getCasePromise = caseManagement.getCase();
+        const getCasePromise = caseManagementService.getCase();
         expectToBePromise(getCasePromise);
 
         getCasePromise.catch(err => {
@@ -375,20 +375,20 @@ describe('CaseManagementV1', () => {
       // ResolvePayload
       const statusPayloadModel = {
         action: 'resolve',
-        comment: 'testString',
+        comment: 'It was actually a mistake',
         resolution_code: 1,
       };
 
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateCaseStatus
         const caseNumber = 'testString';
-        const statusPayload = { action: 'resolve', comment: 'It was actually a mistake', resolution_code: 1 };
+        const statusPayload = statusPayloadModel;
         const params = {
           caseNumber: caseNumber,
           statusPayload: statusPayload,
         };
 
-        const updateCaseStatusResult = caseManagement.updateCaseStatus(params);
+        const updateCaseStatusResult = caseManagementService.updateCaseStatus(params);
 
         // all methods should return a Promise
         expectToBePromise(updateCaseStatusResult);
@@ -409,7 +409,7 @@ describe('CaseManagementV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const caseNumber = 'testString';
-        const statusPayload = { action: 'resolve', comment: 'It was actually a mistake', resolution_code: 1 };
+        const statusPayload = statusPayloadModel;
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -421,7 +421,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.updateCaseStatus(params);
+        caseManagementService.updateCaseStatus(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -430,7 +430,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.updateCaseStatus({});
+          await caseManagementService.updateCaseStatus({});
         } catch (e) {
           err = e;
         }
@@ -440,7 +440,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateCaseStatusPromise = caseManagement.updateCaseStatus();
+        const updateCaseStatusPromise = caseManagementService.updateCaseStatus();
         expectToBePromise(updateCaseStatusPromise);
 
         updateCaseStatusPromise.catch(err => {
@@ -461,7 +461,7 @@ describe('CaseManagementV1', () => {
           comment: comment,
         };
 
-        const addCommentResult = caseManagement.addComment(params);
+        const addCommentResult = caseManagementService.addComment(params);
 
         // all methods should return a Promise
         expectToBePromise(addCommentResult);
@@ -494,7 +494,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.addComment(params);
+        caseManagementService.addComment(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -503,7 +503,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.addComment({});
+          await caseManagementService.addComment({});
         } catch (e) {
           err = e;
         }
@@ -513,7 +513,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const addCommentPromise = caseManagement.addComment();
+        const addCommentPromise = caseManagementService.addComment();
         expectToBePromise(addCommentPromise);
 
         addCommentPromise.catch(err => {
@@ -542,7 +542,7 @@ describe('CaseManagementV1', () => {
           watchlist: watchlist,
         };
 
-        const addWatchlistResult = caseManagement.addWatchlist(params);
+        const addWatchlistResult = caseManagementService.addWatchlist(params);
 
         // all methods should return a Promise
         expectToBePromise(addWatchlistResult);
@@ -573,7 +573,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.addWatchlist(params);
+        caseManagementService.addWatchlist(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -582,7 +582,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.addWatchlist({});
+          await caseManagementService.addWatchlist({});
         } catch (e) {
           err = e;
         }
@@ -592,7 +592,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const addWatchlistPromise = caseManagement.addWatchlist();
+        const addWatchlistPromise = caseManagementService.addWatchlist();
         expectToBePromise(addWatchlistPromise);
 
         addWatchlistPromise.catch(err => {
@@ -621,7 +621,7 @@ describe('CaseManagementV1', () => {
           watchlist: watchlist,
         };
 
-        const removeWatchlistResult = caseManagement.removeWatchlist(params);
+        const removeWatchlistResult = caseManagementService.removeWatchlist(params);
 
         // all methods should return a Promise
         expectToBePromise(removeWatchlistResult);
@@ -652,7 +652,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.removeWatchlist(params);
+        caseManagementService.removeWatchlist(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -661,7 +661,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.removeWatchlist({});
+          await caseManagementService.removeWatchlist({});
         } catch (e) {
           err = e;
         }
@@ -671,7 +671,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const removeWatchlistPromise = caseManagement.removeWatchlist();
+        const removeWatchlistPromise = caseManagementService.removeWatchlist();
         expectToBePromise(removeWatchlistPromise);
 
         removeWatchlistPromise.catch(err => {
@@ -698,7 +698,7 @@ describe('CaseManagementV1', () => {
           note: note,
         };
 
-        const addResourceResult = caseManagement.addResource(params);
+        const addResourceResult = caseManagementService.addResource(params);
 
         // all methods should return a Promise
         expectToBePromise(addResourceResult);
@@ -732,7 +732,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.addResource(params);
+        caseManagementService.addResource(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -741,7 +741,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.addResource({});
+          await caseManagementService.addResource({});
         } catch (e) {
           err = e;
         }
@@ -751,7 +751,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const addResourcePromise = caseManagement.addResource();
+        const addResourcePromise = caseManagementService.addResource();
         expectToBePromise(addResourcePromise);
 
         addResourcePromise.catch(err => {
@@ -772,7 +772,7 @@ describe('CaseManagementV1', () => {
           file: file,
         };
 
-        const uploadFileResult = caseManagement.uploadFile(params);
+        const uploadFileResult = caseManagementService.uploadFile(params);
 
         // all methods should return a Promise
         expectToBePromise(uploadFileResult);
@@ -805,7 +805,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.uploadFile(params);
+        caseManagementService.uploadFile(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -814,7 +814,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.uploadFile({});
+          await caseManagementService.uploadFile({});
         } catch (e) {
           err = e;
         }
@@ -824,7 +824,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const uploadFilePromise = caseManagement.uploadFile();
+        const uploadFilePromise = caseManagementService.uploadFile();
         expectToBePromise(uploadFilePromise);
 
         uploadFilePromise.catch(err => {
@@ -845,7 +845,7 @@ describe('CaseManagementV1', () => {
           fileId: fileId,
         };
 
-        const downloadFileResult = caseManagement.downloadFile(params);
+        const downloadFileResult = caseManagementService.downloadFile(params);
 
         // all methods should return a Promise
         expectToBePromise(downloadFileResult);
@@ -879,7 +879,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.downloadFile(params);
+        caseManagementService.downloadFile(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -888,7 +888,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.downloadFile({});
+          await caseManagementService.downloadFile({});
         } catch (e) {
           err = e;
         }
@@ -898,7 +898,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const downloadFilePromise = caseManagement.downloadFile();
+        const downloadFilePromise = caseManagementService.downloadFile();
         expectToBePromise(downloadFilePromise);
 
         downloadFilePromise.catch(err => {
@@ -919,7 +919,7 @@ describe('CaseManagementV1', () => {
           fileId: fileId,
         };
 
-        const deleteFileResult = caseManagement.deleteFile(params);
+        const deleteFileResult = caseManagementService.deleteFile(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteFileResult);
@@ -952,7 +952,7 @@ describe('CaseManagementV1', () => {
           },
         };
 
-        caseManagement.deleteFile(params);
+        caseManagementService.deleteFile(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -961,7 +961,7 @@ describe('CaseManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await caseManagement.deleteFile({});
+          await caseManagementService.deleteFile({});
         } catch (e) {
           err = e;
         }
@@ -971,7 +971,7 @@ describe('CaseManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteFilePromise = caseManagement.deleteFile();
+        const deleteFilePromise = caseManagementService.deleteFile();
         expectToBePromise(deleteFilePromise);
 
         deleteFilePromise.catch(err => {

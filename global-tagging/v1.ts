@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -113,7 +118,7 @@ class GlobalTaggingV1 extends BaseService {
    * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.TagList>>}
    */
   public listTags(params?: GlobalTaggingV1.ListTagsParams): Promise<GlobalTaggingV1.Response<GlobalTaggingV1.TagList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -157,7 +162,7 @@ class GlobalTaggingV1 extends BaseService {
    * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.DeleteTagsResult>>}
    */
   public deleteTagAll(params?: GlobalTaggingV1.DeleteTagAllParams): Promise<GlobalTaggingV1.Response<GlobalTaggingV1.DeleteTagsResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
     return new Promise((resolve, reject) => {
       const query = {
@@ -196,7 +201,7 @@ class GlobalTaggingV1 extends BaseService {
    * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.DeleteTagResults>>}
    */
   public deleteTag(params: GlobalTaggingV1.DeleteTagParams): Promise<GlobalTaggingV1.Response<GlobalTaggingV1.DeleteTagResults>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['tagName'];
 
     return new Promise((resolve, reject) => {
@@ -249,7 +254,7 @@ class GlobalTaggingV1 extends BaseService {
    * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.TagResults>>}
    */
   public attachTag(params: GlobalTaggingV1.AttachTagParams): Promise<GlobalTaggingV1.Response<GlobalTaggingV1.TagResults>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['resources'];
 
     return new Promise((resolve, reject) => {
@@ -301,7 +306,7 @@ class GlobalTaggingV1 extends BaseService {
    * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.TagResults>>}
    */
   public detachTag(params: GlobalTaggingV1.DetachTagParams): Promise<GlobalTaggingV1.Response<GlobalTaggingV1.TagResults>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['resources'];
 
     return new Promise((resolve, reject) => {

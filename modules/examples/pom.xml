@@ -28,6 +28,11 @@
             <artifactId>configuration-governance</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>iam-identity</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency> 
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jdk14</artifactId>

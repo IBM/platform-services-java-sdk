@@ -1,3 +1,10 @@
+## [0.12.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.12.0...v0.12.1) (2020-09-16)
+
+
+### Bug Fixes
+
+* **User Management:** re-gen user-mgmt service ([1416bd5](https://github.com/IBM/platform-services-node-sdk/commit/1416bd5d4221f3e9aecc56d104a01adf571e5dbb))
+
 # [0.12.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.11.0...v0.12.0) (2020-08-31)
 
 

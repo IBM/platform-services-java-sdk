@@ -21,6 +21,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  * Invite a user to an IAM policy.
  */
 public class InviteUserIamPolicy extends GenericModel {
+
   protected String type;
   protected List<Role> roles;
   protected List<Resource> resources;
@@ -34,6 +35,7 @@ public class InviteUserIamPolicy extends GenericModel {
     private List<Resource> resources;
 
     private Builder(InviteUserIamPolicy inviteUserIamPolicy) {
+      this.type = inviteUserIamPolicy.type;
       this.roles = inviteUserIamPolicy.roles;
       this.resources = inviteUserIamPolicy.resources;
     }
@@ -42,6 +44,15 @@ public class InviteUserIamPolicy extends GenericModel {
      * Instantiates a new builder.
      */
     public Builder() {
+    }
+
+    /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param type the type
+     */
+    public Builder(String type) {
+      this.type = type;
     }
 
     /**
@@ -87,7 +98,6 @@ public class InviteUserIamPolicy extends GenericModel {
 
     /**
      * Set the type.
-     * Existing resources will be replaced.
      *
      * @param type the type
      * @return the InviteUserIamPolicy builder
@@ -123,6 +133,8 @@ public class InviteUserIamPolicy extends GenericModel {
   }
 
   protected InviteUserIamPolicy(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
+      "type cannot be null");
     type = builder.type;
     roles = builder.roles;
     resources = builder.resources;
@@ -135,6 +147,17 @@ public class InviteUserIamPolicy extends GenericModel {
    */
   public Builder newBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Gets the type.
+   *
+   * The policy type. This can be either "access" or "authorization".
+   *
+   * @return the type
+   */
+  public String type() {
+    return type;
   }
 
   /**
@@ -157,17 +180,6 @@ public class InviteUserIamPolicy extends GenericModel {
    */
   public List<Resource> resources() {
     return resources;
-  }
-
-  /**
-   * Gets the type.
-   *
-   * type
-   *
-   * @return the type
-   */
-  public String type() {
-    return type;
   }
 }
 

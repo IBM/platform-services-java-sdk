@@ -18,15 +18,12 @@ import com.ibm.cloud.platform_services.user_management.v1.model.InviteUserIamPol
 import com.ibm.cloud.platform_services.user_management.v1.model.Resource;
 import com.ibm.cloud.platform_services.user_management.v1.model.Role;
 import com.ibm.cloud.platform_services.user_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -39,6 +36,11 @@ public class InviteUserIamPolicyTest {
 
   @Test
   public void testInviteUserIamPolicy() throws Throwable {
+    Role roleModel = new Role.Builder()
+      .roleId("testString")
+      .build();
+    assertEquals(roleModel.roleId(), "testString");
+
     Attribute attributeModel = new Attribute.Builder()
       .name("testString")
       .value("testString")
@@ -51,15 +53,12 @@ public class InviteUserIamPolicyTest {
       .build();
     assertEquals(resourceModel.attributes(), new java.util.ArrayList<Attribute>(java.util.Arrays.asList(attributeModel)));
 
-    Role roleModel = new Role.Builder()
-      .roleId("testString")
-      .build();
-    assertEquals(roleModel.roleId(), "testString");
-
     InviteUserIamPolicy inviteUserIamPolicyModel = new InviteUserIamPolicy.Builder()
+      .type("testString")
       .roles(new java.util.ArrayList<Role>(java.util.Arrays.asList(roleModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
       .build();
+    assertEquals(inviteUserIamPolicyModel.type(), "testString");
     assertEquals(inviteUserIamPolicyModel.roles(), new java.util.ArrayList<Role>(java.util.Arrays.asList(roleModel)));
     assertEquals(inviteUserIamPolicyModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
 
@@ -67,5 +66,12 @@ public class InviteUserIamPolicyTest {
 
     InviteUserIamPolicy inviteUserIamPolicyModelNew = TestUtilities.deserialize(json, InviteUserIamPolicy.class);
     assertTrue(inviteUserIamPolicyModelNew instanceof InviteUserIamPolicy);
+    assertEquals(inviteUserIamPolicyModelNew.type(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testInviteUserIamPolicyError() throws Throwable {
+    new InviteUserIamPolicy.Builder().build();
+  }
+
 }

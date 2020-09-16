@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-79b061f4-20200806-065240
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
  */
 
 package com.ibm.cloud.platform_services.user_management.v1;
@@ -36,6 +36,7 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -104,9 +105,10 @@ public class UserManagement extends BaseService {
   public ServiceCall<UserSettings> getUserSettings(GetUserSettingsOptions getUserSettingsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getUserSettingsOptions,
       "getUserSettingsOptions cannot be null");
-    String[] pathSegments = { "v2/accounts", "users", "settings" };
-    String[] pathParameters = { getUserSettingsOptions.accountId(), getUserSettingsOptions.iamId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getUserSettingsOptions.accountId());
+    pathParamsMap.put("iam_id", getUserSettingsOptions.iamId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}/settings", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "getUserSettings");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -131,9 +133,10 @@ public class UserManagement extends BaseService {
   public ServiceCall<UserSettings> updateUserSettings(UpdateUserSettingsOptions updateUserSettingsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateUserSettingsOptions,
       "updateUserSettingsOptions cannot be null");
-    String[] pathSegments = { "v2/accounts", "users", "settings" };
-    String[] pathParameters = { updateUserSettingsOptions.accountId(), updateUserSettingsOptions.iamId() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", updateUserSettingsOptions.accountId());
+    pathParamsMap.put("iam_id", updateUserSettingsOptions.iamId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}/settings", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "updateUserSettings");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -175,16 +178,16 @@ public class UserManagement extends BaseService {
   public ServiceCall<UserList> listUsers(ListUsersOptions listUsersOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listUsersOptions,
       "listUsersOptions cannot be null");
-    String[] pathSegments = { "v2/accounts", "users" };
-    String[] pathParameters = { listUsersOptions.accountId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", listUsersOptions.accountId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "listUsers");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     if (listUsersOptions.state() != null) {
-      builder.query("state", listUsersOptions.state());
+      builder.query("state", String.valueOf(listUsersOptions.state()));
     }
     ResponseConverter<UserList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<UserList>() { }.getType());
@@ -210,9 +213,9 @@ public class UserManagement extends BaseService {
   public ServiceCall<UserList> inviteUsers(InviteUsersOptions inviteUsersOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(inviteUsersOptions,
       "inviteUsersOptions cannot be null");
-    String[] pathSegments = { "v2/accounts", "users" };
-    String[] pathParameters = { inviteUsersOptions.accountId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", inviteUsersOptions.accountId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "inviteUsers");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -247,9 +250,10 @@ public class UserManagement extends BaseService {
   public ServiceCall<UserProfile> getUserProfile(GetUserProfileOptions getUserProfileOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getUserProfileOptions,
       "getUserProfileOptions cannot be null");
-    String[] pathSegments = { "v2/accounts", "users" };
-    String[] pathParameters = { getUserProfileOptions.accountId(), getUserProfileOptions.iamId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getUserProfileOptions.accountId());
+    pathParamsMap.put("iam_id", getUserProfileOptions.iamId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "getUserProfile");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -276,9 +280,10 @@ public class UserManagement extends BaseService {
   public ServiceCall<Void> updateUserProfiles(UpdateUserProfilesOptions updateUserProfilesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateUserProfilesOptions,
       "updateUserProfilesOptions cannot be null");
-    String[] pathSegments = { "v2/accounts", "users" };
-    String[] pathParameters = { updateUserProfilesOptions.accountId(), updateUserProfilesOptions.iamId() };
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", updateUserProfilesOptions.accountId());
+    pathParamsMap.put("iam_id", updateUserProfilesOptions.iamId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "updateUserProfiles");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -324,9 +329,10 @@ public class UserManagement extends BaseService {
   public ServiceCall<Void> removeUsers(RemoveUsersOptions removeUsersOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(removeUsersOptions,
       "removeUsersOptions cannot be null");
-    String[] pathSegments = { "v2/accounts", "users" };
-    String[] pathParameters = { removeUsersOptions.accountId(), removeUsersOptions.iamId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", removeUsersOptions.accountId());
+    pathParamsMap.put("iam_id", removeUsersOptions.iamId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "removeUsers");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());

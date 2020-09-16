@@ -1,3 +1,10 @@
+## [0.12.1](https://github.com/IBM/platform-services-java-sdk/compare/0.12.0...0.12.1) (2020-09-16)
+
+
+### Bug Fixes
+
+* **User Management:** re-gen user-mgmt service ([#46](https://github.com/IBM/platform-services-java-sdk/issues/46)) ([7e6fe7f](https://github.com/IBM/platform-services-java-sdk/commit/7e6fe7f1d6b6bec28ea631d154631de44c03d68b))
+
 # [0.12.0](https://github.com/IBM/platform-services-java-sdk/compare/0.11.0...0.12.0) (2020-08-31)
 
 

@@ -355,6 +355,7 @@ describe('UserManagementV1', () => {
 
       // InviteUserIamPolicy
       const inviteUserIamPolicyModel = {
+        type: 'testString',
         roles: [roleModel],
         resources: [resourceModel],
       };

@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-7811f8fb-20200813-160653
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
  */
  
 
@@ -688,6 +688,8 @@ namespace UserManagementV1 {
 
   /** Invite a user to an IAM policy. */
   export interface InviteUserIamPolicy {
+    /** The policy type. This can be either "access" or "authorization". */
+    type: string;
     /** A list of IAM roles. */
     roles?: Role[];
     /** A list of resources. */

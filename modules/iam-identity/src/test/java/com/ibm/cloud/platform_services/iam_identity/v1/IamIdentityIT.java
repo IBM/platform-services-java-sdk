@@ -53,397 +53,431 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
  * Integration test class for the IamIdentity service.
  */
 public class IamIdentityIT extends SdkIntegrationTestBase {
-  public IamIdentity service = null;
-  public static Map<String, String> config = null;
+    public IamIdentity service = null;
+    public static Map<String, String> config = null;
 
-  /**
-   * This method provides our config filename to the base class.
-   */
-  public String getConfigFilename() {
-    return "../../iam_identity.env";
-  }
+    private final static String TEST_LABEL = "JavaSDKIntegrationTest";
 
-  @BeforeClass
-  public void constructService() {
-    // Ask super if we should skip the tests.
-    if (skipTests()) {
-      return;
+    private static String ACCOUNT_ID;
+    private static String SERVICE_ID;
+    private static String IAM_ID;
+    private static String IAM_APIKEY;
+
+    //optional parameters- default values
+    private String pageSize = "20";
+    private String order = "asc";
+    private String scope = "entity";
+    private String sort = "name";
+    private String type = "user";
+    private String includeHistory = "false";
+    private String entityLock = "false";
+    private String pageToken;
+    private String apikeyId;
+    private String serviceIdUnique;
+
+    /**
+     * This method provides our config filename to the base class.
+     */
+    public String getConfigFilename() {
+        return "../v1/iam_identity.env";
     }
 
-    service = IamIdentity.newInstance();
-    assertNotNull(service);
-    assertNotNull(service.getServiceUrl());
+    @BeforeClass
+    public void constructService() {
 
-    // Load up our test-specific config properties.
-    config = CredentialUtils.getServiceProperties(IamIdentity.DEFAULT_SERVICE_NAME);
-    assertNotNull(config);
-    assertFalse(config.isEmpty());
-    assertEquals(service.getServiceUrl(), config.get("URL"));
+        if (skipTests()) {
+            return;
+        }
 
-    System.out.println("Setup complete.");
-  }
+        service = IamIdentity.newInstance();
+        assertNotNull(service);
+        assertNotNull(service.getServiceUrl());
 
-  @Test
-  public void testListApiKeys() throws Exception {
-    try {
-      ListApiKeysOptions listApiKeysOptions = new ListApiKeysOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
-      .pagesize("testString")
-      .pagetoken("testString")
-      .scope("testString")
-      .type("testString")
-      .sort("testString")
-      .order("testString")
-      .includeHistory("testString")
-      .build();
+        config = CredentialUtils.getServiceProperties(IamIdentity.DEFAULT_SERVICE_NAME);
+        assertNotNull(config);
+        assertFalse(config.isEmpty());
+        assertEquals(service.getServiceUrl(), config.get("URL"));
 
-      // Invoke operation
-      Response<ApiKeyList> response = service.listApiKeys(listApiKeysOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+        ACCOUNT_ID = config.get("ACCOUNT_ID");
+        SERVICE_ID = config.get("SERVICE_ID");
+        IAM_ID = config.get("IAM_ID");
+        IAM_APIKEY = config.get("IAM_APIKEY");
 
-      ApiKeyList apiKeyListResult = response.getResult();
+        assertNotNull(ACCOUNT_ID);
+        assertNotNull(SERVICE_ID);
+        assertNotNull(IAM_ID);
 
-      assertNotNull(apiKeyListResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        System.out.println("Setup complete.");
+
     }
-  }
 
-  @Test
-  public void testCreateApiKey() throws Exception {
-    try {
-      CreateApiKeyOptions createApiKeyOptions = new CreateApiKeyOptions.Builder()
-      .name("testString")
-      .iamId("testString")
-      .description("testString")
-      .accountId("testString")
-      .apikey("testString")
-      .storeValue(true)
-      .entityLock("testString")
-      .build();
+    @Test
+    public void testListApiKeys() throws Exception {
+        try {
+            ListApiKeysOptions listApiKeysOptions = new ListApiKeysOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .iamId(IAM_ID)
+                    .pagesize("20")
+                    .pagetoken("testString")
+                    .scope(scope)
+                    .type(type)
+                    .sort(sort)
+                    .order(order)
+                    .includeHistory(includeHistory)
+                    .build();
 
-      // Invoke operation
-      Response<ApiKey> response = service.createApiKey(createApiKeyOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 201);
+            // Invoke operation
+            Response<ApiKeyList> response = service.listApiKeys(listApiKeysOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
 
-      ApiKey apiKeyResult = response.getResult();
+            ApiKeyList apiKeyListResult = response.getResult();
 
-      assertNotNull(apiKeyResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertNotNull(apiKeyListResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testGetApiKeysDetails() throws Exception {
-    try {
-      GetApiKeysDetailsOptions getApiKeysDetailsOptions = new GetApiKeysDetailsOptions.Builder()
-      .iamApiKey("testString")
-      .includeHistory("testString")
-      .build();
+    @Test
+    public void testCreateApiKey() throws Exception {
+        try {
+            CreateApiKeyOptions createApiKeyOptions = new CreateApiKeyOptions.Builder()
+                    .name("apikeyTest")
+                    .iamId(IAM_ID)
+                    .description("apikeyTest-Desc")
+                    .accountId(ACCOUNT_ID)
+                    //.apikey("testString")
+                    .storeValue(true)
+                    .entityLock(entityLock)
+                    .build();
 
-      // Invoke operation
-      Response<ApiKey> response = service.getApiKeysDetails(getApiKeysDetailsOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+            // Invoke operation
+            Response<ApiKey> response = service.createApiKey(createApiKeyOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
 
-      ApiKey apiKeyResult = response.getResult();
+            ApiKey apiKeyResult = response.getResult();
+            apikeyId = apiKeyResult.getId();
 
-      assertNotNull(apiKeyResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertNotNull(apiKeyResult);
+            assertNotNull(apikeyId);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testGetApiKey() throws Exception {
-    try {
-      GetApiKeyOptions getApiKeyOptions = new GetApiKeyOptions.Builder()
-      .id("testString")
-      .includeHistory("testString")
-      .build();
+    @Test
+    public void testGetApiKeysDetails() throws Exception {
+        try {
+            GetApiKeysDetailsOptions getApiKeysDetailsOptions = new GetApiKeysDetailsOptions.Builder()
+                    .iamApiKey(IAM_APIKEY)
+                    .includeHistory(includeHistory)
+                    .build();
 
-      // Invoke operation
-      Response<ApiKey> response = service.getApiKey(getApiKeyOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+            // Invoke operation
+            Response<ApiKey> response = service.getApiKeysDetails(getApiKeysDetailsOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
 
-      ApiKey apiKeyResult = response.getResult();
+            ApiKey apiKeyResult = response.getResult();
 
-      assertNotNull(apiKeyResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertNotNull(apiKeyResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testUpdateApiKey() throws Exception {
-    try {
-      UpdateApiKeyOptions updateApiKeyOptions = new UpdateApiKeyOptions.Builder()
-      .id("testString")
-      .ifMatch("testString")
-      .name("testString")
-      .description("testString")
-      .build();
+    @Test(dependsOnMethods = { "testCreateApiKey" })
+    public void testGetApiKey() throws Exception {
+        try {
+            GetApiKeyOptions getApiKeyOptions = new GetApiKeyOptions.Builder()
+                    .id(apikeyId)
+                    .includeHistory(includeHistory)
+                    .build();
 
-      // Invoke operation
-      Response<ApiKey> response = service.updateApiKey(updateApiKeyOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+            // Invoke operation
+            Response<ApiKey> response = service.getApiKey(getApiKeyOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
 
-      ApiKey apiKeyResult = response.getResult();
+            ApiKey apiKeyResult = response.getResult();
 
-      assertNotNull(apiKeyResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertNotNull(apiKeyResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testLockApiKey() throws Exception {
-    try {
-      LockApiKeyOptions lockApiKeyOptions = new LockApiKeyOptions.Builder()
-      .id("testString")
-      .build();
+    @Test(dependsOnMethods = { "testCreateApiKey" })
+    public void testUpdateApiKey() throws Exception {
+        try {
+            UpdateApiKeyOptions updateApiKeyOptions = new UpdateApiKeyOptions.Builder()
+                    .id(apikeyId)
+                    .ifMatch("*")
+                    .name("apikey-sdktest")
+                    .description("sdktest-desc")
+                    .build();
 
-      // Invoke operation
-      Response<Void> response = service.lockApiKey(lockApiKeyOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            // Invoke operation
+            Response<ApiKey> response = service.updateApiKey(updateApiKeyOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ApiKey apiKeyResult = response.getResult();
+
+            assertNotNull(apiKeyResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testListServiceIds() throws Exception {
-    try {
-      ListServiceIdsOptions listServiceIdsOptions = new ListServiceIdsOptions.Builder()
-      .accountId("testString")
-      .name("testString")
-      .pagesize("testString")
-      .pagetoken("testString")
-      .sort("testString")
-      .order("testString")
-      .includeHistory("testString")
-      .build();
+    @Test(dependsOnMethods = { "testCreateApiKey" })
+    public void testLockApiKey() throws Exception {
+        try {
+            LockApiKeyOptions lockApiKeyOptions = new LockApiKeyOptions.Builder()
+                    .id(apikeyId)
+                    .build();
 
-      // Invoke operation
-      Response<ServiceIdList> response = service.listServiceIds(listServiceIdsOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-
-      ServiceIdList serviceIdListResult = response.getResult();
-
-      assertNotNull(serviceIdListResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            // Invoke operation
+            Response<Void> response = service.lockApiKey(lockApiKeyOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testCreateServiceId() throws Exception {
-    try {
-      CreateApiKeyRequest createApiKeyRequestModel = new CreateApiKeyRequest.Builder()
-      .name("testString")
-      .description("testString")
-      .iamId("testString")
-      .accountId("testString")
-      .apikey("testString")
-      .storeValue(true)
-      .build();
+    @Test
+    public void testListServiceIds() throws Exception {
+        try {
+            ListServiceIdsOptions listServiceIdsOptions = new ListServiceIdsOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .name("testString")
+                    .pagesize(pageSize)
+                    //.pagetoken("testString")
+                    .sort(sort)
+                    .order(order)
+                    .includeHistory(includeHistory)
+                    .build();
 
-      CreateServiceIdOptions createServiceIdOptions = new CreateServiceIdOptions.Builder()
-      .accountId("testString")
-      .name("testString")
-      .description("testString")
-      .uniqueInstanceCrns(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .apikey(createApiKeyRequestModel)
-      .entityLock("testString")
-      .build();
+            // Invoke operation
+            Response<ServiceIdList> response = service.listServiceIds(listServiceIdsOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
 
-      // Invoke operation
-      Response<ServiceId> response = service.createServiceId(createServiceIdOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+            ServiceIdList serviceIdListResult = response.getResult();
 
-      ServiceId serviceIdResult = response.getResult();
-
-      assertNotNull(serviceIdResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertNotNull(serviceIdListResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testGetServiceId() throws Exception {
-    try {
-      GetServiceIdOptions getServiceIdOptions = new GetServiceIdOptions.Builder()
-      .id("testString")
-      .includeHistory("testString")
-      .build();
+    @Test
+    public void testCreateServiceId() throws Exception {
+        try {
+            CreateApiKeyRequest createApiKeyRequestModel = new CreateApiKeyRequest.Builder()
+                    .name("apikey-test-serv")
+                    .description("apikey-test-serv")
+                    .iamId(IAM_ID)
+                    .accountId(ACCOUNT_ID)
+                    //.apikey(IAM_APIKEY)
+                    .storeValue(true)
+                    .build();
 
-      // Invoke operation
-      Response<ServiceId> response = service.getServiceId(getServiceIdOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+            CreateServiceIdOptions createServiceIdOptions = new CreateServiceIdOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .name("ServiceId-Test")
+                    .description("ServiceID-Test-desc")
+                    //.uniqueInstanceCrns(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+                    .apikey(createApiKeyRequestModel)
+                    .entityLock(entityLock)
+                    .build();
 
-      ServiceId serviceIdResult = response.getResult();
+            // Invoke operation
+            Response<ServiceId> response = service.createServiceId(createServiceIdOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
 
-      assertNotNull(serviceIdResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            ServiceId serviceIdResult = response.getResult();
+            serviceIdUnique = serviceIdResult.getId();
+
+            assertNotNull(serviceIdResult);
+            assertNotNull(serviceIdUnique);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testUpdateServiceId() throws Exception {
-    try {
-      UpdateServiceIdOptions updateServiceIdOptions = new UpdateServiceIdOptions.Builder()
-      .id("testString")
-      .ifMatch("testString")
-      .name("testString")
-      .description("testString")
-      .uniqueInstanceCrns(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .build();
+    @Test(dependsOnMethods = { "testCreateServiceId" })
+    public void testGetServiceId() throws Exception {
+        try {
+            GetServiceIdOptions getServiceIdOptions = new GetServiceIdOptions.Builder()
+                    .id(serviceIdUnique)
+                    .includeHistory(includeHistory)
+                    .build();
 
-      // Invoke operation
-      Response<ServiceId> response = service.updateServiceId(updateServiceIdOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+            // Invoke operation
+            Response<ServiceId> response = service.getServiceId(getServiceIdOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
 
-      ServiceId serviceIdResult = response.getResult();
+            ServiceId serviceIdResult = response.getResult();
 
-      assertNotNull(serviceIdResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertNotNull(serviceIdResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testLockServiceId() throws Exception {
-    try {
-      LockServiceIdOptions lockServiceIdOptions = new LockServiceIdOptions.Builder()
-      .id("testString")
-      .build();
+    @Test(dependsOnMethods = { "testCreateServiceId" })
+    public void testUpdateServiceId() throws Exception {
+        try {
+            UpdateServiceIdOptions updateServiceIdOptions = new UpdateServiceIdOptions.Builder()
+                    .id(serviceIdUnique)
+                    .ifMatch("*")
+                    .name("updatedServiceId")
+                    .description("updatedServiceId-Desc")
+                    //.uniqueInstanceCrns(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+                    .build();
 
-      // Invoke operation
-      Response<ServiceId> response = service.lockServiceId(lockServiceIdOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+            // Invoke operation
+            Response<ServiceId> response = service.updateServiceId(updateServiceIdOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
 
-      ServiceId serviceIdResult = response.getResult();
+            ServiceId serviceIdResult = response.getResult();
 
-      assertNotNull(serviceIdResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertNotNull(serviceIdResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testUnlockServiceId() throws Exception {
-    try {
-      UnlockServiceIdOptions unlockServiceIdOptions = new UnlockServiceIdOptions.Builder()
-      .id("testString")
-      .build();
+    @Test(dependsOnMethods = { "testCreateServiceId" })
+    public void testLockServiceId() throws Exception {
+        try {
+            LockServiceIdOptions lockServiceIdOptions = new LockServiceIdOptions.Builder()
+                    .id(serviceIdUnique)
+                    .build();
 
-      // Invoke operation
-      Response<ServiceId> response = service.unlockServiceId(unlockServiceIdOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+            // Invoke operation
+            Response<ServiceId> response = service.lockServiceId(lockServiceIdOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
 
-      ServiceId serviceIdResult = response.getResult();
+            ServiceId serviceIdResult = response.getResult();
 
-      assertNotNull(serviceIdResult);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertNotNull(serviceIdResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testUnlockApiKey() throws Exception {
-    try {
-      UnlockApiKeyOptions unlockApiKeyOptions = new UnlockApiKeyOptions.Builder()
-      .id("testString")
-      .build();
+    @Test(dependsOnMethods = { "testLockServiceId" })
+    public void testUnlockServiceId() throws Exception {
+        try {
+            UnlockServiceIdOptions unlockServiceIdOptions = new UnlockServiceIdOptions.Builder()
+                    .id(serviceIdUnique)
+                    .build();
 
-      // Invoke operation
-      Response<Void> response = service.unlockApiKey(unlockApiKeyOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            // Invoke operation
+            Response<ServiceId> response = service.unlockServiceId(unlockServiceIdOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ServiceId serviceIdResult = response.getResult();
+
+            assertNotNull(serviceIdResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testDeleteServiceId() throws Exception {
-    try {
-      DeleteServiceIdOptions deleteServiceIdOptions = new DeleteServiceIdOptions.Builder()
-      .id("testString")
-      .build();
+    @Test(dependsOnMethods = { "testLockApiKey" })
+    public void testUnlockApiKey() throws Exception {
+        try {
+            UnlockApiKeyOptions unlockApiKeyOptions = new UnlockApiKeyOptions.Builder()
+                    .id(apikeyId)
+                    .build();
 
-      // Invoke operation
-      Response<Void> response = service.deleteServiceId(deleteServiceIdOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 204);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            // Invoke operation
+            Response<Void> response = service.unlockApiKey(unlockApiKeyOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @Test
-  public void testDeleteApiKey() throws Exception {
-    try {
-      DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
-      .id("testString")
-      .build();
+    @Test(dependsOnMethods = { "testUnlockServiceId" })
+    public void testDeleteServiceId() throws Exception {
+        try {
+            DeleteServiceIdOptions deleteServiceIdOptions = new DeleteServiceIdOptions.Builder()
+                    .id(serviceIdUnique)
+                    .build();
 
-      // Invoke operation
-      Response<Void> response = service.deleteApiKey(deleteApiKeyOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 204);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            // Invoke operation
+            Response<Void> response = service.deleteServiceId(deleteServiceIdOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
-  }
 
-  @AfterClass
-  public void tearDown() {
-    // Add any clean up logic here
-    System.out.println("Clean up complete.");
-  }
- }
+    @Test(dependsOnMethods = { "testUnlockApiKey" })
+    public void testDeleteApiKey() throws Exception {
+        try {
+            DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
+                    .id(apikeyId)
+                    .build();
+
+            // Invoke operation
+            Response<Void> response = service.deleteApiKey(deleteApiKeyOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @AfterClass
+    public void tearDown() {
+        // Add any clean up logic here
+        System.out.println("Clean up complete.");
+    }
+}

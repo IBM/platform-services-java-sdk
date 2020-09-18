@@ -42,8 +42,8 @@ import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 /*
- 
-This class provides an example of how to use the IAM-IDENTITY service. 
+
+This class provides an example of how to use the IAM-IDENTITY service.
 
 The following configuration properties are assumed to be defined:
 
@@ -53,7 +53,6 @@ IAM_IDENTITY_AUTHTYPE=iam
 IAM_IDENTITY_AUTH_URL=<IAM Token Service url>
 IAM_IDENTITY_APIKEY=<IAM APIKEY for the User>
 IAM_IDENTITY_ACCOUNT_ID=<AccountID which is unique to the User>
-IAM_IDENTITY_SERVICE_ID=<>ServiceID created by the User>
 IAM_IDENTITY_IAM_ID=<IAM ID which is unique to the User account>
 
 These configuration properties can be exported as environment variables, or stored
@@ -67,8 +66,8 @@ public class IamIdentityExamples {
     protected IamIdentityExamples() {
     }
 
-    private static String APIKEY_NAME = "Java-SDK-IT-ApiKey";
-    private static String SERVICEID_NAME = "Java-SDK-IT-ServiceId";
+    private static String APIKEY_NAME = "Java-SDK-Example-ApiKey";
+    private static String SERVICEID_NAME = "Java-SDK-Example-ServiceId";
 
     //values to be read from the env file
     private static String ACCOUNT_ID;
@@ -91,22 +90,8 @@ public class IamIdentityExamples {
         // Load up our test-specific config properties.
         Map<String, String> config = CredentialUtils.getServiceProperties(IamIdentity.DEFAULT_SERVICE_NAME);
         ACCOUNT_ID = config.get("ACCOUNT_ID");
-        IAM_APIKEY = config.get("IAM_APIKEY");
+        IAM_APIKEY = config.get("APIKEY");
         IAM_ID = config.get("IAM_ID");
-        try {
-            // begin-list_api_keys
-            ListApiKeysOptions listApiKeysOptions = new ListApiKeysOptions.Builder()
-                    .build();
-
-            Response<ApiKeyList> response = service.listApiKeys(listApiKeysOptions).execute();
-            ApiKeyList apiKeyList = response.getResult();
-
-            System.out.println(apiKeyList);
-            // end-list_api_keys
-        } catch (ServiceResponseException e) {
-            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-        }
 
         try {
             // begin-create_api_key
@@ -123,8 +108,25 @@ public class IamIdentityExamples {
             apikeyId = apiKey.getId();
             apikeyEtag = apiKey.getEntityTag();
 
-            System.out.println(apiKey);
+            System.out.println("createApiKey() result:\n" + apiKey.toString());
             // end-create_api_key
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            // begin-list_api_keys
+            ListApiKeysOptions listApiKeysOptions = new ListApiKeysOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .iamId(IAM_ID)
+                    .build();
+
+            Response<ApiKeyList> response = service.listApiKeys(listApiKeysOptions).execute();
+            ApiKeyList apiKeyList = response.getResult();
+
+            System.out.println("listApiKeys() result:\n" + apiKeyList.toString());
+            // end-list_api_keys
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -140,7 +142,7 @@ public class IamIdentityExamples {
             Response<ApiKey> response = service.getApiKeysDetails(getApiKeysDetailsOptions).execute();
             ApiKey apiKey = response.getResult();
 
-            System.out.println(apiKey);
+            System.out.println("getApiKeysDetails() result:\n" + apiKey.toString());
             // end-get_api_keys_details
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -157,7 +159,7 @@ public class IamIdentityExamples {
             Response<ApiKey> response = service.getApiKey(getApiKeyOptions).execute();
             ApiKey apiKey = response.getResult();
 
-            System.out.println(apiKey);
+            System.out.println("getApiKey() result:\n" + apiKey.toString());
             // end-get_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -169,12 +171,13 @@ public class IamIdentityExamples {
             UpdateApiKeyOptions updateApiKeyOptions = new UpdateApiKeyOptions.Builder()
                     .id(apikeyId)
                     .ifMatch(apikeyEtag)
+                    .description("This is a new description")
                     .build();
 
             Response<ApiKey> response = service.updateApiKey(updateApiKeyOptions).execute();
             ApiKey apiKey = response.getResult();
 
-            System.out.println(apiKey);
+            System.out.println("updateApiKey() result:\n" + apiKey.toString());
             // end-update_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -195,17 +198,26 @@ public class IamIdentityExamples {
         }
 
         try {
-            // begin-list_service_ids
-            ListServiceIdsOptions listServiceIdsOptions = new ListServiceIdsOptions.Builder()
-                    .accountId(ACCOUNT_ID)
-                    .name(SERVICEID_NAME)
+            // begin-unlock_api_key
+            UnlockApiKeyOptions unlockApiKeyOptions = new UnlockApiKeyOptions.Builder()
+                    .id(apikeyId)
                     .build();
 
-            Response<ServiceIdList> response = service.listServiceIds(listServiceIdsOptions).execute();
-            ServiceIdList serviceIdList = response.getResult();
+            service.unlockApiKey(unlockApiKeyOptions).execute();
+            // end-unlock_api_key
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
 
-            System.out.println(serviceIdList);
-            // end-list_service_ids
+        try {
+            // begin-delete_api_key
+            DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
+                    .id(apikeyId)
+                    .build();
+
+            service.deleteApiKey(deleteApiKeyOptions).execute();
+            // end-delete_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -225,7 +237,7 @@ public class IamIdentityExamples {
             serviceIdNew = serviceId.getId();
             serviceIdEtag = serviceId.getEntityTag();
 
-            System.out.println(serviceId);
+            System.out.println("createServiceId() result:\n" + serviceId.toString());
             // end-create_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -242,8 +254,25 @@ public class IamIdentityExamples {
             Response<ServiceId> response = service.getServiceId(getServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
 
-            System.out.println(serviceId);
+            System.out.println("getServiceId() result:\n" + serviceId.toString());
             // end-get_service_id
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            // begin-list_service_ids
+            ListServiceIdsOptions listServiceIdsOptions = new ListServiceIdsOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .name(SERVICEID_NAME)
+                    .build();
+
+            Response<ServiceIdList> response = service.listServiceIds(listServiceIdsOptions).execute();
+            ServiceIdList serviceIdList = response.getResult();
+
+            System.out.println("listServiceIds() result:\n" + serviceIdList.toString());
+            // end-list_service_ids
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -254,12 +283,13 @@ public class IamIdentityExamples {
             UpdateServiceIdOptions updateServiceIdOptions = new UpdateServiceIdOptions.Builder()
                     .id(serviceIdNew)
                     .ifMatch(serviceIdEtag)
+                    .description("This is a new description")
                     .build();
 
             Response<ServiceId> response = service.updateServiceId(updateServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
 
-            System.out.println(serviceId);
+            System.out.println("updateServiceId() result:\n" + serviceId.toString());
             // end-update_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -275,7 +305,7 @@ public class IamIdentityExamples {
             Response<ServiceId> response = service.lockServiceId(lockServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
 
-            System.out.println(serviceId);
+            System.out.println("lockServiceId() result:\n" + serviceId.toString());
             // end-lock_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -291,21 +321,8 @@ public class IamIdentityExamples {
             Response<ServiceId> response = service.unlockServiceId(unlockServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
 
-            System.out.println(serviceId);
+            System.out.println("unlockServiceId() result:\n" + serviceId.toString());
             // end-unlock_service_id
-        } catch (ServiceResponseException e) {
-            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-        }
-
-        try {
-            // begin-unlock_api_key
-            UnlockApiKeyOptions unlockApiKeyOptions = new UnlockApiKeyOptions.Builder()
-                    .id(apikeyId)
-                    .build();
-
-            service.unlockApiKey(unlockApiKeyOptions).execute();
-            // end-unlock_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -323,19 +340,5 @@ public class IamIdentityExamples {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
-
-        try {
-            // begin-delete_api_key
-            DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
-                    .id(apikeyId)
-                    .build();
-
-            service.deleteApiKey(deleteApiKeyOptions).execute();
-            // end-delete_api_key
-        } catch (ServiceResponseException e) {
-            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-        }
-
     }
 }

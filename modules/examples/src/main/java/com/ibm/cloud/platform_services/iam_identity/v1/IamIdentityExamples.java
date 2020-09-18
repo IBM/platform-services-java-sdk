@@ -66,13 +66,13 @@ public class IamIdentityExamples {
     protected IamIdentityExamples() {
     }
 
-    private static String APIKEY_NAME = "Java-SDK-Example-ApiKey";
-    private static String SERVICEID_NAME = "Java-SDK-Example-ServiceId";
+    private static String apiKeyName = "Java-SDK-Example-ApiKey";
+    private static String serviceIdName = "Java-SDK-Example-ServiceId";
 
     //values to be read from the env file
-    private static String ACCOUNT_ID;
-    private static String IAM_ID;
-    private static String IAM_APIKEY;
+    private static String accountId;
+    private static String iamId;
+    private static String iamApiKey;
 
     // Variables used to hold various values shared between operations.
     private static String apikeyId;
@@ -89,17 +89,17 @@ public class IamIdentityExamples {
 
         // Load up our test-specific config properties.
         Map<String, String> config = CredentialUtils.getServiceProperties(IamIdentity.DEFAULT_SERVICE_NAME);
-        ACCOUNT_ID = config.get("ACCOUNT_ID");
-        IAM_APIKEY = config.get("APIKEY");
-        IAM_ID = config.get("IAM_ID");
+        accountId = config.get("ACCOUNT_ID");
+        iamApiKey = config.get("APIKEY");
+        iamId = config.get("IAM_ID");
 
         try {
             // begin-create_api_key
             CreateApiKeyOptions createApiKeyOptions = new CreateApiKeyOptions.Builder()
-                    .name(APIKEY_NAME)
-                    .iamId(IAM_ID)
+                    .name(apiKeyName)
+                    .iamId(iamId)
                     .description("JavaSDK test apikey")
-                    .accountId(ACCOUNT_ID)
+                    .accountId(accountId)
                     .build();
 
             Response<ApiKey> response = service.createApiKey(createApiKeyOptions).execute();
@@ -118,8 +118,8 @@ public class IamIdentityExamples {
         try {
             // begin-list_api_keys
             ListApiKeysOptions listApiKeysOptions = new ListApiKeysOptions.Builder()
-                    .accountId(ACCOUNT_ID)
-                    .iamId(IAM_ID)
+                    .accountId(accountId)
+                    .iamId(iamId)
                     .build();
 
             Response<ApiKeyList> response = service.listApiKeys(listApiKeysOptions).execute();
@@ -135,7 +135,7 @@ public class IamIdentityExamples {
         try {
             // begin-get_api_keys_details
             GetApiKeysDetailsOptions getApiKeysDetailsOptions = new GetApiKeysDetailsOptions.Builder()
-                    .iamApiKey(IAM_APIKEY)
+                    .iamApiKey(iamApiKey)
                     .includeHistory(true)
                     .build();
 
@@ -226,8 +226,8 @@ public class IamIdentityExamples {
         try {
             // begin-create_service_id
             CreateServiceIdOptions createServiceIdOptions = new CreateServiceIdOptions.Builder()
-                    .accountId(ACCOUNT_ID)
-                    .name(SERVICEID_NAME)
+                    .accountId(accountId)
+                    .name(serviceIdName)
                     .description("JavaSDK test serviceId")
                     .build();
 
@@ -264,8 +264,8 @@ public class IamIdentityExamples {
         try {
             // begin-list_service_ids
             ListServiceIdsOptions listServiceIdsOptions = new ListServiceIdsOptions.Builder()
-                    .accountId(ACCOUNT_ID)
-                    .name(SERVICEID_NAME)
+                    .accountId(accountId)
+                    .name(serviceIdName)
                     .build();
 
             Response<ServiceIdList> response = service.listServiceIds(listServiceIdsOptions).execute();

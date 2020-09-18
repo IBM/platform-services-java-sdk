@@ -566,7 +566,7 @@ public class IamIdentityTest extends PowerMockTestCase {
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
+    .setResponseCode(201)
     .setBody(mockResponseBody));
 
     constructClientService();

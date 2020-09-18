@@ -19,13 +19,23 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListServiceIdsOptions extends GenericModel {
 
+  /**
+   * Optional sort order, valid values are asc and desc. Default: asc.
+   */
+  public interface Order {
+    /** asc. */
+    String ASC = "asc";
+    /** desc. */
+    String DESC = "desc";
+  }
+
   protected String accountId;
   protected String name;
-  protected String pagesize;
+  protected Long pagesize;
   protected String pagetoken;
   protected String sort;
   protected String order;
-  protected String includeHistory;
+  protected Boolean includeHistory;
 
   /**
    * Builder.
@@ -33,11 +43,11 @@ public class ListServiceIdsOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private String name;
-    private String pagesize;
+    private Long pagesize;
     private String pagetoken;
     private String sort;
     private String order;
-    private String includeHistory;
+    private Boolean includeHistory;
 
     private Builder(ListServiceIdsOptions listServiceIdsOptions) {
       this.accountId = listServiceIdsOptions.accountId;
@@ -92,7 +102,7 @@ public class ListServiceIdsOptions extends GenericModel {
      * @param pagesize the pagesize
      * @return the ListServiceIdsOptions builder
      */
-    public Builder pagesize(String pagesize) {
+    public Builder pagesize(long pagesize) {
       this.pagesize = pagesize;
       return this;
     }
@@ -136,7 +146,7 @@ public class ListServiceIdsOptions extends GenericModel {
      * @param includeHistory the includeHistory
      * @return the ListServiceIdsOptions builder
      */
-    public Builder includeHistory(String includeHistory) {
+    public Builder includeHistory(Boolean includeHistory) {
       this.includeHistory = includeHistory;
       return this;
     }
@@ -190,7 +200,7 @@ public class ListServiceIdsOptions extends GenericModel {
    *
    * @return the pagesize
    */
-  public String pagesize() {
+  public Long pagesize() {
     return pagesize;
   }
 
@@ -235,7 +245,7 @@ public class ListServiceIdsOptions extends GenericModel {
    *
    * @return the includeHistory
    */
-  public String includeHistory() {
+  public Boolean includeHistory() {
     return includeHistory;
   }
 }

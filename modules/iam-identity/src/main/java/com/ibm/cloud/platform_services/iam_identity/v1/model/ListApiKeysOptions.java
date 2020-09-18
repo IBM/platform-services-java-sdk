@@ -19,15 +19,45 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListApiKeysOptions extends GenericModel {
 
+  /**
+   * Optional parameter to define the scope of the queried API Keys. Can be 'entity' (default) or 'account'.
+   */
+  public interface Scope {
+    /** entity. */
+    String ENTITY = "entity";
+    /** account. */
+    String ACCOUNT = "account";
+  }
+
+  /**
+   * Optional parameter to filter the type of the queried API Keys. Can be 'user' or 'serviceid'.
+   */
+  public interface Type {
+    /** user. */
+    String USER = "user";
+    /** serviceid. */
+    String SERVICEID = "serviceid";
+  }
+
+  /**
+   * Optional sort order, valid values are asc and desc. Default: asc.
+   */
+  public interface Order {
+    /** asc. */
+    String ASC = "asc";
+    /** desc. */
+    String DESC = "desc";
+  }
+
   protected String accountId;
   protected String iamId;
-  protected String pagesize;
+  protected Long pagesize;
   protected String pagetoken;
   protected String scope;
   protected String type;
   protected String sort;
   protected String order;
-  protected String includeHistory;
+  protected Boolean includeHistory;
 
   /**
    * Builder.
@@ -35,13 +65,13 @@ public class ListApiKeysOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private String iamId;
-    private String pagesize;
+    private Long pagesize;
     private String pagetoken;
     private String scope;
     private String type;
     private String sort;
     private String order;
-    private String includeHistory;
+    private Boolean includeHistory;
 
     private Builder(ListApiKeysOptions listApiKeysOptions) {
       this.accountId = listApiKeysOptions.accountId;
@@ -98,7 +128,7 @@ public class ListApiKeysOptions extends GenericModel {
      * @param pagesize the pagesize
      * @return the ListApiKeysOptions builder
      */
-    public Builder pagesize(String pagesize) {
+    public Builder pagesize(long pagesize) {
       this.pagesize = pagesize;
       return this;
     }
@@ -164,7 +194,7 @@ public class ListApiKeysOptions extends GenericModel {
      * @param includeHistory the includeHistory
      * @return the ListApiKeysOptions builder
      */
-    public Builder includeHistory(String includeHistory) {
+    public Builder includeHistory(Boolean includeHistory) {
       this.includeHistory = includeHistory;
       return this;
     }
@@ -223,7 +253,7 @@ public class ListApiKeysOptions extends GenericModel {
    *
    * @return the pagesize
    */
-  public String pagesize() {
+  public Long pagesize() {
     return pagesize;
   }
 
@@ -290,7 +320,7 @@ public class ListApiKeysOptions extends GenericModel {
    *
    * @return the includeHistory
    */
-  public String includeHistory() {
+  public Boolean includeHistory() {
     return includeHistory;
   }
 }

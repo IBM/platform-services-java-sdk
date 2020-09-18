@@ -20,14 +20,14 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class GetServiceIdOptions extends GenericModel {
 
   protected String id;
-  protected String includeHistory;
+  protected Boolean includeHistory;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String id;
-    private String includeHistory;
+    private Boolean includeHistory;
 
     private Builder(GetServiceIdOptions getServiceIdOptions) {
       this.id = getServiceIdOptions.id;
@@ -75,7 +75,7 @@ public class GetServiceIdOptions extends GenericModel {
      * @param includeHistory the includeHistory
      * @return the GetServiceIdOptions builder
      */
-    public Builder includeHistory(String includeHistory) {
+    public Builder includeHistory(Boolean includeHistory) {
       this.includeHistory = includeHistory;
       return this;
     }
@@ -115,7 +115,7 @@ public class GetServiceIdOptions extends GenericModel {
    *
    * @return the includeHistory
    */
-  public String includeHistory() {
+  public Boolean includeHistory() {
     return includeHistory;
   }
 }

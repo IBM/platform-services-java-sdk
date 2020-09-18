@@ -20,14 +20,14 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class GetApiKeysDetailsOptions extends GenericModel {
 
   protected String iamApiKey;
-  protected String includeHistory;
+  protected Boolean includeHistory;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String iamApiKey;
-    private String includeHistory;
+    private Boolean includeHistory;
 
     private Builder(GetApiKeysDetailsOptions getApiKeysDetailsOptions) {
       this.iamApiKey = getApiKeysDetailsOptions.iamApiKey;
@@ -66,7 +66,7 @@ public class GetApiKeysDetailsOptions extends GenericModel {
      * @param includeHistory the includeHistory
      * @return the GetApiKeysDetailsOptions builder
      */
-    public Builder includeHistory(String includeHistory) {
+    public Builder includeHistory(Boolean includeHistory) {
       this.includeHistory = includeHistory;
       return this;
     }
@@ -104,7 +104,7 @@ public class GetApiKeysDetailsOptions extends GenericModel {
    *
    * @return the includeHistory
    */
-  public String includeHistory() {
+  public Boolean includeHistory() {
     return includeHistory;
   }
 }

@@ -34,22 +34,22 @@ public class ListApiKeysOptionsTest {
     ListApiKeysOptions listApiKeysOptionsModel = new ListApiKeysOptions.Builder()
       .accountId("testString")
       .iamId("testString")
-      .pagesize("testString")
+      .pagesize(Long.valueOf("26"))
       .pagetoken("testString")
-      .scope("testString")
-      .type("testString")
+      .scope("entity")
+      .type("user")
       .sort("testString")
-      .order("testString")
-      .includeHistory("testString")
+      .order("asc")
+      .includeHistory(true)
       .build();
     assertEquals(listApiKeysOptionsModel.accountId(), "testString");
     assertEquals(listApiKeysOptionsModel.iamId(), "testString");
-    assertEquals(listApiKeysOptionsModel.pagesize(), "testString");
+    assertEquals(listApiKeysOptionsModel.pagesize(), Long.valueOf("26"));
     assertEquals(listApiKeysOptionsModel.pagetoken(), "testString");
-    assertEquals(listApiKeysOptionsModel.scope(), "testString");
-    assertEquals(listApiKeysOptionsModel.type(), "testString");
+    assertEquals(listApiKeysOptionsModel.scope(), "entity");
+    assertEquals(listApiKeysOptionsModel.type(), "user");
     assertEquals(listApiKeysOptionsModel.sort(), "testString");
-    assertEquals(listApiKeysOptionsModel.order(), "testString");
-    assertEquals(listApiKeysOptionsModel.includeHistory(), "testString");
+    assertEquals(listApiKeysOptionsModel.order(), "asc");
+    assertEquals(listApiKeysOptionsModel.includeHistory(), Boolean.valueOf(true));
   }
 }

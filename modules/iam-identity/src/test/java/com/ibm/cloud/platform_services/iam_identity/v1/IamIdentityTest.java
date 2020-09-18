@@ -117,13 +117,13 @@ public class IamIdentityTest extends PowerMockTestCase {
     ListApiKeysOptions listApiKeysOptionsModel = new ListApiKeysOptions.Builder()
     .accountId("testString")
     .iamId("testString")
-    .pagesize("testString")
+    .pagesize(Long.valueOf("26"))
     .pagetoken("testString")
-    .scope("testString")
-    .type("testString")
+    .scope("entity")
+    .type("user")
     .sort("testString")
-    .order("testString")
-    .includeHistory("testString")
+    .order("asc")
+    .includeHistory(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -143,13 +143,13 @@ public class IamIdentityTest extends PowerMockTestCase {
     // Get query params
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("iam_id"), "testString");
-    assertEquals(query.get("pagesize"), "testString");
+    assertEquals(Long.valueOf(query.get("pagesize")), Long.valueOf("26"));
     assertEquals(query.get("pagetoken"), "testString");
-    assertEquals(query.get("scope"), "testString");
-    assertEquals(query.get("type"), "testString");
+    assertEquals(query.get("scope"), "entity");
+    assertEquals(query.get("type"), "user");
     assertEquals(query.get("sort"), "testString");
-    assertEquals(query.get("order"), "testString");
-    assertEquals(query.get("include_history"), "testString");
+    assertEquals(query.get("order"), "asc");
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listApiKeysPath);
@@ -227,7 +227,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     // Construct an instance of the GetApiKeysDetailsOptions model
     GetApiKeysDetailsOptions getApiKeysDetailsOptionsModel = new GetApiKeysDetailsOptions.Builder()
     .iamApiKey("testString")
-    .includeHistory("testString")
+    .includeHistory(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -245,7 +245,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("include_history"), "testString");
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getApiKeysDetailsPath);
@@ -267,7 +267,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     // Construct an instance of the GetApiKeyOptions model
     GetApiKeyOptions getApiKeyOptionsModel = new GetApiKeyOptions.Builder()
     .id("testString")
-    .includeHistory("testString")
+    .includeHistory(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -285,7 +285,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("include_history"), "testString");
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getApiKeyPath);
@@ -364,7 +364,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     String deleteApiKeyPath = "/v1/apikeys/testString";
 
     server.enqueue(new MockResponse()
-    .setResponseCode(204)
+    .setResponseCode(200)
     .setBody(mockResponseBody));
 
     constructClientService();
@@ -524,11 +524,11 @@ public class IamIdentityTest extends PowerMockTestCase {
     ListServiceIdsOptions listServiceIdsOptionsModel = new ListServiceIdsOptions.Builder()
     .accountId("testString")
     .name("testString")
-    .pagesize("testString")
+    .pagesize(Long.valueOf("26"))
     .pagetoken("testString")
     .sort("testString")
-    .order("testString")
-    .includeHistory("testString")
+    .order("asc")
+    .includeHistory(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -548,11 +548,11 @@ public class IamIdentityTest extends PowerMockTestCase {
     // Get query params
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("name"), "testString");
-    assertEquals(query.get("pagesize"), "testString");
+    assertEquals(Long.valueOf(query.get("pagesize")), Long.valueOf("26"));
     assertEquals(query.get("pagetoken"), "testString");
     assertEquals(query.get("sort"), "testString");
-    assertEquals(query.get("order"), "testString");
-    assertEquals(query.get("include_history"), "testString");
+    assertEquals(query.get("order"), "asc");
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listServiceIdsPath);
@@ -639,7 +639,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     // Construct an instance of the GetServiceIdOptions model
     GetServiceIdOptions getServiceIdOptionsModel = new GetServiceIdOptions.Builder()
     .id("testString")
-    .includeHistory("testString")
+    .includeHistory(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -657,7 +657,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("include_history"), "testString");
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getServiceIdPath);

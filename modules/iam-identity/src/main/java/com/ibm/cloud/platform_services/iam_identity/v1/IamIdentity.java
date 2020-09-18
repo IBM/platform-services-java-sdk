@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-b734cb71-20200916-090210
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -97,7 +97,7 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Get API keys for a given a service or user IAM ID and account ID.
+   * Get API keys for a given service or user IAM ID and account ID.
    *
    * Returns the list of API key details for a given service or user IAM ID and account ID. Users can manage user API
    * keys for themself, or service ID API keys for  service IDs that are bound to an entity they have access to. In case
@@ -150,7 +150,7 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Get API keys for a given a service or user IAM ID and account ID.
+   * Get API keys for a given service or user IAM ID and account ID.
    *
    * Returns the list of API key details for a given service or user IAM ID and account ID. Users can manage user API
    * keys for themself, or service ID API keys for  service IDs that are bound to an entity they have access to. In case

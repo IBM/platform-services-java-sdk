@@ -34,18 +34,18 @@ public class ListServiceIdsOptionsTest {
     ListServiceIdsOptions listServiceIdsOptionsModel = new ListServiceIdsOptions.Builder()
       .accountId("testString")
       .name("testString")
-      .pagesize("testString")
+      .pagesize(Long.valueOf("26"))
       .pagetoken("testString")
       .sort("testString")
-      .order("testString")
-      .includeHistory("testString")
+      .order("asc")
+      .includeHistory(true)
       .build();
     assertEquals(listServiceIdsOptionsModel.accountId(), "testString");
     assertEquals(listServiceIdsOptionsModel.name(), "testString");
-    assertEquals(listServiceIdsOptionsModel.pagesize(), "testString");
+    assertEquals(listServiceIdsOptionsModel.pagesize(), Long.valueOf("26"));
     assertEquals(listServiceIdsOptionsModel.pagetoken(), "testString");
     assertEquals(listServiceIdsOptionsModel.sort(), "testString");
-    assertEquals(listServiceIdsOptionsModel.order(), "testString");
-    assertEquals(listServiceIdsOptionsModel.includeHistory(), "testString");
+    assertEquals(listServiceIdsOptionsModel.order(), "asc");
+    assertEquals(listServiceIdsOptionsModel.includeHistory(), Boolean.valueOf(true));
   }
 }

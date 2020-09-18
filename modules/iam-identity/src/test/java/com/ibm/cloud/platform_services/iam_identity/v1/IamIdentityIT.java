@@ -70,6 +70,9 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private static String IAM_ID;
     private static String IAM_APIKEY;
 
+    private static String IAM_ID_INVALID = "IAM-InvalidId";
+    private static String ACCOUNT_ID_INVALID = "Account-InvalidId";
+
     // Variables that hold values to be shared between the test methods.
     private String apikeyId1;
     private String apikeyEtag1;
@@ -290,9 +293,9 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     public void testUpdateApiKey() throws Exception {
         assertNotNull(apikeyId1);
         assertNotNull(apikeyEtag1);
-       try {
-           String newDescription = "This is an updated description.";
-           UpdateApiKeyOptions updateApiKeyOptions = new UpdateApiKeyOptions.Builder()
+        try {
+            String newDescription = "This is an updated description.";
+            UpdateApiKeyOptions updateApiKeyOptions = new UpdateApiKeyOptions.Builder()
                     .id(apikeyId1)
                     .ifMatch(apikeyEtag1)
                     .description(newDescription)
@@ -582,6 +585,84 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             // Now make sure the get operation does not return it.
             ServiceId serviceId = getServiceId(serviceId1);
             assertNull(serviceId);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testCreateApiKeyNegative() throws Exception {
+        try {
+            CreateApiKeyOptions createApiKeyOptions = new CreateApiKeyOptions.Builder()
+                    .name(APIKEY_NAME)
+                    .iamId(IAM_ID_INVALID)
+                    .description("Negative Test")
+                    .accountId(ACCOUNT_ID_INVALID)
+                    .build();
+
+            Response<ApiKey> response = service.createApiKey(createApiKeyOptions).execute();
+            assertEquals(response.getStatusCode(), 400);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testDeleteApiNegative() throws Exception {
+        try {
+            DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
+                    .id("InvalidApiKey")
+                    .build();
+            Response<Void> response = service.deleteApiKey(deleteApiKeyOptions).execute();
+            assertEquals(response.getStatusCode(), 400);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testCreateServiceIdNegative() throws Exception {
+        try {
+//            CreateApiKeyRequest createApiKeyRequestModel = new CreateApiKeyRequest.Builder()
+//                    .name(APIKEY_NAME)
+//                    .description("JavaSDK test apikey for serviceId")
+//                    .iamId(IAM_ID)
+//                    .accountId(ACCOUNT_ID)
+//                    .build();
+
+            CreateServiceIdOptions createServiceIdOptions = new CreateServiceIdOptions.Builder()
+                    .accountId("InvalidAccountId")
+                    .name("NegativeTest")
+                    .description("JavaSDK test serviceId")
+                    // .apikey(createApiKeyRequestModel)
+                    .build();
+
+            Response<ServiceId> response = service.createServiceId(createServiceIdOptions).execute();
+            assertEquals(response.getStatusCode(), 400);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testGetServiceIdNegative() throws Exception {
+        try {
+            GetServiceIdOptions getServiceIdOptions = new GetServiceIdOptions.Builder()
+                    .id("InvalidServiceId")
+                    .includeHistory(true)
+                    .build();
+
+            Response<ServiceId> response = service.getServiceId(getServiceIdOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 400);
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

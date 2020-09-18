@@ -362,6 +362,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     @Test(dependsOnMethods = { "testUnlockApiKey" })
     public void testDeleteApiKey1() throws Exception {
+        sleep(1);
         assertNotNull(apikeyId1);
         try {
             DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
@@ -382,6 +383,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     @Test(dependsOnMethods = { "testDeleteApiKey1" })
     public void testDeleteApiKey2() throws Exception {
+        sleep(2);
         assertNotNull(apikeyId2);
         try {
             DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
@@ -601,27 +603,27 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .accountId(ACCOUNT_ID_INVALID)
                     .build();
 
-            Response<ApiKey> response = service.createApiKey(createApiKeyOptions).execute();
-            assertEquals(response.getStatusCode(), 400);
-
+            service.createApiKey(createApiKeyOptions).execute();
+            fail("Invalid iam_id should not have succeeded!");
         } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %d: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            // System.out.println(String.format("Service returned status code %s: %s\nError details: %s",
+            //      e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertEquals(e.getStatusCode(), 400);
         }
     }
 
     @Test
-    public void testDeleteApiNegative() throws Exception {
+    public void testDeleteApiKeyNegative() throws Exception {
         try {
             DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
                     .id("InvalidApiKey")
                     .build();
-            Response<Void> response = service.deleteApiKey(deleteApiKeyOptions).execute();
-            assertEquals(response.getStatusCode(), 400);
-
+            service.deleteApiKey(deleteApiKeyOptions).execute();
+            fail("Invalid apikey id should not have succeeded!");
         } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %d: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            // System.out.println(String.format("Service returned status code %s: %s\nError details: %s",
+            //      e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertEquals(e.getStatusCode(), 404);
         }
     }
 
@@ -642,12 +644,12 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     // .apikey(createApiKeyRequestModel)
                     .build();
 
-            Response<ServiceId> response = service.createServiceId(createServiceIdOptions).execute();
-            assertEquals(response.getStatusCode(), 400);
-
+            service.createServiceId(createServiceIdOptions).execute();
+            fail("Invalid account_id should not have succeeded!");
         } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %d: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            // System.out.println(String.format("Service returned status code %s: %s\nError details: %s",
+            //        e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertEquals(e.getStatusCode(), 400);
         }
     }
 
@@ -659,30 +661,33 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .includeHistory(true)
                     .build();
 
-            Response<ServiceId> response = service.getServiceId(getServiceIdOptions).execute();
-            assertNotNull(response);
-            assertEquals(response.getStatusCode(), 400);
-
+            service.getServiceId(getServiceIdOptions).execute();
+            fail("Invalid service id should not have succeeded!");
         } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %d: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            // System.out.println(String.format("Service returned status code %s: %s\nError details: %s",
+            //        e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            assertEquals(e.getStatusCode(), 404);
         }
     }
 
     @AfterClass
     public void tearDown() {
         // Add any clean up logic here.
-        try {
-            // Sleep for a few seconds to avoid a rate limiting error.
-            Thread.sleep(5000);
-        } catch (Throwable t) {
-        }
+        sleep(5);
         cleanupResources();
         System.out.println("Clean up complete.");
     }
 
+    private void sleep(int numSecs) {
+        try {
+            Thread.sleep(numSecs * 1000);
+        } catch (Throwable t) {
+        }
+
+    }
+
     private void cleanupResources() {
-        System.out.println(">>> Starting cleanup.");
+        System.out.println(">>> Cleaning up resources.");
 
         ListApiKeysOptions listApiKeysOptions = new ListApiKeysOptions.Builder()
                 .accountId(ACCOUNT_ID)
@@ -696,7 +701,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         ApiKeyList apiKeyListResult = response.getResult();
 
         long numApikeys = apiKeyListResult.getApikeys().size();
-        System.out.println(String.format("\n>>> Cleanup found %d apikeys.\n", numApikeys));
+        System.out.println(String.format(">>> Cleanup found %d apikeys.", numApikeys));
         if (numApikeys > 0) {
             for (ApiKey apikey : apiKeyListResult.getApikeys()) {
                 if (APIKEY_NAME.equals(apikey.getName())) {
@@ -725,7 +730,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         assertNotNull(serviceIdListResult);
 
         long numServiceIds = serviceIdListResult.getServiceids().size();
-        System.out.println(String.format(">>> Cleanup found %d service ids.\n", numServiceIds));
+        System.out.println(String.format(">>> Cleanup found %d service ids.", numServiceIds));
         if (numServiceIds > 0) {
             for (ServiceId serviceId : serviceIdListResult.getServiceids()) {
                 if (SERVICEID_NAME.equals(serviceId.getName())) {

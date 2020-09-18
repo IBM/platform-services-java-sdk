@@ -364,7 +364,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     String deleteApiKeyPath = "/v1/apikeys/testString";
 
     server.enqueue(new MockResponse()
-    .setResponseCode(200)
+    .setResponseCode(204)
     .setBody(mockResponseBody));
 
     constructClientService();

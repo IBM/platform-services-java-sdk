@@ -96,7 +96,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
   @Test
   public void testListTagsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"total_count\": 10, \"offset\": 6, \"limit\": 5, \"items\": [{\"name\": \"name\"}]}";
+    String mockResponseBody = "{\"total_count\": 0, \"offset\": 0, \"limit\": 1, \"items\": [{\"name\": \"name\"}]}";
     String listTagsPath = "/v3/tags";
 
     server.enqueue(new MockResponse()
@@ -108,13 +108,15 @@ public class GlobalTaggingTest extends PowerMockTestCase {
 
     // Construct an instance of the ListTagsOptions model
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
+    .accountId("testString")
+    .tagType("user")
+    .fullData(true)
     .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
     .attachedTo("testString")
-    .fullData(true)
     .offset(Long.valueOf("0"))
     .limit(Long.valueOf("1"))
+    .timeout(Long.valueOf("0"))
     .orderByName("asc")
-    .timeout(Long.valueOf("26"))
     .attachedOnly(true)
     .build();
 
@@ -133,13 +135,15 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("tag_type"), "user");
+    assertEquals(Boolean.valueOf(query.get("full_data")), Boolean.valueOf(true));
     assertEquals(query.get("providers"), RequestUtils.join(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")), ","));
     assertEquals(query.get("attached_to"), "testString");
-    assertEquals(Boolean.valueOf(query.get("full_data")), Boolean.valueOf(true));
     assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("0"));
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1"));
+    assertEquals(Long.valueOf(query.get("timeout")), Long.valueOf("0"));
     assertEquals(query.get("order_by_name"), "asc");
-    assertEquals(Long.valueOf(query.get("timeout")), Long.valueOf("26"));
     assertEquals(Boolean.valueOf(query.get("attached_only")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
@@ -162,6 +166,8 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     // Construct an instance of the DeleteTagAllOptions model
     DeleteTagAllOptions deleteTagAllOptionsModel = new DeleteTagAllOptions.Builder()
     .providers("ghost")
+    .accountId("testString")
+    .tagType("user")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -180,6 +186,8 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(query.get("providers"), "ghost");
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("tag_type"), "user");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteTagAllPath);
@@ -202,6 +210,8 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
     .tagName("testString")
     .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
+    .accountId("testString")
+    .tagType("user")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -220,6 +230,8 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(query.get("providers"), RequestUtils.join(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")), ","));
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("tag_type"), "user");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteTagPath);
@@ -261,6 +273,8 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
     .tagName("testString")
     .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .accountId("testString")
+    .tagType("user")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -276,8 +290,10 @@ public class GlobalTaggingTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
+    assertNotNull(query);
+    // Get query params
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("tag_type"), "user");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, attachTagPath);
@@ -319,6 +335,8 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
     .tagName("testString")
     .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .accountId("testString")
+    .tagType("user")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -334,8 +352,10 @@ public class GlobalTaggingTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
+    assertNotNull(query);
+    // Get query params
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("tag_type"), "user");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, detachTagPath);

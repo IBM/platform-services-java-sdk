@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Result of deleting one unattached tag.
+ * Result of a delete_tags request.
  */
 public class DeleteTagsResultItem extends GenericModel {
 
@@ -28,7 +28,7 @@ public class DeleteTagsResultItem extends GenericModel {
   /**
    * Gets the tagName.
    *
-   * The name of the tag that was deleted.
+   * The name of the deleted tag.
    *
    * @return the tagName
    */
@@ -39,7 +39,7 @@ public class DeleteTagsResultItem extends GenericModel {
   /**
    * Gets the isError.
    *
-   * An indicator that is set to true if there was an error deleting the tag.
+   * true if the tag was not deleted.
    *
    * @return the isError
    */

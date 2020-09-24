@@ -22,6 +22,16 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListTagsOptions extends GenericModel {
 
+  /**
+   * The type of the tag you want to list. Supported values are `user` and `service`.
+   */
+  public interface TagType {
+    /** user. */
+    String USER = "user";
+    /** service. */
+    String SERVICE = "service";
+  }
+
   public interface Providers {
     /** ghost. */
     String GHOST = "ghost";
@@ -39,36 +49,42 @@ public class ListTagsOptions extends GenericModel {
     String DESC = "desc";
   }
 
+  protected String accountId;
+  protected String tagType;
+  protected Boolean fullData;
   protected List<String> providers;
   protected String attachedTo;
-  protected Boolean fullData;
   protected Long offset;
   protected Long limit;
-  protected String orderByName;
   protected Long timeout;
+  protected String orderByName;
   protected Boolean attachedOnly;
 
   /**
    * Builder.
    */
   public static class Builder {
+    private String accountId;
+    private String tagType;
+    private Boolean fullData;
     private List<String> providers;
     private String attachedTo;
-    private Boolean fullData;
     private Long offset;
     private Long limit;
-    private String orderByName;
     private Long timeout;
+    private String orderByName;
     private Boolean attachedOnly;
 
     private Builder(ListTagsOptions listTagsOptions) {
+      this.accountId = listTagsOptions.accountId;
+      this.tagType = listTagsOptions.tagType;
+      this.fullData = listTagsOptions.fullData;
       this.providers = listTagsOptions.providers;
       this.attachedTo = listTagsOptions.attachedTo;
-      this.fullData = listTagsOptions.fullData;
       this.offset = listTagsOptions.offset;
       this.limit = listTagsOptions.limit;
-      this.orderByName = listTagsOptions.orderByName;
       this.timeout = listTagsOptions.timeout;
+      this.orderByName = listTagsOptions.orderByName;
       this.attachedOnly = listTagsOptions.attachedOnly;
     }
 
@@ -104,6 +120,39 @@ public class ListTagsOptions extends GenericModel {
     }
 
     /**
+     * Set the accountId.
+     *
+     * @param accountId the accountId
+     * @return the ListTagsOptions builder
+     */
+    public Builder accountId(String accountId) {
+      this.accountId = accountId;
+      return this;
+    }
+
+    /**
+     * Set the tagType.
+     *
+     * @param tagType the tagType
+     * @return the ListTagsOptions builder
+     */
+    public Builder tagType(String tagType) {
+      this.tagType = tagType;
+      return this;
+    }
+
+    /**
+     * Set the fullData.
+     *
+     * @param fullData the fullData
+     * @return the ListTagsOptions builder
+     */
+    public Builder fullData(Boolean fullData) {
+      this.fullData = fullData;
+      return this;
+    }
+
+    /**
      * Set the providers.
      * Existing providers will be replaced.
      *
@@ -123,17 +172,6 @@ public class ListTagsOptions extends GenericModel {
      */
     public Builder attachedTo(String attachedTo) {
       this.attachedTo = attachedTo;
-      return this;
-    }
-
-    /**
-     * Set the fullData.
-     *
-     * @param fullData the fullData
-     * @return the ListTagsOptions builder
-     */
-    public Builder fullData(Boolean fullData) {
-      this.fullData = fullData;
       return this;
     }
 
@@ -160,17 +198,6 @@ public class ListTagsOptions extends GenericModel {
     }
 
     /**
-     * Set the orderByName.
-     *
-     * @param orderByName the orderByName
-     * @return the ListTagsOptions builder
-     */
-    public Builder orderByName(String orderByName) {
-      this.orderByName = orderByName;
-      return this;
-    }
-
-    /**
      * Set the timeout.
      *
      * @param timeout the timeout
@@ -178,6 +205,17 @@ public class ListTagsOptions extends GenericModel {
      */
     public Builder timeout(long timeout) {
       this.timeout = timeout;
+      return this;
+    }
+
+    /**
+     * Set the orderByName.
+     *
+     * @param orderByName the orderByName
+     * @return the ListTagsOptions builder
+     */
+    public Builder orderByName(String orderByName) {
+      this.orderByName = orderByName;
       return this;
     }
 
@@ -194,13 +232,15 @@ public class ListTagsOptions extends GenericModel {
   }
 
   protected ListTagsOptions(Builder builder) {
+    accountId = builder.accountId;
+    tagType = builder.tagType;
+    fullData = builder.fullData;
     providers = builder.providers;
     attachedTo = builder.attachedTo;
-    fullData = builder.fullData;
     offset = builder.offset;
     limit = builder.limit;
-    orderByName = builder.orderByName;
     timeout = builder.timeout;
+    orderByName = builder.orderByName;
     attachedOnly = builder.attachedOnly;
   }
 
@@ -214,28 +254,26 @@ public class ListTagsOptions extends GenericModel {
   }
 
   /**
-   * Gets the providers.
+   * Gets the accountId.
    *
-   * Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and infrastructure tags use
-   * `ghost,ims`.
+   * The ID of the billing account to list the tags for. If it is not set, then it is taken from the authorization
+   * token. This parameter is required if `tag_type` is set to `service`.
    *
-   * @return the providers
+   * @return the accountId
    */
-  public List<String> providers() {
-    return providers;
+  public String accountId() {
+    return accountId;
   }
 
   /**
-   * Gets the attachedTo.
+   * Gets the tagType.
    *
-   * If you want to return only the list of tags attached to a specified resource, pass here the ID of the resource. For
-   * GhoST onboarded resources, the resource ID is the CRN; for IMS resources, it is the IMS ID. When using this
-   * parameter it is mandatory to specify the appropriate provider (`ims` or `ghost`).
+   * The type of the tag you want to list. Supported values are `user` and `service`.
    *
-   * @return the attachedTo
+   * @return the tagType
    */
-  public String attachedTo() {
-    return attachedTo;
+  public String tagType() {
+    return tagType;
   }
 
   /**
@@ -248,6 +286,32 @@ public class ListTagsOptions extends GenericModel {
    */
   public Boolean fullData() {
     return fullData;
+  }
+
+  /**
+   * Gets the providers.
+   *
+   * Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and infrastructure tags use
+   * `ghost,ims`. `service` tags can only be attached to GhoST onboarded resources, so you don't need to set this
+   * parameter when listing `service` tags.
+   *
+   * @return the providers
+   */
+  public List<String> providers() {
+    return providers;
+  }
+
+  /**
+   * Gets the attachedTo.
+   *
+   * If you want to return only the list of tags attached to a specified resource, pass the ID of the resource on this
+   * parameter. For GhoST onboarded resources, the resource ID is the CRN; for IMS resources, it is the IMS ID. When
+   * using this parameter, you must specify the appropriate provider (`ims` or `ghost`).
+   *
+   * @return the attachedTo
+   */
+  public String attachedTo() {
+    return attachedTo;
   }
 
   /**
@@ -273,17 +337,6 @@ public class ListTagsOptions extends GenericModel {
   }
 
   /**
-   * Gets the orderByName.
-   *
-   * Order the output by tag name.
-   *
-   * @return the orderByName
-   */
-  public String orderByName() {
-    return orderByName;
-  }
-
-  /**
    * Gets the timeout.
    *
    * The search timeout bounds the search request to be executed within the specified time value. It returns the hits
@@ -296,10 +349,21 @@ public class ListTagsOptions extends GenericModel {
   }
 
   /**
+   * Gets the orderByName.
+   *
+   * Order the output by tag name.
+   *
+   * @return the orderByName
+   */
+  public String orderByName() {
+    return orderByName;
+  }
+
+  /**
    * Gets the attachedOnly.
    *
-   * Filter on attached tags. If true, returns only tags that are attached to one or more resources. If false returns
-   * all tags.
+   * Filter on attached tags. If `true`, it returns only tags that are attached to one or more resources. If `false`, it
+   * returns all tags.
    *
    * @return the attachedOnly
    */

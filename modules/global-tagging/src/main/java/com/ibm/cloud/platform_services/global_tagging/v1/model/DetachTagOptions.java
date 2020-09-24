@@ -22,9 +22,21 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class DetachTagOptions extends GenericModel {
 
+  /**
+   * The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`.
+   */
+  public interface TagType {
+    /** user. */
+    String USER = "user";
+    /** service. */
+    String SERVICE = "service";
+  }
+
   protected List<Resource> resources;
   protected String tagName;
   protected List<String> tagNames;
+  protected String accountId;
+  protected String tagType;
 
   /**
    * Builder.
@@ -33,11 +45,15 @@ public class DetachTagOptions extends GenericModel {
     private List<Resource> resources;
     private String tagName;
     private List<String> tagNames;
+    private String accountId;
+    private String tagType;
 
     private Builder(DetachTagOptions detachTagOptions) {
       this.resources = detachTagOptions.resources;
       this.tagName = detachTagOptions.tagName;
       this.tagNames = detachTagOptions.tagNames;
+      this.accountId = detachTagOptions.accountId;
+      this.tagType = detachTagOptions.tagType;
     }
 
     /**
@@ -130,6 +146,28 @@ public class DetachTagOptions extends GenericModel {
       this.tagNames = tagNames;
       return this;
     }
+
+    /**
+     * Set the accountId.
+     *
+     * @param accountId the accountId
+     * @return the DetachTagOptions builder
+     */
+    public Builder accountId(String accountId) {
+      this.accountId = accountId;
+      return this;
+    }
+
+    /**
+     * Set the tagType.
+     *
+     * @param tagType the tagType
+     * @return the DetachTagOptions builder
+     */
+    public Builder tagType(String tagType) {
+      this.tagType = tagType;
+      return this;
+    }
   }
 
   protected DetachTagOptions(Builder builder) {
@@ -138,6 +176,8 @@ public class DetachTagOptions extends GenericModel {
     resources = builder.resources;
     tagName = builder.tagName;
     tagNames = builder.tagNames;
+    accountId = builder.accountId;
+    tagType = builder.tagType;
   }
 
   /**
@@ -180,6 +220,29 @@ public class DetachTagOptions extends GenericModel {
    */
   public List<String> tagNames() {
     return tagNames;
+  }
+
+  /**
+   * Gets the accountId.
+   *
+   * The ID of the billing account where the resources to be un-tagged lives. It is a required parameter if `tag_type`
+   * is set to `service`, otherwise it is inferred from the authorization IAM token.
+   *
+   * @return the accountId
+   */
+  public String accountId() {
+    return accountId;
+  }
+
+  /**
+   * Gets the tagType.
+   *
+   * The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`.
+   *
+   * @return the tagType
+   */
+  public String tagType() {
+    return tagType;
   }
 }
 

@@ -36,9 +36,13 @@ public class DeleteTagOptionsTest {
     DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
       .tagName("testString")
       .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
+      .accountId("testString")
+      .tagType("user")
       .build();
     assertEquals(deleteTagOptionsModel.tagName(), "testString");
     assertEquals(deleteTagOptionsModel.providers(), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
+    assertEquals(deleteTagOptionsModel.accountId(), "testString");
+    assertEquals(deleteTagOptionsModel.tagType(), "user");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

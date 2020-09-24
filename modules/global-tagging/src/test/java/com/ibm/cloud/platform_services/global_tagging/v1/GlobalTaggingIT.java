@@ -16,21 +16,24 @@ package com.ibm.cloud.platform_services.global_tagging.v1;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Properties;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.ibm.cloud.platform_services.global_tagging.v1.model.AttachTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagAllOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagResults;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagResultsItem;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagsResult;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DetachTagOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.ListTagsOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.Resource;
@@ -39,32 +42,26 @@ import com.ibm.cloud.platform_services.global_tagging.v1.model.TagResults;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.TagResultsItem;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.IamAuthenticator;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
+import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 /**
  * Integration test class for the GlobalTagging service.
  */
 public class GlobalTaggingIT extends SdkIntegrationTestBase {
+    public GlobalTagging service = null;
+    public static Map<String, String> config = null;
 
-    Properties prop = null;
-    GlobalTagging globalTagging = null;
-
-    private static final String TAG_NAME_PREFIX = "java-sdk-";
-    private String TAG_NAME_SUFFIX = "100";
+    private String resourceCRN;
+    private String tagName;
 
     /**
      * This method provides our config filename to the base class.
      */
     public String getConfigFilename() {
-        return "../../ghost.env";
+        return "../../global_tagging.env";
     }
 
-    /**
-     * This method is invoked before any @Test-annotated methods, and is responsible
-     * for creating the instance of the service that will be used by the rest of the
-     * test methods, as well as any other required initialization.
-     */
     @BeforeClass
     public void constructService() {
         // Ask super if we should skip the tests.
@@ -72,146 +69,181 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
             return;
         }
 
-        try {
-            InputStream input = new FileInputStream(getConfigFilename());
-            this.prop = new Properties();
-            this.prop.load(input);
-        } catch (Throwable t) {
-            System.out.println(
-                    String.format("Unable to load properties file %s: %s", getConfigFilename(), t.getMessage()));
-            this.skipTests = true;
-            return;
-        }
+        service = GlobalTagging.newInstance();
+        assertNotNull(service);
+        assertNotNull(service.getServiceUrl());
 
-        // Create the IAM authenticator.
-        IamAuthenticator authenticator = new IamAuthenticator(this.prop.getProperty("GST_IINTERNA_APIKEY"));
-        authenticator.setURL(this.prop.getProperty("GST_IAM_URL"));
+        // Load up our test-specific config properties.
+        config = CredentialUtils.getServiceProperties(GlobalTagging.DEFAULT_SERVICE_NAME);
+        assertNotNull(config);
+        assertFalse(config.isEmpty());
+        assertEquals(service.getServiceUrl(), config.get("URL"));
 
-        // Create the service instance.
-        this.globalTagging = new GlobalTagging(GlobalTagging.DEFAULT_SERVICE_NAME, authenticator);
-        this.globalTagging.setServiceUrl(this.prop.getProperty("GST_TAGS_URL"));
+        resourceCRN = config.get("RESOURCE_CRN");
+        assertNotNull(resourceCRN);
 
-        // generate tag name suffix
-        Random rand = new Random(); // instance of random class
-        int upperbound = 1000000;
-        int int_random = rand.nextInt(upperbound);
-        this.TAG_NAME_SUFFIX = "" + int_random;
-        System.out.println("Name TAG test = " + TAG_NAME_PREFIX + this.TAG_NAME_SUFFIX);
+        Random rand = new Random();
+        tagName = String.format("java-sdk-%d", rand.nextInt(1000000));
+
+        System.out.println("Service URL: " + service.getServiceUrl());
+        System.out.println("Resource CRN: " + resourceCRN);
+        System.out.println("Test Tag: " + tagName);
+
+        System.out.println("Setup complete.");
     }
 
     @Test
-    public void testListTags() {
-        System.out.println("START 1 GlobalTaggingITest.testGetAllTag method");
-        assertNotNull(this.globalTagging);
-
+    public void testListTags() throws Exception {
         try {
-            // Test 1 - GetAll Tag
-            Response<TagList> response = globalTagging.listTags().execute();
+            ListTagsOptions listTagsOptions = new ListTagsOptions.Builder()
+                    .offset(0)
+                    .limit(1000)
+                    .build();
+
+            Response<TagList> response = service.listTags(listTagsOptions).execute();
             assertNotNull(response);
-            System.out.println("testGetAllTag status code= " + response.getStatusCode());
             assertEquals(response.getStatusCode(), 200);
-            TagList result = response.getResult();
-            assertNotNull(result);
+
+            TagList tagListResult = response.getResult();
+            assertNotNull(tagListResult);
+            // System.out.println(String.format("listTags() response:\n%s", tagListResult.toString()));
         } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
         }
     }
 
     @Test(dependsOnMethods = { "testListTags" })
-    public void testAttachTag() throws Exception, InterruptedException {
-        System.out.println("START 2 GlobalTaggingITest.testAttachTag method");
-
+    public void testAttachTag() throws Exception {
         try {
-            // Test 2 - Attach Tag
-            String tagName = TAG_NAME_PREFIX + this.TAG_NAME_SUFFIX;
-            System.out.println("testAttachTag tagName = " + tagName);
-            Resource resource = new Resource.Builder().resourceId(this.prop.getProperty("GST_RESOURCE_CRN"))
-                    .resourceType("cf-application").build();
-            AttachTagOptions ato = new AttachTagOptions.Builder().addTagNames(tagName).addResources(resource).build();
-
-            Response<TagResults> response = globalTagging.attachTag(ato).execute();
-            assertNotNull(response);
-            System.out.println("testAttachTag status code= " + response.getStatusCode());
-            assertEquals(response.getStatusCode(), 200);
-            TagResults result = response.getResult();
-            System.out.println("testAttachTag result= " + result);
-            assertNotNull(result);
-            assertFalse(((TagResultsItem) (result.getResults().get(0))).isIsError().booleanValue());
-
-            // Test 2 - call GetAll with attached-to parameter true in order to find the tag
-            // just created
-            ListTagsOptions lto = new ListTagsOptions.Builder().attachedTo(this.prop.getProperty("GST_RESOURCE_CRN"))
+            Resource resourceModel = new Resource.Builder()
+                    .resourceId(resourceCRN)
                     .build();
 
-            Response<TagList> tlResponse = globalTagging.listTags(lto).execute();
-            assertNotNull(tlResponse);
-            assertEquals(tlResponse.getStatusCode(), 200);
-            TagList tlResult = tlResponse.getResult();
-            assertNotNull(tlResult);
+            AttachTagOptions attachTagOptions = new AttachTagOptions.Builder()
+                    .addResources(resourceModel)
+                    .addTagNames(tagName)
+                    .build();
 
+            Response<TagResults> response = service.attachTag(attachTagOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            TagResults tagResultsResult = response.getResult();
+            assertNotNull(tagResultsResult);
+            // System.out.println(String.format("attachTag() response:\n%s", tagResultsResult.toString()));
+
+            assertNotNull(tagResultsResult.getResults());
+            for (TagResultsItem result : tagResultsResult.getResults()) {
+                assertFalse(result.isIsError());
+            }
+
+            // Make sure the tag was in fact attached to the resource.
+            List<String> tags = getTagNamesForResource(service, resourceCRN);
+            assertNotNull(tags);
+            // System.out.println("Resource now has these tags: " + tags);
+            assertTrue(tags.contains(tagName));
         } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
         }
     }
 
     @Test(dependsOnMethods = { "testAttachTag" })
-    public void testDetachTag() {
-        System.out.println("START 3 GlobalTaggingITest.testDetachTag method");
-
+    public void testDetachTag() throws Exception {
         try {
-            // Test 3 - Detach Tag
-            String tagName = TAG_NAME_PREFIX + this.TAG_NAME_SUFFIX;
-            System.out.println("testDetachTag tagName = " + tagName);
+            Resource resourceModel = new Resource.Builder()
+                    .resourceId(resourceCRN)
+                    .build();
 
-            Resource resource = new Resource.Builder().resourceId(this.prop.getProperty("GST_RESOURCE_CRN"))
-                    .resourceType("cf-application").build();
+            DetachTagOptions detachTagOptions = new DetachTagOptions.Builder()
+                    .addResources(resourceModel)
+                    .addTagNames(tagName)
+                    .build();
 
-            DetachTagOptions dto = new DetachTagOptions.Builder().addTagNames(tagName).addResources(resource).build();
-
-            Response<TagResults> response = globalTagging.detachTag(dto).execute();
+            Response<TagResults> response = service.detachTag(detachTagOptions).execute();
             assertNotNull(response);
-            System.out.println("testDetachTag status code= " + response.getStatusCode());
             assertEquals(response.getStatusCode(), 200);
-            TagResults result = response.getResult();
-            assertNotNull(result);
-            System.out.println("testDetachTag result= " + result);
-            assertFalse(((TagResultsItem) (result.getResults().get(0))).isIsError().booleanValue());
 
+            TagResults tagResultsResult = response.getResult();
+            assertNotNull(tagResultsResult);
+            // System.out.println(String.format("detachTag() response:\n%s", tagResultsResult.toString()));
+
+            assertNotNull(tagResultsResult.getResults());
+            for (TagResultsItem result : tagResultsResult.getResults()) {
+                assertFalse(result.isIsError());
+            }
+
+            // Make sure the tag was in fact detached from the resource.
+            List<String> tags = getTagNamesForResource(service, resourceCRN);
+            assertNotNull(tags);
+            // System.out.println("Resource now has these tags: " + tags);
+            assertFalse(tags.contains(tagName));
         } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
         }
     }
 
     @Test(dependsOnMethods = { "testDetachTag" })
-    public void testDeleteTag() {
-        System.out.println("START 4 GlobalTaggingITest.testDeleteTag method");
-
+    public void testDeleteTag() throws Exception {
         try {
-            // Test 4 - Delete Tag
-            String tagName = TAG_NAME_PREFIX + this.TAG_NAME_SUFFIX;
-            System.out.println("testDeleteTag tagName = " + tagName);
+            DeleteTagOptions deleteTagOptions = new DeleteTagOptions.Builder()
+                    .tagName(tagName)
+                    .build();
 
-            DeleteTagOptions dto = new DeleteTagOptions.Builder(tagName).build();
-
-            Response<DeleteTagResults> response = globalTagging.deleteTag(dto).execute();
-            assertEquals(response.getStatusCode(), 200);
+            Response<DeleteTagResults> response = service.deleteTag(deleteTagOptions).execute();
             assertNotNull(response);
-            DeleteTagResults result = response.getResult();
-            System.out.println("testDeleteTag result= " + result);
-            assertNotNull(result);
-            assertFalse(((DeleteTagResultsItem) (result.getResults().get(0))).isIsError().booleanValue());
+            assertEquals(response.getStatusCode(), 200);
+            DeleteTagResults deleteTagResults = response.getResult();
+            assertNotNull(deleteTagResults);
+            // System.out.println(String.format("deleteTag() response:\n%s", deleteTagResults.toString()));
 
+            assertNotNull(deleteTagResults.getResults());
+            for (DeleteTagResultsItem result : deleteTagResults.getResults()) {
+                assertFalse(result.isIsError());
+            }
         } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testDeleteTag" })
+    public void testDeleteTagAll() throws Exception {
+        try {
+            DeleteTagAllOptions deleteTagAllOptions = new DeleteTagAllOptions.Builder().build();
+
+            Response<DeleteTagsResult> response = service.deleteTagAll(deleteTagAllOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            DeleteTagsResult deleteTagsResult = response.getResult();
+            assertNotNull(deleteTagsResult);
+            // System.out.println(String.format("deleteTagAll() response:\n%s", deleteTagsResult.toString()));
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
         }
     }
 
     @AfterClass
     public void tearDown() {
-        // Delete any resources created during this test that have not already been deleted.
+        // Add any clean up logic here
+        System.out.println("Clean up complete.");
+    }
+
+    private List<String> getTagNamesForResource(GlobalTagging service, String resourceId) {
+        try {
+            ListTagsOptions options = new ListTagsOptions.Builder().attachedTo(resourceId).build();
+            Response<TagList> listResponse = service.listTags(options).execute();
+            TagList tagList = listResponse.getResult();
+            if (tagList != null) {
+                return tagList.getItems().stream().map(t -> t.getName()).collect(Collectors.toList());
+            }
+        } catch (ServiceResponseException e) {
+            // absorb any errors with the operation
+        }
+        return null;
     }
 }

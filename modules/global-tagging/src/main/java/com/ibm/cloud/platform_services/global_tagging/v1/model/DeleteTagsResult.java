@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The results of a deleting unattatched tags.
+ * Results of a deleting unattatched tags.
  */
 public class DeleteTagsResult extends GenericModel {
 
@@ -30,7 +30,7 @@ public class DeleteTagsResult extends GenericModel {
   /**
    * Gets the totalCount.
    *
-   * The number of tags deleted in the account.
+   * The number of tags that have been deleted.
    *
    * @return the totalCount
    */
@@ -41,7 +41,7 @@ public class DeleteTagsResult extends GenericModel {
   /**
    * Gets the errors.
    *
-   * An indicator that is set to true if there was an error deleting some of the tags.
+   * It is set to true if there is at least one tag operation in error.
    *
    * @return the errors
    */
@@ -51,6 +51,8 @@ public class DeleteTagsResult extends GenericModel {
 
   /**
    * Gets the items.
+   *
+   * The list of tag operation results.
    *
    * @return the items
    */

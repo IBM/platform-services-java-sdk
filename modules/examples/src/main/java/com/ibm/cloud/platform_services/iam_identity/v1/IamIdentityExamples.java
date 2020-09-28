@@ -98,8 +98,7 @@ public class IamIdentityExamples {
             CreateApiKeyOptions createApiKeyOptions = new CreateApiKeyOptions.Builder()
                     .name(apiKeyName)
                     .iamId(iamId)
-                    .description("JavaSDK test apikey")
-                    .accountId(accountId)
+                    .description("Java Example ApiKey")
                     .build();
 
             Response<ApiKey> response = service.createApiKey(createApiKeyOptions).execute();
@@ -228,7 +227,7 @@ public class IamIdentityExamples {
             CreateServiceIdOptions createServiceIdOptions = new CreateServiceIdOptions.Builder()
                     .accountId(accountId)
                     .name(serviceIdName)
-                    .description("JavaSDK test serviceId")
+                    .description("Java Example ServiceId")
                     .build();
 
             Response<ServiceId> response = service.createServiceId(createServiceIdOptions).execute();

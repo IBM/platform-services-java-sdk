@@ -125,7 +125,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .name(APIKEY_NAME)
                     .iamId(IAM_ID)
                     .description("JavaSDK test apikey #1")
-                    .accountId(ACCOUNT_ID)
                     .build();
 
             // System.out.println(String.format("\n>>> createApiKey #1 options:\n%s", createApiKeyOptions.toString()));
@@ -153,7 +152,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .name(APIKEY_NAME)
                     .iamId(IAM_ID)
                     .description("JavaSDK test apikey #2")
-                    .accountId(ACCOUNT_ID)
                     .build();
 
             // System.out.println(String.format("\n>>> createApiKey #2 options:\n%s", createApiKeyOptions.toString()));

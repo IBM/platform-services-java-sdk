@@ -65,7 +65,7 @@ public class GlobalTaggingExamples {
 
             Response<TagList> response = service.listTags(listTagsOptions).execute();
             TagList tagList = response.getResult();
-            System.out.println("listTags() result:\n" + tagList.toString());
+            System.out.println(tagList.toString());
             // end-list_tags
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
@@ -85,7 +85,7 @@ public class GlobalTaggingExamples {
 
             Response<TagResults> response = service.attachTag(attachTagOptions).execute();
             TagResults tagResults = response.getResult();
-            System.out.println("attachTag() result:\n" + tagResults.toString());
+            System.out.println(tagResults.toString());
             // end-attach_tag
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
@@ -105,7 +105,7 @@ public class GlobalTaggingExamples {
 
             Response<TagResults> response = service.detachTag(detachTagOptions).execute();
             TagResults tagResults = response.getResult();
-            System.out.println("detachTag() result:\n" + tagResults.toString());
+            System.out.println(tagResults.toString());
             // end-detach_tag
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
@@ -115,11 +115,12 @@ public class GlobalTaggingExamples {
         try {
             // begin-delete_tag
             DeleteTagOptions deleteTagOptions = new DeleteTagOptions.Builder()
-                    .tagName("tag_test_1").build();
+                    .tagName("tag_test_1")
+                    .build();
 
             Response<DeleteTagResults> response = service.deleteTag(deleteTagOptions).execute();
             DeleteTagResults deleteTagResults = response.getResult();
-            System.out.println("deleteTag() result:\n" + deleteTagResults.toString());
+            System.out.println(deleteTagResults.toString());
             // end-delete_tag
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
@@ -133,7 +134,7 @@ public class GlobalTaggingExamples {
             Response<DeleteTagsResult> response = service.deleteTagAll(deleteTagAllOptions).execute();
             DeleteTagsResult deleteTagsResult = response.getResult();
 
-            System.out.println("deleteTagAll() result:\n" + deleteTagsResult.toString());
+            System.out.println(deleteTagsResult.toString());
             // end-delete_tag_all
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),

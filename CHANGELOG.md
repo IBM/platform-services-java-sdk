@@ -1,3 +1,10 @@
+## [0.12.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.12.1...v0.12.2) (2020-09-30)
+
+
+### Bug Fixes
+
+* **Global Tagging:** re-gen service using latest API definition ([#46](https://github.com/IBM/platform-services-node-sdk/issues/46)) ([b6358c2](https://github.com/IBM/platform-services-node-sdk/commit/b6358c2cc830ef10e7357d77ee766c9b784fb795))
+
 ## [0.12.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.12.0...v0.12.1) (2020-09-16)
 
 

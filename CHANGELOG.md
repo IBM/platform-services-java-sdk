@@ -1,3 +1,10 @@
+# [0.13.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.12.2...v0.13.0) (2020-09-30)
+
+
+### Features
+
+* **IAM Identity:** add service to project ([#45](https://github.com/IBM/platform-services-node-sdk/issues/45)) ([b7a23f4](https://github.com/IBM/platform-services-node-sdk/commit/b7a23f4113a2225f5c69dd223a67f49a84e1e372))
+
 ## [0.12.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.12.1...v0.12.2) (2020-09-30)
 
 

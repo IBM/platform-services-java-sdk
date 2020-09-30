@@ -1,3 +1,10 @@
+## [0.12.2](https://github.com/IBM/platform-services-java-sdk/compare/0.12.1...0.12.2) (2020-09-30)
+
+
+### Bug Fixes
+
+* **Global Tagging:** re-gen service with latest API definition ([#47](https://github.com/IBM/platform-services-java-sdk/issues/47)) ([ace32d6](https://github.com/IBM/platform-services-java-sdk/commit/ace32d65f5260c359caca8cd3aa8ce21bef9169f))
+
 ## [0.12.1](https://github.com/IBM/platform-services-java-sdk/compare/0.12.0...0.12.1) (2020-09-16)
 
 

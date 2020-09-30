@@ -103,22 +103,26 @@ describe('GlobalTaggingV1', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation listTags
+        const accountId = 'testString';
+        const tagType = 'user';
+        const fullData = true;
         const providers = ['ghost'];
         const attachedTo = 'testString';
-        const fullData = true;
         const offset = 0;
         const limit = 1;
+        const timeout = 0;
         const orderByName = 'asc';
-        const timeout = 38;
         const attachedOnly = true;
         const params = {
+          accountId: accountId,
+          tagType: tagType,
+          fullData: fullData,
           providers: providers,
           attachedTo: attachedTo,
-          fullData: fullData,
           offset: offset,
           limit: limit,
-          orderByName: orderByName,
           timeout: timeout,
+          orderByName: orderByName,
           attachedOnly: attachedOnly,
         };
 
@@ -136,13 +140,15 @@ describe('GlobalTaggingV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['account_id']).toEqual(accountId);
+        expect(options.qs['tag_type']).toEqual(tagType);
+        expect(options.qs['full_data']).toEqual(fullData);
         expect(options.qs['providers']).toEqual(providers);
         expect(options.qs['attached_to']).toEqual(attachedTo);
-        expect(options.qs['full_data']).toEqual(fullData);
         expect(options.qs['offset']).toEqual(offset);
         expect(options.qs['limit']).toEqual(limit);
-        expect(options.qs['order_by_name']).toEqual(orderByName);
         expect(options.qs['timeout']).toEqual(timeout);
+        expect(options.qs['order_by_name']).toEqual(orderByName);
         expect(options.qs['attached_only']).toEqual(attachedOnly);
       });
 
@@ -173,8 +179,12 @@ describe('GlobalTaggingV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation deleteTagAll
         const providers = 'ghost';
+        const accountId = 'testString';
+        const tagType = 'user';
         const params = {
           providers: providers,
+          accountId: accountId,
+          tagType: tagType,
         };
 
         const deleteTagAllResult = globalTaggingService.deleteTagAll(params);
@@ -192,6 +202,8 @@ describe('GlobalTaggingV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['providers']).toEqual(providers);
+        expect(options.qs['account_id']).toEqual(accountId);
+        expect(options.qs['tag_type']).toEqual(tagType);
       });
 
       test('should prioritize user-given headers', () => {
@@ -222,9 +234,13 @@ describe('GlobalTaggingV1', () => {
         // Construct the params object for operation deleteTag
         const tagName = 'testString';
         const providers = ['ghost'];
+        const accountId = 'testString';
+        const tagType = 'user';
         const params = {
           tagName: tagName,
           providers: providers,
+          accountId: accountId,
+          tagType: tagType,
         };
 
         const deleteTagResult = globalTaggingService.deleteTag(params);
@@ -242,6 +258,8 @@ describe('GlobalTaggingV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['providers']).toEqual(providers);
+        expect(options.qs['account_id']).toEqual(accountId);
+        expect(options.qs['tag_type']).toEqual(tagType);
         expect(options.path['tag_name']).toEqual(tagName);
       });
 
@@ -302,10 +320,14 @@ describe('GlobalTaggingV1', () => {
         const resources = [resourceModel];
         const tagName = 'testString';
         const tagNames = ['testString'];
+        const accountId = 'testString';
+        const tagType = 'user';
         const params = {
           resources: resources,
           tagName: tagName,
           tagNames: tagNames,
+          accountId: accountId,
+          tagType: tagType,
         };
 
         const attachTagResult = globalTaggingService.attachTag(params);
@@ -325,6 +347,8 @@ describe('GlobalTaggingV1', () => {
         expect(options.body['resources']).toEqual(resources);
         expect(options.body['tag_name']).toEqual(tagName);
         expect(options.body['tag_names']).toEqual(tagNames);
+        expect(options.qs['account_id']).toEqual(accountId);
+        expect(options.qs['tag_type']).toEqual(tagType);
       });
 
       test('should prioritize user-given headers', () => {
@@ -384,10 +408,14 @@ describe('GlobalTaggingV1', () => {
         const resources = [resourceModel];
         const tagName = 'testString';
         const tagNames = ['testString'];
+        const accountId = 'testString';
+        const tagType = 'user';
         const params = {
           resources: resources,
           tagName: tagName,
           tagNames: tagNames,
+          accountId: accountId,
+          tagType: tagType,
         };
 
         const detachTagResult = globalTaggingService.detachTag(params);
@@ -407,6 +435,8 @@ describe('GlobalTaggingV1', () => {
         expect(options.body['resources']).toEqual(resources);
         expect(options.body['tag_name']).toEqual(tagName);
         expect(options.body['tag_names']).toEqual(tagNames);
+        expect(options.qs['account_id']).toEqual(accountId);
+        expect(options.qs['tag_type']).toEqual(tagType);
       });
 
       test('should prioritize user-given headers', () => {

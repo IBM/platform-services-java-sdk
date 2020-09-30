@@ -16,149 +16,198 @@
  */
 
 'use strict';
-
 const GlobalTaggingV1 = require('../../dist/global-tagging/v1');
-const { IamAuthenticator } = require('ibm-cloud-sdk-core');
+const { readExternalSources } = require('ibm-cloud-sdk-core');
 const authHelper = require('../resources/auth-helper.js');
 
-const timeout = 10000; // ten seconds
+// testcase timeout value (10s).
+const timeout = 10000;
 
 // Location of our config file.
-const configFile = 'ghost.env';
+const configFile = 'global_tagging.env';
 
-// Use authHelper to skip tests if our configFile is not available.
 const describe = authHelper.prepareTests(configFile);
 
-// Retrieve the config file as an object.
-// We do this because we're going to directly use the
-// config properties, rather than let the SDK do it for us.
-const config = authHelper.loadConfig();
+let resourceCrn;
 
 describe('GlobalTaggingV1_integration', () => {
-  jest.setTimeout(timeout);
+  const globalTaggingService = GlobalTaggingV1.newInstance({});
+
+  const config = readExternalSources(GlobalTaggingV1.DEFAULT_SERVICE_NAME);
+  expect(globalTaggingService).not.toBeNull();
+  expect(config).not.toBeNull();
+  // console.log('config: ', config)
+
+  const serviceUrl = config.url;
+  expect(serviceUrl).toBeDefined();
+
+  resourceCrn = config.resourceCrn;
+  expect(resourceCrn).toBeDefined();
 
   const tagName = 'node-sdk-' + Math.floor(Math.random() * 100000 + 1).toString();
-  const providers = ['ghost'];
-  const fullData = true;
-  const offset = 0;
-  const limit = 100;
-  const orderByName = 'asc';
-  const attachedOnly = false;
-  const attachedTo = config.GST_RESOURCE_CRN;
-  const fullData2 = false;
 
-  const paramsAttachedTo = {
-    providers: providers,
-    attachedTo: attachedTo,
-    fullData: fullData2,
-    offset: offset,
-    limit: limit,
-    orderByName: orderByName,
-    timeout: timeout,
-    attachedOnly: attachedOnly,
-  };
+  // console.log('Service URL: ', serviceUrl);
+  // console.log('Resource CRN: ', resourceCrn);
+  // console.log('Test tag: ', tagName);
 
-  // Initialize the service client.
-  const options = {
-    authenticator: new IamAuthenticator({
-      apikey: config.GST_IINTERNA_APIKEY,
-    }),
-    serviceUrl: config.GST_TAGS_URL,
-  };
-  const globalTagging = new GlobalTaggingV1(options);
+  jest.setTimeout(timeout);
 
-  test('should getAll tags', done => {
+  test('listTags()', done => {
     const params = {
-      providers: providers,
-      fullData: fullData,
-      offset: offset,
-      limit: limit,
-      orderByName: orderByName,
-      timeout: timeout,
-      attachedOnly: attachedOnly,
+      offset: 0,
+      limit: 1000,
     };
 
-    return globalTagging.listTags(params).then(response => {
-      expect(response.hasOwnProperty('status')).toBe(true);
-      expect(response.status).toBe(200);
-      done();
-    });
-  });
+    globalTaggingService
+      .listTags(params)
+      .then(res => {
+        expect(res).not.toBeNull();
+        expect(res.status).toBe(200);
 
-  test('should Attach tag', done => {
-    const resourceModel = {
-      resource_id: config.GST_RESOURCE_CRN,
-      resource_type: 'cf-application',
-    };
-
-    const resources = [resourceModel];
-    const tagNameArray = [tagName];
-    const params = {
-      resources: resources,
-      tagNames: tagNameArray,
-    };
-
-    globalTagging.attachTag(params).then(response => {
-      // console.log('rispostaTagAttach', response.result.results[0]);
-      // console.log('risorsa', response.result.items[0]);
-      expect(response.hasOwnProperty('status')).toBe(true);
-      expect(response.status).toBe(200);
-      expect(response.result.results[0].isError).toBe('false');
-
-      return globalTagging.listTags(paramsAttachedTo).then(response => {
-        expect(response.hasOwnProperty('status')).toBe(true);
-        expect(response.status).toBe(200);
-        expect(Array.isArray(response.result.items)).toBe(true);
+        const result = res.result;
+        expect(result).toBeDefined();
+        // console.log('listTags() result: ', result)
+        expect(result.items).toBeDefined();
         done();
+      })
+      .catch(err => {
+        console.warn(err);
+        done(err);
       });
-    });
   });
-
-  test('should Detach tag', done => {
+  test('attachTag()', async done => {
+    // Request models needed by this operation.
     const resourceModel = {
-      resource_id: config.GST_RESOURCE_CRN,
-      resource_type: 'cf-application',
+      resource_id: resourceCrn,
     };
 
-    const resources = [resourceModel];
-    const tagNameArray = [tagName];
     const params = {
-      resources: resources,
-      tagNames: tagNameArray,
+      resources: [resourceModel],
+      tagNames: [tagName],
     };
 
-    globalTagging.detachTag(params).then(response => {
-      expect(response.hasOwnProperty('status')).toBe(true);
-      expect(response.status).toBe(200);
-      expect(response.result.results[0].isError).toBe('false');
+    globalTaggingService
+      .attachTag(params)
+      .then(res => {
+        expect(res).not.toBeNull();
+        expect(res.status).toBe(200);
 
-      return globalTagging.listTags(paramsAttachedTo).then(response => {
-        expect(response.hasOwnProperty('status')).toBe(true);
-        expect(response.status).toBe(200);
-        expect(Array.isArray(response.result.items)).toBe(true);
-        done();
+        const result = res.result;
+        expect(result).toBeDefined();
+        // console.log('attachTag() result: ', result)
+
+        expect(result.results).toBeDefined();
+        result.results.forEach(elem => {
+          expect(elem.is_error).toBe(false);
+        });
+
+        // Make sure the tag was in fact attached to the resource.
+        getTagNamesForResource(globalTaggingService, resourceCrn).then(tagNames => {
+          expect(tagNames.includes(tagName)).toBe(true);
+          done();
+        });
+      })
+      .catch(err => {
+        console.warn(err);
+        done(err);
       });
-    });
   });
+  test('detachTag()', done => {
+    // Request models needed by this operation.
+    const resourceModel = {
+      resource_id: resourceCrn,
+    };
 
-  test('should Delete tag', done => {
-    const providers = ['ghost'];
+    const params = {
+      resources: [resourceModel],
+      tagNames: [tagName],
+    };
+
+    globalTaggingService
+      .detachTag(params)
+      .then(res => {
+        const result = res.result;
+        expect(result).toBeDefined();
+        // console.log('detachTag() result: ', result)
+
+        expect(result.results).toBeDefined();
+        result.results.forEach(elem => {
+          expect(elem.is_error).toBe(false);
+        });
+
+        // Make sure the tag was in fact attached to the resource.
+        getTagNamesForResource(globalTaggingService, resourceCrn).then(tagNames => {
+          expect(tagNames.includes(tagName)).toBe(false);
+          done();
+        });
+      })
+      .catch(err => {
+        console.warn(err);
+        done(err);
+      });
+  });
+  test('deleteTag()', done => {
     const params = {
       tagName: tagName,
-      providers: providers,
     };
 
-    globalTagging.deleteTag(params).then(response => {
-      expect(response.hasOwnProperty('status')).toBe(true);
-      expect(response.status).toBe(200);
-      expect(response.result.results[0].isError).toBe('false');
+    globalTaggingService
+      .deleteTag(params)
+      .then(res => {
+        const result = res.result;
+        expect(result).toBeDefined();
+        // console.log('deleteTag() result: ', result)
 
-      return globalTagging.listTags(paramsAttachedTo).then(response => {
-        expect(response.hasOwnProperty('status')).toBe(true);
-        expect(response.status).toBe(200);
-        expect(Array.isArray(response.result.items)).toBe(true);
+        expect(result.results).toBeDefined();
+        result.results.forEach(elem => {
+          expect(elem.is_error).toBe(false);
+        });
         done();
+      })
+      .catch(err => {
+        console.warn(err);
+        done(err);
       });
-    });
+  });
+  test('deleteTagAll()', done => {
+    const params = {};
+
+    globalTaggingService
+      .deleteTagAll(params)
+      .then(res => {
+        const result = res.result;
+        expect(result).toBeDefined();
+        // console.log('deleteTagAll() result: ', result)
+
+        expect(result.items).toBeDefined();
+        result.items.forEach(elem => {
+          expect(elem.is_error).toBe(false);
+        });
+        done();
+      })
+      .catch(err => {
+        console.warn(err);
+        done(err);
+      });
   });
 });
+
+async function getTagNamesForResource(service, resourceId) {
+  const tagNames = [];
+
+  const params = {
+    offset: 0,
+    limit: 1000,
+    attachedTo: resourceId,
+  };
+  const response = await service.listTags(params);
+  expect(response).toBeDefined();
+  const result = response.result;
+  if (result.items) {
+    result.items.forEach(tag => {
+      tagNames.push(tag.name);
+    });
+  }
+
+  return tagNames;
+}

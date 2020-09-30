@@ -1,3 +1,10 @@
+# [0.13.0](https://github.com/IBM/platform-services-java-sdk/compare/0.12.2...0.13.0) (2020-09-30)
+
+
+### Features
+
+* **IAM Identity Services:** add service to the project ([#45](https://github.com/IBM/platform-services-java-sdk/issues/45)) ([2b8b877](https://github.com/IBM/platform-services-java-sdk/commit/2b8b8779d0cefb3f9a6556ffd42414b6a202af22))
+
 ## [0.12.2](https://github.com/IBM/platform-services-java-sdk/compare/0.12.1...0.12.2) (2020-09-30)
 
 

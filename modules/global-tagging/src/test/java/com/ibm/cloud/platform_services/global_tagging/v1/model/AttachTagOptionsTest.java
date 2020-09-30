@@ -45,10 +45,14 @@ public class AttachTagOptionsTest {
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
       .tagName("testString")
       .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .accountId("testString")
+      .tagType("user")
       .build();
     assertEquals(attachTagOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
     assertEquals(attachTagOptionsModel.tagName(), "testString");
     assertEquals(attachTagOptionsModel.tagNames(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(attachTagOptionsModel.accountId(), "testString");
+    assertEquals(attachTagOptionsModel.tagType(), "user");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

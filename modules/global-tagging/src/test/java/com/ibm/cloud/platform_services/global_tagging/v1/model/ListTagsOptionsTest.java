@@ -34,22 +34,26 @@ public class ListTagsOptionsTest {
   @Test
   public void testListTagsOptions() throws Throwable {
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
+      .accountId("testString")
+      .tagType("user")
+      .fullData(true)
       .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
       .attachedTo("testString")
-      .fullData(true)
       .offset(Long.valueOf("0"))
       .limit(Long.valueOf("1"))
+      .timeout(Long.valueOf("0"))
       .orderByName("asc")
-      .timeout(Long.valueOf("26"))
       .attachedOnly(true)
       .build();
+    assertEquals(listTagsOptionsModel.accountId(), "testString");
+    assertEquals(listTagsOptionsModel.tagType(), "user");
+    assertEquals(listTagsOptionsModel.fullData(), Boolean.valueOf(true));
     assertEquals(listTagsOptionsModel.providers(), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
     assertEquals(listTagsOptionsModel.attachedTo(), "testString");
-    assertEquals(listTagsOptionsModel.fullData(), Boolean.valueOf(true));
     assertEquals(listTagsOptionsModel.offset(), Long.valueOf("0"));
     assertEquals(listTagsOptionsModel.limit(), Long.valueOf("1"));
+    assertEquals(listTagsOptionsModel.timeout(), Long.valueOf("0"));
     assertEquals(listTagsOptionsModel.orderByName(), "asc");
-    assertEquals(listTagsOptionsModel.timeout(), Long.valueOf("26"));
     assertEquals(listTagsOptionsModel.attachedOnly(), Boolean.valueOf(true));
   }
 }

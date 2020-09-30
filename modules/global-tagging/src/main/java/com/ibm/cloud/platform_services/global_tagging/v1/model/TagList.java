@@ -31,7 +31,7 @@ public class TagList extends GenericModel {
   /**
    * Gets the totalCount.
    *
-   * The number of tags defined in the account.
+   * Set the occurrencies of the total tags associated to this account.
    *
    * @return the totalCount
    */
@@ -42,7 +42,7 @@ public class TagList extends GenericModel {
   /**
    * Gets the offset.
    *
-   * The offset specific at input time.
+   * The offset at which tags are returned.
    *
    * @return the offset
    */
@@ -53,7 +53,7 @@ public class TagList extends GenericModel {
   /**
    * Gets the limit.
    *
-   * The limit specified at input time.
+   * The number of tags requested to be returned.
    *
    * @return the limit
    */
@@ -64,7 +64,7 @@ public class TagList extends GenericModel {
   /**
    * Gets the items.
    *
-   * This is an array of output results.
+   * Array of output results.
    *
    * @return the items
    */

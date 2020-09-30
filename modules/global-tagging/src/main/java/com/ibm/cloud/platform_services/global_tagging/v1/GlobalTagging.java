@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b0d887a-20200923-132457
  */
 
 package com.ibm.cloud.platform_services.global_tagging.v1;
@@ -43,7 +43,9 @@ import java.util.Map.Entry;
 /**
  * Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete a tag or list all tags in your
  * billing account with the Tagging API. The tag name must be unique within a billing account. You can create tags in
- * two formats: `key:value` or `label`.
+ * two formats: `key:value` or `label`. The tagging API supports two types of tag: `user` and `service`. `service` tags
+ * cannot be attached to IMS resources (see `providers=ims` query parameter). `service` tags must be in the form
+ * `service_prefix:tag_label` where `service_prefix` identifies the Service owning the tag.
  *
  * @version v1
  */
@@ -108,14 +110,20 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listTagsOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listTagsOptions.accountId()));
+    }
+    if (listTagsOptions.tagType() != null) {
+      builder.query("tag_type", String.valueOf(listTagsOptions.tagType()));
+    }
+    if (listTagsOptions.fullData() != null) {
+      builder.query("full_data", String.valueOf(listTagsOptions.fullData()));
+    }
     if (listTagsOptions.providers() != null) {
       builder.query("providers", RequestUtils.join(listTagsOptions.providers(), ","));
     }
     if (listTagsOptions.attachedTo() != null) {
       builder.query("attached_to", String.valueOf(listTagsOptions.attachedTo()));
-    }
-    if (listTagsOptions.fullData() != null) {
-      builder.query("full_data", String.valueOf(listTagsOptions.fullData()));
     }
     if (listTagsOptions.offset() != null) {
       builder.query("offset", String.valueOf(listTagsOptions.offset()));
@@ -123,11 +131,11 @@ public class GlobalTagging extends BaseService {
     if (listTagsOptions.limit() != null) {
       builder.query("limit", String.valueOf(listTagsOptions.limit()));
     }
-    if (listTagsOptions.orderByName() != null) {
-      builder.query("order_by_name", String.valueOf(listTagsOptions.orderByName()));
-    }
     if (listTagsOptions.timeout() != null) {
       builder.query("timeout", String.valueOf(listTagsOptions.timeout()));
+    }
+    if (listTagsOptions.orderByName() != null) {
+      builder.query("order_by_name", String.valueOf(listTagsOptions.orderByName()));
     }
     if (listTagsOptions.attachedOnly() != null) {
       builder.query("attached_only", String.valueOf(listTagsOptions.attachedOnly()));
@@ -150,9 +158,9 @@ public class GlobalTagging extends BaseService {
   }
 
   /**
-   * Delete unused tags.
+   * Delete all unused tags.
    *
-   * Delete the tags that are not attatched to any resource.
+   * Delete the tags that are not attached to any resource.
    *
    * @param deleteTagAllOptions the {@link DeleteTagAllOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link DeleteTagsResult}
@@ -170,15 +178,21 @@ public class GlobalTagging extends BaseService {
     if (deleteTagAllOptions.providers() != null) {
       builder.query("providers", String.valueOf(deleteTagAllOptions.providers()));
     }
+    if (deleteTagAllOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(deleteTagAllOptions.accountId()));
+    }
+    if (deleteTagAllOptions.tagType() != null) {
+      builder.query("tag_type", String.valueOf(deleteTagAllOptions.tagType()));
+    }
     ResponseConverter<DeleteTagsResult> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<DeleteTagsResult>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Delete unused tags.
+   * Delete all unused tags.
    *
-   * Delete the tags that are not attatched to any resource.
+   * Delete the tags that are not attached to any resource.
    *
    * @return a {@link ServiceCall} with a result of type {@link DeleteTagsResult}
    */
@@ -187,7 +201,7 @@ public class GlobalTagging extends BaseService {
   }
 
   /**
-   * Delete a tag.
+   * Delete an unused tag.
    *
    * Delete an existing tag. A tag can be deleted only if it is not attached to any resource.
    *
@@ -208,18 +222,25 @@ public class GlobalTagging extends BaseService {
     if (deleteTagOptions.providers() != null) {
       builder.query("providers", RequestUtils.join(deleteTagOptions.providers(), ","));
     }
+    if (deleteTagOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(deleteTagOptions.accountId()));
+    }
+    if (deleteTagOptions.tagType() != null) {
+      builder.query("tag_type", String.valueOf(deleteTagOptions.tagType()));
+    }
     ResponseConverter<DeleteTagResults> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<DeleteTagResults>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Attach one or more tags.
+   * Attach tags.
    *
-   * Attaches one or more tags to one or more resources. To attach a tag to a resource managed by the Resource
-   * Controller, you must be an editor on the resource. To attach a tag to a Cloud Foundry resource, you must have space
-   * developer role. To attach a tag to IMS resources, depending on the resource, you need either `view hardware
-   * details`, `view virtual server details` or `manage storage` permission.
+   * Attaches one or more tags to one or more resources. To attach a `user` tag on a resource, you must have the access
+   * listed in the [Granting users access to tag resources](https://cloud.ibm.com/docs/account?topic=account-access)
+   * documentation. To attach a `service` tag, you must be an authorized service. If that is the case, then you can
+   * attach a `service` tag with your registered `prefix` to any resource in any account. The account ID must be set
+   * through the `account_id` query parameter.
    *
    * @param attachTagOptions the {@link AttachTagOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TagResults}
@@ -233,6 +254,12 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (attachTagOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(attachTagOptions.accountId()));
+    }
+    if (attachTagOptions.tagType() != null) {
+      builder.query("tag_type", String.valueOf(attachTagOptions.tagType()));
+    }
     final JsonObject contentJson = new JsonObject();
     contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(attachTagOptions.resources()));
     if (attachTagOptions.tagName() != null) {
@@ -248,13 +275,13 @@ public class GlobalTagging extends BaseService {
   }
 
   /**
-   * Detach one or more tags.
+   * Detach tags.
    *
-   * Detach one or more tags from one or more resources. To detach a tag from a Resource Controller managed resource,
-   * you must be an editor on the resource. To detach a tag to a Cloud Foundry resource, you must have `space developer`
-   * role.
-   *   To detach a tag to IMS resources, depending on the resource, you need either `view hardware details`, `view
-   * virtual server details` or `storage manage` permission.
+   * Detaches one or more tags from one or more resources. To detach a `user` tag on a resource you must have the
+   * permissions listed in the [Granting users access to tag
+   * resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation. To detach a `service` tag you
+   * must be an authorized Service. If that is the case, then you can detach a `service` tag with your registered
+   * `prefix` from any resource in any account. The account ID must be set through the `account_id` query parameter.
    *
    * @param detachTagOptions the {@link DetachTagOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TagResults}
@@ -268,6 +295,12 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (detachTagOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(detachTagOptions.accountId()));
+    }
+    if (detachTagOptions.tagType() != null) {
+      builder.query("tag_type", String.valueOf(detachTagOptions.tagType()));
+    }
     final JsonObject contentJson = new JsonObject();
     contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(detachTagOptions.resources()));
     if (detachTagOptions.tagName() != null) {

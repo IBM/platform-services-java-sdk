@@ -33,7 +33,11 @@ public class DeleteTagAllOptionsTest {
   public void testDeleteTagAllOptions() throws Throwable {
     DeleteTagAllOptions deleteTagAllOptionsModel = new DeleteTagAllOptions.Builder()
       .providers("ghost")
+      .accountId("testString")
+      .tagType("user")
       .build();
     assertEquals(deleteTagAllOptionsModel.providers(), "ghost");
+    assertEquals(deleteTagAllOptionsModel.accountId(), "testString");
+    assertEquals(deleteTagAllOptionsModel.tagType(), "user");
   }
 }

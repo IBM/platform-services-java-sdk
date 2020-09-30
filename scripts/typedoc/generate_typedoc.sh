@@ -11,6 +11,7 @@
     ./global-search/v2.ts \
     ./global-tagging/v1.ts \
     ./iam-access-groups/v2.ts \
+    ./iam-identity/v1.ts \
     ./iam-policy-management/v1.ts \
     ./open-service-broker/v1.ts \
     ./resource-controller/v2 \

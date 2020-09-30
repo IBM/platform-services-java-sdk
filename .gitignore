@@ -14,13 +14,14 @@ global-catalog/*.js
 global-search/*.js
 global-tagging/*.js
 iam-access-groups/*.js
+iam-identity/*.js
 iam-policy-management/*.js
 open-service-broker/*.js
 resource-manager/*.js
-
 resource-controller/*.js
 usage-metering/*.js
 usage-reports/*.js
+user-management/*.js
 
 # file holding service credentials
 test/resources/auth.js

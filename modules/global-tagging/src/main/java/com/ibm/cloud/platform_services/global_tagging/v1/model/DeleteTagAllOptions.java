@@ -29,16 +29,33 @@ public class DeleteTagAllOptions extends GenericModel {
     String IMS = "ims";
   }
 
+  /**
+   * The type of the tag. Supported values are `user` and `service`. `service` is not supported if the `providers`
+   * parameter is set to `ims`.
+   */
+  public interface TagType {
+    /** user. */
+    String USER = "user";
+    /** service. */
+    String SERVICE = "service";
+  }
+
   protected String providers;
+  protected String accountId;
+  protected String tagType;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String providers;
+    private String accountId;
+    private String tagType;
 
     private Builder(DeleteTagAllOptions deleteTagAllOptions) {
       this.providers = deleteTagAllOptions.providers;
+      this.accountId = deleteTagAllOptions.accountId;
+      this.tagType = deleteTagAllOptions.tagType;
     }
 
     /**
@@ -66,10 +83,34 @@ public class DeleteTagAllOptions extends GenericModel {
       this.providers = providers;
       return this;
     }
+
+    /**
+     * Set the accountId.
+     *
+     * @param accountId the accountId
+     * @return the DeleteTagAllOptions builder
+     */
+    public Builder accountId(String accountId) {
+      this.accountId = accountId;
+      return this;
+    }
+
+    /**
+     * Set the tagType.
+     *
+     * @param tagType the tagType
+     * @return the DeleteTagAllOptions builder
+     */
+    public Builder tagType(String tagType) {
+      this.tagType = tagType;
+      return this;
+    }
   }
 
   protected DeleteTagAllOptions(Builder builder) {
     providers = builder.providers;
+    accountId = builder.accountId;
+    tagType = builder.tagType;
   }
 
   /**
@@ -90,6 +131,30 @@ public class DeleteTagAllOptions extends GenericModel {
    */
   public String providers() {
     return providers;
+  }
+
+  /**
+   * Gets the accountId.
+   *
+   * The ID of the billing account to delete the tags for. If it is not set, then it is taken from the authorization
+   * token. It is a required parameter if `tag_type` is set to `service`.
+   *
+   * @return the accountId
+   */
+  public String accountId() {
+    return accountId;
+  }
+
+  /**
+   * Gets the tagType.
+   *
+   * The type of the tag. Supported values are `user` and `service`. `service` is not supported if the `providers`
+   * parameter is set to `ims`.
+   *
+   * @return the tagType
+   */
+  public String tagType() {
+    return tagType;
   }
 }
 

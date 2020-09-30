@@ -22,9 +22,22 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class AttachTagOptions extends GenericModel {
 
+  /**
+   * The type of the tag. Supported values are `user` and `service`. `service` is not supported if `providers` is set to
+   * `ims`.
+   */
+  public interface TagType {
+    /** user. */
+    String USER = "user";
+    /** service. */
+    String SERVICE = "service";
+  }
+
   protected List<Resource> resources;
   protected String tagName;
   protected List<String> tagNames;
+  protected String accountId;
+  protected String tagType;
 
   /**
    * Builder.
@@ -33,11 +46,15 @@ public class AttachTagOptions extends GenericModel {
     private List<Resource> resources;
     private String tagName;
     private List<String> tagNames;
+    private String accountId;
+    private String tagType;
 
     private Builder(AttachTagOptions attachTagOptions) {
       this.resources = attachTagOptions.resources;
       this.tagName = attachTagOptions.tagName;
       this.tagNames = attachTagOptions.tagNames;
+      this.accountId = attachTagOptions.accountId;
+      this.tagType = attachTagOptions.tagType;
     }
 
     /**
@@ -130,6 +147,28 @@ public class AttachTagOptions extends GenericModel {
       this.tagNames = tagNames;
       return this;
     }
+
+    /**
+     * Set the accountId.
+     *
+     * @param accountId the accountId
+     * @return the AttachTagOptions builder
+     */
+    public Builder accountId(String accountId) {
+      this.accountId = accountId;
+      return this;
+    }
+
+    /**
+     * Set the tagType.
+     *
+     * @param tagType the tagType
+     * @return the AttachTagOptions builder
+     */
+    public Builder tagType(String tagType) {
+      this.tagType = tagType;
+      return this;
+    }
   }
 
   protected AttachTagOptions(Builder builder) {
@@ -138,6 +177,8 @@ public class AttachTagOptions extends GenericModel {
     resources = builder.resources;
     tagName = builder.tagName;
     tagNames = builder.tagNames;
+    accountId = builder.accountId;
+    tagType = builder.tagType;
   }
 
   /**
@@ -180,6 +221,30 @@ public class AttachTagOptions extends GenericModel {
    */
   public List<String> tagNames() {
     return tagNames;
+  }
+
+  /**
+   * Gets the accountId.
+   *
+   * The ID of the billing account where the resources to be tagged lives. It is a required parameter if `tag_type` is
+   * set to `service`. Otherwise, it is inferred from the authorization IAM token.
+   *
+   * @return the accountId
+   */
+  public String accountId() {
+    return accountId;
+  }
+
+  /**
+   * Gets the tagType.
+   *
+   * The type of the tag. Supported values are `user` and `service`. `service` is not supported if `providers` is set to
+   * `ims`.
+   *
+   * @return the tagType
+   */
+  public String tagType() {
+    return tagType;
   }
 }
 

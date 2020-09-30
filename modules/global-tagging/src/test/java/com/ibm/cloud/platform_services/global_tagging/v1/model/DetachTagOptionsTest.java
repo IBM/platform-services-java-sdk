@@ -45,10 +45,14 @@ public class DetachTagOptionsTest {
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
       .tagName("testString")
       .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .accountId("testString")
+      .tagType("user")
       .build();
     assertEquals(detachTagOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
     assertEquals(detachTagOptionsModel.tagName(), "testString");
     assertEquals(detachTagOptionsModel.tagNames(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(detachTagOptionsModel.accountId(), "testString");
+    assertEquals(detachTagOptionsModel.tagType(), "user");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

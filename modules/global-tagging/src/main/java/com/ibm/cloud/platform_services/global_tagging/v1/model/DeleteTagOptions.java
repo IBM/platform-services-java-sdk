@@ -29,8 +29,20 @@ public class DeleteTagOptions extends GenericModel {
     String IMS = "ims";
   }
 
+  /**
+   * The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`.
+   */
+  public interface TagType {
+    /** user. */
+    String USER = "user";
+    /** service. */
+    String SERVICE = "service";
+  }
+
   protected String tagName;
   protected List<String> providers;
+  protected String accountId;
+  protected String tagType;
 
   /**
    * Builder.
@@ -38,10 +50,14 @@ public class DeleteTagOptions extends GenericModel {
   public static class Builder {
     private String tagName;
     private List<String> providers;
+    private String accountId;
+    private String tagType;
 
     private Builder(DeleteTagOptions deleteTagOptions) {
       this.tagName = deleteTagOptions.tagName;
       this.providers = deleteTagOptions.providers;
+      this.accountId = deleteTagOptions.accountId;
+      this.tagType = deleteTagOptions.tagType;
     }
 
     /**
@@ -106,6 +122,28 @@ public class DeleteTagOptions extends GenericModel {
       this.providers = providers;
       return this;
     }
+
+    /**
+     * Set the accountId.
+     *
+     * @param accountId the accountId
+     * @return the DeleteTagOptions builder
+     */
+    public Builder accountId(String accountId) {
+      this.accountId = accountId;
+      return this;
+    }
+
+    /**
+     * Set the tagType.
+     *
+     * @param tagType the tagType
+     * @return the DeleteTagOptions builder
+     */
+    public Builder tagType(String tagType) {
+      this.tagType = tagType;
+      return this;
+    }
   }
 
   protected DeleteTagOptions(Builder builder) {
@@ -113,6 +151,8 @@ public class DeleteTagOptions extends GenericModel {
       "tagName cannot be empty");
     tagName = builder.tagName;
     providers = builder.providers;
+    accountId = builder.accountId;
+    tagType = builder.tagType;
   }
 
   /**
@@ -144,6 +184,29 @@ public class DeleteTagOptions extends GenericModel {
    */
   public List<String> providers() {
     return providers;
+  }
+
+  /**
+   * Gets the accountId.
+   *
+   * The ID of the billing account to delete the tag for. It is a required parameter if `tag_type` is set to `service`,
+   * otherwise it is inferred from the authorization IAM token.
+   *
+   * @return the accountId
+   */
+  public String accountId() {
+    return accountId;
+  }
+
+  /**
+   * Gets the tagType.
+   *
+   * The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`.
+   *
+   * @return the tagType
+   */
+  public String tagType() {
+    return tagType;
   }
 }
 

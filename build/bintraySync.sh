@@ -29,6 +29,7 @@ com.ibm.cloud:global-catalog
 com.ibm.cloud:global-search
 com.ibm.cloud:global-tagging
 com.ibm.cloud:iam-access-groups
+com.ibm.cloud:iam-identity
 com.ibm.cloud:iam-policy-management
 com.ibm.cloud:open-service-broker
 com.ibm.cloud:resource-controller

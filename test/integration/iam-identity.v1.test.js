@@ -277,13 +277,7 @@ describe('IamIdentityV1_integration', () => {
       .lockApiKey(params)
       .then(res => {
         expect(res).not.toBeNull();
-        expect(res.status).toEqual(200);
-
-        const result = res.result;
-        expect(result).not.toBeNull();
-        // console.log('lockApiKey() result: ', result);
-
-        expect(result.locked).toEqual(true);
+        expect(res.status).toEqual(204);
 
         getApiKeyById(apikeyId2).then(apikey => {
           expect(apikey.locked).toBe(true);
@@ -307,13 +301,7 @@ describe('IamIdentityV1_integration', () => {
       .unlockApiKey(params)
       .then(res => {
         expect(res).not.toBeNull();
-        expect(res.status).toEqual(200);
-
-        const result = res.result;
-        expect(result).not.toBeNull();
-        // console.log('unlockApiKey() result: ', result);
-
-        expect(result.locked).toEqual(false);
+        expect(res.status).toEqual(204);
 
         getApiKeyById(apikeyId2).then(apikey => {
           expect(apikey.locked).toBe(false);
@@ -503,14 +491,12 @@ describe('IamIdentityV1_integration', () => {
       .lockServiceId(params)
       .then(res => {
         expect(res).not.toBeNull();
-        expect(res.status).toEqual(200);
+        expect(res.status).toEqual(204);
 
-        const result = res.result;
-        expect(result).not.toBeNull();
-        // console.log('lockServiceId() result: ', result);
-
-        expect(result.locked).toEqual(true);
-        done();
+        getServiceId(serviceId1).then(serviceId => {
+          expect(serviceId.locked).toBe(true);
+          done();
+        });
       })
       .catch(err => {
         console.warn(err);
@@ -529,13 +515,12 @@ describe('IamIdentityV1_integration', () => {
       .unlockServiceId(params)
       .then(res => {
         expect(res).not.toBeNull();
-        expect(res.status).toEqual(200);
+        expect(res.status).toEqual(204);
 
-        const result = res.result;
-        expect(result).not.toBeNull();
-        // console.log('unlockServiceId() result: ', result);
-        expect(result.locked).toEqual(false);
-        done();
+        getServiceId(serviceId1).then(serviceId => {
+          expect(serviceId.locked).toBe(false);
+          done();
+        });
       })
       .catch(err => {
         console.warn(err);

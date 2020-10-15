@@ -1069,7 +1069,7 @@ describe('IamIdentityV1', () => {
         const options = getOptions(createRequestMock);
 
         checkUrlAndMethod(options, '/v1/serviceids/{id}/lock', 'POST');
-        const expectedAccept = 'application/json';
+        const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.path['id']).toEqual(id);
@@ -1137,7 +1137,7 @@ describe('IamIdentityV1', () => {
         const options = getOptions(createRequestMock);
 
         checkUrlAndMethod(options, '/v1/serviceids/{id}/lock', 'DELETE');
-        const expectedAccept = 'application/json';
+        const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.path['id']).toEqual(id);

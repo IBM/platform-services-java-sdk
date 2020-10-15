@@ -325,7 +325,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .build();
             Response<Void> response = service.lockApiKey(lockApiKeyOptions).execute();
             assertNotNull(response);
-            assertEquals(response.getStatusCode(), 200);
+            assertEquals(response.getStatusCode(), 204);
 
             // Now retrieve the apikey and make sure it is locked.
             ApiKey apikey = getApikey(apikeyId2);
@@ -346,7 +346,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .build();
             Response<Void> response = service.unlockApiKey(unlockApiKeyOptions).execute();
             assertNotNull(response);
-            assertEquals(response.getStatusCode(), 200);
+            assertEquals(response.getStatusCode(), 204);
 
             // Now retrieve the apikey and make sure it is unlocked.
             ApiKey apikey = getApikey(apikeyId2);
@@ -532,15 +532,13 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .id(serviceId1)
                     .build();
 
-            Response<ServiceId> response = service.lockServiceId(lockServiceIdOptions).execute();
+            Response<Void> response = service.lockServiceId(lockServiceIdOptions).execute();
             assertNotNull(response);
-            assertEquals(response.getStatusCode(), 200);
+            assertEquals(response.getStatusCode(), 204);
 
-            ServiceId serviceIdResult = response.getResult();
-            assertNotNull(serviceIdResult);
-            // System.out.println(String.format("\n>>> lockServiceId response:\n%s", serviceIdResult.toString()));
-
-            assertTrue(serviceIdResult.isLocked());
+            ServiceId serviceId = getServiceId(serviceId1);
+            assertNotNull(serviceId);
+            assertTrue(serviceId.isLocked());
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -555,15 +553,13 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .id(serviceId1)
                     .build();
 
-            Response<ServiceId> response = service.unlockServiceId(unlockServiceIdOptions).execute();
+            Response<Void> response = service.unlockServiceId(unlockServiceIdOptions).execute();
             assertNotNull(response);
-            assertEquals(response.getStatusCode(), 200);
+            assertEquals(response.getStatusCode(), 204);
 
-            ServiceId serviceIdResult = response.getResult();
-            assertNotNull(serviceIdResult);
-            // System.out.println(String.format("\n>>> unlockServiceId response:\n%s", serviceIdResult.toString()));
-
-            assertFalse(serviceIdResult.isLocked());
+            ServiceId serviceId = getServiceId(serviceId1);
+            assertNotNull(serviceId);
+            assertFalse(serviceId.isLocked());
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

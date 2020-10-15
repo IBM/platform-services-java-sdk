@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-6748b103-20200928-080640
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-fc98139c-20201015-143541
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -581,9 +581,9 @@ public class IamIdentity extends BaseService {
    * account owner, a IBM Cloud org manager or IBM Cloud space developer in order to manage service IDs of the entity.
    *
    * @param lockServiceIdOptions the {@link LockServiceIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ServiceId}
+   * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<ServiceId> lockServiceId(LockServiceIdOptions lockServiceIdOptions) {
+  public ServiceCall<Void> lockServiceId(LockServiceIdOptions lockServiceIdOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(lockServiceIdOptions,
       "lockServiceIdOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -593,9 +593,7 @@ public class IamIdentity extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    builder.header("Accept", "application/json");
-    ResponseConverter<ServiceId> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceId>() { }.getType());
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -608,9 +606,9 @@ public class IamIdentity extends BaseService {
    * entity.
    *
    * @param unlockServiceIdOptions the {@link UnlockServiceIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ServiceId}
+   * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<ServiceId> unlockServiceId(UnlockServiceIdOptions unlockServiceIdOptions) {
+  public ServiceCall<Void> unlockServiceId(UnlockServiceIdOptions unlockServiceIdOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(unlockServiceIdOptions,
       "unlockServiceIdOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -620,9 +618,7 @@ public class IamIdentity extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    builder.header("Accept", "application/json");
-    ResponseConverter<ServiceId> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceId>() { }.getType());
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 

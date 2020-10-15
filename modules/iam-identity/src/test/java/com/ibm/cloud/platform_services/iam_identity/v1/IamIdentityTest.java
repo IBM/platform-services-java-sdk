@@ -414,7 +414,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     String lockApiKeyPath = "/v1/apikeys/testString/lock";
 
     server.enqueue(new MockResponse()
-    .setResponseCode(200)
+    .setResponseCode(204)
     .setBody(mockResponseBody));
 
     constructClientService();
@@ -464,7 +464,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     String unlockApiKeyPath = "/v1/apikeys/testString/lock";
 
     server.enqueue(new MockResponse()
-    .setResponseCode(200)
+    .setResponseCode(204)
     .setBody(mockResponseBody));
 
     constructClientService();
@@ -783,12 +783,11 @@ public class IamIdentityTest extends PowerMockTestCase {
   @Test
   public void testLockServiceIdWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"createdAt\", \"modified_at\": \"modifiedAt\", \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"modified_at\": \"modifiedAt\", \"name\": \"name\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}]}}";
+    String mockResponseBody = "";
     String lockServiceIdPath = "/v1/serviceids/testString/lock";
 
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
+    .setResponseCode(204)
     .setBody(mockResponseBody));
 
     constructClientService();
@@ -799,10 +798,11 @@ public class IamIdentityTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ServiceId> response = iamIdentityService.lockServiceId(lockServiceIdOptionsModel).execute();
+    Response<Void> response = iamIdentityService.lockServiceId(lockServiceIdOptionsModel).execute();
     assertNotNull(response);
-    ServiceId responseObj = response.getResult();
-    assertNotNull(responseObj);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
 
     // Verify the contents of the request
     RecordedRequest request = server.takeRequest();
@@ -833,12 +833,11 @@ public class IamIdentityTest extends PowerMockTestCase {
   @Test
   public void testUnlockServiceIdWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"createdAt\", \"modified_at\": \"modifiedAt\", \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"modified_at\": \"modifiedAt\", \"name\": \"name\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}]}}";
+    String mockResponseBody = "";
     String unlockServiceIdPath = "/v1/serviceids/testString/lock";
 
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
+    .setResponseCode(204)
     .setBody(mockResponseBody));
 
     constructClientService();
@@ -849,10 +848,11 @@ public class IamIdentityTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ServiceId> response = iamIdentityService.unlockServiceId(unlockServiceIdOptionsModel).execute();
+    Response<Void> response = iamIdentityService.unlockServiceId(unlockServiceIdOptionsModel).execute();
     assertNotNull(response);
-    ServiceId responseObj = response.getResult();
-    assertNotNull(responseObj);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
 
     // Verify the contents of the request
     RecordedRequest request = server.takeRequest();

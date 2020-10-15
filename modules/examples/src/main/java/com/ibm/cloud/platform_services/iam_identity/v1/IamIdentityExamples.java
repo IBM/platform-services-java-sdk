@@ -287,9 +287,7 @@ public class IamIdentityExamples {
                     .id(svcId)
                     .build();
 
-            Response<ServiceId> response = service.lockServiceId(lockServiceIdOptions).execute();
-            ServiceId serviceId = response.getResult();
-            System.out.println(serviceId.toString());
+            service.lockServiceId(lockServiceIdOptions).execute();
             // end-lock_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -302,9 +300,7 @@ public class IamIdentityExamples {
                     .id(svcId)
                     .build();
 
-            Response<ServiceId> response = service.unlockServiceId(unlockServiceIdOptions).execute();
-            ServiceId serviceId = response.getResult();
-            System.out.println(serviceId.toString());
+            service.unlockServiceId(unlockServiceIdOptions).execute();
             // end-unlock_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

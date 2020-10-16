@@ -34,7 +34,7 @@ import static org.testng.AssertJUnit.assertNotNull;
  * Integration test class for the IamAccessGroups service.
  */
 public class OpenServiceBrokerIT extends SdkIntegrationTestBase {
-    
+
     private static final String TEST_ACCOUNT_ID = "bc2b2fca0af84354a916dc1de6eee42e";
     private static final String TEST_RESOURCE_GROUP_ID = "13aa3ee48c3b44ddb64c05c79f7ab8ef";
     private static final String TEST_ORG_ID = "d35d4f0e-5076-4c89-9361-2522894b6548";
@@ -46,7 +46,7 @@ public class OpenServiceBrokerIT extends SdkIntegrationTestBase {
     private static final String TEST_BINDING_ID = "crn:v1:staging:public:bss-monitor:us-south:a/bc2b2fca0af84354a916dc1de6eee42e:sdkTestInstance:resource-binding:sdkTestBinding";
     private static final String TEST_INSTANCE_ID_ESCAPED = "crn%3Av1%3Astaging%3Apublic%3Abss-monitor%3Aglobal%3Aa%2Fbc2b2fca0af84354a916dc1de6eee42e%3AsdkTestInstance%3A%3A";
     private static final String TEST_BINDING_ID_ESCAPED = "crn%3Av1%3Astaging%3Apublic%3Abss-monitor%3Aus-south%3Aa%2Fbc2b2fca0af84354a916dc1de6eee42e%3AsdkTestInstance%3Aresource-binding%3AsdkTestBinding";
-    private static final String TEST_DASHBOARD_URL = "http://www.example.com/crn%3Av1%3Astaging%3Apublic%3Abss-monitor%3Aglobal%3Aa%2Fbc2b2fca0af84354a916dc1de6eee42e%3AsdkTestInstance%3A%3A";
+    private static final String TEST_DASHBOARD_URL = "https://www.example.com/crn%3Av1%3Astaging%3Apublic%3Abss-monitor%3Aglobal%3Aa%2Fbc2b2fca0af84354a916dc1de6eee42e%3AsdkTestInstance%3A%3A";
     private static final String TEST_SERVICE_ID  = "a10e46ae-3685-11e9-b210-d663bd873d93";
     private static final String TEST_REASON_CODE = "test_reason";
     private static final String TEST_INITIATOR_ID = "test_initiator";

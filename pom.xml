@@ -60,6 +60,7 @@
         <module>modules/open-service-broker</module>
         <module>modules/resource-controller</module>
         <module>modules/resource-manager</module>
+        <module>modules/usage-reports</module>
         <module>modules/user-management</module>
 
         <module>modules/examples</module>

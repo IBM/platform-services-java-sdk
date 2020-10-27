@@ -59,6 +59,7 @@ Service Name | Artifact Coordinates
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | com.ibm.cloud:open-service-broker:0.13.2
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | com.ibm.cloud:resource-controller:0.13.2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | com.ibm.cloud:resource-manager:0.13.2
+[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | com.ibm.cloud:usage-reports:0.13.2
 [User Management](https://cloud.ibm.com/apidocs/user-management) | com.ibm.cloud:user-management:0.13.2
 
 ## Prerequisites

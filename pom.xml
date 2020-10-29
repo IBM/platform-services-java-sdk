@@ -11,6 +11,8 @@
     <url>https://github.com/IBM/platform-services-java-sdk</url>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <!-- This is the version associated with the Java core. -->
         <sdk-core-version>9.4.0</sdk-core-version>
 

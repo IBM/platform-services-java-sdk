@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
  */
  
 
@@ -113,38 +113,36 @@ class IamPolicyManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account_id': _params.accountId,
-        'iam_id': _params.iamId,
-        'access_group_id': _params.accessGroupId,
-        'type': _params.type,
-        'service_type': _params.serviceType
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'iam_id': _params.iamId,
+      'access_group_id': _params.accessGroupId,
+      'type': _params.type,
+      'service_type': _params.serviceType
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listPolicies');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listPolicies');
 
-      const parameters = {
-        options: {
-          url: '/v1/policies',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Accept-Language': _params.acceptLanguage
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/policies',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Accept-Language': _params.acceptLanguage
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -184,38 +182,36 @@ class IamPolicyManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['type', 'subjects', 'roles', 'resources'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'type': _params.type,
-        'subjects': _params.subjects,
-        'roles': _params.roles,
-        'resources': _params.resources
-      };
+    const body = {
+      'type': _params.type,
+      'subjects': _params.subjects,
+      'roles': _params.roles,
+      'resources': _params.resources
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createPolicy');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createPolicy');
 
-      const parameters = {
-        options: {
-          url: '/v1/policies',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Accept-Language': _params.acceptLanguage
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/policies',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Accept-Language': _params.acceptLanguage
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -255,43 +251,41 @@ class IamPolicyManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['policyId', 'ifMatch', 'type', 'subjects', 'roles', 'resources'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'type': _params.type,
-        'subjects': _params.subjects,
-        'roles': _params.roles,
-        'resources': _params.resources
-      };
+    const body = {
+      'type': _params.type,
+      'subjects': _params.subjects,
+      'roles': _params.roles,
+      'resources': _params.resources
+    };
 
-      const path = {
-        'policy_id': _params.policyId
-      };
+    const path = {
+      'policy_id': _params.policyId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updatePolicy');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updatePolicy');
 
-      const parameters = {
-        options: {
-          url: '/v1/policies/{policy_id}',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'If-Match': _params.ifMatch
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/policies/{policy_id}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'If-Match': _params.ifMatch
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -308,33 +302,31 @@ class IamPolicyManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['policyId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'policy_id': _params.policyId
-      };
+    const path = {
+      'policy_id': _params.policyId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getPolicy');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getPolicy');
 
-      const parameters = {
-        options: {
-          url: '/v1/policies/{policy_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/policies/{policy_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -352,32 +344,30 @@ class IamPolicyManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['policyId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'policy_id': _params.policyId
-      };
+    const path = {
+      'policy_id': _params.policyId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deletePolicy');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deletePolicy');
 
-      const parameters = {
-        options: {
-          url: '/v1/policies/{policy_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/policies/{policy_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -402,30 +392,28 @@ class IamPolicyManagementV1 extends BaseService {
   public listRoles(params?: IamPolicyManagementV1.ListRolesParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.RoleList>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'account_id': _params.accountId,
-        'service_name': _params.serviceName
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'service_name': _params.serviceName
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listRoles');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listRoles');
 
-      const parameters = {
-        options: {
-          url: '/v2/roles',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Accept-Language': _params.acceptLanguage
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/roles',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Accept-Language': _params.acceptLanguage
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -452,40 +440,38 @@ class IamPolicyManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['displayName', 'actions', 'name', 'accountId', 'serviceName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'display_name': _params.displayName,
-        'actions': _params.actions,
-        'name': _params.name,
-        'account_id': _params.accountId,
-        'service_name': _params.serviceName,
-        'description': _params.description
-      };
+    const body = {
+      'display_name': _params.displayName,
+      'actions': _params.actions,
+      'name': _params.name,
+      'account_id': _params.accountId,
+      'service_name': _params.serviceName,
+      'description': _params.description
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createRole');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createRole');
 
-      const parameters = {
-        options: {
-          url: '/v2/roles',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Accept-Language': _params.acceptLanguage
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/roles',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Accept-Language': _params.acceptLanguage
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -509,42 +495,40 @@ class IamPolicyManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['roleId', 'ifMatch'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'display_name': _params.displayName,
-        'description': _params.description,
-        'actions': _params.actions
-      };
+    const body = {
+      'display_name': _params.displayName,
+      'description': _params.description,
+      'actions': _params.actions
+    };
 
-      const path = {
-        'role_id': _params.roleId
-      };
+    const path = {
+      'role_id': _params.roleId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateRole');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateRole');
 
-      const parameters = {
-        options: {
-          url: '/v2/roles/{role_id}',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'If-Match': _params.ifMatch
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/roles/{role_id}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'If-Match': _params.ifMatch
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -561,33 +545,31 @@ class IamPolicyManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['roleId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'role_id': _params.roleId
-      };
+    const path = {
+      'role_id': _params.roleId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getRole');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getRole');
 
-      const parameters = {
-        options: {
-          url: '/v2/roles/{role_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/roles/{role_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -604,32 +586,30 @@ class IamPolicyManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['roleId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'role_id': _params.roleId
-      };
+    const path = {
+      'role_id': _params.roleId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteRole');
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteRole');
 
-      const parameters = {
-        options: {
-          url: '/v2/roles/{role_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/roles/{role_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
 }

@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
  */
  
 
@@ -112,34 +112,32 @@ class UserManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'account_id': _params.accountId,
-        'iam_id': _params.iamId
-      };
+    const path = {
+      'account_id': _params.accountId,
+      'iam_id': _params.iamId
+    };
 
-      const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getUserSettings');
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getUserSettings');
 
-      const parameters = {
-        options: {
-          url: '/v2/accounts/{account_id}/users/{iam_id}/settings',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/accounts/{account_id}/users/{iam_id}/settings',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -165,43 +163,41 @@ class UserManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'language': _params.language,
-        'notification_language': _params.notificationLanguage,
-        'allowed_ip_addresses': _params.allowedIpAddresses,
-        'self_manage': _params.selfManage
-      };
+    const body = {
+      'language': _params.language,
+      'notification_language': _params.notificationLanguage,
+      'allowed_ip_addresses': _params.allowedIpAddresses,
+      'self_manage': _params.selfManage
+    };
 
-      const path = {
-        'account_id': _params.accountId,
-        'iam_id': _params.iamId
-      };
+    const path = {
+      'account_id': _params.accountId,
+      'iam_id': _params.iamId
+    };
 
-      const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserSettings');
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserSettings');
 
-      const parameters = {
-        options: {
-          url: '/v2/accounts/{account_id}/users/{iam_id}/settings',
-          method: 'PATCH',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/accounts/{account_id}/users/{iam_id}/settings',
+        method: 'PATCH',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -229,38 +225,36 @@ class UserManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'state': _params.state
-      };
+    const query = {
+      'state': _params.state
+    };
 
-      const path = {
-        'account_id': _params.accountId
-      };
+    const path = {
+      'account_id': _params.accountId
+    };
 
-      const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listUsers');
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listUsers');
 
-      const parameters = {
-        options: {
-          url: '/v2/accounts/{account_id}/users',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/accounts/{account_id}/users',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -288,41 +282,39 @@ class UserManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'users': _params.users,
-        'iam_policy': _params.iamPolicy,
-        'access_groups': _params.accessGroups
-      };
+    const body = {
+      'users': _params.users,
+      'iam_policy': _params.iamPolicy,
+      'access_groups': _params.accessGroups
+    };
 
-      const path = {
-        'account_id': _params.accountId
-      };
+    const path = {
+      'account_id': _params.accountId
+    };
 
-      const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'inviteUsers');
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'inviteUsers');
 
-      const parameters = {
-        options: {
-          url: '/v2/accounts/{account_id}/users',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/accounts/{account_id}/users',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -342,34 +334,32 @@ class UserManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'account_id': _params.accountId,
-        'iam_id': _params.iamId
-      };
+    const path = {
+      'account_id': _params.accountId,
+      'iam_id': _params.iamId
+    };
 
-      const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getUserProfile');
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getUserProfile');
 
-      const parameters = {
-        options: {
-          url: '/v2/accounts/{account_id}/users/{iam_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/accounts/{account_id}/users/{iam_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -400,45 +390,43 @@ class UserManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'firstname': _params.firstname,
-        'lastname': _params.lastname,
-        'state': _params.state,
-        'email': _params.email,
-        'phonenumber': _params.phonenumber,
-        'altphonenumber': _params.altphonenumber,
-        'photo': _params.photo
-      };
+    const body = {
+      'firstname': _params.firstname,
+      'lastname': _params.lastname,
+      'state': _params.state,
+      'email': _params.email,
+      'phonenumber': _params.phonenumber,
+      'altphonenumber': _params.altphonenumber,
+      'photo': _params.photo
+    };
 
-      const path = {
-        'account_id': _params.accountId,
-        'iam_id': _params.iamId
-      };
+    const path = {
+      'account_id': _params.accountId,
+      'iam_id': _params.iamId
+    };
 
-      const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserProfiles');
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserProfiles');
 
-      const parameters = {
-        options: {
-          url: '/v2/accounts/{account_id}/users/{iam_id}',
-          method: 'PATCH',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/accounts/{account_id}/users/{iam_id}',
+        method: 'PATCH',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -459,33 +447,31 @@ class UserManagementV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'account_id': _params.accountId,
-        'iam_id': _params.iamId
-      };
+    const path = {
+      'account_id': _params.accountId,
+      'iam_id': _params.iamId
+    };
 
-      const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'removeUsers');
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'removeUsers');
 
-      const parameters = {
-        options: {
-          url: '/v2/accounts/{account_id}/users/{iam_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/accounts/{account_id}/users/{iam_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
 }

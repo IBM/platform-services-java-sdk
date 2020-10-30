@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
  */
  
 
@@ -129,34 +129,32 @@ class GlobalCatalogV1 extends BaseService {
   public listCatalogEntries(params?: GlobalCatalogV1.ListCatalogEntriesParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'account': _params.account,
-        'include': _params.include,
-        'q': _params.q,
-        'sort-by': _params.sortBy,
-        'descending': _params.descending,
-        'languages': _params.languages,
-        'complete': _params.complete
-      };
+    const query = {
+      'account': _params.account,
+      'include': _params.include,
+      'q': _params.q,
+      'sort-by': _params.sortBy,
+      'descending': _params.descending,
+      'languages': _params.languages,
+      'complete': _params.complete
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'listCatalogEntries');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'listCatalogEntries');
 
-      const parameters = {
-        options: {
-          url: '/',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -193,50 +191,48 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider', 'id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'kind': _params.kind,
-        'overview_ui': _params.overviewUi,
-        'images': _params.images,
-        'disabled': _params.disabled,
-        'tags': _params.tags,
-        'provider': _params.provider,
-        'id': _params.id,
-        'parent_id': _params.parentId,
-        'group': _params.group,
-        'active': _params.active,
-        'metadata': _params.metadata
-      };
+    const body = {
+      'name': _params.name,
+      'kind': _params.kind,
+      'overview_ui': _params.overviewUi,
+      'images': _params.images,
+      'disabled': _params.disabled,
+      'tags': _params.tags,
+      'provider': _params.provider,
+      'id': _params.id,
+      'parent_id': _params.parentId,
+      'group': _params.group,
+      'active': _params.active,
+      'metadata': _params.metadata
+    };
 
-      const query = {
-        'account': _params.account
-      };
+    const query = {
+      'account': _params.account
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'createCatalogEntry');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'createCatalogEntry');
 
-      const parameters = {
-        options: {
-          url: '/',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -270,42 +266,40 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account,
-        'include': _params.include,
-        'languages': _params.languages,
-        'complete': _params.complete,
-        'depth': _params.depth
-      };
+    const query = {
+      'account': _params.account,
+      'include': _params.include,
+      'languages': _params.languages,
+      'complete': _params.complete,
+      'depth': _params.depth
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalogEntry');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalogEntry');
 
-      const parameters = {
-        options: {
-          url: '/{id}',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -345,55 +339,53 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id', 'name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'kind': _params.kind,
-        'overview_ui': _params.overviewUi,
-        'images': _params.images,
-        'disabled': _params.disabled,
-        'tags': _params.tags,
-        'provider': _params.provider,
-        'parent_id': _params.parentId,
-        'group': _params.group,
-        'active': _params.active,
-        'metadata': _params.metadata
-      };
+    const body = {
+      'name': _params.name,
+      'kind': _params.kind,
+      'overview_ui': _params.overviewUi,
+      'images': _params.images,
+      'disabled': _params.disabled,
+      'tags': _params.tags,
+      'provider': _params.provider,
+      'parent_id': _params.parentId,
+      'group': _params.group,
+      'active': _params.active,
+      'metadata': _params.metadata
+    };
 
-      const query = {
-        'account': _params.account,
-        'move': _params.move
-      };
+    const query = {
+      'account': _params.account,
+      'move': _params.move
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCatalogEntry');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCatalogEntry');
 
-      const parameters = {
-        options: {
-          url: '/{id}',
-          method: 'PUT',
-          body,
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{id}',
+        method: 'PUT',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -417,38 +409,36 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account,
-        'force': _params.force
-      };
+    const query = {
+      'account': _params.account,
+      'force': _params.force
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCatalogEntry');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCatalogEntry');
 
-      const parameters = {
-        options: {
-          url: '/{id}',
-          method: 'DELETE',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -483,45 +473,43 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id', 'kind'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account,
-        'include': _params.include,
-        'q': _params.q,
-        'sort-by': _params.sortBy,
-        'descending': _params.descending,
-        'languages': _params.languages,
-        'complete': _params.complete
-      };
+    const query = {
+      'account': _params.account,
+      'include': _params.include,
+      'q': _params.q,
+      'sort-by': _params.sortBy,
+      'descending': _params.descending,
+      'languages': _params.languages,
+      'complete': _params.complete
+    };
 
-      const path = {
-        'id': _params.id,
-        'kind': _params.kind
-      };
+    const path = {
+      'id': _params.id,
+      'kind': _params.kind
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getChildObjects');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getChildObjects');
 
-      const parameters = {
-        options: {
-          url: '/{id}/{kind}',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{id}/{kind}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -541,37 +529,35 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account
-      };
+    const query = {
+      'account': _params.account
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'restoreCatalogEntry');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'restoreCatalogEntry');
 
-      const parameters = {
-        options: {
-          url: '/{id}/restore',
-          method: 'PUT',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{id}/restore',
+        method: 'PUT',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -597,38 +583,36 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account
-      };
+    const query = {
+      'account': _params.account
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getVisibility');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getVisibility');
 
-      const parameters = {
-        options: {
-          url: '/{id}/visibility',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{id}/visibility',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -652,45 +636,43 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'extendable': _params.extendable,
-        'include': _params.include,
-        'exclude': _params.exclude
-      };
+    const body = {
+      'extendable': _params.extendable,
+      'include': _params.include,
+      'exclude': _params.exclude
+    };
 
-      const query = {
-        'account': _params.account
-      };
+    const query = {
+      'account': _params.account
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'updateVisibility');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'updateVisibility');
 
-      const parameters = {
-        options: {
-          url: '/{id}/visibility',
-          method: 'PUT',
-          body,
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{id}/visibility',
+        method: 'PUT',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -715,38 +697,36 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account
-      };
+    const query = {
+      'account': _params.account
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getPricing');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getPricing');
 
-      const parameters = {
-        options: {
-          url: '/{id}/pricing',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{id}/pricing',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -780,42 +760,40 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account,
-        'ascending': _params.ascending,
-        'startat': _params.startat,
-        '_offset': _params.offset,
-        '_limit': _params.limit
-      };
+    const query = {
+      'account': _params.account,
+      'ascending': _params.ascending,
+      'startat': _params.startat,
+      '_offset': _params.offset,
+      '_limit': _params.limit
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getAuditLogs');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getAuditLogs');
 
-      const parameters = {
-        options: {
-          url: '/{id}/logs',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{id}/logs',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -839,38 +817,36 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['objectId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account
-      };
+    const query = {
+      'account': _params.account
+    };
 
-      const path = {
-        'object_id': _params.objectId
-      };
+    const path = {
+      'object_id': _params.objectId
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'listArtifacts');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'listArtifacts');
 
-      const parameters = {
-        options: {
-          url: '/{object_id}/artifacts',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{object_id}/artifacts',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -892,40 +868,38 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['objectId', 'artifactId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account
-      };
+    const query = {
+      'account': _params.account
+    };
 
-      const path = {
-        'object_id': _params.objectId,
-        'artifact_id': _params.artifactId
-      };
+    const path = {
+      'object_id': _params.objectId,
+      'artifact_id': _params.artifactId
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getArtifact');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getArtifact');
 
-      const parameters = {
-        options: {
-          url: '/{object_id}/artifacts/{artifact_id}',
-          method: 'GET',
-          qs: query,
-          path,
-          responseType: 'stream',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': _params.accept
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{object_id}/artifacts/{artifact_id}',
+        method: 'GET',
+        qs: query,
+        path,
+        responseType: 'stream',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': _params.accept
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -948,41 +922,39 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['objectId', 'artifactId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = _params.artifact;
-      const query = {
-        'account': _params.account
-      };
+    const body = _params.artifact;
+    const query = {
+      'account': _params.account
+    };
 
-      const path = {
-        'object_id': _params.objectId,
-        'artifact_id': _params.artifactId
-      };
+    const path = {
+      'object_id': _params.objectId,
+      'artifact_id': _params.artifactId
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'uploadArtifact');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'uploadArtifact');
 
-      const parameters = {
-        options: {
-          url: '/{object_id}/artifacts/{artifact_id}',
-          method: 'PUT',
-          body,
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Content-Type': _params.contentType
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{object_id}/artifacts/{artifact_id}',
+        method: 'PUT',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': _params.contentType
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1003,38 +975,36 @@ class GlobalCatalogV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['objectId', 'artifactId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account': _params.account
-      };
+    const query = {
+      'account': _params.account
+    };
 
-      const path = {
-        'object_id': _params.objectId,
-        'artifact_id': _params.artifactId
-      };
+    const path = {
+      'object_id': _params.objectId,
+      'artifact_id': _params.artifactId
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteArtifact');
+    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteArtifact');
 
-      const parameters = {
-        options: {
-          url: '/{object_id}/artifacts/{artifact_id}',
-          method: 'DELETE',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/{object_id}/artifacts/{artifact_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
 }

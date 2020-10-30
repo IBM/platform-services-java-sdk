@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
  */
  
 
@@ -113,41 +113,39 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'name'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'description': _params.description
-      };
+    const body = {
+      'name': _params.name,
+      'description': _params.description
+    };
 
-      const query = {
-        'account_id': _params.accountId
-      };
+    const query = {
+      'account_id': _params.accountId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'createAccessGroup');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'createAccessGroup');
 
-      const parameters = {
-        options: {
-          url: '/groups',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -176,40 +174,38 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account_id': _params.accountId,
-        'iam_id': _params.iamId,
-        'limit': _params.limit,
-        'offset': _params.offset,
-        'sort': _params.sort,
-        'show_federated': _params.showFederated,
-        'hide_public_access': _params.hidePublicAccess
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'iam_id': _params.iamId,
+      'limit': _params.limit,
+      'offset': _params.offset,
+      'sort': _params.sort,
+      'show_federated': _params.showFederated,
+      'hide_public_access': _params.hidePublicAccess
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'listAccessGroups');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'listAccessGroups');
 
-      const parameters = {
-        options: {
-          url: '/groups',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -231,39 +227,37 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'show_federated': _params.showFederated
-      };
+    const query = {
+      'show_federated': _params.showFederated
+    };
 
-      const path = {
-        'access_group_id': _params.accessGroupId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'getAccessGroup');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'getAccessGroup');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -288,42 +282,40 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'ifMatch'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'description': _params.description
-      };
+    const body = {
+      'name': _params.name,
+      'description': _params.description
+    };
 
-      const path = {
-        'access_group_id': _params.accessGroupId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'updateAccessGroup');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'updateAccessGroup');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}',
-          method: 'PATCH',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'If-Match': _params.ifMatch,
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}',
+        method: 'PATCH',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'If-Match': _params.ifMatch,
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -344,38 +336,36 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'force': _params.force
-      };
+    const query = {
+      'force': _params.force
+    };
 
-      const path = {
-        'access_group_id': _params.accessGroupId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteAccessGroup');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteAccessGroup');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}',
-          method: 'DELETE',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -397,34 +387,32 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account_id': _params.accountId
-      };
+    const query = {
+      'account_id': _params.accountId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'getAccountSettings');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'getAccountSettings');
 
-      const parameters = {
-        options: {
-          url: '/groups/settings',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/settings',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -447,40 +435,38 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'public_access_enabled': _params.publicAccessEnabled
-      };
+    const body = {
+      'public_access_enabled': _params.publicAccessEnabled
+    };
 
-      const query = {
-        'account_id': _params.accountId
-      };
+    const query = {
+      'account_id': _params.accountId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'updateAccountSettings');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'updateAccountSettings');
 
-      const parameters = {
-        options: {
-          url: '/groups/settings',
-          method: 'PATCH',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/settings',
+        method: 'PATCH',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -505,34 +491,32 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'iamId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'access_group_id': _params.accessGroupId,
-        'iam_id': _params.iamId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId,
+      'iam_id': _params.iamId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'isMemberOfAccessGroup');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'isMemberOfAccessGroup');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/members/{iam_id}',
-          method: 'HEAD',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/members/{iam_id}',
+        method: 'HEAD',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -555,40 +539,38 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'members': _params.members
-      };
+    const body = {
+      'members': _params.members
+    };
 
-      const path = {
-        'access_group_id': _params.accessGroupId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'addMembersToAccessGroup');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'addMembersToAccessGroup');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/members',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/members',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -614,43 +596,41 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'limit': _params.limit,
-        'offset': _params.offset,
-        'type': _params.type,
-        'verbose': _params.verbose,
-        'sort': _params.sort
-      };
+    const query = {
+      'limit': _params.limit,
+      'offset': _params.offset,
+      'type': _params.type,
+      'verbose': _params.verbose,
+      'sort': _params.sort
+    };
 
-      const path = {
-        'access_group_id': _params.accessGroupId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'listAccessGroupMembers');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'listAccessGroupMembers');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/members',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/members',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -670,34 +650,32 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'iamId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'access_group_id': _params.accessGroupId,
-        'iam_id': _params.iamId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId,
+      'iam_id': _params.iamId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'removeMemberFromAccessGroup');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'removeMemberFromAccessGroup');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/members/{iam_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/members/{iam_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -719,40 +697,38 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'members': _params.members
-      };
+    const body = {
+      'members': _params.members
+    };
 
-      const path = {
-        'access_group_id': _params.accessGroupId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'removeMembersFromAccessGroup');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'removeMembersFromAccessGroup');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/members/delete',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/members/delete',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -773,39 +749,37 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account_id': _params.accountId
-      };
+    const query = {
+      'account_id': _params.accountId
+    };
 
-      const path = {
-        'iam_id': _params.iamId
-      };
+    const path = {
+      'iam_id': _params.iamId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'removeMemberFromAllAccessGroups');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'removeMemberFromAllAccessGroups');
 
-      const parameters = {
-        options: {
-          url: '/groups/_allgroups/members/{iam_id}',
-          method: 'DELETE',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/_allgroups/members/{iam_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -828,46 +802,44 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'type': _params.type,
-        'groups': _params.groups
-      };
+    const body = {
+      'type': _params.type,
+      'groups': _params.groups
+    };
 
-      const query = {
-        'account_id': _params.accountId
-      };
+    const query = {
+      'account_id': _params.accountId
+    };
 
-      const path = {
-        'iam_id': _params.iamId
-      };
+    const path = {
+      'iam_id': _params.iamId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'addMemberToMultipleAccessGroups');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'addMemberToMultipleAccessGroups');
 
-      const parameters = {
-        options: {
-          url: '/groups/_allgroups/members/{iam_id}',
-          method: 'PUT',
-          body,
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/_allgroups/members/{iam_id}',
+        method: 'PUT',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -897,43 +869,41 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'expiration', 'realmName', 'conditions'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'expiration': _params.expiration,
-        'realm_name': _params.realmName,
-        'conditions': _params.conditions,
-        'name': _params.name
-      };
+    const body = {
+      'expiration': _params.expiration,
+      'realm_name': _params.realmName,
+      'conditions': _params.conditions,
+      'name': _params.name
+    };
 
-      const path = {
-        'access_group_id': _params.accessGroupId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'addAccessGroupRule');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'addAccessGroupRule');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/rules',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/rules',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -952,34 +922,32 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'access_group_id': _params.accessGroupId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'listAccessGroupRules');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'listAccessGroupRules');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/rules',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/rules',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -999,35 +967,33 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'ruleId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'access_group_id': _params.accessGroupId,
-        'rule_id': _params.ruleId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId,
+      'rule_id': _params.ruleId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'getAccessGroupRule');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'getAccessGroupRule');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/rules/{rule_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/rules/{rule_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1053,45 +1019,43 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'ruleId', 'ifMatch', 'expiration', 'realmName', 'conditions'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'expiration': _params.expiration,
-        'realm_name': _params.realmName,
-        'conditions': _params.conditions,
-        'name': _params.name
-      };
+    const body = {
+      'expiration': _params.expiration,
+      'realm_name': _params.realmName,
+      'conditions': _params.conditions,
+      'name': _params.name
+    };
 
-      const path = {
-        'access_group_id': _params.accessGroupId,
-        'rule_id': _params.ruleId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId,
+      'rule_id': _params.ruleId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'replaceAccessGroupRule');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'replaceAccessGroupRule');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/rules/{rule_id}',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'If-Match': _params.ifMatch,
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/rules/{rule_id}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'If-Match': _params.ifMatch,
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1111,34 +1075,32 @@ class IamAccessGroupsV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accessGroupId', 'ruleId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'access_group_id': _params.accessGroupId,
-        'rule_id': _params.ruleId
-      };
+    const path = {
+      'access_group_id': _params.accessGroupId,
+      'rule_id': _params.ruleId
+    };
 
-      const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'removeAccessGroupRule');
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'removeAccessGroupRule');
 
-      const parameters = {
-        options: {
-          url: '/groups/{access_group_id}/rules/{rule_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/groups/{access_group_id}/rules/{rule_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
 }

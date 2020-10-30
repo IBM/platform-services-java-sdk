@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ */
+ 
+
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
@@ -96,25 +101,23 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Account>>}
    */
   public getCatalogAccount(params?: CatalogManagementV1.GetCatalogAccountParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Account>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalogAccount');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalogAccount');
 
-      const parameters = {
-        options: {
-          url: '/catalogaccount',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogaccount',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -127,31 +130,63 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public updateCatalogAccount(params?: CatalogManagementV1.UpdateCatalogAccountParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const body = {
-        'id': _params.id,
-        'account_filters': _params.accountFilters
-      };
+    const body = {
+      'id': _params.id,
+      'account_filters': _params.accountFilters
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCatalogAccount');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCatalogAccount');
 
-      const parameters = {
-        options: {
-          url: '/catalogaccount',
-          method: 'PUT',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogaccount',
+        method: 'PUT',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get the audit log(s) for catalog account.
+   *
+   * Get the audit log(s) for catalog account.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.id] - Log identification.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public getCatalogAccountAudit(params?: CatalogManagementV1.GetCatalogAccountAuditParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = Object.assign({}, params);
+
+    const query = {
+      'id': _params.id
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalogAccountAudit');
+
+    const parameters = {
+      options: {
+        url: '/catalogaccount/audit',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -165,30 +200,28 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.AccumulatedFilters>>}
    */
   public getCatalogAccountFilters(params?: CatalogManagementV1.GetCatalogAccountFiltersParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.AccumulatedFilters>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'catalog': _params.catalog
-      };
+    const query = {
+      'catalog': _params.catalog
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalogAccountFilters');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalogAccountFilters');
 
-      const parameters = {
-        options: {
-          url: '/catalogaccount/filters',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogaccount/filters',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -205,25 +238,23 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.CatalogSearchResult>>}
    */
   public listCatalogs(params?: CatalogManagementV1.ListCatalogsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.CatalogSearchResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listCatalogs');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listCatalogs');
 
-      const parameters = {
-        options: {
-          url: '/catalogs',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -253,47 +284,45 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>>}
    */
   public createCatalog(params?: CatalogManagementV1.CreateCatalogParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const body = {
-        'id': _params.id,
-        '_rev': _params.rev,
-        'label': _params.label,
-        'short_description': _params.shortDescription,
-        'catalog_icon_url': _params.catalogIconUrl,
-        'tags': _params.tags,
-        'url': _params.url,
-        'crn': _params.crn,
-        'offerings_url': _params.offeringsUrl,
-        'features': _params.features,
-        'disabled': _params.disabled,
-        'created': _params.created,
-        'updated': _params.updated,
-        'resource_group_id': _params.resourceGroupId,
-        'owning_account': _params.owningAccount,
-        'catalog_filters': _params.catalogFilters,
-        'syndication_settings': _params.syndicationSettings
-      };
+    const body = {
+      'id': _params.id,
+      '_rev': _params.rev,
+      'label': _params.label,
+      'short_description': _params.shortDescription,
+      'catalog_icon_url': _params.catalogIconUrl,
+      'tags': _params.tags,
+      'url': _params.url,
+      'crn': _params.crn,
+      'offerings_url': _params.offeringsUrl,
+      'features': _params.features,
+      'disabled': _params.disabled,
+      'created': _params.created,
+      'updated': _params.updated,
+      'resource_group_id': _params.resourceGroupId,
+      'owning_account': _params.owningAccount,
+      'catalog_filters': _params.catalogFilters,
+      'syndication_settings': _params.syndicationSettings
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createCatalog');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createCatalog');
 
-      const parameters = {
-        options: {
-          url: '/catalogs',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -307,36 +336,34 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>>}
    */
   public getCatalog(params: CatalogManagementV1.GetCatalogParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalog');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalog');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -367,58 +394,56 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>>}
    */
   public replaceCatalog(params: CatalogManagementV1.ReplaceCatalogParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'id': _params.id,
-        '_rev': _params.rev,
-        'label': _params.label,
-        'short_description': _params.shortDescription,
-        'catalog_icon_url': _params.catalogIconUrl,
-        'tags': _params.tags,
-        'url': _params.url,
-        'crn': _params.crn,
-        'offerings_url': _params.offeringsUrl,
-        'features': _params.features,
-        'disabled': _params.disabled,
-        'created': _params.created,
-        'updated': _params.updated,
-        'resource_group_id': _params.resourceGroupId,
-        'owning_account': _params.owningAccount,
-        'catalog_filters': _params.catalogFilters,
-        'syndication_settings': _params.syndicationSettings
-      };
+    const body = {
+      'id': _params.id,
+      '_rev': _params.rev,
+      'label': _params.label,
+      'short_description': _params.shortDescription,
+      'catalog_icon_url': _params.catalogIconUrl,
+      'tags': _params.tags,
+      'url': _params.url,
+      'crn': _params.crn,
+      'offerings_url': _params.offeringsUrl,
+      'features': _params.features,
+      'disabled': _params.disabled,
+      'created': _params.created,
+      'updated': _params.updated,
+      'resource_group_id': _params.resourceGroupId,
+      'owning_account': _params.owningAccount,
+      'catalog_filters': _params.catalogFilters,
+      'syndication_settings': _params.syndicationSettings
+    };
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceCatalog');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceCatalog');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -432,35 +457,79 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public deleteCatalog(params: CatalogManagementV1.DeleteCatalogParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCatalog');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCatalog');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get the audit log(s) for catalog.
+   *
+   * Get the audit log(s) for catalog.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} [params.id] - Log identification.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public getCatalogAudit(params: CatalogManagementV1.GetCatalogAuditParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'id': _params.id
+    };
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalogAudit');
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/audit',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -478,36 +547,34 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Enterprise>>}
    */
   public getEnterprise(params: CatalogManagementV1.GetEnterpriseParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Enterprise>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['enterpriseId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'enterprise_id': _params.enterpriseId
-      };
+    const path = {
+      'enterprise_id': _params.enterpriseId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getEnterprise');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getEnterprise');
 
-      const parameters = {
-        options: {
-          url: '/enterprises/{enterprise_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/enterprises/{enterprise_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -523,44 +590,88 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public replaceEnterprise(params: CatalogManagementV1.ReplaceEnterpriseParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['enterpriseId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'id': _params.id,
-        '_rev': _params.rev,
-        'account_filters': _params.accountFilters,
-        'account_groups': _params.accountGroups
-      };
+    const body = {
+      'id': _params.id,
+      '_rev': _params.rev,
+      'account_filters': _params.accountFilters,
+      'account_groups': _params.accountGroups
+    };
 
-      const path = {
-        'enterprise_id': _params.enterpriseId
-      };
+    const path = {
+      'enterprise_id': _params.enterpriseId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceEnterprise');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceEnterprise');
 
-      const parameters = {
-        options: {
-          url: '/enterprises/{enterprise_id}',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/enterprises/{enterprise_id}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get the audit log(s) for enterprises.
+   *
+   * Get the audit log(s) for enterprises.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.enterpriseId - Enterprise identification.
+   * @param {string} [params.id] - Log identification.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public getEnterprisesAudit(params: CatalogManagementV1.GetEnterprisesAuditParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['enterpriseId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'id': _params.id
+    };
+
+    const path = {
+      'enterprise_id': _params.enterpriseId
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getEnterprisesAudit');
+
+    const parameters = {
+      options: {
+        url: '/enterprises/{enterprise_id}/audit',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -582,37 +693,39 @@ class CatalogManagementV1 extends BaseService {
    * private offerings. 'public' returns only the public offerings and 'private' returns only the private offerings.
    * @param {boolean} [params.includeHidden] - true - include offerings which have been marked as hidden. The default is
    * false and hidden offerings are not returned.
+   * @param {number} [params.limit] - number or results to return.
+   * @param {number} [params.offset] - number of results to skip before returning values.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingSearchResult>>}
    */
   public getConsumptionOfferings(params?: CatalogManagementV1.GetConsumptionOfferingsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingSearchResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'digest': _params.digest,
-        'catalog': _params.catalog,
-        'select': _params.select,
-        'includeHidden': _params.includeHidden
-      };
+    const query = {
+      'digest': _params.digest,
+      'catalog': _params.catalog,
+      'select': _params.select,
+      'includeHidden': _params.includeHidden,
+      'limit': _params.limit,
+      'offset': _params.offset
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getConsumptionOfferings');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getConsumptionOfferings');
 
-      const parameters = {
-        options: {
-          url: '/offerings',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/offerings',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -624,45 +737,53 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} params.catalogIdentifier - Catalog identifier.
    * @param {boolean} [params.digest] - true - Strip down the content of what is returned. For example don't return the
    * readme. Makes the result much smaller. Defaults to false.
+   * @param {number} [params.limit] - number or results to return.
+   * @param {number} [params.offset] - number of results to skip before returning values.
+   * @param {string} [params.name] - only return results that contain the specified string.
+   * @param {string} [params.sort] - The field on which the output is sorted. Sorts by default by **label** property.
+   * Available fields are **name**, **label**, **created**, and **updated**. By adding **-** (i.e. **-label**) in front
+   * of the query string, you can specify descending order. Default is ascending order.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingSearchResult>>}
    */
   public listOfferings(params: CatalogManagementV1.ListOfferingsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingSearchResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'digest': _params.digest
-      };
+    const query = {
+      'digest': _params.digest,
+      'limit': _params.limit,
+      'offset': _params.offset,
+      'name': _params.name,
+      'sort': _params.sort
+    };
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listOfferings');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listOfferings');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/offerings',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -709,72 +830,70 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>>}
    */
   public createOffering(params: CatalogManagementV1.CreateOfferingParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'id': _params.id,
-        '_rev': _params.rev,
-        'url': _params.url,
-        'crn': _params.crn,
-        'label': _params.label,
-        'name': _params.name,
-        'offering_icon_url': _params.offeringIconUrl,
-        'offering_docs_url': _params.offeringDocsUrl,
-        'offering_support_url': _params.offeringSupportUrl,
-        'tags': _params.tags,
-        'rating': _params.rating,
-        'created': _params.created,
-        'updated': _params.updated,
-        'short_description': _params.shortDescription,
-        'long_description': _params.longDescription,
-        'features': _params.features,
-        'kinds': _params.kinds,
-        'permit_request_ibm_public_publish': _params.permitRequestIbmPublicPublish,
-        'ibm_publish_approved': _params.ibmPublishApproved,
-        'public_publish_approved': _params.publicPublishApproved,
-        'public_original_crn': _params.publicOriginalCrn,
-        'publish_public_crn': _params.publishPublicCrn,
-        'portal_approval_record': _params.portalApprovalRecord,
-        'portal_ui_url': _params.portalUiUrl,
-        'catalog_id': _params.catalogId,
-        'catalog_name': _params.catalogName,
-        'metadata': _params.metadata,
-        'disclaimer': _params.disclaimer,
-        'hidden': _params.hidden,
-        'provider': _params.provider,
-        'repo_info': _params.repoInfo
-      };
+    const body = {
+      'id': _params.id,
+      '_rev': _params.rev,
+      'url': _params.url,
+      'crn': _params.crn,
+      'label': _params.label,
+      'name': _params.name,
+      'offering_icon_url': _params.offeringIconUrl,
+      'offering_docs_url': _params.offeringDocsUrl,
+      'offering_support_url': _params.offeringSupportUrl,
+      'tags': _params.tags,
+      'rating': _params.rating,
+      'created': _params.created,
+      'updated': _params.updated,
+      'short_description': _params.shortDescription,
+      'long_description': _params.longDescription,
+      'features': _params.features,
+      'kinds': _params.kinds,
+      'permit_request_ibm_public_publish': _params.permitRequestIbmPublicPublish,
+      'ibm_publish_approved': _params.ibmPublishApproved,
+      'public_publish_approved': _params.publicPublishApproved,
+      'public_original_crn': _params.publicOriginalCrn,
+      'publish_public_crn': _params.publishPublicCrn,
+      'portal_approval_record': _params.portalApprovalRecord,
+      'portal_ui_url': _params.portalUiUrl,
+      'catalog_id': _params.catalogId,
+      'catalog_name': _params.catalogName,
+      'metadata': _params.metadata,
+      'disclaimer': _params.disclaimer,
+      'hidden': _params.hidden,
+      'provider': _params.provider,
+      'repo_info': _params.repoInfo
+    };
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createOffering');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createOffering');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/offerings',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -785,67 +904,67 @@ class CatalogManagementV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
    * @param {string} params.offeringId - Offering identification.
-   * @param {string} params.zipurl - URL path to zip location.
    * @param {string[]} [params.tags] - Tags array.
    * @param {string[]} [params.targetKinds] - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and
    * 'terraform'.
+   * @param {number[]} [params.content] - byte array representing the content to be imported.  Only supported for OVA
+   * images at this time.
+   * @param {string} [params.zipurl] - URL path to zip location.  If not specified, must provide content in the body of
+   * this call.
    * @param {string} [params.targetVersion] - The semver value for this new version, if not found in the zip url package
    * content.
    * @param {boolean} [params.includeConfig] - Add all possible configuration values to this version when importing.
    * @param {string} [params.repoType] - The type of repository containing this version.  Valid values are 'public_git'
    * or 'enterprise_git'.
-   * @param {string} [params.xAuthToken] - Authentication token used to access the specified zip file.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>>}
    */
   public importOfferingVersion(params: CatalogManagementV1.ImportOfferingVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>> {
-    const _params = extend({}, params);
-    const requiredParams = ['catalogIdentifier', 'offeringId', 'zipurl'];
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier', 'offeringId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'tags': _params.tags,
-        'target_kinds': _params.targetKinds
-      };
+    const body = {
+      'tags': _params.tags,
+      'target_kinds': _params.targetKinds,
+      'content': _params.content
+    };
 
-      const query = {
-        'zipurl': _params.zipurl,
-        'targetVersion': _params.targetVersion,
-        'includeConfig': _params.includeConfig,
-        'repoType': _params.repoType
-      };
+    const query = {
+      'zipurl': _params.zipurl,
+      'targetVersion': _params.targetVersion,
+      'includeConfig': _params.includeConfig,
+      'repoType': _params.repoType
+    };
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier,
-        'offering_id': _params.offeringId
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'offering_id': _params.offeringId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'importOfferingVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'importOfferingVersion');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/version',
-          method: 'POST',
-          body,
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-Auth-Token': _params.xAuthToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/version',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -855,11 +974,15 @@ class CatalogManagementV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
-   * @param {string} params.zipurl - URL path to zip location.
    * @param {string[]} [params.tags] - Tags array.
    * @param {string[]} [params.targetKinds] - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and
    * 'terraform'.
+   * @param {number[]} [params.content] - byte array representing the content to be imported.  Only supported for OVA
+   * images at this time.
+   * @param {string} [params.zipurl] - URL path to zip location.  If not specified, must provide content in this post
+   * body.
    * @param {string} [params.offeringId] - Re-use the specified offeringID during import.
+   * @param {string} [params.targetVersion] - The semver value for this new version.
    * @param {boolean} [params.includeConfig] - Add all possible configuration items when creating this version.
    * @param {string} [params.repoType] - The type of repository containing this version.  Valid values are 'public_git'
    * or 'enterprise_git'.
@@ -868,52 +991,52 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>>}
    */
   public importOffering(params: CatalogManagementV1.ImportOfferingParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>> {
-    const _params = extend({}, params);
-    const requiredParams = ['catalogIdentifier', 'zipurl'];
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'tags': _params.tags,
-        'target_kinds': _params.targetKinds
-      };
+    const body = {
+      'tags': _params.tags,
+      'target_kinds': _params.targetKinds,
+      'content': _params.content
+    };
 
-      const query = {
-        'zipurl': _params.zipurl,
-        'offeringID': _params.offeringId,
-        'includeConfig': _params.includeConfig,
-        'repoType': _params.repoType
-      };
+    const query = {
+      'zipurl': _params.zipurl,
+      'offeringID': _params.offeringId,
+      'targetVersion': _params.targetVersion,
+      'includeConfig': _params.includeConfig,
+      'repoType': _params.repoType
+    };
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'importOffering');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'importOffering');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/import/offerings',
-          method: 'POST',
-          body,
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-Auth-Token': _params.xAuthToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/import/offerings',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Auth-Token': _params.xAuthToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -924,64 +1047,64 @@ class CatalogManagementV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
    * @param {string} params.offeringId - Offering identification.
-   * @param {string} params.zipurl - URL path to zip location.
    * @param {string} params.targetVersion - The semver value for this new version.
    * @param {string[]} [params.tags] - Tags array.
    * @param {string[]} [params.targetKinds] - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and
    * 'terraform'.
+   * @param {number[]} [params.content] - byte array representing the content to be imported.  Only supported for OVA
+   * images at this time.
+   * @param {string} [params.zipurl] - URL path to zip location.  If not specified, must provide content in this post
+   * body.
    * @param {string} [params.repoType] - The type of repository containing this version.  Valid values are 'public_git'
    * or 'enterprise_git'.
-   * @param {string} [params.xAuthToken] - Authentication token used to access the specified zip file.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>>}
    */
   public reloadOffering(params: CatalogManagementV1.ReloadOfferingParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>> {
-    const _params = extend({}, params);
-    const requiredParams = ['catalogIdentifier', 'offeringId', 'zipurl', 'targetVersion'];
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier', 'offeringId', 'targetVersion'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'tags': _params.tags,
-        'target_kinds': _params.targetKinds
-      };
+    const body = {
+      'tags': _params.tags,
+      'target_kinds': _params.targetKinds,
+      'content': _params.content
+    };
 
-      const query = {
-        'zipurl': _params.zipurl,
-        'targetVersion': _params.targetVersion,
-        'repoType': _params.repoType
-      };
+    const query = {
+      'targetVersion': _params.targetVersion,
+      'zipurl': _params.zipurl,
+      'repoType': _params.repoType
+    };
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier,
-        'offering_id': _params.offeringId
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'offering_id': _params.offeringId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'reloadOffering');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'reloadOffering');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/reload',
-          method: 'PUT',
-          body,
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-Auth-Token': _params.xAuthToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/reload',
+        method: 'PUT',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -996,37 +1119,35 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>>}
    */
   public getOffering(params: CatalogManagementV1.GetOfferingParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier', 'offeringId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier,
-        'offering_id': _params.offeringId
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'offering_id': _params.offeringId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getOffering');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getOffering');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/offerings/{offering_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{offering_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1074,73 +1195,71 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>>}
    */
   public replaceOffering(params: CatalogManagementV1.ReplaceOfferingParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier', 'offeringId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'id': _params.id,
-        '_rev': _params.rev,
-        'url': _params.url,
-        'crn': _params.crn,
-        'label': _params.label,
-        'name': _params.name,
-        'offering_icon_url': _params.offeringIconUrl,
-        'offering_docs_url': _params.offeringDocsUrl,
-        'offering_support_url': _params.offeringSupportUrl,
-        'tags': _params.tags,
-        'rating': _params.rating,
-        'created': _params.created,
-        'updated': _params.updated,
-        'short_description': _params.shortDescription,
-        'long_description': _params.longDescription,
-        'features': _params.features,
-        'kinds': _params.kinds,
-        'permit_request_ibm_public_publish': _params.permitRequestIbmPublicPublish,
-        'ibm_publish_approved': _params.ibmPublishApproved,
-        'public_publish_approved': _params.publicPublishApproved,
-        'public_original_crn': _params.publicOriginalCrn,
-        'publish_public_crn': _params.publishPublicCrn,
-        'portal_approval_record': _params.portalApprovalRecord,
-        'portal_ui_url': _params.portalUiUrl,
-        'catalog_id': _params.catalogId,
-        'catalog_name': _params.catalogName,
-        'metadata': _params.metadata,
-        'disclaimer': _params.disclaimer,
-        'hidden': _params.hidden,
-        'provider': _params.provider,
-        'repo_info': _params.repoInfo
-      };
+    const body = {
+      'id': _params.id,
+      '_rev': _params.rev,
+      'url': _params.url,
+      'crn': _params.crn,
+      'label': _params.label,
+      'name': _params.name,
+      'offering_icon_url': _params.offeringIconUrl,
+      'offering_docs_url': _params.offeringDocsUrl,
+      'offering_support_url': _params.offeringSupportUrl,
+      'tags': _params.tags,
+      'rating': _params.rating,
+      'created': _params.created,
+      'updated': _params.updated,
+      'short_description': _params.shortDescription,
+      'long_description': _params.longDescription,
+      'features': _params.features,
+      'kinds': _params.kinds,
+      'permit_request_ibm_public_publish': _params.permitRequestIbmPublicPublish,
+      'ibm_publish_approved': _params.ibmPublishApproved,
+      'public_publish_approved': _params.publicPublishApproved,
+      'public_original_crn': _params.publicOriginalCrn,
+      'publish_public_crn': _params.publishPublicCrn,
+      'portal_approval_record': _params.portalApprovalRecord,
+      'portal_ui_url': _params.portalUiUrl,
+      'catalog_id': _params.catalogId,
+      'catalog_name': _params.catalogName,
+      'metadata': _params.metadata,
+      'disclaimer': _params.disclaimer,
+      'hidden': _params.hidden,
+      'provider': _params.provider,
+      'repo_info': _params.repoInfo
+    };
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier,
-        'offering_id': _params.offeringId
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'offering_id': _params.offeringId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceOffering');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceOffering');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/offerings/{offering_id}',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{offering_id}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1155,36 +1274,82 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public deleteOffering(params: CatalogManagementV1.DeleteOfferingParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier', 'offeringId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier,
-        'offering_id': _params.offeringId
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'offering_id': _params.offeringId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteOffering');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteOffering');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/offerings/{offering_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{offering_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get the audit log(s) for offering.
+   *
+   * Get the audit log(s) for offering.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.offeringId - Offering identifier.
+   * @param {string} [params.id] - Log identification.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public getOfferingAudit(params: CatalogManagementV1.GetOfferingAuditParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier', 'offeringId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'id': _params.id
+    };
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'offering_id': _params.offeringId
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getOfferingAudit');
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/audit',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1200,49 +1365,51 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>>}
    */
   public replaceOfferingIcon(params: CatalogManagementV1.ReplaceOfferingIconParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier', 'offeringId', 'fileName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier,
-        'offering_id': _params.offeringId,
-        'file_name': _params.fileName
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'offering_id': _params.offeringId,
+      'file_name': _params.fileName
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceOfferingIcon');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceOfferingIcon');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/icon/{file_name}',
-          method: 'PUT',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/icon/{file_name}',
+        method: 'PUT',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
-   * Approve offering to be permitted to publish to IBM Public Catalog (IBMers only or Everyone).
+   * Approve offering to be permitted to publish or to request to be published to IBM Public Catalog (IBMers only or Everyone).
    *
-   * Approve or disapprove the offering to be allowed to publish to the IBM Public Catalog in `ibm` (visible to IBM
-   * only) or `public` (visible to everyone). Can approve to only `ibm`, or it can be extended to `public`. If extended
-   * to `public` then `ibm` is automatically approved too. If disapprove `public`, then `ibm` approval will not  be
-   * changed. If disapprove `ibm` then `public` will automatically be disapproved. This is because the process steps
-   * always go first through `ibm` and then to `public`. `ibm` cannot be skipped. Only users with Approval IAM authority
-   * can use this.
+   * Approve or disapprove the offering to be allowed to publish to the IBM Public Catalog. Options:
+   * * `allow_request` - (Allow requesting to publish to IBM)
+   * * `ibm` - (Allow publishing to be visible to IBM only)
+   * * `public` - (Allow publishing to be visible to everyone, including IBM)
+   *
+   * If disapprove `public`, then `ibm` approval will not  be changed. If disapprove `ibm` then `public` will
+   * automatically be disapproved. if disapprove `allow_request` then all rights to publish will be removed. This is
+   * because the process steps always go first through `allow` to `ibm` and then to `public`. `ibm` cannot be skipped.
+   * Only users with Approval IAM authority can use this. Approvers should use the catalog and offering id from the
+   * public catalog since they wouldn't have access to the private offering.'.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
@@ -1253,39 +1420,37 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ApprovalResult>>}
    */
   public updateOfferingIbm(params: CatalogManagementV1.UpdateOfferingIbmParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.ApprovalResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['catalogIdentifier', 'offeringId', 'approvalType', 'approved'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'catalog_identifier': _params.catalogIdentifier,
-        'offering_id': _params.offeringId,
-        'approval_type': _params.approvalType,
-        'approved': _params.approved
-      };
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'offering_id': _params.offeringId,
+      'approval_type': _params.approvalType,
+      'approved': _params.approved
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateOfferingIbm');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateOfferingIbm');
 
-      const parameters = {
-        options: {
-          url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/publish/{approval_type}/{approved}',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/publish/{approval_type}/{approved}',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -1303,36 +1468,34 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<string>>}
    */
   public getVersionAbout(params: CatalogManagementV1.GetVersionAboutParams): Promise<CatalogManagementV1.Response<string>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionAbout');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionAbout');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/about',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'text/markdown',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/about',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'text/markdown',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1348,36 +1511,34 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public getVersionLicense(params: CatalogManagementV1.GetVersionLicenseParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId', 'licenseId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId,
-        'license_id': _params.licenseId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId,
+      'license_id': _params.licenseId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionLicense');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionLicense');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/licenses/{license_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/licenses/{license_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1392,36 +1553,34 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ImageManifest>>}
    */
   public getVersionContainerImages(params: CatalogManagementV1.GetVersionContainerImagesParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.ImageManifest>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionContainerImages');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionContainerImages');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/containerImages',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/containerImages',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1435,35 +1594,33 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public deprecateVersion(params: CatalogManagementV1.DeprecateVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deprecateVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deprecateVersion');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/deprecate',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/deprecate',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1477,35 +1634,33 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public accountPublishVersion(params: CatalogManagementV1.AccountPublishVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'accountPublishVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'accountPublishVersion');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/account-publish',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/account-publish',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1519,35 +1674,33 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public ibmPublishVersion(params: CatalogManagementV1.IbmPublishVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'ibmPublishVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'ibmPublishVersion');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/ibm-publish',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/ibm-publish',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1561,35 +1714,33 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public publicPublishVersion(params: CatalogManagementV1.PublicPublishVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'publicPublishVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'publicPublishVersion');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/public-publish',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/public-publish',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1603,35 +1754,86 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public commitVersion(params: CatalogManagementV1.CommitVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'commitVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'commitVersion');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/commit',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/commit',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Copy the specified version to a new target kind within the same offering.
+   *
+   * Copy the specified version to a new target kind within the same offering.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.versionLocId - A dotted value of `catalogID`.`versionID`.
+   * @param {string[]} [params.tags] - Tags array.
+   * @param {string[]} [params.targetKinds] - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and
+   * 'terraform'.
+   * @param {number[]} [params.content] - byte array representing the content to be imported.  Only supported for OVA
+   * images at this time.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public copyVersion(params: CatalogManagementV1.CopyVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['versionLocId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'tags': _params.tags,
+      'target_kinds': _params.targetKinds,
+      'content': _params.content
+    };
+
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'copyVersion');
+
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/copy',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1645,36 +1847,34 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Version>>}
    */
   public getVersionWorkingCopy(params: CatalogManagementV1.GetVersionWorkingCopyParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Version>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionWorkingCopy');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionWorkingCopy');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/workingcopy',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/workingcopy',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1692,44 +1892,42 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.VersionUpdateDescriptor[]>>}
    */
   public getVersionUpdates(params: CatalogManagementV1.GetVersionUpdatesParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.VersionUpdateDescriptor[]>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'resource_group_id': _params.resourceGroupId,
-        'namespace': _params.namespace
-      };
+    const query = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'resource_group_id': _params.resourceGroupId,
+      'namespace': _params.namespace
+    };
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionUpdates');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersionUpdates');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/updates',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/updates',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1743,36 +1941,34 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>>}
    */
   public getVersion(params: CatalogManagementV1.GetVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getVersion');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1787,35 +1983,33 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public deleteVersion(params: CatalogManagementV1.DeleteVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteVersion');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1830,35 +2024,33 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public listVersions(params: CatalogManagementV1.ListVersionsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['q'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'q': _params.q
-      };
+    const query = {
+      'q': _params.q
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listVersions');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listVersions');
 
-      const parameters = {
-        options: {
-          url: '/versions',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -1878,41 +2070,39 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.HelmRepoList>>}
    */
   public getRepos(params: CatalogManagementV1.GetReposParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.HelmRepoList>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['type', 'repourl'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'repourl': _params.repourl
-      };
+    const query = {
+      'repourl': _params.repourl
+    };
 
-      const path = {
-        'type': _params.type
-      };
+    const path = {
+      'type': _params.type
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getRepos');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getRepos');
 
-      const parameters = {
-        options: {
-          url: '/repo/{type}/entries',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/repo/{type}/entries',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1928,41 +2118,39 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.HelmPackage>>}
    */
   public getRepo(params: CatalogManagementV1.GetRepoParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.HelmPackage>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['type', 'charturl'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'charturl': _params.charturl
-      };
+    const query = {
+      'charturl': _params.charturl
+    };
 
-      const path = {
-        'type': _params.type
-      };
+    const path = {
+      'type': _params.type
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getRepo');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getRepo');
 
-      const parameters = {
-        options: {
-          url: '/repo/{type}',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/repo/{type}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -1982,32 +2170,30 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ClusterSearchResult>>}
    */
   public listClusters(params?: CatalogManagementV1.ListClustersParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.ClusterSearchResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'limit': _params.limit,
-        'offset': _params.offset,
-        'type': _params.type
-      };
+    const query = {
+      'limit': _params.limit,
+      'offset': _params.offset,
+      'type': _params.type
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listClusters');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listClusters');
 
-      const parameters = {
-        options: {
-          url: '/deploy/kubernetes/clusters',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/deploy/kubernetes/clusters',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2023,42 +2209,40 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ClusterInfo>>}
    */
   public getCluster(params: CatalogManagementV1.GetClusterParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.ClusterInfo>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['clusterId', 'region', 'xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'region': _params.region
-      };
+    const query = {
+      'region': _params.region
+    };
 
-      const path = {
-        'cluster_id': _params.clusterId
-      };
+    const path = {
+      'cluster_id': _params.clusterId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCluster');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCluster');
 
-      const parameters = {
-        options: {
-          url: '/deploy/kubernetes/clusters/{cluster_id}',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/deploy/kubernetes/clusters/{cluster_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2076,44 +2260,42 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.NamespaceSearchResult>>}
    */
   public getNamespaces(params: CatalogManagementV1.GetNamespacesParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.NamespaceSearchResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['clusterId', 'region', 'xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'region': _params.region,
-        'limit': _params.limit,
-        'offset': _params.offset
-      };
+    const query = {
+      'region': _params.region,
+      'limit': _params.limit,
+      'offset': _params.offset
+    };
 
-      const path = {
-        'cluster_id': _params.clusterId
-      };
+    const path = {
+      'cluster_id': _params.clusterId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getNamespaces');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getNamespaces');
 
-      const parameters = {
-        options: {
-          url: '/deploy/kubernetes/clusters/{cluster_id}/namespaces',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/deploy/kubernetes/clusters/{cluster_id}/namespaces',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2126,46 +2308,46 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.clusterId] - Cluster ID.
    * @param {string} [params.region] - Cluster region.
    * @param {string[]} [params.namespaces] - Kube namespaces to deploy Operator(s) to.
+   * @param {boolean} [params.allNamespaces] - Denotes whether to install Operator(s) globally.
    * @param {string} [params.versionLocatorId] - A dotted value of `catalogID`.`versionID`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>>}
    */
   public createOperator(params: CatalogManagementV1.CreateOperatorParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'namespaces': _params.namespaces,
-        'version_locator_id': _params.versionLocatorId
-      };
+    const body = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'namespaces': _params.namespaces,
+      'all_namespaces': _params.allNamespaces,
+      'version_locator_id': _params.versionLocatorId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createOperator');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createOperator');
 
-      const parameters = {
-        options: {
-          url: '/deploy/kubernetes/olm/operator',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/deploy/kubernetes/olm/operator',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2182,39 +2364,37 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>>}
    */
   public listOperators(params: CatalogManagementV1.ListOperatorsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['xAuthRefreshToken', 'clusterId', 'region', 'versionLocatorId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'version_locator_id': _params.versionLocatorId
-      };
+    const query = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'version_locator_id': _params.versionLocatorId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listOperators');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listOperators');
 
-      const parameters = {
-        options: {
-          url: '/deploy/kubernetes/olm/operator',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/deploy/kubernetes/olm/operator',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2227,46 +2407,46 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.clusterId] - Cluster ID.
    * @param {string} [params.region] - Cluster region.
    * @param {string[]} [params.namespaces] - Kube namespaces to deploy Operator(s) to.
+   * @param {boolean} [params.allNamespaces] - Denotes whether to install Operator(s) globally.
    * @param {string} [params.versionLocatorId] - A dotted value of `catalogID`.`versionID`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>>}
    */
   public replaceOperator(params: CatalogManagementV1.ReplaceOperatorParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'namespaces': _params.namespaces,
-        'version_locator_id': _params.versionLocatorId
-      };
+    const body = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'namespaces': _params.namespaces,
+      'all_namespaces': _params.allNamespaces,
+      'version_locator_id': _params.versionLocatorId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceOperator');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceOperator');
 
-      const parameters = {
-        options: {
-          url: '/deploy/kubernetes/olm/operator',
-          method: 'PUT',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/deploy/kubernetes/olm/operator',
+        method: 'PUT',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2283,38 +2463,36 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public deleteOperator(params: CatalogManagementV1.DeleteOperatorParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['xAuthRefreshToken', 'clusterId', 'region', 'versionLocatorId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'version_locator_id': _params.versionLocatorId
-      };
+    const query = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'version_locator_id': _params.versionLocatorId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteOperator');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteOperator');
 
-      const parameters = {
-        options: {
-          url: '/deploy/kubernetes/olm/operator',
-          method: 'DELETE',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/deploy/kubernetes/olm/operator',
+        method: 'DELETE',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2335,59 +2513,61 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.scriptId] - Script ID.
    * @param {string} [params.versionLocatorId] - A dotted value of `catalogID`.`versionID`.
    * @param {string} [params.vcenterId] - VCenter ID.
+   * @param {string} [params.vcenterUser] - VCenter User.
    * @param {string} [params.vcenterPassword] - VCenter Password.
    * @param {string} [params.vcenterLocation] - VCenter Location.
+   * @param {string} [params.vcenterDatastore] - VCenter Datastore.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public installVersion(params: CatalogManagementV1.InstallVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId', 'xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'namespace': _params.namespace,
-        'override_values': _params.overrideValues,
-        'entitlement_apikey': _params.entitlementApikey,
-        'schematics': _params.schematics,
-        'script': _params.script,
-        'script_id': _params.scriptId,
-        'version_locator_id': _params.versionLocatorId,
-        'vcenter_id': _params.vcenterId,
-        'vcenter_password': _params.vcenterPassword,
-        'vcenter_location': _params.vcenterLocation
-      };
+    const body = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'namespace': _params.namespace,
+      'override_values': _params.overrideValues,
+      'entitlement_apikey': _params.entitlementApikey,
+      'schematics': _params.schematics,
+      'script': _params.script,
+      'script_id': _params.scriptId,
+      'version_locator_id': _params.versionLocatorId,
+      'vcenter_id': _params.vcenterId,
+      'vcenter_user': _params.vcenterUser,
+      'vcenter_password': _params.vcenterPassword,
+      'vcenter_location': _params.vcenterLocation,
+      'vcenter_datastore': _params.vcenterDatastore
+    };
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'installVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'installVersion');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/install',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Content-Type': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/install',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2408,59 +2588,61 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.scriptId] - Script ID.
    * @param {string} [params.versionLocatorId] - A dotted value of `catalogID`.`versionID`.
    * @param {string} [params.vcenterId] - VCenter ID.
+   * @param {string} [params.vcenterUser] - VCenter User.
    * @param {string} [params.vcenterPassword] - VCenter Password.
    * @param {string} [params.vcenterLocation] - VCenter Location.
+   * @param {string} [params.vcenterDatastore] - VCenter Datastore.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public preinstallVersion(params: CatalogManagementV1.PreinstallVersionParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId', 'xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'namespace': _params.namespace,
-        'override_values': _params.overrideValues,
-        'entitlement_apikey': _params.entitlementApikey,
-        'schematics': _params.schematics,
-        'script': _params.script,
-        'script_id': _params.scriptId,
-        'version_locator_id': _params.versionLocatorId,
-        'vcenter_id': _params.vcenterId,
-        'vcenter_password': _params.vcenterPassword,
-        'vcenter_location': _params.vcenterLocation
-      };
+    const body = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'namespace': _params.namespace,
+      'override_values': _params.overrideValues,
+      'entitlement_apikey': _params.entitlementApikey,
+      'schematics': _params.schematics,
+      'script': _params.script,
+      'script_id': _params.scriptId,
+      'version_locator_id': _params.versionLocatorId,
+      'vcenter_id': _params.vcenterId,
+      'vcenter_user': _params.vcenterUser,
+      'vcenter_password': _params.vcenterPassword,
+      'vcenter_location': _params.vcenterLocation,
+      'vcenter_datastore': _params.vcenterDatastore
+    };
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'preinstallVersion');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'preinstallVersion');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/preinstall',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Content-Type': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/preinstall',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2478,44 +2660,42 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.InstallStatus>>}
    */
   public getPreinstall(params: CatalogManagementV1.GetPreinstallParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.InstallStatus>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId', 'xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'namespace': _params.namespace
-      };
+    const query = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'namespace': _params.namespace
+    };
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getPreinstall');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getPreinstall');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/preinstall',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/preinstall',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2536,59 +2716,61 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.scriptId] - Script ID.
    * @param {string} [params.versionLocatorId] - A dotted value of `catalogID`.`versionID`.
    * @param {string} [params.vcenterId] - VCenter ID.
+   * @param {string} [params.vcenterUser] - VCenter User.
    * @param {string} [params.vcenterPassword] - VCenter Password.
    * @param {string} [params.vcenterLocation] - VCenter Location.
+   * @param {string} [params.vcenterDatastore] - VCenter Datastore.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public validationInstall(params: CatalogManagementV1.ValidationInstallParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId', 'xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'namespace': _params.namespace,
-        'override_values': _params.overrideValues,
-        'entitlement_apikey': _params.entitlementApikey,
-        'schematics': _params.schematics,
-        'script': _params.script,
-        'script_id': _params.scriptId,
-        'version_locator_id': _params.versionLocatorId,
-        'vcenter_id': _params.vcenterId,
-        'vcenter_password': _params.vcenterPassword,
-        'vcenter_location': _params.vcenterLocation
-      };
+    const body = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'namespace': _params.namespace,
+      'override_values': _params.overrideValues,
+      'entitlement_apikey': _params.entitlementApikey,
+      'schematics': _params.schematics,
+      'script': _params.script,
+      'script_id': _params.scriptId,
+      'version_locator_id': _params.versionLocatorId,
+      'vcenter_id': _params.vcenterId,
+      'vcenter_user': _params.vcenterUser,
+      'vcenter_password': _params.vcenterPassword,
+      'vcenter_location': _params.vcenterLocation,
+      'vcenter_datastore': _params.vcenterDatastore
+    };
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'validationInstall');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'validationInstall');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/validation/install',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Content-Type': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/validation/install',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2603,37 +2785,35 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Validation>>}
    */
   public getValidationStatus(params: CatalogManagementV1.GetValidationStatusParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Validation>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId', 'xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getValidationStatus');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getValidationStatus');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/validation/install',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/validation/install',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2647,36 +2827,34 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.JsonObject>>}
    */
   public getOverrideValues(params: CatalogManagementV1.GetOverrideValuesParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.JsonObject>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getOverrideValues');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getOverrideValues');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/validation/overridevalues',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/validation/overridevalues',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2691,37 +2869,35 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.SchematicsWorkspaceSearchResult>>}
    */
   public getSchematicsWorkspaces(params: CatalogManagementV1.GetSchematicsWorkspacesParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.SchematicsWorkspaceSearchResult>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId', 'xAuthRefreshToken'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getSchematicsWorkspaces');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getSchematicsWorkspaces');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/workspaces',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/workspaces',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'X-Auth-Refresh-Token': _params.xAuthRefreshToken
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2739,44 +2915,42 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.DeployRequirementsCheck>>}
    */
   public canDeploySchematics(params: CatalogManagementV1.CanDeploySchematicsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.DeployRequirementsCheck>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['versionLocId', 'clusterId', 'region'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'cluster_id': _params.clusterId,
-        'region': _params.region,
-        'namespace': _params.namespace,
-        'resource_group_id': _params.resourceGroupId
-      };
+    const query = {
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'namespace': _params.namespace,
+      'resource_group_id': _params.resourceGroupId
+    };
 
-      const path = {
-        'version_loc_id': _params.versionLocId
-      };
+    const path = {
+      'version_loc_id': _params.versionLocId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'canDeploySchematics');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'canDeploySchematics');
 
-      const parameters = {
-        options: {
-          url: '/versions/{version_loc_id}/candeploy',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/versions/{version_loc_id}/candeploy',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2790,25 +2964,23 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ResourceGroups>>}
    */
   public getResourceGroups(params?: CatalogManagementV1.GetResourceGroupsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.ResourceGroups>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getResourceGroups');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getResourceGroups');
 
-      const parameters = {
-        options: {
-          url: '/deploy/schematics/resourcegroups',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/deploy/schematics/resourcegroups',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -2825,25 +2997,23 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseProviders>>}
    */
   public getLicenseProviders(params?: CatalogManagementV1.GetLicenseProvidersParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseProviders>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getLicenseProviders');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getLicenseProviders');
 
-      const parameters = {
-        options: {
-          url: '/license/license_providers',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/license/license_providers',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2863,33 +3033,31 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlements>>}
    */
   public listLicenseEntitlements(params?: CatalogManagementV1.ListLicenseEntitlementsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlements>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'account_id': _params.accountId,
-        'license_product_id': _params.licenseProductId,
-        'version_id': _params.versionId,
-        'state': _params.state
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'license_product_id': _params.licenseProductId,
+      'version_id': _params.versionId,
+      'state': _params.state
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listLicenseEntitlements');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listLicenseEntitlements');
 
-      const parameters = {
-        options: {
-          url: '/license/entitlements',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/license/entitlements',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2913,43 +3081,41 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlement>>}
    */
   public createLicenseEntitlement(params?: CatalogManagementV1.CreateLicenseEntitlementParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlement>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const body = {
-        'name': _params.name,
-        'effective_from': _params.effectiveFrom,
-        'effective_until': _params.effectiveUntil,
-        'version_id': _params.versionId,
-        'license_id': _params.licenseId,
-        'license_owner_id': _params.licenseOwnerId,
-        'license_provider_id': _params.licenseProviderId,
-        'license_product_id': _params.licenseProductId
-      };
+    const body = {
+      'name': _params.name,
+      'effective_from': _params.effectiveFrom,
+      'effective_until': _params.effectiveUntil,
+      'version_id': _params.versionId,
+      'license_id': _params.licenseId,
+      'license_owner_id': _params.licenseOwnerId,
+      'license_provider_id': _params.licenseProviderId,
+      'license_product_id': _params.licenseProductId
+    };
 
-      const query = {
-        'account_id': _params.accountId
-      };
+    const query = {
+      'account_id': _params.accountId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createLicenseEntitlement');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createLicenseEntitlement');
 
-      const parameters = {
-        options: {
-          url: '/license/entitlements',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/license/entitlements',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -2967,42 +3133,40 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlements>>}
    */
   public getLicenseEntitlements(params: CatalogManagementV1.GetLicenseEntitlementsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlements>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['licenseProductId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account_id': _params.accountId,
-        'version_id': _params.versionId
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'version_id': _params.versionId
+    };
 
-      const path = {
-        'license_product_id': _params.licenseProductId
-      };
+    const path = {
+      'license_product_id': _params.licenseProductId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getLicenseEntitlements');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getLicenseEntitlements');
 
-      const parameters = {
-        options: {
-          url: '/license/entitlements/productID/{license_product_id}',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/license/entitlements/productID/{license_product_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3020,40 +3184,38 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public deleteLicenseEntitlement(params: CatalogManagementV1.DeleteLicenseEntitlementParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['entitlementId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account_id': _params.accountId
-      };
+    const query = {
+      'account_id': _params.accountId
+    };
 
-      const path = {
-        'entitlement_id': _params.entitlementId
-      };
+    const path = {
+      'entitlement_id': _params.entitlementId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteLicenseEntitlement');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteLicenseEntitlement');
 
-      const parameters = {
-        options: {
-          url: '/license/entitlements/{entitlement_id}',
-          method: 'DELETE',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/license/entitlements/{entitlement_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3073,40 +3235,38 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Licenses>>}
    */
   public getLicenses(params: CatalogManagementV1.GetLicensesParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Licenses>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['licenseProviderId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'license_provider_id': _params.licenseProviderId,
-        'account_id': _params.accountId,
-        'name': _params.name,
-        'license_type': _params.licenseType,
-        'license_product_id': _params.licenseProductId
-      };
+    const query = {
+      'license_provider_id': _params.licenseProviderId,
+      'account_id': _params.accountId,
+      'name': _params.name,
+      'license_type': _params.licenseType,
+      'license_product_id': _params.licenseProductId
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getLicenses');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getLicenses');
 
-      const parameters = {
-        options: {
-          url: '/license/licenses',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/license/licenses',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -3124,35 +3284,33 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public searchLicenseVersions(params: CatalogManagementV1.SearchLicenseVersionsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['q'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'q': _params.q
-      };
+    const query = {
+      'q': _params.q
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'searchLicenseVersions');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'searchLicenseVersions');
 
-      const parameters = {
-        options: {
-          url: '/search/license/versions',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/search/license/versions',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -3166,35 +3324,448 @@ class CatalogManagementV1 extends BaseService {
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
   public searchLicenseOfferings(params: CatalogManagementV1.SearchLicenseOfferingsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = extend({}, params);
+    const _params = Object.assign({}, params);
     const requiredParams = ['q'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'q': _params.q
-      };
+    const query = {
+      'q': _params.q
+    };
 
-      const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'searchLicenseOfferings');
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'searchLicenseOfferings');
 
-      const parameters = {
-        options: {
-          url: '/search/license/offerings',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/search/license/offerings',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
+  };
+
+  /*************************
+   * objects
+   ************************/
+
+  /**
+   * Search for objects across catalogs.
+   *
+   * List the available objects from both public and private. These copies cannot be used for updating. They are not
+   * complete and only return what is visible to the caller.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.query - Lucene query string.
+   * @param {number} [params.limit] - number or results to return.
+   * @param {number} [params.offset] - number of results to skip before returning values.
+   * @param {boolean} [params.collapse] - when true, hide private objects that correspond to public or IBM published
+   * objects.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ObjectSearchResult>>}
+   */
+  public searchObjects(params: CatalogManagementV1.SearchObjectsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.ObjectSearchResult>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['query'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'query': _params.query,
+      'limit': _params.limit,
+      'offset': _params.offset,
+      'collapse': _params.collapse
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'searchObjects');
+
+    const parameters = {
+      options: {
+        url: '/objects',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get list of objects.
+   *
+   * List the available objects in the specified catalog.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {number} [params.limit] - number or results to return.
+   * @param {number} [params.offset] - number of results to skip before returning values.
+   * @param {string} [params.name] - only return results that contain the specified string.
+   * @param {string} [params.sort] - The field on which the output is sorted. Sorts by default by **label** property.
+   * Available fields are **name**, **label**, **created**, and **updated**. By adding **-** (i.e. **-label**) in front
+   * of the query string, you can specify descending order. Default is ascending order.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ObjectListResult>>}
+   */
+  public listObjects(params: CatalogManagementV1.ListObjectsParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.ObjectListResult>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'limit': _params.limit,
+      'offset': _params.offset,
+      'name': _params.name,
+      'sort': _params.sort
+    };
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listObjects');
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Create an object.
+   *
+   * Create an object.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} [params.id] - unique id.
+   * @param {string} [params.name] - The programmatic name of this offering.
+   * @param {string} [params.rev] - Cloudant revision.
+   * @param {string} [params.crn] - The crn for this specific object.
+   * @param {string} [params.url] - The url for this specific object.
+   * @param {string} [params.parentId] - The parent for this specific object.
+   * @param {string[]} [params.allowList] - List of allowed accounts for this specific object.
+   * @param {string} [params.labelI18n] - Translated display name in the requested language.
+   * @param {string} [params.label] - Display name in the requested language.
+   * @param {string[]} [params.tags] - List of tags associated with this catalog.
+   * @param {string} [params.created] - The date and time this catalog was created.
+   * @param {string} [params.updated] - The date and time this catalog was last updated.
+   * @param {string} [params.shortDescription] - Short description in the requested language.
+   * @param {string} [params.shortDescriptionI18n] - Short description translation.
+   * @param {string} [params.kind] - Kind of object.
+   * @param {PublishObject} [params.publish] - Publish information.
+   * @param {State} [params.state] - Offering state.
+   * @param {string} [params.catalogId] - The id of the catalog containing this offering.
+   * @param {string} [params.catalogName] - The name of the catalog.
+   * @param {JsonObject} [params.data] - Map of data values for this object.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<Object>>}
+   */
+  public createObject(params: CatalogManagementV1.CreateObjectParams): Promise<CatalogManagementV1.Response<Object>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'id': _params.id,
+      'name': _params.name,
+      '_rev': _params.rev,
+      'crn': _params.crn,
+      'url': _params.url,
+      'parent_id': _params.parentId,
+      'allow_list': _params.allowList,
+      'label_i18n': _params.labelI18n,
+      'label': _params.label,
+      'tags': _params.tags,
+      'created': _params.created,
+      'updated': _params.updated,
+      'short_description': _params.shortDescription,
+      'short_description_i18n': _params.shortDescriptionI18n,
+      'kind': _params.kind,
+      'publish': _params.publish,
+      'state': _params.state,
+      'catalog_id': _params.catalogId,
+      'catalog_name': _params.catalogName,
+      'data': _params.data
+    };
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createObject');
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get an object.
+   *
+   * Get an object.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<Object>>}
+   */
+  public getObject(params: CatalogManagementV1.GetObjectParams): Promise<CatalogManagementV1.Response<Object>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getObject');
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Update an object.
+   *
+   * Update an object.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {string} [params.id] - unique id.
+   * @param {string} [params.name] - The programmatic name of this offering.
+   * @param {string} [params.rev] - Cloudant revision.
+   * @param {string} [params.crn] - The crn for this specific object.
+   * @param {string} [params.url] - The url for this specific object.
+   * @param {string} [params.parentId] - The parent for this specific object.
+   * @param {string[]} [params.allowList] - List of allowed accounts for this specific object.
+   * @param {string} [params.labelI18n] - Translated display name in the requested language.
+   * @param {string} [params.label] - Display name in the requested language.
+   * @param {string[]} [params.tags] - List of tags associated with this catalog.
+   * @param {string} [params.created] - The date and time this catalog was created.
+   * @param {string} [params.updated] - The date and time this catalog was last updated.
+   * @param {string} [params.shortDescription] - Short description in the requested language.
+   * @param {string} [params.shortDescriptionI18n] - Short description translation.
+   * @param {string} [params.kind] - Kind of object.
+   * @param {PublishObject} [params.publish] - Publish information.
+   * @param {State} [params.state] - Offering state.
+   * @param {string} [params.catalogId] - The id of the catalog containing this offering.
+   * @param {string} [params.catalogName] - The name of the catalog.
+   * @param {JsonObject} [params.data] - Map of data values for this object.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<Object>>}
+   */
+  public replaceObject(params: CatalogManagementV1.ReplaceObjectParams): Promise<CatalogManagementV1.Response<Object>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'id': _params.id,
+      'name': _params.name,
+      '_rev': _params.rev,
+      'crn': _params.crn,
+      'url': _params.url,
+      'parent_id': _params.parentId,
+      'allow_list': _params.allowList,
+      'label_i18n': _params.labelI18n,
+      'label': _params.label,
+      'tags': _params.tags,
+      'created': _params.created,
+      'updated': _params.updated,
+      'short_description': _params.shortDescription,
+      'short_description_i18n': _params.shortDescriptionI18n,
+      'kind': _params.kind,
+      'publish': _params.publish,
+      'state': _params.state,
+      'catalog_id': _params.catalogId,
+      'catalog_name': _params.catalogName,
+      'data': _params.data
+    };
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'replaceObject');
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Delete an object.
+   *
+   * Delete an object.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public deleteObject(params: CatalogManagementV1.DeleteObjectParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteObject');
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Get the audit log(s) for object.
+   *
+   * Get the audit log(s) for object.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {string} [params.id] - Log identification.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public getObjectAudit(params: CatalogManagementV1.GetObjectAuditParams): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'id': _params.id
+    };
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier
+    };
+
+    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getObjectAudit');
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{object_identifier}/audit',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
   };
 
 }
@@ -3239,6 +3810,13 @@ namespace CatalogManagementV1 {
     id?: string;
     /** Filters for account and catalog filters. */
     accountFilters?: Filters;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getCatalogAccountAudit` operation. */
+  export interface GetCatalogAccountAuditParams {
+    /** Log identification. */
+    id?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3348,6 +3926,15 @@ namespace CatalogManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `getCatalogAudit` operation. */
+  export interface GetCatalogAuditParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Log identification. */
+    id?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `getEnterprise` operation. */
   export interface GetEnterpriseParams {
     /** Enterprise identification. */
@@ -3370,6 +3957,15 @@ namespace CatalogManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `getEnterprisesAudit` operation. */
+  export interface GetEnterprisesAuditParams {
+    /** Enterprise identification. */
+    enterpriseId: string;
+    /** Log identification. */
+    id?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `getConsumptionOfferings` operation. */
   export interface GetConsumptionOfferingsParams {
     /** true - Strip down the content of what is returned. For example don't return the readme. Makes the result
@@ -3388,6 +3984,10 @@ namespace CatalogManagementV1 {
      *  returned.
      */
     includeHidden?: boolean;
+    /** number or results to return. */
+    limit?: number;
+    /** number of results to skip before returning values. */
+    offset?: number;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3409,6 +4009,17 @@ namespace CatalogManagementV1 {
      *  much smaller. Defaults to false.
      */
     digest?: boolean;
+    /** number or results to return. */
+    limit?: number;
+    /** number of results to skip before returning values. */
+    offset?: number;
+    /** only return results that contain the specified string. */
+    name?: string;
+    /** The field on which the output is sorted. Sorts by default by **label** property. Available fields are
+     *  **name**, **label**, **created**, and **updated**. By adding **-** (i.e. **-label**) in front of the query
+     *  string, you can specify descending order. Default is ascending order.
+     */
+    sort?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3487,20 +4098,20 @@ namespace CatalogManagementV1 {
     catalogIdentifier: string;
     /** Offering identification. */
     offeringId: string;
-    /** URL path to zip location. */
-    zipurl: string;
     /** Tags array. */
     tags?: string[];
     /** Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'. */
     targetKinds?: string[];
+    /** byte array representing the content to be imported.  Only supported for OVA images at this time. */
+    content?: number[];
+    /** URL path to zip location.  If not specified, must provide content in the body of this call. */
+    zipurl?: string;
     /** The semver value for this new version, if not found in the zip url package content. */
     targetVersion?: string;
     /** Add all possible configuration values to this version when importing. */
     includeConfig?: boolean;
     /** The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'. */
     repoType?: string;
-    /** Authentication token used to access the specified zip file. */
-    xAuthToken?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3508,14 +4119,18 @@ namespace CatalogManagementV1 {
   export interface ImportOfferingParams {
     /** Catalog identifier. */
     catalogIdentifier: string;
-    /** URL path to zip location. */
-    zipurl: string;
     /** Tags array. */
     tags?: string[];
     /** Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'. */
     targetKinds?: string[];
+    /** byte array representing the content to be imported.  Only supported for OVA images at this time. */
+    content?: number[];
+    /** URL path to zip location.  If not specified, must provide content in this post body. */
+    zipurl?: string;
     /** Re-use the specified offeringID during import. */
     offeringId?: string;
+    /** The semver value for this new version. */
+    targetVersion?: string;
     /** Add all possible configuration items when creating this version. */
     includeConfig?: boolean;
     /** The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'. */
@@ -3531,18 +4146,18 @@ namespace CatalogManagementV1 {
     catalogIdentifier: string;
     /** Offering identification. */
     offeringId: string;
-    /** URL path to zip location. */
-    zipurl: string;
     /** The semver value for this new version. */
     targetVersion: string;
     /** Tags array. */
     tags?: string[];
     /** Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'. */
     targetKinds?: string[];
+    /** byte array representing the content to be imported.  Only supported for OVA images at this time. */
+    content?: number[];
+    /** URL path to zip location.  If not specified, must provide content in this post body. */
+    zipurl?: string;
     /** The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'. */
     repoType?: string;
-    /** Authentication token used to access the specified zip file. */
-    xAuthToken?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3635,6 +4250,17 @@ namespace CatalogManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `getOfferingAudit` operation. */
+  export interface GetOfferingAuditParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Offering identifier. */
+    offeringId: string;
+    /** Log identification. */
+    id?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `replaceOfferingIcon` operation. */
   export interface ReplaceOfferingIconParams {
     /** Catalog identifier. */
@@ -3663,6 +4289,7 @@ namespace CatalogManagementV1 {
   export namespace UpdateOfferingIbmConstants {
     /** Type of approval, ibm or public. */
     export enum ApprovalType {
+      ALLOW_REQUEST = 'allow_request',
       IBM = 'ibm',
       PUBLIC = 'public',
     }
@@ -3728,6 +4355,19 @@ namespace CatalogManagementV1 {
   export interface CommitVersionParams {
     /** A dotted value of `catalogID`.`versionID`. */
     versionLocId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `copyVersion` operation. */
+  export interface CopyVersionParams {
+    /** A dotted value of `catalogID`.`versionID`. */
+    versionLocId: string;
+    /** Tags array. */
+    tags?: string[];
+    /** Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'. */
+    targetKinds?: string[];
+    /** byte array representing the content to be imported.  Only supported for OVA images at this time. */
+    content?: number[];
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3841,6 +4481,8 @@ namespace CatalogManagementV1 {
     region?: string;
     /** Kube namespaces to deploy Operator(s) to. */
     namespaces?: string[];
+    /** Denotes whether to install Operator(s) globally. */
+    allNamespaces?: boolean;
     /** A dotted value of `catalogID`.`versionID`. */
     versionLocatorId?: string;
     headers?: OutgoingHttpHeaders;
@@ -3869,6 +4511,8 @@ namespace CatalogManagementV1 {
     region?: string;
     /** Kube namespaces to deploy Operator(s) to. */
     namespaces?: string[];
+    /** Denotes whether to install Operator(s) globally. */
+    allNamespaces?: boolean;
     /** A dotted value of `catalogID`.`versionID`. */
     versionLocatorId?: string;
     headers?: OutgoingHttpHeaders;
@@ -3913,10 +4557,14 @@ namespace CatalogManagementV1 {
     versionLocatorId?: string;
     /** VCenter ID. */
     vcenterId?: string;
+    /** VCenter User. */
+    vcenterUser?: string;
     /** VCenter Password. */
     vcenterPassword?: string;
     /** VCenter Location. */
     vcenterLocation?: string;
+    /** VCenter Datastore. */
+    vcenterDatastore?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3946,10 +4594,14 @@ namespace CatalogManagementV1 {
     versionLocatorId?: string;
     /** VCenter ID. */
     vcenterId?: string;
+    /** VCenter User. */
+    vcenterUser?: string;
     /** VCenter Password. */
     vcenterPassword?: string;
     /** VCenter Location. */
     vcenterLocation?: string;
+    /** VCenter Datastore. */
+    vcenterDatastore?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3994,10 +4646,14 @@ namespace CatalogManagementV1 {
     versionLocatorId?: string;
     /** VCenter ID. */
     vcenterId?: string;
+    /** VCenter User. */
+    vcenterUser?: string;
     /** VCenter Password. */
     vcenterPassword?: string;
     /** VCenter Location. */
     vcenterLocation?: string;
+    /** VCenter Datastore. */
+    vcenterDatastore?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4140,6 +4796,162 @@ namespace CatalogManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `searchObjects` operation. */
+  export interface SearchObjectsParams {
+    /** Lucene query string. */
+    query: string;
+    /** number or results to return. */
+    limit?: number;
+    /** number of results to skip before returning values. */
+    offset?: number;
+    /** when true, hide private objects that correspond to public or IBM published objects. */
+    collapse?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listObjects` operation. */
+  export interface ListObjectsParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** number or results to return. */
+    limit?: number;
+    /** number of results to skip before returning values. */
+    offset?: number;
+    /** only return results that contain the specified string. */
+    name?: string;
+    /** The field on which the output is sorted. Sorts by default by **label** property. Available fields are
+     *  **name**, **label**, **created**, and **updated**. By adding **-** (i.e. **-label**) in front of the query
+     *  string, you can specify descending order. Default is ascending order.
+     */
+    sort?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createObject` operation. */
+  export interface CreateObjectParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** unique id. */
+    id?: string;
+    /** The programmatic name of this offering. */
+    name?: string;
+    /** Cloudant revision. */
+    rev?: string;
+    /** The crn for this specific object. */
+    crn?: string;
+    /** The url for this specific object. */
+    url?: string;
+    /** The parent for this specific object. */
+    parentId?: string;
+    /** List of allowed accounts for this specific object. */
+    allowList?: string[];
+    /** Translated display name in the requested language. */
+    labelI18n?: string;
+    /** Display name in the requested language. */
+    label?: string;
+    /** List of tags associated with this catalog. */
+    tags?: string[];
+    /** The date and time this catalog was created. */
+    created?: string;
+    /** The date and time this catalog was last updated. */
+    updated?: string;
+    /** Short description in the requested language. */
+    shortDescription?: string;
+    /** Short description translation. */
+    shortDescriptionI18n?: string;
+    /** Kind of object. */
+    kind?: string;
+    /** Publish information. */
+    publish?: PublishObject;
+    /** Offering state. */
+    state?: State;
+    /** The id of the catalog containing this offering. */
+    catalogId?: string;
+    /** The name of the catalog. */
+    catalogName?: string;
+    /** Map of data values for this object. */
+    data?: JsonObject;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getObject` operation. */
+  export interface GetObjectParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `replaceObject` operation. */
+  export interface ReplaceObjectParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    /** unique id. */
+    id?: string;
+    /** The programmatic name of this offering. */
+    name?: string;
+    /** Cloudant revision. */
+    rev?: string;
+    /** The crn for this specific object. */
+    crn?: string;
+    /** The url for this specific object. */
+    url?: string;
+    /** The parent for this specific object. */
+    parentId?: string;
+    /** List of allowed accounts for this specific object. */
+    allowList?: string[];
+    /** Translated display name in the requested language. */
+    labelI18n?: string;
+    /** Display name in the requested language. */
+    label?: string;
+    /** List of tags associated with this catalog. */
+    tags?: string[];
+    /** The date and time this catalog was created. */
+    created?: string;
+    /** The date and time this catalog was last updated. */
+    updated?: string;
+    /** Short description in the requested language. */
+    shortDescription?: string;
+    /** Short description translation. */
+    shortDescriptionI18n?: string;
+    /** Kind of object. */
+    kind?: string;
+    /** Publish information. */
+    publish?: PublishObject;
+    /** Offering state. */
+    state?: State;
+    /** The id of the catalog containing this offering. */
+    catalogId?: string;
+    /** The name of the catalog. */
+    catalogName?: string;
+    /** Map of data values for this object. */
+    data?: JsonObject;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteObject` operation. */
+  export interface DeleteObjectParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getObjectAudit` operation. */
+  export interface GetObjectAuditParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    /** Log identification. */
+    id?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /*************************
    * model interfaces
    ************************/
@@ -4186,6 +4998,8 @@ namespace CatalogManagementV1 {
 
   /** Result of approval. */
   export interface ApprovalResult {
+    /** Allowed to request to publish. */
+    allow_request?: boolean;
     /** Visible to IBM. */
     ibm?: boolean;
     /** Visible to everyone. */
@@ -4806,6 +5620,122 @@ namespace CatalogManagementV1 {
     resources?: string[];
   }
 
+  /** object information. */
+  export interface Object {
+    /** unique id. */
+    id?: string;
+    /** The programmatic name of this offering. */
+    name?: string;
+    /** Cloudant revision. */
+    _rev?: string;
+    /** The crn for this specific object. */
+    crn?: string;
+    /** The url for this specific object. */
+    url?: string;
+    /** The parent for this specific object. */
+    parent_id?: string;
+    /** List of allowed accounts for this specific object. */
+    allow_list?: string[];
+    /** Translated display name in the requested language. */
+    label_i18n?: string;
+    /** Display name in the requested language. */
+    label?: string;
+    /** List of tags associated with this catalog. */
+    tags?: string[];
+    /** The date and time this catalog was created. */
+    created?: string;
+    /** The date and time this catalog was last updated. */
+    updated?: string;
+    /** Short description in the requested language. */
+    short_description?: string;
+    /** Short description translation. */
+    short_description_i18n?: string;
+    /** Kind of object. */
+    kind?: string;
+    /** Publish information. */
+    publish?: PublishObject;
+    /** Offering state. */
+    state?: State;
+    /** The id of the catalog containing this offering. */
+    catalog_id?: string;
+    /** The name of the catalog. */
+    catalog_name?: string;
+    /** Map of data values for this object. */
+    data?: JsonObject;
+  }
+
+  /** object information. */
+  export interface ObjectDigest {
+    /** unique id. */
+    id?: string;
+    /** Lucene match order. */
+    order?: number[];
+    /** Object digest. */
+    fields?: ObjectDigestFields;
+  }
+
+  /** Object digest. */
+  export interface ObjectDigestFields {
+    /** The id of the catalog containing this offering. */
+    catalog_id?: string;
+    /** The programmatic name of this offering. */
+    name?: string;
+    /** The parent for this specific object. */
+    parent_id?: string;
+    /** Display name in the requested language. */
+    label?: string;
+    /** The date and time this catalog was last updated. */
+    updated?: string;
+    /** Kind of object. */
+    kind?: string;
+    /** The name of the object's parent. */
+    parent_name?: string;
+  }
+
+  /** Paginated object search result. */
+  export interface ObjectListResult {
+    /** The offset (origin 0) of the first resource in this page of search results. */
+    offset?: number;
+    /** The maximum number of resources returned in each page of search results. */
+    limit?: number;
+    /** The overall total number of resources in the search result set. */
+    total_count?: number;
+    /** The number of resources returned in this page of search results. */
+    resource_count?: number;
+    /** A URL for retrieving the first page of search results. */
+    first?: string;
+    /** A URL for retrieving the last page of search results. */
+    last?: string;
+    /** A URL for retrieving the previous page of search results. */
+    prev?: string;
+    /** A URL for retrieving the next page of search results. */
+    next?: string;
+    /** Resulting objects. */
+    resources?: Object[];
+  }
+
+  /** Paginated object search result. */
+  export interface ObjectSearchResult {
+    /** The offset (origin 0) of the first resource in this page of search results. */
+    offset?: number;
+    /** The maximum number of resources returned in each page of search results. */
+    limit?: number;
+    /** The overall total number of resources in the search result set. */
+    total_count?: number;
+    /** The number of resources returned in this page of search results. */
+    resource_count?: number;
+    /** A URL for retrieving the first page of search results. */
+    first?: string;
+    /** A URL for retrieving the last page of search results. */
+    last?: string;
+    /** A URL for retrieving the previous page of search results. */
+    prev?: string;
+    /** A URL for retrieving the next page of search results. */
+    next?: string;
+    /** Resulting objects. */
+    resources?: ObjectDigest[];
+  }
+
   /** Offering information. */
   export interface Offering {
     /** unique id. */
@@ -4938,6 +5868,20 @@ namespace CatalogManagementV1 {
     updated?: string;
     /** list of deployments. */
     deployments?: Deployment[];
+  }
+
+  /** Publish information. */
+  export interface PublishObject {
+    /** Is it permitted to request publishing to IBM or Public. */
+    permit_ibm_public_publish?: boolean;
+    /** Indicates if this offering has been approved for use by all IBMers. */
+    ibm_approved?: boolean;
+    /** Indicates if this offering has been approved for use by all IBM Cloud users. */
+    public_approved?: boolean;
+    /** The portal's approval record ID. */
+    portal_approval_record?: string;
+    /** The portal UI URL. */
+    portal_url?: string;
   }
 
   /** Repository info for offerings. */

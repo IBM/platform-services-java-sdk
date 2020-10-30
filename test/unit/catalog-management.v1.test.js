@@ -35,10 +35,10 @@ const service = {
   url: 'https://cm.globalcatalog.cloud.ibm.com/api/v1-beta',
 };
 
-const catalogManagement = new CatalogManagementV1(service);
+const catalogManagementService = new CatalogManagementV1(service);
 
 // dont actually create a request
-const createRequestMock = jest.spyOn(catalogManagement, 'createRequest');
+const createRequestMock = jest.spyOn(catalogManagementService, 'createRequest');
 createRequestMock.mockImplementation(() => Promise.resolve());
 
 // dont actually construct an authenticator
@@ -106,7 +106,7 @@ describe('CatalogManagementV1', () => {
         // Construct the params object for operation getCatalogAccount
         const params = {};
 
-        const getCatalogAccountResult = catalogManagement.getCatalogAccount(params);
+        const getCatalogAccountResult = catalogManagementService.getCatalogAccount(params);
 
         // all methods should return a Promise
         expectToBePromise(getCatalogAccountResult);
@@ -133,13 +133,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getCatalogAccount(params);
+        catalogManagementService.getCatalogAccount(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.getCatalogAccount({});
+        catalogManagementService.getCatalogAccount({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -168,7 +168,7 @@ describe('CatalogManagementV1', () => {
       // Filters
       const filtersModel = {
         include_all: true,
-        category_filters: { 'key1' : categoryFilterModel },
+        category_filters: { 'key1': categoryFilterModel },
         id_filters: idFilterModel,
       };
 
@@ -181,7 +181,7 @@ describe('CatalogManagementV1', () => {
           accountFilters: accountFilters,
         };
 
-        const updateCatalogAccountResult = catalogManagement.updateCatalogAccount(params);
+        const updateCatalogAccountResult = catalogManagementService.updateCatalogAccount(params);
 
         // all methods should return a Promise
         expectToBePromise(updateCatalogAccountResult);
@@ -210,13 +210,61 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.updateCatalogAccount(params);
+        catalogManagementService.updateCatalogAccount(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.updateCatalogAccount({});
+        catalogManagementService.updateCatalogAccount({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+  describe('getCatalogAccountAudit', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getCatalogAccountAudit
+        const id = 'testString';
+        const params = {
+          id: id,
+        };
+
+        const getCatalogAccountAuditResult = catalogManagementService.getCatalogAccountAudit(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getCatalogAccountAuditResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/catalogaccount/audit', 'GET');
+        const expectedAccept = undefined;
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['id']).toEqual(id);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.getCatalogAccountAudit(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        catalogManagementService.getCatalogAccountAudit({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -230,7 +278,7 @@ describe('CatalogManagementV1', () => {
           catalog: catalog,
         };
 
-        const getCatalogAccountFiltersResult = catalogManagement.getCatalogAccountFilters(params);
+        const getCatalogAccountFiltersResult = catalogManagementService.getCatalogAccountFilters(params);
 
         // all methods should return a Promise
         expectToBePromise(getCatalogAccountFiltersResult);
@@ -258,13 +306,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getCatalogAccountFilters(params);
+        catalogManagementService.getCatalogAccountFilters(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.getCatalogAccountFilters({});
+        catalogManagementService.getCatalogAccountFilters({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -275,7 +323,7 @@ describe('CatalogManagementV1', () => {
         // Construct the params object for operation listCatalogs
         const params = {};
 
-        const listCatalogsResult = catalogManagement.listCatalogs(params);
+        const listCatalogsResult = catalogManagementService.listCatalogs(params);
 
         // all methods should return a Promise
         expectToBePromise(listCatalogsResult);
@@ -302,13 +350,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.listCatalogs(params);
+        catalogManagementService.listCatalogs(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.listCatalogs({});
+        catalogManagementService.listCatalogs({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -343,7 +391,7 @@ describe('CatalogManagementV1', () => {
       // Filters
       const filtersModel = {
         include_all: true,
-        category_filters: { 'key1' : categoryFilterModel },
+        category_filters: { 'key1': categoryFilterModel },
         id_filters: idFilterModel,
       };
 
@@ -358,16 +406,16 @@ describe('CatalogManagementV1', () => {
         all_namespaces: true,
       };
 
-      // SyndicationAuthorization
-      const syndicationAuthorizationModel = {
-        token: 'testString',
-        last_run: '2019-01-01T12:00:00',
-      };
-
       // SyndicationHistory
       const syndicationHistoryModel = {
         namespaces: ['testString'],
         clusters: [syndicationClusterModel],
+        last_run: '2019-01-01T12:00:00',
+      };
+
+      // SyndicationAuthorization
+      const syndicationAuthorizationModel = {
+        token: 'testString',
         last_run: '2019-01-01T12:00:00',
       };
 
@@ -418,7 +466,7 @@ describe('CatalogManagementV1', () => {
           syndicationSettings: syndicationSettings,
         };
 
-        const createCatalogResult = catalogManagement.createCatalog(params);
+        const createCatalogResult = catalogManagementService.createCatalog(params);
 
         // all methods should return a Promise
         expectToBePromise(createCatalogResult);
@@ -462,13 +510,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.createCatalog(params);
+        catalogManagementService.createCatalog(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.createCatalog({});
+        catalogManagementService.createCatalog({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -482,7 +530,7 @@ describe('CatalogManagementV1', () => {
           catalogIdentifier: catalogIdentifier,
         };
 
-        const getCatalogResult = catalogManagement.getCatalog(params);
+        const getCatalogResult = catalogManagementService.getCatalog(params);
 
         // all methods should return a Promise
         expectToBePromise(getCatalogResult);
@@ -512,7 +560,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getCatalog(params);
+        catalogManagementService.getCatalog(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -521,7 +569,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getCatalog({});
+          await catalogManagementService.getCatalog({});
         } catch (e) {
           err = e;
         }
@@ -531,7 +579,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getCatalogPromise = catalogManagement.getCatalog();
+        const getCatalogPromise = catalogManagementService.getCatalog();
         expectToBePromise(getCatalogPromise);
 
         getCatalogPromise.catch(err => {
@@ -571,7 +619,7 @@ describe('CatalogManagementV1', () => {
       // Filters
       const filtersModel = {
         include_all: true,
-        category_filters: { 'key1' : categoryFilterModel },
+        category_filters: { 'key1': categoryFilterModel },
         id_filters: idFilterModel,
       };
 
@@ -586,16 +634,16 @@ describe('CatalogManagementV1', () => {
         all_namespaces: true,
       };
 
-      // SyndicationAuthorization
-      const syndicationAuthorizationModel = {
-        token: 'testString',
-        last_run: '2019-01-01T12:00:00',
-      };
-
       // SyndicationHistory
       const syndicationHistoryModel = {
         namespaces: ['testString'],
         clusters: [syndicationClusterModel],
+        last_run: '2019-01-01T12:00:00',
+      };
+
+      // SyndicationAuthorization
+      const syndicationAuthorizationModel = {
+        token: 'testString',
         last_run: '2019-01-01T12:00:00',
       };
 
@@ -648,7 +696,7 @@ describe('CatalogManagementV1', () => {
           syndicationSettings: syndicationSettings,
         };
 
-        const replaceCatalogResult = catalogManagement.replaceCatalog(params);
+        const replaceCatalogResult = catalogManagementService.replaceCatalog(params);
 
         // all methods should return a Promise
         expectToBePromise(replaceCatalogResult);
@@ -695,7 +743,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.replaceCatalog(params);
+        catalogManagementService.replaceCatalog(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -704,7 +752,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.replaceCatalog({});
+          await catalogManagementService.replaceCatalog({});
         } catch (e) {
           err = e;
         }
@@ -714,7 +762,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const replaceCatalogPromise = catalogManagement.replaceCatalog();
+        const replaceCatalogPromise = catalogManagementService.replaceCatalog();
         expectToBePromise(replaceCatalogPromise);
 
         replaceCatalogPromise.catch(err => {
@@ -733,7 +781,7 @@ describe('CatalogManagementV1', () => {
           catalogIdentifier: catalogIdentifier,
         };
 
-        const deleteCatalogResult = catalogManagement.deleteCatalog(params);
+        const deleteCatalogResult = catalogManagementService.deleteCatalog(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteCatalogResult);
@@ -763,7 +811,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.deleteCatalog(params);
+        catalogManagementService.deleteCatalog(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -772,7 +820,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.deleteCatalog({});
+          await catalogManagementService.deleteCatalog({});
         } catch (e) {
           err = e;
         }
@@ -782,10 +830,81 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteCatalogPromise = catalogManagement.deleteCatalog();
+        const deleteCatalogPromise = catalogManagementService.deleteCatalog();
         expectToBePromise(deleteCatalogPromise);
 
         deleteCatalogPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('getCatalogAudit', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getCatalogAudit
+        const catalogIdentifier = 'testString';
+        const id = 'testString';
+        const params = {
+          catalogIdentifier: catalogIdentifier,
+          id: id,
+        };
+
+        const getCatalogAuditResult = catalogManagementService.getCatalogAudit(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getCatalogAuditResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/catalogs/{catalog_identifier}/audit', 'GET');
+        const expectedAccept = undefined;
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['id']).toEqual(id);
+        expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const catalogIdentifier = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          catalogIdentifier,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.getCatalogAudit(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.getCatalogAudit({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getCatalogAuditPromise = catalogManagementService.getCatalogAudit();
+        expectToBePromise(getCatalogAuditPromise);
+
+        getCatalogAuditPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -801,7 +920,7 @@ describe('CatalogManagementV1', () => {
           enterpriseId: enterpriseId,
         };
 
-        const getEnterpriseResult = catalogManagement.getEnterprise(params);
+        const getEnterpriseResult = catalogManagementService.getEnterprise(params);
 
         // all methods should return a Promise
         expectToBePromise(getEnterpriseResult);
@@ -831,7 +950,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getEnterprise(params);
+        catalogManagementService.getEnterprise(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -840,7 +959,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getEnterprise({});
+          await catalogManagementService.getEnterprise({});
         } catch (e) {
           err = e;
         }
@@ -850,7 +969,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getEnterprisePromise = catalogManagement.getEnterprise();
+        const getEnterprisePromise = catalogManagementService.getEnterprise();
         expectToBePromise(getEnterprisePromise);
 
         getEnterprisePromise.catch(err => {
@@ -884,7 +1003,7 @@ describe('CatalogManagementV1', () => {
       // Filters
       const filtersModel = {
         include_all: true,
-        category_filters: { 'key1' : categoryFilterModel },
+        category_filters: { 'key1': categoryFilterModel },
         id_filters: idFilterModel,
       };
 
@@ -914,7 +1033,7 @@ describe('CatalogManagementV1', () => {
           accountGroups: accountGroups,
         };
 
-        const replaceEnterpriseResult = catalogManagement.replaceEnterprise(params);
+        const replaceEnterpriseResult = catalogManagementService.replaceEnterprise(params);
 
         // all methods should return a Promise
         expectToBePromise(replaceEnterpriseResult);
@@ -948,7 +1067,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.replaceEnterprise(params);
+        catalogManagementService.replaceEnterprise(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -957,7 +1076,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.replaceEnterprise({});
+          await catalogManagementService.replaceEnterprise({});
         } catch (e) {
           err = e;
         }
@@ -967,10 +1086,81 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const replaceEnterprisePromise = catalogManagement.replaceEnterprise();
+        const replaceEnterprisePromise = catalogManagementService.replaceEnterprise();
         expectToBePromise(replaceEnterprisePromise);
 
         replaceEnterprisePromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('getEnterprisesAudit', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getEnterprisesAudit
+        const enterpriseId = 'testString';
+        const id = 'testString';
+        const params = {
+          enterpriseId: enterpriseId,
+          id: id,
+        };
+
+        const getEnterprisesAuditResult = catalogManagementService.getEnterprisesAudit(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getEnterprisesAuditResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/enterprises/{enterprise_id}/audit', 'GET');
+        const expectedAccept = undefined;
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['id']).toEqual(id);
+        expect(options.path['enterprise_id']).toEqual(enterpriseId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const enterpriseId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          enterpriseId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.getEnterprisesAudit(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.getEnterprisesAudit({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getEnterprisesAuditPromise = catalogManagementService.getEnterprisesAudit();
+        expectToBePromise(getEnterprisesAuditPromise);
+
+        getEnterprisesAuditPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -985,14 +1175,18 @@ describe('CatalogManagementV1', () => {
         const catalog = 'testString';
         const select = 'all';
         const includeHidden = true;
+        const limit = 38;
+        const offset = 38;
         const params = {
           digest: digest,
           catalog: catalog,
           select: select,
           includeHidden: includeHidden,
+          limit: limit,
+          offset: offset,
         };
 
-        const getConsumptionOfferingsResult = catalogManagement.getConsumptionOfferings(params);
+        const getConsumptionOfferingsResult = catalogManagementService.getConsumptionOfferings(params);
 
         // all methods should return a Promise
         expectToBePromise(getConsumptionOfferingsResult);
@@ -1010,6 +1204,8 @@ describe('CatalogManagementV1', () => {
         expect(options.qs['catalog']).toEqual(catalog);
         expect(options.qs['select']).toEqual(select);
         expect(options.qs['includeHidden']).toEqual(includeHidden);
+        expect(options.qs['limit']).toEqual(limit);
+        expect(options.qs['offset']).toEqual(offset);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1023,13 +1219,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getConsumptionOfferings(params);
+        catalogManagementService.getConsumptionOfferings(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.getConsumptionOfferings({});
+        catalogManagementService.getConsumptionOfferings({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -1040,12 +1236,20 @@ describe('CatalogManagementV1', () => {
         // Construct the params object for operation listOfferings
         const catalogIdentifier = 'testString';
         const digest = true;
+        const limit = 38;
+        const offset = 38;
+        const name = 'testString';
+        const sort = 'testString';
         const params = {
           catalogIdentifier: catalogIdentifier,
           digest: digest,
+          limit: limit,
+          offset: offset,
+          name: name,
+          sort: sort,
         };
 
-        const listOfferingsResult = catalogManagement.listOfferings(params);
+        const listOfferingsResult = catalogManagementService.listOfferings(params);
 
         // all methods should return a Promise
         expectToBePromise(listOfferingsResult);
@@ -1060,6 +1264,10 @@ describe('CatalogManagementV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['digest']).toEqual(digest);
+        expect(options.qs['limit']).toEqual(limit);
+        expect(options.qs['offset']).toEqual(offset);
+        expect(options.qs['name']).toEqual(name);
+        expect(options.qs['sort']).toEqual(sort);
         expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
       });
 
@@ -1076,7 +1284,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.listOfferings(params);
+        catalogManagementService.listOfferings(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1085,7 +1293,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.listOfferings({});
+          await catalogManagementService.listOfferings({});
         } catch (e) {
           err = e;
         }
@@ -1095,7 +1303,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const listOfferingsPromise = catalogManagement.listOfferings();
+        const listOfferingsPromise = catalogManagementService.listOfferings();
         expectToBePromise(listOfferingsPromise);
 
         listOfferingsPromise.catch(err => {
@@ -1127,58 +1335,12 @@ describe('CatalogManagementV1', () => {
       const configurationModel = {
         key: 'testString',
         type: 'testString',
-        default_value: 'any',
+        default_value: 'testString',
         value_constraint: 'testString',
         description: 'testString',
         required: true,
         options: [{ foo: 'bar' }],
         hidden: true,
-      };
-
-      // Deployment
-      const deploymentModel = {
-        id: 'testString',
-        label: 'testString',
-        name: 'testString',
-        short_description: 'testString',
-        long_description: 'testString',
-        metadata: { foo: 'bar' },
-        tags: ['testString'],
-        created: '2019-01-01T12:00:00',
-        updated: '2019-01-01T12:00:00',
-      };
-
-      // License
-      const licenseModel = {
-        id: 'testString',
-        name: 'testString',
-        type: 'testString',
-        url: 'testString',
-        description: 'testString',
-      };
-
-      // Resource
-      const resourceModel = {
-        type: 'mem',
-        value: 'any',
-      };
-
-      // Script
-      const scriptModel = {
-        instructions: 'testString',
-        script: 'testString',
-        script_permission: 'testString',
-        delete_script: 'testString',
-        scope: 'testString',
-      };
-
-      // State
-      const stateModel = {
-        current: 'testString',
-        current_entered: '2019-01-01T12:00:00',
-        pending: 'testString',
-        pending_requested: '2019-01-01T12:00:00',
-        previous: 'testString',
       };
 
       // Validation
@@ -1190,6 +1352,21 @@ describe('CatalogManagementV1', () => {
         target: { foo: 'bar' },
       };
 
+      // Resource
+      const resourceModel = {
+        type: 'mem',
+        value: 'testString',
+      };
+
+      // Script
+      const scriptModel = {
+        instructions: 'testString',
+        script: 'testString',
+        script_permission: 'testString',
+        delete_script: 'testString',
+        scope: 'testString',
+      };
+
       // VersionEntitlement
       const versionEntitlementModel = {
         provider_name: 'testString',
@@ -1199,19 +1376,22 @@ describe('CatalogManagementV1', () => {
         image_repo_name: 'testString',
       };
 
-      // Plan
-      const planModel = {
+      // License
+      const licenseModel = {
         id: 'testString',
-        label: 'testString',
         name: 'testString',
-        short_description: 'testString',
-        long_description: 'testString',
-        metadata: { foo: 'bar' },
-        tags: ['testString'],
-        additional_features: [featureModel],
-        created: '2019-01-01T12:00:00',
-        updated: '2019-01-01T12:00:00',
-        deployments: [deploymentModel],
+        type: 'testString',
+        url: 'testString',
+        description: 'testString',
+      };
+
+      // State
+      const stateModel = {
+        current: 'testString',
+        current_entered: '2019-01-01T12:00:00',
+        pending: 'testString',
+        pending_requested: '2019-01-01T12:00:00',
+        previous: 'testString',
       };
 
       // Version
@@ -1247,6 +1427,34 @@ describe('CatalogManagementV1', () => {
         console_url: 'testString',
         long_description: 'testString',
         whitelisted_accounts: ['testString'],
+      };
+
+      // Deployment
+      const deploymentModel = {
+        id: 'testString',
+        label: 'testString',
+        name: 'testString',
+        short_description: 'testString',
+        long_description: 'testString',
+        metadata: { foo: 'bar' },
+        tags: ['testString'],
+        created: '2019-01-01T12:00:00',
+        updated: '2019-01-01T12:00:00',
+      };
+
+      // Plan
+      const planModel = {
+        id: 'testString',
+        label: 'testString',
+        name: 'testString',
+        short_description: 'testString',
+        long_description: 'testString',
+        metadata: { foo: 'bar' },
+        tags: ['testString'],
+        additional_features: [featureModel],
+        created: '2019-01-01T12:00:00',
+        updated: '2019-01-01T12:00:00',
+        deployments: [deploymentModel],
       };
 
       // Kind
@@ -1339,7 +1547,7 @@ describe('CatalogManagementV1', () => {
           repoInfo: repoInfo,
         };
 
-        const createOfferingResult = catalogManagement.createOffering(params);
+        const createOfferingResult = catalogManagementService.createOffering(params);
 
         // all methods should return a Promise
         expectToBePromise(createOfferingResult);
@@ -1400,7 +1608,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.createOffering(params);
+        catalogManagementService.createOffering(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1409,7 +1617,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.createOffering({});
+          await catalogManagementService.createOffering({});
         } catch (e) {
           err = e;
         }
@@ -1419,7 +1627,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createOfferingPromise = catalogManagement.createOffering();
+        const createOfferingPromise = catalogManagementService.createOffering();
         expectToBePromise(createOfferingPromise);
 
         createOfferingPromise.catch(err => {
@@ -1435,26 +1643,26 @@ describe('CatalogManagementV1', () => {
         // Construct the params object for operation importOfferingVersion
         const catalogIdentifier = 'testString';
         const offeringId = 'testString';
-        const zipurl = 'testString';
         const tags = ['testString'];
         const targetKinds = ['testString'];
+        const content = [38];
+        const zipurl = 'testString';
         const targetVersion = 'testString';
         const includeConfig = true;
         const repoType = 'testString';
-        const xAuthToken = 'testString';
         const params = {
           catalogIdentifier: catalogIdentifier,
           offeringId: offeringId,
-          zipurl: zipurl,
           tags: tags,
           targetKinds: targetKinds,
+          content: content,
+          zipurl: zipurl,
           targetVersion: targetVersion,
           includeConfig: includeConfig,
           repoType: repoType,
-          xAuthToken: xAuthToken,
         };
 
-        const importOfferingVersionResult = catalogManagement.importOfferingVersion(params);
+        const importOfferingVersionResult = catalogManagementService.importOfferingVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(importOfferingVersionResult);
@@ -1468,9 +1676,9 @@ describe('CatalogManagementV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        checkUserHeader(createRequestMock, 'X-Auth-Token', xAuthToken);
         expect(options.body['tags']).toEqual(tags);
         expect(options.body['target_kinds']).toEqual(targetKinds);
+        expect(options.body['content']).toEqual(content);
         expect(options.qs['zipurl']).toEqual(zipurl);
         expect(options.qs['targetVersion']).toEqual(targetVersion);
         expect(options.qs['includeConfig']).toEqual(includeConfig);
@@ -1483,20 +1691,18 @@ describe('CatalogManagementV1', () => {
         // parameters
         const catalogIdentifier = 'testString';
         const offeringId = 'testString';
-        const zipurl = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
           catalogIdentifier,
           offeringId,
-          zipurl,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        catalogManagement.importOfferingVersion(params);
+        catalogManagementService.importOfferingVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1505,7 +1711,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.importOfferingVersion({});
+          await catalogManagementService.importOfferingVersion({});
         } catch (e) {
           err = e;
         }
@@ -1515,7 +1721,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const importOfferingVersionPromise = catalogManagement.importOfferingVersion();
+        const importOfferingVersionPromise = catalogManagementService.importOfferingVersion();
         expectToBePromise(importOfferingVersionPromise);
 
         importOfferingVersionPromise.catch(err => {
@@ -1530,25 +1736,29 @@ describe('CatalogManagementV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation importOffering
         const catalogIdentifier = 'testString';
-        const zipurl = 'testString';
         const tags = ['testString'];
         const targetKinds = ['testString'];
+        const content = [38];
+        const zipurl = 'testString';
         const offeringId = 'testString';
+        const targetVersion = 'testString';
         const includeConfig = true;
         const repoType = 'testString';
         const xAuthToken = 'testString';
         const params = {
           catalogIdentifier: catalogIdentifier,
-          zipurl: zipurl,
           tags: tags,
           targetKinds: targetKinds,
+          content: content,
+          zipurl: zipurl,
           offeringId: offeringId,
+          targetVersion: targetVersion,
           includeConfig: includeConfig,
           repoType: repoType,
           xAuthToken: xAuthToken,
         };
 
-        const importOfferingResult = catalogManagement.importOffering(params);
+        const importOfferingResult = catalogManagementService.importOffering(params);
 
         // all methods should return a Promise
         expectToBePromise(importOfferingResult);
@@ -1565,8 +1775,10 @@ describe('CatalogManagementV1', () => {
         checkUserHeader(createRequestMock, 'X-Auth-Token', xAuthToken);
         expect(options.body['tags']).toEqual(tags);
         expect(options.body['target_kinds']).toEqual(targetKinds);
+        expect(options.body['content']).toEqual(content);
         expect(options.qs['zipurl']).toEqual(zipurl);
         expect(options.qs['offeringID']).toEqual(offeringId);
+        expect(options.qs['targetVersion']).toEqual(targetVersion);
         expect(options.qs['includeConfig']).toEqual(includeConfig);
         expect(options.qs['repoType']).toEqual(repoType);
         expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
@@ -1575,19 +1787,17 @@ describe('CatalogManagementV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const catalogIdentifier = 'testString';
-        const zipurl = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
           catalogIdentifier,
-          zipurl,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        catalogManagement.importOffering(params);
+        catalogManagementService.importOffering(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1596,7 +1806,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.importOffering({});
+          await catalogManagementService.importOffering({});
         } catch (e) {
           err = e;
         }
@@ -1606,7 +1816,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const importOfferingPromise = catalogManagement.importOffering();
+        const importOfferingPromise = catalogManagementService.importOffering();
         expectToBePromise(importOfferingPromise);
 
         importOfferingPromise.catch(err => {
@@ -1622,24 +1832,24 @@ describe('CatalogManagementV1', () => {
         // Construct the params object for operation reloadOffering
         const catalogIdentifier = 'testString';
         const offeringId = 'testString';
-        const zipurl = 'testString';
         const targetVersion = 'testString';
         const tags = ['testString'];
         const targetKinds = ['testString'];
+        const content = [38];
+        const zipurl = 'testString';
         const repoType = 'testString';
-        const xAuthToken = 'testString';
         const params = {
           catalogIdentifier: catalogIdentifier,
           offeringId: offeringId,
-          zipurl: zipurl,
           targetVersion: targetVersion,
           tags: tags,
           targetKinds: targetKinds,
+          content: content,
+          zipurl: zipurl,
           repoType: repoType,
-          xAuthToken: xAuthToken,
         };
 
-        const reloadOfferingResult = catalogManagement.reloadOffering(params);
+        const reloadOfferingResult = catalogManagementService.reloadOffering(params);
 
         // all methods should return a Promise
         expectToBePromise(reloadOfferingResult);
@@ -1653,11 +1863,11 @@ describe('CatalogManagementV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        checkUserHeader(createRequestMock, 'X-Auth-Token', xAuthToken);
         expect(options.body['tags']).toEqual(tags);
         expect(options.body['target_kinds']).toEqual(targetKinds);
-        expect(options.qs['zipurl']).toEqual(zipurl);
+        expect(options.body['content']).toEqual(content);
         expect(options.qs['targetVersion']).toEqual(targetVersion);
+        expect(options.qs['zipurl']).toEqual(zipurl);
         expect(options.qs['repoType']).toEqual(repoType);
         expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
         expect(options.path['offering_id']).toEqual(offeringId);
@@ -1667,14 +1877,12 @@ describe('CatalogManagementV1', () => {
         // parameters
         const catalogIdentifier = 'testString';
         const offeringId = 'testString';
-        const zipurl = 'testString';
         const targetVersion = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
           catalogIdentifier,
           offeringId,
-          zipurl,
           targetVersion,
           headers: {
             Accept: userAccept,
@@ -1682,7 +1890,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.reloadOffering(params);
+        catalogManagementService.reloadOffering(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1691,7 +1899,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.reloadOffering({});
+          await catalogManagementService.reloadOffering({});
         } catch (e) {
           err = e;
         }
@@ -1701,7 +1909,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const reloadOfferingPromise = catalogManagement.reloadOffering();
+        const reloadOfferingPromise = catalogManagementService.reloadOffering();
         expectToBePromise(reloadOfferingPromise);
 
         reloadOfferingPromise.catch(err => {
@@ -1722,7 +1930,7 @@ describe('CatalogManagementV1', () => {
           offeringId: offeringId,
         };
 
-        const getOfferingResult = catalogManagement.getOffering(params);
+        const getOfferingResult = catalogManagementService.getOffering(params);
 
         // all methods should return a Promise
         expectToBePromise(getOfferingResult);
@@ -1755,7 +1963,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getOffering(params);
+        catalogManagementService.getOffering(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1764,7 +1972,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getOffering({});
+          await catalogManagementService.getOffering({});
         } catch (e) {
           err = e;
         }
@@ -1774,7 +1982,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getOfferingPromise = catalogManagement.getOffering();
+        const getOfferingPromise = catalogManagementService.getOffering();
         expectToBePromise(getOfferingPromise);
 
         getOfferingPromise.catch(err => {
@@ -1806,58 +2014,12 @@ describe('CatalogManagementV1', () => {
       const configurationModel = {
         key: 'testString',
         type: 'testString',
-        default_value: 'any',
+        default_value: 'testString',
         value_constraint: 'testString',
         description: 'testString',
         required: true,
         options: [{ foo: 'bar' }],
         hidden: true,
-      };
-
-      // Deployment
-      const deploymentModel = {
-        id: 'testString',
-        label: 'testString',
-        name: 'testString',
-        short_description: 'testString',
-        long_description: 'testString',
-        metadata: { foo: 'bar' },
-        tags: ['testString'],
-        created: '2019-01-01T12:00:00',
-        updated: '2019-01-01T12:00:00',
-      };
-
-      // License
-      const licenseModel = {
-        id: 'testString',
-        name: 'testString',
-        type: 'testString',
-        url: 'testString',
-        description: 'testString',
-      };
-
-      // Resource
-      const resourceModel = {
-        type: 'mem',
-        value: 'any',
-      };
-
-      // Script
-      const scriptModel = {
-        instructions: 'testString',
-        script: 'testString',
-        script_permission: 'testString',
-        delete_script: 'testString',
-        scope: 'testString',
-      };
-
-      // State
-      const stateModel = {
-        current: 'testString',
-        current_entered: '2019-01-01T12:00:00',
-        pending: 'testString',
-        pending_requested: '2019-01-01T12:00:00',
-        previous: 'testString',
       };
 
       // Validation
@@ -1869,6 +2031,21 @@ describe('CatalogManagementV1', () => {
         target: { foo: 'bar' },
       };
 
+      // Resource
+      const resourceModel = {
+        type: 'mem',
+        value: 'testString',
+      };
+
+      // Script
+      const scriptModel = {
+        instructions: 'testString',
+        script: 'testString',
+        script_permission: 'testString',
+        delete_script: 'testString',
+        scope: 'testString',
+      };
+
       // VersionEntitlement
       const versionEntitlementModel = {
         provider_name: 'testString',
@@ -1878,19 +2055,22 @@ describe('CatalogManagementV1', () => {
         image_repo_name: 'testString',
       };
 
-      // Plan
-      const planModel = {
+      // License
+      const licenseModel = {
         id: 'testString',
-        label: 'testString',
         name: 'testString',
-        short_description: 'testString',
-        long_description: 'testString',
-        metadata: { foo: 'bar' },
-        tags: ['testString'],
-        additional_features: [featureModel],
-        created: '2019-01-01T12:00:00',
-        updated: '2019-01-01T12:00:00',
-        deployments: [deploymentModel],
+        type: 'testString',
+        url: 'testString',
+        description: 'testString',
+      };
+
+      // State
+      const stateModel = {
+        current: 'testString',
+        current_entered: '2019-01-01T12:00:00',
+        pending: 'testString',
+        pending_requested: '2019-01-01T12:00:00',
+        previous: 'testString',
       };
 
       // Version
@@ -1926,6 +2106,34 @@ describe('CatalogManagementV1', () => {
         console_url: 'testString',
         long_description: 'testString',
         whitelisted_accounts: ['testString'],
+      };
+
+      // Deployment
+      const deploymentModel = {
+        id: 'testString',
+        label: 'testString',
+        name: 'testString',
+        short_description: 'testString',
+        long_description: 'testString',
+        metadata: { foo: 'bar' },
+        tags: ['testString'],
+        created: '2019-01-01T12:00:00',
+        updated: '2019-01-01T12:00:00',
+      };
+
+      // Plan
+      const planModel = {
+        id: 'testString',
+        label: 'testString',
+        name: 'testString',
+        short_description: 'testString',
+        long_description: 'testString',
+        metadata: { foo: 'bar' },
+        tags: ['testString'],
+        additional_features: [featureModel],
+        created: '2019-01-01T12:00:00',
+        updated: '2019-01-01T12:00:00',
+        deployments: [deploymentModel],
       };
 
       // Kind
@@ -2020,7 +2228,7 @@ describe('CatalogManagementV1', () => {
           repoInfo: repoInfo,
         };
 
-        const replaceOfferingResult = catalogManagement.replaceOffering(params);
+        const replaceOfferingResult = catalogManagementService.replaceOffering(params);
 
         // all methods should return a Promise
         expectToBePromise(replaceOfferingResult);
@@ -2084,7 +2292,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.replaceOffering(params);
+        catalogManagementService.replaceOffering(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2093,7 +2301,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.replaceOffering({});
+          await catalogManagementService.replaceOffering({});
         } catch (e) {
           err = e;
         }
@@ -2103,7 +2311,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const replaceOfferingPromise = catalogManagement.replaceOffering();
+        const replaceOfferingPromise = catalogManagementService.replaceOffering();
         expectToBePromise(replaceOfferingPromise);
 
         replaceOfferingPromise.catch(err => {
@@ -2124,7 +2332,7 @@ describe('CatalogManagementV1', () => {
           offeringId: offeringId,
         };
 
-        const deleteOfferingResult = catalogManagement.deleteOffering(params);
+        const deleteOfferingResult = catalogManagementService.deleteOffering(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteOfferingResult);
@@ -2157,7 +2365,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.deleteOffering(params);
+        catalogManagementService.deleteOffering(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2166,7 +2374,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.deleteOffering({});
+          await catalogManagementService.deleteOffering({});
         } catch (e) {
           err = e;
         }
@@ -2176,10 +2384,86 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteOfferingPromise = catalogManagement.deleteOffering();
+        const deleteOfferingPromise = catalogManagementService.deleteOffering();
         expectToBePromise(deleteOfferingPromise);
 
         deleteOfferingPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('getOfferingAudit', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getOfferingAudit
+        const catalogIdentifier = 'testString';
+        const offeringId = 'testString';
+        const id = 'testString';
+        const params = {
+          catalogIdentifier: catalogIdentifier,
+          offeringId: offeringId,
+          id: id,
+        };
+
+        const getOfferingAuditResult = catalogManagementService.getOfferingAudit(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getOfferingAuditResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/catalogs/{catalog_identifier}/offerings/{offering_id}/audit', 'GET');
+        const expectedAccept = undefined;
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['id']).toEqual(id);
+        expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
+        expect(options.path['offering_id']).toEqual(offeringId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const catalogIdentifier = 'testString';
+        const offeringId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          catalogIdentifier,
+          offeringId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.getOfferingAudit(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.getOfferingAudit({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getOfferingAuditPromise = catalogManagementService.getOfferingAudit();
+        expectToBePromise(getOfferingAuditPromise);
+
+        getOfferingAuditPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2199,7 +2483,7 @@ describe('CatalogManagementV1', () => {
           fileName: fileName,
         };
 
-        const replaceOfferingIconResult = catalogManagement.replaceOfferingIcon(params);
+        const replaceOfferingIconResult = catalogManagementService.replaceOfferingIcon(params);
 
         // all methods should return a Promise
         expectToBePromise(replaceOfferingIconResult);
@@ -2235,7 +2519,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.replaceOfferingIcon(params);
+        catalogManagementService.replaceOfferingIcon(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2244,7 +2528,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.replaceOfferingIcon({});
+          await catalogManagementService.replaceOfferingIcon({});
         } catch (e) {
           err = e;
         }
@@ -2254,7 +2538,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const replaceOfferingIconPromise = catalogManagement.replaceOfferingIcon();
+        const replaceOfferingIconPromise = catalogManagementService.replaceOfferingIcon();
         expectToBePromise(replaceOfferingIconPromise);
 
         replaceOfferingIconPromise.catch(err => {
@@ -2270,7 +2554,7 @@ describe('CatalogManagementV1', () => {
         // Construct the params object for operation updateOfferingIbm
         const catalogIdentifier = 'testString';
         const offeringId = 'testString';
-        const approvalType = 'ibm';
+        const approvalType = 'allow_request';
         const approved = 'true';
         const params = {
           catalogIdentifier: catalogIdentifier,
@@ -2279,7 +2563,7 @@ describe('CatalogManagementV1', () => {
           approved: approved,
         };
 
-        const updateOfferingIbmResult = catalogManagement.updateOfferingIbm(params);
+        const updateOfferingIbmResult = catalogManagementService.updateOfferingIbm(params);
 
         // all methods should return a Promise
         expectToBePromise(updateOfferingIbmResult);
@@ -2303,7 +2587,7 @@ describe('CatalogManagementV1', () => {
         // parameters
         const catalogIdentifier = 'testString';
         const offeringId = 'testString';
-        const approvalType = 'ibm';
+        const approvalType = 'allow_request';
         const approved = 'true';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
@@ -2318,7 +2602,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.updateOfferingIbm(params);
+        catalogManagementService.updateOfferingIbm(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2327,7 +2611,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.updateOfferingIbm({});
+          await catalogManagementService.updateOfferingIbm({});
         } catch (e) {
           err = e;
         }
@@ -2337,7 +2621,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateOfferingIbmPromise = catalogManagement.updateOfferingIbm();
+        const updateOfferingIbmPromise = catalogManagementService.updateOfferingIbm();
         expectToBePromise(updateOfferingIbmPromise);
 
         updateOfferingIbmPromise.catch(err => {
@@ -2356,7 +2640,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const getVersionAboutResult = catalogManagement.getVersionAbout(params);
+        const getVersionAboutResult = catalogManagementService.getVersionAbout(params);
 
         // all methods should return a Promise
         expectToBePromise(getVersionAboutResult);
@@ -2386,7 +2670,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getVersionAbout(params);
+        catalogManagementService.getVersionAbout(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2395,7 +2679,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getVersionAbout({});
+          await catalogManagementService.getVersionAbout({});
         } catch (e) {
           err = e;
         }
@@ -2405,7 +2689,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getVersionAboutPromise = catalogManagement.getVersionAbout();
+        const getVersionAboutPromise = catalogManagementService.getVersionAbout();
         expectToBePromise(getVersionAboutPromise);
 
         getVersionAboutPromise.catch(err => {
@@ -2426,7 +2710,7 @@ describe('CatalogManagementV1', () => {
           licenseId: licenseId,
         };
 
-        const getVersionLicenseResult = catalogManagement.getVersionLicense(params);
+        const getVersionLicenseResult = catalogManagementService.getVersionLicense(params);
 
         // all methods should return a Promise
         expectToBePromise(getVersionLicenseResult);
@@ -2459,7 +2743,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getVersionLicense(params);
+        catalogManagementService.getVersionLicense(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2468,7 +2752,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getVersionLicense({});
+          await catalogManagementService.getVersionLicense({});
         } catch (e) {
           err = e;
         }
@@ -2478,7 +2762,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getVersionLicensePromise = catalogManagement.getVersionLicense();
+        const getVersionLicensePromise = catalogManagementService.getVersionLicense();
         expectToBePromise(getVersionLicensePromise);
 
         getVersionLicensePromise.catch(err => {
@@ -2497,7 +2781,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const getVersionContainerImagesResult = catalogManagement.getVersionContainerImages(params);
+        const getVersionContainerImagesResult = catalogManagementService.getVersionContainerImages(params);
 
         // all methods should return a Promise
         expectToBePromise(getVersionContainerImagesResult);
@@ -2527,7 +2811,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getVersionContainerImages(params);
+        catalogManagementService.getVersionContainerImages(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2536,7 +2820,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getVersionContainerImages({});
+          await catalogManagementService.getVersionContainerImages({});
         } catch (e) {
           err = e;
         }
@@ -2546,7 +2830,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getVersionContainerImagesPromise = catalogManagement.getVersionContainerImages();
+        const getVersionContainerImagesPromise = catalogManagementService.getVersionContainerImages();
         expectToBePromise(getVersionContainerImagesPromise);
 
         getVersionContainerImagesPromise.catch(err => {
@@ -2565,7 +2849,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const deprecateVersionResult = catalogManagement.deprecateVersion(params);
+        const deprecateVersionResult = catalogManagementService.deprecateVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(deprecateVersionResult);
@@ -2595,7 +2879,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.deprecateVersion(params);
+        catalogManagementService.deprecateVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2604,7 +2888,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.deprecateVersion({});
+          await catalogManagementService.deprecateVersion({});
         } catch (e) {
           err = e;
         }
@@ -2614,7 +2898,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deprecateVersionPromise = catalogManagement.deprecateVersion();
+        const deprecateVersionPromise = catalogManagementService.deprecateVersion();
         expectToBePromise(deprecateVersionPromise);
 
         deprecateVersionPromise.catch(err => {
@@ -2633,7 +2917,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const accountPublishVersionResult = catalogManagement.accountPublishVersion(params);
+        const accountPublishVersionResult = catalogManagementService.accountPublishVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(accountPublishVersionResult);
@@ -2663,7 +2947,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.accountPublishVersion(params);
+        catalogManagementService.accountPublishVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2672,7 +2956,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.accountPublishVersion({});
+          await catalogManagementService.accountPublishVersion({});
         } catch (e) {
           err = e;
         }
@@ -2682,7 +2966,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const accountPublishVersionPromise = catalogManagement.accountPublishVersion();
+        const accountPublishVersionPromise = catalogManagementService.accountPublishVersion();
         expectToBePromise(accountPublishVersionPromise);
 
         accountPublishVersionPromise.catch(err => {
@@ -2701,7 +2985,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const ibmPublishVersionResult = catalogManagement.ibmPublishVersion(params);
+        const ibmPublishVersionResult = catalogManagementService.ibmPublishVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(ibmPublishVersionResult);
@@ -2731,7 +3015,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.ibmPublishVersion(params);
+        catalogManagementService.ibmPublishVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2740,7 +3024,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.ibmPublishVersion({});
+          await catalogManagementService.ibmPublishVersion({});
         } catch (e) {
           err = e;
         }
@@ -2750,7 +3034,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const ibmPublishVersionPromise = catalogManagement.ibmPublishVersion();
+        const ibmPublishVersionPromise = catalogManagementService.ibmPublishVersion();
         expectToBePromise(ibmPublishVersionPromise);
 
         ibmPublishVersionPromise.catch(err => {
@@ -2769,7 +3053,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const publicPublishVersionResult = catalogManagement.publicPublishVersion(params);
+        const publicPublishVersionResult = catalogManagementService.publicPublishVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(publicPublishVersionResult);
@@ -2799,7 +3083,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.publicPublishVersion(params);
+        catalogManagementService.publicPublishVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2808,7 +3092,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.publicPublishVersion({});
+          await catalogManagementService.publicPublishVersion({});
         } catch (e) {
           err = e;
         }
@@ -2818,7 +3102,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const publicPublishVersionPromise = catalogManagement.publicPublishVersion();
+        const publicPublishVersionPromise = catalogManagementService.publicPublishVersion();
         expectToBePromise(publicPublishVersionPromise);
 
         publicPublishVersionPromise.catch(err => {
@@ -2837,7 +3121,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const commitVersionResult = catalogManagement.commitVersion(params);
+        const commitVersionResult = catalogManagementService.commitVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(commitVersionResult);
@@ -2867,7 +3151,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.commitVersion(params);
+        catalogManagementService.commitVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2876,7 +3160,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.commitVersion({});
+          await catalogManagementService.commitVersion({});
         } catch (e) {
           err = e;
         }
@@ -2886,10 +3170,87 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const commitVersionPromise = catalogManagement.commitVersion();
+        const commitVersionPromise = catalogManagementService.commitVersion();
         expectToBePromise(commitVersionPromise);
 
         commitVersionPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('copyVersion', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation copyVersion
+        const versionLocId = 'testString';
+        const tags = ['testString'];
+        const targetKinds = ['testString'];
+        const content = [38];
+        const params = {
+          versionLocId: versionLocId,
+          tags: tags,
+          targetKinds: targetKinds,
+          content: content,
+        };
+
+        const copyVersionResult = catalogManagementService.copyVersion(params);
+
+        // all methods should return a Promise
+        expectToBePromise(copyVersionResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/versions/{version_loc_id}/copy', 'POST');
+        const expectedAccept = undefined;
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['tags']).toEqual(tags);
+        expect(options.body['target_kinds']).toEqual(targetKinds);
+        expect(options.body['content']).toEqual(content);
+        expect(options.path['version_loc_id']).toEqual(versionLocId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const versionLocId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          versionLocId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.copyVersion(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.copyVersion({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const copyVersionPromise = catalogManagementService.copyVersion();
+        expectToBePromise(copyVersionPromise);
+
+        copyVersionPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2905,7 +3266,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const getVersionWorkingCopyResult = catalogManagement.getVersionWorkingCopy(params);
+        const getVersionWorkingCopyResult = catalogManagementService.getVersionWorkingCopy(params);
 
         // all methods should return a Promise
         expectToBePromise(getVersionWorkingCopyResult);
@@ -2935,7 +3296,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getVersionWorkingCopy(params);
+        catalogManagementService.getVersionWorkingCopy(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2944,7 +3305,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getVersionWorkingCopy({});
+          await catalogManagementService.getVersionWorkingCopy({});
         } catch (e) {
           err = e;
         }
@@ -2954,7 +3315,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getVersionWorkingCopyPromise = catalogManagement.getVersionWorkingCopy();
+        const getVersionWorkingCopyPromise = catalogManagementService.getVersionWorkingCopy();
         expectToBePromise(getVersionWorkingCopyPromise);
 
         getVersionWorkingCopyPromise.catch(err => {
@@ -2981,7 +3342,7 @@ describe('CatalogManagementV1', () => {
           namespace: namespace,
         };
 
-        const getVersionUpdatesResult = catalogManagement.getVersionUpdates(params);
+        const getVersionUpdatesResult = catalogManagementService.getVersionUpdates(params);
 
         // all methods should return a Promise
         expectToBePromise(getVersionUpdatesResult);
@@ -3015,7 +3376,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getVersionUpdates(params);
+        catalogManagementService.getVersionUpdates(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3024,7 +3385,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getVersionUpdates({});
+          await catalogManagementService.getVersionUpdates({});
         } catch (e) {
           err = e;
         }
@@ -3034,7 +3395,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getVersionUpdatesPromise = catalogManagement.getVersionUpdates();
+        const getVersionUpdatesPromise = catalogManagementService.getVersionUpdates();
         expectToBePromise(getVersionUpdatesPromise);
 
         getVersionUpdatesPromise.catch(err => {
@@ -3053,7 +3414,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const getVersionResult = catalogManagement.getVersion(params);
+        const getVersionResult = catalogManagementService.getVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(getVersionResult);
@@ -3083,7 +3444,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getVersion(params);
+        catalogManagementService.getVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3092,7 +3453,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getVersion({});
+          await catalogManagementService.getVersion({});
         } catch (e) {
           err = e;
         }
@@ -3102,7 +3463,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getVersionPromise = catalogManagement.getVersion();
+        const getVersionPromise = catalogManagementService.getVersion();
         expectToBePromise(getVersionPromise);
 
         getVersionPromise.catch(err => {
@@ -3121,7 +3482,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const deleteVersionResult = catalogManagement.deleteVersion(params);
+        const deleteVersionResult = catalogManagementService.deleteVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteVersionResult);
@@ -3151,7 +3512,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.deleteVersion(params);
+        catalogManagementService.deleteVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3160,7 +3521,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.deleteVersion({});
+          await catalogManagementService.deleteVersion({});
         } catch (e) {
           err = e;
         }
@@ -3170,7 +3531,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteVersionPromise = catalogManagement.deleteVersion();
+        const deleteVersionPromise = catalogManagementService.deleteVersion();
         expectToBePromise(deleteVersionPromise);
 
         deleteVersionPromise.catch(err => {
@@ -3189,7 +3550,7 @@ describe('CatalogManagementV1', () => {
           q: q,
         };
 
-        const listVersionsResult = catalogManagement.listVersions(params);
+        const listVersionsResult = catalogManagementService.listVersions(params);
 
         // all methods should return a Promise
         expectToBePromise(listVersionsResult);
@@ -3219,7 +3580,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.listVersions(params);
+        catalogManagementService.listVersions(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3228,7 +3589,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.listVersions({});
+          await catalogManagementService.listVersions({});
         } catch (e) {
           err = e;
         }
@@ -3238,7 +3599,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const listVersionsPromise = catalogManagement.listVersions();
+        const listVersionsPromise = catalogManagementService.listVersions();
         expectToBePromise(listVersionsPromise);
 
         listVersionsPromise.catch(err => {
@@ -3259,7 +3620,7 @@ describe('CatalogManagementV1', () => {
           repourl: repourl,
         };
 
-        const getReposResult = catalogManagement.getRepos(params);
+        const getReposResult = catalogManagementService.getRepos(params);
 
         // all methods should return a Promise
         expectToBePromise(getReposResult);
@@ -3292,7 +3653,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getRepos(params);
+        catalogManagementService.getRepos(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3301,7 +3662,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getRepos({});
+          await catalogManagementService.getRepos({});
         } catch (e) {
           err = e;
         }
@@ -3311,7 +3672,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getReposPromise = catalogManagement.getRepos();
+        const getReposPromise = catalogManagementService.getRepos();
         expectToBePromise(getReposPromise);
 
         getReposPromise.catch(err => {
@@ -3332,7 +3693,7 @@ describe('CatalogManagementV1', () => {
           charturl: charturl,
         };
 
-        const getRepoResult = catalogManagement.getRepo(params);
+        const getRepoResult = catalogManagementService.getRepo(params);
 
         // all methods should return a Promise
         expectToBePromise(getRepoResult);
@@ -3365,7 +3726,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getRepo(params);
+        catalogManagementService.getRepo(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3374,7 +3735,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getRepo({});
+          await catalogManagementService.getRepo({});
         } catch (e) {
           err = e;
         }
@@ -3384,7 +3745,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getRepoPromise = catalogManagement.getRepo();
+        const getRepoPromise = catalogManagementService.getRepo();
         expectToBePromise(getRepoPromise);
 
         getRepoPromise.catch(err => {
@@ -3407,7 +3768,7 @@ describe('CatalogManagementV1', () => {
           type: type,
         };
 
-        const listClustersResult = catalogManagement.listClusters(params);
+        const listClustersResult = catalogManagementService.listClusters(params);
 
         // all methods should return a Promise
         expectToBePromise(listClustersResult);
@@ -3437,13 +3798,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.listClusters(params);
+        catalogManagementService.listClusters(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.listClusters({});
+        catalogManagementService.listClusters({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -3461,7 +3822,7 @@ describe('CatalogManagementV1', () => {
           xAuthRefreshToken: xAuthRefreshToken,
         };
 
-        const getClusterResult = catalogManagement.getCluster(params);
+        const getClusterResult = catalogManagementService.getCluster(params);
 
         // all methods should return a Promise
         expectToBePromise(getClusterResult);
@@ -3497,7 +3858,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getCluster(params);
+        catalogManagementService.getCluster(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3506,7 +3867,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getCluster({});
+          await catalogManagementService.getCluster({});
         } catch (e) {
           err = e;
         }
@@ -3516,7 +3877,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getClusterPromise = catalogManagement.getCluster();
+        const getClusterPromise = catalogManagementService.getCluster();
         expectToBePromise(getClusterPromise);
 
         getClusterPromise.catch(err => {
@@ -3543,7 +3904,7 @@ describe('CatalogManagementV1', () => {
           offset: offset,
         };
 
-        const getNamespacesResult = catalogManagement.getNamespaces(params);
+        const getNamespacesResult = catalogManagementService.getNamespaces(params);
 
         // all methods should return a Promise
         expectToBePromise(getNamespacesResult);
@@ -3581,7 +3942,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getNamespaces(params);
+        catalogManagementService.getNamespaces(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3590,7 +3951,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getNamespaces({});
+          await catalogManagementService.getNamespaces({});
         } catch (e) {
           err = e;
         }
@@ -3600,7 +3961,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getNamespacesPromise = catalogManagement.getNamespaces();
+        const getNamespacesPromise = catalogManagementService.getNamespaces();
         expectToBePromise(getNamespacesPromise);
 
         getNamespacesPromise.catch(err => {
@@ -3618,16 +3979,18 @@ describe('CatalogManagementV1', () => {
         const clusterId = 'testString';
         const region = 'testString';
         const namespaces = ['testString'];
+        const allNamespaces = true;
         const versionLocatorId = 'testString';
         const params = {
           xAuthRefreshToken: xAuthRefreshToken,
           clusterId: clusterId,
           region: region,
           namespaces: namespaces,
+          allNamespaces: allNamespaces,
           versionLocatorId: versionLocatorId,
         };
 
-        const createOperatorResult = catalogManagement.createOperator(params);
+        const createOperatorResult = catalogManagementService.createOperator(params);
 
         // all methods should return a Promise
         expectToBePromise(createOperatorResult);
@@ -3645,6 +4008,7 @@ describe('CatalogManagementV1', () => {
         expect(options.body['cluster_id']).toEqual(clusterId);
         expect(options.body['region']).toEqual(region);
         expect(options.body['namespaces']).toEqual(namespaces);
+        expect(options.body['all_namespaces']).toEqual(allNamespaces);
         expect(options.body['version_locator_id']).toEqual(versionLocatorId);
       });
 
@@ -3661,7 +4025,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.createOperator(params);
+        catalogManagementService.createOperator(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3670,7 +4034,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.createOperator({});
+          await catalogManagementService.createOperator({});
         } catch (e) {
           err = e;
         }
@@ -3680,7 +4044,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const createOperatorPromise = catalogManagement.createOperator();
+        const createOperatorPromise = catalogManagementService.createOperator();
         expectToBePromise(createOperatorPromise);
 
         createOperatorPromise.catch(err => {
@@ -3705,7 +4069,7 @@ describe('CatalogManagementV1', () => {
           versionLocatorId: versionLocatorId,
         };
 
-        const listOperatorsResult = catalogManagement.listOperators(params);
+        const listOperatorsResult = catalogManagementService.listOperators(params);
 
         // all methods should return a Promise
         expectToBePromise(listOperatorsResult);
@@ -3744,7 +4108,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.listOperators(params);
+        catalogManagementService.listOperators(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3753,7 +4117,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.listOperators({});
+          await catalogManagementService.listOperators({});
         } catch (e) {
           err = e;
         }
@@ -3763,7 +4127,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const listOperatorsPromise = catalogManagement.listOperators();
+        const listOperatorsPromise = catalogManagementService.listOperators();
         expectToBePromise(listOperatorsPromise);
 
         listOperatorsPromise.catch(err => {
@@ -3781,16 +4145,18 @@ describe('CatalogManagementV1', () => {
         const clusterId = 'testString';
         const region = 'testString';
         const namespaces = ['testString'];
+        const allNamespaces = true;
         const versionLocatorId = 'testString';
         const params = {
           xAuthRefreshToken: xAuthRefreshToken,
           clusterId: clusterId,
           region: region,
           namespaces: namespaces,
+          allNamespaces: allNamespaces,
           versionLocatorId: versionLocatorId,
         };
 
-        const replaceOperatorResult = catalogManagement.replaceOperator(params);
+        const replaceOperatorResult = catalogManagementService.replaceOperator(params);
 
         // all methods should return a Promise
         expectToBePromise(replaceOperatorResult);
@@ -3808,6 +4174,7 @@ describe('CatalogManagementV1', () => {
         expect(options.body['cluster_id']).toEqual(clusterId);
         expect(options.body['region']).toEqual(region);
         expect(options.body['namespaces']).toEqual(namespaces);
+        expect(options.body['all_namespaces']).toEqual(allNamespaces);
         expect(options.body['version_locator_id']).toEqual(versionLocatorId);
       });
 
@@ -3824,7 +4191,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.replaceOperator(params);
+        catalogManagementService.replaceOperator(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3833,7 +4200,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.replaceOperator({});
+          await catalogManagementService.replaceOperator({});
         } catch (e) {
           err = e;
         }
@@ -3843,7 +4210,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const replaceOperatorPromise = catalogManagement.replaceOperator();
+        const replaceOperatorPromise = catalogManagementService.replaceOperator();
         expectToBePromise(replaceOperatorPromise);
 
         replaceOperatorPromise.catch(err => {
@@ -3868,7 +4235,7 @@ describe('CatalogManagementV1', () => {
           versionLocatorId: versionLocatorId,
         };
 
-        const deleteOperatorResult = catalogManagement.deleteOperator(params);
+        const deleteOperatorResult = catalogManagementService.deleteOperator(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteOperatorResult);
@@ -3907,7 +4274,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.deleteOperator(params);
+        catalogManagementService.deleteOperator(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -3916,7 +4283,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.deleteOperator({});
+          await catalogManagementService.deleteOperator({});
         } catch (e) {
           err = e;
         }
@@ -3926,7 +4293,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteOperatorPromise = catalogManagement.deleteOperator();
+        const deleteOperatorPromise = catalogManagementService.deleteOperator();
         expectToBePromise(deleteOperatorPromise);
 
         deleteOperatorPromise.catch(err => {
@@ -3962,8 +4329,10 @@ describe('CatalogManagementV1', () => {
         const scriptId = 'testString';
         const versionLocatorId = 'testString';
         const vcenterId = 'testString';
+        const vcenterUser = 'testString';
         const vcenterPassword = 'testString';
         const vcenterLocation = 'testString';
+        const vcenterDatastore = 'testString';
         const params = {
           versionLocId: versionLocId,
           xAuthRefreshToken: xAuthRefreshToken,
@@ -3977,11 +4346,13 @@ describe('CatalogManagementV1', () => {
           scriptId: scriptId,
           versionLocatorId: versionLocatorId,
           vcenterId: vcenterId,
+          vcenterUser: vcenterUser,
           vcenterPassword: vcenterPassword,
           vcenterLocation: vcenterLocation,
+          vcenterDatastore: vcenterDatastore,
         };
 
-        const installVersionResult = catalogManagement.installVersion(params);
+        const installVersionResult = catalogManagementService.installVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(installVersionResult);
@@ -4006,8 +4377,10 @@ describe('CatalogManagementV1', () => {
         expect(options.body['script_id']).toEqual(scriptId);
         expect(options.body['version_locator_id']).toEqual(versionLocatorId);
         expect(options.body['vcenter_id']).toEqual(vcenterId);
+        expect(options.body['vcenter_user']).toEqual(vcenterUser);
         expect(options.body['vcenter_password']).toEqual(vcenterPassword);
         expect(options.body['vcenter_location']).toEqual(vcenterLocation);
+        expect(options.body['vcenter_datastore']).toEqual(vcenterDatastore);
         expect(options.path['version_loc_id']).toEqual(versionLocId);
       });
 
@@ -4026,7 +4399,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.installVersion(params);
+        catalogManagementService.installVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -4035,7 +4408,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.installVersion({});
+          await catalogManagementService.installVersion({});
         } catch (e) {
           err = e;
         }
@@ -4045,7 +4418,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const installVersionPromise = catalogManagement.installVersion();
+        const installVersionPromise = catalogManagementService.installVersion();
         expectToBePromise(installVersionPromise);
 
         installVersionPromise.catch(err => {
@@ -4081,8 +4454,10 @@ describe('CatalogManagementV1', () => {
         const scriptId = 'testString';
         const versionLocatorId = 'testString';
         const vcenterId = 'testString';
+        const vcenterUser = 'testString';
         const vcenterPassword = 'testString';
         const vcenterLocation = 'testString';
+        const vcenterDatastore = 'testString';
         const params = {
           versionLocId: versionLocId,
           xAuthRefreshToken: xAuthRefreshToken,
@@ -4096,11 +4471,13 @@ describe('CatalogManagementV1', () => {
           scriptId: scriptId,
           versionLocatorId: versionLocatorId,
           vcenterId: vcenterId,
+          vcenterUser: vcenterUser,
           vcenterPassword: vcenterPassword,
           vcenterLocation: vcenterLocation,
+          vcenterDatastore: vcenterDatastore,
         };
 
-        const preinstallVersionResult = catalogManagement.preinstallVersion(params);
+        const preinstallVersionResult = catalogManagementService.preinstallVersion(params);
 
         // all methods should return a Promise
         expectToBePromise(preinstallVersionResult);
@@ -4125,8 +4502,10 @@ describe('CatalogManagementV1', () => {
         expect(options.body['script_id']).toEqual(scriptId);
         expect(options.body['version_locator_id']).toEqual(versionLocatorId);
         expect(options.body['vcenter_id']).toEqual(vcenterId);
+        expect(options.body['vcenter_user']).toEqual(vcenterUser);
         expect(options.body['vcenter_password']).toEqual(vcenterPassword);
         expect(options.body['vcenter_location']).toEqual(vcenterLocation);
+        expect(options.body['vcenter_datastore']).toEqual(vcenterDatastore);
         expect(options.path['version_loc_id']).toEqual(versionLocId);
       });
 
@@ -4145,7 +4524,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.preinstallVersion(params);
+        catalogManagementService.preinstallVersion(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -4154,7 +4533,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.preinstallVersion({});
+          await catalogManagementService.preinstallVersion({});
         } catch (e) {
           err = e;
         }
@@ -4164,7 +4543,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const preinstallVersionPromise = catalogManagement.preinstallVersion();
+        const preinstallVersionPromise = catalogManagementService.preinstallVersion();
         expectToBePromise(preinstallVersionPromise);
 
         preinstallVersionPromise.catch(err => {
@@ -4191,7 +4570,7 @@ describe('CatalogManagementV1', () => {
           namespace: namespace,
         };
 
-        const getPreinstallResult = catalogManagement.getPreinstall(params);
+        const getPreinstallResult = catalogManagementService.getPreinstall(params);
 
         // all methods should return a Promise
         expectToBePromise(getPreinstallResult);
@@ -4227,7 +4606,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getPreinstall(params);
+        catalogManagementService.getPreinstall(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -4236,7 +4615,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getPreinstall({});
+          await catalogManagementService.getPreinstall({});
         } catch (e) {
           err = e;
         }
@@ -4246,7 +4625,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getPreinstallPromise = catalogManagement.getPreinstall();
+        const getPreinstallPromise = catalogManagementService.getPreinstall();
         expectToBePromise(getPreinstallPromise);
 
         getPreinstallPromise.catch(err => {
@@ -4282,8 +4661,10 @@ describe('CatalogManagementV1', () => {
         const scriptId = 'testString';
         const versionLocatorId = 'testString';
         const vcenterId = 'testString';
+        const vcenterUser = 'testString';
         const vcenterPassword = 'testString';
         const vcenterLocation = 'testString';
+        const vcenterDatastore = 'testString';
         const params = {
           versionLocId: versionLocId,
           xAuthRefreshToken: xAuthRefreshToken,
@@ -4297,11 +4678,13 @@ describe('CatalogManagementV1', () => {
           scriptId: scriptId,
           versionLocatorId: versionLocatorId,
           vcenterId: vcenterId,
+          vcenterUser: vcenterUser,
           vcenterPassword: vcenterPassword,
           vcenterLocation: vcenterLocation,
+          vcenterDatastore: vcenterDatastore,
         };
 
-        const validationInstallResult = catalogManagement.validationInstall(params);
+        const validationInstallResult = catalogManagementService.validationInstall(params);
 
         // all methods should return a Promise
         expectToBePromise(validationInstallResult);
@@ -4326,8 +4709,10 @@ describe('CatalogManagementV1', () => {
         expect(options.body['script_id']).toEqual(scriptId);
         expect(options.body['version_locator_id']).toEqual(versionLocatorId);
         expect(options.body['vcenter_id']).toEqual(vcenterId);
+        expect(options.body['vcenter_user']).toEqual(vcenterUser);
         expect(options.body['vcenter_password']).toEqual(vcenterPassword);
         expect(options.body['vcenter_location']).toEqual(vcenterLocation);
+        expect(options.body['vcenter_datastore']).toEqual(vcenterDatastore);
         expect(options.path['version_loc_id']).toEqual(versionLocId);
       });
 
@@ -4346,7 +4731,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.validationInstall(params);
+        catalogManagementService.validationInstall(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -4355,7 +4740,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.validationInstall({});
+          await catalogManagementService.validationInstall({});
         } catch (e) {
           err = e;
         }
@@ -4365,7 +4750,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const validationInstallPromise = catalogManagement.validationInstall();
+        const validationInstallPromise = catalogManagementService.validationInstall();
         expectToBePromise(validationInstallPromise);
 
         validationInstallPromise.catch(err => {
@@ -4386,7 +4771,7 @@ describe('CatalogManagementV1', () => {
           xAuthRefreshToken: xAuthRefreshToken,
         };
 
-        const getValidationStatusResult = catalogManagement.getValidationStatus(params);
+        const getValidationStatusResult = catalogManagementService.getValidationStatus(params);
 
         // all methods should return a Promise
         expectToBePromise(getValidationStatusResult);
@@ -4419,7 +4804,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getValidationStatus(params);
+        catalogManagementService.getValidationStatus(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -4428,7 +4813,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getValidationStatus({});
+          await catalogManagementService.getValidationStatus({});
         } catch (e) {
           err = e;
         }
@@ -4438,7 +4823,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getValidationStatusPromise = catalogManagement.getValidationStatus();
+        const getValidationStatusPromise = catalogManagementService.getValidationStatus();
         expectToBePromise(getValidationStatusPromise);
 
         getValidationStatusPromise.catch(err => {
@@ -4457,7 +4842,7 @@ describe('CatalogManagementV1', () => {
           versionLocId: versionLocId,
         };
 
-        const getOverrideValuesResult = catalogManagement.getOverrideValues(params);
+        const getOverrideValuesResult = catalogManagementService.getOverrideValues(params);
 
         // all methods should return a Promise
         expectToBePromise(getOverrideValuesResult);
@@ -4487,7 +4872,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getOverrideValues(params);
+        catalogManagementService.getOverrideValues(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -4496,7 +4881,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getOverrideValues({});
+          await catalogManagementService.getOverrideValues({});
         } catch (e) {
           err = e;
         }
@@ -4506,7 +4891,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getOverrideValuesPromise = catalogManagement.getOverrideValues();
+        const getOverrideValuesPromise = catalogManagementService.getOverrideValues();
         expectToBePromise(getOverrideValuesPromise);
 
         getOverrideValuesPromise.catch(err => {
@@ -4527,7 +4912,7 @@ describe('CatalogManagementV1', () => {
           xAuthRefreshToken: xAuthRefreshToken,
         };
 
-        const getSchematicsWorkspacesResult = catalogManagement.getSchematicsWorkspaces(params);
+        const getSchematicsWorkspacesResult = catalogManagementService.getSchematicsWorkspaces(params);
 
         // all methods should return a Promise
         expectToBePromise(getSchematicsWorkspacesResult);
@@ -4560,7 +4945,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getSchematicsWorkspaces(params);
+        catalogManagementService.getSchematicsWorkspaces(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -4569,7 +4954,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getSchematicsWorkspaces({});
+          await catalogManagementService.getSchematicsWorkspaces({});
         } catch (e) {
           err = e;
         }
@@ -4579,7 +4964,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getSchematicsWorkspacesPromise = catalogManagement.getSchematicsWorkspaces();
+        const getSchematicsWorkspacesPromise = catalogManagementService.getSchematicsWorkspaces();
         expectToBePromise(getSchematicsWorkspacesPromise);
 
         getSchematicsWorkspacesPromise.catch(err => {
@@ -4606,7 +4991,7 @@ describe('CatalogManagementV1', () => {
           resourceGroupId: resourceGroupId,
         };
 
-        const canDeploySchematicsResult = catalogManagement.canDeploySchematics(params);
+        const canDeploySchematicsResult = catalogManagementService.canDeploySchematics(params);
 
         // all methods should return a Promise
         expectToBePromise(canDeploySchematicsResult);
@@ -4644,7 +5029,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.canDeploySchematics(params);
+        catalogManagementService.canDeploySchematics(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -4653,7 +5038,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.canDeploySchematics({});
+          await catalogManagementService.canDeploySchematics({});
         } catch (e) {
           err = e;
         }
@@ -4663,7 +5048,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const canDeploySchematicsPromise = catalogManagement.canDeploySchematics();
+        const canDeploySchematicsPromise = catalogManagementService.canDeploySchematics();
         expectToBePromise(canDeploySchematicsPromise);
 
         canDeploySchematicsPromise.catch(err => {
@@ -4679,7 +5064,7 @@ describe('CatalogManagementV1', () => {
         // Construct the params object for operation getResourceGroups
         const params = {};
 
-        const getResourceGroupsResult = catalogManagement.getResourceGroups(params);
+        const getResourceGroupsResult = catalogManagementService.getResourceGroups(params);
 
         // all methods should return a Promise
         expectToBePromise(getResourceGroupsResult);
@@ -4706,13 +5091,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getResourceGroups(params);
+        catalogManagementService.getResourceGroups(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.getResourceGroups({});
+        catalogManagementService.getResourceGroups({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -4723,7 +5108,7 @@ describe('CatalogManagementV1', () => {
         // Construct the params object for operation getLicenseProviders
         const params = {};
 
-        const getLicenseProvidersResult = catalogManagement.getLicenseProviders(params);
+        const getLicenseProvidersResult = catalogManagementService.getLicenseProviders(params);
 
         // all methods should return a Promise
         expectToBePromise(getLicenseProvidersResult);
@@ -4750,13 +5135,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getLicenseProviders(params);
+        catalogManagementService.getLicenseProviders(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.getLicenseProviders({});
+        catalogManagementService.getLicenseProviders({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -4776,7 +5161,7 @@ describe('CatalogManagementV1', () => {
           state: state,
         };
 
-        const listLicenseEntitlementsResult = catalogManagement.listLicenseEntitlements(params);
+        const listLicenseEntitlementsResult = catalogManagementService.listLicenseEntitlements(params);
 
         // all methods should return a Promise
         expectToBePromise(listLicenseEntitlementsResult);
@@ -4807,13 +5192,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.listLicenseEntitlements(params);
+        catalogManagementService.listLicenseEntitlements(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.listLicenseEntitlements({});
+        catalogManagementService.listLicenseEntitlements({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -4843,7 +5228,7 @@ describe('CatalogManagementV1', () => {
           accountId: accountId,
         };
 
-        const createLicenseEntitlementResult = catalogManagement.createLicenseEntitlement(params);
+        const createLicenseEntitlementResult = catalogManagementService.createLicenseEntitlement(params);
 
         // all methods should return a Promise
         expectToBePromise(createLicenseEntitlementResult);
@@ -4879,13 +5264,13 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.createLicenseEntitlement(params);
+        catalogManagementService.createLicenseEntitlement(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
       test('should not have any problems when no parameters are passed in', () => {
         // invoke the method with no parameters
-        catalogManagement.createLicenseEntitlement({});
+        catalogManagementService.createLicenseEntitlement({});
         checkForSuccessfulExecution(createRequestMock);
       });
     });
@@ -4903,7 +5288,7 @@ describe('CatalogManagementV1', () => {
           versionId: versionId,
         };
 
-        const getLicenseEntitlementsResult = catalogManagement.getLicenseEntitlements(params);
+        const getLicenseEntitlementsResult = catalogManagementService.getLicenseEntitlements(params);
 
         // all methods should return a Promise
         expectToBePromise(getLicenseEntitlementsResult);
@@ -4935,7 +5320,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getLicenseEntitlements(params);
+        catalogManagementService.getLicenseEntitlements(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -4944,7 +5329,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getLicenseEntitlements({});
+          await catalogManagementService.getLicenseEntitlements({});
         } catch (e) {
           err = e;
         }
@@ -4954,7 +5339,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getLicenseEntitlementsPromise = catalogManagement.getLicenseEntitlements();
+        const getLicenseEntitlementsPromise = catalogManagementService.getLicenseEntitlements();
         expectToBePromise(getLicenseEntitlementsPromise);
 
         getLicenseEntitlementsPromise.catch(err => {
@@ -4975,7 +5360,7 @@ describe('CatalogManagementV1', () => {
           accountId: accountId,
         };
 
-        const deleteLicenseEntitlementResult = catalogManagement.deleteLicenseEntitlement(params);
+        const deleteLicenseEntitlementResult = catalogManagementService.deleteLicenseEntitlement(params);
 
         // all methods should return a Promise
         expectToBePromise(deleteLicenseEntitlementResult);
@@ -5006,7 +5391,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.deleteLicenseEntitlement(params);
+        catalogManagementService.deleteLicenseEntitlement(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -5015,7 +5400,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.deleteLicenseEntitlement({});
+          await catalogManagementService.deleteLicenseEntitlement({});
         } catch (e) {
           err = e;
         }
@@ -5025,7 +5410,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const deleteLicenseEntitlementPromise = catalogManagement.deleteLicenseEntitlement();
+        const deleteLicenseEntitlementPromise = catalogManagementService.deleteLicenseEntitlement();
         expectToBePromise(deleteLicenseEntitlementPromise);
 
         deleteLicenseEntitlementPromise.catch(err => {
@@ -5052,7 +5437,7 @@ describe('CatalogManagementV1', () => {
           licenseProductId: licenseProductId,
         };
 
-        const getLicensesResult = catalogManagement.getLicenses(params);
+        const getLicensesResult = catalogManagementService.getLicenses(params);
 
         // all methods should return a Promise
         expectToBePromise(getLicensesResult);
@@ -5086,7 +5471,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.getLicenses(params);
+        catalogManagementService.getLicenses(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -5095,7 +5480,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.getLicenses({});
+          await catalogManagementService.getLicenses({});
         } catch (e) {
           err = e;
         }
@@ -5105,7 +5490,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const getLicensesPromise = catalogManagement.getLicenses();
+        const getLicensesPromise = catalogManagementService.getLicenses();
         expectToBePromise(getLicensesPromise);
 
         getLicensesPromise.catch(err => {
@@ -5124,7 +5509,7 @@ describe('CatalogManagementV1', () => {
           q: q,
         };
 
-        const searchLicenseVersionsResult = catalogManagement.searchLicenseVersions(params);
+        const searchLicenseVersionsResult = catalogManagementService.searchLicenseVersions(params);
 
         // all methods should return a Promise
         expectToBePromise(searchLicenseVersionsResult);
@@ -5154,7 +5539,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.searchLicenseVersions(params);
+        catalogManagementService.searchLicenseVersions(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -5163,7 +5548,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.searchLicenseVersions({});
+          await catalogManagementService.searchLicenseVersions({});
         } catch (e) {
           err = e;
         }
@@ -5173,7 +5558,7 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const searchLicenseVersionsPromise = catalogManagement.searchLicenseVersions();
+        const searchLicenseVersionsPromise = catalogManagementService.searchLicenseVersions();
         expectToBePromise(searchLicenseVersionsPromise);
 
         searchLicenseVersionsPromise.catch(err => {
@@ -5192,7 +5577,7 @@ describe('CatalogManagementV1', () => {
           q: q,
         };
 
-        const searchLicenseOfferingsResult = catalogManagement.searchLicenseOfferings(params);
+        const searchLicenseOfferingsResult = catalogManagementService.searchLicenseOfferings(params);
 
         // all methods should return a Promise
         expectToBePromise(searchLicenseOfferingsResult);
@@ -5222,7 +5607,7 @@ describe('CatalogManagementV1', () => {
           },
         };
 
-        catalogManagement.searchLicenseOfferings(params);
+        catalogManagementService.searchLicenseOfferings(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -5231,7 +5616,7 @@ describe('CatalogManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await catalogManagement.searchLicenseOfferings({});
+          await catalogManagementService.searchLicenseOfferings({});
         } catch (e) {
           err = e;
         }
@@ -5241,10 +5626,690 @@ describe('CatalogManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const searchLicenseOfferingsPromise = catalogManagement.searchLicenseOfferings();
+        const searchLicenseOfferingsPromise = catalogManagementService.searchLicenseOfferings();
         expectToBePromise(searchLicenseOfferingsPromise);
 
         searchLicenseOfferingsPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('searchObjects', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation searchObjects
+        const query = 'testString';
+        const limit = 38;
+        const offset = 38;
+        const collapse = true;
+        const params = {
+          query: query,
+          limit: limit,
+          offset: offset,
+          collapse: collapse,
+        };
+
+        const searchObjectsResult = catalogManagementService.searchObjects(params);
+
+        // all methods should return a Promise
+        expectToBePromise(searchObjectsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/objects', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['query']).toEqual(query);
+        expect(options.qs['limit']).toEqual(limit);
+        expect(options.qs['offset']).toEqual(offset);
+        expect(options.qs['collapse']).toEqual(collapse);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const query = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          query,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.searchObjects(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.searchObjects({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const searchObjectsPromise = catalogManagementService.searchObjects();
+        expectToBePromise(searchObjectsPromise);
+
+        searchObjectsPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('listObjects', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation listObjects
+        const catalogIdentifier = 'testString';
+        const limit = 38;
+        const offset = 38;
+        const name = 'testString';
+        const sort = 'testString';
+        const params = {
+          catalogIdentifier: catalogIdentifier,
+          limit: limit,
+          offset: offset,
+          name: name,
+          sort: sort,
+        };
+
+        const listObjectsResult = catalogManagementService.listObjects(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listObjectsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/catalogs/{catalog_identifier}/objects', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['limit']).toEqual(limit);
+        expect(options.qs['offset']).toEqual(offset);
+        expect(options.qs['name']).toEqual(name);
+        expect(options.qs['sort']).toEqual(sort);
+        expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const catalogIdentifier = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          catalogIdentifier,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.listObjects(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.listObjects({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const listObjectsPromise = catalogManagementService.listObjects();
+        expectToBePromise(listObjectsPromise);
+
+        listObjectsPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('createObject', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // PublishObject
+      const publishObjectModel = {
+        permit_ibm_public_publish: true,
+        ibm_approved: true,
+        public_approved: true,
+        portal_approval_record: 'testString',
+        portal_url: 'testString',
+      };
+
+      // State
+      const stateModel = {
+        current: 'testString',
+        current_entered: '2019-01-01T12:00:00',
+        pending: 'testString',
+        pending_requested: '2019-01-01T12:00:00',
+        previous: 'testString',
+      };
+
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation createObject
+        const catalogIdentifier = 'testString';
+        const id = 'testString';
+        const name = 'testString';
+        const rev = 'testString';
+        const crn = 'testString';
+        const url = 'testString';
+        const parentId = 'testString';
+        const allowList = ['testString'];
+        const labelI18n = 'testString';
+        const label = 'testString';
+        const tags = ['testString'];
+        const created = '2019-01-01T12:00:00';
+        const updated = '2019-01-01T12:00:00';
+        const shortDescription = 'testString';
+        const shortDescriptionI18n = 'testString';
+        const kind = 'testString';
+        const publish = publishObjectModel;
+        const state = stateModel;
+        const catalogId = 'testString';
+        const catalogName = 'testString';
+        const data = { foo: 'bar' };
+        const params = {
+          catalogIdentifier: catalogIdentifier,
+          id: id,
+          name: name,
+          rev: rev,
+          crn: crn,
+          url: url,
+          parentId: parentId,
+          allowList: allowList,
+          labelI18n: labelI18n,
+          label: label,
+          tags: tags,
+          created: created,
+          updated: updated,
+          shortDescription: shortDescription,
+          shortDescriptionI18n: shortDescriptionI18n,
+          kind: kind,
+          publish: publish,
+          state: state,
+          catalogId: catalogId,
+          catalogName: catalogName,
+          data: data,
+        };
+
+        const createObjectResult = catalogManagementService.createObject(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createObjectResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/catalogs/{catalog_identifier}/objects', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['id']).toEqual(id);
+        expect(options.body['name']).toEqual(name);
+        expect(options.body['_rev']).toEqual(rev);
+        expect(options.body['crn']).toEqual(crn);
+        expect(options.body['url']).toEqual(url);
+        expect(options.body['parent_id']).toEqual(parentId);
+        expect(options.body['allow_list']).toEqual(allowList);
+        expect(options.body['label_i18n']).toEqual(labelI18n);
+        expect(options.body['label']).toEqual(label);
+        expect(options.body['tags']).toEqual(tags);
+        expect(options.body['created']).toEqual(created);
+        expect(options.body['updated']).toEqual(updated);
+        expect(options.body['short_description']).toEqual(shortDescription);
+        expect(options.body['short_description_i18n']).toEqual(shortDescriptionI18n);
+        expect(options.body['kind']).toEqual(kind);
+        expect(options.body['publish']).toEqual(publish);
+        expect(options.body['state']).toEqual(state);
+        expect(options.body['catalog_id']).toEqual(catalogId);
+        expect(options.body['catalog_name']).toEqual(catalogName);
+        expect(options.body['data']).toEqual(data);
+        expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const catalogIdentifier = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          catalogIdentifier,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.createObject(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.createObject({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const createObjectPromise = catalogManagementService.createObject();
+        expectToBePromise(createObjectPromise);
+
+        createObjectPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('getObject', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getObject
+        const catalogIdentifier = 'testString';
+        const objectIdentifier = 'testString';
+        const params = {
+          catalogIdentifier: catalogIdentifier,
+          objectIdentifier: objectIdentifier,
+        };
+
+        const getObjectResult = catalogManagementService.getObject(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getObjectResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/catalogs/{catalog_identifier}/objects/{object_identifier}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
+        expect(options.path['object_identifier']).toEqual(objectIdentifier);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const catalogIdentifier = 'testString';
+        const objectIdentifier = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          catalogIdentifier,
+          objectIdentifier,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.getObject(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.getObject({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getObjectPromise = catalogManagementService.getObject();
+        expectToBePromise(getObjectPromise);
+
+        getObjectPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('replaceObject', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // PublishObject
+      const publishObjectModel = {
+        permit_ibm_public_publish: true,
+        ibm_approved: true,
+        public_approved: true,
+        portal_approval_record: 'testString',
+        portal_url: 'testString',
+      };
+
+      // State
+      const stateModel = {
+        current: 'testString',
+        current_entered: '2019-01-01T12:00:00',
+        pending: 'testString',
+        pending_requested: '2019-01-01T12:00:00',
+        previous: 'testString',
+      };
+
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation replaceObject
+        const catalogIdentifier = 'testString';
+        const objectIdentifier = 'testString';
+        const id = 'testString';
+        const name = 'testString';
+        const rev = 'testString';
+        const crn = 'testString';
+        const url = 'testString';
+        const parentId = 'testString';
+        const allowList = ['testString'];
+        const labelI18n = 'testString';
+        const label = 'testString';
+        const tags = ['testString'];
+        const created = '2019-01-01T12:00:00';
+        const updated = '2019-01-01T12:00:00';
+        const shortDescription = 'testString';
+        const shortDescriptionI18n = 'testString';
+        const kind = 'testString';
+        const publish = publishObjectModel;
+        const state = stateModel;
+        const catalogId = 'testString';
+        const catalogName = 'testString';
+        const data = { foo: 'bar' };
+        const params = {
+          catalogIdentifier: catalogIdentifier,
+          objectIdentifier: objectIdentifier,
+          id: id,
+          name: name,
+          rev: rev,
+          crn: crn,
+          url: url,
+          parentId: parentId,
+          allowList: allowList,
+          labelI18n: labelI18n,
+          label: label,
+          tags: tags,
+          created: created,
+          updated: updated,
+          shortDescription: shortDescription,
+          shortDescriptionI18n: shortDescriptionI18n,
+          kind: kind,
+          publish: publish,
+          state: state,
+          catalogId: catalogId,
+          catalogName: catalogName,
+          data: data,
+        };
+
+        const replaceObjectResult = catalogManagementService.replaceObject(params);
+
+        // all methods should return a Promise
+        expectToBePromise(replaceObjectResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/catalogs/{catalog_identifier}/objects/{object_identifier}', 'PUT');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['id']).toEqual(id);
+        expect(options.body['name']).toEqual(name);
+        expect(options.body['_rev']).toEqual(rev);
+        expect(options.body['crn']).toEqual(crn);
+        expect(options.body['url']).toEqual(url);
+        expect(options.body['parent_id']).toEqual(parentId);
+        expect(options.body['allow_list']).toEqual(allowList);
+        expect(options.body['label_i18n']).toEqual(labelI18n);
+        expect(options.body['label']).toEqual(label);
+        expect(options.body['tags']).toEqual(tags);
+        expect(options.body['created']).toEqual(created);
+        expect(options.body['updated']).toEqual(updated);
+        expect(options.body['short_description']).toEqual(shortDescription);
+        expect(options.body['short_description_i18n']).toEqual(shortDescriptionI18n);
+        expect(options.body['kind']).toEqual(kind);
+        expect(options.body['publish']).toEqual(publish);
+        expect(options.body['state']).toEqual(state);
+        expect(options.body['catalog_id']).toEqual(catalogId);
+        expect(options.body['catalog_name']).toEqual(catalogName);
+        expect(options.body['data']).toEqual(data);
+        expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
+        expect(options.path['object_identifier']).toEqual(objectIdentifier);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const catalogIdentifier = 'testString';
+        const objectIdentifier = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          catalogIdentifier,
+          objectIdentifier,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.replaceObject(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.replaceObject({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const replaceObjectPromise = catalogManagementService.replaceObject();
+        expectToBePromise(replaceObjectPromise);
+
+        replaceObjectPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('deleteObject', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation deleteObject
+        const catalogIdentifier = 'testString';
+        const objectIdentifier = 'testString';
+        const params = {
+          catalogIdentifier: catalogIdentifier,
+          objectIdentifier: objectIdentifier,
+        };
+
+        const deleteObjectResult = catalogManagementService.deleteObject(params);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteObjectResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/catalogs/{catalog_identifier}/objects/{object_identifier}', 'DELETE');
+        const expectedAccept = undefined;
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
+        expect(options.path['object_identifier']).toEqual(objectIdentifier);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const catalogIdentifier = 'testString';
+        const objectIdentifier = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          catalogIdentifier,
+          objectIdentifier,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.deleteObject(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.deleteObject({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const deleteObjectPromise = catalogManagementService.deleteObject();
+        expectToBePromise(deleteObjectPromise);
+
+        deleteObjectPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('getObjectAudit', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getObjectAudit
+        const catalogIdentifier = 'testString';
+        const objectIdentifier = 'testString';
+        const id = 'testString';
+        const params = {
+          catalogIdentifier: catalogIdentifier,
+          objectIdentifier: objectIdentifier,
+          id: id,
+        };
+
+        const getObjectAuditResult = catalogManagementService.getObjectAudit(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getObjectAuditResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/catalogs/{catalog_identifier}/offerings/{object_identifier}/audit', 'GET');
+        const expectedAccept = undefined;
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['id']).toEqual(id);
+        expect(options.path['catalog_identifier']).toEqual(catalogIdentifier);
+        expect(options.path['object_identifier']).toEqual(objectIdentifier);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const catalogIdentifier = 'testString';
+        const objectIdentifier = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          catalogIdentifier,
+          objectIdentifier,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        catalogManagementService.getObjectAudit(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await catalogManagementService.getObjectAudit({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getObjectAuditPromise = catalogManagementService.getObjectAudit();
+        expectToBePromise(getObjectAuditPromise);
+
+        getObjectAuditPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

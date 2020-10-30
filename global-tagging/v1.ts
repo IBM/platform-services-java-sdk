@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-6058b92b-20200924-123044
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
  */
  
 
@@ -127,37 +127,35 @@ class GlobalTaggingV1 extends BaseService {
   public listTags(params?: GlobalTaggingV1.ListTagsParams): Promise<GlobalTaggingV1.Response<GlobalTaggingV1.TagList>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'account_id': _params.accountId,
-        'tag_type': _params.tagType,
-        'full_data': _params.fullData,
-        'providers': _params.providers,
-        'attached_to': _params.attachedTo,
-        'offset': _params.offset,
-        'limit': _params.limit,
-        'timeout': _params.timeout,
-        'order_by_name': _params.orderByName,
-        'attached_only': _params.attachedOnly
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'tag_type': _params.tagType,
+      'full_data': _params.fullData,
+      'providers': _params.providers,
+      'attached_to': _params.attachedTo,
+      'offset': _params.offset,
+      'limit': _params.limit,
+      'timeout': _params.timeout,
+      'order_by_name': _params.orderByName,
+      'attached_only': _params.attachedOnly
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'listTags');
+    const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'listTags');
 
-      const parameters = {
-        options: {
-          url: '/v3/tags',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/tags',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -177,30 +175,28 @@ class GlobalTaggingV1 extends BaseService {
   public deleteTagAll(params?: GlobalTaggingV1.DeleteTagAllParams): Promise<GlobalTaggingV1.Response<GlobalTaggingV1.DeleteTagsResult>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'providers': _params.providers,
-        'account_id': _params.accountId,
-        'tag_type': _params.tagType
-      };
+    const query = {
+      'providers': _params.providers,
+      'account_id': _params.accountId,
+      'tag_type': _params.tagType
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTagAll');
+    const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTagAll');
 
-      const parameters = {
-        options: {
-          url: '/v3/tags',
-          method: 'DELETE',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/tags',
+        method: 'DELETE',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -223,40 +219,38 @@ class GlobalTaggingV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['tagName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'providers': _params.providers,
-        'account_id': _params.accountId,
-        'tag_type': _params.tagType
-      };
+    const query = {
+      'providers': _params.providers,
+      'account_id': _params.accountId,
+      'tag_type': _params.tagType
+    };
 
-      const path = {
-        'tag_name': _params.tagName
-      };
+    const path = {
+      'tag_name': _params.tagName
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTag');
+    const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTag');
 
-      const parameters = {
-        options: {
-          url: '/v3/tags/{tag_name}',
-          method: 'DELETE',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/tags/{tag_name}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -283,42 +277,40 @@ class GlobalTaggingV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['resources'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'resources': _params.resources,
-        'tag_name': _params.tagName,
-        'tag_names': _params.tagNames
-      };
+    const body = {
+      'resources': _params.resources,
+      'tag_name': _params.tagName,
+      'tag_names': _params.tagNames
+    };
 
-      const query = {
-        'account_id': _params.accountId,
-        'tag_type': _params.tagType
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'tag_type': _params.tagType
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'attachTag');
+    const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'attachTag');
 
-      const parameters = {
-        options: {
-          url: '/v3/tags/attach',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/tags/attach',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -345,42 +337,40 @@ class GlobalTaggingV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['resources'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'resources': _params.resources,
-        'tag_name': _params.tagName,
-        'tag_names': _params.tagNames
-      };
+    const body = {
+      'resources': _params.resources,
+      'tag_name': _params.tagName,
+      'tag_names': _params.tagNames
+    };
 
-      const query = {
-        'account_id': _params.accountId,
-        'tag_type': _params.tagType
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'tag_type': _params.tagType
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'detachTag');
+    const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'detachTag');
 
-      const parameters = {
-        options: {
-          url: '/v3/tags/detach',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/tags/detach',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
 }

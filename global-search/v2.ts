@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
  */
  
 
@@ -131,40 +131,38 @@ class GlobalSearchV2 extends BaseService {
   public search(params?: GlobalSearchV2.SearchParams): Promise<GlobalSearchV2.Response<GlobalSearchV2.ScanResult>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const body = {
-        'query': _params.query,
-        'fields': _params.fields,
-        'search_cursor': _params.searchCursor
-      };
+    const body = {
+      'query': _params.query,
+      'fields': _params.fields,
+      'search_cursor': _params.searchCursor
+    };
 
-      const query = {
-        'account_id': _params.accountId,
-        'limit': _params.limit,
-        'timeout': _params.timeout,
-        'sort': _params.sort
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'limit': _params.limit,
+      'timeout': _params.timeout,
+      'sort': _params.sort
+    };
 
-      const sdkHeaders = getSdkHeaders(GlobalSearchV2.DEFAULT_SERVICE_NAME, 'v2', 'search');
+    const sdkHeaders = getSdkHeaders(GlobalSearchV2.DEFAULT_SERVICE_NAME, 'v2', 'search');
 
-      const parameters = {
-        options: {
-          url: '/v3/resources/search',
-          method: 'POST',
-          body,
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'transaction-id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v3/resources/search',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'transaction-id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -183,23 +181,21 @@ class GlobalSearchV2 extends BaseService {
   public getSupportedTypes(params?: GlobalSearchV2.GetSupportedTypesParams): Promise<GlobalSearchV2.Response<GlobalSearchV2.SupportedTypesList>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const sdkHeaders = getSdkHeaders(GlobalSearchV2.DEFAULT_SERVICE_NAME, 'v2', 'getSupportedTypes');
+    const sdkHeaders = getSdkHeaders(GlobalSearchV2.DEFAULT_SERVICE_NAME, 'v2', 'getSupportedTypes');
 
-      const parameters = {
-        options: {
-          url: '/v2/resources/supported_types',
-          method: 'GET',
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resources/supported_types',
+        method: 'GET',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
 }

@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
  */
  
 
@@ -114,35 +114,33 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['rules'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'rules': _params.rules
-      };
+    const body = {
+      'rules': _params.rules
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'createRules');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'createRules');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -179,39 +177,37 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'account_id': _params.accountId,
-        'attached': _params.attached,
-        'labels': _params.labels,
-        'scopes': _params.scopes,
-        'limit': _params.limit,
-        'offset': _params.offset
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'attached': _params.attached,
+      'labels': _params.labels,
+      'scopes': _params.scopes,
+      'limit': _params.limit,
+      'offset': _params.offset
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'listRules');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'listRules');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -234,34 +230,32 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['ruleId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'rule_id': _params.ruleId
-      };
+    const path = {
+      'rule_id': _params.ruleId
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'getRule');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'getRule');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules/{rule_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules/{rule_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -300,48 +294,46 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['ruleId', 'ifMatch', 'name', 'description', 'target', 'requiredConfig', 'enforcementActions'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'description': _params.description,
-        'target': _params.target,
-        'required_config': _params.requiredConfig,
-        'enforcement_actions': _params.enforcementActions,
-        'account_id': _params.accountId,
-        'rule_type': _params.ruleType,
-        'labels': _params.labels
-      };
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+      'target': _params.target,
+      'required_config': _params.requiredConfig,
+      'enforcement_actions': _params.enforcementActions,
+      'account_id': _params.accountId,
+      'rule_type': _params.ruleType,
+      'labels': _params.labels
+    };
 
-      const path = {
-        'rule_id': _params.ruleId
-      };
+    const path = {
+      'rule_id': _params.ruleId
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'updateRule');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'updateRule');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules/{rule_id}',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'If-Match': _params.ifMatch,
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules/{rule_id}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'If-Match': _params.ifMatch,
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -364,33 +356,31 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['ruleId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'rule_id': _params.ruleId
-      };
+    const path = {
+      'rule_id': _params.ruleId
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteRule');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteRule');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules/{rule_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules/{rule_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -418,40 +408,38 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['ruleId', 'attachments'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'attachments': _params.attachments
-      };
+    const body = {
+      'attachments': _params.attachments
+    };
 
-      const path = {
-        'rule_id': _params.ruleId
-      };
+    const path = {
+      'rule_id': _params.ruleId
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'createAttachments');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'createAttachments');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules/{rule_id}/attachments',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules/{rule_id}/attachments',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -485,40 +473,38 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['ruleId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const query = {
-        'limit': _params.limit,
-        'offset': _params.offset
-      };
+    const query = {
+      'limit': _params.limit,
+      'offset': _params.offset
+    };
 
-      const path = {
-        'rule_id': _params.ruleId
-      };
+    const path = {
+      'rule_id': _params.ruleId
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'listAttachments');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'listAttachments');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules/{rule_id}/attachments',
-          method: 'GET',
-          qs: query,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules/{rule_id}/attachments',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -542,35 +528,33 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['ruleId', 'attachmentId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'rule_id': _params.ruleId,
-        'attachment_id': _params.attachmentId
-      };
+    const path = {
+      'rule_id': _params.ruleId,
+      'attachment_id': _params.attachmentId
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'getAttachment');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'getAttachment');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules/{rule_id}/attachments/{attachment_id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules/{rule_id}/attachments/{attachment_id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -603,44 +587,42 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['ruleId', 'attachmentId', 'ifMatch', 'accountId', 'includedScope'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'account_id': _params.accountId,
-        'included_scope': _params.includedScope,
-        'excluded_scopes': _params.excludedScopes
-      };
+    const body = {
+      'account_id': _params.accountId,
+      'included_scope': _params.includedScope,
+      'excluded_scopes': _params.excludedScopes
+    };
 
-      const path = {
-        'rule_id': _params.ruleId,
-        'attachment_id': _params.attachmentId
-      };
+    const path = {
+      'rule_id': _params.ruleId,
+      'attachment_id': _params.attachmentId
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'updateAttachment');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'updateAttachment');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules/{rule_id}/attachments/{attachment_id}',
-          method: 'PUT',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'If-Match': _params.ifMatch,
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules/{rule_id}/attachments/{attachment_id}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'If-Match': _params.ifMatch,
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -664,34 +646,32 @@ class ConfigurationGovernanceV1 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['ruleId', 'attachmentId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'rule_id': _params.ruleId,
-        'attachment_id': _params.attachmentId
-      };
+    const path = {
+      'rule_id': _params.ruleId,
+      'attachment_id': _params.attachmentId
+    };
 
-      const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAttachment');
+    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAttachment');
 
-      const parameters = {
-        options: {
-          url: '/config/v1/rules/{rule_id}/attachments/{attachment_id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Transaction-Id': _params.transactionId
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/config/v1/rules/{rule_id}/attachments/{attachment_id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
 }

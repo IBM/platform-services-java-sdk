@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
  */
  
 
@@ -118,37 +118,35 @@ class ResourceControllerV2 extends BaseService {
   public listResourceInstances(params?: ResourceControllerV2.ListResourceInstancesParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstancesList>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'guid': _params.guid,
-        'name': _params.name,
-        'resource_group_id': _params.resourceGroupId,
-        'resource_id': _params.resourceId,
-        'resource_plan_id': _params.resourcePlanId,
-        'type': _params.type,
-        'sub_type': _params.subType,
-        'limit': _params.limit,
-        'updated_from': _params.updatedFrom,
-        'updated_to': _params.updatedTo
-      };
+    const query = {
+      'guid': _params.guid,
+      'name': _params.name,
+      'resource_group_id': _params.resourceGroupId,
+      'resource_id': _params.resourceId,
+      'resource_plan_id': _params.resourcePlanId,
+      'type': _params.type,
+      'sub_type': _params.subType,
+      'limit': _params.limit,
+      'updated_from': _params.updatedFrom,
+      'updated_to': _params.updatedTo
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceInstances');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceInstances');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_instances',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_instances',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -179,41 +177,39 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['name', 'target', 'resourceGroup', 'resourcePlanId'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'target': _params.target,
-        'resource_group': _params.resourceGroup,
-        'resource_plan_id': _params.resourcePlanId,
-        'tags': _params.tags,
-        'allow_cleanup': _params.allowCleanup,
-        'parameters': _params.parameters
-      };
+    const body = {
+      'name': _params.name,
+      'target': _params.target,
+      'resource_group': _params.resourceGroup,
+      'resource_plan_id': _params.resourcePlanId,
+      'tags': _params.tags,
+      'allow_cleanup': _params.allowCleanup,
+      'parameters': _params.parameters
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceInstance');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceInstance');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_instances',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Entity-Lock': _params.entityLock
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_instances',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Entity-Lock': _params.entityLock
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -230,33 +226,31 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceInstance');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceInstance');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_instances/{id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_instances/{id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -273,32 +267,30 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceInstance');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceInstance');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_instances/{id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_instances/{id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -322,42 +314,40 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'parameters': _params.parameters,
-        'resource_plan_id': _params.resourcePlanId,
-        'allow_cleanup': _params.allowCleanup
-      };
+    const body = {
+      'name': _params.name,
+      'parameters': _params.parameters,
+      'resource_plan_id': _params.resourcePlanId,
+      'allow_cleanup': _params.allowCleanup
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceInstance');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceInstance');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_instances/{id}',
-          method: 'PATCH',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_instances/{id}',
+        method: 'PATCH',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -375,33 +365,31 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'lockResourceInstance');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'lockResourceInstance');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_instances/{id}/lock',
-          method: 'POST',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_instances/{id}/lock',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -418,33 +406,31 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'unlockResourceInstance');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'unlockResourceInstance');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_instances/{id}/lock',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_instances/{id}/lock',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -472,34 +458,32 @@ class ResourceControllerV2 extends BaseService {
   public listResourceKeys(params?: ResourceControllerV2.ListResourceKeysParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'guid': _params.guid,
-        'name': _params.name,
-        'resource_group_id': _params.resourceGroupId,
-        'resource_id': _params.resourceId,
-        'limit': _params.limit,
-        'updated_from': _params.updatedFrom,
-        'updated_to': _params.updatedTo
-      };
+    const query = {
+      'guid': _params.guid,
+      'name': _params.name,
+      'resource_group_id': _params.resourceGroupId,
+      'resource_id': _params.resourceId,
+      'limit': _params.limit,
+      'updated_from': _params.updatedFrom,
+      'updated_to': _params.updatedTo
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceKeys');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceKeys');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_keys',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_keys',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -521,37 +505,35 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['name', 'source'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'source': _params.source,
-        'parameters': _params.parameters,
-        'role': _params.role
-      };
+    const body = {
+      'name': _params.name,
+      'source': _params.source,
+      'parameters': _params.parameters,
+      'role': _params.role
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceKey');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceKey');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_keys',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_keys',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -568,33 +550,31 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceKey');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceKey');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_keys/{id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_keys/{id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -611,32 +591,30 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceKey');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceKey');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_keys/{id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_keys/{id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -655,39 +633,37 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id', 'name'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name
-      };
+    const body = {
+      'name': _params.name
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceKey');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceKey');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_keys/{id}',
-          method: 'PATCH',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_keys/{id}',
+        method: 'PATCH',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -716,35 +692,33 @@ class ResourceControllerV2 extends BaseService {
   public listResourceBindings(params?: ResourceControllerV2.ListResourceBindingsParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'guid': _params.guid,
-        'name': _params.name,
-        'resource_group_id': _params.resourceGroupId,
-        'resource_id': _params.resourceId,
-        'region_binding_id': _params.regionBindingId,
-        'limit': _params.limit,
-        'updated_from': _params.updatedFrom,
-        'updated_to': _params.updatedTo
-      };
+    const query = {
+      'guid': _params.guid,
+      'name': _params.name,
+      'resource_group_id': _params.resourceGroupId,
+      'resource_id': _params.resourceId,
+      'region_binding_id': _params.regionBindingId,
+      'limit': _params.limit,
+      'updated_from': _params.updatedFrom,
+      'updated_to': _params.updatedTo
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceBindings');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceBindings');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_bindings',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_bindings',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -769,38 +743,36 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['source', 'target'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'source': _params.source,
-        'target': _params.target,
-        'name': _params.name,
-        'parameters': _params.parameters,
-        'role': _params.role
-      };
+    const body = {
+      'source': _params.source,
+      'target': _params.target,
+      'name': _params.name,
+      'parameters': _params.parameters,
+      'role': _params.role
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceBinding');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceBinding');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_bindings',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_bindings',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -817,33 +789,31 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceBinding');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceBinding');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_bindings/{id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_bindings/{id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -860,32 +830,30 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceBinding');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceBinding');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_bindings/{id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_bindings/{id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -904,39 +872,37 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id', 'name'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name
-      };
+    const body = {
+      'name': _params.name
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceBinding');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceBinding');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_bindings/{id}',
-          method: 'PATCH',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_bindings/{id}',
+        method: 'PATCH',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -966,36 +932,34 @@ class ResourceControllerV2 extends BaseService {
   public listResourceAliases(params?: ResourceControllerV2.ListResourceAliasesParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'guid': _params.guid,
-        'name': _params.name,
-        'resource_instance_id': _params.resourceInstanceId,
-        'region_instance_id': _params.regionInstanceId,
-        'resource_id': _params.resourceId,
-        'resource_group_id': _params.resourceGroupId,
-        'limit': _params.limit,
-        'updated_from': _params.updatedFrom,
-        'updated_to': _params.updatedTo
-      };
+    const query = {
+      'guid': _params.guid,
+      'name': _params.name,
+      'resource_instance_id': _params.resourceInstanceId,
+      'region_instance_id': _params.regionInstanceId,
+      'resource_id': _params.resourceId,
+      'resource_group_id': _params.resourceGroupId,
+      'limit': _params.limit,
+      'updated_from': _params.updatedFrom,
+      'updated_to': _params.updatedTo
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceAliases');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceAliases');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_aliases',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_aliases',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1016,36 +980,34 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['name', 'source', 'target'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name,
-        'source': _params.source,
-        'target': _params.target
-      };
+    const body = {
+      'name': _params.name,
+      'source': _params.source,
+      'target': _params.target
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceAlias');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceAlias');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_aliases',
-          method: 'POST',
-          body,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_aliases',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1062,33 +1024,31 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceAlias');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceAlias');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_aliases/{id}',
-          method: 'GET',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_aliases/{id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1105,32 +1065,30 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceAlias');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceAlias');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_aliases/{id}',
-          method: 'DELETE',
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_aliases/{id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1149,39 +1107,37 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id', 'name'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'name': _params.name
-      };
+    const body = {
+      'name': _params.name
+    };
 
-      const path = {
-        'id': _params.id
-      };
+    const path = {
+      'id': _params.id
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceAlias');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceAlias');
 
-      const parameters = {
-        options: {
-          url: '/v2/resource_aliases/{id}',
-          method: 'PATCH',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v2/resource_aliases/{id}',
+        method: 'PATCH',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /*************************
@@ -1202,29 +1158,27 @@ class ResourceControllerV2 extends BaseService {
   public listReclamations(params?: ResourceControllerV2.ListReclamationsParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ReclamationsList>> {
     const _params = Object.assign({}, params);
 
-    return new Promise((resolve, reject) => {
-      const query = {
-        'account_id': _params.accountId,
-        'resource_instance_id': _params.resourceInstanceId
-      };
+    const query = {
+      'account_id': _params.accountId,
+      'resource_instance_id': _params.resourceInstanceId
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listReclamations');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listReclamations');
 
-      const parameters = {
-        options: {
-          url: '/v1/reclamations',
-          method: 'GET',
-          qs: query,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/reclamations',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
   /**
@@ -1246,41 +1200,39 @@ class ResourceControllerV2 extends BaseService {
     const _params = Object.assign({}, params);
     const requiredParams = ['id', 'actionName'];
 
-    return new Promise((resolve, reject) => {
-      const missingParams = getMissingParams(_params, requiredParams);
-      if (missingParams) {
-        return reject(missingParams);
-      }
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
 
-      const body = {
-        'request_by': _params.requestBy,
-        'comment': _params.comment
-      };
+    const body = {
+      'request_by': _params.requestBy,
+      'comment': _params.comment
+    };
 
-      const path = {
-        'id': _params.id,
-        'action_name': _params.actionName
-      };
+    const path = {
+      'id': _params.id,
+      'action_name': _params.actionName
+    };
 
-      const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'runReclamationAction');
+    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'runReclamationAction');
 
-      const parameters = {
-        options: {
-          url: '/v1/reclamations/{id}/actions/{action_name}',
-          method: 'POST',
-          body,
-          path,
-        },
-        defaultOptions: extend(true, {}, this.baseOptions, {
-          headers: extend(true, sdkHeaders, {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          }, _params.headers),
-        }),
-      };
+    const parameters = {
+      options: {
+        url: '/v1/reclamations/{id}/actions/{action_name}',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
 
-      return resolve(this.createRequest(parameters));
-    });
+    return this.createRequest(parameters);
   };
 
 }
@@ -1753,6 +1705,12 @@ namespace ResourceControllerV2 {
     updated_at?: string;
     /** The date when the alias was deleted. */
     deleted_at?: string;
+    /** The subject who created the alias. */
+    created_by?: string;
+    /** The subject who updated the alias. */
+    updated_by?: string;
+    /** The subject who deleted the alias. */
+    deleted_by?: string;
   }
 
   /** A list of resource aliases. */
@@ -1789,6 +1747,8 @@ namespace ResourceControllerV2 {
     source_crn?: string;
     /** The CRN of target resource, e.g. application, in a specific environment. */
     target_crn?: string;
+    /** The role CRN. */
+    role?: string;
     /** The short ID of the binding in specific targeted environment, e.g. `service_binding_id` in a given IBM Cloud
      *  environment.
      */
@@ -1809,6 +1769,12 @@ namespace ResourceControllerV2 {
     updated_at?: string;
     /** The date when the binding was deleted. */
     deleted_at?: string;
+    /** The subject who created the binding. */
+    created_by?: string;
+    /** The subject who updated the binding. */
+    updated_by?: string;
+    /** The subject who deleted the binding. */
+    deleted_by?: string;
   }
 
   /** Configuration options represented as key-value pairs. Service defined options are passed through to the target resource brokers, whereas platform defined options are not. */
@@ -1859,6 +1825,8 @@ namespace ResourceControllerV2 {
      *  location where the instance is provisioned.
      */
     target_crn?: string;
+    /** The current configuration parameters of the instance. */
+    parameters?: JsonObject;
     /** The current state of the instance. For example, if the instance is deleted, it will return removed. */
     state?: string;
     /** The type of the instance, e.g. `service_instance`. */
@@ -1885,10 +1853,24 @@ namespace ResourceControllerV2 {
     resource_keys_url?: string;
     /** The date when the instance was created. */
     created_at?: string;
+    /** The subject who created the instance. */
+    created_by?: string;
     /** The date when the instance was last updated. */
     updated_at?: string;
+    /** The subject who updated the instance. */
+    updated_by?: string;
     /** The date when the instance was deleted. */
     deleted_at?: string;
+    /** The subject who deleted the instance. */
+    deleted_by?: string;
+    /** The date when the instance was scheduled for reclamation. */
+    scheduled_reclaim_at?: string;
+    /** The subject who initiated the instance reclamation. */
+    scheduled_reclaim_by?: string;
+    /** The date when the instance under reclamation was restored. */
+    restored_at?: string;
+    /** The subject who restored the instance back from reclamation. */
+    restored_by?: string;
   }
 
   /** A list of resource instances. */
@@ -1923,6 +1905,8 @@ namespace ResourceControllerV2 {
     resource_group_id?: string;
     /** The CRN of resource instance or alias associated to the key. */
     source_crn?: string;
+    /** The role CRN. */
+    role?: string;
     /** The state of the key. */
     state?: string;
     /** The credentials for the key. Additional key-value pairs are passed through from the resource brokers.  Refer
@@ -1939,6 +1923,12 @@ namespace ResourceControllerV2 {
     updated_at?: string;
     /** The date when the key was deleted. */
     deleted_at?: string;
+    /** The subject who created the key. */
+    created_by?: string;
+    /** The subject who updated the key. */
+    updated_by?: string;
+    /** The subject who deleted the key. */
+    deleted_by?: string;
   }
 
   /** Configuration options represented as key-value pairs. Service defined options are passed through to the target resource brokers, whereas platform defined options are not. */

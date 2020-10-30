@@ -41,6 +41,7 @@ public class ResourceKeyTest {
     assertNull(resourceKeyModel.getAccountId());
     assertNull(resourceKeyModel.getResourceGroupId());
     assertNull(resourceKeyModel.getSourceCrn());
+    assertNull(resourceKeyModel.getRole());
     assertNull(resourceKeyModel.getState());
     assertNull(resourceKeyModel.getCredentials());
     assertNull(resourceKeyModel.isIamCompatible());
@@ -48,5 +49,8 @@ public class ResourceKeyTest {
     assertNull(resourceKeyModel.getCreatedAt());
     assertNull(resourceKeyModel.getUpdatedAt());
     assertNull(resourceKeyModel.getDeletedAt());
+    assertNull(resourceKeyModel.getCreatedBy());
+    assertNull(resourceKeyModel.getUpdatedBy());
+    assertNull(resourceKeyModel.getDeletedBy());
   }
 }

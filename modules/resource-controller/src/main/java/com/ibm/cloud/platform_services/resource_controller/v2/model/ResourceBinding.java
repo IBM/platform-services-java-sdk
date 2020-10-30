@@ -35,6 +35,7 @@ public class ResourceBinding extends GenericModel {
   protected String sourceCrn;
   @SerializedName("target_crn")
   protected String targetCrn;
+  protected String role;
   @SerializedName("region_binding_id")
   protected String regionBindingId;
   protected String state;
@@ -49,6 +50,12 @@ public class ResourceBinding extends GenericModel {
   protected Date updatedAt;
   @SerializedName("deleted_at")
   protected Date deletedAt;
+  @SerializedName("created_by")
+  protected String createdBy;
+  @SerializedName("updated_by")
+  protected String updatedBy;
+  @SerializedName("deleted_by")
+  protected String deletedBy;
 
   /**
    * Gets the id.
@@ -152,6 +159,17 @@ public class ResourceBinding extends GenericModel {
   }
 
   /**
+   * Gets the role.
+   *
+   * The role CRN.
+   *
+   * @return the role
+   */
+  public String getRole() {
+    return role;
+  }
+
+  /**
    * Gets the regionBindingId.
    *
    * The short ID of the binding in specific targeted environment, e.g. `service_binding_id` in a given IBM Cloud
@@ -239,6 +257,39 @@ public class ResourceBinding extends GenericModel {
    */
   public Date getDeletedAt() {
     return deletedAt;
+  }
+
+  /**
+   * Gets the createdBy.
+   *
+   * The subject who created the binding.
+   *
+   * @return the createdBy
+   */
+  public String getCreatedBy() {
+    return createdBy;
+  }
+
+  /**
+   * Gets the updatedBy.
+   *
+   * The subject who updated the binding.
+   *
+   * @return the updatedBy
+   */
+  public String getUpdatedBy() {
+    return updatedBy;
+  }
+
+  /**
+   * Gets the deletedBy.
+   *
+   * The subject who deleted the binding.
+   *
+   * @return the deletedBy
+   */
+  public String getDeletedBy() {
+    return deletedBy;
   }
 }
 

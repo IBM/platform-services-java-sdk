@@ -50,5 +50,8 @@ public class ResourceAliasTest {
     assertNull(resourceAliasModel.getCreatedAt());
     assertNull(resourceAliasModel.getUpdatedAt());
     assertNull(resourceAliasModel.getDeletedAt());
+    assertNull(resourceAliasModel.getCreatedBy());
+    assertNull(resourceAliasModel.getUpdatedBy());
+    assertNull(resourceAliasModel.getDeletedBy());
   }
 }

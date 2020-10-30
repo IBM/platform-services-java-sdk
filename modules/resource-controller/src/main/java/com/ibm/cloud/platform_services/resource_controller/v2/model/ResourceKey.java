@@ -33,6 +33,7 @@ public class ResourceKey extends GenericModel {
   protected String resourceGroupId;
   @SerializedName("source_crn")
   protected String sourceCrn;
+  protected String role;
   protected String state;
   protected Credentials credentials;
   @SerializedName("iam_compatible")
@@ -45,6 +46,12 @@ public class ResourceKey extends GenericModel {
   protected Date updatedAt;
   @SerializedName("deleted_at")
   protected Date deletedAt;
+  @SerializedName("created_by")
+  protected String createdBy;
+  @SerializedName("updated_by")
+  protected String updatedBy;
+  @SerializedName("deleted_by")
+  protected String deletedBy;
 
   /**
    * Gets the id.
@@ -137,6 +144,17 @@ public class ResourceKey extends GenericModel {
   }
 
   /**
+   * Gets the role.
+   *
+   * The role CRN.
+   *
+   * @return the role
+   */
+  public String getRole() {
+    return role;
+  }
+
+  /**
    * Gets the state.
    *
    * The state of the key.
@@ -212,6 +230,39 @@ public class ResourceKey extends GenericModel {
    */
   public Date getDeletedAt() {
     return deletedAt;
+  }
+
+  /**
+   * Gets the createdBy.
+   *
+   * The subject who created the key.
+   *
+   * @return the createdBy
+   */
+  public String getCreatedBy() {
+    return createdBy;
+  }
+
+  /**
+   * Gets the updatedBy.
+   *
+   * The subject who updated the key.
+   *
+   * @return the updatedBy
+   */
+  public String getUpdatedBy() {
+    return updatedBy;
+  }
+
+  /**
+   * Gets the deletedBy.
+   *
+   * The subject who deleted the key.
+   *
+   * @return the deletedBy
+   */
+  public String getDeletedBy() {
+    return deletedBy;
   }
 }
 

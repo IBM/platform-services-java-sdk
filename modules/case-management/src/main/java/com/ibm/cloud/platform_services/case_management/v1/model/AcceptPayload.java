@@ -49,15 +49,6 @@ public class AcceptPayload extends StatusPayload {
     }
 
     /**
-     * Instantiates a new builder with required properties.
-     *
-     * @param action the action
-     */
-    public Builder(String action) {
-      this.action = action;
-    }
-
-    /**
      * Builds a AcceptPayload.
      *
      * @return the new AcceptPayload instance

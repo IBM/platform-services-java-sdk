@@ -1,3 +1,11 @@
+## [0.13.2](https://github.com/IBM/platform-services-java-sdk/compare/0.13.1...0.13.2) (2020-10-30)
+
+
+### Bug Fixes
+
+* **Case Management:** regen AcceptPayload model and test ([d0c719d](https://github.com/IBM/platform-services-java-sdk/commit/d0c719def6200163bb1ca1ff20ac50985255b10a))
+* **Resource Controller:** re-gen after API changes ([1d6266b](https://github.com/IBM/platform-services-java-sdk/commit/1d6266bc024419ee72e60a64b3e768d7ded784e5))
+
 ## [0.13.1](https://github.com/IBM/platform-services-java-sdk/compare/0.13.0...0.13.1) (2020-10-16)
 
 

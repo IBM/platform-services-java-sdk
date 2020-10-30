@@ -16,5 +16,6 @@
     ./open-service-broker/v1.ts \
     ./resource-controller/v2 \
     ./resource-manager/v2 \
+    ./usage-reports/v4 \
     ./user-management/v1 \
     --target "ES5"

@@ -1,3 +1,10 @@
+## [0.13.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.13.1...v0.13.2) (2020-10-30)
+
+
+### Bug Fixes
+
+* regen services with latest SDK generator ([2634e73](https://github.com/IBM/platform-services-node-sdk/commit/2634e73199b31d59f18a1b8b6770f7399ff57e3d))
+
 ## [0.13.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.13.0...v0.13.1) (2020-10-16)
 
 

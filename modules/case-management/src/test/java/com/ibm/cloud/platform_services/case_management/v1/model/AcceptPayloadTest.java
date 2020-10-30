@@ -45,10 +45,4 @@ public class AcceptPayloadTest {
     assertEquals(acceptPayloadModelNew.action(), "accept");
     assertEquals(acceptPayloadModelNew.comment(), "testString");
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testAcceptPayloadError() throws Throwable {
-    new AcceptPayload.Builder().build();
-  }
-
 }

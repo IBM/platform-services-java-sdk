@@ -42,6 +42,7 @@ public class ResourceBindingTest {
     assertNull(resourceBindingModel.getResourceGroupId());
     assertNull(resourceBindingModel.getSourceCrn());
     assertNull(resourceBindingModel.getTargetCrn());
+    assertNull(resourceBindingModel.getRole());
     assertNull(resourceBindingModel.getRegionBindingId());
     assertNull(resourceBindingModel.getState());
     assertNull(resourceBindingModel.getCredentials());
@@ -50,5 +51,8 @@ public class ResourceBindingTest {
     assertNull(resourceBindingModel.getCreatedAt());
     assertNull(resourceBindingModel.getUpdatedAt());
     assertNull(resourceBindingModel.getDeletedAt());
+    assertNull(resourceBindingModel.getCreatedBy());
+    assertNull(resourceBindingModel.getUpdatedBy());
+    assertNull(resourceBindingModel.getDeletedBy());
   }
 }

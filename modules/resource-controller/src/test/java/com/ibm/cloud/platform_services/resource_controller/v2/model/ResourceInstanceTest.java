@@ -44,6 +44,7 @@ public class ResourceInstanceTest {
     assertNull(resourceInstanceModel.getResourceId());
     assertNull(resourceInstanceModel.getResourcePlanId());
     assertNull(resourceInstanceModel.getTargetCrn());
+    assertNull(resourceInstanceModel.getParameters());
     assertNull(resourceInstanceModel.getState());
     assertNull(resourceInstanceModel.getType());
     assertNull(resourceInstanceModel.getSubType());
@@ -56,7 +57,14 @@ public class ResourceInstanceTest {
     assertNull(resourceInstanceModel.getResourceBindingsUrl());
     assertNull(resourceInstanceModel.getResourceKeysUrl());
     assertNull(resourceInstanceModel.getCreatedAt());
+    assertNull(resourceInstanceModel.getCreatedBy());
     assertNull(resourceInstanceModel.getUpdatedAt());
+    assertNull(resourceInstanceModel.getUpdatedBy());
     assertNull(resourceInstanceModel.getDeletedAt());
+    assertNull(resourceInstanceModel.getDeletedBy());
+    assertNull(resourceInstanceModel.getScheduledReclaimAt());
+    assertNull(resourceInstanceModel.getScheduledReclaimBy());
+    assertNull(resourceInstanceModel.getRestoredAt());
+    assertNull(resourceInstanceModel.getRestoredBy());
   }
 }

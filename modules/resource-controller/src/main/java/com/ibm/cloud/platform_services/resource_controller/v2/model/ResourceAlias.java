@@ -52,6 +52,12 @@ public class ResourceAlias extends GenericModel {
   protected Date updatedAt;
   @SerializedName("deleted_at")
   protected Date deletedAt;
+  @SerializedName("created_by")
+  protected String createdBy;
+  @SerializedName("updated_by")
+  protected String updatedBy;
+  @SerializedName("deleted_by")
+  protected String deletedBy;
 
   /**
    * Gets the id.
@@ -252,6 +258,39 @@ public class ResourceAlias extends GenericModel {
    */
   public Date getDeletedAt() {
     return deletedAt;
+  }
+
+  /**
+   * Gets the createdBy.
+   *
+   * The subject who created the alias.
+   *
+   * @return the createdBy
+   */
+  public String getCreatedBy() {
+    return createdBy;
+  }
+
+  /**
+   * Gets the updatedBy.
+   *
+   * The subject who updated the alias.
+   *
+   * @return the updatedBy
+   */
+  public String getUpdatedBy() {
+    return updatedBy;
+  }
+
+  /**
+   * Gets the deletedBy.
+   *
+   * The subject who deleted the alias.
+   *
+   * @return the deletedBy
+   */
+  public String getDeletedBy() {
+    return deletedBy;
   }
 }
 

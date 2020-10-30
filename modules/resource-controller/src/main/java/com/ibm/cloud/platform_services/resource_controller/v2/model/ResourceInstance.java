@@ -41,6 +41,7 @@ public class ResourceInstance extends GenericModel {
   protected String resourcePlanId;
   @SerializedName("target_crn")
   protected String targetCrn;
+  protected Map<String, Object> parameters;
   protected String state;
   protected String type;
   @SerializedName("sub_type")
@@ -62,10 +63,24 @@ public class ResourceInstance extends GenericModel {
   protected String resourceKeysUrl;
   @SerializedName("created_at")
   protected Date createdAt;
+  @SerializedName("created_by")
+  protected String createdBy;
   @SerializedName("updated_at")
   protected Date updatedAt;
+  @SerializedName("updated_by")
+  protected String updatedBy;
   @SerializedName("deleted_at")
   protected Date deletedAt;
+  @SerializedName("deleted_by")
+  protected String deletedBy;
+  @SerializedName("scheduled_reclaim_at")
+  protected Date scheduledReclaimAt;
+  @SerializedName("scheduled_reclaim_by")
+  protected String scheduledReclaimBy;
+  @SerializedName("restored_at")
+  protected Date restoredAt;
+  @SerializedName("restored_by")
+  protected String restoredBy;
 
   /**
    * Gets the id.
@@ -189,6 +204,17 @@ public class ResourceInstance extends GenericModel {
    */
   public String getTargetCrn() {
     return targetCrn;
+  }
+
+  /**
+   * Gets the parameters.
+   *
+   * The current configuration parameters of the instance.
+   *
+   * @return the parameters
+   */
+  public Map<String, Object> getParameters() {
+    return parameters;
   }
 
   /**
@@ -325,6 +351,17 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
+   * Gets the createdBy.
+   *
+   * The subject who created the instance.
+   *
+   * @return the createdBy
+   */
+  public String getCreatedBy() {
+    return createdBy;
+  }
+
+  /**
    * Gets the updatedAt.
    *
    * The date when the instance was last updated.
@@ -336,6 +373,17 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
+   * Gets the updatedBy.
+   *
+   * The subject who updated the instance.
+   *
+   * @return the updatedBy
+   */
+  public String getUpdatedBy() {
+    return updatedBy;
+  }
+
+  /**
    * Gets the deletedAt.
    *
    * The date when the instance was deleted.
@@ -344,6 +392,61 @@ public class ResourceInstance extends GenericModel {
    */
   public Date getDeletedAt() {
     return deletedAt;
+  }
+
+  /**
+   * Gets the deletedBy.
+   *
+   * The subject who deleted the instance.
+   *
+   * @return the deletedBy
+   */
+  public String getDeletedBy() {
+    return deletedBy;
+  }
+
+  /**
+   * Gets the scheduledReclaimAt.
+   *
+   * The date when the instance was scheduled for reclamation.
+   *
+   * @return the scheduledReclaimAt
+   */
+  public Date getScheduledReclaimAt() {
+    return scheduledReclaimAt;
+  }
+
+  /**
+   * Gets the scheduledReclaimBy.
+   *
+   * The subject who initiated the instance reclamation.
+   *
+   * @return the scheduledReclaimBy
+   */
+  public String getScheduledReclaimBy() {
+    return scheduledReclaimBy;
+  }
+
+  /**
+   * Gets the restoredAt.
+   *
+   * The date when the instance under reclamation was restored.
+   *
+   * @return the restoredAt
+   */
+  public Date getRestoredAt() {
+    return restoredAt;
+  }
+
+  /**
+   * Gets the restoredBy.
+   *
+   * The subject who restored the instance back from reclamation.
+   *
+   * @return the restoredBy
+   */
+  public String getRestoredBy() {
+    return restoredBy;
   }
 }
 

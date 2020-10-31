@@ -1,3 +1,10 @@
+# [0.14.0](https://github.com/IBM/platform-services-java-sdk/compare/0.13.2...0.14.0) (2020-10-31)
+
+
+### Features
+
+* **Usage Reports:** add service to project ([61e183a](https://github.com/IBM/platform-services-java-sdk/commit/61e183a13c65a3061068ac6ac8a69557cc54bae2))
+
 ## [0.13.2](https://github.com/IBM/platform-services-java-sdk/compare/0.13.1...0.13.2) (2020-10-30)
 
 

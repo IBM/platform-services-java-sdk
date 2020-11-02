@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>platform-services-coverage-reports</artifactId>
-    <name>Platform Services Test Coverage Reports</name>
+    <name>IBM Cloud Platform Services Test Coverage Reports</name>
 
     <dependencies>
 	<!-- 

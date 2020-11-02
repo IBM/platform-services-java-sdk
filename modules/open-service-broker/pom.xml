@@ -14,7 +14,7 @@
     <artifactId>open-service-broker</artifactId>
 
     <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
-    <name>IBM Cloud Open Service Broker</name>
+    <name>IBM Cloud Open Service Broker API</name>
     <packaging>jar</packaging>
 
     <dependencies>

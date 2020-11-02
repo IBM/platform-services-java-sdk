@@ -14,7 +14,7 @@
     <artifactId>iam-identity</artifactId>
 
     <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
-    <name>IAM Identity Services</name>
+    <name>IBM Cloud IAM Identity Services API</name>
     <packaging>jar</packaging>
 
     <dependencies>

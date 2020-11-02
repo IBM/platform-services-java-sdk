@@ -14,7 +14,7 @@
     <artifactId>iam-policy-management</artifactId>
 
     <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
-    <name>IAM Policy Management</name>
+    <name>IBM Cloud IAM Policy Management API</name>
     <packaging>jar</packaging>
 
     <dependencies>

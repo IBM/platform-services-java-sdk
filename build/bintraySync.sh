@@ -34,6 +34,7 @@ com.ibm.cloud:iam-policy-management
 com.ibm.cloud:open-service-broker
 com.ibm.cloud:resource-controller
 com.ibm.cloud:resource-manager
+com.ibm.cloud:usage-reports
 com.ibm.cloud:user-management"
 
 this_dir=`dirname "$0"`

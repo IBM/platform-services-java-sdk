@@ -51,6 +51,7 @@
         <module>modules/catalog-management</module>
         <module>modules/configuration-governance</module>
         <module>modules/enterprise-management</module>
+        <module>modules/enterprise-usage-reports</module>
         <module>modules/global-catalog</module>
         <module>modules/global-search</module>
         <module>modules/global-tagging</module>

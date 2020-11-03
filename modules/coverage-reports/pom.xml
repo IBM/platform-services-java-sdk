@@ -50,6 +50,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>enterprise-usage-reports</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>global-catalog</artifactId>
             <version>${project.version}</version>
         </dependency>

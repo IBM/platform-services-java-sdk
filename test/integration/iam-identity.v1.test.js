@@ -557,7 +557,9 @@ describe('IamIdentityV1_integration', () => {
 function getPageTokenFromURL(urlstring) {
   let pageToken = null;
   if (urlstring) {
-    const url = new URL(urlstring);
+    // We use a bogus "baseurl" in case "urlstring" is a relative url.
+    // This is fine since we're only trying to retrieve the "offset" query parameter.
+    const url = new URL(urlstring, 'https://fakehost.com');
     pageToken = url.searchParams.get('pagetoken');
   }
   return pageToken;

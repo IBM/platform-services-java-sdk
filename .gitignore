@@ -10,6 +10,7 @@ case-management/*.js
 catalog-management/*.js
 configuration-governance/*.js
 enterprise-management/*.js
+enterprise-usage-reports/*.js
 global-catalog/*.js
 global-search/*.js
 global-tagging/*.js
@@ -19,7 +20,6 @@ iam-policy-management/*.js
 open-service-broker/*.js
 resource-manager/*.js
 resource-controller/*.js
-usage-metering/*.js
 usage-reports/*.js
 user-management/*.js
 

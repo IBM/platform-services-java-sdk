@@ -7,6 +7,7 @@
     ./catalog-management/v1.ts \
     ./configuration-governance/v1.ts \
     ./enterprise-management/v1.ts \
+    ./enterprise-usage-reports/v1.ts \
     ./global-catalog/v1.ts \
     ./global-search/v2.ts \
     ./global-tagging/v1.ts \

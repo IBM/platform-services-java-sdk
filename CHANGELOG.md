@@ -1,3 +1,10 @@
+# [0.15.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.14.0...v0.15.0) (2020-11-04)
+
+
+### Features
+
+* **Enterprise Usage Reports:** add service to project ([5e93384](https://github.com/IBM/platform-services-node-sdk/commit/5e933847a2c8956df2bc5df92b5cd02401f6ef0c))
+
 # [0.14.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.13.2...v0.14.0) (2020-10-31)
 
 

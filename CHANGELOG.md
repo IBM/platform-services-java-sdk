@@ -1,3 +1,10 @@
+## [0.15.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.0...v0.15.1) (2020-11-11)
+
+
+### Bug Fixes
+
+* **Configuration Governance:** update service after API changes ([09ff19a](https://github.com/IBM/platform-services-node-sdk/commit/09ff19a2b9acaeb90271be70709a130b666d1ac6))
+
 # [0.15.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.14.0...v0.15.0) (2020-11-04)
 
 

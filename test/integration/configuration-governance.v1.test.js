@@ -611,6 +611,7 @@ describe('ConfigurationGovernanceV1_integration', () => {
     const params = {
       ruleId: ruleId1,
       attachmentId: attachmentId1,
+      transactionId: transactionId,
     };
 
     configurationGovernanceService
@@ -653,6 +654,7 @@ describe('ConfigurationGovernanceV1_integration', () => {
     const params = {
       ruleId: ruleId1,
       attachmentId: 'BOGUS_ID',
+      transactionId: transactionId,
     };
 
     configurationGovernanceService
@@ -882,6 +884,7 @@ async function cleanRules(label, done) {
       labels: label,
       limit: 1000,
       offset: 0,
+      transactionId: transactionId,
     };
 
     const res = await configurationGovernanceService.listRules(params);
@@ -897,6 +900,7 @@ async function cleanRules(label, done) {
       for (const rule of ruleListResult.rules) {
         const deleteRuleParams = {
           ruleId: rule.rule_id,
+          transactionId: transactionId,
         };
 
         log(`Deleting rule: name=${rule.name} id=${rule.rule_id}`);
@@ -1035,6 +1039,7 @@ async function getAttachment(ruleId, attachmentId) {
     const params = {
       ruleId: ruleId,
       attachmentId: attachmentId,
+      transactionId: transactionId,
     };
 
     const res = await configurationGovernanceService.getAttachment(params);

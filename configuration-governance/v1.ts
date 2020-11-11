@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-af92e433-20201110-100619
  */
  
 
@@ -100,19 +100,19 @@ class ConfigurationGovernanceV1 extends BaseService {
    * that you specify. The response returns the ID value for your rule, along with other metadata.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {CreateRuleRequest[]} params.rules - A list of rules to be created.
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
    * this field, the service generates and sends a transaction ID in the
    * `trace` field of the response body.
    *
    * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
    * with each request.
+   * @param {CreateRuleRequest[]} params.rules - A list of rules to be created.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateRulesResponse>>}
    */
   public createRules(params: ConfigurationGovernanceV1.CreateRulesParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateRulesResponse>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['rules'];
+    const requiredParams = ['transactionId', 'rules'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -149,13 +149,13 @@ class ConfigurationGovernanceV1 extends BaseService {
    * Retrieves a list of the rules that are available in your account.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - Your IBM Cloud account ID.
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
    * this field, the service generates and sends a transaction ID in the
    * `trace` field of the response body.
    *
    * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
    * with each request.
+   * @param {string} params.accountId - Your IBM Cloud account ID.
    * @param {boolean} [params.attached] - Retrieves a list of rules that have scope attachments.
    * @param {string} [params.labels] - Retrieves a list of rules that match the labels that you specify.
    * @param {string} [params.scopes] - Retrieves a list of rules that match the scope ID that you specify.
@@ -175,7 +175,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    */
   public listRules(params: ConfigurationGovernanceV1.ListRulesParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.RuleList>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['accountId'];
+    const requiredParams = ['transactionId', 'accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -217,7 +217,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.ruleId - The UUID that uniquely identifies the rule.
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
    * this field, the service generates and sends a transaction ID in the
    * `trace` field of the response body.
    *
@@ -228,7 +228,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    */
   public getRule(params: ConfigurationGovernanceV1.GetRuleParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Rule>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['ruleId'];
+    const requiredParams = ['ruleId', 'transactionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -265,6 +265,12 @@ class ConfigurationGovernanceV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.ruleId - The UUID that uniquely identifies the rule.
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
+   * this field, the service generates and sends a transaction ID in the
+   * `trace` field of the response body.
+   *
+   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+   * with each request.
    * @param {string} params.ifMatch - Compares a supplied `Etag` value with the version that is stored for the requested
    * resource. If the values match, the server allows the request method to continue.
    *
@@ -281,18 +287,12 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {string} [params.ruleType] - The type of rule. Rules that you create are `user_defined`.
    * @param {string[]} [params.labels] - Labels that you can use to group and search for similar rules, such as those
    * that help you to meet a specific organization guideline.
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
-   * this field, the service generates and sends a transaction ID in the
-   * `trace` field of the response body.
-   *
-   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
-   * with each request.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Rule>>}
    */
   public updateRule(params: ConfigurationGovernanceV1.UpdateRuleParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Rule>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['ruleId', 'ifMatch', 'name', 'description', 'target', 'requiredConfig', 'enforcementActions'];
+    const requiredParams = ['ruleId', 'transactionId', 'ifMatch', 'name', 'description', 'target', 'requiredConfig', 'enforcementActions'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -327,8 +327,8 @@ class ConfigurationGovernanceV1 extends BaseService {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'If-Match': _params.ifMatch,
-          'Transaction-Id': _params.transactionId
+          'Transaction-Id': _params.transactionId,
+          'If-Match': _params.ifMatch
         }, _params.headers),
       }),
     };
@@ -343,7 +343,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.ruleId - The UUID that uniquely identifies the rule.
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
    * this field, the service generates and sends a transaction ID in the
    * `trace` field of the response body.
    *
@@ -354,7 +354,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    */
   public deleteRule(params: ConfigurationGovernanceV1.DeleteRuleParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Empty>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['ruleId'];
+    const requiredParams = ['ruleId', 'transactionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -394,19 +394,19 @@ class ConfigurationGovernanceV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.ruleId - The UUID that uniquely identifies the rule.
-   * @param {AttachmentRequest[]} params.attachments -
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
    * this field, the service generates and sends a transaction ID in the
    * `trace` field of the response body.
    *
    * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
    * with each request.
+   * @param {AttachmentRequest[]} params.attachments -
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateAttachmentsResponse>>}
    */
   public createAttachments(params: ConfigurationGovernanceV1.CreateAttachmentsParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateAttachmentsResponse>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['ruleId', 'attachments'];
+    const requiredParams = ['ruleId', 'transactionId', 'attachments'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -449,7 +449,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.ruleId - The UUID that uniquely identifies the rule.
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
    * this field, the service generates and sends a transaction ID in the
    * `trace` field of the response body.
    *
@@ -471,7 +471,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    */
   public listAttachments(params: ConfigurationGovernanceV1.ListAttachmentsParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.AttachmentList>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['ruleId'];
+    const requiredParams = ['ruleId', 'transactionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -515,7 +515,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.ruleId - The UUID that uniquely identifies the rule.
    * @param {string} params.attachmentId - The UUID that uniquely identifies the attachment.
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
    * this field, the service generates and sends a transaction ID in the
    * `trace` field of the response body.
    *
@@ -526,7 +526,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    */
   public getAttachment(params: ConfigurationGovernanceV1.GetAttachmentParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Attachment>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['ruleId', 'attachmentId'];
+    const requiredParams = ['ruleId', 'attachmentId', 'transactionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -565,6 +565,12 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.ruleId - The UUID that uniquely identifies the rule.
    * @param {string} params.attachmentId - The UUID that uniquely identifies the attachment.
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
+   * this field, the service generates and sends a transaction ID in the
+   * `trace` field of the response body.
+   *
+   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+   * with each request.
    * @param {string} params.ifMatch - Compares a supplied `Etag` value with the version that is stored for the requested
    * resource. If the values match, the server allows the request method to continue.
    *
@@ -574,18 +580,12 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {RuleScope} params.includedScope - The extent at which the rule can be attached across your accounts.
    * @param {RuleScope[]} [params.excludedScopes] - The extent at which the rule can be excluded from the included
    * scope.
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
-   * this field, the service generates and sends a transaction ID in the
-   * `trace` field of the response body.
-   *
-   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
-   * with each request.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Attachment>>}
    */
   public updateAttachment(params: ConfigurationGovernanceV1.UpdateAttachmentParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Attachment>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['ruleId', 'attachmentId', 'ifMatch', 'accountId', 'includedScope'];
+    const requiredParams = ['ruleId', 'attachmentId', 'transactionId', 'ifMatch', 'accountId', 'includedScope'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -616,8 +616,8 @@ class ConfigurationGovernanceV1 extends BaseService {
         headers: extend(true, sdkHeaders, {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'If-Match': _params.ifMatch,
-          'Transaction-Id': _params.transactionId
+          'Transaction-Id': _params.transactionId,
+          'If-Match': _params.ifMatch
         }, _params.headers),
       }),
     };
@@ -633,7 +633,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.ruleId - The UUID that uniquely identifies the rule.
    * @param {string} params.attachmentId - The UUID that uniquely identifies the attachment.
-   * @param {string} [params.transactionId] - The unique identifier that is used to trace an entire request. If you omit
+   * @param {string} params.transactionId - The unique identifier that is used to trace an entire request. If you omit
    * this field, the service generates and sends a transaction ID in the
    * `trace` field of the response body.
    *
@@ -644,7 +644,7 @@ class ConfigurationGovernanceV1 extends BaseService {
    */
   public deleteAttachment(params: ConfigurationGovernanceV1.DeleteAttachmentParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Empty>> {
     const _params = Object.assign({}, params);
-    const requiredParams = ['ruleId', 'attachmentId'];
+    const requiredParams = ['ruleId', 'attachmentId', 'transactionId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -707,8 +707,6 @@ namespace ConfigurationGovernanceV1 {
 
   /** Parameters for the `createRules` operation. */
   export interface CreateRulesParams {
-    /** A list of rules to be created. */
-    rules: CreateRuleRequest[];
     /** The unique identifier that is used to trace an entire request. If you omit this field, the service generates
      *  and sends a transaction ID in the
      *  `trace` field of the response body.
@@ -716,14 +714,14 @@ namespace ConfigurationGovernanceV1 {
      *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
      *  `Transaction-Id` with each request.
      */
-    transactionId?: string;
+    transactionId: string;
+    /** A list of rules to be created. */
+    rules: CreateRuleRequest[];
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listRules` operation. */
   export interface ListRulesParams {
-    /** Your IBM Cloud account ID. */
-    accountId: string;
     /** The unique identifier that is used to trace an entire request. If you omit this field, the service generates
      *  and sends a transaction ID in the
      *  `trace` field of the response body.
@@ -731,7 +729,9 @@ namespace ConfigurationGovernanceV1 {
      *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
      *  `Transaction-Id` with each request.
      */
-    transactionId?: string;
+    transactionId: string;
+    /** Your IBM Cloud account ID. */
+    accountId: string;
     /** Retrieves a list of rules that have scope attachments. */
     attached?: boolean;
     /** Retrieves a list of rules that match the labels that you specify. */
@@ -766,7 +766,7 @@ namespace ConfigurationGovernanceV1 {
      *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
      *  `Transaction-Id` with each request.
      */
-    transactionId?: string;
+    transactionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -774,6 +774,14 @@ namespace ConfigurationGovernanceV1 {
   export interface UpdateRuleParams {
     /** The UUID that uniquely identifies the rule. */
     ruleId: string;
+    /** The unique identifier that is used to trace an entire request. If you omit this field, the service generates
+     *  and sends a transaction ID in the
+     *  `trace` field of the response body.
+     *
+     *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
+     *  `Transaction-Id` with each request.
+     */
+    transactionId: string;
     /** Compares a supplied `Etag` value with the version that is stored for the requested resource. If the values
      *  match, the server allows the request method to continue.
      *
@@ -785,7 +793,7 @@ namespace ConfigurationGovernanceV1 {
     name: string;
     /** An extended description of your rule. */
     description: string;
-    /** The properties that describe the resource that you want to target  with the rule. */
+    /** The properties that describe the resource that you want to target with the rule. */
     target: TargetResource;
     requiredConfig: RuleRequiredConfig;
     /** The actions that the service must run on your behalf when a request to create or modify the target resource
@@ -800,14 +808,6 @@ namespace ConfigurationGovernanceV1 {
      *  specific organization guideline.
      */
     labels?: string[];
-    /** The unique identifier that is used to trace an entire request. If you omit this field, the service generates
-     *  and sends a transaction ID in the
-     *  `trace` field of the response body.
-     *
-     *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
-     *  `Transaction-Id` with each request.
-     */
-    transactionId?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -830,7 +830,7 @@ namespace ConfigurationGovernanceV1 {
      *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
      *  `Transaction-Id` with each request.
      */
-    transactionId?: string;
+    transactionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -838,7 +838,6 @@ namespace ConfigurationGovernanceV1 {
   export interface CreateAttachmentsParams {
     /** The UUID that uniquely identifies the rule. */
     ruleId: string;
-    attachments: AttachmentRequest[];
     /** The unique identifier that is used to trace an entire request. If you omit this field, the service generates
      *  and sends a transaction ID in the
      *  `trace` field of the response body.
@@ -846,7 +845,8 @@ namespace ConfigurationGovernanceV1 {
      *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
      *  `Transaction-Id` with each request.
      */
-    transactionId?: string;
+    transactionId: string;
+    attachments: AttachmentRequest[];
     headers?: OutgoingHttpHeaders;
   }
 
@@ -861,7 +861,7 @@ namespace ConfigurationGovernanceV1 {
      *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
      *  `Transaction-Id` with each request.
      */
-    transactionId?: string;
+    transactionId: string;
     /** The number of resources to retrieve. By default, list operations return the first 100 items. To retrieve a
      *  different set of items, use `limit` with `offset` to page through your available resources.
      *
@@ -892,7 +892,7 @@ namespace ConfigurationGovernanceV1 {
      *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
      *  `Transaction-Id` with each request.
      */
-    transactionId?: string;
+    transactionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -902,6 +902,14 @@ namespace ConfigurationGovernanceV1 {
     ruleId: string;
     /** The UUID that uniquely identifies the attachment. */
     attachmentId: string;
+    /** The unique identifier that is used to trace an entire request. If you omit this field, the service generates
+     *  and sends a transaction ID in the
+     *  `trace` field of the response body.
+     *
+     *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
+     *  `Transaction-Id` with each request.
+     */
+    transactionId: string;
     /** Compares a supplied `Etag` value with the version that is stored for the requested resource. If the values
      *  match, the server allows the request method to continue.
      *
@@ -915,14 +923,6 @@ namespace ConfigurationGovernanceV1 {
     includedScope: RuleScope;
     /** The extent at which the rule can be excluded from the included scope. */
     excludedScopes?: RuleScope[];
-    /** The unique identifier that is used to trace an entire request. If you omit this field, the service generates
-     *  and sends a transaction ID in the
-     *  `trace` field of the response body.
-     *
-     *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
-     *  `Transaction-Id` with each request.
-     */
-    transactionId?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -939,7 +939,7 @@ namespace ConfigurationGovernanceV1 {
      *  **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a
      *  `Transaction-Id` with each request.
      */
-    transactionId?: string;
+    transactionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1041,7 +1041,7 @@ namespace ConfigurationGovernanceV1 {
 
   /** EnforcementAction. */
   export interface EnforcementAction {
-    /** To block a request from completing, use `disallow`. To log the  request to Activity Tracker with LogDNA, use
+    /** To block a request from completing, use `disallow`. To log the request to Activity Tracker with LogDNA, use
      *  `audit_log`.
      */
     action: string;
@@ -1063,7 +1063,7 @@ namespace ConfigurationGovernanceV1 {
     description: string;
     /** The type of rule. Rules that you create are `user_defined`. */
     rule_type?: string;
-    /** The properties that describe the resource that you want to target  with the rule. */
+    /** The properties that describe the resource that you want to target with the rule. */
     target: TargetResource;
     required_config: RuleRequiredConfig;
     /** The actions that the service must run on your behalf when a request to create or modify the target resource
@@ -1118,7 +1118,7 @@ namespace ConfigurationGovernanceV1 {
     description: string;
     /** The type of rule. Rules that you create are `user_defined`. */
     rule_type?: string;
-    /** The properties that describe the resource that you want to target  with the rule. */
+    /** The properties that describe the resource that you want to target with the rule. */
     target: TargetResource;
     required_config: RuleRequiredConfig;
     /** The actions that the service must run on your behalf when a request to create or modify the target resource
@@ -1158,8 +1158,7 @@ namespace ConfigurationGovernanceV1 {
     description?: string;
     /** A resource configuration variable that describes the property that you want to apply to the target resource.
      *
-     *  Available options depend on the target service and resource. Currently,
-     *  `public_access_enabled` is supported.
+     *  Available options depend on the target service and resource.
      */
     property: string;
     /** The way in which the `property` field is compared to its value.
@@ -1191,16 +1190,14 @@ namespace ConfigurationGovernanceV1 {
     value?: string;
   }
 
-  /** The properties that describe the resource that you want to target  with the rule. */
+  /** The properties that describe the resource that you want to target with the rule. */
   export interface TargetResource {
-    /** The programmatic name of the IBM Cloud service that you want to  target with the rule. Currently,
-     *  `iam-groups` is supported.
-     */
+    /** The programmatic name of the IBM Cloud service that you want to target with the rule. */
     service_name: string;
     /** The type of resource that you want to target. */
     resource_kind: string;
-    /** An extra qualifier for the resource kind. When you include  additional attributes, only the resources that
-     *  match the             definition are included in the rule.
+    /** An extra qualifier for the resource kind. When you include additional attributes, only the resources that
+     *  match the definition are included in the rule.
      */
     additional_target_attributes?: RuleTargetAttribute[];
   }
@@ -1222,8 +1219,7 @@ namespace ConfigurationGovernanceV1 {
     description?: string;
     /** A resource configuration variable that describes the property that you want to apply to the target resource.
      *
-     *  Available options depend on the target service and resource. Currently,
-     *  `public_access_enabled` is supported.
+     *  Available options depend on the target service and resource.
      */
     property: string;
     /** The way in which the `property` field is compared to its value.
@@ -1248,8 +1244,7 @@ namespace ConfigurationGovernanceV1 {
     description?: string;
     /** A resource configuration variable that describes the property that you want to apply to the target resource.
      *
-     *  Available options depend on the target service and resource. Currently,
-     *  `public_access_enabled` is supported.
+     *  Available options depend on the target service and resource.
      */
     property: string;
     /** The way in which the `property` field is compared to its value.

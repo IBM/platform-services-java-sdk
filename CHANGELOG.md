@@ -1,3 +1,10 @@
+## [0.15.1](https://github.com/IBM/platform-services-java-sdk/compare/0.15.0...0.15.1) (2020-11-11)
+
+
+### Bug Fixes
+
+* **Configuration Governance:** update service after API changes ([62a5390](https://github.com/IBM/platform-services-java-sdk/commit/62a5390d710bfa8859e9e3eca3c1ab8ea66f8511))
+
 # [0.15.0](https://github.com/IBM/platform-services-java-sdk/compare/0.14.0...0.15.0) (2020-11-04)
 
 

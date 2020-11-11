@@ -46,19 +46,19 @@ public class UpdateAttachmentOptionsTest {
     UpdateAttachmentOptions updateAttachmentOptionsModel = new UpdateAttachmentOptions.Builder()
       .ruleId("testString")
       .attachmentId("testString")
+      .transactionId("testString")
       .ifMatch("testString")
       .accountId("testString")
       .includedScope(ruleScopeModel)
       .excludedScopes(new java.util.ArrayList<RuleScope>(java.util.Arrays.asList(ruleScopeModel)))
-      .transactionId("testString")
       .build();
     assertEquals(updateAttachmentOptionsModel.ruleId(), "testString");
     assertEquals(updateAttachmentOptionsModel.attachmentId(), "testString");
+    assertEquals(updateAttachmentOptionsModel.transactionId(), "testString");
     assertEquals(updateAttachmentOptionsModel.ifMatch(), "testString");
     assertEquals(updateAttachmentOptionsModel.accountId(), "testString");
     assertEquals(updateAttachmentOptionsModel.includedScope(), ruleScopeModel);
     assertEquals(updateAttachmentOptionsModel.excludedScopes(), new java.util.ArrayList<RuleScope>(java.util.Arrays.asList(ruleScopeModel)));
-    assertEquals(updateAttachmentOptionsModel.transactionId(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

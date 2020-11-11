@@ -56,6 +56,10 @@ public class RuleSingleProperty extends GenericModel {
     String NUM_GREATER_THAN = "num_greater_than";
     /** num_greater_than_equals. */
     String NUM_GREATER_THAN_EQUALS = "num_greater_than_equals";
+    /** ips_in_range. */
+    String IPS_IN_RANGE = "ips_in_range";
+    /** strings_in_list. */
+    String STRINGS_IN_LIST = "strings_in_list";
   }
 
   protected String description;
@@ -184,8 +188,7 @@ public class RuleSingleProperty extends GenericModel {
    *
    * A resource configuration variable that describes the property that you want to apply to the target resource.
    *
-   * Available options depend on the target service and resource. Currently,
-   * `public_access_enabled` is supported.
+   * Available options depend on the target service and resource.
    *
    * @return the property
    */

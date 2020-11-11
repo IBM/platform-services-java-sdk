@@ -55,12 +55,12 @@ public class CreateAttachmentsOptionsTest {
 
     CreateAttachmentsOptions createAttachmentsOptionsModel = new CreateAttachmentsOptions.Builder()
       .ruleId("testString")
-      .attachments(new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)))
       .transactionId("testString")
+      .attachments(new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)))
       .build();
     assertEquals(createAttachmentsOptionsModel.ruleId(), "testString");
-    assertEquals(createAttachmentsOptionsModel.attachments(), new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)));
     assertEquals(createAttachmentsOptionsModel.transactionId(), "testString");
+    assertEquals(createAttachmentsOptionsModel.attachments(), new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

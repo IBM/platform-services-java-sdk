@@ -44,9 +44,11 @@ public class DeleteRuleOptions extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param ruleId the ruleId
+     * @param transactionId the transactionId
      */
-    public Builder(String ruleId) {
+    public Builder(String ruleId, String transactionId) {
       this.ruleId = ruleId;
+      this.transactionId = transactionId;
     }
 
     /**
@@ -84,6 +86,8 @@ public class DeleteRuleOptions extends GenericModel {
   protected DeleteRuleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.ruleId,
       "ruleId cannot be empty");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
+      "transactionId cannot be null");
     ruleId = builder.ruleId;
     transactionId = builder.transactionId;
   }

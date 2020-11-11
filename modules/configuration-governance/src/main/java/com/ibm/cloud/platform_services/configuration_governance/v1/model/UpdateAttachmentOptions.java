@@ -24,11 +24,11 @@ public class UpdateAttachmentOptions extends GenericModel {
 
   protected String ruleId;
   protected String attachmentId;
+  protected String transactionId;
   protected String ifMatch;
   protected String accountId;
   protected RuleScope includedScope;
   protected List<RuleScope> excludedScopes;
-  protected String transactionId;
 
   /**
    * Builder.
@@ -36,20 +36,20 @@ public class UpdateAttachmentOptions extends GenericModel {
   public static class Builder {
     private String ruleId;
     private String attachmentId;
+    private String transactionId;
     private String ifMatch;
     private String accountId;
     private RuleScope includedScope;
     private List<RuleScope> excludedScopes;
-    private String transactionId;
 
     private Builder(UpdateAttachmentOptions updateAttachmentOptions) {
       this.ruleId = updateAttachmentOptions.ruleId;
       this.attachmentId = updateAttachmentOptions.attachmentId;
+      this.transactionId = updateAttachmentOptions.transactionId;
       this.ifMatch = updateAttachmentOptions.ifMatch;
       this.accountId = updateAttachmentOptions.accountId;
       this.includedScope = updateAttachmentOptions.includedScope;
       this.excludedScopes = updateAttachmentOptions.excludedScopes;
-      this.transactionId = updateAttachmentOptions.transactionId;
     }
 
     /**
@@ -63,13 +63,15 @@ public class UpdateAttachmentOptions extends GenericModel {
      *
      * @param ruleId the ruleId
      * @param attachmentId the attachmentId
+     * @param transactionId the transactionId
      * @param ifMatch the ifMatch
      * @param accountId the accountId
      * @param includedScope the includedScope
      */
-    public Builder(String ruleId, String attachmentId, String ifMatch, String accountId, RuleScope includedScope) {
+    public Builder(String ruleId, String attachmentId, String transactionId, String ifMatch, String accountId, RuleScope includedScope) {
       this.ruleId = ruleId;
       this.attachmentId = attachmentId;
+      this.transactionId = transactionId;
       this.ifMatch = ifMatch;
       this.accountId = accountId;
       this.includedScope = includedScope;
@@ -123,6 +125,17 @@ public class UpdateAttachmentOptions extends GenericModel {
     }
 
     /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the UpdateAttachmentOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
      * Set the ifMatch.
      *
      * @param ifMatch the ifMatch
@@ -166,17 +179,6 @@ public class UpdateAttachmentOptions extends GenericModel {
       this.excludedScopes = excludedScopes;
       return this;
     }
-
-    /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the UpdateAttachmentOptions builder
-     */
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
   }
 
   protected UpdateAttachmentOptions(Builder builder) {
@@ -184,6 +186,8 @@ public class UpdateAttachmentOptions extends GenericModel {
       "ruleId cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.attachmentId,
       "attachmentId cannot be empty");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
+      "transactionId cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ifMatch,
       "ifMatch cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,
@@ -192,11 +196,11 @@ public class UpdateAttachmentOptions extends GenericModel {
       "includedScope cannot be null");
     ruleId = builder.ruleId;
     attachmentId = builder.attachmentId;
+    transactionId = builder.transactionId;
     ifMatch = builder.ifMatch;
     accountId = builder.accountId;
     includedScope = builder.includedScope;
     excludedScopes = builder.excludedScopes;
-    transactionId = builder.transactionId;
   }
 
   /**
@@ -228,6 +232,22 @@ public class UpdateAttachmentOptions extends GenericModel {
    */
   public String attachmentId() {
     return attachmentId;
+  }
+
+  /**
+   * Gets the transactionId.
+   *
+   * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+   * sends a transaction ID in the
+   * `trace` field of the response body.
+   *
+   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+   * with each request.
+   *
+   * @return the transactionId
+   */
+  public String transactionId() {
+    return transactionId;
   }
 
   /**
@@ -276,22 +296,6 @@ public class UpdateAttachmentOptions extends GenericModel {
    */
   public List<RuleScope> excludedScopes() {
     return excludedScopes;
-  }
-
-  /**
-   * Gets the transactionId.
-   *
-   * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
-   * sends a transaction ID in the
-   * `trace` field of the response body.
-   *
-   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
-   * with each request.
-   *
-   * @return the transactionId
-   */
-  public String transactionId() {
-    return transactionId;
   }
 }
 

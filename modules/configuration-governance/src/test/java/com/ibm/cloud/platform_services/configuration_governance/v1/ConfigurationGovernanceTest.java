@@ -117,7 +117,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   @Test
   public void testCreateRulesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rules\": [{\"request_id\": \"3cebc877-58e7-44a5-a292-32114fa73558\", \"status_code\": 201, \"rule\": {\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}, \"errors\": [{\"code\": \"bad_request\", \"message\": \"The rule is missing an account ID\"}], \"trace\": \"861263b4-cee3-4514-8d8c-05d17308e6eb\"}]}";
+    String mockResponseBody = "{\"rules\": [{\"request_id\": \"3cebc877-58e7-44a5-a292-32114fa73558\", \"status_code\": 201, \"rule\": {\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"modification_date\": \"2019-01-01T12:00:00\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}, \"errors\": [{\"code\": \"bad_request\", \"message\": \"The rule is missing an account ID\"}], \"trace\": \"861263b4-cee3-4514-8d8c-05d17308e6eb\"}]}";
     String createRulesPath = "/config/v1/rules";
 
     server.enqueue(new MockResponse()
@@ -180,8 +180,8 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the CreateRulesOptions model
     CreateRulesOptions createRulesOptionsModel = new CreateRulesOptions.Builder()
-    .rules(new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)))
     .transactionId("testString")
+    .rules(new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -194,6 +194,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "POST");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -219,7 +220,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   @Test
   public void testListRulesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 1000, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"rules\": [{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}]}";
+    String mockResponseBody = "{\"offset\": 6, \"limit\": 1000, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"rules\": [{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"modification_date\": \"2019-01-01T12:00:00\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}]}";
     String listRulesPath = "/config/v1/rules";
 
     server.enqueue(new MockResponse()
@@ -231,8 +232,8 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the ListRulesOptions model
     ListRulesOptions listRulesOptionsModel = new ListRulesOptions.Builder()
-    .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
     .transactionId("testString")
+    .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
     .attached(true)
     .labels("SOC2,ITCS300")
     .scopes("scope_id")
@@ -250,6 +251,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -281,7 +283,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   @Test
   public void testGetRuleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"modification_date\": \"2019-01-01T12:00:00\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
     String getRulePath = "/config/v1/rules/testString";
 
     server.enqueue(new MockResponse()
@@ -307,6 +309,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -332,7 +335,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
   @Test
   public void testUpdateRuleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2020-01-10T05:23:19+0000\", \"created_by\": \"createdBy\", \"modification_date\": \"modificationDate\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"rule_type\": \"user_defined\", \"target\": {\"service_name\": \"iam-groups\", \"resource_kind\": \"zone\", \"additional_target_attributes\": [{\"name\": \"name\", \"operator\": \"string_equals\", \"value\": \"value\"}]}, \"required_config\": {\"description\": \"description\", \"property\": \"public_access_enabled\", \"operator\": \"is_true\", \"value\": \"value\"}, \"enforcement_actions\": [{\"action\": \"audit_log\"}], \"labels\": [\"label\"], \"rule_id\": \"rule-81f3db5e-f9db-4c46-9de3-a4a76e66adbf\", \"creation_date\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"modification_date\": \"2019-01-01T12:00:00\", \"modified_by\": \"modifiedBy\", \"number_of_attachments\": 3}";
     String updateRulePath = "/config/v1/rules/testString";
 
     server.enqueue(new MockResponse()
@@ -372,6 +375,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     // Construct an instance of the UpdateRuleOptions model
     UpdateRuleOptions updateRuleOptionsModel = new UpdateRuleOptions.Builder()
     .ruleId("testString")
+    .transactionId("testString")
     .ifMatch("testString")
     .name("Disable public access")
     .description("Ensure that public access to account resources is disabled.")
@@ -381,7 +385,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
     .ruleType("user_defined")
     .labels(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .transactionId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -394,6 +397,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "PUT");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
     assertEquals(request.getHeader("If-Match"), "testString");
 
     // Check query
@@ -446,6 +450,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "DELETE");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -498,8 +503,8 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     // Construct an instance of the CreateAttachmentsOptions model
     CreateAttachmentsOptions createAttachmentsOptionsModel = new CreateAttachmentsOptions.Builder()
     .ruleId("testString")
-    .attachments(new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)))
     .transactionId("testString")
+    .attachments(new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -512,6 +517,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "POST");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -565,6 +571,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -619,6 +626,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -665,11 +673,11 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     UpdateAttachmentOptions updateAttachmentOptionsModel = new UpdateAttachmentOptions.Builder()
     .ruleId("testString")
     .attachmentId("testString")
+    .transactionId("testString")
     .ifMatch("testString")
     .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
     .includedScope(ruleScopeModel)
     .excludedScopes(new java.util.ArrayList<RuleScope>(java.util.Arrays.asList(ruleScopeModel)))
-    .transactionId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -682,6 +690,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "PUT");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
     assertEquals(request.getHeader("If-Match"), "testString");
 
     // Check query
@@ -735,6 +744,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "DELETE");
+    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);

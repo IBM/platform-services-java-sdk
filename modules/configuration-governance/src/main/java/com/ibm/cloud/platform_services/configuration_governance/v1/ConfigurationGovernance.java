@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-af92e433-20201110-100619
  */
 
 package com.ibm.cloud.platform_services.configuration_governance.v1;
@@ -114,9 +114,7 @@ public class ConfigurationGovernance extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (createRulesOptions.transactionId() != null) {
-      builder.header("Transaction-Id", createRulesOptions.transactionId());
-    }
+    builder.header("Transaction-Id", createRulesOptions.transactionId());
     final JsonObject contentJson = new JsonObject();
     contentJson.add("rules", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRulesOptions.rules()));
     builder.bodyJson(contentJson);
@@ -142,9 +140,7 @@ public class ConfigurationGovernance extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listRulesOptions.transactionId() != null) {
-      builder.header("Transaction-Id", listRulesOptions.transactionId());
-    }
+    builder.header("Transaction-Id", listRulesOptions.transactionId());
     builder.query("account_id", String.valueOf(listRulesOptions.accountId()));
     if (listRulesOptions.attached() != null) {
       builder.query("attached", String.valueOf(listRulesOptions.attached()));
@@ -185,9 +181,7 @@ public class ConfigurationGovernance extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (getRuleOptions.transactionId() != null) {
-      builder.header("Transaction-Id", getRuleOptions.transactionId());
-    }
+    builder.header("Transaction-Id", getRuleOptions.transactionId());
     ResponseConverter<Rule> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Rule>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -212,10 +206,8 @@ public class ConfigurationGovernance extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    builder.header("Transaction-Id", updateRuleOptions.transactionId());
     builder.header("If-Match", updateRuleOptions.ifMatch());
-    if (updateRuleOptions.transactionId() != null) {
-      builder.header("Transaction-Id", updateRuleOptions.transactionId());
-    }
     final JsonObject contentJson = new JsonObject();
     contentJson.addProperty("name", updateRuleOptions.name());
     contentJson.addProperty("description", updateRuleOptions.description());
@@ -255,9 +247,7 @@ public class ConfigurationGovernance extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    if (deleteRuleOptions.transactionId() != null) {
-      builder.header("Transaction-Id", deleteRuleOptions.transactionId());
-    }
+    builder.header("Transaction-Id", deleteRuleOptions.transactionId());
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -285,9 +275,7 @@ public class ConfigurationGovernance extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (createAttachmentsOptions.transactionId() != null) {
-      builder.header("Transaction-Id", createAttachmentsOptions.transactionId());
-    }
+    builder.header("Transaction-Id", createAttachmentsOptions.transactionId());
     final JsonObject contentJson = new JsonObject();
     contentJson.add("attachments", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createAttachmentsOptions.attachments()));
     builder.bodyJson(contentJson);
@@ -315,9 +303,7 @@ public class ConfigurationGovernance extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listAttachmentsOptions.transactionId() != null) {
-      builder.header("Transaction-Id", listAttachmentsOptions.transactionId());
-    }
+    builder.header("Transaction-Id", listAttachmentsOptions.transactionId());
     if (listAttachmentsOptions.limit() != null) {
       builder.query("limit", String.valueOf(listAttachmentsOptions.limit()));
     }
@@ -349,9 +335,7 @@ public class ConfigurationGovernance extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (getAttachmentOptions.transactionId() != null) {
-      builder.header("Transaction-Id", getAttachmentOptions.transactionId());
-    }
+    builder.header("Transaction-Id", getAttachmentOptions.transactionId());
     ResponseConverter<Attachment> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Attachment>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -377,10 +361,8 @@ public class ConfigurationGovernance extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    builder.header("Transaction-Id", updateAttachmentOptions.transactionId());
     builder.header("If-Match", updateAttachmentOptions.ifMatch());
-    if (updateAttachmentOptions.transactionId() != null) {
-      builder.header("Transaction-Id", updateAttachmentOptions.transactionId());
-    }
     final JsonObject contentJson = new JsonObject();
     contentJson.addProperty("account_id", updateAttachmentOptions.accountId());
     contentJson.add("included_scope", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateAttachmentOptions.includedScope()));
@@ -412,9 +394,7 @@ public class ConfigurationGovernance extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    if (deleteAttachmentOptions.transactionId() != null) {
-      builder.header("Transaction-Id", deleteAttachmentOptions.transactionId());
-    }
+    builder.header("Transaction-Id", deleteAttachmentOptions.transactionId());
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }

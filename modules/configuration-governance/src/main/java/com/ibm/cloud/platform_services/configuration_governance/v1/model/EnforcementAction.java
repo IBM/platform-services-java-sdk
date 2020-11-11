@@ -20,7 +20,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class EnforcementAction extends GenericModel {
 
   /**
-   * To block a request from completing, use `disallow`. To log the  request to Activity Tracker with LogDNA, use
+   * To block a request from completing, use `disallow`. To log the request to Activity Tracker with LogDNA, use
    * `audit_log`.
    */
   public interface Action {
@@ -96,7 +96,7 @@ public class EnforcementAction extends GenericModel {
   /**
    * Gets the action.
    *
-   * To block a request from completing, use `disallow`. To log the  request to Activity Tracker with LogDNA, use
+   * To block a request from completing, use `disallow`. To log the request to Activity Tracker with LogDNA, use
    * `audit_log`.
    *
    * @return the action

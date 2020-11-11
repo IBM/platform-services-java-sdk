@@ -631,6 +631,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             GetAttachmentOptions getAttachmentOptions = new GetAttachmentOptions.Builder()
                     .ruleId(ruleId1)
                     .attachmentId(attachmentId1)
+                    .transactionId(transactionId)
                     .build();
 
             Response<Attachment> response = service.getAttachment(getAttachmentOptions).execute();
@@ -667,6 +668,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             GetAttachmentOptions getAttachmentOptions = new GetAttachmentOptions.Builder()
                     .ruleId(ruleId1)
                     .attachmentId("BOGUS_ID")
+                    .transactionId(transactionId)
                     .build();
 
             service.getAttachment(getAttachmentOptions).execute();
@@ -881,6 +883,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             GetAttachmentOptions getAttachmentOptions = new GetAttachmentOptions.Builder()
                     .ruleId(ruleId)
                     .attachmentId(attachmentId)
+                    .transactionId(transactionId)
                     .build();
 
             Response<Attachment> response = service.getAttachment(getAttachmentOptions).execute();
@@ -910,6 +913,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                     .labels(label)
                     .offset(0)
                     .limit(1000)
+                    .transactionId(transactionId)
                     .build();
             Response<RuleList> response = service.listRules(listRulesOptions).execute();
             assertNotNull(response);
@@ -925,6 +929,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
                 for (Rule rule : ruleListResult.getRules()) {
                     DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
                             .ruleId(rule.getRuleId())
+                            .transactionId(transactionId)
                             .build();
 
                     log(String.format("Deleting rule: name='%s' id='%s'", rule.getName(), rule.getRuleId()));

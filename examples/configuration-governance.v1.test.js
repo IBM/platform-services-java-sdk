@@ -47,7 +47,7 @@ describe('ConfigurationGovernanceV1', () => {
 
   // end-common
 
-  // Globlal variables to hold link values
+  // Global variables to hold link values
   let attachmentEtag
   let attachmentId
   let ruleEtag

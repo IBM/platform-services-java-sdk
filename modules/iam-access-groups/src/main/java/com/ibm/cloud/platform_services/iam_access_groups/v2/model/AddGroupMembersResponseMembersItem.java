@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.iam_access_groups.v2.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -26,7 +27,7 @@ public class AddGroupMembersResponseMembersItem extends GenericModel {
   protected String iamId;
   protected String type;
   @SerializedName("created_at")
-  protected String createdAt;
+  protected Date createdAt;
   @SerializedName("created_by_id")
   protected String createdById;
   @SerializedName("status_code")
@@ -63,7 +64,7 @@ public class AddGroupMembersResponseMembersItem extends GenericModel {
    *
    * @return the createdAt
    */
-  public String getCreatedAt() {
+  public Date getCreatedAt() {
     return createdAt;
   }
 

@@ -12,6 +12,8 @@
  */
 package com.ibm.cloud.platform_services.iam_access_groups.v2.model;
 
+import java.util.Date;
+
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
@@ -23,7 +25,7 @@ public class AccountSettings extends GenericModel {
   @SerializedName("account_id")
   protected String accountId;
   @SerializedName("last_modified_at")
-  protected String lastModifiedAt;
+  protected Date lastModifiedAt;
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
   @SerializedName("public_access_enabled")
@@ -47,7 +49,7 @@ public class AccountSettings extends GenericModel {
    *
    * @return the lastModifiedAt
    */
-  public String getLastModifiedAt() {
+  public Date getLastModifiedAt() {
     return lastModifiedAt;
   }
 

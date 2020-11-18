@@ -1,3 +1,10 @@
+## [0.15.2](https://github.com/IBM/platform-services-java-sdk/compare/0.15.1...0.15.2) (2020-11-18)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** regen service and add examples ([cc8d2a0](https://github.com/IBM/platform-services-java-sdk/commit/cc8d2a01bb52b36bb3c56b7853841bb74f477f09))
+
 ## [0.15.1](https://github.com/IBM/platform-services-java-sdk/compare/0.15.0...0.15.1) (2020-11-11)
 
 

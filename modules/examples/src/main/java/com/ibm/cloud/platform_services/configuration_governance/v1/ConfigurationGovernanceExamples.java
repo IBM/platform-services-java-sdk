@@ -83,6 +83,8 @@ public class ConfigurationGovernanceExamples {
   private static Attachment attachmentToUpdateLink;
   private static String attachmentToUpdateEtagLink;
 
+  private static String transactionId = UUID.randomUUID().toString();
+
   static {
       System.setProperty("IBM_CREDENTIALS_FILE", "../../configuration_governance.env");
   }
@@ -131,7 +133,7 @@ public class ConfigurationGovernanceExamples {
         .build();
       CreateRulesOptions createRulesOptions = new CreateRulesOptions.Builder()
         .addRule(createRuleRequestModel)
-        .transactionId(UUID.randomUUID().toString())
+        .transactionId(transactionId)
         .build();
 
       Response<CreateRulesResponse> response = service.createRules(createRulesOptions).execute();
@@ -160,6 +162,7 @@ public class ConfigurationGovernanceExamples {
       ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
         .accountId(accountId)
         .labels("test_label")
+        .transactionId(transactionId)
         .build();
 
       RuleList result = service.listRules(listRulesOptions).execute().getResult();
@@ -174,6 +177,7 @@ public class ConfigurationGovernanceExamples {
       // begin-get_rule
       GetRuleOptions getRuleOptions = new GetRuleOptions.Builder()
         .ruleId(ruleIdLink)
+        .transactionId(transactionId)
         .build();
 
       Response<Rule> response = service.getRule(getRuleOptions).execute();
@@ -203,6 +207,7 @@ public class ConfigurationGovernanceExamples {
         .accountId(ruleToUpdateLink.getAccountId())
         .ruleType(ruleToUpdateLink.getRuleType())
         .labels(ruleToUpdateLink.getLabels())
+        .transactionId(transactionId)
         .build();
 
       Rule result = service.updateRule(updateRuleOptions).execute().getResult();
@@ -233,6 +238,7 @@ public class ConfigurationGovernanceExamples {
       CreateAttachmentsOptions createAttachmentsOptions = new CreateAttachmentsOptions.Builder()
         .ruleId(ruleIdLink)
         .addAttachment(attachmentRequestModel)
+        .transactionId(transactionId)
         .build();
 
       CreateAttachmentsResponse result = service.createAttachments(createAttachmentsOptions).execute().getResult();
@@ -250,6 +256,7 @@ public class ConfigurationGovernanceExamples {
       // begin-list_attachments
       ListAttachmentsOptions listAttachmentsOptions = new ListAttachmentsOptions.Builder()
         .ruleId(ruleIdLink)
+        .transactionId(transactionId)
         .build();
 
       AttachmentList result = service.listAttachments(listAttachmentsOptions).execute().getResult();
@@ -265,6 +272,7 @@ public class ConfigurationGovernanceExamples {
       GetAttachmentOptions getAttachmentOptions = new GetAttachmentOptions.Builder()
         .ruleId(ruleIdLink)
         .attachmentId(attachmentIdLink)
+        .transactionId(transactionId)
         .build();
 
       Response<Attachment> response = service.getAttachment(getAttachmentOptions).execute();
@@ -292,6 +300,7 @@ public class ConfigurationGovernanceExamples {
         .accountId(attachmentToUpdateLink.getAccountId())
         .includedScope(updatedIncludedScope)
         .excludedScopes(attachmentToUpdateLink.getExcludedScopes())
+        .transactionId(transactionId)
         .build();
 
       Attachment result = service.updateAttachment(updateAttachmentOptions).execute().getResult();
@@ -307,6 +316,7 @@ public class ConfigurationGovernanceExamples {
       DeleteAttachmentOptions deleteAttachmentOptions = new DeleteAttachmentOptions.Builder()
         .ruleId(ruleIdLink)
         .attachmentId(attachmentIdLink)
+        .transactionId(transactionId)
         .build();
 
       Response<Void> response = service.deleteAttachment(deleteAttachmentOptions).execute();
@@ -321,6 +331,7 @@ public class ConfigurationGovernanceExamples {
       // begin-delete_rule
       DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
         .ruleId(ruleIdLink)
+        .transactionId(transactionId)
         .build();
 
       Response<Void> response = service.deleteRule(deleteRuleOptions).execute();

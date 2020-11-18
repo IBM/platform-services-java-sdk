@@ -12,7 +12,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>platform-services-coverage-reports</artifactId>
-    <name>Platform Services Test Coverage Reports</name>
+    <name>IBM Cloud Platform Services Test Coverage Reports</name>
 
     <dependencies>
 	<!-- 
@@ -46,6 +46,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>enterprise-management</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>enterprise-usage-reports</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -91,6 +96,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>resource-manager</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>usage-reports</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -100,11 +100,11 @@ public class CreateRulesOptionsTest {
     assertEquals(createRuleRequestModel.rule(), ruleRequestModel);
 
     CreateRulesOptions createRulesOptionsModel = new CreateRulesOptions.Builder()
-      .rules(new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)))
       .transactionId("testString")
+      .rules(new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)))
       .build();
-    assertEquals(createRulesOptionsModel.rules(), new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)));
     assertEquals(createRulesOptionsModel.transactionId(), "testString");
+    assertEquals(createRulesOptionsModel.rules(), new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

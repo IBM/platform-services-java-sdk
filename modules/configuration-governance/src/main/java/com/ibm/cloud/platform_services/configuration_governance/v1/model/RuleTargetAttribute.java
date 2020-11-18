@@ -53,6 +53,10 @@ public class RuleTargetAttribute extends GenericModel {
     String IS_TRUE = "is_true";
     /** is_false. */
     String IS_FALSE = "is_false";
+    /** ips_in_range. */
+    String IPS_IN_RANGE = "ips_in_range";
+    /** strings_in_list. */
+    String STRINGS_IN_LIST = "strings_in_list";
   }
 
   protected String name;

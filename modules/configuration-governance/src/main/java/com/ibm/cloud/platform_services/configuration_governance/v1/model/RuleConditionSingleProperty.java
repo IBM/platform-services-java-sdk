@@ -54,6 +54,10 @@ public class RuleConditionSingleProperty extends RuleCondition {
     String NUM_GREATER_THAN = "num_greater_than";
     /** num_greater_than_equals. */
     String NUM_GREATER_THAN_EQUALS = "num_greater_than_equals";
+    /** ips_in_range. */
+    String IPS_IN_RANGE = "ips_in_range";
+    /** strings_in_list. */
+    String STRINGS_IN_LIST = "strings_in_list";
   }
 
 

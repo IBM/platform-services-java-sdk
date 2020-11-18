@@ -25,6 +25,7 @@ com.ibm.cloud:case-management
 com.ibm.cloud:catalog-management
 com.ibm.cloud:configuration-governance
 com.ibm.cloud:enterprise-management
+com.ibm.cloud:enterprise-usage-reports
 com.ibm.cloud:global-catalog
 com.ibm.cloud:global-search
 com.ibm.cloud:global-tagging
@@ -34,6 +35,7 @@ com.ibm.cloud:iam-policy-management
 com.ibm.cloud:open-service-broker
 com.ibm.cloud:resource-controller
 com.ibm.cloud:resource-manager
+com.ibm.cloud:usage-reports
 com.ibm.cloud:user-management"
 
 this_dir=`dirname "$0"`

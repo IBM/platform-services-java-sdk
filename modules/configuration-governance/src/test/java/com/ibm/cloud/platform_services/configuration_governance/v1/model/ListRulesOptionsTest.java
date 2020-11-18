@@ -32,16 +32,16 @@ public class ListRulesOptionsTest {
   @Test
   public void testListRulesOptions() throws Throwable {
     ListRulesOptions listRulesOptionsModel = new ListRulesOptions.Builder()
-      .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
       .transactionId("testString")
+      .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
       .attached(true)
       .labels("SOC2,ITCS300")
       .scopes("scope_id")
       .limit(Long.valueOf("1000"))
       .offset(Long.valueOf("26"))
       .build();
-    assertEquals(listRulesOptionsModel.accountId(), "531fc3e28bfc43c5a2cea07786d93f5c");
     assertEquals(listRulesOptionsModel.transactionId(), "testString");
+    assertEquals(listRulesOptionsModel.accountId(), "531fc3e28bfc43c5a2cea07786d93f5c");
     assertEquals(listRulesOptionsModel.attached(), Boolean.valueOf(true));
     assertEquals(listRulesOptionsModel.labels(), "SOC2,ITCS300");
     assertEquals(listRulesOptionsModel.scopes(), "scope_id");

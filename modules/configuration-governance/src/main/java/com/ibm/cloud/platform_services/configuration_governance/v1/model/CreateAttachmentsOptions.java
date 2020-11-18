@@ -23,21 +23,21 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class CreateAttachmentsOptions extends GenericModel {
 
   protected String ruleId;
-  protected List<AttachmentRequest> attachments;
   protected String transactionId;
+  protected List<AttachmentRequest> attachments;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String ruleId;
-    private List<AttachmentRequest> attachments;
     private String transactionId;
+    private List<AttachmentRequest> attachments;
 
     private Builder(CreateAttachmentsOptions createAttachmentsOptions) {
       this.ruleId = createAttachmentsOptions.ruleId;
-      this.attachments = createAttachmentsOptions.attachments;
       this.transactionId = createAttachmentsOptions.transactionId;
+      this.attachments = createAttachmentsOptions.attachments;
     }
 
     /**
@@ -50,10 +50,12 @@ public class CreateAttachmentsOptions extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param ruleId the ruleId
+     * @param transactionId the transactionId
      * @param attachments the attachments
      */
-    public Builder(String ruleId, List<AttachmentRequest> attachments) {
+    public Builder(String ruleId, String transactionId, List<AttachmentRequest> attachments) {
       this.ruleId = ruleId;
+      this.transactionId = transactionId;
       this.attachments = attachments;
     }
 
@@ -94,6 +96,17 @@ public class CreateAttachmentsOptions extends GenericModel {
     }
 
     /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the CreateAttachmentsOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
      * Set the attachments.
      * Existing attachments will be replaced.
      *
@@ -104,27 +117,18 @@ public class CreateAttachmentsOptions extends GenericModel {
       this.attachments = attachments;
       return this;
     }
-
-    /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the CreateAttachmentsOptions builder
-     */
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
   }
 
   protected CreateAttachmentsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.ruleId,
       "ruleId cannot be empty");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
+      "transactionId cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.attachments,
       "attachments cannot be null");
     ruleId = builder.ruleId;
-    attachments = builder.attachments;
     transactionId = builder.transactionId;
+    attachments = builder.attachments;
   }
 
   /**
@@ -148,15 +152,6 @@ public class CreateAttachmentsOptions extends GenericModel {
   }
 
   /**
-   * Gets the attachments.
-   *
-   * @return the attachments
-   */
-  public List<AttachmentRequest> attachments() {
-    return attachments;
-  }
-
-  /**
    * Gets the transactionId.
    *
    * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
@@ -170,6 +165,15 @@ public class CreateAttachmentsOptions extends GenericModel {
    */
   public String transactionId() {
     return transactionId;
+  }
+
+  /**
+   * Gets the attachments.
+   *
+   * @return the attachments
+   */
+  public List<AttachmentRequest> attachments() {
+    return attachments;
   }
 }
 

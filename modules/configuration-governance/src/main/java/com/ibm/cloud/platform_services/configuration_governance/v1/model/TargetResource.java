@@ -19,7 +19,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The properties that describe the resource that you want to target  with the rule.
+ * The properties that describe the resource that you want to target with the rule.
  */
 public class TargetResource extends GenericModel {
 
@@ -143,8 +143,7 @@ public class TargetResource extends GenericModel {
   /**
    * Gets the serviceName.
    *
-   * The programmatic name of the IBM Cloud service that you want to  target with the rule. Currently, `iam-groups` is
-   * supported.
+   * The programmatic name of the IBM Cloud service that you want to target with the rule.
    *
    * @return the serviceName
    */
@@ -166,8 +165,8 @@ public class TargetResource extends GenericModel {
   /**
    * Gets the additionalTargetAttributes.
    *
-   * An extra qualifier for the resource kind. When you include  additional attributes, only the resources that match
-   * the             definition are included in the rule.
+   * An extra qualifier for the resource kind. When you include additional attributes, only the resources that match the
+   * definition are included in the rule.
    *
    * @return the additionalTargetAttributes
    */

@@ -1,3 +1,31 @@
+## [0.15.2](https://github.com/IBM/platform-services-java-sdk/compare/0.15.1...0.15.2) (2020-11-18)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** regen service and add examples ([cc8d2a0](https://github.com/IBM/platform-services-java-sdk/commit/cc8d2a01bb52b36bb3c56b7853841bb74f477f09))
+
+## [0.15.1](https://github.com/IBM/platform-services-java-sdk/compare/0.15.0...0.15.1) (2020-11-11)
+
+
+### Bug Fixes
+
+* **Configuration Governance:** update service after API changes ([62a5390](https://github.com/IBM/platform-services-java-sdk/commit/62a5390d710bfa8859e9e3eca3c1ab8ea66f8511))
+
+# [0.15.0](https://github.com/IBM/platform-services-java-sdk/compare/0.14.0...0.15.0) (2020-11-04)
+
+
+### Features
+
+* **Enterprise Usage Reports:** add service to project ([87728d0](https://github.com/IBM/platform-services-java-sdk/commit/87728d03baa8bafb89d82686c5ac37321e49f2dc))
+
+# [0.14.0](https://github.com/IBM/platform-services-java-sdk/compare/0.13.2...0.14.0) (2020-10-31)
+
+
+### Features
+
+* **Usage Reports:** add service to project ([61e183a](https://github.com/IBM/platform-services-java-sdk/commit/61e183a13c65a3061068ac6ac8a69557cc54bae2))
+
 ## [0.13.2](https://github.com/IBM/platform-services-java-sdk/compare/0.13.1...0.13.2) (2020-10-30)
 
 

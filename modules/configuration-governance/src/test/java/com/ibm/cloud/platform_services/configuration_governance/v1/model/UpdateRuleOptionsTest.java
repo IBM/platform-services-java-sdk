@@ -73,6 +73,7 @@ public class UpdateRuleOptionsTest {
 
     UpdateRuleOptions updateRuleOptionsModel = new UpdateRuleOptions.Builder()
       .ruleId("testString")
+      .transactionId("testString")
       .ifMatch("testString")
       .name("testString")
       .description("testString")
@@ -82,9 +83,9 @@ public class UpdateRuleOptionsTest {
       .accountId("testString")
       .ruleType("user_defined")
       .labels(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .transactionId("testString")
       .build();
     assertEquals(updateRuleOptionsModel.ruleId(), "testString");
+    assertEquals(updateRuleOptionsModel.transactionId(), "testString");
     assertEquals(updateRuleOptionsModel.ifMatch(), "testString");
     assertEquals(updateRuleOptionsModel.name(), "testString");
     assertEquals(updateRuleOptionsModel.description(), "testString");
@@ -94,7 +95,6 @@ public class UpdateRuleOptionsTest {
     assertEquals(updateRuleOptionsModel.accountId(), "testString");
     assertEquals(updateRuleOptionsModel.ruleType(), "user_defined");
     assertEquals(updateRuleOptionsModel.labels(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
-    assertEquals(updateRuleOptionsModel.transactionId(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

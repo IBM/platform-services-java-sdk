@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- This is the version associated with the Java core. -->
-        <sdk-core-version>9.4.1</sdk-core-version>
+        <sdk-core-version>9.5.3</sdk-core-version>
 
         <testng-version>7.1.0</testng-version>
         <okhttp3-version>4.9.0</okhttp3-version>
@@ -51,6 +51,7 @@
         <module>modules/catalog-management</module>
         <module>modules/configuration-governance</module>
         <module>modules/enterprise-management</module>
+        <module>modules/enterprise-usage-reports</module>
         <module>modules/global-catalog</module>
         <module>modules/global-search</module>
         <module>modules/global-tagging</module>
@@ -60,6 +61,7 @@
         <module>modules/open-service-broker</module>
         <module>modules/resource-controller</module>
         <module>modules/resource-manager</module>
+        <module>modules/usage-reports</module>
         <module>modules/user-management</module>
 
         <module>modules/examples</module>

@@ -22,19 +22,19 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class CreateRulesOptions extends GenericModel {
 
-  protected List<CreateRuleRequest> rules;
   protected String transactionId;
+  protected List<CreateRuleRequest> rules;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private List<CreateRuleRequest> rules;
     private String transactionId;
+    private List<CreateRuleRequest> rules;
 
     private Builder(CreateRulesOptions createRulesOptions) {
-      this.rules = createRulesOptions.rules;
       this.transactionId = createRulesOptions.transactionId;
+      this.rules = createRulesOptions.rules;
     }
 
     /**
@@ -46,9 +46,11 @@ public class CreateRulesOptions extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
+     * @param transactionId the transactionId
      * @param rules the rules
      */
-    public Builder(List<CreateRuleRequest> rules) {
+    public Builder(String transactionId, List<CreateRuleRequest> rules) {
+      this.transactionId = transactionId;
       this.rules = rules;
     }
 
@@ -78,6 +80,17 @@ public class CreateRulesOptions extends GenericModel {
     }
 
     /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the CreateRulesOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
      * Set the rules.
      * Existing rules will be replaced.
      *
@@ -88,24 +101,15 @@ public class CreateRulesOptions extends GenericModel {
       this.rules = rules;
       return this;
     }
-
-    /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the CreateRulesOptions builder
-     */
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
   }
 
   protected CreateRulesOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
+      "transactionId cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.rules,
       "rules cannot be null");
-    rules = builder.rules;
     transactionId = builder.transactionId;
+    rules = builder.rules;
   }
 
   /**
@@ -115,17 +119,6 @@ public class CreateRulesOptions extends GenericModel {
    */
   public Builder newBuilder() {
     return new Builder(this);
-  }
-
-  /**
-   * Gets the rules.
-   *
-   * A list of rules to be created.
-   *
-   * @return the rules
-   */
-  public List<CreateRuleRequest> rules() {
-    return rules;
   }
 
   /**
@@ -142,6 +135,17 @@ public class CreateRulesOptions extends GenericModel {
    */
   public String transactionId() {
     return transactionId;
+  }
+
+  /**
+   * Gets the rules.
+   *
+   * A list of rules to be created.
+   *
+   * @return the rules
+   */
+  public List<CreateRuleRequest> rules() {
+    return rules;
   }
 }
 

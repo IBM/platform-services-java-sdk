@@ -1,3 +1,10 @@
+## [0.15.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.1...v0.15.2) (2020-11-18)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** update service and add examples ([773363c](https://github.com/IBM/platform-services-node-sdk/commit/773363c4bb91a2f47a8e327a155e475f9f09b2d3))
+
 ## [0.15.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.0...v0.15.1) (2020-11-11)
 
 

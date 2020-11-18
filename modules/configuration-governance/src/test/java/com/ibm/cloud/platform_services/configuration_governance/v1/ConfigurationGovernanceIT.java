@@ -62,6 +62,7 @@ import com.ibm.cloud.platform_services.configuration_governance.v1.model.UpdateA
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.UpdateRuleOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.exception.ForbiddenException;
 import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -73,7 +74,6 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
     public ConfigurationGovernance service = null;
     public ConfigurationGovernance serviceNoAccess = null;
     public static Map<String, String> config = null;
-    private boolean verbose = true;
 
     private final static String TEST_LABEL = "JavaSDKIntegrationTest";
 
@@ -105,11 +105,14 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
     private String attachmentEtag1;
     private String attachmentId2;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../configuration_governance.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     @BeforeClass
@@ -175,7 +178,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
 
             Response<CreateRulesResponse> response = service.createRules(createRulesOptions).execute();
             assertNotNull(response);
-            // log(String.format("Received response:\n%s", response.getResult().toString()));
+            log(String.format("createRules() response:\n%s", response.getResult().toString()));
             assertEquals(response.getStatusCode(), 201);
 
             CreateRulesResponse result = response.getResult();
@@ -208,7 +211,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             Response<CreateRulesResponse> response = service.createRules(createRulesOptions).execute();
 
             assertNotNull(response);
-            // log(String.format("Received response:\n%s\n", response.getResult().toString()));
+            log(String.format("createRules():\n%s\n", response.getResult().toString()));
             assertEquals(response.getStatusCode(), 201);
 
             CreateRulesResponse result = response.getResult();
@@ -244,7 +247,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             // return a 207 status code.
             Response<CreateRulesResponse> response = service.createRules(createRulesOptions).execute();
             assertNotNull(response);
-            // log(String.format("Received response:\n%s", response.getResult().toString()));
+            log(String.format("createRules() response:\n%s", response.getResult().toString()));
             assertEquals(response.getStatusCode(), 207);
 
             CreateRulesResponse result = response.getResult();
@@ -264,27 +267,19 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(expectedExceptions = {ForbiddenException.class})
     public void testCreateRuleNoAccess() throws Exception {
-        try {
-            CreateRuleRequest ruleRequest1 = new CreateRuleRequest.Builder()
-                    .requestId("request-1")
-                    .rule(sampleRule1)
-                    .build();
+        CreateRuleRequest ruleRequest1 = new CreateRuleRequest.Builder()
+                .requestId("request-1")
+                .rule(sampleRule1)
+                .build();
 
-            CreateRulesOptions createRulesOptions = new CreateRulesOptions.Builder()
-                    .rules(new ArrayList<>(Arrays.asList(ruleRequest1)))
-                    .transactionId(transactionId)
-                    .build();
+        CreateRulesOptions createRulesOptions = new CreateRulesOptions.Builder()
+                .rules(new ArrayList<>(Arrays.asList(ruleRequest1)))
+                .transactionId(transactionId)
+                .build();
 
-            serviceNoAccess.createRules(createRulesOptions).execute();
-            fail("Using a no-access apikey should not have succeeded!");
-        } catch (ServiceResponseException e) {
-            // log(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-            //        e.getMessage(), e.getDebuggingInfo()));
-            assertEquals(e.getStatusCode(), 403);
-            assertTrue(e.getMessage().contains("not authorized"));
-        }
+        serviceNoAccess.createRules(createRulesOptions).execute();
     }
 
     @Test(dependsOnMethods = { "testCreateRule1", "testCreateRule2" })
@@ -304,7 +299,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             RuleList result = response.getResult();
             assertNotNull(result);
 
-            // log(String.format("listRules() result:\n%s", ruleListResult.toString()));
+            log(String.format("listRules() result:\n%s", result.toString()));
             assertEquals(result.getTotalCount().longValue(), 2);
             assertEquals(result.getOffset().longValue(), 0);
             assertEquals(result.getLimit().longValue(), 1000);
@@ -316,25 +311,17 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(expectedExceptions = {ForbiddenException.class})
     public void testListRulesNoAccess() throws Exception {
-        try {
-            ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
-                    .accountId(ACCOUNT_ID)
-                    .labels(TEST_LABEL)
-                    .transactionId(transactionId)
-                    .limit(1000)
-                    .offset(0)
-                    .build();
+        ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
+                .accountId(ACCOUNT_ID)
+                .labels(TEST_LABEL)
+                .transactionId(transactionId)
+                .limit(1000)
+                .offset(0)
+                .build();
 
-            serviceNoAccess.listRules(listRulesOptions).execute();
-            fail("Using a no-access apikey should not have succeeded!");
-        } catch (ServiceResponseException e) {
-            // log(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-            //        e.getMessage(), e.getDebuggingInfo()));
-            assertEquals(e.getStatusCode(), 403);
-            assertTrue(e.getMessage().contains("not authorized"));
-        }
+        serviceNoAccess.listRules(listRulesOptions).execute();
     }
 
     @Test(dependsOnMethods = { "testCreateRule1" })
@@ -353,6 +340,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
 
             Rule result = response.getResult();
             assertNotNull(result);
+            log(String.format("getRule() result:\n%s", result.toString()));
             rule1 = result;
 
             // Grab the Etag value from the response for use in the update operation.
@@ -410,11 +398,11 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
 
             Response<Rule> response = service.updateRule(updateRuleOptions).execute();
             assertNotNull(response);
-            // log(String.format("Received result:\n%s", response.getResult().toString()));
             assertEquals(response.getStatusCode(), 200);
 
             Rule result = response.getResult();
             assertNotNull(result);
+            log(String.format("updateRule() result:\n%s", result.toString()));
             assertTrue(result.getDescription().startsWith("Updated: "));
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
@@ -531,12 +519,11 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             Response<CreateAttachmentsResponse> response =
                     service.createAttachments(createAttachmentsOptions).execute();
             assertNotNull(response);
-            // log(String.format("Received response:\n%s", response.getResult().toString()));
-
             assertEquals(response.getStatusCode(), 201);
 
             CreateAttachmentsResponse result = response.getResult();
             assertNotNull(result);
+            log(String.format("createAttachments() result:\n%s", result.toString()));
             assertNotNull(result.getAttachments());
             assertEquals(result.getAttachments().size(), 1);
             assertNotNull(result.getAttachments().get(0));
@@ -573,11 +560,11 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             Response<CreateAttachmentsResponse> response =
                     service.createAttachments(createAttachmentsOptions).execute();
             assertNotNull(response);
-            // log(String.format("Received response:\n%s", response.getResult().toString()));
             assertEquals(response.getStatusCode(), 201);
 
             CreateAttachmentsResponse result = response.getResult();
             assertNotNull(result);
+            log(String.format("createAttachments() result:\n%s", result.toString()));
             assertNotNull(result.getAttachments());
             assertEquals(result.getAttachments().size(), 1);
             attachmentId2 = result.getAttachments().get(0).getAttachmentId();
@@ -640,6 +627,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
 
             Attachment result = response.getResult();
             assertNotNull(result);
+            log(String.format("getAttachment() result:\n%s", result.toString()));
             attachment1 = result;
 
             assertEquals(result.getAccountId(), ACCOUNT_ID);
@@ -696,7 +684,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             assertEquals(response.getStatusCode(), 200);
 
             AttachmentList result = response.getResult();
-            // log(String.format("Received response:\n%s", result.toString()));
+            log(String.format("listAttachments() result:\n%s", result.toString()));
             assertNotNull(result);
             assertEquals(result.getOffset().longValue(), 0);
             assertEquals(result.getLimit().longValue(), 1000);
@@ -747,7 +735,7 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
 
             Attachment result = response.getResult();
             assertNotNull(result);
-            // log(String.format("Received response:\n%s", result.toString()));
+            log(String.format("updateAttachment() result:\n%s", result.toString()));
             assertNotNull(result.getIncludedScope());
             assertTrue(result.getIncludedScope().note().startsWith("Updated:"));
         } catch (ServiceResponseException e) {
@@ -942,12 +930,6 @@ public class ConfigurationGovernanceIT extends SdkIntegrationTestBase {
             log("Finished cleaning rules...");
         } catch (ServiceResponseException e) {
             throw e;
-        }
-    }
-
-    private void log(String msg) {
-        if (verbose) {
-            System.out.println(msg);
         }
     }
 

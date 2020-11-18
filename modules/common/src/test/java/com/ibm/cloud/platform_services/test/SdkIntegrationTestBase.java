@@ -29,6 +29,11 @@ public abstract class SdkIntegrationTestBase {
 
     private File configFile = null;
 
+    protected void log(String msg) {
+        if (loggingEnabled()) {
+            System.out.println(msg);
+        }
+    }
     /**
      * Returns true if and only if test methods within the subclass should be skipped due to
      * lack of an external configuration file.
@@ -45,6 +50,14 @@ public abstract class SdkIntegrationTestBase {
      * @return the name of the config file associated with the testcase
      */
     public abstract String getConfigFilename();
+
+    /**
+     * This function can be overridden in subclasses as needed to enable logging during the tests.
+     * @return true if logging should be performed
+     */
+    public boolean loggingEnabled() {
+        return false;
+    }
 
     /**
      * Perform the necessary setup steps to ensure that the java core will be able to

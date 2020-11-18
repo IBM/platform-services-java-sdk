@@ -1,5 +1,17 @@
 package com.ibm.cloud.platform_services.open_service_broker.v1;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertNotNull;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 /*
  * (C) Copyright IBM Corp. 2020.
  *
@@ -12,23 +24,25 @@ package com.ibm.cloud.platform_services.open_service_broker.v1;
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.*;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.BindResource;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Context;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.DeleteServiceBindingOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.DeleteServiceInstanceOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.GetServiceInstanceStateOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.ListCatalogOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceBindingOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceInstanceOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceInstanceStateOptions;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp1874644Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp1874650Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079872Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079874Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079876Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2448145Root;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.Services;
+import com.ibm.cloud.platform_services.open_service_broker.v1.model.UpdateServiceInstanceOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import java.util.UUID;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.io.*;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.Assert.assertTrue;
-import static org.testng.AssertJUnit.assertNotNull;
 
 /**
  * Integration test class for the IamAccessGroups service.
@@ -54,11 +68,14 @@ public class OpenServiceBrokerIT extends SdkIntegrationTestBase {
     OpenServiceBroker service = null;
     String transactionId = null;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../open_service_broker.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     /**
@@ -79,7 +96,7 @@ public class OpenServiceBrokerIT extends SdkIntegrationTestBase {
         assertNotNull(service.getServiceUrl());
 
         transactionId = UUID.randomUUID().toString();
-        System.out.println("Transaction-Id for Test Run: " + transactionId);
+        log("Transaction-Id for Test Run: " + transactionId);
     }
 
     @Test

@@ -13,12 +13,24 @@
 
 package com.ibm.cloud.platform_services.enterprise_usage_reports.v1;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
+
+import java.io.InputStream;
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportOptions;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.Link;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.MetricUsage;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.PlanUsage;
 import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.Reports;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.ResourceUsage;
 import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.ResourceUsageReport;
 import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.utils.TestUtilities;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
@@ -26,21 +38,6 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
-
-import okhttp3.HttpUrl;
-
-import java.io.InputStream;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Integration test class for the EnterpriseUsageReports service.
@@ -57,11 +54,14 @@ public class EnterpriseUsageReportsIT extends SdkIntegrationTestBase {
     private static String ENTERPRISE_ID;
     private static String BILLING_MONTH;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../enterprise_usage_reports.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     @BeforeClass
@@ -90,7 +90,7 @@ public class EnterpriseUsageReportsIT extends SdkIntegrationTestBase {
         assertNotNull(ACCOUNT_GROUP_ID);
         assertNotNull(ENTERPRISE_ID);
         assertNotNull(BILLING_MONTH);
-        System.out.println("Setup complete.");
+        log("Setup complete.");
     }
 
     @Test
@@ -127,7 +127,7 @@ public class EnterpriseUsageReportsIT extends SdkIntegrationTestBase {
             } while (offset != null);
 
             assertFalse(results.isEmpty());
-            // System.out.println(String.format("Retrieved %d reports.", results.size()));
+            log(String.format("Retrieved %d reports.", results.size()));
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
@@ -168,7 +168,7 @@ public class EnterpriseUsageReportsIT extends SdkIntegrationTestBase {
             } while (offset != null);
 
             assertFalse(results.isEmpty());
-            // System.out.println(String.format("Retrieved %d reports.", results.size()));
+            log(String.format("Retrieved %d reports.", results.size()));
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
@@ -209,7 +209,7 @@ public class EnterpriseUsageReportsIT extends SdkIntegrationTestBase {
             } while (offset != null);
 
             assertFalse(results.isEmpty());
-            // System.out.println(String.format("Retrieved %d reports.", results.size()));
+            log(String.format("Retrieved %d reports.", results.size()));
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));

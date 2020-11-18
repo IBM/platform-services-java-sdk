@@ -1,6 +1,7 @@
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 import static org.testng.AssertJUnit.assertNotNull;
 
 import java.net.MalformedURLException;
@@ -88,11 +89,14 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     String crn2 = null;
     String newAccountId = null;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../enterprise-management.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     /**
@@ -181,7 +185,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         try {
             url = new URL(config.get("DB_URL"));
         } catch (MalformedURLException e) {
-            System.out.println("The url is not well formed: " + url);
+            fail("The url is not well formed: " + url);
         }
         CloudantClient client = ClientBuilder.url(url)
                 .username(config.get("DB_USER"))
@@ -333,7 +337,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         try {
             url = new URL(config.get("DB_URL"));
         } catch (MalformedURLException e) {
-            System.out.println("The url is not well formed: " + url);
+            fail("The url is not well formed: " + url);
         }
         CloudantClient client = ClientBuilder.url(url).username(config.get("DB_USER")).password(config.get("DB_PASS"))
                 .build();

@@ -85,12 +85,16 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
     String testClaimRuleETag = null;
     AccountSettings testAccountSettings = null;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../iam_access_groups.env";
     }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
+    }
+
 
     /**
      * This method is invoked before any @Test-annotated methods, and is responsible for
@@ -120,8 +124,8 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
         assertNotNull(service);
         assertNotNull(service.getServiceUrl());
 
-        System.out.println("Using Account Id: " + testAccountId);
-        System.out.println("Using Service URL: " + service.getServiceUrl());
+        log("Using Account Id: " + testAccountId);
+        log("Using Service URL: " + service.getServiceUrl());
     }
 
     @Test

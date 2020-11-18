@@ -98,8 +98,14 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     GetArtifactOptions getArtifact;
     DeleteArtifactOptions deleteArtifact;
 
+    @Override
     public String getConfigFilename() {
         return "../../global_catalog.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     @BeforeClass
@@ -251,6 +257,8 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(result.getImages(), defaultCreate.images());
         assertEquals(result.getTags(), defaultCreate.tags());
         assertEquals(result.getProvider(), defaultCreate.provider());
+
+        log("createCatalogEntry result: " + result.toString());
     }
 
     @Test(dependsOnMethods = { "testCreateCatalogEntry" })
@@ -268,6 +276,8 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(result.getImages(), defaultCreate.images());
         assertEquals(result.getTags(), defaultCreate.tags());
         assertEquals(result.getProvider(), defaultCreate.provider());
+
+        log("createCatalogEntry result: " + result.toString());
     }
 
     @Test(dependsOnMethods = { "testGetCatalogEntry" })
@@ -285,6 +295,8 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(result.getImages(), defaultUpdate.images());
         assertEquals(result.getTags(), defaultUpdate.tags());
         assertEquals(result.getProvider(), defaultUpdate.provider());
+
+        log("createCatalogEntry result: " + result.toString());
     }
 
     @Test(dependsOnMethods = { "testUpdateCatalogEntry" })
@@ -295,27 +307,16 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(dependsOnMethods = { "testDeleteCatalogEntry" })
+    @Test(dependsOnMethods = { "testDeleteCatalogEntry" }, expectedExceptions = {NotFoundException.class})
     public void testGetCatalogEntryAfterDeleteFailure() {
         service.createCatalogEntry(defaultCreate).execute();
         service.deleteCatalogEntry(forceDelete).execute();
-
-        try {
-            service.getCatalogEntry(defaultGet).execute();
-            fail("Expected exception.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        service.getCatalogEntry(defaultGet).execute();
     }
 
-    @Test(dependsOnMethods = { "testDeleteCatalogEntry" })
+    @Test(dependsOnMethods = { "testDeleteCatalogEntry" }, expectedExceptions = {NotFoundException.class})
     public void testGetCatalogEntryFailure() {
-        try {
-            service.getCatalogEntry(defaultGet).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        service.getCatalogEntry(defaultGet).execute();
     }
 
     @Test(dependsOnMethods = { "testDeleteCatalogEntry" })
@@ -326,26 +327,15 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(dependsOnMethods = { "testUpdateCatalogEntry" })
+    @Test(dependsOnMethods = { "testUpdateCatalogEntry" }, expectedExceptions = {NotFoundException.class})
     public void testUpdateCatalogEntryFailure() {
-        try {
-            service.updateCatalogEntry(defaultUpdate).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        service.updateCatalogEntry(defaultUpdate).execute();
     }
 
-    @Test(dependsOnMethods = { "testUpdateCatalogEntryFailure" })
+    @Test(dependsOnMethods = { "testUpdateCatalogEntryFailure" }, expectedExceptions = {ConflictException.class})
     public void testCreateCatalogEntryFailure() {
         service.createCatalogEntry(defaultCreate).execute();
-
-        try {
-            service.createCatalogEntry(defaultCreate).execute();
-            fail("Expected ConflictException.");
-        } catch (ConflictException e) {
-            assertEquals(e.getStatusCode(), 409);
-        }
+        service.createCatalogEntry(defaultCreate).execute();
     }
 
     @Test
@@ -384,14 +374,9 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(resource.getProvider(), defaultChild.provider());
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testGetChildObjectsFailure() {
-        try {
-            service.getChildObjects(getChild).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        service.getChildObjects(getChild).execute();
     }
 
     @Test
@@ -416,14 +401,9 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(result.getProvider(), defaultCreate.provider());
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testRestoreCatalogEntryFailure() {
-        try {
-            service.restoreCatalogEntry(bogusRestore).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        service.restoreCatalogEntry(bogusRestore).execute();
     }
 
     @Test
@@ -438,36 +418,20 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(result.restrictions(), visibilityRestriction);
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testGetVisibilityFailure() {
-        try {
-            service.getVisibility(getVisibility).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        service.getVisibility(getVisibility).execute();
     }
 
-    @Test
+    @Test(expectedExceptions = {ForbiddenException.class})
     public void testUpdateVisibility() {
         service.createCatalogEntry(defaultCreate).execute();
-
-        try {
-            service.updateVisibility(updateVisibility).execute();
-            fail("Expected ForbiddenException.");
-        } catch (ForbiddenException e) {
-            assertEquals(e.getStatusCode(), 403);
-        }
+        service.updateVisibility(updateVisibility).execute();
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testUpdateVisibilityFailure() {
-        try {
-            service.updateVisibility(updateVisibility).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        service.updateVisibility(updateVisibility).execute();
     }
 
     @Test
@@ -567,14 +531,9 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testCreateArtifactFailure() {
-        try {
-            service.uploadArtifact(uploadArtifactCreateFailure).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        service.uploadArtifact(uploadArtifactCreateFailure).execute();
     }
 
     @Test
@@ -586,13 +545,8 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testDeleteArtifactFailure() {
-        try {
-            service.deleteArtifact(deleteArtifact).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        service.deleteArtifact(deleteArtifact).execute();
     }
 }

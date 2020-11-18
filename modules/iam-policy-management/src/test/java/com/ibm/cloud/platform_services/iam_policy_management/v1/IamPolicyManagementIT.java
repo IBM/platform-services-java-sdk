@@ -83,11 +83,14 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     String testCustomRoleId = null;
     String testCustomRoleEtag = null;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../iam_policy_management.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     /**
@@ -114,8 +117,8 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertNotNull(service);
         assertNotNull(service.getServiceUrl());
 
-        System.out.println("Using Account Id: " + testAccountId);
-        System.out.println("Using Service URL: " + service.getServiceUrl());
+        log("Using Account Id: " + testAccountId);
+        log("Using Service URL: " + service.getServiceUrl());
     }
 
     @Test
@@ -432,7 +435,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                     Response<Void> deleteResponse = service.deletePolicy(deleteOptions).execute();
                     assertNotNull(deleteResponse);
                     assertEquals(deleteResponse.getStatusCode(), 204);
-                    System.out.println("Cleanup test policy id: " + policy.getId());
+                    log("Cleanup test policy id: " + policy.getId());
                 }
             }
         }
@@ -461,7 +464,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                   Response<Void> deleteResponse = service.deleteRole(deleteOptions).execute();
                   assertNotNull(deleteResponse);
                   assertEquals(deleteResponse.getStatusCode(), 204);
-                  System.out.println("Cleanup test role id: " + role.getId());
+                  log("Cleanup test role id: " + role.getId());
               }
           }
         }

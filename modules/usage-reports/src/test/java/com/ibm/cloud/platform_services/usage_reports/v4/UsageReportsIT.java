@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -50,8 +49,6 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 public class UsageReportsIT extends SdkIntegrationTestBase {
   public UsageReports service = null;
   public static Map<String, String> config = null;
-  private boolean verbose = false;
-
 
   // Test-related config properties.
   private static String ACCOUNT_ID;
@@ -59,11 +56,14 @@ public class UsageReportsIT extends SdkIntegrationTestBase {
   private static String ORG_ID;
   private static String BILLING_MONTH;
 
-  /**
-   * This method provides our config filename to the base class.
-   */
+  @Override
   public String getConfigFilename() {
     return "../../usage_reports.env";
+  }
+
+  @Override
+  public boolean loggingEnabled() {
+      return false;
   }
 
   @BeforeClass
@@ -362,18 +362,4 @@ public class UsageReportsIT extends SdkIntegrationTestBase {
                   e.getMessage(), e.getDebuggingInfo()));
       }
   }
-
-  @AfterClass
-  public void tearDown() {
-    // Add any clean up logic here
-    // System.out.println("Clean up complete.");
-  }
-
-
-  private void log(String msg) {
-      if (verbose) {
-          System.out.println(msg);
-      }
-  }
-
  }

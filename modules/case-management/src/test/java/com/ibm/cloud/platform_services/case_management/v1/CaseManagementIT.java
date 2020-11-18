@@ -70,6 +70,12 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         return "../../case_management.env";
     }
 
+    @Override
+    public boolean loggingEnabled() {
+        return false;
+    }
+
+
     /**
      * This method is invoked before any @Test-annotated methods, and is responsible for
      * creating the instance of the service that will be used by the rest of the test methods,
@@ -88,7 +94,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         assertNotNull(service);
         assertNotNull(service.getServiceUrl());
 
-        System.out.println("Using Service URL: " + service.getServiceUrl());
+        log("Using Service URL: " + service.getServiceUrl());
     }
 
     @Test (expectedExceptions = {BadRequestException.class})
@@ -164,7 +170,8 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         // Storing the new case number for subsequent test cases
         this.newCaseNumber = responseObj.getNumber();
 
-        System.out.println("New case number: " + responseObj.getNumber());
+        log("New case number: " + responseObj.getNumber());
+        log("createCase() result:\n" + responseObj.toString());
     }
 
     @Test (dependsOnMethods = {"testCreateCase"})
@@ -183,6 +190,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         Response<CaseList> response = service.getCases(getCasesOptionsModel).execute();
         assertNotNull(response);
         CaseList responseObj = response.getResult();
+        log("getCases() result:\n" + responseObj.toString());
 
         assertTrue(0 < responseObj.getTotalCount());
         assertTrue(0 < responseObj.getCases().size());
@@ -202,6 +210,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         assertNotNull(response);
 
         Case responseObj = response.getResult();
+        log("getCase() result:\n" + responseObj.toString());
         assertEquals(newCaseNumber, responseObj.getNumber());
         assertNotNull(responseObj.getDescription());
     }
@@ -233,6 +242,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
 
         Comment responseObj = response.getResult();
         assertEquals(comment, responseObj.getValue());
+        log("addComment() result:\n" + responseObj.toString());
     }
 
     @Test (expectedExceptions = {NotFoundException.class})
@@ -262,6 +272,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         Response<WatchlistAddResponse> response = service.addWatchlist(watchlistOptionsModel).execute();
         WatchlistAddResponse responseObj = response.getResult();
         assertNotNull(responseObj);
+        log("addWatchlist() result:\n" + responseObj.toString());
 
         // Non-account member cannot be added to the watch-list, therefore the response will include a "failed" list
         List<User> users = responseObj.getFailed();
@@ -299,6 +310,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
 
         Response<Attachment> response = service.uploadFile(uploadFileOptionsModel).execute();
         Attachment responseObj = response.getResult();
+        log("uploadFile() result:\n" + responseObj.toString());
 
         this.fileAttachmentId = responseObj.getId();
         assertEquals(fileName, responseObj.getFilename());
@@ -332,6 +344,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
 
         // Assert the file attachment list is empty
         assertEquals(0, responseObj.getAttachments().size());
+        log("deleteFile() result:\n" + responseObj.toString());
     }
 
     @Test (dependsOnMethods = {"testCreateCase"}, expectedExceptions = {InternalServerErrorException.class})
@@ -367,6 +380,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         assertNotNull(response);
         Case responseObj = response.getResult();
         assertNotNull(responseObj);
+        log("updateCaseStatus() result:\n" + responseObj.toString());
     }
 
     /**

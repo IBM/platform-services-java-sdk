@@ -48,8 +48,6 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
-import org.json.JSONObject;
-import org.json.JSONArray;
 
 
 /**
@@ -62,12 +60,15 @@ public class UserManagementIT extends SdkIntegrationTestBase {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
   public String userId = null;
-  /**
-   * This method provides our config filename to the base class.
-   */
 
+  @Override
   public String getConfigFilename() {
     return "../../user_management.env";
+  }
+
+  @Override
+  public boolean loggingEnabled() {
+      return false;
   }
 
   @BeforeClass
@@ -91,7 +92,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
     assertFalse(config.isEmpty());
     assertEquals(service.getServiceUrl(), config.get("URL"));
 
-    System.out.println("Setup complete.");
+    log("Setup complete.");
   }
 
   @Test
@@ -135,6 +136,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 204);
       UserSettings userSettingsResult = response.getResult();
+      assertNotNull(userSettingsResult);
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -290,11 +292,5 @@ public class UserManagementIT extends SdkIntegrationTestBase {
         fail(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
-  }
-
-  @AfterClass
-  public void tearDown() {
-    // Add any clean up logic here
-    System.out.println("Clean up complete.");
   }
  }

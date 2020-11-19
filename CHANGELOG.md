@@ -1,3 +1,10 @@
+## [0.15.4](https://github.com/IBM/platform-services-java-sdk/compare/0.15.3...0.15.4) (2020-11-19)
+
+
+### Bug Fixes
+
+* **Global Catalog:** re-gen service after recent API changes ([aed25df](https://github.com/IBM/platform-services-java-sdk/commit/aed25df99d844c188706efb7c5e8cb6c2637a884))
+
 ## [0.15.3](https://github.com/IBM/platform-services-java-sdk/compare/0.15.2...0.15.3) (2020-11-19)
 
 

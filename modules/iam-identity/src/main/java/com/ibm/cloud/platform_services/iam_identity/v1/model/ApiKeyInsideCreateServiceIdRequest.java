@@ -16,16 +16,12 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Input body parameters for the Create API key V1 REST request.
+ * Parameters for the API key in the Create service Id V1 REST request.
  */
-public class CreateApiKeyRequest extends GenericModel {
+public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
 
   protected String name;
   protected String description;
-  @SerializedName("iam_id")
-  protected String iamId;
-  @SerializedName("account_id")
-  protected String accountId;
   protected String apikey;
   @SerializedName("store_value")
   protected Boolean storeValue;
@@ -36,18 +32,14 @@ public class CreateApiKeyRequest extends GenericModel {
   public static class Builder {
     private String name;
     private String description;
-    private String iamId;
-    private String accountId;
     private String apikey;
     private Boolean storeValue;
 
-    private Builder(CreateApiKeyRequest createApiKeyRequest) {
-      this.name = createApiKeyRequest.name;
-      this.description = createApiKeyRequest.description;
-      this.iamId = createApiKeyRequest.iamId;
-      this.accountId = createApiKeyRequest.accountId;
-      this.apikey = createApiKeyRequest.apikey;
-      this.storeValue = createApiKeyRequest.storeValue;
+    private Builder(ApiKeyInsideCreateServiceIdRequest apiKeyInsideCreateServiceIdRequest) {
+      this.name = apiKeyInsideCreateServiceIdRequest.name;
+      this.description = apiKeyInsideCreateServiceIdRequest.description;
+      this.apikey = apiKeyInsideCreateServiceIdRequest.apikey;
+      this.storeValue = apiKeyInsideCreateServiceIdRequest.storeValue;
     }
 
     /**
@@ -60,27 +52,25 @@ public class CreateApiKeyRequest extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param name the name
-     * @param iamId the iamId
      */
-    public Builder(String name, String iamId) {
+    public Builder(String name) {
       this.name = name;
-      this.iamId = iamId;
     }
 
     /**
-     * Builds a CreateApiKeyRequest.
+     * Builds a ApiKeyInsideCreateServiceIdRequest.
      *
-     * @return the new CreateApiKeyRequest instance
+     * @return the new ApiKeyInsideCreateServiceIdRequest instance
      */
-    public CreateApiKeyRequest build() {
-      return new CreateApiKeyRequest(this);
+    public ApiKeyInsideCreateServiceIdRequest build() {
+      return new ApiKeyInsideCreateServiceIdRequest(this);
     }
 
     /**
      * Set the name.
      *
      * @param name the name
-     * @return the CreateApiKeyRequest builder
+     * @return the ApiKeyInsideCreateServiceIdRequest builder
      */
     public Builder name(String name) {
       this.name = name;
@@ -91,7 +81,7 @@ public class CreateApiKeyRequest extends GenericModel {
      * Set the description.
      *
      * @param description the description
-     * @return the CreateApiKeyRequest builder
+     * @return the ApiKeyInsideCreateServiceIdRequest builder
      */
     public Builder description(String description) {
       this.description = description;
@@ -99,32 +89,10 @@ public class CreateApiKeyRequest extends GenericModel {
     }
 
     /**
-     * Set the iamId.
-     *
-     * @param iamId the iamId
-     * @return the CreateApiKeyRequest builder
-     */
-    public Builder iamId(String iamId) {
-      this.iamId = iamId;
-      return this;
-    }
-
-    /**
-     * Set the accountId.
-     *
-     * @param accountId the accountId
-     * @return the CreateApiKeyRequest builder
-     */
-    public Builder accountId(String accountId) {
-      this.accountId = accountId;
-      return this;
-    }
-
-    /**
      * Set the apikey.
      *
      * @param apikey the apikey
-     * @return the CreateApiKeyRequest builder
+     * @return the ApiKeyInsideCreateServiceIdRequest builder
      */
     public Builder apikey(String apikey) {
       this.apikey = apikey;
@@ -135,7 +103,7 @@ public class CreateApiKeyRequest extends GenericModel {
      * Set the storeValue.
      *
      * @param storeValue the storeValue
-     * @return the CreateApiKeyRequest builder
+     * @return the ApiKeyInsideCreateServiceIdRequest builder
      */
     public Builder storeValue(Boolean storeValue) {
       this.storeValue = storeValue;
@@ -143,15 +111,11 @@ public class CreateApiKeyRequest extends GenericModel {
     }
   }
 
-  protected CreateApiKeyRequest(Builder builder) {
+  protected ApiKeyInsideCreateServiceIdRequest(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,
       "name cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.iamId,
-      "iamId cannot be null");
     name = builder.name;
     description = builder.description;
-    iamId = builder.iamId;
-    accountId = builder.accountId;
     apikey = builder.apikey;
     storeValue = builder.storeValue;
   }
@@ -159,7 +123,7 @@ public class CreateApiKeyRequest extends GenericModel {
   /**
    * New builder.
    *
-   * @return a CreateApiKeyRequest builder
+   * @return a ApiKeyInsideCreateServiceIdRequest builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -187,28 +151,6 @@ public class CreateApiKeyRequest extends GenericModel {
    */
   public String description() {
     return description;
-  }
-
-  /**
-   * Gets the iamId.
-   *
-   * The iam_id that this API key authenticates.
-   *
-   * @return the iamId
-   */
-  public String iamId() {
-    return iamId;
-  }
-
-  /**
-   * Gets the accountId.
-   *
-   * The account ID of the API key.
-   *
-   * @return the accountId
-   */
-  public String accountId() {
-    return accountId;
   }
 
   /**

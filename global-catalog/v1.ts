@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef9b3113-20201118-074613
  */
  
 
@@ -683,7 +683,7 @@ class GlobalCatalogV1 extends BaseService {
    * Get the pricing for an object.
    *
    * This endpoint returns the pricing for an object. Static pricing is defined in the catalog. Dynamic pricing is
-   * stored in Bluemix Pricing Catalog.
+   * stored in IBM Cloud Pricing Catalog.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The object's unique ID.
@@ -1585,19 +1585,20 @@ namespace GlobalCatalogV1 {
     metadata?: CatalogEntryMetadata;
     /** Catalog entry's unique ID. It's the same across all catalog instances. */
     id?: string;
-    catalog_crn?: any;
+    /** The CRN associated with the catalog entry. */
+    catalog_crn?: string;
     /** URL to get details about this object. */
-    url?: any;
+    url?: string;
     /** URL to get details about children of this object. */
-    children_url?: any;
+    children_url?: string;
     /** tags to indicate the locations this service is deployable to. */
-    geo_tags?: any;
+    geo_tags?: string[];
     /** tags to indicate the type of pricing plans this service supports. */
-    pricing_tags?: any;
+    pricing_tags?: string[];
     /** Date created. */
-    created?: any;
+    created?: string;
     /** Date last updated. */
-    updated?: any;
+    updated?: string;
   }
 
   /** Model used to describe metadata object returned. */
@@ -1752,7 +1753,7 @@ namespace GlobalCatalogV1 {
     type?: string;
     /** message describing action. */
     message?: string;
-    /** JSON object containing details on changes made to object data. */
+    /** An object containing details on changes made to object data. */
     data?: JsonObject;
   }
 

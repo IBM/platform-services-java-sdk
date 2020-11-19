@@ -735,12 +735,10 @@ describe('IamIdentityV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // CreateApiKeyRequest
-      const createApiKeyRequestModel = {
+      // ApiKeyInsideCreateServiceIdRequest
+      const apiKeyInsideCreateServiceIdRequestModel = {
         name: 'testString',
         description: 'testString',
-        iam_id: 'testString',
-        account_id: 'testString',
         apikey: 'testString',
         store_value: true,
       };
@@ -751,7 +749,7 @@ describe('IamIdentityV1', () => {
         const name = 'testString';
         const description = 'testString';
         const uniqueInstanceCrns = ['testString'];
-        const apikey = createApiKeyRequestModel;
+        const apikey = apiKeyInsideCreateServiceIdRequestModel;
         const entityLock = 'testString';
         const params = {
           accountId: accountId,

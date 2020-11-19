@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -51,16 +52,16 @@ public class CatalogEntry extends GenericModel {
   protected CatalogEntryMetadata metadata;
   protected String id;
   @SerializedName("catalog_crn")
-  protected Object catalogCrn;
-  protected Object url;
+  protected String catalogCrn;
+  protected String url;
   @SerializedName("children_url")
-  protected Object childrenUrl;
+  protected String childrenUrl;
   @SerializedName("geo_tags")
-  protected Object geoTags;
+  protected List<String> geoTags;
   @SerializedName("pricing_tags")
-  protected Object pricingTags;
-  protected Object created;
-  protected Object updated;
+  protected List<String> pricingTags;
+  protected Date created;
+  protected Date updated;
 
   /**
    * Gets the name.
@@ -200,9 +201,11 @@ public class CatalogEntry extends GenericModel {
   /**
    * Gets the catalogCrn.
    *
+   * The CRN associated with the catalog entry.
+   *
    * @return the catalogCrn
    */
-  public Object getCatalogCrn() {
+  public String getCatalogCrn() {
     return catalogCrn;
   }
 
@@ -213,7 +216,7 @@ public class CatalogEntry extends GenericModel {
    *
    * @return the url
    */
-  public Object getUrl() {
+  public String getUrl() {
     return url;
   }
 
@@ -224,7 +227,7 @@ public class CatalogEntry extends GenericModel {
    *
    * @return the childrenUrl
    */
-  public Object getChildrenUrl() {
+  public String getChildrenUrl() {
     return childrenUrl;
   }
 
@@ -235,7 +238,7 @@ public class CatalogEntry extends GenericModel {
    *
    * @return the geoTags
    */
-  public Object getGeoTags() {
+  public List<String> getGeoTags() {
     return geoTags;
   }
 
@@ -246,7 +249,7 @@ public class CatalogEntry extends GenericModel {
    *
    * @return the pricingTags
    */
-  public Object getPricingTags() {
+  public List<String> getPricingTags() {
     return pricingTags;
   }
 
@@ -257,7 +260,7 @@ public class CatalogEntry extends GenericModel {
    *
    * @return the created
    */
-  public Object getCreated() {
+  public Date getCreated() {
     return created;
   }
 
@@ -268,7 +271,7 @@ public class CatalogEntry extends GenericModel {
    *
    * @return the updated
    */
-  public Object getUpdated() {
+  public Date getUpdated() {
     return updated;
   }
 }

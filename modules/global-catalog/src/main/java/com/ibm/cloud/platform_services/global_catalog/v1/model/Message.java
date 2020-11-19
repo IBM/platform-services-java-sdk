@@ -151,7 +151,7 @@ public class Message extends GenericModel {
   /**
    * Gets the data.
    *
-   * JSON object containing details on changes made to object data.
+   * An object containing details on changes made to object data.
    *
    * @return the data
    */

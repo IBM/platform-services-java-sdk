@@ -1,3 +1,10 @@
+## [0.15.3](https://github.com/IBM/platform-services-java-sdk/compare/0.15.2...0.15.3) (2020-11-19)
+
+
+### Bug Fixes
+
+* **IAM Identity:** update service to use java.util.Date ([5316c19](https://github.com/IBM/platform-services-java-sdk/commit/5316c196dd37b8116e981c74c796131412b22fe8))
+
 ## [0.15.2](https://github.com/IBM/platform-services-java-sdk/compare/0.15.1...0.15.2) (2020-11-18)
 
 

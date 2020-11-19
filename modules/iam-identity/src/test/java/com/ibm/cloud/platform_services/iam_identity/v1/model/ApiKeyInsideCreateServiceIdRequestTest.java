@@ -14,26 +14,23 @@
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyInsideCreateServiceIdRequest;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the CreateServiceIdOptions model.
+ * Unit test class for the ApiKeyInsideCreateServiceIdRequest model.
  */
-public class CreateServiceIdOptionsTest {
+public class ApiKeyInsideCreateServiceIdRequestTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testCreateServiceIdOptions() throws Throwable {
+  public void testApiKeyInsideCreateServiceIdRequest() throws Throwable {
     ApiKeyInsideCreateServiceIdRequest apiKeyInsideCreateServiceIdRequestModel = new ApiKeyInsideCreateServiceIdRequest.Builder()
       .name("testString")
       .description("testString")
@@ -45,25 +42,19 @@ public class CreateServiceIdOptionsTest {
     assertEquals(apiKeyInsideCreateServiceIdRequestModel.apikey(), "testString");
     assertEquals(apiKeyInsideCreateServiceIdRequestModel.storeValue(), Boolean.valueOf(true));
 
-    CreateServiceIdOptions createServiceIdOptionsModel = new CreateServiceIdOptions.Builder()
-      .accountId("testString")
-      .name("testString")
-      .description("testString")
-      .uniqueInstanceCrns(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .apikey(apiKeyInsideCreateServiceIdRequestModel)
-      .entityLock("testString")
-      .build();
-    assertEquals(createServiceIdOptionsModel.accountId(), "testString");
-    assertEquals(createServiceIdOptionsModel.name(), "testString");
-    assertEquals(createServiceIdOptionsModel.description(), "testString");
-    assertEquals(createServiceIdOptionsModel.uniqueInstanceCrns(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
-    assertEquals(createServiceIdOptionsModel.apikey(), apiKeyInsideCreateServiceIdRequestModel);
-    assertEquals(createServiceIdOptionsModel.entityLock(), "testString");
+    String json = TestUtilities.serialize(apiKeyInsideCreateServiceIdRequestModel);
+
+    ApiKeyInsideCreateServiceIdRequest apiKeyInsideCreateServiceIdRequestModelNew = TestUtilities.deserialize(json, ApiKeyInsideCreateServiceIdRequest.class);
+    assertTrue(apiKeyInsideCreateServiceIdRequestModelNew instanceof ApiKeyInsideCreateServiceIdRequest);
+    assertEquals(apiKeyInsideCreateServiceIdRequestModelNew.name(), "testString");
+    assertEquals(apiKeyInsideCreateServiceIdRequestModelNew.description(), "testString");
+    assertEquals(apiKeyInsideCreateServiceIdRequestModelNew.apikey(), "testString");
+    assertEquals(apiKeyInsideCreateServiceIdRequestModelNew.storeValue(), Boolean.valueOf(true));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateServiceIdOptionsError() throws Throwable {
-    new CreateServiceIdOptions.Builder().build();
+  public void testApiKeyInsideCreateServiceIdRequestError() throws Throwable {
+    new ApiKeyInsideCreateServiceIdRequest.Builder().build();
   }
 
 }

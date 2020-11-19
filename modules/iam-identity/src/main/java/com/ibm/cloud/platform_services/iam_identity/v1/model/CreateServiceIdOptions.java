@@ -26,7 +26,7 @@ public class CreateServiceIdOptions extends GenericModel {
   protected String name;
   protected String description;
   protected List<String> uniqueInstanceCrns;
-  protected CreateApiKeyRequest apikey;
+  protected ApiKeyInsideCreateServiceIdRequest apikey;
   protected String entityLock;
 
   /**
@@ -37,7 +37,7 @@ public class CreateServiceIdOptions extends GenericModel {
     private String name;
     private String description;
     private List<String> uniqueInstanceCrns;
-    private CreateApiKeyRequest apikey;
+    private ApiKeyInsideCreateServiceIdRequest apikey;
     private String entityLock;
 
     private Builder(CreateServiceIdOptions createServiceIdOptions) {
@@ -142,7 +142,7 @@ public class CreateServiceIdOptions extends GenericModel {
      * @param apikey the apikey
      * @return the CreateServiceIdOptions builder
      */
-    public Builder apikey(CreateApiKeyRequest apikey) {
+    public Builder apikey(ApiKeyInsideCreateServiceIdRequest apikey) {
       this.apikey = apikey;
       return this;
     }
@@ -230,11 +230,11 @@ public class CreateServiceIdOptions extends GenericModel {
   /**
    * Gets the apikey.
    *
-   * Input body parameters for the Create API key V1 REST request.
+   * Parameters for the API key in the Create service Id V1 REST request.
    *
    * @return the apikey
    */
-  public CreateApiKeyRequest apikey() {
+  public ApiKeyInsideCreateServiceIdRequest apikey() {
     return apikey;
   }
 

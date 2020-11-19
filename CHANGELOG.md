@@ -1,3 +1,10 @@
+## [0.15.3](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.2...v0.15.3) (2020-11-19)
+
+
+### Bug Fixes
+
+* **IAM Identity:** re-gen service after recent API updates ([fa53c7f](https://github.com/IBM/platform-services-node-sdk/commit/fa53c7f9eb4d5e0f20bcd976920a09475befcd0c))
+
 ## [0.15.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.1...v0.15.2) (2020-11-18)
 
 

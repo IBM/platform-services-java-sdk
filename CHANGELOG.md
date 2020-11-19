@@ -1,3 +1,10 @@
+## [0.15.4](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.3...v0.15.4) (2020-11-19)
+
+
+### Bug Fixes
+
+* **Global Catalog:** re-gen service after recent API changes ([adb5a2f](https://github.com/IBM/platform-services-node-sdk/commit/adb5a2f0a803acaf05d13de818ba7455dc320349))
+
 ## [0.15.3](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.2...v0.15.3) (2020-11-19)
 
 

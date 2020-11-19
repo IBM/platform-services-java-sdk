@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef9b3113-20201118-074613
  */
 
 package com.ibm.cloud.platform_services.global_catalog.v1;
@@ -471,7 +471,7 @@ public class GlobalCatalog extends BaseService {
    * Get the pricing for an object.
    *
    * This endpoint returns the pricing for an object. Static pricing is defined in the catalog. Dynamic pricing is
-   * stored in Bluemix Pricing Catalog.
+   * stored in IBM Cloud Pricing Catalog.
    *
    * @param getPricingOptions the {@link GetPricingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link PricingGet}

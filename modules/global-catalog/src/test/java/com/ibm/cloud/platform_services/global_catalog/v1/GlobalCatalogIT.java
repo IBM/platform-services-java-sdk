@@ -105,7 +105,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
 
     @Override
     public boolean loggingEnabled() {
-        return false;
+        return true;
     }
 
     @BeforeClass

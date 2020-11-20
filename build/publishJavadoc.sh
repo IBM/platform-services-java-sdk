@@ -21,7 +21,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" ]; then
     cp -rf ../target/site/apidocs/* docs/${TRAVIS_BRANCH}
 
     printf "\n>>>>> Generating gh-pages index.html...\n"
-    ../build/generate-index-html.sh > index.html
+    ../build/generateJavadocIndex.sh > index.html
 
     # Update the 'latest' symlink to point to this branch if it's a tagged release.
     if [ -n "$TRAVIS_TAG" ]; then

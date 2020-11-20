@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# This script will check $TRAVIS_TAG to see if we need to run maven to
+# set the artifact version #'s.
+
+if [[ -n "${TRAVIS_TAG}" ]]; then
+    printf "\n>>>>> Setting artifact version #'s to: %s" ${TRAVIS_TAG}
+    mvn versions:set -DnewVersion=${TRAVIS_TAG} -DgenerateBackupPoms=false
+else
+    printf "\n>>>>> Bypassing artifact version setting for non-tagged build"
+    echo 
+fi
+     

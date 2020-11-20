@@ -51,12 +51,48 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+///////////////////////////////////////////////////////
+///////////// Example config file fields //////////////
+// RESOURCE_CONTROLLER_URL=https://resource-controller.cloud.ibm.com
+// RESOURCE_CONTROLLER_AUTH_TYPE=iam
+// RESOURCE_CONTROLLER_AUTH_URL=https://iam.cloud.ibm.com/identity/token
+// RESOURCE_CONTROLLER_APIKEY=<User's IAM API Key>
+// RESOURCE_CONTROLLER_RESOURCE_GROUP=5g9f447903254bb58972a2f3f5a4c711
+// RESOURCE_CONTROLLER_RECLAMATION_PLAN_ID=0be5ad401ae913d8ff665d92680664ed
+// RESOURCE_CONTROLLER_ACCOUNT_ID=b80a8b513ae24e178438b7a18bd8d609
+// RESOURCE_CONTROLLER_ALIAS_TARGET_CRN=crn:v1:cf:public:cf:eu-gb:o/e242c7f0-9eb7-4541-ad3e-b5f5a45a1498::cf-space:f5038ca8-9d28-42a1-9e57-9b9fdd66bf8e
+// RESOURCE_CONTROLLER_BINDING_TARGET_CRN=crn:v1:cf:public:cf:eu-gb:s/f5038ca8-9d28-42a1-9e57-9b9fdd66bf8e::cf-application:b04ddee1-2838-449a-96d3-02a03179e991
+///////////////////////////////////////////////////////
 
 public class ResourceControllerExamples {
   private static final Logger logger = LoggerFactory.getLogger(ResourceControllerExamples.class);
   protected ResourceControllerExamples() { }
+
+  private static String instanceGuid;
+  private static String aliasGuid;
+  private static String bindingGuid;
+  private static String instanceKeyGuid;
+  private static String resourceGroup;
+  private static String resourcePlanId;
+  private static String accountId;
+  private static String aliasTargetCRN;
+  private static String bindingTargetCRN;
+  private static String reclamationId;
+  private static String resourceInstanceName = "RcSdkInstance1Java";
+  private static String resourceInstanceUpdateName = "RcSdkInstanceUpdate1Java";
+  private static String aliasName = "RcSdkAlias1Java";
+  private static String aliasUpdateName = "RcSdkAliasUpdate1Java";
+  private static String bindingName = "RcSdkBinding1Java";
+  private static String bindingUpdateName = "RcSdkBindingUpdate1Java";
+  private static String keyName = "RcSdkKey1Java";
+  private static String keyUpdateName = "RcSdkKeyUpdate1Java";
+  private static String targetRegion = "global";
+  private static String reclaimAction = "reclaim";
 
   static {
       System.setProperty("IBM_CREDENTIALS_FILE", "../../resource_controller.env");
@@ -67,35 +103,24 @@ public class ResourceControllerExamples {
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(ResourceController.DEFAULT_SERVICE_NAME);
-
-    try {
-      // begin-list_resource_instances
-      ListResourceInstancesOptions listResourceInstancesOptions = new ListResourceInstancesOptions.Builder()
-        .updatedFrom("2019-01-08T00:00:00.000Z")
-        .updatedTo("2019-01-08T00:00:00.000Z")
-        .build();
-
-      Response<ResourceInstancesList> response = service.listResourceInstances(listResourceInstancesOptions).execute();
-      ResourceInstancesList resourceInstancesList = response.getResult();
-
-      System.out.println(resourceInstancesList);
-      // end-list_resource_instances
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
+    resourceGroup = config.get("RESOURCE_GROUP");
+    resourcePlanId = config.get("PLAN_ID");
+    accountId = config.get("ACCOUNT_ID");
+    aliasTargetCRN = config.get("ALIAS_TARGET_CRN");
+    bindingTargetCRN = config.get("BINDING_TARGET_CRN");
 
     try {
       // begin-create_resource_instance
       CreateResourceInstanceOptions createResourceInstanceOptions = new CreateResourceInstanceOptions.Builder()
-        .name("my-instance")
-        .target("bluemix-us-south")
-        .resourceGroup("5c49eabc-f5e8-5881-a37e-2d100a33b3df")
-        .resourcePlanId("cloudant-standard")
+        .name(resourceInstanceName)
+        .target(targetRegion)
+        .resourceGroup(resourceGroup)
+        .resourcePlanId(resourcePlanId)
         .build();
 
       Response<ResourceInstance> response = service.createResourceInstance(createResourceInstanceOptions).execute();
       ResourceInstance resourceInstance = response.getResult();
+      instanceGuid = resourceInstance.getGuid();
 
       System.out.println(resourceInstance);
       // end-create_resource_instance
@@ -107,7 +132,7 @@ public class ResourceControllerExamples {
     try {
       // begin-get_resource_instance
       GetResourceInstanceOptions getResourceInstanceOptions = new GetResourceInstanceOptions.Builder()
-        .id("testString")
+        .id(instanceGuid)
         .build();
 
       Response<ResourceInstance> response = service.getResourceInstance(getResourceInstanceOptions).execute();
@@ -122,8 +147,13 @@ public class ResourceControllerExamples {
 
     try {
       // begin-update_resource_instance
+      Map<String, Object> params = new HashMap<String, Object>();
+      params.put("example", "property");
+
       UpdateResourceInstanceOptions updateResourceInstanceOptions = new UpdateResourceInstanceOptions.Builder()
-        .id("testString")
+        .id(instanceGuid)
+        .name(resourceInstanceUpdateName)
+        .parameters(params)
         .build();
 
       Response<ResourceInstance> response = service.updateResourceInstance(updateResourceInstanceOptions).execute();
@@ -137,167 +167,16 @@ public class ResourceControllerExamples {
     }
 
     try {
-      // begin-lock_resource_instance
-      LockResourceInstanceOptions lockResourceInstanceOptions = new LockResourceInstanceOptions.Builder()
-        .id("testString")
+      // begin-list_resource_instances
+      ListResourceInstancesOptions listResourceInstancesOptions = new ListResourceInstancesOptions.Builder()
+        .name(resourceInstanceName)
         .build();
 
-      Response<ResourceInstance> response = service.lockResourceInstance(lockResourceInstanceOptions).execute();
-      ResourceInstance resourceInstance = response.getResult();
+      Response<ResourceInstancesList> response = service.listResourceInstances(listResourceInstancesOptions).execute();
+      ResourceInstancesList resourceInstancesList = response.getResult();
 
-      System.out.println(resourceInstance);
-      // end-lock_resource_instance
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      // begin-list_resource_keys
-      ListResourceKeysOptions listResourceKeysOptions = new ListResourceKeysOptions.Builder()
-        .updatedFrom("2019-01-08T00:00:00.000Z")
-        .updatedTo("2019-01-08T00:00:00.000Z")
-        .build();
-
-      Response<ResourceKeysList> response = service.listResourceKeys(listResourceKeysOptions).execute();
-      ResourceKeysList resourceKeysList = response.getResult();
-
-      System.out.println(resourceKeysList);
-      // end-list_resource_keys
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      // begin-create_resource_key
-      CreateResourceKeyOptions createResourceKeyOptions = new CreateResourceKeyOptions.Builder()
-        .name("my-key")
-        .source("25eba2a9-beef-450b-82cf-f5ad5e36c6dd")
-        .build();
-
-      Response<ResourceKey> response = service.createResourceKey(createResourceKeyOptions).execute();
-      ResourceKey resourceKey = response.getResult();
-
-      System.out.println(resourceKey);
-      // end-create_resource_key
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      // begin-get_resource_key
-      GetResourceKeyOptions getResourceKeyOptions = new GetResourceKeyOptions.Builder()
-        .id("testString")
-        .build();
-
-      Response<ResourceKey> response = service.getResourceKey(getResourceKeyOptions).execute();
-      ResourceKey resourceKey = response.getResult();
-
-      System.out.println(resourceKey);
-      // end-get_resource_key
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      // begin-update_resource_key
-      UpdateResourceKeyOptions updateResourceKeyOptions = new UpdateResourceKeyOptions.Builder()
-        .id("testString")
-        .name("my-new-key-name")
-        .build();
-
-      Response<ResourceKey> response = service.updateResourceKey(updateResourceKeyOptions).execute();
-      ResourceKey resourceKey = response.getResult();
-
-      System.out.println(resourceKey);
-      // end-update_resource_key
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      // begin-list_resource_bindings
-      ListResourceBindingsOptions listResourceBindingsOptions = new ListResourceBindingsOptions.Builder()
-        .updatedFrom("2019-01-08T00:00:00.000Z")
-        .updatedTo("2019-01-08T00:00:00.000Z")
-        .build();
-
-      Response<ResourceBindingsList> response = service.listResourceBindings(listResourceBindingsOptions).execute();
-      ResourceBindingsList resourceBindingsList = response.getResult();
-
-      System.out.println(resourceBindingsList);
-      // end-list_resource_bindings
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      // begin-create_resource_binding
-      CreateResourceBindingOptions createResourceBindingOptions = new CreateResourceBindingOptions.Builder()
-        .source("25eba2a9-beef-450b-82cf-f5ad5e36c6dd")
-        .target("crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c")
-        .build();
-
-      Response<ResourceBinding> response = service.createResourceBinding(createResourceBindingOptions).execute();
-      ResourceBinding resourceBinding = response.getResult();
-
-      System.out.println(resourceBinding);
-      // end-create_resource_binding
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      // begin-get_resource_binding
-      GetResourceBindingOptions getResourceBindingOptions = new GetResourceBindingOptions.Builder()
-        .id("testString")
-        .build();
-
-      Response<ResourceBinding> response = service.getResourceBinding(getResourceBindingOptions).execute();
-      ResourceBinding resourceBinding = response.getResult();
-
-      System.out.println(resourceBinding);
-      // end-get_resource_binding
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      // begin-update_resource_binding
-      UpdateResourceBindingOptions updateResourceBindingOptions = new UpdateResourceBindingOptions.Builder()
-        .id("testString")
-        .name("my-new-binding-name")
-        .build();
-
-      Response<ResourceBinding> response = service.updateResourceBinding(updateResourceBindingOptions).execute();
-      ResourceBinding resourceBinding = response.getResult();
-
-      System.out.println(resourceBinding);
-      // end-update_resource_binding
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      // begin-list_resource_aliases
-      ListResourceAliasesOptions listResourceAliasesOptions = new ListResourceAliasesOptions.Builder()
-        .updatedFrom("2019-01-08T00:00:00.000Z")
-        .updatedTo("2019-01-08T00:00:00.000Z")
-        .build();
-
-      Response<ResourceAliasesList> response = service.listResourceAliases(listResourceAliasesOptions).execute();
-      ResourceAliasesList resourceAliasesList = response.getResult();
-
-      System.out.println(resourceAliasesList);
-      // end-list_resource_aliases
+      System.out.println(resourceInstancesList);
+      // end-list_resource_instances
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -306,13 +185,14 @@ public class ResourceControllerExamples {
     try {
       // begin-create_resource_alias
       CreateResourceAliasOptions createResourceAliasOptions = new CreateResourceAliasOptions.Builder()
-        .name("my-alias")
-        .source("a8dff6d3-d287-4668-a81d-c87c55c2656d")
-        .target("crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5")
+        .name(aliasName)
+        .source(instanceGuid)
+        .target(aliasTargetCRN)
         .build();
 
       Response<ResourceAlias> response = service.createResourceAlias(createResourceAliasOptions).execute();
       ResourceAlias resourceAlias = response.getResult();
+      aliasGuid = resourceAlias.getGuid();
 
       System.out.println(resourceAlias);
       // end-create_resource_alias
@@ -324,7 +204,7 @@ public class ResourceControllerExamples {
     try {
       // begin-get_resource_alias
       GetResourceAliasOptions getResourceAliasOptions = new GetResourceAliasOptions.Builder()
-        .id("testString")
+        .id(aliasGuid)
         .build();
 
       Response<ResourceAlias> response = service.getResourceAlias(getResourceAliasOptions).execute();
@@ -340,8 +220,8 @@ public class ResourceControllerExamples {
     try {
       // begin-update_resource_alias
       UpdateResourceAliasOptions updateResourceAliasOptions = new UpdateResourceAliasOptions.Builder()
-        .id("testString")
-        .name("my-new-alias-name")
+        .id(aliasGuid)
+        .name(aliasUpdateName)
         .build();
 
       Response<ResourceAlias> response = service.updateResourceAlias(updateResourceAliasOptions).execute();
@@ -355,32 +235,206 @@ public class ResourceControllerExamples {
     }
 
     try {
-      // begin-list_reclamations
-      ListReclamationsOptions listReclamationsOptions = new ListReclamationsOptions.Builder()
+      // begin-list_resource_aliases
+      ListResourceAliasesOptions listResourceAliasesOptions = new ListResourceAliasesOptions.Builder()
+        .name(aliasName)
         .build();
 
-      Response<ReclamationsList> response = service.listReclamations(listReclamationsOptions).execute();
-      ReclamationsList reclamationsList = response.getResult();
+      Response<ResourceAliasesList> response = service.listResourceAliases(listResourceAliasesOptions).execute();
+      ResourceAliasesList resourceAliasesList = response.getResult();
 
-      System.out.println(reclamationsList);
-      // end-list_reclamations
+      System.out.println(resourceAliasesList);
+      // end-list_resource_aliases
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-      // begin-run_reclamation_action
-      RunReclamationActionOptions runReclamationActionOptions = new RunReclamationActionOptions.Builder()
-        .id("testString")
-        .actionName("testString")
+      // begin-create_resource_binding
+      CreateResourceBindingOptions createResourceBindingOptions = new CreateResourceBindingOptions.Builder()
+        .source(aliasGuid)
+        .target(bindingTargetCRN)
+        .name(bindingName)
         .build();
 
-      Response<Reclamation> response = service.runReclamationAction(runReclamationActionOptions).execute();
-      Reclamation reclamation = response.getResult();
+      Response<ResourceBinding> response = service.createResourceBinding(createResourceBindingOptions).execute();
+      ResourceBinding resourceBinding = response.getResult();
+      bindingGuid = resourceBinding.getGuid();
 
-      System.out.println(reclamation);
-      // end-run_reclamation_action
+      System.out.println(resourceBinding);
+      // end-create_resource_binding
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-get_resource_binding
+      GetResourceBindingOptions getResourceBindingOptions = new GetResourceBindingOptions.Builder()
+        .id(bindingGuid)
+        .build();
+
+      Response<ResourceBinding> response = service.getResourceBinding(getResourceBindingOptions).execute();
+      ResourceBinding resourceBinding = response.getResult();
+
+      System.out.println(resourceBinding);
+      // end-get_resource_binding
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-update_resource_binding
+      UpdateResourceBindingOptions updateResourceBindingOptions = new UpdateResourceBindingOptions.Builder()
+        .id(bindingGuid)
+        .name(bindingUpdateName)
+        .build();
+
+      Response<ResourceBinding> response = service.updateResourceBinding(updateResourceBindingOptions).execute();
+      ResourceBinding resourceBinding = response.getResult();
+
+      System.out.println(resourceBinding);
+      // end-update_resource_binding
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-list_resource_bindings
+      ListResourceBindingsOptions listResourceBindingsOptions = new ListResourceBindingsOptions.Builder()
+        .name(bindingName)
+        .build();
+
+      Response<ResourceBindingsList> response = service.listResourceBindings(listResourceBindingsOptions).execute();
+      ResourceBindingsList resourceBindingsList = response.getResult();
+
+      System.out.println(resourceBindingsList);
+      // end-list_resource_bindings
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-create_resource_key
+      CreateResourceKeyOptions createResourceKeyOptions = new CreateResourceKeyOptions.Builder()
+        .name(keyName)
+        .source(instanceGuid)
+        .build();
+
+      Response<ResourceKey> response = service.createResourceKey(createResourceKeyOptions).execute();
+      ResourceKey resourceKey = response.getResult();
+      instanceKeyGuid = resourceKey.getGuid();
+
+      System.out.println(resourceKey);
+      // end-create_resource_key
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-get_resource_key
+      GetResourceKeyOptions getResourceKeyOptions = new GetResourceKeyOptions.Builder()
+        .id(instanceKeyGuid)
+        .build();
+
+      Response<ResourceKey> response = service.getResourceKey(getResourceKeyOptions).execute();
+      ResourceKey resourceKey = response.getResult();
+
+      System.out.println(resourceKey);
+      // end-get_resource_key
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-update_resource_key
+      UpdateResourceKeyOptions updateResourceKeyOptions = new UpdateResourceKeyOptions.Builder()
+        .id(instanceKeyGuid)
+        .name(keyUpdateName)
+        .build();
+
+      Response<ResourceKey> response = service.updateResourceKey(updateResourceKeyOptions).execute();
+      ResourceKey resourceKey = response.getResult();
+
+      System.out.println(resourceKey);
+      // end-update_resource_key
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-list_resource_keys
+      ListResourceKeysOptions listResourceKeysOptions = new ListResourceKeysOptions.Builder()
+        .name(keyName)
+        .build();
+
+      Response<ResourceKeysList> response = service.listResourceKeys(listResourceKeysOptions).execute();
+      ResourceKeysList resourceKeysList = response.getResult();
+
+      System.out.println(resourceKeysList);
+      // end-list_resource_keys
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_resource_binding
+      DeleteResourceBindingOptions deleteResourceBindingOptions = new DeleteResourceBindingOptions.Builder()
+        .id(bindingGuid)
+        .build();
+
+      service.deleteResourceBinding(deleteResourceBindingOptions).execute();
+      // end-delete_resource_binding
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_resource_key
+      DeleteResourceKeyOptions deleteResourceKeyOptions = new DeleteResourceKeyOptions.Builder()
+        .id(instanceKeyGuid)
+        .build();
+
+      service.deleteResourceKey(deleteResourceKeyOptions).execute();
+      // end-delete_resource_key
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_resource_alias
+      DeleteResourceAliasOptions deleteResourceAliasOptions = new DeleteResourceAliasOptions.Builder()
+        .id(aliasGuid)
+        .build();
+
+      service.deleteResourceAlias(deleteResourceAliasOptions).execute();
+      // end-delete_resource_alias
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-lock_resource_instance
+      LockResourceInstanceOptions lockResourceInstanceOptions = new LockResourceInstanceOptions.Builder()
+        .id(instanceGuid)
+        .build();
+
+      Response<ResourceInstance> response = service.lockResourceInstance(lockResourceInstanceOptions).execute();
+      ResourceInstance resourceInstance = response.getResult();
+
+      System.out.println(resourceInstance);
+      // end-lock_resource_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -389,7 +443,7 @@ public class ResourceControllerExamples {
     try {
       // begin-unlock_resource_instance
       UnlockResourceInstanceOptions unlockResourceInstanceOptions = new UnlockResourceInstanceOptions.Builder()
-        .id("testString")
+        .id(instanceGuid)
         .build();
 
       Response<ResourceInstance> response = service.unlockResourceInstance(unlockResourceInstanceOptions).execute();
@@ -403,22 +457,9 @@ public class ResourceControllerExamples {
     }
 
     try {
-      // begin-delete_resource_key
-      DeleteResourceKeyOptions deleteResourceKeyOptions = new DeleteResourceKeyOptions.Builder()
-        .id("testString")
-        .build();
-
-      service.deleteResourceKey(deleteResourceKeyOptions).execute();
-      // end-delete_resource_key
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
       // begin-delete_resource_instance
       DeleteResourceInstanceOptions deleteResourceInstanceOptions = new DeleteResourceInstanceOptions.Builder()
-        .id("testString")
+        .id(instanceGuid)
         .build();
 
       service.deleteResourceInstance(deleteResourceInstanceOptions).execute();
@@ -429,26 +470,44 @@ public class ResourceControllerExamples {
     }
 
     try {
-      // begin-delete_resource_binding
-      DeleteResourceBindingOptions deleteResourceBindingOptions = new DeleteResourceBindingOptions.Builder()
-        .id("testString")
+      // begin-list_reclamations
+      ListReclamationsOptions listReclamationsOptions = new ListReclamationsOptions.Builder()
+        .accountId(accountId)
         .build();
 
-      service.deleteResourceBinding(deleteResourceBindingOptions).execute();
-      // end-delete_resource_binding
+      Response<ReclamationsList> response = service.listReclamations(listReclamationsOptions).execute();
+      ReclamationsList reclamationsList = response.getResult();
+
+      for (Reclamation r : reclamationsList.getResources()) {
+        if (r.getResourceInstanceId().equals(instanceGuid)) {
+          reclamationId = r.getId();
+        }
+      }
+
+      System.out.println(reclamationsList);
+      // end-list_reclamations
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-      // begin-delete_resource_alias
-      DeleteResourceAliasOptions deleteResourceAliasOptions = new DeleteResourceAliasOptions.Builder()
-        .id("testString")
+      // begin-run_reclamation_action
+      RunReclamationActionOptions runReclamationActionOptions = new RunReclamationActionOptions.Builder()
+        .id(reclamationId)
+        .actionName(reclaimAction)
         .build();
 
-      service.deleteResourceAlias(deleteResourceAliasOptions).execute();
-      // end-delete_resource_alias
+      Response<Reclamation> response = service.runReclamationAction(runReclamationActionOptions).execute();
+      Reclamation reclamation = response.getResult();
+
+      System.out.println(reclamation);
+      // end-run_reclamation_action
+      try {
+        TimeUnit.SECONDS.sleep(20);
+      } catch (Exception e) {
+        System.out.println("Failed to wait for 20 seconds.");
+      }
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

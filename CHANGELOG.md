@@ -1,3 +1,10 @@
+## [0.15.5](https://github.com/IBM/platform-services-java-sdk/compare/0.15.4...0.15.5) (2020-11-20)
+
+
+### Bug Fixes
+
+* **build:** introduce travis build stages for parallelism ([c22d114](https://github.com/IBM/platform-services-java-sdk/commit/c22d1141a63668bd1e3fb08eced770bbc4df579d))
+
 ## [0.15.4](https://github.com/IBM/platform-services-java-sdk/compare/0.15.3...0.15.4) (2020-11-19)
 
 

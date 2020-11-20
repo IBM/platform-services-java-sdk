@@ -28,6 +28,8 @@ stages:
     if: branch = master AND type = push AND fork = false
   - name: Publish-Release
     if: tag IS present
+  - name: Sync-to-MavenCentral
+    if: tag IS present
 
 before_install:
   - sudo apt-get update
@@ -77,3 +79,95 @@ jobs:
         - mvn deploy $MVN_ARGS -DskipTests
       after_success:
         - build/bintraySync.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO $TRAVIS_TAG
+
+    - stage: Sync-to-MavenCentral
+      jdk: openjdk8
+      name: platform-services
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:platform-services $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: platform-services-common
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:platform-services-common $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: case-management
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:case-management $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: catalog-management
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:catalog-management $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: configuration-governance
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:configuration-governance $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: enterprise-management
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:enterprise-management $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: enterprise-usage-reports
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:enterprise-usage-reports $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: global-catalog
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:global-catalog $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: global-search
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:global-search $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: global-tagging
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:global-tagging $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: iam-access-groups
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:iam-access-groups $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: iam-identity
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:iam-identity $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: iam-policy-management
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:iam-policy-management $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: open-service-broker
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:open-service-broker $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: resource-controller
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:resource-controller $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: resource-manager
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:resource-manager $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: usage-reports
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:usage-reports $TRAVIS_TAG 
+    - jdk: openjdk8
+      name: user-management
+      install: true
+      script:
+        - build/sync2MC.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO com.ibm.cloud:user-management $TRAVIS_TAG 

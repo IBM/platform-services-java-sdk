@@ -1,3 +1,10 @@
+## [0.15.6](https://github.com/IBM/platform-services-java-sdk/compare/0.15.5...0.15.6) (2020-11-20)
+
+
+### Bug Fixes
+
+* **build:** parallelize all mc sync steps ([6393e79](https://github.com/IBM/platform-services-java-sdk/commit/6393e79bd694327c2c18a9e7506c1205b759b83a))
+
 ## [0.15.5](https://github.com/IBM/platform-services-java-sdk/compare/0.15.4...0.15.5) (2020-11-20)
 
 

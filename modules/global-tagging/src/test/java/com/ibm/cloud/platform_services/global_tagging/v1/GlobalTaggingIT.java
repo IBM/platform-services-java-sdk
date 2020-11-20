@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -55,11 +54,14 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
     private String resourceCRN;
     private String tagName;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../global_tagging.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     @BeforeClass
@@ -85,11 +87,11 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
         Random rand = new Random();
         tagName = String.format("java-sdk-%d", rand.nextInt(1000000));
 
-        System.out.println("Service URL: " + service.getServiceUrl());
-        System.out.println("Resource CRN: " + resourceCRN);
-        System.out.println("Test Tag: " + tagName);
+        log("Service URL: " + service.getServiceUrl());
+        log("Resource CRN: " + resourceCRN);
+        log("Test Tag: " + tagName);
 
-        System.out.println("Setup complete.");
+        log("Setup complete.");
     }
 
     @Test
@@ -106,7 +108,7 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
 
             TagList tagListResult = response.getResult();
             assertNotNull(tagListResult);
-            // System.out.println(String.format("listTags() response:\n%s", tagListResult.toString()));
+            log(String.format("listTags() response:\n%s", tagListResult.toString()));
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
@@ -131,7 +133,7 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
 
             TagResults tagResultsResult = response.getResult();
             assertNotNull(tagResultsResult);
-            // System.out.println(String.format("attachTag() response:\n%s", tagResultsResult.toString()));
+            log(String.format("attachTag() response:\n%s", tagResultsResult.toString()));
 
             assertNotNull(tagResultsResult.getResults());
             for (TagResultsItem result : tagResultsResult.getResults()) {
@@ -141,7 +143,7 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
             // Make sure the tag was in fact attached to the resource.
             List<String> tags = getTagNamesForResource(service, resourceCRN);
             assertNotNull(tags);
-            // System.out.println("Resource now has these tags: " + tags);
+            log("Resource now has these tags: " + tags);
             assertTrue(tags.contains(tagName));
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
@@ -167,7 +169,7 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
 
             TagResults tagResultsResult = response.getResult();
             assertNotNull(tagResultsResult);
-            // System.out.println(String.format("detachTag() response:\n%s", tagResultsResult.toString()));
+            log(String.format("detachTag() response:\n%s", tagResultsResult.toString()));
 
             assertNotNull(tagResultsResult.getResults());
             for (TagResultsItem result : tagResultsResult.getResults()) {
@@ -177,7 +179,7 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
             // Make sure the tag was in fact detached from the resource.
             List<String> tags = getTagNamesForResource(service, resourceCRN);
             assertNotNull(tags);
-            // System.out.println("Resource now has these tags: " + tags);
+            log("Resource now has these tags: " + tags);
             assertFalse(tags.contains(tagName));
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
@@ -197,7 +199,7 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
             assertEquals(response.getStatusCode(), 200);
             DeleteTagResults deleteTagResults = response.getResult();
             assertNotNull(deleteTagResults);
-            // System.out.println(String.format("deleteTag() response:\n%s", deleteTagResults.toString()));
+            log(String.format("deleteTag() response:\n%s", deleteTagResults.toString()));
 
             assertNotNull(deleteTagResults.getResults());
             for (DeleteTagResultsItem result : deleteTagResults.getResults()) {
@@ -220,17 +222,11 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
 
             DeleteTagsResult deleteTagsResult = response.getResult();
             assertNotNull(deleteTagsResult);
-            // System.out.println(String.format("deleteTagAll() response:\n%s", deleteTagsResult.toString()));
+            log(String.format("deleteTagAll() response:\n%s", deleteTagsResult.toString()));
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
         }
-    }
-
-    @AfterClass
-    public void tearDown() {
-        // Add any clean up logic here
-        System.out.println("Clean up complete.");
     }
 
     private List<String> getTagNamesForResource(GlobalTagging service, String resourceId) {

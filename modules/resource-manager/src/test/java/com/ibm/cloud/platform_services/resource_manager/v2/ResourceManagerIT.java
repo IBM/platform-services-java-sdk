@@ -33,11 +33,14 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
     ResourceManager service2 = null;
     String newResourceGroupID = null;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../resource_manager.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     /**

@@ -27,6 +27,7 @@ import java.util.Map;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Account;
@@ -82,8 +83,14 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
 
     private String gitToken;
 
+    @Override
     public String getConfigFilename() {
         return "../../catalog_mgmt.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     @BeforeClass
@@ -223,6 +230,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(result.catalogFilters().categoryFilters(), null);
         assertEquals(result.catalogFilters().idFilters().include(), null);
         assertEquals(result.catalogFilters().idFilters().exclude(), null);
+
+        log("createCatalog() result:\n" + result.toString());
     }
 
     @Test
@@ -251,15 +260,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(getResult.catalogFilters().idFilters().exclude(), null);
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testGetCatalogFailure() {
-        try {
-            GetCatalogOptions getOptions = new GetCatalogOptions.Builder().catalogIdentifier(fakeName).build();
-            Response<Catalog> response = service.getCatalog(getOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        GetCatalogOptions getOptions = new GetCatalogOptions.Builder().catalogIdentifier(fakeName).build();
+        service.getCatalog(getOptions).execute();
     }
 
     @Test
@@ -291,15 +295,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(replaceResult.catalogFilters().idFilters().exclude(), null);
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testUpdateCatalogFailure() {
-        try {
-            ReplaceCatalogOptions replaceOptions = new ReplaceCatalogOptions.Builder().catalogIdentifier(fakeName).id(fakeName).build();
-            Response<Catalog> response = service.replaceCatalog(replaceOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        ReplaceCatalogOptions replaceOptions = new ReplaceCatalogOptions.Builder().catalogIdentifier(fakeName).id(fakeName).build();
+        service.replaceCatalog(replaceOptions).execute();
     }
 
     @Test
@@ -457,7 +456,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(deleteOfferingResponse.getStatusCode(), 200);
     }
 
-    @Test
+    @Test(expectedExceptions = {ForbiddenException.class})
     public void testDeleteOfferingFailure() {
         CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
         Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
@@ -472,13 +471,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
         service.deleteCatalog(deleteOptions).execute();
 
-        try {
-            DeleteOfferingOptions deleteOfferingNoCatalogOptions = new DeleteOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).build();
-            service.deleteOffering(deleteOfferingNoCatalogOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (ForbiddenException e) {
-            assertEquals(e.getStatusCode(), 403);
-        }
+        DeleteOfferingOptions deleteOfferingNoCatalogOptions = new DeleteOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).build();
+        service.deleteOffering(deleteOfferingNoCatalogOptions).execute();
     }
 
     @Test
@@ -551,6 +545,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertNotEquals(result.getResources().size(), 0);
     }
 
+    @Ignore
     @Test
     public void testImportOffering() {
         final String expectedOfferingName = "jenkins-operator";
@@ -589,6 +584,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(offeringResult.kinds().get(0).versions().get(0).tgzUrl(), expectedOfferingZipURL);
     }
 
+    @Ignore
     @Test
     public void testImportOfferingVersion() {
         final String expectedOfferingName = "jenkins-operator";
@@ -663,6 +659,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Ignore
     @Test
     public void testReloadOfferingVersion() {
         final String expectedOfferingName = "jenkins-operator";
@@ -734,6 +731,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Ignore
     @Test
     public void testGetVersion() {
         final String expectedOfferingName = "jenkins-operator";
@@ -776,17 +774,13 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(getResult.kinds().get(0).versions().get(0).tgzUrl(), expectedOfferingZipURL);
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testGetVersionFailure() {
-        try {
-            GetVersionOptions getOptions = new GetVersionOptions.Builder().versionLocId(fakeVersionLocator).build();
-            service.getVersion(getOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        GetVersionOptions getOptions = new GetVersionOptions.Builder().versionLocId(fakeVersionLocator).build();
+        service.getVersion(getOptions).execute();
     }
 
+    @Ignore
     @Test
     public void testDeleteVersion() {
         final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
@@ -809,17 +803,13 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(deleteResponse.getStatusCode(), 200);
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testDeleteVersionFailure() {
-        try {
-            DeleteVersionOptions deleteOption = new DeleteVersionOptions.Builder().versionLocId(fakeVersionLocator).build();
-            service.deleteVersion(deleteOption).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        DeleteVersionOptions deleteOption = new DeleteVersionOptions.Builder().versionLocId(fakeVersionLocator).build();
+        service.deleteVersion(deleteOption).execute();
     }
 
+    @Ignore
     @Test
     public void testGetVersionAbout() {
         final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
@@ -843,17 +833,13 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertNotEquals(getResponse.getResult().length(), 0);
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testGetVersionAboutFailure() {
-        try {
-            GetVersionAboutOptions getOptions = new GetVersionAboutOptions.Builder().versionLocId(fakeVersionLocator).build();
-            service.getVersionAbout(getOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        GetVersionAboutOptions getOptions = new GetVersionAboutOptions.Builder().versionLocId(fakeVersionLocator).build();
+        service.getVersionAbout(getOptions).execute();
     }
 
+    @Ignore
     @Test
     public void testGetVersionUpdates() {
         final int expectedOfferingUpdates = 1;
@@ -890,15 +876,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertTrue(getResult.get(0).isCanUpdate());
     }
 
-    @Test
+    @Test(expectedExceptions = {NotFoundException.class})
     public void testGetVersionUpdatesFailure() {
-        try {
-            GetVersionUpdatesOptions getOptions = new GetVersionUpdatesOptions.Builder().versionLocId(fakeVersionLocator).build();
-            service.getVersionUpdates(getOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
+        GetVersionUpdatesOptions getOptions = new GetVersionUpdatesOptions.Builder().versionLocId(fakeVersionLocator).build();
+        service.getVersionUpdates(getOptions).execute();
     }
 
     @Test
@@ -947,25 +928,15 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         assertEquals(result.getTotalPages(), expectedTotalPages);
     }
 
-    @Test
+    @Test(expectedExceptions = {ForbiddenException.class})
     public void testSearchLicenseVersionFailure() {
-        try {
-            SearchLicenseVersionsOptions getOptions = new SearchLicenseVersionsOptions.Builder().q(fakeName).build();
-            service.searchLicenseVersions(getOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (ForbiddenException e) {
-            assertEquals(e.getStatusCode(), 403);
-        }
+        SearchLicenseVersionsOptions getOptions = new SearchLicenseVersionsOptions.Builder().q(fakeName).build();
+        service.searchLicenseVersions(getOptions).execute();
     }
 
-    @Test
+    @Test(expectedExceptions = {ForbiddenException.class})
     public void testSearchLicenseOfferingsFailure() {
-        try {
-            SearchLicenseOfferingsOptions getOptions = new SearchLicenseOfferingsOptions.Builder().q(fakeName).build();
-            service.searchLicenseOfferings(getOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (ForbiddenException e) {
-            assertEquals(e.getStatusCode(), 403);
-        }
+        SearchLicenseOfferingsOptions getOptions = new SearchLicenseOfferingsOptions.Builder().q(fakeName).build();
+        service.searchLicenseOfferings(getOptions).execute();
     }
 }

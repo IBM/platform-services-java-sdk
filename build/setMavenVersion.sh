@@ -4,10 +4,10 @@
 # set the artifact version #'s.
 
 if [[ -n "${TRAVIS_TAG}" ]]; then
-    printf "\n>>>>> Setting artifact version #'s to: %s" ${TRAVIS_TAG}
+    printf "\n>>>>> Setting artifact version #'s to: %s\n" ${TRAVIS_TAG}
     mvn versions:set -DnewVersion=${TRAVIS_TAG} -DgenerateBackupPoms=false
 else
-    printf "\n>>>>> Bypassing artifact version setting for non-tagged build"
+    printf "\n>>>>> Bypassing artifact version setting for non-tagged build\n"
     echo 
 fi
      

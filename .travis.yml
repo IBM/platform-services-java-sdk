@@ -78,7 +78,7 @@ jobs:
         - build/setMavenVersion.sh
         - mvn deploy $MVN_ARGS -DskipTests
       after_success:
-        - build/bintraySync.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO $TRAVIS_TAG
+        - echo "Maven artifacts successfully published to bintray/jcenter"
 
     - stage: Sync-to-MavenCentral
       jdk: openjdk8

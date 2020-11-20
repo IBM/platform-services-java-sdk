@@ -20,9 +20,11 @@ import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+import com.ibm.cloud.sdk.core.util.CredentialUtils;
 import java.util.UUID;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.io.*;
 
@@ -33,19 +35,27 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertNotNull;
 
 /**
- * Integration test class for the IamAccessGroups service.
+ * Integration test class for the ResourceController service.
  */
 public class ResourceControllerIT extends SdkIntegrationTestBase {
 
-    private static final String TEST_ACCOUNT_ID = "bc2b2fca0af84354a916dc1de6eee42e";
-    private static final String TEST_RESOURCE_GROUP_ID = "13aa3ee48c3b44ddb64c05c79f7ab8ef";
-    private static final String TEST_ORG_ID = "d35d4f0e-5076-4c89-9361-2522894b6548";
-    private static final String TEST_SPACE_ID = "aedabf7e-60f0-410c-ae92-5c17aa0ab7d4";
-    private static final String TEST_APP_ID = "da510b99-d78d-4860-8afd-8650ecc5f49d";
+    public static Map<String, String> config = null;
+    private static String TEST_ACCOUNT_ID = null;
+    private static String TEST_RESOURCE_GROUP_ID = null;
+    private static String TEST_ORG_ID = null;
+    private static String TEST_SPACE_ID = null;
+    private static String TEST_APP_ID = null;
+    private static String TEST_PLAN_ID1 = null;
+    private static String TEST_PLAN_ID2 = null;
     private static final String TEST_REGION_ID1 = "global";
-    private static final String TEST_PLAN_ID1 = "a10e4820-3685-11e9-b210-d663bd873d93";
     private static final String TEST_REGION_ID2 = "global";
-    private static final String TEST_PLAN_ID2 = "a10e4960-3685-11e9-b210-d663bd873d93";
+
+    private static final String reclaimInstanceName = "RcSdkReclaimInstance1";
+    private static final String lockedInstanceNameUpdate = "RcSdkLockedInstanceUpdate1";
+    private static final Map<String, String> instanceNames = new HashMap<String, String>();
+    private static final Map<String, String> aliasNames = new HashMap<String, String>();
+    private static final Map<String, String> bindingNames = new HashMap<String, String>();
+    private static final Map<String, String> keyNames = new HashMap<String, String>();
 
     ResourceController service = null;
     String transactionId = null;
@@ -80,6 +90,18 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
      */
     @BeforeClass
     public void constructService() {
+        // Populate name maps
+        instanceNames.put("name", "RcSdkInstance1Java");
+        instanceNames.put("update", "RcSdkInstanceUpdate1Java");
+        aliasNames.put("name", "RcSdkAlias1Java");
+        aliasNames.put("update", "RcSdkAliasUpdate1Java");
+        bindingNames.put("name", "RcSdkBinding1Java");
+        bindingNames.put("update", "RcSdkBindingUpdate1Java");
+        keyNames.put("name", "RcSdkKey1Java");
+        keyNames.put("update", "RcSdkKeyUpdate1Java");
+        keyNames.put("name2", "RcSdkKey2Java");
+        keyNames.put("update2", "RcSdkKeyUpdate2Java");
+
         // Ask super if we should skip the tests.
         if (skipTests()) {
             return;
@@ -90,8 +112,21 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(service);
         assertNotNull(service.getServiceUrl());
 
+        config = CredentialUtils.getServiceProperties(ResourceController.DEFAULT_SERVICE_NAME);
+        assertNotNull(config);
+        assertFalse(config.isEmpty());
+
+        TEST_ACCOUNT_ID = config.get("ACCOUNT_ID");
+        TEST_RESOURCE_GROUP_ID = config.get("RESOURCE_GROUP");
+        TEST_ORG_ID = config.get("ORGANIZATION_GUID");
+        TEST_SPACE_ID = config.get("SPACE_GUID");
+        TEST_APP_ID = config.get("APPLICATION_GUID");
+        TEST_PLAN_ID1 = config.get("PLAN_ID");
+        TEST_PLAN_ID2 = config.get("RECLAMATION_PLAN_ID");
+
         transactionId = UUID.randomUUID().toString();
         System.out.println("Transaction-Id for Test Run: " + transactionId);
+        cleanupByName();
     }
 
     @AfterClass
@@ -103,12 +138,13 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         } else {
             System.out.println("Reclamation instance was not created. No cleanup needed.");
         }
+        cleanupByName();
     }
 
     @Test
     public void test00CreateResoureInstance() {
         CreateResourceInstanceOptions options = new CreateResourceInstanceOptions.Builder()
-            .name("RcSdkInstance1")
+            .name(instanceNames.get("name"))
             .target(TEST_REGION_ID1)
             .resourceGroup(TEST_RESOURCE_GROUP_ID)
             .resourcePlanId(TEST_PLAN_ID1)
@@ -126,7 +162,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(result.getGuid());
         assertNotNull(result.getCrn());
         assertEquals(result.getId(), result.getCrn());
-        assertEquals(result.getName(), "RcSdkInstance1");
+        assertEquals(result.getName(), instanceNames.get("name"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getResourcePlanId(), TEST_PLAN_ID1);
@@ -156,7 +192,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(result.getId(), testInstanceCrn);
         assertEquals(result.getGuid(), testInstanceGuid);
         assertEquals(result.getCrn(), testInstanceCrn);
-        assertEquals(result.getName(), "RcSdkInstance1");
+        assertEquals(result.getName(), instanceNames.get("name"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getResourcePlanId(), TEST_PLAN_ID1);
@@ -174,7 +210,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
         UpdateResourceInstanceOptions options = new UpdateResourceInstanceOptions.Builder()
             .id(testInstanceGuid)
-            .name("RcSdkInstanceUpdate1")
+            .name(instanceNames.get("update"))
             .parameters(params)
             .build();
 
@@ -187,7 +223,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceInstance result = response.getResult();
         assertNotNull(result);
         assertEquals(result.getId(), testInstanceCrn);
-        assertEquals(result.getName(), "RcSdkInstanceUpdate1");
+        assertEquals(result.getName(), instanceNames.get("update"));
         assertEquals(result.getState(), "active");
         assertEquals(result.getLastOperation().get("type").toString(), "update");
         assertEquals(result.getLastOperation().get("sub_type").toString(), "config");
@@ -229,7 +265,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceInstance instance = result.getResources().get(0);
         assertEquals(instance.getId(), testInstanceCrn);
         assertEquals(instance.getGuid(), testInstanceGuid);
-        assertEquals(instance.getName(), "RcSdkInstanceUpdate1");
+        assertEquals(instance.getName(), instanceNames.get("update"));
         assertEquals(instance.getState(), "active");
         assertEquals(instance.getLastOperation().get("type").toString(), "update");
         assertEquals(instance.getLastOperation().get("sub_type").toString(), "config");
@@ -240,7 +276,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test05ListResourceInstancesWithNameFilter() {
         ListResourceInstancesOptions options = new ListResourceInstancesOptions.Builder()
-            .name("RcSdkInstance1")
+            .name(instanceNames.get("name"))
             .build();
 
         Response<ResourceInstancesList> response = service.listResourceInstances(options)
@@ -259,7 +295,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         String target = "crn:v1:bluemix:public:bluemix:us-south:o/" + TEST_ORG_ID + "::cf-space:" + TEST_SPACE_ID;
         aliasTargetCrn = "crn:v1:bluemix:public:cf:us-south:o/" + TEST_ORG_ID + "::cf-space:" + TEST_SPACE_ID;
         CreateResourceAliasOptions options = new CreateResourceAliasOptions.Builder()
-            .name("RcSdkAlias1")
+            .name(aliasNames.get("name"))
             .source(testInstanceGuid)
             .target(target)
             .build();
@@ -276,7 +312,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(result.getGuid());
         assertNotNull(result.getCrn());
         assertEquals(result.getId(), result.getCrn());
-        assertEquals(result.getName(), "RcSdkAlias1");
+        assertEquals(result.getName(), aliasNames.get("name"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getTargetCrn(), aliasTargetCrn);
@@ -303,7 +339,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(result.getId(), testAliasCrn);
         assertEquals(result.getGuid(), testAliasGuid);
         assertEquals(result.getCrn(), testAliasCrn);
-        assertEquals(result.getName(), "RcSdkAlias1");
+        assertEquals(result.getName(), aliasNames.get("name"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getTargetCrn(), aliasTargetCrn);
@@ -315,7 +351,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     public void test08UpdateResourceAlias() {
         UpdateResourceAliasOptions options = new UpdateResourceAliasOptions.Builder()
             .id(testAliasGuid)
-            .name("RcSdkAliasUpdate1")
+            .name(aliasNames.get("update"))
             .build();
 
         Response<ResourceAlias> response = service.updateResourceAlias(options)
@@ -327,7 +363,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceAlias result = response.getResult();
         assertNotNull(result);
         assertEquals(result.getId(), testAliasCrn);
-        assertEquals(result.getName(), "RcSdkAliasUpdate1");
+        assertEquals(result.getName(), aliasNames.get("update"));
         assertEquals(result.getState(), "active");
     }
 
@@ -365,7 +401,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceAlias alias = result.getResources().get(0);
         assertEquals(alias.getId(), testAliasCrn);
         assertEquals(alias.getGuid(), testAliasGuid);
-        assertEquals(alias.getName(), "RcSdkAliasUpdate1");
+        assertEquals(alias.getName(), aliasNames.get("update"));
         assertEquals(alias.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(alias.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(alias.getTargetCrn(), aliasTargetCrn);
@@ -376,7 +412,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test11ListResourceAliasesWithNameFilter() {
         ListResourceAliasesOptions options = new ListResourceAliasesOptions.Builder()
-            .name("RcSdkAlias1")
+            .name(aliasNames.get("name"))
             .build();
 
         Response<ResourceAliasesList> response = service.listResourceAliases(options)
@@ -397,7 +433,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         CreateResourceBindingOptions options = new CreateResourceBindingOptions.Builder()
             .source(testAliasGuid)
             .target(target)
-            .name("RcSdkBinding1")
+            .name(bindingNames.get("name"))
             .build();
 
         Response<ResourceBinding> response = service.createResourceBinding(options)
@@ -412,7 +448,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(result.getGuid());
         assertNotNull(result.getCrn());
         assertEquals(result.getId(), result.getCrn());
-        assertEquals(result.getName(), "RcSdkBinding1");
+        assertEquals(result.getName(), bindingNames.get("name"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getSourceCrn(), testAliasCrn);
@@ -439,7 +475,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(result.getId(), testBindingCrn);
         assertEquals(result.getGuid(), testBindingGuid);
         assertEquals(result.getCrn(), testBindingCrn);
-        assertEquals(result.getName(), "RcSdkBinding1");
+        assertEquals(result.getName(), bindingNames.get("name"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getSourceCrn(), testAliasCrn);
@@ -451,7 +487,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     public void test14UpdateResourceBinding() {
         UpdateResourceBindingOptions options = new UpdateResourceBindingOptions.Builder()
             .id(testBindingGuid)
-            .name("RcSdkBindingUpdate1")
+            .name(bindingNames.get("update"))
             .build();
 
         Response<ResourceBinding> response = service.updateResourceBinding(options)
@@ -463,7 +499,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceBinding result = response.getResult();
         assertNotNull(result);
         assertEquals(result.getId(), testBindingCrn);
-        assertEquals(result.getName(), "RcSdkBindingUpdate1");
+        assertEquals(result.getName(), bindingNames.get("update"));
         assertEquals(result.getState(), "active");
     }
 
@@ -501,7 +537,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceBinding binding = result.getResources().get(0);
         assertEquals(binding.getId(), testBindingCrn);
         assertEquals(binding.getGuid(), testBindingGuid);
-        assertEquals(binding.getName(), "RcSdkBindingUpdate1");
+        assertEquals(binding.getName(), bindingNames.get("update"));
         assertEquals(binding.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(binding.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(binding.getSourceCrn(), testAliasCrn);
@@ -512,7 +548,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test17ListResourceBindingsWithNameFilter() {
         ListResourceBindingsOptions options = new ListResourceBindingsOptions.Builder()
-            .name("RcSdkBinding1")
+            .name(bindingNames.get("name"))
             .build();
 
         Response<ResourceBindingsList> response = service.listResourceBindings(options)
@@ -529,7 +565,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test18CreateResoureKeyForInstance() {
         CreateResourceKeyOptions options = new CreateResourceKeyOptions.Builder()
-            .name("RcSdkKey1")
+            .name(keyNames.get("name"))
             .source(testInstanceGuid)
             .build();
 
@@ -545,7 +581,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(result.getGuid());
         assertNotNull(result.getCrn());
         assertEquals(result.getId(), result.getCrn());
-        assertEquals(result.getName(), "RcSdkKey1");
+        assertEquals(result.getName(), keyNames.get("name"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getSourceCrn(), testInstanceCrn);
@@ -571,7 +607,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(result.getId(), testInstanceKeyCrn);
         assertEquals(result.getGuid(), testInstanceKeyGuid);
         assertEquals(result.getCrn(), testInstanceKeyCrn);
-        assertEquals(result.getName(), "RcSdkKey1");
+        assertEquals(result.getName(), keyNames.get("name"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getSourceCrn(), testInstanceCrn);
@@ -582,7 +618,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     public void test20UpdateResourceKey() {
         UpdateResourceKeyOptions options = new UpdateResourceKeyOptions.Builder()
             .id(testInstanceKeyGuid)
-            .name("RcSdkKeyUpdate1")
+            .name(keyNames.get("update"))
             .build();
 
         Response<ResourceKey> response = service.updateResourceKey(options)
@@ -594,7 +630,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceKey result = response.getResult();
         assertNotNull(result);
         assertEquals(result.getId(), testInstanceKeyCrn);
-        assertEquals(result.getName(), "RcSdkKeyUpdate1");
+        assertEquals(result.getName(), keyNames.get("update"));
         assertEquals(result.getState(), "active");
     }
 
@@ -632,7 +668,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceKey key = result.getResources().get(0);
         assertEquals(key.getId(), testInstanceKeyCrn);
         assertEquals(key.getGuid(), testInstanceKeyGuid);
-        assertEquals(key.getName(), "RcSdkKeyUpdate1");
+        assertEquals(key.getName(), keyNames.get("update"));
         assertEquals(key.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(key.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(key.getSourceCrn(), testInstanceCrn);
@@ -642,7 +678,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test23ListResourceKeysWithNameFilter() {
         ListResourceKeysOptions options = new ListResourceKeysOptions.Builder()
-            .name("RcSdkKey1")
+            .name(keyNames.get("name"))
             .build();
 
         Response<ResourceKeysList> response = service.listResourceKeys(options)
@@ -659,7 +695,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test24CreateResoureKeyForAlias() {
         CreateResourceKeyOptions options = new CreateResourceKeyOptions.Builder()
-            .name("RcSdkKey2")
+            .name(keyNames.get("name2"))
             .source(testAliasGuid)
             .build();
 
@@ -675,7 +711,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(result.getGuid());
         assertNotNull(result.getCrn());
         assertEquals(result.getId(), result.getCrn());
-        assertEquals(result.getName(), "RcSdkKey2");
+        assertEquals(result.getName(), keyNames.get("name2"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getSourceCrn(), testAliasCrn);
@@ -701,7 +737,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(result.getId(), testAliasKeyCrn);
         assertEquals(result.getGuid(), testAliasKeyGuid);
         assertEquals(result.getCrn(), testAliasKeyCrn);
-        assertEquals(result.getName(), "RcSdkKey2");
+        assertEquals(result.getName(), keyNames.get("name2"));
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getSourceCrn(), testAliasCrn);
@@ -712,7 +748,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     public void test26UpdateResourceKey() {
         UpdateResourceKeyOptions options = new UpdateResourceKeyOptions.Builder()
             .id(testAliasKeyCrn)
-            .name("RcSdkKeyUpdate2")
+            .name(keyNames.get("update2"))
             .build();
 
         Response<ResourceKey> response = service.updateResourceKey(options)
@@ -724,7 +760,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceKey result = response.getResult();
         assertNotNull(result);
         assertEquals(result.getId(), testAliasKeyCrn);
-        assertEquals(result.getName(), "RcSdkKeyUpdate2");
+        assertEquals(result.getName(), keyNames.get("update2"));
         assertEquals(result.getState(), "active");
     }
 
@@ -762,7 +798,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceKey key = result.getResources().get(0);
         assertEquals(key.getId(), testAliasKeyCrn);
         assertEquals(key.getGuid(), testAliasKeyGuid);
-        assertEquals(key.getName(), "RcSdkKeyUpdate2");
+        assertEquals(key.getName(), keyNames.get("update2"));
         assertEquals(key.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(key.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(key.getSourceCrn(), testAliasCrn);
@@ -772,7 +808,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test29ListResourceKeysWithNameFilter() {
         ListResourceKeysOptions options = new ListResourceKeysOptions.Builder()
-            .name("RcSdkKey2")
+            .name(keyNames.get("name2"))
             .build();
 
         Response<ResourceKeysList> response = service.listResourceKeys(options)
@@ -958,7 +994,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         try {
             UpdateResourceInstanceOptions options = new UpdateResourceInstanceOptions.Builder()
                 .id(testInstanceGuid)
-                .name("RcSdkLockedInstanceUpdate1")
+                .name(lockedInstanceNameUpdate)
                 .build();
 
             Response<ResourceInstance> response = service.updateResourceInstance(options)
@@ -1043,7 +1079,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test44CreateResoureInstanceForReclamationEnabledPlan() {
         CreateResourceInstanceOptions options = new CreateResourceInstanceOptions.Builder()
-            .name("RcSdkReclaimInstance1")
+            .name(reclaimInstanceName)
             .target(TEST_REGION_ID2)
             .resourceGroup(TEST_RESOURCE_GROUP_ID)
             .resourcePlanId(TEST_PLAN_ID2)
@@ -1061,7 +1097,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(result.getGuid());
         assertNotNull(result.getCrn());
         assertEquals(result.getId(), result.getCrn());
-        assertEquals(result.getName(), "RcSdkReclaimInstance1");
+        assertEquals(result.getName(), reclaimInstanceName);
         assertEquals(result.getAccountId(), TEST_ACCOUNT_ID);
         assertEquals(result.getResourceGroupId(), TEST_RESOURCE_GROUP_ID);
         assertEquals(result.getResourcePlanId(), TEST_PLAN_ID2);
@@ -1512,6 +1548,193 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 System.out.println("Successfully reclaimed instance " + testReclaimInstanceGuid);
         } catch (ServiceResponseException e) {
             System.out.println("Failed to reclaim instance " + testReclaimInstanceGuid + ". Error: " + e.getMessage());
+        }
+    }
+
+    public void cleanupByName(){
+        //Resource Key
+        for (String name : keyNames.values()){
+            try {
+                ListResourceKeysOptions listKeyOptions = new ListResourceKeysOptions.Builder()
+                    .name(name)
+                    .build();
+
+                Response<ResourceKeysList> response = service.listResourceKeys(listKeyOptions)
+                    .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
+                    .execute();
+                ResourceKeysList result = response.getResult();
+                List<ResourceKey> resources = result.getResources();
+                if (resources.size() > 0){
+                    for (ResourceKey res : resources){
+                        String keyGuid = res.getGuid();
+                        try {
+                            DeleteResourceKeyOptions deleteKeyOptions = new DeleteResourceKeyOptions.Builder()
+                                .id(keyGuid)
+                                .build();
+
+                            service.deleteResourceKey(deleteKeyOptions)
+                            .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
+                            .execute();
+
+                            System.out.println("Successful cleanup of key " + keyGuid);
+                        } catch (ServiceResponseException e) {
+                            if (e.getStatusCode() == 410) {
+                                System.out.println("Key " + keyGuid + " was already deleted by tests.");
+                            } else {
+                                System.out.println("Failed to cleanup key " + keyGuid + ". Error: " + e.getMessage());
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("No keys found for name " + name);
+                }
+            } catch (ServiceResponseException e) {
+                System.out.println("Failed to retrieve key with name " + name + "for cleanup. Error: " + e.getMessage());
+            }
+        }
+
+        //Resource Instance
+        for (String name : instanceNames.values()){
+            try {
+                ListResourceInstancesOptions listInstanceOptions = new ListResourceInstancesOptions.Builder()
+                    .name(name)
+                    .build();
+
+                Response<ResourceInstancesList> response = service.listResourceInstances(listInstanceOptions)
+                    .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
+                    .execute();
+                ResourceInstancesList result = response.getResult();
+                List<ResourceInstance> resources = result.getResources();
+                if (resources.size() > 0){
+                    for (ResourceInstance res : resources){
+                        String instanceGuid = res.getGuid();
+                        
+                        //unlock if its locked
+                        if (res.getState().equals("active") && res.isLocked()) {
+                            try {
+                                UnlockResourceInstanceOptions options = new UnlockResourceInstanceOptions.Builder()
+                                    .id(instanceGuid)
+                                    .build();
+
+                                service.unlockResourceInstance(options)
+                                    .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
+                                    .execute();
+
+                                System.out.println("Successfully unlocked instance " + instanceGuid);
+                            } catch (ServiceResponseException e) {
+                                System.out.println("Failed to unlock instance " + instanceGuid + "for cleanup. Error: " + e.getMessage());
+                            }
+                        }
+
+                        try {
+                            DeleteResourceInstanceOptions deleteInstanceOptions = new DeleteResourceInstanceOptions.Builder()
+                                .id(instanceGuid)
+                                .build();
+
+                            service.deleteResourceInstance(deleteInstanceOptions)
+                            .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
+                            .execute();
+
+                            System.out.println("Successful cleanup of instance " + instanceGuid);
+                        } catch (ServiceResponseException e) {
+                            if (e.getStatusCode() == 410) {
+                                System.out.println("Instance " + instanceGuid + " was already deleted by tests.");
+                            } else {
+                                System.out.println("Failed to cleanup instance " + instanceGuid + ". Error: " + e.getMessage());
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("No instances found for name " + name);
+                }
+            } catch (ServiceResponseException e) {
+                System.out.println("Failed to retrieve instance with name " + name + "for cleanup. Error: " + e.getMessage());
+            }
+
+        }
+
+        //Resource Binding
+        for (String name : bindingNames.values()){
+            try {
+                ListResourceBindingsOptions listBindingOptions = new ListResourceBindingsOptions.Builder()
+                    .name(name)
+                    .build();
+
+                Response<ResourceBindingsList> response = service.listResourceBindings(listBindingOptions)
+                    .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
+                    .execute();
+                ResourceBindingsList result = response.getResult();
+                List<ResourceBinding> resources = result.getResources();
+                if (resources.size() > 0){
+                    for (ResourceBinding res : resources){
+                        String bindingGuid = res.getGuid();
+                        try {
+                            DeleteResourceBindingOptions deleteBindingOptions = new DeleteResourceBindingOptions.Builder()
+                                .id(bindingGuid)
+                                .build();
+
+                            service.deleteResourceBinding(deleteBindingOptions)
+                            .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
+                            .execute();
+
+                            System.out.println("Successful cleanup of binding " + bindingGuid);
+                        } catch (ServiceResponseException e) {
+                            if (e.getStatusCode() == 410) {
+                                System.out.println("Binding " + bindingGuid + " was already deleted by tests.");
+                            } else {
+                                System.out.println("Failed to cleanup binding " + bindingGuid + ". Error: " + e.getMessage());
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("No bindings found for name " + name);
+                }
+            } catch (ServiceResponseException e) {
+                System.out.println("Failed to retrieve Bindings with name " + name + "for cleanup. Error: " + e.getMessage());
+            }
+
+        }
+
+        //Resource Alias
+        for (String name : aliasNames.values()){
+            try {
+                ListResourceAliasesOptions listAliasOptions = new ListResourceAliasesOptions.Builder()
+                    .name(name)
+                    .build();
+
+                Response<ResourceAliasesList> response = service.listResourceAliases(listAliasOptions)
+                    .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
+                    .execute();
+                ResourceAliasesList result = response.getResult();
+                List<ResourceAlias> resources = result.getResources();
+                if (resources.size() > 0){
+                    for (ResourceAlias res : resources){
+                        String aliasGuid = res.getGuid();
+                        try {
+                            DeleteResourceAliasOptions deleteAliasOptions = new DeleteResourceAliasOptions.Builder()
+                                .id(aliasGuid)
+                                .build();
+
+                            service.deleteResourceAlias(deleteAliasOptions)
+                            .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
+                            .execute();
+
+                            System.out.println("Successful cleanup of alias " + aliasGuid);
+                        } catch (ServiceResponseException e) {
+                            if (e.getStatusCode() == 410) {
+                                System.out.println("Alias " + aliasGuid + " was already deleted by tests.");
+                            } else {
+                                System.out.println("Failed to cleanup alias " + aliasGuid + ". Error: " + e.getMessage());
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("No alias found for name " + name);
+                }
+            } catch (ServiceResponseException e) {
+                System.out.println("Failed to retrieve alias with name " + name + "for cleanup. Error: " + e.getMessage());
+            }
+
         }
     }
 }

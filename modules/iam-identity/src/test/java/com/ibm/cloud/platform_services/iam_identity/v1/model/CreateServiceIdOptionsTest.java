@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyRequest;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyInsideCreateServiceIdRequest;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -34,34 +34,30 @@ public class CreateServiceIdOptionsTest {
 
   @Test
   public void testCreateServiceIdOptions() throws Throwable {
-    CreateApiKeyRequest createApiKeyRequestModel = new CreateApiKeyRequest.Builder()
+    ApiKeyInsideCreateServiceIdRequest apiKeyInsideCreateServiceIdRequestModel = new ApiKeyInsideCreateServiceIdRequest.Builder()
       .name("testString")
       .description("testString")
-      .iamId("testString")
-      .accountId("testString")
       .apikey("testString")
       .storeValue(true)
       .build();
-    assertEquals(createApiKeyRequestModel.name(), "testString");
-    assertEquals(createApiKeyRequestModel.description(), "testString");
-    assertEquals(createApiKeyRequestModel.iamId(), "testString");
-    assertEquals(createApiKeyRequestModel.accountId(), "testString");
-    assertEquals(createApiKeyRequestModel.apikey(), "testString");
-    assertEquals(createApiKeyRequestModel.storeValue(), Boolean.valueOf(true));
+    assertEquals(apiKeyInsideCreateServiceIdRequestModel.name(), "testString");
+    assertEquals(apiKeyInsideCreateServiceIdRequestModel.description(), "testString");
+    assertEquals(apiKeyInsideCreateServiceIdRequestModel.apikey(), "testString");
+    assertEquals(apiKeyInsideCreateServiceIdRequestModel.storeValue(), Boolean.valueOf(true));
 
     CreateServiceIdOptions createServiceIdOptionsModel = new CreateServiceIdOptions.Builder()
       .accountId("testString")
       .name("testString")
       .description("testString")
       .uniqueInstanceCrns(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .apikey(createApiKeyRequestModel)
+      .apikey(apiKeyInsideCreateServiceIdRequestModel)
       .entityLock("testString")
       .build();
     assertEquals(createServiceIdOptionsModel.accountId(), "testString");
     assertEquals(createServiceIdOptionsModel.name(), "testString");
     assertEquals(createServiceIdOptionsModel.description(), "testString");
     assertEquals(createServiceIdOptionsModel.uniqueInstanceCrns(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
-    assertEquals(createServiceIdOptionsModel.apikey(), createApiKeyRequestModel);
+    assertEquals(createServiceIdOptionsModel.apikey(), apiKeyInsideCreateServiceIdRequestModel);
     assertEquals(createServiceIdOptionsModel.entityLock(), "testString");
   }
 

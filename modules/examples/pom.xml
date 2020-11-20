@@ -30,7 +30,17 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>enterprise-usage-reports</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>global-tagging</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>iam-access-groups</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -46,6 +56,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>resource-controller</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>usage-reports</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency> 

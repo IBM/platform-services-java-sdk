@@ -43,8 +43,14 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
     /**
      * This method provides our config filename to the base class.
      */
+    @Override
     public String getConfigFilename() {
         return "../../ghost.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     /**
@@ -64,8 +70,7 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
             this.prop = new Properties();
             this.prop.load(input);
         } catch (Throwable t) {
-            System.out.println(
-                    String.format("Unable to load properties file %s: %s", getConfigFilename(), t.getMessage()));
+            log(String.format("Unable to load properties file %s: %s", getConfigFilename(), t.getMessage()));
             this.skipTests = true;
             return;
         }
@@ -81,7 +86,7 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
 
     @Test
     public void testSearchAll() {
-        System.out.println("START GlobalSearchIT.testSearchAll method");
+        log("START GlobalSearchIT.testSearchAll method");
 
         try {
             // Test - search all resource
@@ -92,7 +97,7 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
             assertNotNull(response);
             ScanResult result = response.getResult();
             assertNotNull(result);
-            System.out.println("response: " + result.getItems());
+            log("response: " + result.getItems());
             assertEquals(result.getItems().size(), 2);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %s: %s\nError details: %s",
@@ -102,7 +107,7 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
 
     @Test(dependsOnMethods = { "testSearchAll" })
     public void testSearchOne() {
-        System.out.println("START GlobalSearchIT.testSearchOne method");
+        log("START GlobalSearchIT.testSearchOne method");
 
         try {
             // Test - search all resource and set limit = 1
@@ -118,7 +123,7 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
             ScanResult result = response.getResult();
             assertNotNull(result);
             assertEquals(result.getItems().size(), 1);
-            System.out.println("response: " + result.getItems());
+            log("response: " + result.getItems());
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
@@ -132,6 +137,6 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
         assertNotNull(responseSTL);
         SupportedTypesList resultSTL = responseSTL.getResult();
         assertNotNull(resultSTL);
-        System.out.println("response SupportedTypesList: " + resultSTL.getSupportedTypes());
+        log("response SupportedTypesList: " + resultSTL.getSupportedTypes());
     }
 }

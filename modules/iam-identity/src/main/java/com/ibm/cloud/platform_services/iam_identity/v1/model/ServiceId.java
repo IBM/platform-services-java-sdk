@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -31,9 +32,9 @@ public class ServiceId extends GenericModel {
   protected String crn;
   protected Boolean locked;
   @SerializedName("created_at")
-  protected String createdAt;
+  protected Date createdAt;
   @SerializedName("modified_at")
-  protected String modifiedAt;
+  protected Date modifiedAt;
   @SerializedName("account_id")
   protected String accountId;
   protected String name;
@@ -118,7 +119,7 @@ public class ServiceId extends GenericModel {
    *
    * @return the createdAt
    */
-  public String getCreatedAt() {
+  public Date getCreatedAt() {
     return createdAt;
   }
 
@@ -129,7 +130,7 @@ public class ServiceId extends GenericModel {
    *
    * @return the modifiedAt
    */
-  public String getModifiedAt() {
+  public Date getModifiedAt() {
     return modifiedAt;
   }
 

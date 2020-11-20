@@ -18,22 +18,50 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertNotNull;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.TimeZone;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccountSettings;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddAccessGroupRuleOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersRequestMembersItem;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersResponseMembersItem;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMemberToMultipleAccessGroupsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembersToAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembershipMultipleGroupsResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembershipMultipleGroupsResponseGroupsItem;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupRuleOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccountSettingsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Group;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupMembersList;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupsList;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.IsMemberOfAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupMembersOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupRulesOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListGroupMembersResponseMember;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveAccessGroupRuleOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAllAccessGroupsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMembersFromAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ReplaceAccessGroupRuleOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Rule;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RuleConditions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RulesList;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.*;
-import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 /**
@@ -57,12 +85,16 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
     String testClaimRuleETag = null;
     AccountSettings testAccountSettings = null;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../iam_access_groups.env";
     }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
+    }
+
 
     /**
      * This method is invoked before any @Test-annotated methods, and is responsible for
@@ -92,8 +124,8 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
         assertNotNull(service);
         assertNotNull(service.getServiceUrl());
 
-        System.out.println("Using Account Id: " + testAccountId);
-        System.out.println("Using Service URL: " + service.getServiceUrl());
+        log("Using Account Id: " + testAccountId);
+        log("Using Service URL: " + service.getServiceUrl());
     }
 
     @Test
@@ -494,30 +526,17 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
             // Force delete the test group (or any test groups older than 5 minutes)
             if (TEST_GROUP_NAME.equals(group.getName())) {
+                Date now = new Date();
+                final int FIVE_MINUTES = 5 * 60 * 1000;
+                long createdAt = group.getCreatedAt().getTime();
+                long fiveMinutesAgo = now.getTime() - FIVE_MINUTES;
 
-                try {
-
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-                    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                    Date parsedDate = dateFormat.parse(group.getCreatedAt());
-                    Date now = new Date();
-
-                    final int FIVE_MINUTES = 5 * 60 * 1000;
-                    long createdAt = parsedDate.getTime();
-                    long fiveMinutesAgo = now.getTime() - FIVE_MINUTES;
-
-                    if (testGroupId.equals(group.getId()) || createdAt < fiveMinutesAgo) {
-                        DeleteAccessGroupOptions deleteOptions = new DeleteAccessGroupOptions.Builder()
-                                .accessGroupId(group.getId()).force(true).build();
-                        Response<Void> deleteResponse = service.deleteAccessGroup(deleteOptions).execute();
-                        assertNotNull(deleteResponse);
-                        assertEquals(deleteResponse.getStatusCode(), 204);
-                    }
-
-                }  catch (ParseException e) {
-                    System.out.println("Exception :" + e);
-                    System.out.println("Cleanup failed");
-                    break;
+                if (testGroupId.equals(group.getId()) || createdAt < fiveMinutesAgo) {
+                    DeleteAccessGroupOptions deleteOptions = new DeleteAccessGroupOptions.Builder()
+                            .accessGroupId(group.getId()).force(true).build();
+                    Response<Void> deleteResponse = service.deleteAccessGroup(deleteOptions).execute();
+                    assertNotNull(deleteResponse);
+                    assertEquals(deleteResponse.getStatusCode(), 204);
                 }
             }
         }

@@ -31,6 +31,7 @@ public class UpdateRuleOptions extends GenericModel {
   }
 
   protected String ruleId;
+  protected String transactionId;
   protected String ifMatch;
   protected String name;
   protected String description;
@@ -40,13 +41,13 @@ public class UpdateRuleOptions extends GenericModel {
   protected String accountId;
   protected String ruleType;
   protected List<String> labels;
-  protected String transactionId;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String ruleId;
+    private String transactionId;
     private String ifMatch;
     private String name;
     private String description;
@@ -56,10 +57,10 @@ public class UpdateRuleOptions extends GenericModel {
     private String accountId;
     private String ruleType;
     private List<String> labels;
-    private String transactionId;
 
     private Builder(UpdateRuleOptions updateRuleOptions) {
       this.ruleId = updateRuleOptions.ruleId;
+      this.transactionId = updateRuleOptions.transactionId;
       this.ifMatch = updateRuleOptions.ifMatch;
       this.name = updateRuleOptions.name;
       this.description = updateRuleOptions.description;
@@ -69,7 +70,6 @@ public class UpdateRuleOptions extends GenericModel {
       this.accountId = updateRuleOptions.accountId;
       this.ruleType = updateRuleOptions.ruleType;
       this.labels = updateRuleOptions.labels;
-      this.transactionId = updateRuleOptions.transactionId;
     }
 
     /**
@@ -82,6 +82,7 @@ public class UpdateRuleOptions extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param ruleId the ruleId
+     * @param transactionId the transactionId
      * @param ifMatch the ifMatch
      * @param name the name
      * @param description the description
@@ -89,8 +90,9 @@ public class UpdateRuleOptions extends GenericModel {
      * @param requiredConfig the requiredConfig
      * @param enforcementActions the enforcementActions
      */
-    public Builder(String ruleId, String ifMatch, String name, String description, TargetResource target, RuleRequiredConfig requiredConfig, List<EnforcementAction> enforcementActions) {
+    public Builder(String ruleId, String transactionId, String ifMatch, String name, String description, TargetResource target, RuleRequiredConfig requiredConfig, List<EnforcementAction> enforcementActions) {
       this.ruleId = ruleId;
+      this.transactionId = transactionId;
       this.ifMatch = ifMatch;
       this.name = name;
       this.description = description;
@@ -148,6 +150,17 @@ public class UpdateRuleOptions extends GenericModel {
      */
     public Builder ruleId(String ruleId) {
       this.ruleId = ruleId;
+      return this;
+    }
+
+    /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the UpdateRuleOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
       return this;
     }
 
@@ -251,22 +264,13 @@ public class UpdateRuleOptions extends GenericModel {
       this.labels = labels;
       return this;
     }
-
-    /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the UpdateRuleOptions builder
-     */
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
   }
 
   protected UpdateRuleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.ruleId,
       "ruleId cannot be empty");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
+      "transactionId cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ifMatch,
       "ifMatch cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,
@@ -280,6 +284,7 @@ public class UpdateRuleOptions extends GenericModel {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.enforcementActions,
       "enforcementActions cannot be null");
     ruleId = builder.ruleId;
+    transactionId = builder.transactionId;
     ifMatch = builder.ifMatch;
     name = builder.name;
     description = builder.description;
@@ -289,7 +294,6 @@ public class UpdateRuleOptions extends GenericModel {
     accountId = builder.accountId;
     ruleType = builder.ruleType;
     labels = builder.labels;
-    transactionId = builder.transactionId;
   }
 
   /**
@@ -310,6 +314,22 @@ public class UpdateRuleOptions extends GenericModel {
    */
   public String ruleId() {
     return ruleId;
+  }
+
+  /**
+   * Gets the transactionId.
+   *
+   * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+   * sends a transaction ID in the
+   * `trace` field of the response body.
+   *
+   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+   * with each request.
+   *
+   * @return the transactionId
+   */
+  public String transactionId() {
+    return transactionId;
   }
 
   /**
@@ -414,22 +434,6 @@ public class UpdateRuleOptions extends GenericModel {
    */
   public List<String> labels() {
     return labels;
-  }
-
-  /**
-   * Gets the transactionId.
-   *
-   * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
-   * sends a transaction ID in the
-   * `trace` field of the response body.
-   *
-   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
-   * with each request.
-   *
-   * @return the transactionId
-   */
-  public String transactionId() {
-    return transactionId;
   }
 }
 

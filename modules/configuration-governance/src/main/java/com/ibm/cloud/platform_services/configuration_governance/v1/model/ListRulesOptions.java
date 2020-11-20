@@ -19,8 +19,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListRulesOptions extends GenericModel {
 
-  protected String accountId;
   protected String transactionId;
+  protected String accountId;
   protected Boolean attached;
   protected String labels;
   protected String scopes;
@@ -31,8 +31,8 @@ public class ListRulesOptions extends GenericModel {
    * Builder.
    */
   public static class Builder {
-    private String accountId;
     private String transactionId;
+    private String accountId;
     private Boolean attached;
     private String labels;
     private String scopes;
@@ -40,8 +40,8 @@ public class ListRulesOptions extends GenericModel {
     private Long offset;
 
     private Builder(ListRulesOptions listRulesOptions) {
-      this.accountId = listRulesOptions.accountId;
       this.transactionId = listRulesOptions.transactionId;
+      this.accountId = listRulesOptions.accountId;
       this.attached = listRulesOptions.attached;
       this.labels = listRulesOptions.labels;
       this.scopes = listRulesOptions.scopes;
@@ -58,9 +58,11 @@ public class ListRulesOptions extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
+     * @param transactionId the transactionId
      * @param accountId the accountId
      */
-    public Builder(String accountId) {
+    public Builder(String transactionId, String accountId) {
+      this.transactionId = transactionId;
       this.accountId = accountId;
     }
 
@@ -74,17 +76,6 @@ public class ListRulesOptions extends GenericModel {
     }
 
     /**
-     * Set the accountId.
-     *
-     * @param accountId the accountId
-     * @return the ListRulesOptions builder
-     */
-    public Builder accountId(String accountId) {
-      this.accountId = accountId;
-      return this;
-    }
-
-    /**
      * Set the transactionId.
      *
      * @param transactionId the transactionId
@@ -92,6 +83,17 @@ public class ListRulesOptions extends GenericModel {
      */
     public Builder transactionId(String transactionId) {
       this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
+     * Set the accountId.
+     *
+     * @param accountId the accountId
+     * @return the ListRulesOptions builder
+     */
+    public Builder accountId(String accountId) {
+      this.accountId = accountId;
       return this;
     }
 
@@ -152,10 +154,12 @@ public class ListRulesOptions extends GenericModel {
   }
 
   protected ListRulesOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
+      "transactionId cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,
       "accountId cannot be null");
-    accountId = builder.accountId;
     transactionId = builder.transactionId;
+    accountId = builder.accountId;
     attached = builder.attached;
     labels = builder.labels;
     scopes = builder.scopes;
@@ -173,17 +177,6 @@ public class ListRulesOptions extends GenericModel {
   }
 
   /**
-   * Gets the accountId.
-   *
-   * Your IBM Cloud account ID.
-   *
-   * @return the accountId
-   */
-  public String accountId() {
-    return accountId;
-  }
-
-  /**
    * Gets the transactionId.
    *
    * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
@@ -197,6 +190,17 @@ public class ListRulesOptions extends GenericModel {
    */
   public String transactionId() {
     return transactionId;
+  }
+
+  /**
+   * Gets the accountId.
+   *
+   * Your IBM Cloud account ID.
+   *
+   * @return the accountId
+   */
+  public String accountId() {
+    return accountId;
   }
 
   /**

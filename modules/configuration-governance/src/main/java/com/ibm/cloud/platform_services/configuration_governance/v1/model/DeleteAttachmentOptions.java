@@ -48,10 +48,12 @@ public class DeleteAttachmentOptions extends GenericModel {
      *
      * @param ruleId the ruleId
      * @param attachmentId the attachmentId
+     * @param transactionId the transactionId
      */
-    public Builder(String ruleId, String attachmentId) {
+    public Builder(String ruleId, String attachmentId, String transactionId) {
       this.ruleId = ruleId;
       this.attachmentId = attachmentId;
+      this.transactionId = transactionId;
     }
 
     /**
@@ -102,6 +104,8 @@ public class DeleteAttachmentOptions extends GenericModel {
       "ruleId cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.attachmentId,
       "attachmentId cannot be empty");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
+      "transactionId cannot be null");
     ruleId = builder.ruleId;
     attachmentId = builder.attachmentId;
     transactionId = builder.transactionId;

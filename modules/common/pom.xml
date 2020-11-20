@@ -14,7 +14,7 @@
 	<!-- Update this section to reflect your SDK project name, etc. -->
 	<artifactId>platform-services-common</artifactId>
 	<packaging>jar</packaging>
-	<name>Platform Services SDK Common Library</name>
+	<name>IBM Cloud Platform Services SDK Common Library</name>
 
 	<dependencies>
 		<dependency>

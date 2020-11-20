@@ -14,7 +14,7 @@
     <artifactId>catalog-management</artifactId>
 
     <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
-    <name>Catalog Management</name>
+    <name>IBM Cloud Catalog Management API</name>
     <packaging>jar</packaging>
 
     <dependencies>

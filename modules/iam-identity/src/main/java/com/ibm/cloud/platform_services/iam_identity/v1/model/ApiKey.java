@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -29,11 +30,11 @@ public class ApiKey extends GenericModel {
   protected String crn;
   protected Boolean locked;
   @SerializedName("created_at")
-  protected String createdAt;
+  protected Date createdAt;
   @SerializedName("created_by")
   protected String createdBy;
   @SerializedName("modified_at")
-  protected String modifiedAt;
+  protected Date modifiedAt;
   protected String name;
   protected String description;
   @SerializedName("iam_id")
@@ -107,7 +108,7 @@ public class ApiKey extends GenericModel {
    *
    * @return the createdAt
    */
-  public String getCreatedAt() {
+  public Date getCreatedAt() {
     return createdAt;
   }
 
@@ -129,7 +130,7 @@ public class ApiKey extends GenericModel {
    *
    * @return the modifiedAt
    */
-  public String getModifiedAt() {
+  public Date getModifiedAt() {
     return modifiedAt;
   }
 

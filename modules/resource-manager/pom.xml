@@ -14,7 +14,7 @@
     <artifactId>resource-manager</artifactId>
 
     <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
-    <name>Resource Manager</name>
+    <name>IBM Cloud Resource Manager API</name>
     <packaging>jar</packaging>
 
     <dependencies>

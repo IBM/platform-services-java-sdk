@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.configuration_governance.v1.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -45,11 +46,11 @@ public class Rule extends GenericModel {
   @SerializedName("rule_id")
   protected String ruleId;
   @SerializedName("creation_date")
-  protected String creationDate;
+  protected Date creationDate;
   @SerializedName("created_by")
   protected String createdBy;
   @SerializedName("modification_date")
-  protected String modificationDate;
+  protected Date modificationDate;
   @SerializedName("modified_by")
   protected String modifiedBy;
   @SerializedName("number_of_attachments")
@@ -162,7 +163,7 @@ public class Rule extends GenericModel {
    *
    * @return the creationDate
    */
-  public String getCreationDate() {
+  public Date getCreationDate() {
     return creationDate;
   }
 
@@ -184,7 +185,7 @@ public class Rule extends GenericModel {
    *
    * @return the modificationDate
    */
-  public String getModificationDate() {
+  public Date getModificationDate() {
     return modificationDate;
   }
 

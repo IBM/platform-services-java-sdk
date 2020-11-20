@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.iam_access_groups.v2.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -33,11 +34,11 @@ public class Rule extends GenericModel {
   protected String accountId;
   protected List<RuleConditions> conditions;
   @SerializedName("created_at")
-  protected String createdAt;
+  protected Date createdAt;
   @SerializedName("created_by_id")
   protected String createdById;
   @SerializedName("last_modified_at")
-  protected String lastModifiedAt;
+  protected Date lastModifiedAt;
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
 
@@ -125,7 +126,7 @@ public class Rule extends GenericModel {
    *
    * @return the createdAt
    */
-  public String getCreatedAt() {
+  public Date getCreatedAt() {
     return createdAt;
   }
 
@@ -147,7 +148,7 @@ public class Rule extends GenericModel {
    *
    * @return the lastModifiedAt
    */
-  public String getLastModifiedAt() {
+  public Date getLastModifiedAt() {
     return lastModifiedAt;
   }
 

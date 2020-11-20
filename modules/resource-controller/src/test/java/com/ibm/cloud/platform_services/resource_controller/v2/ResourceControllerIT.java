@@ -1,5 +1,20 @@
 package com.ibm.cloud.platform_services.resource_controller.v2;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.AssertJUnit.assertNotNull;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 /*
  * (C) Copyright IBM Corp. 2020.
  *
@@ -12,8 +27,40 @@ package com.ibm.cloud.platform_services.resource_controller.v2;
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-
-import com.ibm.cloud.platform_services.resource_controller.v2.model.*;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceAliasOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceBindingOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceInstanceOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceKeyOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.DeleteResourceAliasOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.DeleteResourceBindingOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.DeleteResourceInstanceOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.DeleteResourceKeyOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceAliasOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceBindingOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceInstanceOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceKeyOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListReclamationsOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceAliasesOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceBindingsOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceInstancesOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.LockResourceInstanceOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.Reclamation;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ReclamationsList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceAlias;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceAliasesList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBinding;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBindingsList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstance;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstancesList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKey;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKeysList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.RunReclamationActionOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.UnlockResourceInstanceOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.UpdateResourceAliasOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.UpdateResourceBindingOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.UpdateResourceInstanceOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.UpdateResourceKeyOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
@@ -76,11 +123,14 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     String testReclamationId1 = null;
     String testReclamationId2 = null;
 
-    /**
-     * This method provides our config filename to the base class.
-     */
+    @Override
     public String getConfigFilename() {
         return "../../resource_controller.env";
+    }
+
+    @Override
+    public boolean loggingEnabled() {
+        return false;
     }
 
     /**
@@ -125,8 +175,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         TEST_PLAN_ID2 = config.get("RECLAMATION_PLAN_ID");
 
         transactionId = UUID.randomUUID().toString();
-        System.out.println("Transaction-Id for Test Run: " + transactionId);
-        cleanupByName();
+        log("Transaction-Id for Test Run: " + transactionId);
     }
 
     @AfterClass
@@ -136,7 +185,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         if (testReclaimInstanceGuid != null) {
             cleanupReclamationInstance();
         } else {
-            System.out.println("Reclamation instance was not created. No cleanup needed.");
+            log("Reclamation instance was not created. No cleanup needed.");
         }
         cleanupByName();
     }
@@ -1126,7 +1175,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         try {
             TimeUnit.SECONDS.sleep(20);
         } catch (Exception e) {
-            System.out.println("Failed to wait for 20 seconds.");
+            log("Failed to wait for 20 seconds.");
         }
     }
 
@@ -1158,7 +1207,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     public void test47ListReclamationsForAccountId() {
         ListReclamationsOptions options = new ListReclamationsOptions.Builder()
             // .accountId(TEST_ACCOUNT_ID)
-            .resourceInstanceId(testReclaimInstanceGuid) //checking reclamations with instance guid for more test reliability 
+            .resourceInstanceId(testReclaimInstanceGuid) //checking reclamations with instance guid for more test reliability
             .build();
 
         Response<ReclamationsList> response = service.listReclamations(options)
@@ -1209,7 +1258,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         try {
             TimeUnit.SECONDS.sleep(20);
         } catch (Exception e) {
-            System.out.println("Failed to wait for 20 seconds.");
+            log("Failed to wait for 20 seconds.");
         }
     }
 
@@ -1252,7 +1301,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         try {
             TimeUnit.SECONDS.sleep(20);
         } catch (Exception e) {
-            System.out.println("Failed to wait for 20 seconds.");
+            log("Failed to wait for 20 seconds.");
         }
     }
 
@@ -1304,7 +1353,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         try {
             TimeUnit.SECONDS.sleep(20);
         } catch (Exception e) {
-            System.out.println("Failed to wait for 20 seconds.");
+            log("Failed to wait for 20 seconds.");
         }
     }
 
@@ -1343,16 +1392,16 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                 .execute();
 
-                System.out.println("Successful cleanup of key " + testInstanceKeyGuid);
+                log("Successful cleanup of key " + testInstanceKeyGuid);
             } catch (ServiceResponseException e) {
                 if (e.getStatusCode() == 410) {
-                    System.out.println("Key " + testInstanceKeyGuid + " was already deleted by tests.");
+                    log("Key " + testInstanceKeyGuid + " was already deleted by tests.");
                 } else {
-                    System.out.println("Failed to cleanup key " + testInstanceKeyGuid + ". Error: " + e.getMessage());
+                    log("Failed to cleanup key " + testInstanceKeyGuid + ". Error: " + e.getMessage());
                 }
             }
         } else {
-            System.out.println("Key for instance was not created. No cleanup needed.");
+            log("Key for instance was not created. No cleanup needed.");
         }
 
         if (testAliasKeyGuid != null) {
@@ -1365,16 +1414,16 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                 .execute();
 
-                System.out.println("Successful cleanup of key " + testAliasKeyGuid);
+                log("Successful cleanup of key " + testAliasKeyGuid);
             } catch (ServiceResponseException e) {
                 if (e.getStatusCode() == 410) {
-                    System.out.println("Key " + testAliasKeyGuid + " was already deleted by tests.");
+                    log("Key " + testAliasKeyGuid + " was already deleted by tests.");
                 } else {
-                    System.out.println("Failed to cleanup key " + testAliasKeyGuid + ". Error: " + e.getMessage());
+                    log("Failed to cleanup key " + testAliasKeyGuid + ". Error: " + e.getMessage());
                 }
             }
         } else {
-            System.out.println("Key for alias was not created. No cleanup needed.");
+            log("Key for alias was not created. No cleanup needed.");
         }
 
         if (testBindingGuid != null) {
@@ -1387,16 +1436,16 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                 .execute();
 
-                System.out.println("Successful cleanup of binding " + testBindingGuid);
+                log("Successful cleanup of binding " + testBindingGuid);
             } catch (ServiceResponseException e) {
                 if (e.getStatusCode() == 410) {
-                    System.out.println("Binding " + testBindingGuid + " was already deleted by tests.");
+                    log("Binding " + testBindingGuid + " was already deleted by tests.");
                 } else {
-                    System.out.println("Failed to cleanup binding " + testBindingGuid + ". Error: " + e.getMessage());
+                    log("Failed to cleanup binding " + testBindingGuid + ". Error: " + e.getMessage());
                 }
             }
         } else {
-            System.out.println("Binding was not created. No cleanup needed.");
+            log("Binding was not created. No cleanup needed.");
         }
 
         if (testAliasGuid != null) {
@@ -1409,22 +1458,22 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                 .execute();
 
-                System.out.println("Successful cleanup of alias " + testAliasGuid);
+                log("Successful cleanup of alias " + testAliasGuid);
             } catch (ServiceResponseException e) {
                 if (e.getStatusCode() == 410) {
-                    System.out.println("Alias " + testAliasGuid + " was already deleted by tests.");
+                    log("Alias " + testAliasGuid + " was already deleted by tests.");
                 } else {
-                    System.out.println("Failed to cleanup alias " + testAliasGuid + ". Error: " + e.getMessage());
+                    log("Failed to cleanup alias " + testAliasGuid + ". Error: " + e.getMessage());
                 }
             }
         } else {
-            System.out.println("Alias was not created. No cleanup needed.");
+            log("Alias was not created. No cleanup needed.");
         }
 
         if (testInstanceGuid != null) {
             cleanupInstance();
         } else {
-            System.out.println("Instance was not created. No cleanup needed.");
+            log("Instance was not created. No cleanup needed.");
         }
     }
 
@@ -1441,7 +1490,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
             instance = response.getResult();
         } catch (ServiceResponseException e) {
-            System.out.println("Failed to retrieve instance " + testInstanceGuid + "for cleanup. Error: " + e.getMessage());
+            log("Failed to retrieve instance " + testInstanceGuid + "for cleanup. Error: " + e.getMessage());
         }
 
         if (instance != null && instance.getState().equals("active") && instance.isLocked()) {
@@ -1454,9 +1503,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                     .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                     .execute();
 
-                System.out.println("Successfully unlocked instance " + testInstanceGuid);
+                log("Successfully unlocked instance " + testInstanceGuid);
             } catch (ServiceResponseException e) {
-                System.out.println("Failed to unlock instance " + testInstanceGuid + "for cleanup. Error: " + e.getMessage());
+                log("Failed to unlock instance " + testInstanceGuid + "for cleanup. Error: " + e.getMessage());
             }
         }
 
@@ -1469,12 +1518,12 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                 .execute();
 
-            System.out.println("Successfully cleaned up instance " + testInstanceGuid);
+            log("Successfully cleaned up instance " + testInstanceGuid);
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() == 410) {
-                System.out.println("Instance " + testInstanceGuid + " was already deleted by tests.");
+                log("Instance " + testInstanceGuid + " was already deleted by tests.");
             } else {
-                System.out.println("Failed to cleanup instance " + testInstanceGuid + ". Error: " + e.getMessage());
+                log("Failed to cleanup instance " + testInstanceGuid + ". Error: " + e.getMessage());
             }
         }
     }
@@ -1491,7 +1540,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
             ResourceInstance instance = response.getResult();
             if (instance.getState().equals("removed")) {
-                System.out.println("Instance " + testReclaimInstanceGuid + " was already reclaimed by tests.");
+                log("Instance " + testReclaimInstanceGuid + " was already reclaimed by tests.");
             } else if (instance.getState().equals("pending_reclamation")) {
                 cleanupInstancePendingReclamation();
             } else {
@@ -1503,18 +1552,18 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                     .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                     .execute();
 
-                System.out.println("Successfully scheduled instance " + testReclaimInstanceGuid + " for reclamation.");
-                
+                log("Successfully scheduled instance " + testReclaimInstanceGuid + " for reclamation.");
+
                 try {
                     TimeUnit.SECONDS.sleep(20);
                 } catch (Exception e) {
-                    System.out.println("Failed to wait for 20 seconds.");
+                    log("Failed to wait for 20 seconds.");
                 }
 
                 cleanupInstancePendingReclamation();
             }
         } catch (ServiceResponseException e) {
-            System.out.println("Failed to reclaim instance " + testReclaimInstanceGuid + ". Error: " + e.getMessage());
+            log("Failed to reclaim instance " + testReclaimInstanceGuid + ". Error: " + e.getMessage());
         }
     }
 
@@ -1531,7 +1580,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
             ReclamationsList reclamationList = response.getResult();
             if (reclamationList.getResources().size() == 0) {
-                System.out.println("No reclamations for instance " + testReclaimInstanceGuid + " were returned.");
+                log("No reclamations for instance " + testReclaimInstanceGuid + " were returned.");
                 return;
             }
 
@@ -1545,9 +1594,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                 .execute();
 
-                System.out.println("Successfully reclaimed instance " + testReclaimInstanceGuid);
+                log("Successfully reclaimed instance " + testReclaimInstanceGuid);
         } catch (ServiceResponseException e) {
-            System.out.println("Failed to reclaim instance " + testReclaimInstanceGuid + ". Error: " + e.getMessage());
+            log("Failed to reclaim instance " + testReclaimInstanceGuid + ". Error: " + e.getMessage());
         }
     }
 
@@ -1576,20 +1625,20 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                             .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                             .execute();
 
-                            System.out.println("Successful cleanup of key " + keyGuid);
+                            log("Successful cleanup of key " + keyGuid);
                         } catch (ServiceResponseException e) {
                             if (e.getStatusCode() == 410) {
-                                System.out.println("Key " + keyGuid + " was already deleted by tests.");
+                                log("Key " + keyGuid + " was already deleted by tests.");
                             } else {
-                                System.out.println("Failed to cleanup key " + keyGuid + ". Error: " + e.getMessage());
+                                log("Failed to cleanup key " + keyGuid + ". Error: " + e.getMessage());
                             }
                         }
                     }
                 } else {
-                    System.out.println("No keys found for name " + name);
+                    log("No keys found for name " + name);
                 }
             } catch (ServiceResponseException e) {
-                System.out.println("Failed to retrieve key with name " + name + "for cleanup. Error: " + e.getMessage());
+                log("Failed to retrieve key with name " + name + "for cleanup. Error: " + e.getMessage());
             }
         }
 
@@ -1620,9 +1669,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                                     .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                                     .execute();
 
-                                System.out.println("Successfully unlocked instance " + instanceGuid);
+                                log("Successfully unlocked instance " + instanceGuid);
                             } catch (ServiceResponseException e) {
-                                System.out.println("Failed to unlock instance " + instanceGuid + "for cleanup. Error: " + e.getMessage());
+                                log("Failed to unlock instance " + instanceGuid + "for cleanup. Error: " + e.getMessage());
                             }
                         }
 
@@ -1635,20 +1684,20 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                             .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                             .execute();
 
-                            System.out.println("Successful cleanup of instance " + instanceGuid);
+                            log("Successful cleanup of instance " + instanceGuid);
                         } catch (ServiceResponseException e) {
                             if (e.getStatusCode() == 410) {
-                                System.out.println("Instance " + instanceGuid + " was already deleted by tests.");
+                                log("Instance " + instanceGuid + " was already deleted by tests.");
                             } else {
-                                System.out.println("Failed to cleanup instance " + instanceGuid + ". Error: " + e.getMessage());
+                                log("Failed to cleanup instance " + instanceGuid + ". Error: " + e.getMessage());
                             }
                         }
                     }
                 } else {
-                    System.out.println("No instances found for name " + name);
+                    log("No instances found for name " + name);
                 }
             } catch (ServiceResponseException e) {
-                System.out.println("Failed to retrieve instance with name " + name + "for cleanup. Error: " + e.getMessage());
+                log("Failed to retrieve instance with name " + name + "for cleanup. Error: " + e.getMessage());
             }
 
         }
@@ -1677,20 +1726,20 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                             .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                             .execute();
 
-                            System.out.println("Successful cleanup of binding " + bindingGuid);
+                            log("Successful cleanup of binding " + bindingGuid);
                         } catch (ServiceResponseException e) {
                             if (e.getStatusCode() == 410) {
-                                System.out.println("Binding " + bindingGuid + " was already deleted by tests.");
+                                log("Binding " + bindingGuid + " was already deleted by tests.");
                             } else {
-                                System.out.println("Failed to cleanup binding " + bindingGuid + ". Error: " + e.getMessage());
+                                log("Failed to cleanup binding " + bindingGuid + ". Error: " + e.getMessage());
                             }
                         }
                     }
                 } else {
-                    System.out.println("No bindings found for name " + name);
+                    log("No bindings found for name " + name);
                 }
             } catch (ServiceResponseException e) {
-                System.out.println("Failed to retrieve Bindings with name " + name + "for cleanup. Error: " + e.getMessage());
+                log("Failed to retrieve Bindings with name " + name + "for cleanup. Error: " + e.getMessage());
             }
 
         }
@@ -1719,20 +1768,20 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                             .addHeader("Transaction-Id", "rc-sdk-java-cleanup-" + transactionId)
                             .execute();
 
-                            System.out.println("Successful cleanup of alias " + aliasGuid);
+                            log("Successful cleanup of alias " + aliasGuid);
                         } catch (ServiceResponseException e) {
                             if (e.getStatusCode() == 410) {
-                                System.out.println("Alias " + aliasGuid + " was already deleted by tests.");
+                                log("Alias " + aliasGuid + " was already deleted by tests.");
                             } else {
-                                System.out.println("Failed to cleanup alias " + aliasGuid + ". Error: " + e.getMessage());
+                                log("Failed to cleanup alias " + aliasGuid + ". Error: " + e.getMessage());
                             }
                         }
                     }
                 } else {
-                    System.out.println("No alias found for name " + name);
+                    log("No alias found for name " + name);
                 }
             } catch (ServiceResponseException e) {
-                System.out.println("Failed to retrieve alias with name " + name + "for cleanup. Error: " + e.getMessage());
+                log("Failed to retrieve alias with name " + name + "for cleanup. Error: " + e.getMessage());
             }
 
         }

@@ -1,3 +1,12 @@
+## [0.15.7](https://github.com/IBM/platform-services-java-sdk/compare/0.15.6...0.15.7) (2020-11-22)
+
+
+### Bug Fixes
+
+* **build:** perform parallel deployments on bintray and central ([a1894f6](https://github.com/IBM/platform-services-java-sdk/commit/a1894f6f7b350c9152008bd0ea78d0158eb38b83))
+* **build:** remove duplicate deploy step ([044e1da](https://github.com/IBM/platform-services-java-sdk/commit/044e1dae1ad6b647c0c5378995f1364f12f01b91))
+* **build:** revert parallel sync steps ([43a9c10](https://github.com/IBM/platform-services-java-sdk/commit/43a9c109f83800f3f0f76c61f8b1a2e377a796d0))
+
 ## [0.15.6](https://github.com/IBM/platform-services-java-sdk/compare/0.15.5...0.15.6) (2020-11-20)
 
 

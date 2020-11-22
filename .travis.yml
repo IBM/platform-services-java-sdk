@@ -28,12 +28,11 @@ stages:
     if: branch = master AND type = push AND fork = false
   - name: Publish-Release
     if: tag IS present
-  - name: Sync-to-MavenCentral
-    if: tag IS present
 
 before_install:
   - sudo apt-get update
   - env | grep TRAVIS
+  - gpg --version
 
 jobs:
   include:
@@ -64,25 +63,29 @@ jobs:
 
     - stage: Publish-Release
       jdk: openjdk8
-      name: Publish Javadoc
+      name: Publish-Javadoc
       install: true
       script:
         - build/setMavenVersion.sh
         - mvn clean javadoc:aggregate $MVN_ARGS
-      after_success:
         - build/publishJavadoc.sh
+      after_success:
+        - echo "Javadocs successfully published to gh-pages!"
     - jdk: openjdk8
-      name: Publish Jars
+      name: Publish-To-Bintray
       install: true
       script:
         - build/setMavenVersion.sh
-        - mvn deploy $MVN_ARGS -DskipTests
+        - mvn deploy $MVN_ARGS -DskipTests -P bintray
       after_success:
-        - echo "Maven artifacts successfully published to bintray/jcenter"
+        - echo "Maven artifacts successfully published to Bintray!"
 
-    - stage: Sync-to-MavenCentral
-      jdk: openjdk8
-      name: platform-services
+    - jdk: openjdk8
+      name: Publish-To-Maven-Central
       install: true
       script:
-        - build/bintraySync.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO $TRAVIS_TAG
+        - build/setupSigning.sh
+        - build/setMavenVersion.sh
+        - mvn deploy $MVN_ARGS -DskipTests -P central
+      after_success:
+        - echo "Maven artifacts successfully published to Maven Central!"

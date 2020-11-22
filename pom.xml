@@ -22,6 +22,8 @@
         <jacoco-plugin-version>0.8.5</jacoco-plugin-version>
         <bintray-plugin-version>1.5.20191113165555</bintray-plugin-version>
         <maven-deploy-plugin-version>3.0.0-M1</maven-deploy-plugin-version>
+        <nexus-staging-plugin-version>1.6.8</nexus-staging-plugin-version>
+        <maven-gpg-plugin-version>1.6</maven-gpg-plugin-version>
         <maven-source-plugin-version>3.1.0</maven-source-plugin-version>
         <maven-jar-plugin-version>3.2.0</maven-jar-plugin-version>
         <maven-javadoc-plugin-version>3.1.1</maven-javadoc-plugin-version>
@@ -97,15 +99,11 @@
         <url>https://travis-ci.com/IBM/platform-services-java-sdk/</url>
     </ciManagement>
 
-    <repositories>
-        <repository>
-            <id>jcenter</id>
-            <url>https://jcenter.bintray.com/</url>
-        </repository>
-    </repositories>
-
     <!-- We use an alternate deploy plugin which doesn't use 'distributionManagement' -->
     <distributionManagement></distributionManagement>
+
+    <!-- We define repositories in each of the profiles below -->
+    <repositories></repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -164,7 +162,7 @@
                 <scope>test</scope>
             </dependency>
             <!-- Depedency needed to build examples -->
-            <dependency> 
+            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-jdk14</artifactId>
                 <version>${slf4j-version}</version>
@@ -176,14 +174,49 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin-version}</version>
+                </plugin>
+                <plugin>
                     <groupId>com.carrotgarden.maven</groupId>
                     <artifactId>bintray-maven-plugin</artifactId>
                     <version>${bintray-plugin-version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-plugin-version}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <version>${maven-deploy-plugin-version}</version>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${maven-gpg-plugin-version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <!-- Disable use of bintray:deploy during "Maven -> Update Project" in eclipse -->
+                                    <pluginExecutionFilter>
+                                        <groupId>com.carrotgarden.maven</groupId>
+                                        <artifactId>bintray-maven-plugin</artifactId>
+                                        <versionRange>[1.0.0,)</versionRange>
+                                        <goals>
+                                            <goal>deploy</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore/>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -193,7 +226,7 @@
                         <execution>
                             <id>attach-sources</id>
                             <goals>
-                                <goal>jar</goal>
+                                <goal>jar-no-fork</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -335,86 +368,13 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <!-- Disable use of bintray:deploy during "Maven -> Update Project" in eclipse -->
-                                    <pluginExecutionFilter>
-                                        <groupId>com.carrotgarden.maven</groupId>
-                                        <artifactId>bintray-maven-plugin</artifactId>
-                                        <versionRange>[1.0.0,)</versionRange>
-                                        <goals>
-                                            <goal>deploy</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore/>
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade-plugin-version}</version>
                 </plugin>
-		<plugin>
-		    <groupId>org.apache.maven.plugins</groupId>
-		    <artifactId>maven-shade-plugin</artifactId>
-		    <version>${maven-shade-plugin-version}</version>
-		</plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-            <!-- Disable default maven-deploy-plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-
-            <!-- Enable alternate deploy plugin: bintray-maven-plugin -->
-            <plugin>
-                <groupId>com.carrotgarden.maven</groupId>
-                <artifactId>bintray-maven-plugin</artifactId>
-                <configuration>
-                    <skip>false</skip>
-
-                    <!-- Bintray oranization name. -->
-                    <subject>${bintray.org}</subject>
-
-                    <!-- Bintray target repository. -->
-                    <repository>${bintray.repo}</repository>
-
-                    <!-- Bintray credentials in settings.xml. -->
-                    <serverId>bintray</serverId>
-
-                    <!-- We'll use the maven coordinates for the bintray package name -->
-                    <bintrayPackage>${project.groupId}:${project.artifactId}</bintrayPackage>
-
-                    <!-- Use the project's github url when creating each module's package in the bintray repo -->
-                    <packageVcsUrl>${bintray.package.url}</packageVcsUrl>
-
-                    <performDestroy>false</performDestroy>
-                    <performCleanup>false</performCleanup>
-                    <performDeploy>true</performDeploy>
-                    <performEnsure>true</performEnsure>
-                    <performPublish>true</performPublish>
-                    <retryFailedDeploymentCount>2</retryFailedDeploymentCount>
-                </configuration>
-                <executions>
-                    <!-- Activate "bintray:deploy" during "deploy" -->
-                    <execution>
-                        <id>bintray-deploy</id>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -495,4 +455,130 @@
         </developer>
     </developers>
 
+    <profiles>
+
+        <!-- "bintray" will deploy artifacts on bintray/jcenter -->
+        <profile>
+            <id>bintray</id>
+
+            <!-- For this profile, we'll get our dependencies from jcenter -->
+            <repositories>
+                <repository>
+                    <id>jcenter</id>
+                    <url>https://jcenter.bintray.com/</url>
+                </repository>
+            </repositories>
+            <build>
+                <plugins>
+                    <!-- Disable default maven-deploy-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+
+                    <!-- Enable alternate deploy plugin: bintray-maven-plugin -->
+                    <plugin>
+                        <groupId>com.carrotgarden.maven</groupId>
+                        <artifactId>bintray-maven-plugin</artifactId>
+                        <configuration>
+                            <skip>false</skip>
+
+                            <!-- Bintray oranization name. -->
+                            <subject>${bintray.org}</subject>
+
+                            <!-- Bintray target repository. -->
+                            <repository>${bintray.repo}</repository>
+
+                            <!-- Bintray credentials in settings.xml. -->
+                            <serverId>bintray</serverId>
+
+                            <!-- We'll use the maven coordinates for the bintray package name -->
+                            <bintrayPackage>${project.groupId}:${project.artifactId}</bintrayPackage>
+
+                            <!-- Use the project's github url when creating each module's package in the bintray repo -->
+                            <packageVcsUrl>${bintray.package.url}</packageVcsUrl>
+
+                            <performDestroy>false</performDestroy>
+                            <performCleanup>false</performCleanup>
+                            <performDeploy>true</performDeploy>
+                            <performEnsure>true</performEnsure>
+                            <performPublish>true</performPublish>
+                            <retryFailedDeploymentCount>2</retryFailedDeploymentCount>
+                        </configuration>
+                        <executions>
+                            <!-- Activate "bintray:deploy" during "deploy" -->
+                            <execution>
+                                <id>bintray-deploy</id>
+                                <goals>
+                                    <goal>deploy</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- "central" is used to deploy artifacts on maven central -->
+        <profile>
+            <id>central</id>
+
+            <!-- For this profile, we'll get dependencies from maven central -->
+            <repositories></repositories>
+
+            <distributionManagement>
+                <snapshotRepository>
+                    <!-- We don't deploy snapshot releases -->
+                </snapshotRepository>
+                <repository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <gpgArguments>
+                                <gpgArgument>--batch</gpgArgument>
+                                <gpgArgument>--yes</gpgArgument>
+                                <gpgArgument>--no-tty</gpgArgument>
+                                <gpgArgument>--pinentry-mode</gpgArgument>
+                                <gpgArgument>loopback</gpgArgument>
+                            </gpgArguments>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <properties>
+                <gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
+                <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+            </properties>
+        </profile>
+    </profiles>
 </project>

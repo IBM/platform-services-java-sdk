@@ -1,3 +1,10 @@
+## [0.15.8](https://github.com/IBM/platform-services-java-sdk/compare/0.15.7...0.15.8) (2020-11-22)
+
+
+### Bug Fixes
+
+* **build:** avoid gpg --pinentry-mode option ([b7bdb3f](https://github.com/IBM/platform-services-java-sdk/commit/b7bdb3ff503cf0702714c64eb5ceb706b76ffddf))
+
 ## [0.15.7](https://github.com/IBM/platform-services-java-sdk/compare/0.15.6...0.15.7) (2020-11-22)
 
 

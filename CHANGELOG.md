@@ -1,3 +1,10 @@
+## [0.15.10](https://github.com/IBM/platform-services-java-sdk/compare/0.15.9...0.15.10) (2020-11-23)
+
+
+### Bug Fixes
+
+* **build:** revert to using gnupg 1.x ([9840eab](https://github.com/IBM/platform-services-java-sdk/commit/9840eabe0122ae2ef516715b7ab72f0ec6a84999))
+
 ## [0.15.9](https://github.com/IBM/platform-services-java-sdk/compare/0.15.8...0.15.9) (2020-11-23)
 
 

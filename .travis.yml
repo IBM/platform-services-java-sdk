@@ -32,7 +32,8 @@ stages:
 before_install:
   - sudo apt-get update
   - env | grep TRAVIS
-  - gpg --version
+  - sudo apt-get install gnupg2
+  - gpg2 --version
 
 jobs:
   include:

@@ -66,10 +66,10 @@
         <module>modules/usage-reports</module>
         <module>modules/user-management</module>
 
-        <module>modules/examples</module>
+        <module>modules/coverage-reports</module>
 
         <!-- This module should always be listed last -->
-        <module>modules/coverage-reports</module>
+        <module>modules/examples</module>
     </modules>
 
     <licenses>
@@ -548,7 +548,8 @@
                         <configuration>
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <keepStagingRepositoryOnCloseRuleFailure>true</keepStagingRepositoryOnCloseRuleFailure>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -564,10 +565,13 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <executable>gpg2</executable>
                             <gpgArguments>
                                 <gpgArgument>--batch</gpgArgument>
                                 <gpgArgument>--yes</gpgArgument>
                                 <gpgArgument>--no-tty</gpgArgument>
+                                <gpgArgument>--pinentry-mode</gpgArgument>
+                                <gpgArgument>loopback</gpgArgument>
                             </gpgArguments>
                         </configuration>
                     </plugin>

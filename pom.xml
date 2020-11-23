@@ -565,13 +565,10 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <executable>gpg2</executable>
                             <gpgArguments>
                                 <gpgArgument>--batch</gpgArgument>
                                 <gpgArgument>--yes</gpgArgument>
                                 <gpgArgument>--no-tty</gpgArgument>
-                                <gpgArgument>--pinentry-mode</gpgArgument>
-                                <gpgArgument>loopback</gpgArgument>
                             </gpgArguments>
                         </configuration>
                     </plugin>

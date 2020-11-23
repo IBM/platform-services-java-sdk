@@ -1,3 +1,10 @@
+## [0.15.9](https://github.com/IBM/platform-services-java-sdk/compare/0.15.8...0.15.9) (2020-11-23)
+
+
+### Bug Fixes
+
+* **build:** fix maven central deploy problems ([c16c6e0](https://github.com/IBM/platform-services-java-sdk/commit/c16c6e0b14096422512179087fe2989de85f4cd3))
+
 ## [0.15.8](https://github.com/IBM/platform-services-java-sdk/compare/0.15.7...0.15.8) (2020-11-22)
 
 

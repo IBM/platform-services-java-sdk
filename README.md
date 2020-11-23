@@ -6,7 +6,7 @@
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
-# IBM Cloud Platform Services Java SDK Version 0.15.4
+# IBM Cloud Platform Services Java SDK Version 0.15.10
 
 Java client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
@@ -46,22 +46,22 @@ The IBM Cloud Platform Services Java SDK allows developers to programmatically i
 
 Service Name | Artifact Coordinates
 --- | --- 
-[Case Management](https://cloud.ibm.com/apidocs/case-management) | com.ibm.cloud:case-management:0.15.4
-[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | com.ibm.cloud:catalog-management:0.15.4
-[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | com.ibm.cloud:configuration-governance:0.15.4
-[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | com.ibm.cloud:enterprise-management:0.15.4
-[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | com.ibm.cloud:enterprise-usage-reports:0.15.4
-[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | com.ibm.cloud:global-catalog:0.15.4
-[Global Search](https://cloud.ibm.com/apidocs/search) | com.ibm.cloud:global-search:0.15.4
-[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | com.ibm.cloud:global-tagging:0.15.4
-[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | com.ibm.cloud:iam-access-groups:0.15.4
-[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | com.ibm.cloud:iam-identity:0.15.4
-[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | com.ibm.cloud:iam-policy-management:0.15.4
-[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | com.ibm.cloud:open-service-broker:0.15.4
-[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | com.ibm.cloud:resource-controller:0.15.4
-[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | com.ibm.cloud:resource-manager:0.15.4
-[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | com.ibm.cloud:usage-reports:0.15.4
-[User Management](https://cloud.ibm.com/apidocs/user-management) | com.ibm.cloud:user-management:0.15.4
+[Case Management](https://cloud.ibm.com/apidocs/case-management) | com.ibm.cloud:case-management:0.15.10
+[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | com.ibm.cloud:catalog-management:0.15.10
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | com.ibm.cloud:configuration-governance:0.15.10
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | com.ibm.cloud:enterprise-management:0.15.10
+[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | com.ibm.cloud:enterprise-usage-reports:0.15.10
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | com.ibm.cloud:global-catalog:0.15.10
+[Global Search](https://cloud.ibm.com/apidocs/search) | com.ibm.cloud:global-search:0.15.10
+[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | com.ibm.cloud:global-tagging:0.15.10
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | com.ibm.cloud:iam-access-groups:0.15.10
+[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | com.ibm.cloud:iam-identity:0.15.10
+[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | com.ibm.cloud:iam-policy-management:0.15.10
+[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | com.ibm.cloud:open-service-broker:0.15.10
+[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | com.ibm.cloud:resource-controller:0.15.10
+[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | com.ibm.cloud:resource-manager:0.15.10
+[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | com.ibm.cloud:usage-reports:0.15.10
+[User Management](https://cloud.ibm.com/apidocs/user-management) | com.ibm.cloud:user-management:0.15.10
 
 ## Prerequisites
 
@@ -72,7 +72,7 @@ Service Name | Artifact Coordinates
 * Java 8 or above.
 
 ## Installation
-The current version of this SDK is: 0.15.4
+The current version of this SDK is: 0.15.10
 
 Each service's artifact coordinates are listed in the table above.
 
@@ -94,13 +94,13 @@ artifact coordinates (group id, artifact id and version) for the service, like t
 <dependency>
     <groupId>com.ibm.cloud</groupId>
     <artifactId>case-management</artifactId>
-    <version>0.15.4</version>
+    <version>0.15.10</version>
 </dependency>
 ```
 
 ##### Gradle
 ```gradle
-'com.ibm.cloud:case-management:0.15.4'
+'com.ibm.cloud:case-management:0.15.10'
 ```
 
 ## Using the SDK

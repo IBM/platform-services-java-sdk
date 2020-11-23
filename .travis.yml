@@ -22,64 +22,69 @@ env:
     - BINTRAY_ORG=ibm-cloud-sdks
     - BINTRAY_REPO=platform-services-java-sdk
 
+stages:
+  - name: Build-Test
+  - name: Semantic-Release
+    if: branch = master AND type = push AND fork = false
+  - name: Publish-Release
+    if: tag IS present
+
 before_install:
-- env | grep TRAVIS
-- sudo apt-get update
-- sudo apt-get install python
-- nvm install 12
-- npm install -g npm@6.x
+  - sudo apt-get update
+  - env | grep TRAVIS
 
-install:
-- curl -s https://codecov.io/bash > $HOME/codecov-bash.sh && chmod +x $HOME/codecov-bash.sh
-
-
-# For a tagged build, we'll set the maven artifact version #.
-before_script:
-- >-
-      [ -n "${TRAVIS_TAG}" ]
-      && mvn versions:set -DnewVersion=${TRAVIS_TAG} -DgenerateBackupPoms=false
-      || true
-
-script:
--  mvn clean verify -fae -DskipITs $MVN_ARGS
-
-before_deploy:
-- pip install --user bump2version
-- npm install @semantic-release/changelog
-- npm install @semantic-release/exec
-- npm install @semantic-release/git
-- npm install @semantic-release/github
-
-deploy:
-  # On master, run semrel to create a new tagged-release.
-  - provider: script
-    script: npx semantic-release
-    skip_cleanup: true
-    on:
-      branch: master
-  # For a tagged release, publish jars on bintray and sync to maven central.
-  - provider: script
-    script: 
-    - >-
-          mvn deploy $MVN_ARGS -DskipTests 
-          && build/bintraySync.sh $BINTRAY_USER $BINTRAY_APIKEY $BINTRAY_ORG $BINTRAY_REPO $TRAVIS_TAG
-    skip_cleanup: true
-    on:
-      tags: true
+jobs:
+  include:
+    - stage: Build-Test
       jdk: openjdk8
-  # For a tagged release, publish javadocs to gh-pages.
-  - provider: script
-    script: ./build/publish-javadoc.sh
-    skip_cleanup: true
-    on:
-      tags: true
+      install:
+        - curl -s https://codecov.io/bash > $HOME/codecov-bash.sh && chmod +x $HOME/codecov-bash.sh
+      script:
+        - build/setMavenVersion.sh
+        - mvn verify -fae -DskipITs $MVN_ARGS
+      after_success:
+        - build/publishCodeCoverage.sh
+
+    - stage: Semantic-Release
+      install:
+        - sudo apt-get install python
+        - nvm install 12
+        - npm install -g npm@6.x
+        - pip install --user bump2version
+        - npm install @semantic-release/changelog
+        - npm install @semantic-release/exec
+        - npm install @semantic-release/git
+        - npm install @semantic-release/github
+      script:
+        - npx semantic-release
+      after_success:
+        - echo "Semantic release has successfully created a new tagged-release"
+
+    - stage: Publish-Release
       jdk: openjdk8
-  # On master or for a tagged release, upload code coverage reports to codecov.io.
-  - provider: script
-    script: $HOME/codecov-bash.sh -s modules/coverage-reports/target/site/jacoco-aggregate -t $CODECOV_TOKEN
-    skip_cleanup: true
-    on:
-      condition: $TRAVIS_BRANCH == master || -n "$TRAVIS_TAG"
-      jdk: openjdk8
-      
-  
+      name: Publish-Javadoc
+      install: true
+      script:
+        - build/setMavenVersion.sh
+        - mvn clean javadoc:aggregate $MVN_ARGS
+        - build/publishJavadoc.sh
+      after_success:
+        - echo "Javadocs successfully published to gh-pages!"
+    - jdk: openjdk8
+      name: Publish-To-Bintray
+      install: true
+      script:
+        - build/setMavenVersion.sh
+        - mvn deploy $MVN_ARGS -DskipTests -P bintray
+      after_success:
+        - echo "Maven artifacts successfully published to Bintray!"
+
+    - jdk: openjdk8
+      name: Publish-To-Maven-Central
+      install: true
+      script:
+        - build/setupSigning.sh
+        - build/setMavenVersion.sh
+        - mvn deploy $MVN_ARGS -DskipTests -P central
+      after_success:
+        - echo "Maven artifacts successfully published to Maven Central!"

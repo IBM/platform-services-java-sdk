@@ -1,10 +1,9 @@
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <!-- Update this section to reflect the correct values for your SDK project -->
     <parent>
         <groupId>com.ibm.cloud</groupId>
-	<!-- Update this to reflect your parent project's artifact id -->
+        <!-- Update this to reflect your parent project's artifact id -->
         <artifactId>platform-services</artifactId>
         <version>99-SNAPSHOT</version>
         <relativePath>../..</relativePath>
@@ -14,15 +13,16 @@
     <artifactId>platform-services-coverage-reports</artifactId>
     <name>IBM Cloud Platform Services Test Coverage Reports</name>
 
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+    </properties>
+    
     <dependencies>
-	<!-- 
-	     There should be a dependency for EACH module in the project.
-	     Add new "dependency" entries here as needed when you add modules to
-	     your parent pom.xml.   This will ensure that an aggregate code
-	     coverage report contains information for all of your modules.
-	     Note: the "artifactId" values below should reflect the "artifactId" value specified
-	     in each module's pom.xml file (i.e. not the module's directory name).
-	-->
+        <!-- There should be a dependency for EACH module in the project. Add new "dependency" entries here as needed when 
+            you add modules to your parent pom.xml. This will ensure that an aggregate code coverage report contains information for 
+            all of your modules. Note: the "artifactId" values below should reflect the "artifactId" value specified in each module's 
+            pom.xml file (i.e. not the module's directory name). -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>platform-services-common</artifactId>
@@ -112,14 +112,6 @@
 
     <build>
         <plugins>
-            <!-- No need to deploy this artifact since it contains only coverage info -->
-            <plugin>
-                <groupId>com.carrotgarden.maven</groupId>
-                <artifactId>bintray-maven-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>

@@ -1,3 +1,47 @@
+## [0.15.10](https://github.com/IBM/platform-services-java-sdk/compare/0.15.9...0.15.10) (2020-11-23)
+
+
+### Bug Fixes
+
+* **build:** revert to using gnupg 1.x ([9840eab](https://github.com/IBM/platform-services-java-sdk/commit/9840eabe0122ae2ef516715b7ab72f0ec6a84999))
+
+## [0.15.9](https://github.com/IBM/platform-services-java-sdk/compare/0.15.8...0.15.9) (2020-11-23)
+
+
+### Bug Fixes
+
+* **build:** fix maven central deploy problems ([c16c6e0](https://github.com/IBM/platform-services-java-sdk/commit/c16c6e0b14096422512179087fe2989de85f4cd3))
+
+## [0.15.8](https://github.com/IBM/platform-services-java-sdk/compare/0.15.7...0.15.8) (2020-11-22)
+
+
+### Bug Fixes
+
+* **build:** avoid gpg --pinentry-mode option ([b7bdb3f](https://github.com/IBM/platform-services-java-sdk/commit/b7bdb3ff503cf0702714c64eb5ceb706b76ffddf))
+
+## [0.15.7](https://github.com/IBM/platform-services-java-sdk/compare/0.15.6...0.15.7) (2020-11-22)
+
+
+### Bug Fixes
+
+* **build:** perform parallel deployments on bintray and central ([a1894f6](https://github.com/IBM/platform-services-java-sdk/commit/a1894f6f7b350c9152008bd0ea78d0158eb38b83))
+* **build:** remove duplicate deploy step ([044e1da](https://github.com/IBM/platform-services-java-sdk/commit/044e1dae1ad6b647c0c5378995f1364f12f01b91))
+* **build:** revert parallel sync steps ([43a9c10](https://github.com/IBM/platform-services-java-sdk/commit/43a9c109f83800f3f0f76c61f8b1a2e377a796d0))
+
+## [0.15.6](https://github.com/IBM/platform-services-java-sdk/compare/0.15.5...0.15.6) (2020-11-20)
+
+
+### Bug Fixes
+
+* **build:** parallelize all mc sync steps ([6393e79](https://github.com/IBM/platform-services-java-sdk/commit/6393e79bd694327c2c18a9e7506c1205b759b83a))
+
+## [0.15.5](https://github.com/IBM/platform-services-java-sdk/compare/0.15.4...0.15.5) (2020-11-20)
+
+
+### Bug Fixes
+
+* **build:** introduce travis build stages for parallelism ([c22d114](https://github.com/IBM/platform-services-java-sdk/commit/c22d1141a63668bd1e3fb08eced770bbc4df579d))
+
 ## [0.15.4](https://github.com/IBM/platform-services-java-sdk/compare/0.15.3...0.15.4) (2020-11-19)
 
 

@@ -5,7 +5,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" ]; then
 
     printf "\n>>>>> Publishing javadoc for release build: repo=%s branch=%s build_num=%s job_num=%s\n" ${TRAVIS_REPO_SLUG} ${TRAVIS_BRANCH} ${TRAVIS_BUILD_NUMBER} ${TRAVIS_JOB_NUMBER} 
 
-    printf "\n>>>>> Cloning repository's gh-pages branch into directory 'gh-pages'"
+    printf "\n>>>>> Cloning repository's gh-pages branch into directory 'gh-pages'\n"
     rm -fr ./gh-pages
     git clone --branch=gh-pages https://${GH_TOKEN}@github.com/IBM/platform-services-java-sdk.git gh-pages
 
@@ -21,7 +21,7 @@ if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" ]; then
     cp -rf ../target/site/apidocs/* docs/${TRAVIS_BRANCH}
 
     printf "\n>>>>> Generating gh-pages index.html...\n"
-    ../build/generate-index-html.sh > index.html
+    ../build/generateJavadocIndex.sh > index.html
 
     # Update the 'latest' symlink to point to this branch if it's a tagged release.
     if [ -n "$TRAVIS_TAG" ]; then

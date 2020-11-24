@@ -111,7 +111,7 @@ public class ResourceControllerExamples {
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(ResourceController.DEFAULT_SERVICE_NAME);
     resourceGroup = config.get("RESOURCE_GROUP");
-    resourcePlanId = config.get("PLAN_ID");
+    resourcePlanId = config.get("RECLAMATION_PLAN_ID");
     accountId = config.get("ACCOUNT_ID");
     aliasTargetCRN = config.get("ALIAS_TARGET_CRN");
     bindingTargetCRN = config.get("BINDING_TARGET_CRN");
@@ -471,6 +471,11 @@ public class ResourceControllerExamples {
 
       service.deleteResourceInstance(deleteResourceInstanceOptions).execute();
       // end-delete_resource_instance
+      try {
+        TimeUnit.SECONDS.sleep(20);
+      } catch (Exception e) {
+        System.out.println("Failed to wait for 20 seconds.");
+      }
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

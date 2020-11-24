@@ -19,6 +19,7 @@
 
 const ResourceControllerV2 = require('../../dist/resource-controller/v2');
 const authHelper = require('../resources/auth-helper.js');
+const { readExternalSources } = require('ibm-cloud-sdk-core');
 const { v4: uuidv4 } = require('uuid');
 
 // testcase timeout value (40s).
@@ -30,18 +31,19 @@ const configFile = 'resource_controller.env';
 // Use authHelper to skip tests if our configFile is not available.
 const describe = authHelper.prepareTests(configFile);
 
-const testAccountId = 'bc2b2fca0af84354a916dc1de6eee42e';
-const testResourceGroupGuid = '13aa3ee48c3b44ddb64c05c79f7ab8ef';
-const testOrgGuid = 'd35d4f0e-5076-4c89-9361-2522894b6548';
-const testSpaceGuid = '24e02942-4515-4273-a7c2-c2dbdd6d7f27';
-const testAppGuid = '20d43255-4b2f-49bb-aed9-618240f5d1b0';
+const reclaimInstanceName = 'RcSdkReclaimInstance1';
+const lockedInstanceNameUpdate = 'RcSdkLockedInstanceUpdate1';
+const instanceNames = { 'name': 'RcSdkInstance1Node', 'update': 'RcSdkInstanceUpdate1Node' };
+const keyNames = { 'name': 'RcSdkKey1Node', 'update': 'RcSdkKeyUpdate1Node', 'name2': 'RcSdkKey2Node', 'update2': 'RcSdkKeyUpdate2Node' };
+const bindingNames = { 'name': 'RcSdkBinding1Node', 'update': 'RcSdkBindingUpdate1Node' };
+const aliasNames = { 'name': 'RcSdkAlias1Node', 'update': 'RcSdkAliasUpdate1Node' };
+
 const testRegionId1 = 'global';
-const testPlanId1 = 'a10e4820-3685-11e9-b210-d663bd873d93';
 const testRegionId2 = 'global';
-const testPlanId2 = 'a10e4960-3685-11e9-b210-d663bd873d93';
 const transactionId = uuidv4();
 
 let service;
+let testAccountId;
 let testInstanceCrn;
 let testInstanceGuid;
 let testAliasCrn;
@@ -62,6 +64,16 @@ let testReclamationId2;
 describe('ResourceControllerV2_integration', () => {
   jest.setTimeout(timeout);
 
+  const config = readExternalSources(ResourceControllerV2.DEFAULT_SERVICE_NAME);
+
+  testAccountId = config.accountId;
+  const testResourceGroupGuid = config.resourceGroup;
+  const testOrgGuid = config.organizationGuid;
+  const testSpaceGuid = config.spaceGuid;
+  const testAppGuid = config.applicationGuid;
+  const testPlanId1 = config.planId;
+  const testPlanId2 = config.reclamationPlanId;
+
   test('should successfully complete initialization', done => {
     // Initialize the service client.
     service = ResourceControllerV2.newInstance();
@@ -77,7 +89,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: 'RcSdkInstance1',
+      name: instanceNames.name,
       target: testRegionId1,
       resourceGroup: testResourceGroupGuid,
       resourcePlanId: testPlanId1,
@@ -100,7 +112,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
     expect(result.id).toEqual(result.crn);
-    expect(result.name).toEqual('RcSdkInstance1');
+    expect(result.name).toEqual(instanceNames.name);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.resource_plan_id).toEqual(testPlanId1);
@@ -141,7 +153,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.id).toEqual(testInstanceCrn);
     expect(result.guid).toEqual(testInstanceGuid);
     expect(result.crn).toEqual(testInstanceCrn);
-    expect(result.name).toEqual('RcSdkInstance1');
+    expect(result.name).toEqual(instanceNames.name);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.resource_plan_id).toEqual(testPlanId1);
@@ -165,7 +177,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       id: testInstanceGuid,
-      name: 'RcSdkInstanceUpdate1',
+      name: instanceNames.update,
       parameters: instanceParams,
       headers: customHeader,
     };
@@ -183,7 +195,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const result = response.result;
     expect(result.id).toEqual(testInstanceCrn);
-    expect(result.name).toEqual('RcSdkInstanceUpdate1');
+    expect(result.name).toEqual(instanceNames.update);
     expect(result.state).toEqual('active');
     expect(result.last_operation.type).toEqual('update');
     expect(result.last_operation.sub_type).toEqual('config');
@@ -245,7 +257,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testInstanceCrn);
-    expect(result.resources[0].name).toEqual('RcSdkInstanceUpdate1');
+    expect(result.resources[0].name).toEqual(instanceNames.update);
     expect(result.resources[0].state).toEqual('active');
     expect(result.resources[0].last_operation.type).toEqual('update');
     expect(result.resources[0].last_operation.sub_type).toEqual('config');
@@ -261,7 +273,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: 'RcSdkInstance1',
+      name: instanceNames.name,
       headers: customHeader,
     };
 
@@ -291,7 +303,7 @@ describe('ResourceControllerV2_integration', () => {
     const targetCrn = 'crn:v1:bluemix:public:bluemix:us-south:o/' + testOrgGuid + '::cf-space:' + testSpaceGuid;
     aliasTargetCrn = 'crn:v1:bluemix:public:cf:us-south:o/' + testOrgGuid + '::cf-space:' + testSpaceGuid;
     const params = {
-      name: 'RcSdkAlias1',
+      name: aliasNames.name,
       source: testInstanceGuid,
       target: targetCrn,
       headers: customHeader,
@@ -313,7 +325,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
     expect(result.id).toEqual(result.crn);
-    expect(result.name).toEqual('RcSdkAlias1');
+    expect(result.name).toEqual(aliasNames.name);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.target_crn).toEqual(aliasTargetCrn);
@@ -351,7 +363,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.id).toEqual(testAliasCrn);
     expect(result.guid).toEqual(testAliasGuid);
     expect(result.crn).toEqual(testAliasCrn);
-    expect(result.name).toEqual('RcSdkAlias1');
+    expect(result.name).toEqual(aliasNames.name);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.target_crn).toEqual(aliasTargetCrn);
@@ -368,7 +380,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       id: testAliasGuid,
-      name: 'RcSdkAliasUpdate1',
+      name: aliasNames.update,
       headers: customHeader,
     };
 
@@ -385,7 +397,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const result = response.result;
     expect(result.id).toEqual(testAliasCrn);
-    expect(result.name).toEqual('RcSdkAliasUpdate1');
+    expect(result.name).toEqual(aliasNames.update);
     expect(result.state).toEqual('active');
 
     done();
@@ -443,7 +455,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testAliasCrn);
-    expect(result.resources[0].name).toEqual('RcSdkAliasUpdate1');
+    expect(result.resources[0].name).toEqual(aliasNames.update);
     expect(result.resources[0].state).toEqual('active');
     expect(result.resources[0].account_id).toEqual(testAccountId);
     expect(result.resources[0].resource_group_id).toEqual(testResourceGroupGuid);
@@ -460,7 +472,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: 'RcSdkAlias1',
+      name: aliasNames.name,
       headers: customHeader,
     };
 
@@ -490,7 +502,7 @@ describe('ResourceControllerV2_integration', () => {
     const targetCrn = 'crn:v1:staging:public:bluemix:us-south:s/' + testSpaceGuid + '::cf-application:' + testAppGuid;
     bindTargetCrn = 'crn:v1:staging:public:cf:us-south:s/' + testSpaceGuid + '::cf-application:' + testAppGuid;
     const params = {
-      name: 'RcSdkBinding1',
+      name: bindingNames.name,
       source: testAliasGuid,
       target: targetCrn,
       headers: customHeader,
@@ -512,7 +524,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
     expect(result.id).toEqual(result.crn);
-    expect(result.name).toEqual('RcSdkBinding1');
+    expect(result.name).toEqual(bindingNames.name);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.source_crn).toEqual(testAliasCrn);
@@ -550,7 +562,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.id).toEqual(testBindingCrn);
     expect(result.guid).toEqual(testBindingGuid);
     expect(result.crn).toEqual(testBindingCrn);
-    expect(result.name).toEqual('RcSdkBinding1');
+    expect(result.name).toEqual(bindingNames.name);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.source_crn).toEqual(testAliasCrn);
@@ -567,7 +579,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       id: testBindingGuid,
-      name: 'RcSdkBindingUpdate1',
+      name: bindingNames.update,
       headers: customHeader,
     };
 
@@ -584,7 +596,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const result = response.result;
     expect(result.id).toEqual(testBindingCrn);
-    expect(result.name).toEqual('RcSdkBindingUpdate1');
+    expect(result.name).toEqual(bindingNames.update);
     expect(result.state).toEqual('active');
 
     done();
@@ -642,7 +654,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testBindingCrn);
-    expect(result.resources[0].name).toEqual('RcSdkBindingUpdate1');
+    expect(result.resources[0].name).toEqual(bindingNames.update);
     expect(result.resources[0].account_id).toEqual(testAccountId);
     expect(result.resources[0].resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.resources[0].source_crn).toEqual(testAliasCrn);
@@ -658,7 +670,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: 'RcSdkBinding1',
+      name: bindingNames.name,
       headers: customHeader,
     };
 
@@ -686,7 +698,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: 'RcSdkKey1',
+      name: keyNames.name,
       source: testInstanceGuid,
       headers: customHeader,
     };
@@ -707,7 +719,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
     expect(result.id).toEqual(result.crn);
-    expect(result.name).toEqual('RcSdkKey1');
+    expect(result.name).toEqual(keyNames.name);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.source_crn).toEqual(testInstanceCrn);
@@ -744,7 +756,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.id).toEqual(testInstanceKeyCrn);
     expect(result.guid).toEqual(testInstanceKeyGuid);
     expect(result.crn).toEqual(testInstanceKeyCrn);
-    expect(result.name).toEqual('RcSdkKey1');
+    expect(result.name).toEqual(keyNames.name);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.source_crn).toEqual(testInstanceCrn);
@@ -760,7 +772,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       id: testInstanceKeyGuid,
-      name: 'RcSdkKeyUpdate1',
+      name: keyNames.update,
       headers: customHeader,
     };
 
@@ -777,7 +789,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const result = response.result;
     expect(result.id).toEqual(testInstanceKeyCrn);
-    expect(result.name).toEqual('RcSdkKeyUpdate1');
+    expect(result.name).toEqual(keyNames.update);
     expect(result.state).toEqual('active');
 
     done();
@@ -835,7 +847,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testInstanceKeyCrn);
-    expect(result.resources[0].name).toEqual('RcSdkKeyUpdate1');
+    expect(result.resources[0].name).toEqual(keyNames.update);
     expect(result.resources[0].account_id).toEqual(testAccountId);
     expect(result.resources[0].resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.resources[0].source_crn).toEqual(testInstanceCrn);
@@ -850,7 +862,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: 'RcSdkKey1',
+      name: keyNames.name,
       headers: customHeader,
     };
 
@@ -878,7 +890,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: 'RcSdkKey2',
+      name: keyNames.name2,
       source: testAliasGuid,
       headers: customHeader,
     };
@@ -899,7 +911,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
     expect(result.id).toEqual(result.crn);
-    expect(result.name).toEqual('RcSdkKey2');
+    expect(result.name).toEqual(keyNames.name2);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.source_crn).toEqual(testAliasCrn);
@@ -936,7 +948,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.id).toEqual(testAliasKeyCrn);
     expect(result.guid).toEqual(testAliasKeyGuid);
     expect(result.crn).toEqual(testAliasKeyCrn);
-    expect(result.name).toEqual('RcSdkKey2');
+    expect(result.name).toEqual(keyNames.name2);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.source_crn).toEqual(testAliasCrn);
@@ -952,7 +964,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       id: testAliasKeyGuid,
-      name: 'RcSdkKeyUpdate2',
+      name: keyNames.update2,
       headers: customHeader,
     };
 
@@ -969,7 +981,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const result = response.result;
     expect(result.id).toEqual(testAliasKeyCrn);
-    expect(result.name).toEqual('RcSdkKeyUpdate2');
+    expect(result.name).toEqual(keyNames.update2);
     expect(result.state).toEqual('active');
 
     done();
@@ -1027,7 +1039,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testAliasKeyCrn);
-    expect(result.resources[0].name).toEqual('RcSdkKeyUpdate2');
+    expect(result.resources[0].name).toEqual(keyNames.update2);
     expect(result.resources[0].account_id).toEqual(testAccountId);
     expect(result.resources[0].resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.resources[0].source_crn).toEqual(testAliasCrn);
@@ -1042,7 +1054,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: 'RcSdkKey2',
+      name: keyNames.name2,
       headers: customHeader,
     };
 
@@ -1345,7 +1357,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       id: testInstanceGuid,
-      name: 'RcSdkLockedInstanceUpdate1',
+      name: lockedInstanceNameUpdate,
       headers: customHeader,
     };
 
@@ -1476,7 +1488,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: 'RcSdkReclaimInstance1',
+      name: reclaimInstanceName,
       target: testRegionId2,
       resourceGroup: testResourceGroupGuid,
       resourcePlanId: testPlanId2,
@@ -1499,7 +1511,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
     expect(result.id).toEqual(result.crn);
-    expect(result.name).toEqual('RcSdkReclaimInstance1');
+    expect(result.name).toEqual(reclaimInstanceName);
     expect(result.account_id).toEqual(testAccountId);
     expect(result.resource_group_id).toEqual(testResourceGroupGuid);
     expect(result.resource_plan_id).toEqual(testPlanId2);
@@ -1807,8 +1819,11 @@ describe('ResourceControllerV2_integration', () => {
   //   done();
   // });
 
-  // cleanup resources
-  afterAll(async done => {
+  afterAll(done => {
+    cleanUp(done);
+  }, 120000);
+
+  async function cleanUp(done) {
     // delete keys to cleanup
     if (testAliasKeyGuid) {
       try {
@@ -1948,9 +1963,200 @@ describe('ResourceControllerV2_integration', () => {
       console.log('Instance was not created. No cleanup needed.');
     }
 
+    const customHeader = {
+      'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+    };
+
+    // Clean up keys by name
+    let names = Object.values(keyNames);
+    let namesLength = names.length;
+    let nameCounter = 0;
+    while (nameCounter < namesLength) {
+      const listKeyParams = {
+        name: names[nameCounter],
+        headers: customHeader,
+      };
+      let listKeyResponse;
+      try {
+        listKeyResponse = await service.listResourceKeys(listKeyParams);
+      } catch (err) {
+        console.log('Error retrieving key with name ' + names[nameCounter] + ' for cleanup: ', JSON.stringify(err));
+      }
+      if (listKeyResponse.result.resources.length > 0) {
+        const resources = listKeyResponse.result.resources;
+        const resLength = resources.length;
+        let resCounter = 0;
+        while (resCounter < resLength) {
+          const keyGuid = resources[resCounter].guid;
+          const deleteKeyParams = {
+            id: keyGuid,
+            headers: customHeader,
+          };
+          try {
+            await service.deleteResourceKey(deleteKeyParams);
+            console.log('Successful cleanup of key with name ' + names[nameCounter]);
+          } catch (err) {
+            if (err && err.status === 410) {
+              console.log('Key with name ' + names[nameCounter] + ' was already deleted by the tests.');
+            } else {
+              console.log('Error cleaning up key with name' + names[nameCounter] + ' and key guid ' + keyGuid + ': ', JSON.stringify(err));
+            }
+          }
+          resCounter++;
+        }
+      } else {
+        console.log('No keys found for name ' + names[nameCounter]);
+      }
+      nameCounter++;
+    }
+
+    // Clean up instances by name
+    names = Object.values(instanceNames);
+    namesLength = names.length;
+    nameCounter = 0;
+    while (nameCounter < namesLength) {
+      const listInstanceParams = {
+        name: names[nameCounter],
+        headers: customHeader,
+      };
+      let listInstanceResponse;
+      try {
+        listInstanceResponse = await service.listResourceInstances(listInstanceParams);
+      } catch (err) {
+        console.log('Error retrieving instance with name ' + names[nameCounter] + ' for cleanup: ', JSON.stringify(err));
+      }
+      if (listInstanceResponse.result.resources.length > 0) {
+        const resources = listInstanceResponse.result.resources;
+        const resLength = resources.length;
+        let resCounter = 0;
+        while (resCounter < resLength) {
+          const instanceGuid = resources[resCounter].guid;
+
+          // if active and locked, unlock instance to cleanup
+          if (resources[resCounter].state === 'active' && resources[resCounter].locked) {
+            try {
+              const unlockParams = {
+                id: instanceGuid,
+                headers: customHeader,
+              };
+              await service.unlockResourceInstance(unlockParams);
+            } catch (err) {
+              console.log('Error unlocking instance ' + instanceGuid + ' for cleanup: ', JSON.stringify(err));
+            }
+          }
+
+          const deleteInstanceParams = {
+            id: instanceGuid,
+            headers: customHeader,
+          };
+          try {
+            await service.deleteResourceInstance(deleteInstanceParams);
+            console.log('Successful cleanup of instance with name ' + names[nameCounter]);
+          } catch (err) {
+            if (err && err.status === 410) {
+              console.log('Instance with name ' + names[nameCounter] + ' was already deleted by the tests.');
+            } else {
+              console.log('Error cleaning up instance with name' + names[nameCounter] + ' and instance guid ' + instanceGuid + ': ', JSON.stringify(err));
+            }
+          }
+          resCounter++;
+        }
+      } else {
+        console.log('No instances found for name ' + names[nameCounter]);
+      }
+      nameCounter++;
+    }
+
+    // Clean up bindings by name
+    names = Object.values(bindingNames);
+    namesLength = names.length;
+    nameCounter = 0;
+    while (nameCounter < namesLength) {
+      const listBindingParams = {
+        name: names[nameCounter],
+        headers: customHeader,
+      };
+      let listBindingResponse;
+      try {
+        listBindingResponse = await service.listResourceBindings(listBindingParams);
+      } catch (err) {
+        console.log('Error retrieving binding with name ' + names[nameCounter] + ' for cleanup: ', JSON.stringify(err));
+      }
+      if (listBindingResponse.result.resources.length > 0) {
+        const resources = listBindingResponse.result.resources;
+        const resLength = resources.length;
+        let resCounter = 0;
+        while (resCounter < resLength) {
+          const bindingGuid = resources[resCounter].guid;
+          const deleteBindingParams = {
+            id: bindingGuid,
+            headers: customHeader,
+          };
+          try {
+            await service.deleteResourceBinding(deleteBindingParams);
+            console.log('Successful cleanup of binding with name ' + names[nameCounter]);
+          } catch (err) {
+            if (err && err.status === 410) {
+              console.log('Binding with name ' + names[nameCounter] + ' was already deleted by the tests.');
+            } else {
+              console.log('Error cleaning up binding with name' + names[nameCounter] + ' and binding guid ' + bindingGuid + ': ', JSON.stringify(err));
+            }
+          }
+          resCounter++;
+        }
+      } else {
+        console.log('No bindings found for name ' + names[nameCounter]);
+      }
+      nameCounter++;
+    }
+
+    // Clean up aliases by name
+    names = Object.values(aliasNames);
+    namesLength = names.length;
+    nameCounter = 0;
+    while (nameCounter < namesLength) {
+      const listAliasParams = {
+        name: names[nameCounter],
+        headers: customHeader,
+      };
+      let listAliasResponse;
+      try {
+        listAliasResponse = await service.listResourceAliases(listAliasParams);
+      } catch (err) {
+        console.log('Error retrieving alias with name ' + names[nameCounter] + ' for cleanup: ', JSON.stringify(err));
+      }
+      if (listAliasResponse.result.resources.length > 0) {
+        const resources = listAliasResponse.result.resources;
+        const resLength = resources.length;
+        let resCounter = 0;
+        while (resCounter < resLength) {
+          const aliasGuid = resources[resCounter].guid;
+          const deleteAliasParams = {
+            id: aliasGuid,
+            headers: customHeader,
+          };
+          try {
+            await service.deleteResourceAlias(deleteAliasParams);
+            console.log('Successful cleanup of alias with name ' + names[nameCounter]);
+          } catch (err) {
+            if (err && err.status === 410) {
+              console.log('Alias with name ' + names[nameCounter] + ' was already deleted by the tests.');
+            } else {
+              console.log('Error cleaning up alias with name' + names[nameCounter] + ' and alias guid ' + aliasGuid + ': ', JSON.stringify(err));
+            }
+          }
+          resCounter++;
+        }
+      } else {
+        console.log('No aliases found for name ' + names[nameCounter]);
+      }
+      nameCounter++;
+    }
+
     await cleanupReclamationInstance(done);
+
     done();
-  }, 120000);
+  }
 });
 
 function getResourceInstanceForCleanup(instanceId) {
@@ -1962,7 +2168,6 @@ function getResourceInstanceForCleanup(instanceId) {
     id: instanceId,
     headers: customHeader,
   };
-
   return service.getResourceInstance(params);
 }
 

@@ -18,7 +18,7 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * object.
+ * A collection of attribute value pairs.
  */
 public class Resource extends GenericModel {
 

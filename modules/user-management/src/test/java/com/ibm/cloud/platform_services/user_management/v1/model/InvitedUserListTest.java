@@ -13,7 +13,8 @@
 
 package com.ibm.cloud.platform_services.user_management.v1.model;
 
-import com.ibm.cloud.platform_services.user_management.v1.model.RemoveUsersOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.InvitedUser;
+import com.ibm.cloud.platform_services.user_management.v1.model.InvitedUserList;
 import com.ibm.cloud.platform_services.user_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,25 +24,15 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the RemoveUsersOptions model.
+ * Unit test class for the InvitedUserList model.
  */
-public class RemoveUsersOptionsTest {
+public class InvitedUserListTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testRemoveUsersOptions() throws Throwable {
-    RemoveUsersOptions removeUsersOptionsModel = new RemoveUsersOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
-      .build();
-    assertEquals(removeUsersOptionsModel.accountId(), "testString");
-    assertEquals(removeUsersOptionsModel.iamId(), "testString");
+  public void testInvitedUserList() throws Throwable {
+    InvitedUserList invitedUserListModel = new InvitedUserList();
+    assertNull(invitedUserListModel.getResources());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testRemoveUsersOptionsError() throws Throwable {
-    new RemoveUsersOptions.Builder().build();
-  }
-
 }

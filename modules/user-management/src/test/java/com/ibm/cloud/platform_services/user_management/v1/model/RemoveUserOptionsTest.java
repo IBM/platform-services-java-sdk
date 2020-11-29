@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.user_management.v1.model;
 
-import com.ibm.cloud.platform_services.user_management.v1.model.ListUsersOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.RemoveUserOptions;
 import com.ibm.cloud.platform_services.user_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,29 +23,25 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListUsersOptions model.
+ * Unit test class for the RemoveUserOptions model.
  */
-public class ListUsersOptionsTest {
+public class RemoveUserOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListUsersOptions() throws Throwable {
-    ListUsersOptions listUsersOptionsModel = new ListUsersOptions.Builder()
+  public void testRemoveUserOptions() throws Throwable {
+    RemoveUserOptions removeUserOptionsModel = new RemoveUserOptions.Builder()
       .accountId("testString")
-      .state("testString")
-      .limit(Long.valueOf("100"))
-      .start("testString")
+      .iamId("testString")
       .build();
-    assertEquals(listUsersOptionsModel.accountId(), "testString");
-    assertEquals(listUsersOptionsModel.state(), "testString");
-    assertEquals(listUsersOptionsModel.limit(), Long.valueOf("100"));
-    assertEquals(listUsersOptionsModel.start(), "testString");
+    assertEquals(removeUserOptionsModel.accountId(), "testString");
+    assertEquals(removeUserOptionsModel.iamId(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListUsersOptionsError() throws Throwable {
-    new ListUsersOptions.Builder().build();
+  public void testRemoveUserOptionsError() throws Throwable {
+    new RemoveUserOptions.Builder().build();
   }
 
 }

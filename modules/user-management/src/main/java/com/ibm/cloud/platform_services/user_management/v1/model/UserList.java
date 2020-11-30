@@ -23,8 +23,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class UserList extends GenericModel {
 
   @SerializedName("total_results")
-  protected Double totalResults;
-  protected Double limit;
+  protected Long totalResults;
+  protected Long limit;
   @SerializedName("first_url")
   protected String firstUrl;
   @SerializedName("next_url")
@@ -38,7 +38,7 @@ public class UserList extends GenericModel {
    *
    * @return the totalResults
    */
-  public Double getTotalResults() {
+  public Long getTotalResults() {
     return totalResults;
   }
 
@@ -49,7 +49,7 @@ public class UserList extends GenericModel {
    *
    * @return the limit
    */
-  public Double getLimit() {
+  public Long getLimit() {
     return limit;
   }
 

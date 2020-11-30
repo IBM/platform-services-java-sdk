@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef5e13c2-20200915-144510
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-60fd6b3d-20201128-071551
  */
 
 package com.ibm.cloud.platform_services.user_management.v1;
@@ -22,9 +22,10 @@ import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.platform_services.user_management.v1.model.GetUserProfileOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.GetUserSettingsOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.InviteUsersOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.InvitedUserList;
 import com.ibm.cloud.platform_services.user_management.v1.model.ListUsersOptions;
-import com.ibm.cloud.platform_services.user_management.v1.model.RemoveUsersOptions;
-import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserProfilesOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.RemoveUserOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserProfileOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserSettingsOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserList;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserProfile;
@@ -88,80 +89,6 @@ public class UserManagement extends BaseService {
   }
 
   /**
-   * Get user settings.
-   *
-   * Retrieve a user's settings by the user's IAM ID. You can use the IAM service token or a user token for
-   * authorization. To use this method, the requesting user or service ID must have the viewer, editor, or administrator
-   * role on the User Management service. &lt;br/&gt;&lt;br/&gt;The user settings have several fields. The `language`
-   * field is the language setting for the user interface display language. The `notification_language` field is the
-   * language setting for phone and email notifications. The `allowed_ip_addresses` field specifies a list of IP
-   * addresses that the user can log in and perform operations from as described in [Allowing specific IP addresses for
-   * a user](/docs/account?topic=account-ips). For information about the `self_manage` field, review information about
-   * the [user-managed login setting](/docs/account?topic=account-types).
-   *
-   * @param getUserSettingsOptions the {@link GetUserSettingsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link UserSettings}
-   */
-  public ServiceCall<UserSettings> getUserSettings(GetUserSettingsOptions getUserSettingsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getUserSettingsOptions,
-      "getUserSettingsOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_id", getUserSettingsOptions.accountId());
-    pathParamsMap.put("iam_id", getUserSettingsOptions.iamId());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}/settings", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "getUserSettings");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    ResponseConverter<UserSettings> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<UserSettings>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Partially update user settings.
-   *
-   * Update a user's settings by the user's IAM ID. You can use the IAM service token or a user token for authorization.
-   * To fully use this method, the user or service ID must have the editor or administrator role on the User Management
-   * service. Without these roles, a user can update only their own `language` or `notification_language` fields. If
-   * `self_manage` is `true`, the user can also update the `allowed_ip_addresses` field.
-   *
-   * @param updateUserSettingsOptions the {@link UpdateUserSettingsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link UserSettings}
-   */
-  public ServiceCall<UserSettings> updateUserSettings(UpdateUserSettingsOptions updateUserSettingsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(updateUserSettingsOptions,
-      "updateUserSettingsOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_id", updateUserSettingsOptions.accountId());
-    pathParamsMap.put("iam_id", updateUserSettingsOptions.iamId());
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}/settings", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "updateUserSettings");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    final JsonObject contentJson = new JsonObject();
-    if (updateUserSettingsOptions.language() != null) {
-      contentJson.addProperty("language", updateUserSettingsOptions.language());
-    }
-    if (updateUserSettingsOptions.notificationLanguage() != null) {
-      contentJson.addProperty("notification_language", updateUserSettingsOptions.notificationLanguage());
-    }
-    if (updateUserSettingsOptions.allowedIpAddresses() != null) {
-      contentJson.addProperty("allowed_ip_addresses", updateUserSettingsOptions.allowedIpAddresses());
-    }
-    if (updateUserSettingsOptions.selfManage() != null) {
-      contentJson.addProperty("self_manage", updateUserSettingsOptions.selfManage());
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<UserSettings> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<UserSettings>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
    * List users.
    *
    * Retrieve users in the account. You can use the IAM service token or a user token for authorization. To use this
@@ -189,28 +116,34 @@ public class UserManagement extends BaseService {
     if (listUsersOptions.state() != null) {
       builder.query("state", String.valueOf(listUsersOptions.state()));
     }
+    if (listUsersOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listUsersOptions.limit()));
+    }
+    if (listUsersOptions.start() != null) {
+      builder.query("_start", String.valueOf(listUsersOptions.start()));
+    }
     ResponseConverter<UserList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<UserList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Invite users.
+   * Invite users to an account.
    *
    * Invite users to the account. You must use a user token for authorization. Service IDs can't invite users to the
    * account. To use this method, the requesting user must have the editor or administrator role on the User Management
-   * service. For more information, see the [Inviting users](/docs/account?topic=account-iamuserinv) documentation. You
-   * can specify the user account role and the corresponding IAM policy information in the request body.
-   * &lt;br/&gt;&lt;br/&gt;When you invite a user to an account, the user is initially created in the `PROCESSING`
-   * state. After the user is successfully created, all specified permissions are configured, and the activation email
-   * is sent, the invited user is transitioned to the `PENDING` state. When the invited user clicks the activation email
-   * and creates and confirms their IBM Cloud account, the user is transitioned to `ACTIVE` state. If the user email is
-   * already verified, no email is generated.
+   * service. For more information, see the [Inviting
+   * users](https://cloud.ibm.com/docs/account?topic=account-iamuserinv) documentation. You can specify the user account
+   * role and the corresponding IAM policy information in the request body. &lt;br/&gt;&lt;br/&gt;When you invite a user
+   * to an account, the user is initially created in the `PROCESSING` state. After the user is successfully created, all
+   * specified permissions are configured, and the activation email is sent, the invited user is transitioned to the
+   * `PENDING` state. When the invited user clicks the activation email and creates and confirms their IBM Cloud
+   * account, the user is transitioned to `ACTIVE` state. If the user email is already verified, no email is generated.
    *
    * @param inviteUsersOptions the {@link InviteUsersOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link UserList}
+   * @return a {@link ServiceCall} with a result of type {@link InvitedUserList}
    */
-  public ServiceCall<UserList> inviteUsers(InviteUsersOptions inviteUsersOptions) {
+  public ServiceCall<InvitedUserList> inviteUsers(InviteUsersOptions inviteUsersOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(inviteUsersOptions,
       "inviteUsersOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -232,8 +165,8 @@ public class UserManagement extends BaseService {
       contentJson.add("access_groups", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(inviteUsersOptions.accessGroups()));
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<UserList> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<UserList>() { }.getType());
+    ResponseConverter<InvitedUserList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<InvitedUserList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -265,7 +198,7 @@ public class UserManagement extends BaseService {
   }
 
   /**
-   * Partially update user profiles.
+   * Partially update user profile.
    *
    * Partially update a user's profile by user's IAM ID. You can use the IAM service token or a user token for
    * authorization. To use this method, the requesting user or service ID must have at least the editor or administrator
@@ -274,41 +207,41 @@ public class UserManagement extends BaseService {
    * `PENDING` because these are system states. For other request body fields, a user can update their own profile
    * without having User Management service permissions.
    *
-   * @param updateUserProfilesOptions the {@link UpdateUserProfilesOptions} containing the options for the call
+   * @param updateUserProfileOptions the {@link UpdateUserProfileOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<Void> updateUserProfiles(UpdateUserProfilesOptions updateUserProfilesOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(updateUserProfilesOptions,
-      "updateUserProfilesOptions cannot be null");
+  public ServiceCall<Void> updateUserProfile(UpdateUserProfileOptions updateUserProfileOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateUserProfileOptions,
+      "updateUserProfileOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_id", updateUserProfilesOptions.accountId());
-    pathParamsMap.put("iam_id", updateUserProfilesOptions.iamId());
+    pathParamsMap.put("account_id", updateUserProfileOptions.accountId());
+    pathParamsMap.put("iam_id", updateUserProfileOptions.iamId());
     RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "updateUserProfiles");
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "updateUserProfile");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     final JsonObject contentJson = new JsonObject();
-    if (updateUserProfilesOptions.firstname() != null) {
-      contentJson.addProperty("firstname", updateUserProfilesOptions.firstname());
+    if (updateUserProfileOptions.firstname() != null) {
+      contentJson.addProperty("firstname", updateUserProfileOptions.firstname());
     }
-    if (updateUserProfilesOptions.lastname() != null) {
-      contentJson.addProperty("lastname", updateUserProfilesOptions.lastname());
+    if (updateUserProfileOptions.lastname() != null) {
+      contentJson.addProperty("lastname", updateUserProfileOptions.lastname());
     }
-    if (updateUserProfilesOptions.state() != null) {
-      contentJson.addProperty("state", updateUserProfilesOptions.state());
+    if (updateUserProfileOptions.state() != null) {
+      contentJson.addProperty("state", updateUserProfileOptions.state());
     }
-    if (updateUserProfilesOptions.email() != null) {
-      contentJson.addProperty("email", updateUserProfilesOptions.email());
+    if (updateUserProfileOptions.email() != null) {
+      contentJson.addProperty("email", updateUserProfileOptions.email());
     }
-    if (updateUserProfilesOptions.phonenumber() != null) {
-      contentJson.addProperty("phonenumber", updateUserProfilesOptions.phonenumber());
+    if (updateUserProfileOptions.phonenumber() != null) {
+      contentJson.addProperty("phonenumber", updateUserProfileOptions.phonenumber());
     }
-    if (updateUserProfilesOptions.altphonenumber() != null) {
-      contentJson.addProperty("altphonenumber", updateUserProfilesOptions.altphonenumber());
+    if (updateUserProfileOptions.altphonenumber() != null) {
+      contentJson.addProperty("altphonenumber", updateUserProfileOptions.altphonenumber());
     }
-    if (updateUserProfilesOptions.photo() != null) {
-      contentJson.addProperty("photo", updateUserProfilesOptions.photo());
+    if (updateUserProfileOptions.photo() != null) {
+      contentJson.addProperty("photo", updateUserProfileOptions.photo());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
@@ -316,27 +249,99 @@ public class UserManagement extends BaseService {
   }
 
   /**
-   * Remove users.
+   * Remove user from account.
    *
    * Remove users from an account by user's IAM ID. You must use a user token for authorization. Service IDs can't
    * remove users from an account. To use this method, the requesting user must have the editor or administrator role on
-   * the User Management service. For more information, see the [Removing users](/docs/account?topic=account-remove)
-   * documentation.
+   * the User Management service. For more information, see the [Removing
+   * users](https://cloud.ibm.com/docs/account?topic=account-remove) documentation.
    *
-   * @param removeUsersOptions the {@link RemoveUsersOptions} containing the options for the call
+   * @param removeUserOptions the {@link RemoveUserOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<Void> removeUsers(RemoveUsersOptions removeUsersOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(removeUsersOptions,
-      "removeUsersOptions cannot be null");
+  public ServiceCall<Void> removeUser(RemoveUserOptions removeUserOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(removeUserOptions,
+      "removeUserOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_id", removeUsersOptions.accountId());
-    pathParamsMap.put("iam_id", removeUsersOptions.iamId());
+    pathParamsMap.put("account_id", removeUserOptions.accountId());
+    pathParamsMap.put("iam_id", removeUserOptions.iamId());
     RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "removeUsers");
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "removeUser");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get user settings.
+   *
+   * Retrieve a user's settings by the user's IAM ID. You can use the IAM service token or a user token for
+   * authorization. To use this method, the requesting user or service ID must have the viewer, editor, or administrator
+   * role on the User Management service. &lt;br/&gt;&lt;br/&gt;The user settings have several fields. The `language`
+   * field is the language setting for the user interface display language. The `notification_language` field is the
+   * language setting for phone and email notifications. The `allowed_ip_addresses` field specifies a list of IP
+   * addresses that the user can log in and perform operations from as described in [Allowing specific IP addresses for
+   * a user](https://cloud.ibm.com/docs/account?topic=account-ips). For information about the `self_manage` field,
+   * review information about the [user-managed login setting](https://cloud.ibm.com/docs/account?topic=account-types).
+   *
+   * @param getUserSettingsOptions the {@link GetUserSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link UserSettings}
+   */
+  public ServiceCall<UserSettings> getUserSettings(GetUserSettingsOptions getUserSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getUserSettingsOptions,
+      "getUserSettingsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getUserSettingsOptions.accountId());
+    pathParamsMap.put("iam_id", getUserSettingsOptions.iamId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}/settings", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "getUserSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<UserSettings> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<UserSettings>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Partially update user settings.
+   *
+   * Update a user's settings by the user's IAM ID. You can use the IAM service token or a user token for authorization.
+   * To fully use this method, the user or service ID must have the editor or administrator role on the User Management
+   * service. Without these roles, a user can update only their own `language` or `notification_language` fields. If
+   * `self_manage` is `true`, the user can also update the `allowed_ip_addresses` field.
+   *
+   * @param updateUserSettingsOptions the {@link UpdateUserSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> updateUserSettings(UpdateUserSettingsOptions updateUserSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateUserSettingsOptions,
+      "updateUserSettingsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", updateUserSettingsOptions.accountId());
+    pathParamsMap.put("iam_id", updateUserSettingsOptions.iamId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}/settings", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "updateUserSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    final JsonObject contentJson = new JsonObject();
+    if (updateUserSettingsOptions.language() != null) {
+      contentJson.addProperty("language", updateUserSettingsOptions.language());
+    }
+    if (updateUserSettingsOptions.notificationLanguage() != null) {
+      contentJson.addProperty("notification_language", updateUserSettingsOptions.notificationLanguage());
+    }
+    if (updateUserSettingsOptions.allowedIpAddresses() != null) {
+      contentJson.addProperty("allowed_ip_addresses", updateUserSettingsOptions.allowedIpAddresses());
+    }
+    if (updateUserSettingsOptions.selfManage() != null) {
+      contentJson.addProperty("self_manage", updateUserSettingsOptions.selfManage());
+    }
+    builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }

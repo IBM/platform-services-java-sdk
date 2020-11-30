@@ -1,3 +1,10 @@
+## [0.15.5](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.4...v0.15.5) (2020-11-30)
+
+
+### Bug Fixes
+
+* **User Management:** re-gen service and update tests after API changes ([#58](https://github.com/IBM/platform-services-node-sdk/issues/58)) ([f3b3c0c](https://github.com/IBM/platform-services-node-sdk/commit/f3b3c0cbc47c40af781d4813d7d5aa2349ac88c8))
+
 ## [0.15.4](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.3...v0.15.4) (2020-11-19)
 
 

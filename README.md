@@ -49,6 +49,7 @@ Service Name | Artifact Coordinates
 [Case Management](https://cloud.ibm.com/apidocs/case-management) | com.ibm.cloud:case-management:0.15.10
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | com.ibm.cloud:catalog-management:0.15.10
 [Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | com.ibm.cloud:configuration-governance:0.15.10
+[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit) | com.ibm.cloud:enterprise-billing-units:0.15.10
 [Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | com.ibm.cloud:enterprise-management:0.15.10
 [Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | com.ibm.cloud:enterprise-usage-reports:0.15.10
 [Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | com.ibm.cloud:global-catalog:0.15.10

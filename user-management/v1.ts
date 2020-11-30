@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-60fd6b3d-20201128-071551
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -69,7 +69,7 @@ class UserManagementV1 extends BaseService {
    * Construct a UserManagementV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
@@ -85,120 +85,6 @@ class UserManagementV1 extends BaseService {
       this.setServiceUrl(UserManagementV1.DEFAULT_SERVICE_URL);
     }
   }
-
-  /*************************
-   * userSettings
-   ************************/
-
-  /**
-   * Get user settings.
-   *
-   * Retrieve a user's settings by the user's IAM ID. You can use the IAM service token or a user token for
-   * authorization. To use this method, the requesting user or service ID must have the viewer, editor, or administrator
-   * role on the User Management service. <br/><br/>The user settings have several fields. The `language` field is the
-   * language setting for the user interface display language. The `notification_language` field is the language setting
-   * for phone and email notifications. The `allowed_ip_addresses` field specifies a list of IP addresses that the user
-   * can log in and perform operations from as described in [Allowing specific IP addresses for a
-   * user](/docs/account?topic=account-ips). For information about the `self_manage` field, review information about the
-   * [user-managed login setting](/docs/account?topic=account-types).
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - The account ID.
-   * @param {string} params.iamId - The user's IAM ID.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<UserManagementV1.Response<UserManagementV1.UserSettings>>}
-   */
-  public getUserSettings(params: UserManagementV1.GetUserSettingsParams): Promise<UserManagementV1.Response<UserManagementV1.UserSettings>> {
-    const _params = Object.assign({}, params);
-    const requiredParams = ['accountId', 'iamId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const path = {
-      'account_id': _params.accountId,
-      'iam_id': _params.iamId
-    };
-
-    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getUserSettings');
-
-    const parameters = {
-      options: {
-        url: '/v2/accounts/{account_id}/users/{iam_id}/settings',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  };
-
-  /**
-   * Partially update user settings.
-   *
-   * Update a user's settings by the user's IAM ID. You can use the IAM service token or a user token for authorization.
-   * To fully use this method, the user or service ID must have the editor or administrator role on the User Management
-   * service. Without these roles, a user can update only their own `language` or `notification_language` fields. If
-   * `self_manage` is `true`, the user can also update the `allowed_ip_addresses` field.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - The account ID.
-   * @param {string} params.iamId - The user's IAM ID.
-   * @param {string} [params.language] - The console UI language. By default, this field is empty.
-   * @param {string} [params.notificationLanguage] - The language for email and phone notifications. By default, this
-   * field is empty.
-   * @param {string} [params.allowedIpAddresses] - A comma-separated list of IP addresses.
-   * @param {boolean} [params.selfManage] - Whether user managed login is enabled. The default value is `false`.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<UserManagementV1.Response<UserManagementV1.UserSettings>>}
-   */
-  public updateUserSettings(params: UserManagementV1.UpdateUserSettingsParams): Promise<UserManagementV1.Response<UserManagementV1.UserSettings>> {
-    const _params = Object.assign({}, params);
-    const requiredParams = ['accountId', 'iamId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const body = {
-      'language': _params.language,
-      'notification_language': _params.notificationLanguage,
-      'allowed_ip_addresses': _params.allowedIpAddresses,
-      'self_manage': _params.selfManage
-    };
-
-    const path = {
-      'account_id': _params.accountId,
-      'iam_id': _params.iamId
-    };
-
-    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserSettings');
-
-    const parameters = {
-      options: {
-        url: '/v2/accounts/{account_id}/users/{iam_id}/settings',
-        method: 'PATCH',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  };
 
   /*************************
    * users
@@ -218,6 +104,10 @@ class UserManagementV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.accountId - The account ID.
    * @param {string} [params.state] - The state of the user.
+   * @param {number} [params.limit] - The number of results to be returned.
+   * @param {string} [params.start] - An optional token that indicates the beginning of the page of results to be
+   * returned. If omitted, the first page of results is returned. This value is obtained from the 'next_url' field of
+   * the operation response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.UserList>>}
    */
@@ -231,7 +121,9 @@ class UserManagementV1 extends BaseService {
     }
 
     const query = {
-      'state': _params.state
+      'state': _params.state,
+      'limit': _params.limit,
+      '_start': _params.start
     };
 
     const path = {
@@ -258,17 +150,17 @@ class UserManagementV1 extends BaseService {
   };
 
   /**
-   * Invite users.
+   * Invite users to an account.
    *
    * Invite users to the account. You must use a user token for authorization. Service IDs can't invite users to the
    * account. To use this method, the requesting user must have the editor or administrator role on the User Management
-   * service. For more information, see the [Inviting users](/docs/account?topic=account-iamuserinv) documentation. You
-   * can specify the user account role and the corresponding IAM policy information in the request body. <br/><br/>When
-   * you invite a user to an account, the user is initially created in the `PROCESSING` state. After the user is
-   * successfully created, all specified permissions are configured, and the activation email is sent, the invited user
-   * is transitioned to the `PENDING` state. When the invited user clicks the activation email and creates and confirms
-   * their IBM Cloud account, the user is transitioned to `ACTIVE` state. If the user email is already verified, no
-   * email is generated.
+   * service. For more information, see the [Inviting
+   * users](https://cloud.ibm.com/docs/account?topic=account-iamuserinv) documentation. You can specify the user account
+   * role and the corresponding IAM policy information in the request body. <br/><br/>When you invite a user to an
+   * account, the user is initially created in the `PROCESSING` state. After the user is successfully created, all
+   * specified permissions are configured, and the activation email is sent, the invited user is transitioned to the
+   * `PENDING` state. When the invited user clicks the activation email and creates and confirms their IBM Cloud
+   * account, the user is transitioned to `ACTIVE` state. If the user email is already verified, no email is generated.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.accountId - The account ID.
@@ -276,9 +168,9 @@ class UserManagementV1 extends BaseService {
    * @param {InviteUserIamPolicy[]} [params.iamPolicy] - A list of IAM policies.
    * @param {string[]} [params.accessGroups] - A list of access groups.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<UserManagementV1.Response<UserManagementV1.UserList>>}
+   * @returns {Promise<UserManagementV1.Response<UserManagementV1.InvitedUserList>>}
    */
-  public inviteUsers(params: UserManagementV1.InviteUsersParams): Promise<UserManagementV1.Response<UserManagementV1.UserList>> {
+  public inviteUsers(params: UserManagementV1.InviteUsersParams): Promise<UserManagementV1.Response<UserManagementV1.InvitedUserList>> {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId'];
 
@@ -363,7 +255,7 @@ class UserManagementV1 extends BaseService {
   };
 
   /**
-   * Partially update user profiles.
+   * Partially update user profile.
    *
    * Partially update a user's profile by user's IAM ID. You can use the IAM service token or a user token for
    * authorization. To use this method, the requesting user or service ID must have at least the editor or administrator
@@ -386,7 +278,7 @@ class UserManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.Empty>>}
    */
-  public updateUserProfiles(params: UserManagementV1.UpdateUserProfilesParams): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
+  public updateUserProfile(params: UserManagementV1.UpdateUserProfileParams): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
@@ -410,7 +302,7 @@ class UserManagementV1 extends BaseService {
       'iam_id': _params.iamId
     };
 
-    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserProfiles');
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserProfile');
 
     const parameters = {
       options: {
@@ -430,12 +322,12 @@ class UserManagementV1 extends BaseService {
   };
 
   /**
-   * Remove users.
+   * Remove user from account.
    *
    * Remove users from an account by user's IAM ID. You must use a user token for authorization. Service IDs can't
    * remove users from an account. To use this method, the requesting user must have the editor or administrator role on
-   * the User Management service. For more information, see the [Removing users](/docs/account?topic=account-remove)
-   * documentation.
+   * the User Management service. For more information, see the [Removing
+   * users](https://cloud.ibm.com/docs/account?topic=account-remove) documentation.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.accountId - The account ID.
@@ -443,7 +335,7 @@ class UserManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.Empty>>}
    */
-  public removeUsers(params: UserManagementV1.RemoveUsersParams): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
+  public removeUser(params: UserManagementV1.RemoveUserParams): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
     const _params = Object.assign({}, params);
     const requiredParams = ['accountId', 'iamId'];
 
@@ -457,7 +349,7 @@ class UserManagementV1 extends BaseService {
       'iam_id': _params.iamId
     };
 
-    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'removeUsers');
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'removeUser');
 
     const parameters = {
       options: {
@@ -467,6 +359,119 @@ class UserManagementV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /*************************
+   * userSettings
+   ************************/
+
+  /**
+   * Get user settings.
+   *
+   * Retrieve a user's settings by the user's IAM ID. You can use the IAM service token or a user token for
+   * authorization. To use this method, the requesting user or service ID must have the viewer, editor, or administrator
+   * role on the User Management service. <br/><br/>The user settings have several fields. The `language` field is the
+   * language setting for the user interface display language. The `notification_language` field is the language setting
+   * for phone and email notifications. The `allowed_ip_addresses` field specifies a list of IP addresses that the user
+   * can log in and perform operations from as described in [Allowing specific IP addresses for a
+   * user](https://cloud.ibm.com/docs/account?topic=account-ips). For information about the `self_manage` field, review
+   * information about the [user-managed login setting](https://cloud.ibm.com/docs/account?topic=account-types).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.accountId - The account ID.
+   * @param {string} params.iamId - The user's IAM ID.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<UserManagementV1.Response<UserManagementV1.UserSettings>>}
+   */
+  public getUserSettings(params: UserManagementV1.GetUserSettingsParams): Promise<UserManagementV1.Response<UserManagementV1.UserSettings>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['accountId', 'iamId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'account_id': _params.accountId,
+      'iam_id': _params.iamId
+    };
+
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getUserSettings');
+
+    const parameters = {
+      options: {
+        url: '/v2/accounts/{account_id}/users/{iam_id}/settings',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Partially update user settings.
+   *
+   * Update a user's settings by the user's IAM ID. You can use the IAM service token or a user token for authorization.
+   * To fully use this method, the user or service ID must have the editor or administrator role on the User Management
+   * service. Without these roles, a user can update only their own `language` or `notification_language` fields. If
+   * `self_manage` is `true`, the user can also update the `allowed_ip_addresses` field.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.accountId - The account ID.
+   * @param {string} params.iamId - The user's IAM ID.
+   * @param {string} [params.language] - The console UI language. By default, this field is empty.
+   * @param {string} [params.notificationLanguage] - The language for email and phone notifications. By default, this
+   * field is empty.
+   * @param {string} [params.allowedIpAddresses] - A comma-separated list of IP addresses.
+   * @param {boolean} [params.selfManage] - Whether user managed login is enabled. The default value is `false`.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<UserManagementV1.Response<UserManagementV1.Empty>>}
+   */
+  public updateUserSettings(params: UserManagementV1.UpdateUserSettingsParams): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['accountId', 'iamId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'language': _params.language,
+      'notification_language': _params.notificationLanguage,
+      'allowed_ip_addresses': _params.allowedIpAddresses,
+      'self_manage': _params.selfManage
+    };
+
+    const path = {
+      'account_id': _params.accountId,
+      'iam_id': _params.iamId
+    };
+
+    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserSettings');
+
+    const parameters = {
+      options: {
+        url: '/v2/accounts/{account_id}/users/{iam_id}/settings',
+        method: 'PATCH',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Content-Type': 'application/json',
         }, _params.headers),
       }),
     };
@@ -505,6 +510,77 @@ namespace UserManagementV1 {
    * request interfaces
    ************************/
 
+  /** Parameters for the `listUsers` operation. */
+  export interface ListUsersParams {
+    /** The account ID. */
+    accountId: string;
+    /** The state of the user. */
+    state?: string;
+    /** The number of results to be returned. */
+    limit?: number;
+    /** An optional token that indicates the beginning of the page of results to be returned. If omitted, the first
+     *  page of results is returned. This value is obtained from the 'next_url' field of the operation response.
+     */
+    start?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `inviteUsers` operation. */
+  export interface InviteUsersParams {
+    /** The account ID. */
+    accountId: string;
+    /** A list of users to be invited. */
+    users?: InviteUser[];
+    /** A list of IAM policies. */
+    iamPolicy?: InviteUserIamPolicy[];
+    /** A list of access groups. */
+    accessGroups?: string[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getUserProfile` operation. */
+  export interface GetUserProfileParams {
+    /** The account ID. */
+    accountId: string;
+    /** The user's IAM ID. */
+    iamId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateUserProfile` operation. */
+  export interface UpdateUserProfileParams {
+    /** The account ID. */
+    accountId: string;
+    /** The user's IAM ID. */
+    iamId: string;
+    /** The first name of the user. */
+    firstname?: string;
+    /** The last name of the user. */
+    lastname?: string;
+    /** The state of the user. Possible values are `PROCESSING`, `PENDING`, `ACTIVE`,
+     *  `DISABLED_CLASSIC_INFRASTRUCTURE`, and `VPN_ONLY`.
+     */
+    state?: string;
+    /** The email address of the user. */
+    email?: string;
+    /** The phone number of the user. */
+    phonenumber?: string;
+    /** The alternative phone number of the user. */
+    altphonenumber?: string;
+    /** A link to a photo of the user. */
+    photo?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `removeUser` operation. */
+  export interface RemoveUserParams {
+    /** The account ID. */
+    accountId: string;
+    /** The user's IAM ID. */
+    iamId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `getUserSettings` operation. */
   export interface GetUserSettingsParams {
     /** The account ID. */
@@ -531,81 +607,32 @@ namespace UserManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `listUsers` operation. */
-  export interface ListUsersParams {
-    /** The account ID. */
-    accountId: string;
-    /** The state of the user. */
-    state?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `inviteUsers` operation. */
-  export interface InviteUsersParams {
-    /** The account ID. */
-    accountId: string;
-    /** A list of users to be invited. */
-    users?: InviteUser[];
-    /** A list of IAM policies. */
-    iamPolicy?: InviteUserIamPolicy[];
-    /** A list of access groups. */
-    accessGroups?: string[];
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getUserProfile` operation. */
-  export interface GetUserProfileParams {
-    /** The account ID. */
-    accountId: string;
-    /** The user's IAM ID. */
-    iamId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `updateUserProfiles` operation. */
-  export interface UpdateUserProfilesParams {
-    /** The account ID. */
-    accountId: string;
-    /** The user's IAM ID. */
-    iamId: string;
-    /** The first name of the user. */
-    firstname?: string;
-    /** The last name of the user. */
-    lastname?: string;
-    /** The state of the user. Possible values are `PROCESSING`, `PENDING`, `ACTIVE`,
-     *  `DISABLED_CLASSIC_INFRASTRUCTURE`, and `VPN_ONLY`.
-     */
-    state?: string;
-    /** The email address of the user. */
-    email?: string;
-    /** The phone number of the user. */
-    phonenumber?: string;
-    /** The alternative phone number of the user. */
-    altphonenumber?: string;
-    /** A link to a photo of the user. */
-    photo?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `removeUsers` operation. */
-  export interface RemoveUsersParams {
-    /** The account ID. */
-    accountId: string;
-    /** The user's IAM ID. */
-    iamId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
   /*************************
    * model interfaces
    ************************/
 
+  /** Information about a user that has been invited to join an account. */
+  export interface InvitedUser {
+    /** The email address associated with the invited user. */
+    email?: string;
+    /** The id associated with the invited user. */
+    id?: string;
+    /** The state of the invitation for the user. */
+    state?: string;
+  }
+
+  /** A collection of invited users.  This is the response returned by the invite_users operation. */
+  export interface InvitedUserList {
+    /** The list of users that have been invited to join the account. */
+    resources?: InvitedUser[];
+  }
+
   /** The users returned. */
   export interface UserList {
     /** The number of users returned. */
-    total_results?: number;
+    total_results: number;
     /** A limit to the number of users returned in a page. */
-    limit?: number;
+    limit: number;
     /** The first URL of the get users API. */
     first_url?: string;
     /** The next URL of the get users API. */
@@ -656,7 +683,7 @@ namespace UserManagementV1 {
     self_manage?: boolean;
   }
 
-  /** Attribute. */
+  /** An attribute/value pair. */
   export interface Attribute {
     /** The name of the attribute. */
     name?: string;
@@ -682,7 +709,7 @@ namespace UserManagementV1 {
     resources?: Resource[];
   }
 
-  /** object. */
+  /** A collection of attribute value pairs. */
   export interface Resource {
     /** A list of IAM attributes. */
     attributes?: Attribute[];

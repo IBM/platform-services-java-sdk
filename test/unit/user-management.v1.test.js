@@ -98,173 +98,19 @@ describe('UserManagementV1', () => {
       expect(testInstance.baseOptions.serviceUrl).toBe(UserManagementV1.DEFAULT_SERVICE_URL);
     });
   });
-  describe('getUserSettings', () => {
-    describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
-        // Construct the params object for operation getUserSettings
-        const accountId = 'testString';
-        const iamId = 'testString';
-        const params = {
-          accountId: accountId,
-          iamId: iamId,
-        };
-
-        const getUserSettingsResult = userManagementService.getUserSettings(params);
-
-        // all methods should return a Promise
-        expectToBePromise(getUserSettingsResult);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v2/accounts/{account_id}/users/{iam_id}/settings', 'GET');
-        const expectedAccept = 'application/json';
-        const expectedContentType = undefined;
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['account_id']).toEqual(accountId);
-        expect(options.path['iam_id']).toEqual(iamId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const accountId = 'testString';
-        const iamId = 'testString';
-        const userAccept = 'fake/accept';
-        const userContentType = 'fake/contentType';
-        const params = {
-          accountId,
-          iamId,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        userManagementService.getUserSettings(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-    });
-
-    describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
-        let err;
-        try {
-          await userManagementService.getUserSettings({});
-        } catch (e) {
-          err = e;
-        }
-
-        expect(err.message).toMatch(/Missing required parameters/);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        const getUserSettingsPromise = userManagementService.getUserSettings();
-        expectToBePromise(getUserSettingsPromise);
-
-        getUserSettingsPromise.catch(err => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
-      });
-    });
-  });
-  describe('updateUserSettings', () => {
-    describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
-        // Construct the params object for operation updateUserSettings
-        const accountId = 'testString';
-        const iamId = 'testString';
-        const language = 'testString';
-        const notificationLanguage = 'testString';
-        const allowedIpAddresses = '32.96.110.50,172.16.254.1';
-        const selfManage = true;
-        const params = {
-          accountId: accountId,
-          iamId: iamId,
-          language: language,
-          notificationLanguage: notificationLanguage,
-          allowedIpAddresses: allowedIpAddresses,
-          selfManage: selfManage,
-        };
-
-        const updateUserSettingsResult = userManagementService.updateUserSettings(params);
-
-        // all methods should return a Promise
-        expectToBePromise(updateUserSettingsResult);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v2/accounts/{account_id}/users/{iam_id}/settings', 'PATCH');
-        const expectedAccept = 'application/json';
-        const expectedContentType = 'application/json';
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.body['language']).toEqual(language);
-        expect(options.body['notification_language']).toEqual(notificationLanguage);
-        expect(options.body['allowed_ip_addresses']).toEqual(allowedIpAddresses);
-        expect(options.body['self_manage']).toEqual(selfManage);
-        expect(options.path['account_id']).toEqual(accountId);
-        expect(options.path['iam_id']).toEqual(iamId);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const accountId = 'testString';
-        const iamId = 'testString';
-        const userAccept = 'fake/accept';
-        const userContentType = 'fake/contentType';
-        const params = {
-          accountId,
-          iamId,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        userManagementService.updateUserSettings(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-    });
-
-    describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
-        let err;
-        try {
-          await userManagementService.updateUserSettings({});
-        } catch (e) {
-          err = e;
-        }
-
-        expect(err.message).toMatch(/Missing required parameters/);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        const updateUserSettingsPromise = userManagementService.updateUserSettings();
-        expectToBePromise(updateUserSettingsPromise);
-
-        updateUserSettingsPromise.catch(err => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
-      });
-    });
-  });
   describe('listUsers', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation listUsers
         const accountId = 'testString';
         const state = 'testString';
+        const limit = 100;
+        const start = 'testString';
         const params = {
           accountId: accountId,
           state: state,
+          limit: limit,
+          start: start,
         };
 
         const listUsersResult = userManagementService.listUsers(params);
@@ -282,6 +128,8 @@ describe('UserManagementV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['state']).toEqual(state);
+        expect(options.qs['limit']).toEqual(limit);
+        expect(options.qs['_start']).toEqual(start);
         expect(options.path['account_id']).toEqual(accountId);
       });
 
@@ -508,10 +356,10 @@ describe('UserManagementV1', () => {
       });
     });
   });
-  describe('updateUserProfiles', () => {
+  describe('updateUserProfile', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // Construct the params object for operation updateUserProfiles
+        // Construct the params object for operation updateUserProfile
         const accountId = 'testString';
         const iamId = 'testString';
         const firstname = 'testString';
@@ -533,10 +381,10 @@ describe('UserManagementV1', () => {
           photo: photo,
         };
 
-        const updateUserProfilesResult = userManagementService.updateUserProfiles(params);
+        const updateUserProfileResult = userManagementService.updateUserProfile(params);
 
         // all methods should return a Promise
-        expectToBePromise(updateUserProfilesResult);
+        expectToBePromise(updateUserProfileResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -573,7 +421,7 @@ describe('UserManagementV1', () => {
           },
         };
 
-        userManagementService.updateUserProfiles(params);
+        userManagementService.updateUserProfile(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -582,7 +430,7 @@ describe('UserManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await userManagementService.updateUserProfiles({});
+          await userManagementService.updateUserProfile({});
         } catch (e) {
           err = e;
         }
@@ -592,20 +440,20 @@ describe('UserManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const updateUserProfilesPromise = userManagementService.updateUserProfiles();
-        expectToBePromise(updateUserProfilesPromise);
+        const updateUserProfilePromise = userManagementService.updateUserProfile();
+        expectToBePromise(updateUserProfilePromise);
 
-        updateUserProfilesPromise.catch(err => {
+        updateUserProfilePromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
       });
     });
   });
-  describe('removeUsers', () => {
+  describe('removeUser', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // Construct the params object for operation removeUsers
+        // Construct the params object for operation removeUser
         const accountId = 'testString';
         const iamId = 'testString';
         const params = {
@@ -613,10 +461,10 @@ describe('UserManagementV1', () => {
           iamId: iamId,
         };
 
-        const removeUsersResult = userManagementService.removeUsers(params);
+        const removeUserResult = userManagementService.removeUser(params);
 
         // all methods should return a Promise
-        expectToBePromise(removeUsersResult);
+        expectToBePromise(removeUserResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -646,7 +494,7 @@ describe('UserManagementV1', () => {
           },
         };
 
-        userManagementService.removeUsers(params);
+        userManagementService.removeUser(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -655,7 +503,7 @@ describe('UserManagementV1', () => {
       test('should enforce required parameters', async done => {
         let err;
         try {
-          await userManagementService.removeUsers({});
+          await userManagementService.removeUser({});
         } catch (e) {
           err = e;
         }
@@ -665,10 +513,168 @@ describe('UserManagementV1', () => {
       });
 
       test('should reject promise when required params are not given', done => {
-        const removeUsersPromise = userManagementService.removeUsers();
-        expectToBePromise(removeUsersPromise);
+        const removeUserPromise = userManagementService.removeUser();
+        expectToBePromise(removeUserPromise);
 
-        removeUsersPromise.catch(err => {
+        removeUserPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('getUserSettings', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getUserSettings
+        const accountId = 'testString';
+        const iamId = 'testString';
+        const params = {
+          accountId: accountId,
+          iamId: iamId,
+        };
+
+        const getUserSettingsResult = userManagementService.getUserSettings(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getUserSettingsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/accounts/{account_id}/users/{iam_id}/settings', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['account_id']).toEqual(accountId);
+        expect(options.path['iam_id']).toEqual(iamId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const accountId = 'testString';
+        const iamId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          accountId,
+          iamId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        userManagementService.getUserSettings(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await userManagementService.getUserSettings({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getUserSettingsPromise = userManagementService.getUserSettings();
+        expectToBePromise(getUserSettingsPromise);
+
+        getUserSettingsPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('updateUserSettings', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation updateUserSettings
+        const accountId = 'testString';
+        const iamId = 'testString';
+        const language = 'testString';
+        const notificationLanguage = 'testString';
+        const allowedIpAddresses = '32.96.110.50,172.16.254.1';
+        const selfManage = true;
+        const params = {
+          accountId: accountId,
+          iamId: iamId,
+          language: language,
+          notificationLanguage: notificationLanguage,
+          allowedIpAddresses: allowedIpAddresses,
+          selfManage: selfManage,
+        };
+
+        const updateUserSettingsResult = userManagementService.updateUserSettings(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateUserSettingsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/accounts/{account_id}/users/{iam_id}/settings', 'PATCH');
+        const expectedAccept = undefined;
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['language']).toEqual(language);
+        expect(options.body['notification_language']).toEqual(notificationLanguage);
+        expect(options.body['allowed_ip_addresses']).toEqual(allowedIpAddresses);
+        expect(options.body['self_manage']).toEqual(selfManage);
+        expect(options.path['account_id']).toEqual(accountId);
+        expect(options.path['iam_id']).toEqual(iamId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const accountId = 'testString';
+        const iamId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          accountId,
+          iamId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        userManagementService.updateUserSettings(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await userManagementService.updateUserSettings({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const updateUserSettingsPromise = userManagementService.updateUserSettings();
+        expectToBePromise(updateUserSettingsPromise);
+
+        updateUserSettingsPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

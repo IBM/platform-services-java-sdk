@@ -29,6 +29,12 @@ const describe = authHelper.prepareTests(configFile);
 
 let userId;
 
+const accountId = '1aa434630b594b8a88b961a44c9eb2a9';
+const iamUserId = 'IBMid-550008BJPR';
+const invitedUserEmail = 'aminttest+linked_account_owner_11@mail.test.ibm.com';
+const viewerRoleId = 'crn:v1:bluemix:public:iam::::role:Viewer';
+const accessGroupId = 'AccessGroupId-51675919-2bd7-4ce3-86e4-5faff8065574';
+
 describe('UserManagementV1_integration', () => {
   const userManagementService = UserManagementV1.newInstance({ serviceName: 'USERMGMT1' });
   const alternateUserManagementService = UserManagementV1.newInstance({ serviceName: 'USERMGMT2' });
@@ -37,13 +43,17 @@ describe('UserManagementV1_integration', () => {
 
   test('getUserSettings()', done => {
     const params = {
-      accountId: '1aa434630b594b8a88b961a44c9eb2a9',
-      iamId: 'IBMid-550008BJPR',
+      accountId: accountId,
+      iamId: iamUserId,
     };
 
     userManagementService
       .getUserSettings(params)
       .then(res => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(200);
+        expect(res.result).toBeDefined();
+        console.log('getUserSettings() result: ', res.result);
         done();
       })
       .catch(err => {
@@ -53,10 +63,10 @@ describe('UserManagementV1_integration', () => {
   });
   test('updateUserSettings()', done => {
     const params = {
-      accountId: '1aa434630b594b8a88b961a44c9eb2a9',
-      iamId: 'IBMid-550008BJPR',
-      language: 'testString',
-      notificationLanguage: 'testString',
+      accountId: accountId,
+      iamId: iamUserId,
+      language: 'French',
+      notificationLanguage: 'English',
       allowedIpAddresses: '32.96.110.50,172.16.254.1',
       selfManage: true,
     };
@@ -64,6 +74,8 @@ describe('UserManagementV1_integration', () => {
     userManagementService
       .updateUserSettings(params)
       .then(res => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(204);
         done();
       })
       .catch(err => {
@@ -71,40 +83,66 @@ describe('UserManagementV1_integration', () => {
         done(err);
       });
   });
-  test('listUsers()', done => {
-    const params = {
-      accountId: '1aa434630b594b8a88b961a44c9eb2a9',
-      state: 'ACTIVE',
-    };
+  test('listUsers()', async done => {
+    const results = [];
+    let start = null;
 
-    userManagementService
-      .listUsers(params)
-      .then(res => {
-        done();
-      })
-      .catch(err => {
-        console.warn(err);
-        done(err);
-      });
+    try {
+      do {
+        // Retrieve the users, 10 per page to test out pagination.
+        const params = {
+          accountId: accountId,
+          limit: 10,
+          start: start,
+        };
+
+        const res = await userManagementService.listUsers(params);
+        expect(res).toBeDefined();
+        expect(res.status).toEqual(200);
+
+        const result = res.result;
+        expect(result).toBeDefined();
+
+        // Add the just-retrieved page to "results".
+        expect(result.resources).toBeDefined();
+        results.push(...result.resources);
+
+        // Determine the offset to use to get the next page.
+        if (result.next_url) {
+          start = getStartTokenFromURL(result.next_url);
+        } else {
+          start = null;
+        }
+      } while (start != null);
+    } catch (err) {
+      console.log(err);
+      done(err);
+    }
+
+    // Make sure we found some users.
+    const numUsers = results.length;
+    console.log(`listUsers() response contained ${numUsers} total users`);
+    expect(numUsers).toBeGreaterThan(0);
+    done();
   });
   test('inviteUsers()', done => {
     // Request models needed by this operation.
 
     // InviteUser
     const inviteUserModel = {
-      email: 'aminttest+linked_account_owner_11@mail.test.ibm.com',
+      email: invitedUserEmail,
       account_role: 'Member',
     };
 
     // Role
     const roleModel = {
-      role_id: 'crn:v1:bluemix:public:iam::::role:Viewer',
+      role_id: viewerRoleId,
     };
 
     // Attribute
     const attributeModel = {
       name: 'accountId',
-      value: '1aa434630b594b8a88b961a44c9eb2a9',
+      value: accountId,
     };
 
     // Attribute
@@ -126,16 +164,23 @@ describe('UserManagementV1_integration', () => {
     };
 
     const params = {
-      accountId: '1aa434630b594b8a88b961a44c9eb2a9',
+      accountId: accountId,
       users: [inviteUserModel],
       iamPolicy: [inviteUserIamPolicyModel],
-      accessGroups: ['AccessGroupId-51675919-2bd7-4ce3-86e4-5faff8065574'],
+      accessGroups: [accessGroupId],
     };
 
     alternateUserManagementService
       .inviteUsers(params)
       .then(res => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(202);
+        expect(res.result).toBeDefined();
+        console.log('inviteUsers() result: ', res.result);
+
+        expect(res.result.resources).toBeDefined();
         userId = res.result.resources[0].id;
+        expect(userId).toBeDefined();
         done();
       })
       .catch(err => {
@@ -145,13 +190,17 @@ describe('UserManagementV1_integration', () => {
   });
   test('getUserProfile()', done => {
     const params = {
-      accountId: '1aa434630b594b8a88b961a44c9eb2a9',
-      iamId: 'IBMid-550008BJPR',
+      accountId: accountId,
+      iamId: iamUserId,
     };
 
     userManagementService
       .getUserProfile(params)
       .then(res => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(200);
+        expect(res.result).toBeDefined();
+        console.log('getUserProfile() result: ', res.result);
         done();
       })
       .catch(err => {
@@ -159,22 +208,21 @@ describe('UserManagementV1_integration', () => {
         done(err);
       });
   });
-  test('updateUserProfiles()', done => {
+  test('updateUserProfile()', done => {
     const params = {
-      accountId: '1aa434630b594b8a88b961a44c9eb2a9',
-      iamId: 'IBMid-550008BJPR',
-      firstname: 'testString',
-      lastname: 'testString',
+      accountId: accountId,
+      iamId: iamUserId,
+      firstname: 'John',
+      lastname: 'Doe',
       state: 'ACTIVE',
       email: 'do_not_delete_user_without_iam_policy_stage@mail.test.ibm.com',
-      phonenumber: 'testString',
-      altphonenumber: 'testString',
-      photo: 'testString',
     };
 
     userManagementService
-      .updateUserProfiles(params)
+      .updateUserProfile(params)
       .then(res => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(204);
         done();
       })
       .catch(err => {
@@ -182,15 +230,17 @@ describe('UserManagementV1_integration', () => {
         done(err);
       });
   });
-  test('removeUsers()', done => {
+  test('removeUser()', done => {
     const params = {
-      accountId: '1aa434630b594b8a88b961a44c9eb2a9',
+      accountId: accountId,
       iamId: userId,
     };
 
     userManagementService
-      .removeUsers(params)
+      .removeUser(params)
       .then(res => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(204);
         done();
       })
       .catch(err => {
@@ -199,3 +249,14 @@ describe('UserManagementV1_integration', () => {
       });
   });
 });
+
+function getStartTokenFromURL(urlstring) {
+  let offset = null;
+  if (urlstring) {
+    // We use a bogus "baseurl" in case "urlstring" is a relative url.
+    // This is fine since we're only trying to retrieve the "offset" query parameter.
+    const url = new URL(urlstring, 'https://fakehost.com');
+    offset = url.searchParams.get('_start');
+  }
+  return offset;
+}

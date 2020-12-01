@@ -28,21 +28,40 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//
+// This file provides an example of how to use the Enterprise Billing Units service.
+//
+// The following configuration properties are assumed to be defined in the external configuration file:
+// ENTERPRISE_BILLING_UNITS_URL=<service url>
+// ENTERPRISE_BILLING_UNITS_AUTHTYPE=iam
+// ENTERPRISE_BILLING_UNITS_APIKEY=<your iam apikey>
+// ENTERPRISE_BILLING_UNITS_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+// ENTERPRISE_BILLING_UNITS_ENTERPRISE_ID=<id of enterprise to use for examples>
+// ENTERPRISE_BILLING_UNITS_BILLING_UNIT_ID=<id of billing unit to use for examples>
+//
 public class EnterpriseBillingUnitsExamples {
   private static final Logger logger = LoggerFactory.getLogger(EnterpriseBillingUnitsExamples.class);
   protected EnterpriseBillingUnitsExamples() { }
 
-  @SuppressWarnings("checkstyle:methodlength")
+  private static String enterpriseId;
+  private static String billingUnitId;
+
+  static {
+      System.setProperty("IBM_CREDENTIALS_FILE", "../../enterprise_billing_units.env");
+  }
+
   public static void main(String[] args) throws Exception {
     EnterpriseBillingUnits service = EnterpriseBillingUnits.newInstance();
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(EnterpriseBillingUnits.DEFAULT_SERVICE_NAME);
+    enterpriseId = config.get("ENTERPRISE_ID");
+    billingUnitId = config.get("BILLING_UNIT_ID");
 
     try {
       // begin-get_billing_unit
       GetBillingUnitOptions getBillingUnitOptions = new GetBillingUnitOptions.Builder()
-        .billingUnitId("testString")
+        .billingUnitId(billingUnitId)
         .build();
 
       Response<BillingUnit> response = service.getBillingUnit(getBillingUnitOptions).execute();
@@ -58,6 +77,7 @@ public class EnterpriseBillingUnitsExamples {
     try {
       // begin-list_billing_units
       ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
+        .enterpriseId(enterpriseId)
         .build();
 
       Response<BillingUnitsList> response = service.listBillingUnits(listBillingUnitsOptions).execute();
@@ -73,7 +93,7 @@ public class EnterpriseBillingUnitsExamples {
     try {
       // begin-list_billing_options
       ListBillingOptionsOptions listBillingOptionsOptions = new ListBillingOptionsOptions.Builder()
-        .billingUnitId("testString")
+        .billingUnitId(billingUnitId)
         .build();
 
       Response<BillingOptionsList> response = service.listBillingOptions(listBillingOptionsOptions).execute();
@@ -89,7 +109,7 @@ public class EnterpriseBillingUnitsExamples {
     try {
       // begin-get_credit_pools
       GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
-        .billingUnitId("testString")
+        .billingUnitId(billingUnitId)
         .build();
 
       Response<CreditPoolsList> response = service.getCreditPools(getCreditPoolsOptions).execute();

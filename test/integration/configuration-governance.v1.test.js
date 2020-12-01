@@ -106,6 +106,8 @@ describe('ConfigurationGovernanceV1_integration', () => {
     initSampleData();
 
     log('Finished setup.');
+
+    done();
   });
 
   test('createRule1', done => {

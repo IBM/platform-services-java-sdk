@@ -6,6 +6,7 @@
     ./case-management/v1.ts \
     ./catalog-management/v1.ts \
     ./configuration-governance/v1.ts \
+    ./enterprise-billing-units/v1.ts \
     ./enterprise-management/v1.ts \
     ./enterprise-usage-reports/v1.ts \
     ./global-catalog/v1.ts \

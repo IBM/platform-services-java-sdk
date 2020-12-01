@@ -9,6 +9,7 @@ lib/*.js
 case-management/*.js
 catalog-management/*.js
 configuration-governance/*.js
+enterprise-billing-units/*.js
 enterprise-management/*.js
 enterprise-usage-reports/*.js
 global-catalog/*.js

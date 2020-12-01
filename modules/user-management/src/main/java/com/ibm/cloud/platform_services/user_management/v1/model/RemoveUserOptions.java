@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.user_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The removeUsers options.
+ * The removeUser options.
  */
-public class RemoveUsersOptions extends GenericModel {
+public class RemoveUserOptions extends GenericModel {
 
   protected String accountId;
   protected String iamId;
@@ -29,9 +29,9 @@ public class RemoveUsersOptions extends GenericModel {
     private String accountId;
     private String iamId;
 
-    private Builder(RemoveUsersOptions removeUsersOptions) {
-      this.accountId = removeUsersOptions.accountId;
-      this.iamId = removeUsersOptions.iamId;
+    private Builder(RemoveUserOptions removeUserOptions) {
+      this.accountId = removeUserOptions.accountId;
+      this.iamId = removeUserOptions.iamId;
     }
 
     /**
@@ -52,19 +52,19 @@ public class RemoveUsersOptions extends GenericModel {
     }
 
     /**
-     * Builds a RemoveUsersOptions.
+     * Builds a RemoveUserOptions.
      *
-     * @return the new RemoveUsersOptions instance
+     * @return the new RemoveUserOptions instance
      */
-    public RemoveUsersOptions build() {
-      return new RemoveUsersOptions(this);
+    public RemoveUserOptions build() {
+      return new RemoveUserOptions(this);
     }
 
     /**
      * Set the accountId.
      *
      * @param accountId the accountId
-     * @return the RemoveUsersOptions builder
+     * @return the RemoveUserOptions builder
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
@@ -75,7 +75,7 @@ public class RemoveUsersOptions extends GenericModel {
      * Set the iamId.
      *
      * @param iamId the iamId
-     * @return the RemoveUsersOptions builder
+     * @return the RemoveUserOptions builder
      */
     public Builder iamId(String iamId) {
       this.iamId = iamId;
@@ -83,7 +83,7 @@ public class RemoveUsersOptions extends GenericModel {
     }
   }
 
-  protected RemoveUsersOptions(Builder builder) {
+  protected RemoveUserOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.iamId,
@@ -95,7 +95,7 @@ public class RemoveUsersOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a RemoveUsersOptions builder
+   * @return a RemoveUserOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

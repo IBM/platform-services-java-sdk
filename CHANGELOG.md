@@ -1,3 +1,10 @@
+## [0.15.11](https://github.com/IBM/platform-services-java-sdk/compare/0.15.10...0.15.11) (2020-11-30)
+
+
+### Bug Fixes
+
+* **User Management:** re-gen service and update tests after API changes ([#65](https://github.com/IBM/platform-services-java-sdk/issues/65)) ([2bc5e1f](https://github.com/IBM/platform-services-java-sdk/commit/2bc5e1f9b6fd13af1f980896c3d70eab76245035))
+
 ## [0.15.10](https://github.com/IBM/platform-services-java-sdk/compare/0.15.9...0.15.10) (2020-11-23)
 
 

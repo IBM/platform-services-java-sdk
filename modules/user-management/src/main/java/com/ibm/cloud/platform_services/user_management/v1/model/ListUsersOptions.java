@@ -21,6 +21,8 @@ public class ListUsersOptions extends GenericModel {
 
   protected String accountId;
   protected String state;
+  protected Long limit;
+  protected String start;
 
   /**
    * Builder.
@@ -28,10 +30,14 @@ public class ListUsersOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private String state;
+    private Long limit;
+    private String start;
 
     private Builder(ListUsersOptions listUsersOptions) {
       this.accountId = listUsersOptions.accountId;
       this.state = listUsersOptions.state;
+      this.limit = listUsersOptions.limit;
+      this.start = listUsersOptions.start;
     }
 
     /**
@@ -79,6 +85,28 @@ public class ListUsersOptions extends GenericModel {
       this.state = state;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListUsersOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListUsersOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
+      return this;
+    }
   }
 
   protected ListUsersOptions(Builder builder) {
@@ -86,6 +114,8 @@ public class ListUsersOptions extends GenericModel {
       "accountId cannot be empty");
     accountId = builder.accountId;
     state = builder.state;
+    limit = builder.limit;
+    start = builder.start;
   }
 
   /**
@@ -117,6 +147,29 @@ public class ListUsersOptions extends GenericModel {
    */
   public String state() {
     return state;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * The number of results to be returned.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * An optional token that indicates the beginning of the page of results to be returned. If omitted, the first page of
+   * results is returned. This value is obtained from the 'next_url' field of the operation response.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 }
 

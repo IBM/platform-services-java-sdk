@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.user_management.v1.model;
 
-import com.ibm.cloud.platform_services.user_management.v1.model.ListUsersOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.InvitedUser;
 import com.ibm.cloud.platform_services.user_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,29 +23,17 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListUsersOptions model.
+ * Unit test class for the InvitedUser model.
  */
-public class ListUsersOptionsTest {
+public class InvitedUserTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListUsersOptions() throws Throwable {
-    ListUsersOptions listUsersOptionsModel = new ListUsersOptions.Builder()
-      .accountId("testString")
-      .state("testString")
-      .limit(Long.valueOf("100"))
-      .start("testString")
-      .build();
-    assertEquals(listUsersOptionsModel.accountId(), "testString");
-    assertEquals(listUsersOptionsModel.state(), "testString");
-    assertEquals(listUsersOptionsModel.limit(), Long.valueOf("100"));
-    assertEquals(listUsersOptionsModel.start(), "testString");
+  public void testInvitedUser() throws Throwable {
+    InvitedUser invitedUserModel = new InvitedUser();
+    assertNull(invitedUserModel.getEmail());
+    assertNull(invitedUserModel.getId());
+    assertNull(invitedUserModel.getState());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListUsersOptionsError() throws Throwable {
-    new ListUsersOptions.Builder().build();
-  }
-
 }

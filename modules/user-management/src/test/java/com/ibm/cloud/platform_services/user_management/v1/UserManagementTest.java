@@ -19,11 +19,13 @@ import com.ibm.cloud.platform_services.user_management.v1.model.GetUserSettingsO
 import com.ibm.cloud.platform_services.user_management.v1.model.InviteUser;
 import com.ibm.cloud.platform_services.user_management.v1.model.InviteUserIamPolicy;
 import com.ibm.cloud.platform_services.user_management.v1.model.InviteUsersOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.InvitedUser;
+import com.ibm.cloud.platform_services.user_management.v1.model.InvitedUserList;
 import com.ibm.cloud.platform_services.user_management.v1.model.ListUsersOptions;
-import com.ibm.cloud.platform_services.user_management.v1.model.RemoveUsersOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.RemoveUserOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.Resource;
 import com.ibm.cloud.platform_services.user_management.v1.model.Role;
-import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserProfilesOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserProfileOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserSettingsOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserList;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserProfile;
@@ -94,112 +96,6 @@ public class UserManagementTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testGetUserSettingsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"language\": \"language\", \"notification_language\": \"notificationLanguage\", \"allowed_ip_addresses\": \"32.96.110.50,172.16.254.1\", \"self_manage\": true}";
-    String getUserSettingsPath = "/v2/accounts/testString/users/testString/settings";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetUserSettingsOptions model
-    GetUserSettingsOptions getUserSettingsOptionsModel = new GetUserSettingsOptions.Builder()
-    .accountId("testString")
-    .iamId("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<UserSettings> response = userManagementService.getUserSettings(getUserSettingsOptionsModel).execute();
-    assertNotNull(response);
-    UserSettings responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getUserSettingsPath);
-  }
-
-  // Test the getUserSettings operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetUserSettingsNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    userManagementService.getUserSettings(null).execute();
-  }
-
-  @Test
-  public void testUpdateUserSettingsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"language\": \"language\", \"notification_language\": \"notificationLanguage\", \"allowed_ip_addresses\": \"32.96.110.50,172.16.254.1\", \"self_manage\": true}";
-    String updateUserSettingsPath = "/v2/accounts/testString/users/testString/settings";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the UpdateUserSettingsOptions model
-    UpdateUserSettingsOptions updateUserSettingsOptionsModel = new UpdateUserSettingsOptions.Builder()
-    .accountId("testString")
-    .iamId("testString")
-    .language("testString")
-    .notificationLanguage("testString")
-    .allowedIpAddresses("32.96.110.50,172.16.254.1")
-    .selfManage(true)
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<UserSettings> response = userManagementService.updateUserSettings(updateUserSettingsOptionsModel).execute();
-    assertNotNull(response);
-    UserSettings responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "PATCH");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateUserSettingsPath);
-  }
-
-  // Test the updateUserSettings operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateUserSettingsNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    userManagementService.updateUserSettings(null).execute();
-  }
-
-  @Test
   public void testListUsersWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"total_results\": 12, \"limit\": 5, \"first_url\": \"firstUrl\", \"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"iam_id\": \"iamId\", \"realm\": \"realm\", \"user_id\": \"userId\", \"firstname\": \"firstname\", \"lastname\": \"lastname\", \"state\": \"state\", \"email\": \"email\", \"phonenumber\": \"phonenumber\", \"altphonenumber\": \"altphonenumber\", \"photo\": \"photo\", \"account_id\": \"accountId\"}]}";
@@ -216,6 +112,8 @@ public class UserManagementTest extends PowerMockTestCase {
     ListUsersOptions listUsersOptionsModel = new ListUsersOptions.Builder()
     .accountId("testString")
     .state("testString")
+    .limit(Long.valueOf("100"))
+    .start("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -234,6 +132,8 @@ public class UserManagementTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(query.get("state"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
+    assertEquals(query.get("_start"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listUsersPath);
@@ -254,7 +154,7 @@ public class UserManagementTest extends PowerMockTestCase {
   @Test
   public void testInviteUsersWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"total_results\": 12, \"limit\": 5, \"first_url\": \"firstUrl\", \"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"iam_id\": \"iamId\", \"realm\": \"realm\", \"user_id\": \"userId\", \"firstname\": \"firstname\", \"lastname\": \"lastname\", \"state\": \"state\", \"email\": \"email\", \"phonenumber\": \"phonenumber\", \"altphonenumber\": \"altphonenumber\", \"photo\": \"photo\", \"account_id\": \"accountId\"}]}";
+    String mockResponseBody = "{\"resources\": [{\"email\": \"email\", \"id\": \"id\", \"state\": \"state\"}]}";
     String inviteUsersPath = "/v2/accounts/testString/users";
 
     server.enqueue(new MockResponse()
@@ -302,9 +202,9 @@ public class UserManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<UserList> response = userManagementService.inviteUsers(inviteUsersOptionsModel).execute();
+    Response<InvitedUserList> response = userManagementService.inviteUsers(inviteUsersOptionsModel).execute();
     assertNotNull(response);
-    UserList responseObj = response.getResult();
+    InvitedUserList responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -385,10 +285,10 @@ public class UserManagementTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testUpdateUserProfilesWOptions() throws Throwable {
+  public void testUpdateUserProfileWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String updateUserProfilesPath = "/v2/accounts/testString/users/testString";
+    String updateUserProfilePath = "/v2/accounts/testString/users/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -396,8 +296,8 @@ public class UserManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the UpdateUserProfilesOptions model
-    UpdateUserProfilesOptions updateUserProfilesOptionsModel = new UpdateUserProfilesOptions.Builder()
+    // Construct an instance of the UpdateUserProfileOptions model
+    UpdateUserProfileOptions updateUserProfileOptionsModel = new UpdateUserProfileOptions.Builder()
     .accountId("testString")
     .iamId("testString")
     .firstname("testString")
@@ -410,7 +310,7 @@ public class UserManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = userManagementService.updateUserProfiles(updateUserProfilesOptionsModel).execute();
+    Response<Void> response = userManagementService.updateUserProfile(updateUserProfileOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -427,26 +327,26 @@ public class UserManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateUserProfilesPath);
+    assertEquals(parsedPath, updateUserProfilePath);
   }
 
-  // Test the updateUserProfiles operation with null options model parameter
+  // Test the updateUserProfile operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateUserProfilesNoOptions() throws Throwable {
+  public void testUpdateUserProfileNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    userManagementService.updateUserProfiles(null).execute();
+    userManagementService.updateUserProfile(null).execute();
   }
 
   @Test
-  public void testRemoveUsersWOptions() throws Throwable {
+  public void testRemoveUserWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String removeUsersPath = "/v2/accounts/testString/users/testString";
+    String removeUserPath = "/v2/accounts/testString/users/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -454,14 +354,14 @@ public class UserManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the RemoveUsersOptions model
-    RemoveUsersOptions removeUsersOptionsModel = new RemoveUsersOptions.Builder()
+    // Construct an instance of the RemoveUserOptions model
+    RemoveUserOptions removeUserOptionsModel = new RemoveUserOptions.Builder()
     .accountId("testString")
     .iamId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = userManagementService.removeUsers(removeUsersOptionsModel).execute();
+    Response<Void> response = userManagementService.removeUser(removeUserOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -478,19 +378,125 @@ public class UserManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, removeUsersPath);
+    assertEquals(parsedPath, removeUserPath);
   }
 
-  // Test the removeUsers operation with null options model parameter
+  // Test the removeUser operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testRemoveUsersNoOptions() throws Throwable {
+  public void testRemoveUserNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    userManagementService.removeUsers(null).execute();
+    userManagementService.removeUser(null).execute();
+  }
+
+  @Test
+  public void testGetUserSettingsWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"language\": \"language\", \"notification_language\": \"notificationLanguage\", \"allowed_ip_addresses\": \"32.96.110.50,172.16.254.1\", \"self_manage\": true}";
+    String getUserSettingsPath = "/v2/accounts/testString/users/testString/settings";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetUserSettingsOptions model
+    GetUserSettingsOptions getUserSettingsOptionsModel = new GetUserSettingsOptions.Builder()
+    .accountId("testString")
+    .iamId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<UserSettings> response = userManagementService.getUserSettings(getUserSettingsOptionsModel).execute();
+    assertNotNull(response);
+    UserSettings responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getUserSettingsPath);
+  }
+
+  // Test the getUserSettings operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetUserSettingsNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    userManagementService.getUserSettings(null).execute();
+  }
+
+  @Test
+  public void testUpdateUserSettingsWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String updateUserSettingsPath = "/v2/accounts/testString/users/testString/settings";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(204)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the UpdateUserSettingsOptions model
+    UpdateUserSettingsOptions updateUserSettingsOptionsModel = new UpdateUserSettingsOptions.Builder()
+    .accountId("testString")
+    .iamId("testString")
+    .language("testString")
+    .notificationLanguage("testString")
+    .allowedIpAddresses("32.96.110.50,172.16.254.1")
+    .selfManage(true)
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = userManagementService.updateUserSettings(updateUserSettingsOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PATCH");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateUserSettingsPath);
+  }
+
+  // Test the updateUserSettings operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateUserSettingsNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    userManagementService.updateUserSettings(null).execute();
   }
 
   /** Initialize the server */

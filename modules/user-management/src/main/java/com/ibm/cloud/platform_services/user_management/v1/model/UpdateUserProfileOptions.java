@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.user_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The updateUserProfiles options.
+ * The updateUserProfile options.
  */
-public class UpdateUserProfilesOptions extends GenericModel {
+public class UpdateUserProfileOptions extends GenericModel {
 
   protected String accountId;
   protected String iamId;
@@ -43,16 +43,16 @@ public class UpdateUserProfilesOptions extends GenericModel {
     private String altphonenumber;
     private String photo;
 
-    private Builder(UpdateUserProfilesOptions updateUserProfilesOptions) {
-      this.accountId = updateUserProfilesOptions.accountId;
-      this.iamId = updateUserProfilesOptions.iamId;
-      this.firstname = updateUserProfilesOptions.firstname;
-      this.lastname = updateUserProfilesOptions.lastname;
-      this.state = updateUserProfilesOptions.state;
-      this.email = updateUserProfilesOptions.email;
-      this.phonenumber = updateUserProfilesOptions.phonenumber;
-      this.altphonenumber = updateUserProfilesOptions.altphonenumber;
-      this.photo = updateUserProfilesOptions.photo;
+    private Builder(UpdateUserProfileOptions updateUserProfileOptions) {
+      this.accountId = updateUserProfileOptions.accountId;
+      this.iamId = updateUserProfileOptions.iamId;
+      this.firstname = updateUserProfileOptions.firstname;
+      this.lastname = updateUserProfileOptions.lastname;
+      this.state = updateUserProfileOptions.state;
+      this.email = updateUserProfileOptions.email;
+      this.phonenumber = updateUserProfileOptions.phonenumber;
+      this.altphonenumber = updateUserProfileOptions.altphonenumber;
+      this.photo = updateUserProfileOptions.photo;
     }
 
     /**
@@ -73,19 +73,19 @@ public class UpdateUserProfilesOptions extends GenericModel {
     }
 
     /**
-     * Builds a UpdateUserProfilesOptions.
+     * Builds a UpdateUserProfileOptions.
      *
-     * @return the new UpdateUserProfilesOptions instance
+     * @return the new UpdateUserProfileOptions instance
      */
-    public UpdateUserProfilesOptions build() {
-      return new UpdateUserProfilesOptions(this);
+    public UpdateUserProfileOptions build() {
+      return new UpdateUserProfileOptions(this);
     }
 
     /**
      * Set the accountId.
      *
      * @param accountId the accountId
-     * @return the UpdateUserProfilesOptions builder
+     * @return the UpdateUserProfileOptions builder
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
@@ -96,7 +96,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
      * Set the iamId.
      *
      * @param iamId the iamId
-     * @return the UpdateUserProfilesOptions builder
+     * @return the UpdateUserProfileOptions builder
      */
     public Builder iamId(String iamId) {
       this.iamId = iamId;
@@ -107,7 +107,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
      * Set the firstname.
      *
      * @param firstname the firstname
-     * @return the UpdateUserProfilesOptions builder
+     * @return the UpdateUserProfileOptions builder
      */
     public Builder firstname(String firstname) {
       this.firstname = firstname;
@@ -118,7 +118,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
      * Set the lastname.
      *
      * @param lastname the lastname
-     * @return the UpdateUserProfilesOptions builder
+     * @return the UpdateUserProfileOptions builder
      */
     public Builder lastname(String lastname) {
       this.lastname = lastname;
@@ -129,7 +129,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
      * Set the state.
      *
      * @param state the state
-     * @return the UpdateUserProfilesOptions builder
+     * @return the UpdateUserProfileOptions builder
      */
     public Builder state(String state) {
       this.state = state;
@@ -140,7 +140,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
      * Set the email.
      *
      * @param email the email
-     * @return the UpdateUserProfilesOptions builder
+     * @return the UpdateUserProfileOptions builder
      */
     public Builder email(String email) {
       this.email = email;
@@ -151,7 +151,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
      * Set the phonenumber.
      *
      * @param phonenumber the phonenumber
-     * @return the UpdateUserProfilesOptions builder
+     * @return the UpdateUserProfileOptions builder
      */
     public Builder phonenumber(String phonenumber) {
       this.phonenumber = phonenumber;
@@ -162,7 +162,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
      * Set the altphonenumber.
      *
      * @param altphonenumber the altphonenumber
-     * @return the UpdateUserProfilesOptions builder
+     * @return the UpdateUserProfileOptions builder
      */
     public Builder altphonenumber(String altphonenumber) {
       this.altphonenumber = altphonenumber;
@@ -173,7 +173,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
      * Set the photo.
      *
      * @param photo the photo
-     * @return the UpdateUserProfilesOptions builder
+     * @return the UpdateUserProfileOptions builder
      */
     public Builder photo(String photo) {
       this.photo = photo;
@@ -181,7 +181,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
     }
   }
 
-  protected UpdateUserProfilesOptions(Builder builder) {
+  protected UpdateUserProfileOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.iamId,
@@ -200,7 +200,7 @@ public class UpdateUserProfilesOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a UpdateUserProfilesOptions builder
+   * @return a UpdateUserProfileOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

@@ -15,7 +15,7 @@ package com.ibm.cloud.platform_services.user_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Attribute.
+ * An attribute/value pair.
  */
 public class Attribute extends GenericModel {
 

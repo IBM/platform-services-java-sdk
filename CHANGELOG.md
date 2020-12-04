@@ -1,3 +1,10 @@
+## [0.16.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.16.0...v0.16.1) (2020-12-04)
+
+
+### Bug Fixes
+
+* avoid highlight.js vulnerability ([a301efa](https://github.com/IBM/platform-services-node-sdk/commit/a301efae41c1c99c50418b8e5a4b8d9c6d8784d3))
+
 # [0.16.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.5...v0.16.0) (2020-12-04)
 
 

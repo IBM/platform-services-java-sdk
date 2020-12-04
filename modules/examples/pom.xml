@@ -24,6 +24,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>enterprise-billing-units</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>enterprise-usage-reports</artifactId>
             <version>${project.version}</version>
         </dependency>

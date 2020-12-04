@@ -52,6 +52,7 @@
         <module>modules/case-management</module>
         <module>modules/catalog-management</module>
         <module>modules/configuration-governance</module>
+        <module>modules/enterprise-billing-units</module>
         <module>modules/enterprise-management</module>
         <module>modules/enterprise-usage-reports</module>
         <module>modules/global-catalog</module>

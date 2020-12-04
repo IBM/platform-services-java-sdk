@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/IBM/platform-services-java-sdk/compare/0.15.11...0.16.0) (2020-12-04)
+
+
+### Features
+
+* **Enterprise Billing Units:** add service to project ([#66](https://github.com/IBM/platform-services-java-sdk/issues/66)) ([550c490](https://github.com/IBM/platform-services-java-sdk/commit/550c490f5dda03bf76871c2c0fa7e9024230baa9))
+
 ## [0.15.11](https://github.com/IBM/platform-services-java-sdk/compare/0.15.10...0.15.11) (2020-11-30)
 
 

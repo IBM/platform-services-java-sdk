@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.5...v0.16.0) (2020-12-04)
+
+
+### Features
+
+* **Enterprise Billing Units:** add service to project ([40ac30b](https://github.com/IBM/platform-services-node-sdk/commit/40ac30bb297d1af59467779946f25de27474ef5a))
+
 ## [0.15.5](https://github.com/IBM/platform-services-node-sdk/compare/v0.15.4...v0.15.5) (2020-11-30)
 
 

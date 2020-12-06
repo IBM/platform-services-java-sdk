@@ -21,9 +21,11 @@ pkgversion=$5
 package_names="
 com.ibm.cloud:platform-services
 com.ibm.cloud:platform-services-common
+com.ibm.cloud:platform-services-examples
 com.ibm.cloud:case-management
 com.ibm.cloud:catalog-management
 com.ibm.cloud:configuration-governance
+com.ibm.cloud:enterprise-billing-units
 com.ibm.cloud:enterprise-management
 com.ibm.cloud:enterprise-usage-reports
 com.ibm.cloud:global-catalog

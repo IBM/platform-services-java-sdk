@@ -1,3 +1,10 @@
+# [0.17.0](https://github.com/IBM/platform-services-java-sdk/compare/0.16.0...0.17.0) (2020-12-07)
+
+
+### Features
+
+* **Usage Metering:** add service to project ([957a70e](https://github.com/IBM/platform-services-java-sdk/commit/957a70ec899c16a0baa98aa42b755f2c8bd25add))
+
 # [0.16.0](https://github.com/IBM/platform-services-java-sdk/compare/0.15.11...0.16.0) (2020-12-04)
 
 

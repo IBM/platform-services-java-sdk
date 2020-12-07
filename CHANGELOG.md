@@ -1,3 +1,10 @@
+# [0.17.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.16.1...v0.17.0) (2020-12-07)
+
+
+### Features
+
+* **Usage Metering:** add service to project ([d0609d0](https://github.com/IBM/platform-services-node-sdk/commit/d0609d0862881f57b8e57bb68a7fb99bf4bd7e72))
+
 ## [0.16.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.16.0...v0.16.1) (2020-12-04)
 
 

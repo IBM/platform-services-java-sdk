@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -71,7 +71,7 @@ class CaseManagementV1 extends BaseService {
    * Construct a CaseManagementV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/case-management/v1'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
@@ -891,7 +891,7 @@ namespace CaseManagementV1 {
     filename?: string;
     /** Size of the attachment in bytes. */
     size_in_bytes?: number;
-    /** Date time of uploading. */
+    /** Date time of uploading in UTC. */
     created_at?: string;
     /** URL of the attachment used to download. */
     url?: string;
@@ -985,7 +985,7 @@ namespace CaseManagementV1 {
   export interface Comment {
     /** The comment. */
     value?: string;
-    /** Timestamp of when comment is added. */
+    /** Date time when comment was added in UTC. */
     added_at?: string;
     /** User info in a case. */
     added_by?: User;

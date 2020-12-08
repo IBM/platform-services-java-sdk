@@ -40,7 +40,7 @@ public class Comment extends GenericModel {
   /**
    * Gets the addedAt.
    *
-   * Timestamp of when comment is added.
+   * Date time when comment was added in UTC.
    *
    * @return the addedAt
    */

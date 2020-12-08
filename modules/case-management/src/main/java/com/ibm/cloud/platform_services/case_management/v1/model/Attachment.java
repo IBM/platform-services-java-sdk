@@ -64,7 +64,7 @@ public class Attachment extends GenericModel {
   /**
    * Gets the createdAt.
    *
-   * Date time of uploading.
+   * Date time of uploading in UTC.
    *
    * @return the createdAt
    */

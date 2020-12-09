@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-ef9b3113-20201118-074613
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -74,7 +74,7 @@ class GlobalCatalogV1 extends BaseService {
    * Construct a GlobalCatalogV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/api/v1'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
@@ -239,7 +239,8 @@ class GlobalCatalogV1 extends BaseService {
    * Get a specific catalog object.
    *
    * This endpoint returns a specific catalog entry using the object's unique identifier, for example
-   * `/_*service_name*?complete=true`. This endpoint is ETag enabled.
+   * `/_*service_name*?complete=true`. This endpoint is ETag enabled. This can be used by an unauthenticated user for
+   * publicly available services.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The catalog entry's unqiue ID.
@@ -444,7 +445,8 @@ class GlobalCatalogV1 extends BaseService {
   /**
    * Get child catalog entries of a specific kind.
    *
-   * Fetch child catalog entries for a catalog entry with a specific id. This endpoint is ETag enabled.
+   * Fetch child catalog entries for a catalog entry with a specific id. This endpoint is ETag enabled. This can be used
+   * by an unauthenticated user for publicly available services.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The parent catalog entry's ID.
@@ -683,7 +685,7 @@ class GlobalCatalogV1 extends BaseService {
    * Get the pricing for an object.
    *
    * This endpoint returns the pricing for an object. Static pricing is defined in the catalog. Dynamic pricing is
-   * stored in IBM Cloud Pricing Catalog.
+   * stored in IBM Cloud Pricing Catalog. This can be used by an unauthenticated user for publicly available services.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The object's unique ID.

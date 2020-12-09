@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -70,7 +70,7 @@ class EnterpriseManagementV1 extends BaseService {
    * Construct a EnterpriseManagementV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/v1'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
@@ -355,8 +355,8 @@ class EnterpriseManagementV1 extends BaseService {
    *
    * Create a new account as a part of an existing enterprise. The API creates an account entity under the parent that
    * is specified in the payload of the request. The request also takes in the name and the owner of this new account.
-   * The owner must have a valid IBMid that's registered with {{site.data.keyword.cloud_notm}}, but they don't need to
-   * be a user in the enterprise account.
+   * The owner must have a valid IBMid that's registered with IBM Cloud, but they don't need to be a user in the
+   * enterprise account.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.parent - The CRN of the parent under which the account will be created. The parent can be an

@@ -24,7 +24,7 @@ public class ScanResult extends GenericModel {
 
   @SerializedName("search_cursor")
   protected String searchCursor;
-  protected Double limit;
+  protected Long limit;
   protected List<ResultItem> items;
 
   /**
@@ -45,7 +45,7 @@ public class ScanResult extends GenericModel {
    *
    * @return the limit
    */
-  public Double getLimit() {
+  public Long getLimit() {
     return limit;
   }
 

@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  */
 
 package com.ibm.cloud.platform_services.enterprise_management.v1;
@@ -291,8 +291,8 @@ public class EnterpriseManagement extends BaseService {
    *
    * Create a new account as a part of an existing enterprise. The API creates an account entity under the parent that
    * is specified in the payload of the request. The request also takes in the name and the owner of this new account.
-   * The owner must have a valid IBMid that's registered with {{site.data.keyword.cloud_notm}}, but they don't need to
-   * be a user in the enterprise account.
+   * The owner must have a valid IBMid that's registered with IBM Cloud, but they don't need to be a user in the
+   * enterprise account.
    *
    * @param createAccountOptions the {@link CreateAccountOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link CreateAccountResponse}

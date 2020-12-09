@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -75,7 +75,7 @@ class GlobalSearchV2 extends BaseService {
    * Construct a GlobalSearchV2 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
@@ -93,13 +93,13 @@ class GlobalSearchV2 extends BaseService {
   }
 
   /*************************
-   * resourceFinder
+   * search
    ************************/
 
   /**
    * Find instances of resources.
    *
-   * 'Find cloud foundry resources, resource controlled enabled resources, or storage and network resources running on
+   * Find cloud foundry resources, resource controller-enabled resources, or storage and network resources running on
    * classic infrastructure in a specific account ID. You can apply query strings if necessary. To filter results, you
    * can insert a string using the Lucene syntax and the query string is parsed into a series of terms and operators. A
    * term can be a single word or a phrase, in which case the search is performed for all the words, in the same order.
@@ -109,7 +109,7 @@ class GlobalSearchV2 extends BaseService {
    * through such a big number. On the first call, the operation returns a live cursor on the data that you must use on
    * all the subsequent calls to get the next batch of results until you get the empty result set. By default, the
    * fields returned for every resources are: "crn", "name", "family", "type", "account_id". You can specify the subset
-   * of the fields you want in your request.''.
+   * of the fields you want in your request.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.query] - The Lucene-formatted query string. Default to '*' if not set.

@@ -16,96 +16,68 @@
  */
 
 'use strict';
-
 const GlobalSearchV2 = require('../../dist/global-search/v2');
-const { IamAuthenticator } = require('ibm-cloud-sdk-core');
+const { readExternalSources } = require('ibm-cloud-sdk-core');
 const authHelper = require('../resources/auth-helper.js');
+const { v4: uuidv4 } = require('uuid');
 
-const timeout = 10000; // ten seconds
+// testcase timeout value (120s).
+const timeout = 120000;
 
 // Location of our config file.
-const configFile = 'ghost.env';
+const configFile = 'global_search.env';
 
-// Use authHelper to skip tests if our configFile is not available.
 const describe = authHelper.prepareTests(configFile);
 
-// Retrieve the config file as an object.
-// We do this because we're going to directly use the
-// config properties, rather than let the SDK do it for us.
-const config = authHelper.loadConfig();
+const transactionId = uuidv4();
 
 describe('GlobalSearchV2_integration', () => {
   jest.setTimeout(timeout);
 
-  // add query and other mandatory parameters.
-  const query = config.GST_QUERY;
-  const fields = ['crn', 'name'];
-  const transactionId = 'testString';
-  const limit = 100;
-  const limit1 = 1;
+  const globalSearchService = GlobalSearchV2.newInstance({});
 
-  // Initialize the service client.
-  const options = {
-    authenticator: new IamAuthenticator({
-      apikey: config.GST_IINTERNA_APIKEY,
-    }),
-    serviceUrl: config.GST_API_URL,
-  };
-  const globalSearch = new GlobalSearchV2(options);
+  const config = readExternalSources(GlobalSearchV2.DEFAULT_SERVICE_NAME);
 
-  test('should search resources', done => {
-    const params = {
-      query: query,
-      transactionId: transactionId,
-      limit: limit,
-      timeout: timeout,
-    };
-    return globalSearch.search(params).then(response => {
-      expect(response.hasOwnProperty('status')).toBe(true);
-      expect(response.status).toBe(200);
-      done();
-    });
-  });
+  expect(globalSearchService).not.toBeNull();
+  expect(config).not.toBeNull();
 
-  test('should search resources with cursor', done => {
-    let searchCursor;
+  test('search()', async () => {
+    const searchResults = [];
+    let searchCursor = undefined;
+    let moreResults = true;
 
-    const paramsCursor0 = {
-      query: query,
-      fields: fields,
-      transactionId: transactionId,
-      limit: limit1,
-      timeout: timeout,
-    };
-    globalSearch.search(paramsCursor0).then(response => {
-      searchCursor = response.result.search_cursor;
-      expect(response.hasOwnProperty('status')).toBe(true);
-      expect(response.status).toBe(200);
-
-      const paramsCursor = {
-        query: query,
-        fields: fields,
-        searchCursor: searchCursor,
+    while (moreResults) {
+      const params = {
+        query: 'GST-sdk-*',
+        fields: ['*'],
         transactionId: transactionId,
-        limit: limit1,
-        timeout: timeout,
+        searchCursor: searchCursor,
+        limit: 1,
       };
 
-      return globalSearch.search(paramsCursor).then(response => {
-        expect(response.hasOwnProperty('status')).toBe(true);
-        expect(response.status).toBe(200);
-        done();
-      });
-    });
-  });
+      const res = await globalSearchService.search(params);
+      expect(res).toBeDefined();
+      expect(res.result).toBeDefined();
+      expect(res.status).toEqual(200);
+      console.log('search() result: \n' + JSON.stringify(res.result, null, 2));
 
-  test('should get supported types', done => {
-    const params3 = {};
-    return globalSearch.getSupportedTypes(params3).then(response => {
-      expect(response.hasOwnProperty('status')).toBe(true);
-      expect(response.status).toBe(200);
-      expect(Array.isArray(response.result.supported_types)).toBe(true);
-      done();
-    });
+      const result = res.result;
+      if (result.items && result.items.length > 0) {
+        searchResults.push(...result.items);
+        searchCursor = result.search_cursor;
+      } else {
+        moreResults = false;
+      }
+    }
+
+    console.log('Total items returned by search(): ', searchResults.length);
+  });
+  test('getSupportedTypes()', async () => {
+    const res = await globalSearchService.getSupportedTypes();
+    expect(res).toBeDefined();
+    expect(res.result).toBeDefined();
+    expect(res.status).toEqual(200);
+
+    console.log('getSupportedTypes() result: \n' + JSON.stringify(res.result, null, 2));
   });
 });

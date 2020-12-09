@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  */
 
 package com.ibm.cloud.platform_services.global_search.v2;
@@ -90,7 +90,7 @@ public class GlobalSearch extends BaseService {
   /**
    * Find instances of resources.
    *
-   * 'Find cloud foundry resources, resource controlled enabled resources, or storage and network resources running on
+   * Find cloud foundry resources, resource controller-enabled resources, or storage and network resources running on
    * classic infrastructure in a specific account ID. You can apply query strings if necessary. To filter results, you
    * can insert a string using the Lucene syntax and the query string is parsed into a series of terms and operators. A
    * term can be a single word or a phrase, in which case the search is performed for all the words, in the same order.
@@ -100,7 +100,7 @@ public class GlobalSearch extends BaseService {
    * through such a big number. On the first call, the operation returns a live cursor on the data that you must use on
    * all the subsequent calls to get the next batch of results until you get the empty result set. By default, the
    * fields returned for every resources are: "crn", "name", "family", "type", "account_id". You can specify the subset
-   * of the fields you want in your request.''.
+   * of the fields you want in your request.
    *
    * @param searchOptions the {@link SearchOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
@@ -148,7 +148,7 @@ public class GlobalSearch extends BaseService {
   /**
    * Find instances of resources.
    *
-   * 'Find cloud foundry resources, resource controlled enabled resources, or storage and network resources running on
+   * Find cloud foundry resources, resource controller-enabled resources, or storage and network resources running on
    * classic infrastructure in a specific account ID. You can apply query strings if necessary. To filter results, you
    * can insert a string using the Lucene syntax and the query string is parsed into a series of terms and operators. A
    * term can be a single word or a phrase, in which case the search is performed for all the words, in the same order.
@@ -158,7 +158,7 @@ public class GlobalSearch extends BaseService {
    * through such a big number. On the first call, the operation returns a live cursor on the data that you must use on
    * all the subsequent calls to get the next batch of results until you get the empty result set. By default, the
    * fields returned for every resources are: "crn", "name", "family", "type", "account_id". You can specify the subset
-   * of the fields you want in your request.''.
+   * of the fields you want in your request.
    *
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
    */

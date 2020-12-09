@@ -14,50 +14,54 @@
 package com.ibm.cloud.platform_services.global_search.v2;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.fail;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.ibm.cloud.platform_services.global_search.v2.model.GetSupportedTypesOptions;
+import com.ibm.cloud.platform_services.global_search.v2.model.ResultItem;
 import com.ibm.cloud.platform_services.global_search.v2.model.ScanResult;
 import com.ibm.cloud.platform_services.global_search.v2.model.SearchOptions;
 import com.ibm.cloud.platform_services.global_search.v2.model.SupportedTypesList;
+import com.ibm.cloud.platform_services.global_search.v2.utils.TestUtilities;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.IamAuthenticator;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 /**
  * Integration test class for the GlobalSearch service.
  */
 public class GlobalSearchIT extends SdkIntegrationTestBase {
+    public GlobalSearch service = null;
+    public static Map<String, String> config = null;
+    final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
+    final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
-    Properties prop = null;
-    GlobalSearch globalSearch = null;
+    private String transactionId = UUID.randomUUID().toString();
 
-    /**
-     * This method provides our config filename to the base class.
-     */
     @Override
     public String getConfigFilename() {
-        return "../../ghost.env";
+        return "../../global_search.env";
     }
 
     @Override
     public boolean loggingEnabled() {
-        return false;
+        return true;
     }
 
-    /**
-     * This method is invoked before any @Test-annotated methods, and is responsible
-     * for creating the instance of the service that will be used by the rest of the
-     * test methods, as well as any other required initialization.
-     */
     @BeforeClass
     public void constructService() {
         // Ask super if we should skip the tests.
@@ -65,78 +69,80 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
             return;
         }
 
-        try {
-            InputStream input = new FileInputStream(getConfigFilename());
-            this.prop = new Properties();
-            this.prop.load(input);
-        } catch (Throwable t) {
-            log(String.format("Unable to load properties file %s: %s", getConfigFilename(), t.getMessage()));
-            this.skipTests = true;
-            return;
-        }
+        service = GlobalSearch.newInstance();
+        assertNotNull(service);
+        assertNotNull(service.getServiceUrl());
 
-        // Create the IAM authenticator.
-        IamAuthenticator authenticator = new IamAuthenticator(this.prop.getProperty("GST_IINTERNA_APIKEY"));
-        authenticator.setURL(this.prop.getProperty("GST_IAM_URL"));
+        // Load up our test-specific config properties.
+        config = CredentialUtils.getServiceProperties(GlobalSearch.DEFAULT_SERVICE_NAME);
+        assertNotNull(config);
+        assertFalse(config.isEmpty());
+        assertEquals(service.getServiceUrl(), config.get("URL"));
 
-        // Create the service instance.
-        this.globalSearch = new GlobalSearch("global_search", authenticator);
-        this.globalSearch.setServiceUrl(this.prop.getProperty("GST_API_URL"));
+        log("Setup complete.");
     }
 
     @Test
-    public void testSearchAll() {
-        log("START GlobalSearchIT.testSearchAll method");
-
+    public void testSearch() throws Exception {
         try {
-            // Test - search all resource
-            SearchOptions searchOpt = new SearchOptions.Builder()
-                    .query("name:gst-sdk*")
-                    .build();
-            Response<ScanResult> response = this.globalSearch.search(searchOpt).execute();
-            assertNotNull(response);
-            ScanResult result = response.getResult();
-            assertNotNull(result);
-            log("response: " + result.getItems());
-            assertEquals(result.getItems().size(), 2);
+            List<ResultItem> searchResults = new ArrayList<>();
+
+            // Search for resources 1 item at a time to exercise pagination.
+            String searchCursor = null;
+            boolean moreResults = true;
+
+            do {
+                SearchOptions searchOptions = new SearchOptions.Builder()
+                        .query("GST-sdk-*")
+                        .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("*")))
+                        .searchCursor(searchCursor)
+                        .transactionId(transactionId)
+                        .limit(1)
+                        .build();
+
+                Response<ScanResult> response = service.search(searchOptions).execute();
+                assertNotNull(response);
+                assertEquals(response.getStatusCode(), 200);
+                ScanResult scanResult = response.getResult();
+                assertNotNull(scanResult);
+                log(String.format("search() result:\n%s\n", scanResult.toString()));
+
+                if (!scanResult.getItems().isEmpty()) {
+                    searchCursor = scanResult.getSearchCursor();
+                    searchResults.addAll(scanResult.getItems());
+                } else {
+                    moreResults = false;
+                }
+            } while (moreResults);
+
+            log(String.format("Total results returned by search(): %s\n", searchResults.size()));
         } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %s: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-        }
-    }
-
-    @Test(dependsOnMethods = { "testSearchAll" })
-    public void testSearchOne() {
-        log("START GlobalSearchIT.testSearchOne method");
-
-        try {
-            // Test - search all resource and set limit = 1
-            SearchOptions searchOpt = new SearchOptions.Builder()
-                    .query(this.prop.getProperty("GST_QUERY"))
-                    .limit(1)
-                    .addFields("crn")
-                    .addFields("name")
-                    .build();
-            Response<ScanResult> response = this.globalSearch.search(searchOpt).execute();
-            assertNotNull(response);
-
-            ScanResult result = response.getResult();
-            assertNotNull(result);
-            assertEquals(result.getItems().size(), 1);
-            log("response: " + result.getItems());
-        } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
         }
     }
 
-    @Test(dependsOnMethods = { "testSearchOne" })
-    public void testGetSupportedTypes() {
-        // Test 3 - getSupportedTypes operation
-        Response<SupportedTypesList> responseSTL = this.globalSearch.getSupportedTypes().execute();
-        assertNotNull(responseSTL);
-        SupportedTypesList resultSTL = responseSTL.getResult();
-        assertNotNull(resultSTL);
-        log("response SupportedTypesList: " + resultSTL.getSupportedTypes());
+    @Test
+    public void testGetSupportedTypes() throws Exception {
+        try {
+            GetSupportedTypesOptions getSupportedTypesOptions = new GetSupportedTypesOptions();
+
+            Response<SupportedTypesList> response = service.getSupportedTypes(getSupportedTypesOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            SupportedTypesList supportedTypesListResult = response.getResult();
+            assertNotNull(supportedTypesListResult);
+            log(String.format("getSupportedTypes() result:\n%s\n", supportedTypesListResult.toString()));
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @AfterClass
+    public void tearDown() {
+        // Add any clean up logic here
+        System.out.println("Clean up complete.");
     }
 }

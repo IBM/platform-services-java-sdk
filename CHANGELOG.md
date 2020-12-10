@@ -1,3 +1,17 @@
+## [0.17.1](https://github.com/IBM/platform-services-java-sdk/compare/0.17.0...0.17.1) (2020-12-10)
+
+
+### Bug Fixes
+
+* **Case Management:** re-gen service from latest API ([1891291](https://github.com/IBM/platform-services-java-sdk/commit/1891291bcd71675ce5339fd8f159a7abe9ead9b9))
+* **Configuration Governance:** re-gen service with latest API ([47ad40b](https://github.com/IBM/platform-services-java-sdk/commit/47ad40b13e976cdc48ca13f7feea38a164011a3e))
+* **Enterprise Billing Units:** re-gen service with latest API ([4337d8a](https://github.com/IBM/platform-services-java-sdk/commit/4337d8a973303ed4b5befdd4a36abfd1fc6385cf))
+* **Enterprise Management:** re-gen service with latest API ([e1a614e](https://github.com/IBM/platform-services-java-sdk/commit/e1a614eb7636daa96104f8281064c04976a2911c))
+* **Enterprise Usage Reports:** re-gen service with latest API ([cd4cd25](https://github.com/IBM/platform-services-java-sdk/commit/cd4cd2564054c47bfbc603f6d57e88c97b639563))
+* **Global Catalog:** re-gen service with latest API ([956fe22](https://github.com/IBM/platform-services-java-sdk/commit/956fe22f12e53a548a7edbf03e6baeea234b7905))
+* **Global Search:** re-gen service and add examples ([49161c9](https://github.com/IBM/platform-services-java-sdk/commit/49161c94f943aca3e88b49c0a6d28dbaf0227d49))
+* **Global Tagging:** re-gen service with latest API ([0d0b1b4](https://github.com/IBM/platform-services-java-sdk/commit/0d0b1b40c675b842f7badae3cb86879277bb0674))
+
 # [0.17.0](https://github.com/IBM/platform-services-java-sdk/compare/0.16.0...0.17.0) (2020-12-07)
 
 

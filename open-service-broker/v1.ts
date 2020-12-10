@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -70,7 +70,7 @@ class OpenServiceBrokerV1 extends BaseService {
    * Construct a OpenServiceBrokerV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
@@ -229,16 +229,16 @@ class OpenServiceBrokerV1 extends BaseService {
    * @param {string} params.instanceId - The `instance_id` of a service instance is provided by the IBM Cloud platform.
    * This ID will be used for future requests to bind and deprovision, so the broker can use it to correlate the
    * resource it creates.
-   * @param {string} [params.organizationGuid] - Deprecated in favor of `context`. The identifier for the project space
-   * within the IBM Cloud platform organization. Although most brokers will not use this field, it might be helpful for
-   * executing operations on a user's behalf. It MUST be a non-empty string.
+   * @param {string} [params.organizationGuid] - Deprecated in favor of `context`. The IBM Cloud platform GUID for the
+   * organization under which the service instance is to be provisioned. Although most brokers will not use this field,
+   * it might be helpful for executing operations on a user's behalf. It MUST be a non-empty string.
    * @param {string} [params.planId] - The ID of the plan for which the service instance has been requested, which is
    * stored in the catalog.json of your broker. This value should be a GUID and it MUST be unique to a service.
    * @param {string} [params.serviceId] - The ID of the service stored in the catalog.json of your broker. This value
    * should be a GUID and it MUST be a non-empty string.
-   * @param {string} [params.spaceGuid] - Deprecated in favor of `context`. The IBM Cloud platform GUID for the
-   * organization under which the service instance is to be provisioned. Although most brokers will not use this field,
-   * it might be helpful for executing operations on a user's behalf. It MUST be a non-empty string.
+   * @param {string} [params.spaceGuid] - Deprecated in favor of `context`. The identifier for the project space within
+   * the IBM Cloud platform organization. Although most brokers will not use this field, it might be helpful for
+   * executing operations on a user's behalf. It MUST be a non-empty string.
    * @param {Context} [params.context] - Platform specific contextual information under which the service instance is to
    * be provisioned.
    * @param {JsonObject} [params.parameters] - Configuration options for the service instance. An opaque object,
@@ -745,9 +745,9 @@ namespace OpenServiceBrokerV1 {
      *  future requests to bind and deprovision, so the broker can use it to correlate the resource it creates.
      */
     instanceId: string;
-    /** Deprecated in favor of `context`. The identifier for the project space within the IBM Cloud platform
-     *  organization. Although most brokers will not use this field, it might be helpful for executing operations on a
-     *  user's behalf. It MUST be a non-empty string.
+    /** Deprecated in favor of `context`. The IBM Cloud platform GUID for the organization under which the service
+     *  instance is to be provisioned. Although most brokers will not use this field, it might be helpful for executing
+     *  operations on a user's behalf. It MUST be a non-empty string.
      */
     organizationGuid?: string;
     /** The ID of the plan for which the service instance has been requested, which is stored in the catalog.json of
@@ -758,9 +758,9 @@ namespace OpenServiceBrokerV1 {
      *  a non-empty string.
      */
     serviceId?: string;
-    /** Deprecated in favor of `context`. The IBM Cloud platform GUID for the organization under which the service
-     *  instance is to be provisioned. Although most brokers will not use this field, it might be helpful for executing
-     *  operations on a user's behalf. It MUST be a non-empty string.
+    /** Deprecated in favor of `context`. The identifier for the project space within the IBM Cloud platform
+     *  organization. Although most brokers will not use this field, it might be helpful for executing operations on a
+     *  user's behalf. It MUST be a non-empty string.
      */
     spaceGuid?: string;
     /** Platform specific contextual information under which the service instance is to be provisioned. */

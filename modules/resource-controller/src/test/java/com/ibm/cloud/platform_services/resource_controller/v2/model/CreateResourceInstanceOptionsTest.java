@@ -41,7 +41,7 @@ public class CreateResourceInstanceOptionsTest {
       .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .allowCleanup(true)
       .parameters(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
-      .entityLock("testString")
+      .entityLock(true)
       .build();
     assertEquals(createResourceInstanceOptionsModel.name(), "my-instance");
     assertEquals(createResourceInstanceOptionsModel.target(), "bluemix-us-south");
@@ -50,7 +50,7 @@ public class CreateResourceInstanceOptionsTest {
     assertEquals(createResourceInstanceOptionsModel.tags(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(createResourceInstanceOptionsModel.allowCleanup(), Boolean.valueOf(true));
     assertEquals(createResourceInstanceOptionsModel.parameters(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
-    assertEquals(createResourceInstanceOptionsModel.entityLock(), "testString");
+    assertEquals(createResourceInstanceOptionsModel.entityLock(), Boolean.valueOf(true));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

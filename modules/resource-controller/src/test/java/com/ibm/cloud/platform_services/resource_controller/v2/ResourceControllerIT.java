@@ -7,6 +7,7 @@ import static org.testng.Assert.assertTrue;
 import static org.testng.AssertJUnit.assertNotNull;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -64,22 +65,7 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.UpdateResour
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
-import java.util.UUID;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.io.*;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
-import static org.testng.AssertJUnit.assertNotNull;
 
 /**
  * Integration test class for the ResourceController service.
@@ -1657,7 +1643,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 if (resources.size() > 0){
                     for (ResourceInstance res : resources){
                         String instanceGuid = res.getGuid();
-                        
+
                         //unlock if its locked
                         if (res.getState().equals("active") && res.isLocked()) {
                             try {

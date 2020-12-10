@@ -30,7 +30,7 @@ public class CreateResourceInstanceOptions extends GenericModel {
   protected List<String> tags;
   protected Boolean allowCleanup;
   protected Map<String, Object> parameters;
-  protected String entityLock;
+  protected Boolean entityLock;
 
   /**
    * Builder.
@@ -43,7 +43,7 @@ public class CreateResourceInstanceOptions extends GenericModel {
     private List<String> tags;
     private Boolean allowCleanup;
     private Map<String, Object> parameters;
-    private String entityLock;
+    private Boolean entityLock;
 
     private Builder(CreateResourceInstanceOptions createResourceInstanceOptions) {
       this.name = createResourceInstanceOptions.name;
@@ -186,7 +186,7 @@ public class CreateResourceInstanceOptions extends GenericModel {
      * @param entityLock the entityLock
      * @return the CreateResourceInstanceOptions builder
      */
-    public Builder entityLock(String entityLock) {
+    public Builder entityLock(Boolean entityLock) {
       this.entityLock = entityLock;
       return this;
     }
@@ -308,7 +308,7 @@ public class CreateResourceInstanceOptions extends GenericModel {
    *
    * @return the entityLock
    */
-  public String entityLock() {
+  public Boolean entityLock() {
     return entityLock;
   }
 }

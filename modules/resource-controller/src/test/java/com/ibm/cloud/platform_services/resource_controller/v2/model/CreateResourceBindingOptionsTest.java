@@ -39,13 +39,13 @@ public class CreateResourceBindingOptionsTest {
 
     CreateResourceBindingOptions createResourceBindingOptionsModel = new CreateResourceBindingOptions.Builder()
       .source("25eba2a9-beef-450b-82cf-f5ad5e36c6dd")
-      .target("crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c")
+      .target("crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c")
       .name("my-binding")
       .parameters(resourceBindingPostParametersModel)
       .role("Writer")
       .build();
     assertEquals(createResourceBindingOptionsModel.source(), "25eba2a9-beef-450b-82cf-f5ad5e36c6dd");
-    assertEquals(createResourceBindingOptionsModel.target(), "crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c");
+    assertEquals(createResourceBindingOptionsModel.target(), "crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c");
     assertEquals(createResourceBindingOptionsModel.name(), "my-binding");
     assertEquals(createResourceBindingOptionsModel.parameters(), resourceBindingPostParametersModel);
     assertEquals(createResourceBindingOptionsModel.role(), "Writer");

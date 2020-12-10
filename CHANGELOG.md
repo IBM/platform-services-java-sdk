@@ -1,3 +1,17 @@
+## [0.17.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.0...v0.17.1) (2020-12-10)
+
+
+### Bug Fixes
+
+* **Case Management:** re-gen service from latest API ([b6f9a6b](https://github.com/IBM/platform-services-node-sdk/commit/b6f9a6bbc4d9542b87ab92ccf3dea1d071e45d91))
+* **Configuration Governance:** re-gen service with latest API ([d86fbdd](https://github.com/IBM/platform-services-node-sdk/commit/d86fbdd74aacd07ae2ce66653dcea3a5f4962bce))
+* **Enterprise Billing Units:** re-gen service with latest API ([548c81c](https://github.com/IBM/platform-services-node-sdk/commit/548c81ce6f9aa32178d04921625b1d9b414289c8))
+* **Enterprise Management:** re-gen service with latest API ([71ce140](https://github.com/IBM/platform-services-node-sdk/commit/71ce1407f21ab68aec1fab6c19d04db4deaeecc7))
+* **Enterprise Usage Reports:** re-gen service with latest API ([6ac0564](https://github.com/IBM/platform-services-node-sdk/commit/6ac05643f2df9e0c36610bdf3a3100cf6541700c))
+* **Global Catalog:** re-gen service with latest API ([7e18576](https://github.com/IBM/platform-services-node-sdk/commit/7e1857693b504612f0feea50dece2b7ec0f75db3))
+* **Global Search:** re-gen service and add examples ([9601b3c](https://github.com/IBM/platform-services-node-sdk/commit/9601b3c030b13e34909896594cf9a06c14bc17b8))
+* **Global Tagging:** re-gen service with latest API ([bbe2b19](https://github.com/IBM/platform-services-node-sdk/commit/bbe2b198e07a1a6031da2e45ea75345ff05e606d))
+
 # [0.17.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.16.1...v0.17.0) (2020-12-07)
 
 

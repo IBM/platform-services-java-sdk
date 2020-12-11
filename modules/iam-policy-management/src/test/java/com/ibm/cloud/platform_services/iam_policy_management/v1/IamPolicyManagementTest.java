@@ -101,7 +101,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testListPoliciesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"policies\": [{\"id\": \"id\", \"type\": \"type\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"policies\": [{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listPoliciesPath = "/v1/policies";
 
     server.enqueue(new MockResponse()
@@ -119,6 +119,8 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .accessGroupId("testString")
     .type("testString")
     .serviceType("testString")
+    .sort("testString")
+    .format("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -141,6 +143,8 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     assertEquals(query.get("access_group_id"), "testString");
     assertEquals(query.get("type"), "testString");
     assertEquals(query.get("service_type"), "testString");
+    assertEquals(query.get("sort"), "testString");
+    assertEquals(query.get("format"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listPoliciesPath);
@@ -161,7 +165,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testCreatePolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createPolicyPath = "/v1/policies";
 
     server.enqueue(new MockResponse()
@@ -205,6 +209,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .subjects(new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)))
     .roles(new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)))
     .resources(new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)))
+    .description("testString")
     .acceptLanguage("testString")
     .build();
 
@@ -243,7 +248,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testUpdatePolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String updatePolicyPath = "/v1/policies/testString";
 
     server.enqueue(new MockResponse()
@@ -289,6 +294,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .subjects(new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)))
     .roles(new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)))
     .resources(new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)))
+    .description("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -327,7 +333,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testGetPolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getPolicyPath = "/v1/policies/testString";
 
     server.enqueue(new MockResponse()

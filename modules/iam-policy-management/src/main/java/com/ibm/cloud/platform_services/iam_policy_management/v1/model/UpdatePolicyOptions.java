@@ -28,6 +28,7 @@ public class UpdatePolicyOptions extends GenericModel {
   protected List<PolicySubject> subjects;
   protected List<PolicyRole> roles;
   protected List<PolicyResource> resources;
+  protected String description;
 
   /**
    * Builder.
@@ -39,6 +40,7 @@ public class UpdatePolicyOptions extends GenericModel {
     private List<PolicySubject> subjects;
     private List<PolicyRole> roles;
     private List<PolicyResource> resources;
+    private String description;
 
     private Builder(UpdatePolicyOptions updatePolicyOptions) {
       this.policyId = updatePolicyOptions.policyId;
@@ -47,6 +49,7 @@ public class UpdatePolicyOptions extends GenericModel {
       this.subjects = updatePolicyOptions.subjects;
       this.roles = updatePolicyOptions.roles;
       this.resources = updatePolicyOptions.resources;
+      this.description = updatePolicyOptions.description;
     }
 
     /**
@@ -199,6 +202,17 @@ public class UpdatePolicyOptions extends GenericModel {
       this.resources = resources;
       return this;
     }
+
+    /**
+     * Set the description.
+     *
+     * @param description the description
+     * @return the UpdatePolicyOptions builder
+     */
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
   }
 
   protected UpdatePolicyOptions(Builder builder) {
@@ -220,6 +234,7 @@ public class UpdatePolicyOptions extends GenericModel {
     subjects = builder.subjects;
     roles = builder.roles;
     resources = builder.resources;
+    description = builder.description;
   }
 
   /**
@@ -296,6 +311,17 @@ public class UpdatePolicyOptions extends GenericModel {
    */
   public List<PolicyResource> resources() {
     return resources;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * Customer-defined description.
+   *
+   * @return the description
+   */
+  public String description() {
+    return description;
   }
 }
 

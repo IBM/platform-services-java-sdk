@@ -25,6 +25,8 @@ public class ListPoliciesOptions extends GenericModel {
   protected String accessGroupId;
   protected String type;
   protected String serviceType;
+  protected String sort;
+  protected String format;
 
   /**
    * Builder.
@@ -36,6 +38,8 @@ public class ListPoliciesOptions extends GenericModel {
     private String accessGroupId;
     private String type;
     private String serviceType;
+    private String sort;
+    private String format;
 
     private Builder(ListPoliciesOptions listPoliciesOptions) {
       this.accountId = listPoliciesOptions.accountId;
@@ -44,6 +48,8 @@ public class ListPoliciesOptions extends GenericModel {
       this.accessGroupId = listPoliciesOptions.accessGroupId;
       this.type = listPoliciesOptions.type;
       this.serviceType = listPoliciesOptions.serviceType;
+      this.sort = listPoliciesOptions.sort;
+      this.format = listPoliciesOptions.format;
     }
 
     /**
@@ -135,6 +141,28 @@ public class ListPoliciesOptions extends GenericModel {
       this.serviceType = serviceType;
       return this;
     }
+
+    /**
+     * Set the sort.
+     *
+     * @param sort the sort
+     * @return the ListPoliciesOptions builder
+     */
+    public Builder sort(String sort) {
+      this.sort = sort;
+      return this;
+    }
+
+    /**
+     * Set the format.
+     *
+     * @param format the format
+     * @return the ListPoliciesOptions builder
+     */
+    public Builder format(String format) {
+      this.format = format;
+      return this;
+    }
   }
 
   protected ListPoliciesOptions(Builder builder) {
@@ -146,6 +174,8 @@ public class ListPoliciesOptions extends GenericModel {
     accessGroupId = builder.accessGroupId;
     type = builder.type;
     serviceType = builder.serviceType;
+    sort = builder.sort;
+    format = builder.format;
   }
 
   /**
@@ -221,6 +251,28 @@ public class ListPoliciesOptions extends GenericModel {
    */
   public String serviceType() {
     return serviceType;
+  }
+
+  /**
+   * Gets the sort.
+   *
+   * Sort the results by any of the top level policy fields (id, created_at, created_by_id, last_modified_at, etc).
+   *
+   * @return the sort
+   */
+  public String sort() {
+    return sort;
+  }
+
+  /**
+   * Gets the format.
+   *
+   * Include additional data per policy returned [include_last_permit, display].
+   *
+   * @return the format
+   */
+  public String format() {
+    return format;
   }
 }
 

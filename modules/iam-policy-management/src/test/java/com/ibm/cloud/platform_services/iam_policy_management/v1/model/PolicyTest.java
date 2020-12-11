@@ -40,6 +40,7 @@ public class PolicyTest {
   public void testPolicy() throws Throwable {
     Policy policyModel = new Policy();
     assertNull(policyModel.getType());
+    assertNull(policyModel.getDescription());
     assertNull(policyModel.getSubjects());
     assertNull(policyModel.getRoles());
     assertNull(policyModel.getResources());

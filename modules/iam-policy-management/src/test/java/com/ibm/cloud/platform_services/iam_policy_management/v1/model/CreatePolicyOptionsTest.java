@@ -74,12 +74,14 @@ public class CreatePolicyOptionsTest {
       .subjects(new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)))
       .roles(new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)))
       .resources(new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)))
+      .description("testString")
       .acceptLanguage("testString")
       .build();
     assertEquals(createPolicyOptionsModel.type(), "testString");
     assertEquals(createPolicyOptionsModel.subjects(), new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)));
     assertEquals(createPolicyOptionsModel.roles(), new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)));
     assertEquals(createPolicyOptionsModel.resources(), new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)));
+    assertEquals(createPolicyOptionsModel.description(), "testString");
     assertEquals(createPolicyOptionsModel.acceptLanguage(), "testString");
   }
 

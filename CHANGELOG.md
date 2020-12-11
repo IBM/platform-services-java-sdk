@@ -1,3 +1,20 @@
+## [0.17.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.1...v0.17.2) (2020-12-11)
+
+
+### Bug Fixes
+
+* **Case Management:** re-gen service with latest API ([73ad7b7](https://github.com/IBM/platform-services-node-sdk/commit/73ad7b7e66082fb5f8b4fa05ac27789e5800f16c))
+* **Configuration Governance:** re-gen service with latest API ([4cf2dcb](https://github.com/IBM/platform-services-node-sdk/commit/4cf2dcb181d0bdfed822a91576fb0de6ae7769d8))
+* **IAM Access Groups:** re-gen service with latest API ([05141f3](https://github.com/IBM/platform-services-node-sdk/commit/05141f3751534625aa3366048ff3b8751dd34f9c))
+* **IAM Identity Service:** re-gen service with latest API ([389fd76](https://github.com/IBM/platform-services-node-sdk/commit/389fd7603ff4dbb1113040633312cd345750494b))
+* **IAM Policy Management:** re-gen service with latest API ([b8c9c43](https://github.com/IBM/platform-services-node-sdk/commit/b8c9c43209f107a428e24d1ba2026957054ef1c2))
+* **Open Service Broker:** re-gen service with latest API ([1aeb7f8](https://github.com/IBM/platform-services-node-sdk/commit/1aeb7f8efb56bed27625e5b17751a684b20878fe))
+* **Resource Controller:** re-gen service with latest API ([a54b3b7](https://github.com/IBM/platform-services-node-sdk/commit/a54b3b7aed9d9d2777134f97efa4a025ab7af641))
+* **Resource Manager:** re-gen service with latest API ([08c8094](https://github.com/IBM/platform-services-node-sdk/commit/08c8094246d7b2190f1027583ad56530a1b59bbb))
+* **Usage Metering:** re-gen service with latest API ([8948955](https://github.com/IBM/platform-services-node-sdk/commit/89489555cf613d22751836548eb191e06fb74f7a))
+* **Usage Reports:** re-gen service with latest API ([29a3103](https://github.com/IBM/platform-services-node-sdk/commit/29a31034ec33da755abbeebb41678b5b3422ba40))
+* **User Management:** re-gen service with latest API ([9636b87](https://github.com/IBM/platform-services-node-sdk/commit/9636b879d6a3ecf6eb7eaa79dcc22db9957c3b5a))
+
 ## [0.17.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.0...v0.17.1) (2020-12-10)
 
 

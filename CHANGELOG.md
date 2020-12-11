@@ -1,3 +1,20 @@
+## [0.17.2](https://github.com/IBM/platform-services-java-sdk/compare/0.17.1...0.17.2) (2020-12-11)
+
+
+### Bug Fixes
+
+* **Case Management:** re-gen service with latest API ([c5cc504](https://github.com/IBM/platform-services-java-sdk/commit/c5cc504c8cacf8b70261e59edf63ce54611e5720))
+* **Configuration Goverancne:** re-gen service with latest API ([613fe36](https://github.com/IBM/platform-services-java-sdk/commit/613fe36b54636d96a5f73c634118005b6bdde880))
+* **IAM Access Groups:** re-gen service with latest API ([28d113e](https://github.com/IBM/platform-services-java-sdk/commit/28d113efad9792ec3630749bf2ce49d0e79eede5))
+* **IAM Identity Service:** re-gen service with latest API ([99ebe26](https://github.com/IBM/platform-services-java-sdk/commit/99ebe26137c7c9b473176fce07db0293890a18cc))
+* **IAM Policy Management:** re-gen service with latest API ([4e47593](https://github.com/IBM/platform-services-java-sdk/commit/4e47593227808ceb8e9b22668b2d5c96137321e8))
+* **Open Service Broker:** re-gen service with latest API ([02b5fb1](https://github.com/IBM/platform-services-java-sdk/commit/02b5fb19d2da48861ad6c7a331cdda796e6a8139))
+* **Resource Controller:** re-gen service with latest API ([c75cc1c](https://github.com/IBM/platform-services-java-sdk/commit/c75cc1ccb3b7c72628be54465d0101d1fc05732f))
+* **Resource Manager:** re-gen service with latest API ([d1b9a24](https://github.com/IBM/platform-services-java-sdk/commit/d1b9a249873d87cba05125a3aa312f785bf89dab))
+* **Usage Metering:** re-gen service with latest API ([0cf1b32](https://github.com/IBM/platform-services-java-sdk/commit/0cf1b32906259fc7c51e272bdf677e953f865bad))
+* **Usage Reports:** re-gen service with latest API ([18cb1ff](https://github.com/IBM/platform-services-java-sdk/commit/18cb1ff597f0ecce2e8e70ec2535029f47955ad2))
+* **User Management:** re-gen service with latest API ([b669954](https://github.com/IBM/platform-services-java-sdk/commit/b669954412d38bea9b013a8e12a6a7cc18a3c7e1))
+
 ## [0.17.1](https://github.com/IBM/platform-services-java-sdk/compare/0.17.0...0.17.1) (2020-12-10)
 
 

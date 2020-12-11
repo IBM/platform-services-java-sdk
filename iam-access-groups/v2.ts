@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-af92e433-20201110-100619
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -70,7 +70,7 @@ class IamAccessGroupsV2 extends BaseService {
    * Construct a IamAccessGroupsV2 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/v2'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
@@ -100,7 +100,7 @@ class IamAccessGroupsV2 extends BaseService {
    * same name.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - IBM Cloud account id under which the group is created.
+   * @param {string} params.accountId - IBM Cloud account identifier.
    * @param {string} params.name - Assign the specified name to the Access Group. This field has a limit of 100
    * characters.
    * @param {string} [params.description] - Assign a description for the Access Group. This field has a limit of 250
@@ -157,11 +157,11 @@ class IamAccessGroupsV2 extends BaseService {
    * or viewer)). There may be more groups in the account that aren't shown if you lack the aforementioned permissions.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - IBM Cloud account id under which the groups are listed.
+   * @param {string} params.accountId - IBM Cloud account identifier.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {string} [params.iamId] - Return groups for member id (IBMid or Service Id).
    * @param {number} [params.limit] - Return up to this limit of results where limit is between 0 and 100.
-   * @param {number} [params.offset] - Offset the results using this query parameter.
+   * @param {number} [params.offset] - The offset of the first result item to be returned.
    * @param {string} [params.sort] - Sort the results by id, name, description, or is_federated flag.
    * @param {boolean} [params.showFederated] - If show_federated is true, each group listed will return an is_federated
    * value that is set to true if rules exist for the group.
@@ -216,7 +216,7 @@ class IamAccessGroupsV2 extends BaseService {
    * needed when updating the Access Group.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The Access Group to get.
+   * @param {string} params.accessGroupId - The Access Group identifier.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {boolean} [params.showFederated] - If show_federated is true, the group will return an is_federated value
    * that is set to true if rules exist for the group.
@@ -267,7 +267,7 @@ class IamAccessGroupsV2 extends BaseService {
    * populated with the group's most recent revision number (which can be acquired in the `Get an Access Group` API).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The Access group to update.
+   * @param {string} params.accessGroupId - The Access Group identifier.
    * @param {string} params.ifMatch - The current revision number of the group being updated. This can be found in the
    * Create/Get Access Group response Etag header.
    * @param {string} [params.name] - Assign the specified name to the Access Group. This field has a limit of 100
@@ -326,7 +326,7 @@ class IamAccessGroupsV2 extends BaseService {
    * delete the group as well as its associated members, rules, and policies.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The Access group to delete.
+   * @param {string} params.accessGroupId - The Access Group identifier.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {boolean} [params.force] - If force is true, delete the group as well as its associated members and rules.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -369,107 +369,6 @@ class IamAccessGroupsV2 extends BaseService {
   };
 
   /*************************
-   * accountSettings
-   ************************/
-
-  /**
-   * Get Account Settings.
-   *
-   * Retrieve the Access Groups settings for a specific account.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - The account id of the settings being retrieved.
-   * @param {string} [params.transactionId] - An optional transaction id for the request.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>>}
-   */
-  public getAccountSettings(params: IamAccessGroupsV2.GetAccountSettingsParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>> {
-    const _params = Object.assign({}, params);
-    const requiredParams = ['accountId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'account_id': _params.accountId
-    };
-
-    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'getAccountSettings');
-
-    const parameters = {
-      options: {
-        url: '/groups/settings',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  };
-
-  /**
-   * Update Account Settings.
-   *
-   * Update the Access Groups settings for a specific account. Note: When the `public_access_enabled` setting is set to
-   * false, all policies within the account attached to the Public Access group will be deleted. Only set
-   * `public_access_enabled` to false if you are sure that you want those policies to be removed.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - The account id of the settings being updated.
-   * @param {boolean} [params.publicAccessEnabled] - This flag controls the public access feature within the account. It
-   * is set to true by default. Note: When this flag is set to false, all policies within the account attached to the
-   * Public Access group will be deleted.
-   * @param {string} [params.transactionId] - An optional transaction id for the request.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>>}
-   */
-  public updateAccountSettings(params: IamAccessGroupsV2.UpdateAccountSettingsParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>> {
-    const _params = Object.assign({}, params);
-    const requiredParams = ['accountId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const body = {
-      'public_access_enabled': _params.publicAccessEnabled
-    };
-
-    const query = {
-      'account_id': _params.accountId
-    };
-
-    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'updateAccountSettings');
-
-    const parameters = {
-      options: {
-        url: '/groups/settings',
-        method: 'PATCH',
-        body,
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  };
-
-  /*************************
    * membershipOperations
    ************************/
 
@@ -481,8 +380,8 @@ class IamAccessGroupsV2 extends BaseService {
    * does not exist, a `404 - Not Found` status code is returned.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The access_group_id to check for membership in.
-   * @param {string} params.iamId - The iam_id to look for within the group.
+   * @param {string} params.accessGroupId - The Access Group identifier.
+   * @param {string} params.iamId - The IAM identifier.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>>}
@@ -528,7 +427,7 @@ class IamAccessGroupsV2 extends BaseService {
    * groups. Additionally, this API request payload can add up to 50 members per call.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The Access Group to add the members to.
+   * @param {string} params.accessGroupId - The Access Group identifier.
    * @param {AddGroupMembersRequestMembersItem[]} [params.members] - An array of member objects to add to an access
    * group.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
@@ -582,10 +481,10 @@ class IamAccessGroupsV2 extends BaseService {
    * information does not get retrieved.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The access_group_id to list members of.
+   * @param {string} params.accessGroupId - The Access Group identifier.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {number} [params.limit] - Return up to this limit of results where limit is between 0 and 100.
-   * @param {number} [params.offset] - Offset the results using this query parameter.
+   * @param {number} [params.offset] - The offset of the first result item to be returned.
    * @param {string} [params.type] - Filter the results by member type.
    * @param {boolean} [params.verbose] - Return user's email and name for each user id or the name for each service id.
    * @param {string} [params.sort] - If verbose is true, sort the results by id, name, or email.
@@ -640,8 +539,8 @@ class IamAccessGroupsV2 extends BaseService {
    * with no body is returned. However, if any error occurs, the standard error format will be returned.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The access_group_id to find the membership in.
-   * @param {string} params.iamId - The iam_id to remove from the group.
+   * @param {string} params.accessGroupId - The Access Group identifier.
+   * @param {string} params.iamId - The IAM identifier.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>>}
@@ -686,7 +585,7 @@ class IamAccessGroupsV2 extends BaseService {
    * request payload can delete up to 50 members per call.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The access_group_id to find the memberships in.
+   * @param {string} params.accessGroupId - The Access Group identifier.
    * @param {string[]} [params.members] - The `iam_id`s to remove from the access group. This field has a limit of 50
    * `iam_id`s.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
@@ -739,8 +638,8 @@ class IamAccessGroupsV2 extends BaseService {
    * deletion, the response will be shown in the body.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - IBM Cloud account id for the group membership deletion.
-   * @param {string} params.iamId - The iam_id to remove from all groups.
+   * @param {string} params.accountId - IBM Cloud account identifier.
+   * @param {string} params.iamId - The IAM identifier.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.DeleteFromAllGroupsResponse>>}
@@ -790,8 +689,8 @@ class IamAccessGroupsV2 extends BaseService {
    * not.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - IBM Cloud account id of the groups that the member will be added to.
-   * @param {string} params.iamId - The iam_id to be added to the groups.
+   * @param {string} params.accountId - IBM Cloud account identifier.
+   * @param {string} params.iamId - The IAM identifier.
    * @param {string} [params.type] - The type of the member, must be either "user" or "service".
    * @param {string[]} [params.groups] - The ids of the access groups a given member is to be added to.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
@@ -856,7 +755,7 @@ class IamAccessGroupsV2 extends BaseService {
    * further explanation of dynamic rules.](/docs/iam/accessgroup_rules.html#rules).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The id of the group that the rule will be added to.
+   * @param {string} params.accessGroupId - The Access Group identifier.
    * @param {number} params.expiration - The number of hours that the rule lives for (Must be between 1 and 24).
    * @param {string} params.realmName - The url of the identity provider.
    * @param {RuleConditions[]} params.conditions - A list of conditions the rule must satisfy.
@@ -913,7 +812,7 @@ class IamAccessGroupsV2 extends BaseService {
    * pagination or sorting support on this API.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The group id that the rules are bound to.
+   * @param {string} params.accessGroupId - The Access Group identifier.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.RulesList>>}
@@ -957,7 +856,7 @@ class IamAccessGroupsV2 extends BaseService {
    * updating the rule.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The group id that the rule is bound to.
+   * @param {string} params.accessGroupId - The Access Group identifier.
    * @param {string} params.ruleId - The rule to get.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -1003,8 +902,8 @@ class IamAccessGroupsV2 extends BaseService {
    * recent revision number (which can be acquired in the `Get an Access Group rule` API).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The group id that the rule is bound to.
-   * @param {string} params.ruleId - The rule to update.
+   * @param {string} params.accessGroupId - The Access Group identifier.
+   * @param {string} params.ruleId - The rule to get.
    * @param {string} params.ifMatch - The current revision number of the rule being updated. This can be found in the
    * Get Rule response Etag header.
    * @param {number} params.expiration - The number of hours that the rule lives for (Must be between 1 and 24).
@@ -1065,8 +964,8 @@ class IamAccessGroupsV2 extends BaseService {
    * with no body is returned. However, if any error occurs, the standard error format will be returned.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accessGroupId - The group id that the rule is bound to.
-   * @param {string} params.ruleId - The rule to delete.
+   * @param {string} params.accessGroupId - The Access Group identifier.
+   * @param {string} params.ruleId - The rule to get.
    * @param {string} [params.transactionId] - An optional transaction id for the request.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.Empty>>}
@@ -1095,6 +994,107 @@ class IamAccessGroupsV2 extends BaseService {
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /*************************
+   * accountSettings
+   ************************/
+
+  /**
+   * Get Account Settings.
+   *
+   * Retrieve the Access Groups settings for a specific account.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.accountId - IBM Cloud account identifier.
+   * @param {string} [params.transactionId] - An optional transaction id for the request.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>>}
+   */
+  public getAccountSettings(params: IamAccessGroupsV2.GetAccountSettingsParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['accountId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'account_id': _params.accountId
+    };
+
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'getAccountSettings');
+
+    const parameters = {
+      options: {
+        url: '/groups/settings',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Transaction-Id': _params.transactionId
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Update Account Settings.
+   *
+   * Update the Access Groups settings for a specific account. Note: When the `public_access_enabled` setting is set to
+   * false, all policies within the account attached to the Public Access group will be deleted. Only set
+   * `public_access_enabled` to false if you are sure that you want those policies to be removed.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.accountId - IBM Cloud account identifier.
+   * @param {boolean} [params.publicAccessEnabled] - This flag controls the public access feature within the account. It
+   * is set to true by default. Note: When this flag is set to false, all policies within the account attached to the
+   * Public Access group will be deleted.
+   * @param {string} [params.transactionId] - An optional transaction id for the request.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>>}
+   */
+  public updateAccountSettings(params: IamAccessGroupsV2.UpdateAccountSettingsParams): Promise<IamAccessGroupsV2.Response<IamAccessGroupsV2.AccountSettings>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['accountId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'public_access_enabled': _params.publicAccessEnabled
+    };
+
+    const query = {
+      'account_id': _params.accountId
+    };
+
+    const sdkHeaders = getSdkHeaders(IamAccessGroupsV2.DEFAULT_SERVICE_NAME, 'v2', 'updateAccountSettings');
+
+    const parameters = {
+      options: {
+        url: '/groups/settings',
+        method: 'PATCH',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
           'Transaction-Id': _params.transactionId
         }, _params.headers),
       }),
@@ -1136,7 +1136,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `createAccessGroup` operation. */
   export interface CreateAccessGroupParams {
-    /** IBM Cloud account id under which the group is created. */
+    /** IBM Cloud account identifier. */
     accountId: string;
     /** Assign the specified name to the Access Group. This field has a limit of 100 characters. */
     name: string;
@@ -1149,7 +1149,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `listAccessGroups` operation. */
   export interface ListAccessGroupsParams {
-    /** IBM Cloud account id under which the groups are listed. */
+    /** IBM Cloud account identifier. */
     accountId: string;
     /** An optional transaction id for the request. */
     transactionId?: string;
@@ -1157,7 +1157,7 @@ namespace IamAccessGroupsV2 {
     iamId?: string;
     /** Return up to this limit of results where limit is between 0 and 100. */
     limit?: number;
-    /** Offset the results using this query parameter. */
+    /** The offset of the first result item to be returned. */
     offset?: number;
     /** Sort the results by id, name, description, or is_federated flag. */
     sort?: string;
@@ -1172,7 +1172,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `getAccessGroup` operation. */
   export interface GetAccessGroupParams {
-    /** The Access Group to get. */
+    /** The Access Group identifier. */
     accessGroupId: string;
     /** An optional transaction id for the request. */
     transactionId?: string;
@@ -1185,7 +1185,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `updateAccessGroup` operation. */
   export interface UpdateAccessGroupParams {
-    /** The Access group to update. */
+    /** The Access Group identifier. */
     accessGroupId: string;
     /** The current revision number of the group being updated. This can be found in the Create/Get Access Group
      *  response Etag header.
@@ -1202,7 +1202,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `deleteAccessGroup` operation. */
   export interface DeleteAccessGroupParams {
-    /** The Access group to delete. */
+    /** The Access Group identifier. */
     accessGroupId: string;
     /** An optional transaction id for the request. */
     transactionId?: string;
@@ -1211,33 +1211,11 @@ namespace IamAccessGroupsV2 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `getAccountSettings` operation. */
-  export interface GetAccountSettingsParams {
-    /** The account id of the settings being retrieved. */
-    accountId: string;
-    /** An optional transaction id for the request. */
-    transactionId?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `updateAccountSettings` operation. */
-  export interface UpdateAccountSettingsParams {
-    /** The account id of the settings being updated. */
-    accountId: string;
-    /** This flag controls the public access feature within the account. It is set to true by default. Note: When
-     *  this flag is set to false, all policies within the account attached to the Public Access group will be deleted.
-     */
-    publicAccessEnabled?: boolean;
-    /** An optional transaction id for the request. */
-    transactionId?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
   /** Parameters for the `isMemberOfAccessGroup` operation. */
   export interface IsMemberOfAccessGroupParams {
-    /** The access_group_id to check for membership in. */
+    /** The Access Group identifier. */
     accessGroupId: string;
-    /** The iam_id to look for within the group. */
+    /** The IAM identifier. */
     iamId: string;
     /** An optional transaction id for the request. */
     transactionId?: string;
@@ -1246,7 +1224,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `addMembersToAccessGroup` operation. */
   export interface AddMembersToAccessGroupParams {
-    /** The Access Group to add the members to. */
+    /** The Access Group identifier. */
     accessGroupId: string;
     /** An array of member objects to add to an access group. */
     members?: AddGroupMembersRequestMembersItem[];
@@ -1257,13 +1235,13 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `listAccessGroupMembers` operation. */
   export interface ListAccessGroupMembersParams {
-    /** The access_group_id to list members of. */
+    /** The Access Group identifier. */
     accessGroupId: string;
     /** An optional transaction id for the request. */
     transactionId?: string;
     /** Return up to this limit of results where limit is between 0 and 100. */
     limit?: number;
-    /** Offset the results using this query parameter. */
+    /** The offset of the first result item to be returned. */
     offset?: number;
     /** Filter the results by member type. */
     type?: string;
@@ -1276,9 +1254,9 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `removeMemberFromAccessGroup` operation. */
   export interface RemoveMemberFromAccessGroupParams {
-    /** The access_group_id to find the membership in. */
+    /** The Access Group identifier. */
     accessGroupId: string;
-    /** The iam_id to remove from the group. */
+    /** The IAM identifier. */
     iamId: string;
     /** An optional transaction id for the request. */
     transactionId?: string;
@@ -1287,7 +1265,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `removeMembersFromAccessGroup` operation. */
   export interface RemoveMembersFromAccessGroupParams {
-    /** The access_group_id to find the memberships in. */
+    /** The Access Group identifier. */
     accessGroupId: string;
     /** The `iam_id`s to remove from the access group. This field has a limit of 50 `iam_id`s. */
     members?: string[];
@@ -1298,9 +1276,9 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `removeMemberFromAllAccessGroups` operation. */
   export interface RemoveMemberFromAllAccessGroupsParams {
-    /** IBM Cloud account id for the group membership deletion. */
+    /** IBM Cloud account identifier. */
     accountId: string;
-    /** The iam_id to remove from all groups. */
+    /** The IAM identifier. */
     iamId: string;
     /** An optional transaction id for the request. */
     transactionId?: string;
@@ -1309,9 +1287,9 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `addMemberToMultipleAccessGroups` operation. */
   export interface AddMemberToMultipleAccessGroupsParams {
-    /** IBM Cloud account id of the groups that the member will be added to. */
+    /** IBM Cloud account identifier. */
     accountId: string;
-    /** The iam_id to be added to the groups. */
+    /** The IAM identifier. */
     iamId: string;
     /** The type of the member, must be either "user" or "service". */
     type?: string;
@@ -1324,7 +1302,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `addAccessGroupRule` operation. */
   export interface AddAccessGroupRuleParams {
-    /** The id of the group that the rule will be added to. */
+    /** The Access Group identifier. */
     accessGroupId: string;
     /** The number of hours that the rule lives for (Must be between 1 and 24). */
     expiration: number;
@@ -1341,7 +1319,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `listAccessGroupRules` operation. */
   export interface ListAccessGroupRulesParams {
-    /** The group id that the rules are bound to. */
+    /** The Access Group identifier. */
     accessGroupId: string;
     /** An optional transaction id for the request. */
     transactionId?: string;
@@ -1350,7 +1328,7 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `getAccessGroupRule` operation. */
   export interface GetAccessGroupRuleParams {
-    /** The group id that the rule is bound to. */
+    /** The Access Group identifier. */
     accessGroupId: string;
     /** The rule to get. */
     ruleId: string;
@@ -1361,9 +1339,9 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `replaceAccessGroupRule` operation. */
   export interface ReplaceAccessGroupRuleParams {
-    /** The group id that the rule is bound to. */
+    /** The Access Group identifier. */
     accessGroupId: string;
-    /** The rule to update. */
+    /** The rule to get. */
     ruleId: string;
     /** The current revision number of the rule being updated. This can be found in the Get Rule response Etag
      *  header.
@@ -1384,10 +1362,32 @@ namespace IamAccessGroupsV2 {
 
   /** Parameters for the `removeAccessGroupRule` operation. */
   export interface RemoveAccessGroupRuleParams {
-    /** The group id that the rule is bound to. */
+    /** The Access Group identifier. */
     accessGroupId: string;
-    /** The rule to delete. */
+    /** The rule to get. */
     ruleId: string;
+    /** An optional transaction id for the request. */
+    transactionId?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getAccountSettings` operation. */
+  export interface GetAccountSettingsParams {
+    /** IBM Cloud account identifier. */
+    accountId: string;
+    /** An optional transaction id for the request. */
+    transactionId?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateAccountSettings` operation. */
+  export interface UpdateAccountSettingsParams {
+    /** IBM Cloud account identifier. */
+    accountId: string;
+    /** This flag controls the public access feature within the account. It is set to true by default. Note: When
+     *  this flag is set to false, all policies within the account attached to the Public Access group will be deleted.
+     */
+    publicAccessEnabled?: boolean;
     /** An optional transaction id for the request. */
     transactionId?: string;
     headers?: OutgoingHttpHeaders;
@@ -1539,7 +1539,7 @@ namespace IamAccessGroupsV2 {
   export interface GroupMembersList {
     /** Limit on how many items can be returned. */
     limit?: number;
-    /** The number of items to skip over in the result set. */
+    /** The offset of the first item returned in the result set. */
     offset?: number;
     /** The total number of items that match the query. */
     total_count?: number;
@@ -1559,7 +1559,7 @@ namespace IamAccessGroupsV2 {
   export interface GroupsList {
     /** Limit on how many items can be returned. */
     limit?: number;
-    /** The number of items to skip over in the result set. */
+    /** The offset of the first item returned in the result set. */
     offset?: number;
     /** The total number of items that match the query. */
     total_count?: number;

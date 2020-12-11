@@ -110,6 +110,8 @@ describe('IamPolicyManagementV1', () => {
         const accessGroupId = 'testString';
         const type = 'testString';
         const serviceType = 'testString';
+        const sort = 'testString';
+        const format = 'testString';
         const params = {
           accountId: accountId,
           acceptLanguage: acceptLanguage,
@@ -117,6 +119,8 @@ describe('IamPolicyManagementV1', () => {
           accessGroupId: accessGroupId,
           type: type,
           serviceType: serviceType,
+          sort: sort,
+          format: format,
         };
 
         const listPoliciesResult = iamPolicyManagementService.listPolicies(params);
@@ -139,6 +143,8 @@ describe('IamPolicyManagementV1', () => {
         expect(options.qs['access_group_id']).toEqual(accessGroupId);
         expect(options.qs['type']).toEqual(type);
         expect(options.qs['service_type']).toEqual(serviceType);
+        expect(options.qs['sort']).toEqual(sort);
+        expect(options.qs['format']).toEqual(format);
       });
 
       test('should prioritize user-given headers', () => {
@@ -221,12 +227,14 @@ describe('IamPolicyManagementV1', () => {
         const subjects = [policySubjectModel];
         const roles = [policyRoleModel];
         const resources = [policyResourceModel];
+        const description = 'testString';
         const acceptLanguage = 'testString';
         const params = {
           type: type,
           subjects: subjects,
           roles: roles,
           resources: resources,
+          description: description,
           acceptLanguage: acceptLanguage,
         };
 
@@ -249,6 +257,7 @@ describe('IamPolicyManagementV1', () => {
         expect(options.body['subjects']).toEqual(subjects);
         expect(options.body['roles']).toEqual(roles);
         expect(options.body['resources']).toEqual(resources);
+        expect(options.body['description']).toEqual(description);
       });
 
       test('should prioritize user-given headers', () => {
@@ -339,6 +348,7 @@ describe('IamPolicyManagementV1', () => {
         const subjects = [policySubjectModel];
         const roles = [policyRoleModel];
         const resources = [policyResourceModel];
+        const description = 'testString';
         const params = {
           policyId: policyId,
           ifMatch: ifMatch,
@@ -346,6 +356,7 @@ describe('IamPolicyManagementV1', () => {
           subjects: subjects,
           roles: roles,
           resources: resources,
+          description: description,
         };
 
         const updatePolicyResult = iamPolicyManagementService.updatePolicy(params);
@@ -367,6 +378,7 @@ describe('IamPolicyManagementV1', () => {
         expect(options.body['subjects']).toEqual(subjects);
         expect(options.body['roles']).toEqual(roles);
         expect(options.body['resources']).toEqual(resources);
+        expect(options.body['description']).toEqual(description);
         expect(options.path['policy_id']).toEqual(policyId);
       });
 

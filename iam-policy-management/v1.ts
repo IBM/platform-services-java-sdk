@@ -15,9 +15,9 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  */
- 
+
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
@@ -69,7 +69,7 @@ class IamPolicyManagementV1 extends BaseService {
    * Construct a IamPolicyManagementV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
@@ -106,6 +106,9 @@ class IamPolicyManagementV1 extends BaseService {
    * @param {string} [params.accessGroupId] - The access group id.
    * @param {string} [params.type] - The type of policy (access or authorization).
    * @param {string} [params.serviceType] - The type of service.
+   * @param {string} [params.sort] - Sort the results by any of the top level policy fields (id, created_at,
+   * created_by_id, last_modified_at, etc).
+   * @param {string} [params.format] - Include additional data per policy returned [include_last_permit, display].
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.PolicyList>>}
    */
@@ -123,7 +126,9 @@ class IamPolicyManagementV1 extends BaseService {
       'iam_id': _params.iamId,
       'access_group_id': _params.accessGroupId,
       'type': _params.type,
-      'service_type': _params.serviceType
+      'service_type': _params.serviceType,
+      'sort': _params.sort,
+      'format': _params.format
     };
 
     const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listPolicies');
@@ -174,6 +179,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @param {PolicySubject[]} params.subjects - The subjects associated with a policy.
    * @param {PolicyRole[]} params.roles - A set of role cloud resource names (CRNs) granted by the policy.
    * @param {PolicyResource[]} params.resources - The resources associated with a policy.
+   * @param {string} [params.description] - Customer-defined description.
    * @param {string} [params.acceptLanguage] - Translation language code.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>>}
@@ -191,7 +197,8 @@ class IamPolicyManagementV1 extends BaseService {
       'type': _params.type,
       'subjects': _params.subjects,
       'roles': _params.roles,
-      'resources': _params.resources
+      'resources': _params.resources,
+      'description': _params.description
     };
 
     const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createPolicy');
@@ -244,6 +251,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @param {PolicySubject[]} params.subjects - The subjects associated with a policy.
    * @param {PolicyRole[]} params.roles - A set of role cloud resource names (CRNs) granted by the policy.
    * @param {PolicyResource[]} params.resources - The resources associated with a policy.
+   * @param {string} [params.description] - Customer-defined description.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>>}
    */
@@ -260,7 +268,8 @@ class IamPolicyManagementV1 extends BaseService {
       'type': _params.type,
       'subjects': _params.subjects,
       'roles': _params.roles,
-      'resources': _params.resources
+      'resources': _params.resources,
+      'description': _params.description
     };
 
     const path = {
@@ -657,6 +666,12 @@ namespace IamPolicyManagementV1 {
     type?: string;
     /** The type of service. */
     serviceType?: string;
+    /** Sort the results by any of the top level policy fields (id, created_at, created_by_id, last_modified_at,
+     *  etc).
+     */
+    sort?: string;
+    /** Include additional data per policy returned [include_last_permit, display]. */
+    format?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -670,6 +685,8 @@ namespace IamPolicyManagementV1 {
     roles: PolicyRole[];
     /** The resources associated with a policy. */
     resources: PolicyResource[];
+    /** Customer-defined description. */
+    description?: string;
     /** Translation language code. */
     acceptLanguage?: string;
     headers?: OutgoingHttpHeaders;
@@ -691,6 +708,8 @@ namespace IamPolicyManagementV1 {
     roles: PolicyRole[];
     /** The resources associated with a policy. */
     resources: PolicyResource[];
+    /** Customer-defined description. */
+    description?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -809,6 +828,8 @@ namespace IamPolicyManagementV1 {
     id?: string;
     /** The policy type; either 'access' or 'authorization'. */
     type?: string;
+    /** Customer-defined description. */
+    description?: string;
     /** The subjects associated with a policy. */
     subjects?: PolicySubject[];
     /** A set of role cloud resource names (CRNs) granted by the policy. */

@@ -100,7 +100,7 @@ public class GetAccountSettingsOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account id of the settings being retrieved.
+   * IBM Cloud account identifier.
    *
    * @return the accountId
    */

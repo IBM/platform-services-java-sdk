@@ -115,7 +115,7 @@ public class DeleteAccessGroupOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The Access group to delete.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */

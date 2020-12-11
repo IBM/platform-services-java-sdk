@@ -149,7 +149,7 @@ public class UpdateAccessGroupOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The Access group to update.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */

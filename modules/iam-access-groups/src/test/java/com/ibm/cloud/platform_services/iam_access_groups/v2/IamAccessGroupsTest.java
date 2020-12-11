@@ -396,111 +396,6 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testGetAccountSettingsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
-    String getAccountSettingsPath = "/groups/settings";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetAccountSettingsOptions model
-    GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
-    .accountId("testString")
-    .transactionId("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<AccountSettings> response = iamAccessGroupsService.getAccountSettings(getAccountSettingsOptionsModel).execute();
-    assertNotNull(response);
-    AccountSettings responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("account_id"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getAccountSettingsPath);
-  }
-
-  // Test the getAccountSettings operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountSettingsNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    iamAccessGroupsService.getAccountSettings(null).execute();
-  }
-
-  @Test
-  public void testUpdateAccountSettingsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
-    String updateAccountSettingsPath = "/groups/settings";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the UpdateAccountSettingsOptions model
-    UpdateAccountSettingsOptions updateAccountSettingsOptionsModel = new UpdateAccountSettingsOptions.Builder()
-    .accountId("testString")
-    .publicAccessEnabled(true)
-    .transactionId("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<AccountSettings> response = iamAccessGroupsService.updateAccountSettings(updateAccountSettingsOptionsModel).execute();
-    assertNotNull(response);
-    AccountSettings responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "PATCH");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("account_id"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateAccountSettingsPath);
-  }
-
-  // Test the updateAccountSettings operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateAccountSettingsNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    iamAccessGroupsService.updateAccountSettings(null).execute();
-  }
-
-  @Test
   public void testIsMemberOfAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
@@ -627,8 +522,8 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     ListAccessGroupMembersOptions listAccessGroupMembersOptionsModel = new ListAccessGroupMembersOptions.Builder()
     .accessGroupId("testString")
     .transactionId("testString")
-    .limit(Double.valueOf("72.5"))
-    .offset(Double.valueOf("72.5"))
+    .limit(Long.valueOf("26"))
+    .offset(Long.valueOf("26"))
     .type("testString")
     .verbose(true)
     .sort("testString")
@@ -649,8 +544,8 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Double.valueOf(query.get("limit")), Double.valueOf("72.5"));
-    assertEquals(Double.valueOf(query.get("offset")), Double.valueOf("72.5"));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
     assertEquals(query.get("type"), "testString");
     assertEquals(Boolean.valueOf(query.get("verbose")), Boolean.valueOf(true));
     assertEquals(query.get("sort"), "testString");
@@ -1163,6 +1058,111 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
 
     // Invoke operation with null options model (negative test)
     iamAccessGroupsService.removeAccessGroupRule(null).execute();
+  }
+
+  @Test
+  public void testGetAccountSettingsWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
+    String getAccountSettingsPath = "/groups/settings";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetAccountSettingsOptions model
+    GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
+    .accountId("testString")
+    .transactionId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<AccountSettings> response = iamAccessGroupsService.getAccountSettings(getAccountSettingsOptionsModel).execute();
+    assertNotNull(response);
+    AccountSettings responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    // Get query params
+    assertEquals(query.get("account_id"), "testString");
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getAccountSettingsPath);
+  }
+
+  // Test the getAccountSettings operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetAccountSettingsNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamAccessGroupsService.getAccountSettings(null).execute();
+  }
+
+  @Test
+  public void testUpdateAccountSettingsWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
+    String updateAccountSettingsPath = "/groups/settings";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the UpdateAccountSettingsOptions model
+    UpdateAccountSettingsOptions updateAccountSettingsOptionsModel = new UpdateAccountSettingsOptions.Builder()
+    .accountId("testString")
+    .publicAccessEnabled(true)
+    .transactionId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<AccountSettings> response = iamAccessGroupsService.updateAccountSettings(updateAccountSettingsOptionsModel).execute();
+    assertNotNull(response);
+    AccountSettings responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PATCH");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    // Get query params
+    assertEquals(query.get("account_id"), "testString");
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateAccountSettingsPath);
+  }
+
+  // Test the updateAccountSettings operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateAccountSettingsNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamAccessGroupsService.updateAccountSettings(null).execute();
   }
 
   /** Initialize the server */

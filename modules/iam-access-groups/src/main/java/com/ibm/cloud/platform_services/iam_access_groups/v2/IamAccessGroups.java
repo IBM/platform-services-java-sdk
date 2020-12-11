@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-af92e433-20201110-100619
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  */
 
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
@@ -285,65 +285,6 @@ public class IamAccessGroups extends BaseService {
       builder.query("force", String.valueOf(deleteAccessGroupOptions.force()));
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get Account Settings.
-   *
-   * Retrieve the Access Groups settings for a specific account.
-   *
-   * @param getAccountSettingsOptions the {@link GetAccountSettingsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettings}
-   */
-  public ServiceCall<AccountSettings> getAccountSettings(GetAccountSettingsOptions getAccountSettingsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountSettingsOptions,
-      "getAccountSettingsOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/settings"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "getAccountSettings");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getAccountSettingsOptions.transactionId() != null) {
-      builder.header("Transaction-Id", getAccountSettingsOptions.transactionId());
-    }
-    builder.query("account_id", String.valueOf(getAccountSettingsOptions.accountId()));
-    ResponseConverter<AccountSettings> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettings>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Update Account Settings.
-   *
-   * Update the Access Groups settings for a specific account. Note: When the `public_access_enabled` setting is set to
-   * false, all policies within the account attached to the Public Access group will be deleted. Only set
-   * `public_access_enabled` to false if you are sure that you want those policies to be removed.
-   *
-   * @param updateAccountSettingsOptions the {@link UpdateAccountSettingsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettings}
-   */
-  public ServiceCall<AccountSettings> updateAccountSettings(UpdateAccountSettingsOptions updateAccountSettingsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountSettingsOptions,
-      "updateAccountSettingsOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/settings"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "updateAccountSettings");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (updateAccountSettingsOptions.transactionId() != null) {
-      builder.header("Transaction-Id", updateAccountSettingsOptions.transactionId());
-    }
-    builder.query("account_id", String.valueOf(updateAccountSettingsOptions.accountId()));
-    final JsonObject contentJson = new JsonObject();
-    if (updateAccountSettingsOptions.publicAccessEnabled() != null) {
-      contentJson.addProperty("public_access_enabled", updateAccountSettingsOptions.publicAccessEnabled());
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<AccountSettings> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettings>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -742,6 +683,65 @@ public class IamAccessGroups extends BaseService {
       builder.header("Transaction-Id", removeAccessGroupRuleOptions.transactionId());
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get Account Settings.
+   *
+   * Retrieve the Access Groups settings for a specific account.
+   *
+   * @param getAccountSettingsOptions the {@link GetAccountSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettings}
+   */
+  public ServiceCall<AccountSettings> getAccountSettings(GetAccountSettingsOptions getAccountSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountSettingsOptions,
+      "getAccountSettingsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/settings"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "getAccountSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getAccountSettingsOptions.transactionId() != null) {
+      builder.header("Transaction-Id", getAccountSettingsOptions.transactionId());
+    }
+    builder.query("account_id", String.valueOf(getAccountSettingsOptions.accountId()));
+    ResponseConverter<AccountSettings> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettings>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update Account Settings.
+   *
+   * Update the Access Groups settings for a specific account. Note: When the `public_access_enabled` setting is set to
+   * false, all policies within the account attached to the Public Access group will be deleted. Only set
+   * `public_access_enabled` to false if you are sure that you want those policies to be removed.
+   *
+   * @param updateAccountSettingsOptions the {@link UpdateAccountSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettings}
+   */
+  public ServiceCall<AccountSettings> updateAccountSettings(UpdateAccountSettingsOptions updateAccountSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountSettingsOptions,
+      "updateAccountSettingsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/groups/settings"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_access_groups", "v2", "updateAccountSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (updateAccountSettingsOptions.transactionId() != null) {
+      builder.header("Transaction-Id", updateAccountSettingsOptions.transactionId());
+    }
+    builder.query("account_id", String.valueOf(updateAccountSettingsOptions.accountId()));
+    final JsonObject contentJson = new JsonObject();
+    if (updateAccountSettingsOptions.publicAccessEnabled() != null) {
+      contentJson.addProperty("public_access_enabled", updateAccountSettingsOptions.publicAccessEnabled());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<AccountSettings> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettings>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

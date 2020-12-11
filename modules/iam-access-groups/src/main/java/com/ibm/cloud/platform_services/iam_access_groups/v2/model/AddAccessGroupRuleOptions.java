@@ -192,7 +192,7 @@ public class AddAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The id of the group that the rule will be added to.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */

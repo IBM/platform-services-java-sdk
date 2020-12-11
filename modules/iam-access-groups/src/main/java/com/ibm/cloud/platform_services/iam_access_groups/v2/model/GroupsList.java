@@ -46,7 +46,7 @@ public class GroupsList extends GenericModel {
   /**
    * Gets the offset.
    *
-   * The number of items to skip over in the result set.
+   * The offset of the first item returned in the result set.
    *
    * @return the offset
    */

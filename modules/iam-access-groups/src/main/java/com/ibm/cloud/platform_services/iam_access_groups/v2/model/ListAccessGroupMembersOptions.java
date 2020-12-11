@@ -21,8 +21,8 @@ public class ListAccessGroupMembersOptions extends GenericModel {
 
   protected String accessGroupId;
   protected String transactionId;
-  protected Double limit;
-  protected Double offset;
+  protected Long limit;
+  protected Long offset;
   protected String type;
   protected Boolean verbose;
   protected String sort;
@@ -33,8 +33,8 @@ public class ListAccessGroupMembersOptions extends GenericModel {
   public static class Builder {
     private String accessGroupId;
     private String transactionId;
-    private Double limit;
-    private Double offset;
+    private Long limit;
+    private Long offset;
     private String type;
     private Boolean verbose;
     private String sort;
@@ -101,7 +101,7 @@ public class ListAccessGroupMembersOptions extends GenericModel {
      * @param limit the limit
      * @return the ListAccessGroupMembersOptions builder
      */
-    public Builder limit(Double limit) {
+    public Builder limit(long limit) {
       this.limit = limit;
       return this;
     }
@@ -112,7 +112,7 @@ public class ListAccessGroupMembersOptions extends GenericModel {
      * @param offset the offset
      * @return the ListAccessGroupMembersOptions builder
      */
-    public Builder offset(Double offset) {
+    public Builder offset(long offset) {
       this.offset = offset;
       return this;
     }
@@ -175,7 +175,7 @@ public class ListAccessGroupMembersOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The access_group_id to list members of.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */
@@ -201,18 +201,18 @@ public class ListAccessGroupMembersOptions extends GenericModel {
    *
    * @return the limit
    */
-  public Double limit() {
+  public Long limit() {
     return limit;
   }
 
   /**
    * Gets the offset.
    *
-   * Offset the results using this query parameter.
+   * The offset of the first result item to be returned.
    *
    * @return the offset
    */
-  public Double offset() {
+  public Long offset() {
     return offset;
   }
 

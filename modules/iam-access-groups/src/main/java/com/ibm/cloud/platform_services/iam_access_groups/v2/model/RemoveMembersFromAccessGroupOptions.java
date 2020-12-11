@@ -135,7 +135,7 @@ public class RemoveMembersFromAccessGroupOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The access_group_id to find the memberships in.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */

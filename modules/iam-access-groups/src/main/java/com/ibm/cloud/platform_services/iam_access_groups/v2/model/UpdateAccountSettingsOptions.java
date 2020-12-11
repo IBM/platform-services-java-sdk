@@ -115,7 +115,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account id of the settings being updated.
+   * IBM Cloud account identifier.
    *
    * @return the accountId
    */

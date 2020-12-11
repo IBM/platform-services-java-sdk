@@ -135,7 +135,7 @@ public class AddMembersToAccessGroupOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The Access Group to add the members to.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */

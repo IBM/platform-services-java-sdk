@@ -115,7 +115,7 @@ public class GetAccessGroupOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The Access Group to get.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */

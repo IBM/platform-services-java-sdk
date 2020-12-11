@@ -230,7 +230,7 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The group id that the rule is bound to.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */
@@ -241,7 +241,7 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the ruleId.
    *
-   * The rule to update.
+   * The rule to get.
    *
    * @return the ruleId
    */

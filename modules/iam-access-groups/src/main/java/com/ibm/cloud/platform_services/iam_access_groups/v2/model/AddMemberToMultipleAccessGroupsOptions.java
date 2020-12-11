@@ -169,7 +169,7 @@ public class AddMemberToMultipleAccessGroupsOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * IBM Cloud account id of the groups that the member will be added to.
+   * IBM Cloud account identifier.
    *
    * @return the accountId
    */
@@ -180,7 +180,7 @@ public class AddMemberToMultipleAccessGroupsOptions extends GenericModel {
   /**
    * Gets the iamId.
    *
-   * The iam_id to be added to the groups.
+   * The IAM identifier.
    *
    * @return the iamId
    */

@@ -134,7 +134,7 @@ public class CreateAccessGroupOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * IBM Cloud account id under which the group is created.
+   * IBM Cloud account identifier.
    *
    * @return the accountId
    */

@@ -100,7 +100,7 @@ public class ListAccessGroupRulesOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The group id that the rules are bound to.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */

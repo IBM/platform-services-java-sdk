@@ -119,7 +119,7 @@ public class RemoveMemberFromAllAccessGroupsOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * IBM Cloud account id for the group membership deletion.
+   * IBM Cloud account identifier.
    *
    * @return the accountId
    */
@@ -130,7 +130,7 @@ public class RemoveMemberFromAllAccessGroupsOptions extends GenericModel {
   /**
    * Gets the iamId.
    *
-   * The iam_id to remove from all groups.
+   * The IAM identifier.
    *
    * @return the iamId
    */

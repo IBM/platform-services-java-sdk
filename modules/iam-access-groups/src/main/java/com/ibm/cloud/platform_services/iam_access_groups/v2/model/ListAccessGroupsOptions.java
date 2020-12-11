@@ -190,7 +190,7 @@ public class ListAccessGroupsOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * IBM Cloud account id under which the groups are listed.
+   * IBM Cloud account identifier.
    *
    * @return the accountId
    */
@@ -234,7 +234,7 @@ public class ListAccessGroupsOptions extends GenericModel {
   /**
    * Gets the offset.
    *
-   * Offset the results using this query parameter.
+   * The offset of the first result item to be returned.
    *
    * @return the offset
    */

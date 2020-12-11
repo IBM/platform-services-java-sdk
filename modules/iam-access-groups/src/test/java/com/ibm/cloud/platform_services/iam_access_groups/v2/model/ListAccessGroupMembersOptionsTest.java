@@ -34,16 +34,16 @@ public class ListAccessGroupMembersOptionsTest {
     ListAccessGroupMembersOptions listAccessGroupMembersOptionsModel = new ListAccessGroupMembersOptions.Builder()
       .accessGroupId("testString")
       .transactionId("testString")
-      .limit(Double.valueOf("72.5"))
-      .offset(Double.valueOf("72.5"))
+      .limit(Long.valueOf("26"))
+      .offset(Long.valueOf("26"))
       .type("testString")
       .verbose(true)
       .sort("testString")
       .build();
     assertEquals(listAccessGroupMembersOptionsModel.accessGroupId(), "testString");
     assertEquals(listAccessGroupMembersOptionsModel.transactionId(), "testString");
-    assertEquals(listAccessGroupMembersOptionsModel.limit(), Double.valueOf("72.5"));
-    assertEquals(listAccessGroupMembersOptionsModel.offset(), Double.valueOf("72.5"));
+    assertEquals(listAccessGroupMembersOptionsModel.limit(), Long.valueOf("26"));
+    assertEquals(listAccessGroupMembersOptionsModel.offset(), Long.valueOf("26"));
     assertEquals(listAccessGroupMembersOptionsModel.type(), "testString");
     assertEquals(listAccessGroupMembersOptionsModel.verbose(), Boolean.valueOf(true));
     assertEquals(listAccessGroupMembersOptionsModel.sort(), "testString");

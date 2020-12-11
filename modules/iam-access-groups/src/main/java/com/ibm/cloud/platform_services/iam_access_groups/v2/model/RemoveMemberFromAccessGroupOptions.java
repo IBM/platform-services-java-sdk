@@ -119,7 +119,7 @@ public class RemoveMemberFromAccessGroupOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The access_group_id to find the membership in.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */
@@ -130,7 +130,7 @@ public class RemoveMemberFromAccessGroupOptions extends GenericModel {
   /**
    * Gets the iamId.
    *
-   * The iam_id to remove from the group.
+   * The IAM identifier.
    *
    * @return the iamId
    */

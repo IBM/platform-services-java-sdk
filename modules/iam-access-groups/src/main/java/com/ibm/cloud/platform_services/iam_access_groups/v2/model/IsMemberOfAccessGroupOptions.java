@@ -119,7 +119,7 @@ public class IsMemberOfAccessGroupOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The access_group_id to check for membership in.
+   * The Access Group identifier.
    *
    * @return the accessGroupId
    */
@@ -130,7 +130,7 @@ public class IsMemberOfAccessGroupOptions extends GenericModel {
   /**
    * Gets the iamId.
    *
-   * The iam_id to look for within the group.
+   * The IAM identifier.
    *
    * @return the iamId
    */

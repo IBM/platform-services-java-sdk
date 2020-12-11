@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-cfe3553a-20200914-135527
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -128,6 +128,12 @@ public class IamPolicyManagement extends BaseService {
     if (listPoliciesOptions.serviceType() != null) {
       builder.query("service_type", String.valueOf(listPoliciesOptions.serviceType()));
     }
+    if (listPoliciesOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listPoliciesOptions.sort()));
+    }
+    if (listPoliciesOptions.format() != null) {
+      builder.query("format", String.valueOf(listPoliciesOptions.format()));
+    }
     ResponseConverter<PolicyList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -177,6 +183,9 @@ public class IamPolicyManagement extends BaseService {
     contentJson.add("subjects", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyOptions.subjects()));
     contentJson.add("roles", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyOptions.roles()));
     contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyOptions.resources()));
+    if (createPolicyOptions.description() != null) {
+      contentJson.addProperty("description", createPolicyOptions.description());
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<Policy> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Policy>() { }.getType());
@@ -224,6 +233,9 @@ public class IamPolicyManagement extends BaseService {
     contentJson.add("subjects", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updatePolicyOptions.subjects()));
     contentJson.add("roles", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updatePolicyOptions.roles()));
     contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updatePolicyOptions.resources()));
+    if (updatePolicyOptions.description() != null) {
+      contentJson.addProperty("description", updatePolicyOptions.description());
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<Policy> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Policy>() { }.getType());

@@ -25,6 +25,7 @@ public class Policy extends GenericModel {
 
   protected String id;
   protected String type;
+  protected String description;
   protected List<PolicySubject> subjects;
   protected List<PolicyRole> roles;
   protected List<PolicyResource> resources;
@@ -58,6 +59,17 @@ public class Policy extends GenericModel {
    */
   public String getType() {
     return type;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * Customer-defined description.
+   *
+   * @return the description
+   */
+  public String getDescription() {
+    return description;
   }
 
   /**

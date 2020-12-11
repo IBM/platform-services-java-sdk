@@ -26,6 +26,7 @@ public class CreatePolicyOptions extends GenericModel {
   protected List<PolicySubject> subjects;
   protected List<PolicyRole> roles;
   protected List<PolicyResource> resources;
+  protected String description;
   protected String acceptLanguage;
 
   /**
@@ -36,6 +37,7 @@ public class CreatePolicyOptions extends GenericModel {
     private List<PolicySubject> subjects;
     private List<PolicyRole> roles;
     private List<PolicyResource> resources;
+    private String description;
     private String acceptLanguage;
 
     private Builder(CreatePolicyOptions createPolicyOptions) {
@@ -43,6 +45,7 @@ public class CreatePolicyOptions extends GenericModel {
       this.subjects = createPolicyOptions.subjects;
       this.roles = createPolicyOptions.roles;
       this.resources = createPolicyOptions.resources;
+      this.description = createPolicyOptions.description;
       this.acceptLanguage = createPolicyOptions.acceptLanguage;
     }
 
@@ -172,6 +175,17 @@ public class CreatePolicyOptions extends GenericModel {
     }
 
     /**
+     * Set the description.
+     *
+     * @param description the description
+     * @return the CreatePolicyOptions builder
+     */
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    /**
      * Set the acceptLanguage.
      *
      * @param acceptLanguage the acceptLanguage
@@ -196,6 +210,7 @@ public class CreatePolicyOptions extends GenericModel {
     subjects = builder.subjects;
     roles = builder.roles;
     resources = builder.resources;
+    description = builder.description;
     acceptLanguage = builder.acceptLanguage;
   }
 
@@ -250,6 +265,17 @@ public class CreatePolicyOptions extends GenericModel {
    */
   public List<PolicyResource> resources() {
     return resources;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * Customer-defined description.
+   *
+   * @return the description
+   */
+  public String description() {
+    return description;
   }
 
   /**

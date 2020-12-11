@@ -38,6 +38,8 @@ public class ListPoliciesOptionsTest {
       .accessGroupId("testString")
       .type("testString")
       .serviceType("testString")
+      .sort("testString")
+      .format("testString")
       .build();
     assertEquals(listPoliciesOptionsModel.accountId(), "testString");
     assertEquals(listPoliciesOptionsModel.acceptLanguage(), "testString");
@@ -45,6 +47,8 @@ public class ListPoliciesOptionsTest {
     assertEquals(listPoliciesOptionsModel.accessGroupId(), "testString");
     assertEquals(listPoliciesOptionsModel.type(), "testString");
     assertEquals(listPoliciesOptionsModel.serviceType(), "testString");
+    assertEquals(listPoliciesOptionsModel.sort(), "testString");
+    assertEquals(listPoliciesOptionsModel.format(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

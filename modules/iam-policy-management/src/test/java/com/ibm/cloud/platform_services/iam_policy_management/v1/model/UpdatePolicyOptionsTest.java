@@ -76,6 +76,7 @@ public class UpdatePolicyOptionsTest {
       .subjects(new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)))
       .roles(new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)))
       .resources(new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)))
+      .description("testString")
       .build();
     assertEquals(updatePolicyOptionsModel.policyId(), "testString");
     assertEquals(updatePolicyOptionsModel.ifMatch(), "testString");
@@ -83,6 +84,7 @@ public class UpdatePolicyOptionsTest {
     assertEquals(updatePolicyOptionsModel.subjects(), new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)));
     assertEquals(updatePolicyOptionsModel.roles(), new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)));
     assertEquals(updatePolicyOptionsModel.resources(), new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)));
+    assertEquals(updatePolicyOptionsModel.description(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

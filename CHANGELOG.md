@@ -1,3 +1,10 @@
+## [0.17.3](https://github.com/IBM/platform-services-java-sdk/compare/0.17.2...0.17.3) (2021-01-13)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** minor code re-gen after recent API changes ([1d395e3](https://github.com/IBM/platform-services-java-sdk/commit/1d395e3c955c6e1ec6015b5f50bf1e24309b6ae6))
+
 ## [0.17.2](https://github.com/IBM/platform-services-java-sdk/compare/0.17.1...0.17.2) (2020-12-11)
 
 

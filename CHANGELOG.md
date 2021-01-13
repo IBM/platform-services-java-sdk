@@ -1,3 +1,10 @@
+## [0.17.5](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.4...v0.17.5) (2021-01-13)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** minor code re-gen after recent API changes ([ca0470e](https://github.com/IBM/platform-services-node-sdk/commit/ca0470ed93b164a442b97cc649617024c1e09ab2))
+
 ## [0.17.4](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.3...v0.17.4) (2021-01-07)
 
 

@@ -1,3 +1,10 @@
+## [0.17.6](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.5...v0.17.6) (2021-01-14)
+
+
+### Bug Fixes
+
+* **Configuration Governance:** re-gen service after recent API changes ([3ef27d2](https://github.com/IBM/platform-services-node-sdk/commit/3ef27d26b0988b137bc4c9d616792502cd22ce57))
+
 ## [0.17.5](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.4...v0.17.5) (2021-01-13)
 
 

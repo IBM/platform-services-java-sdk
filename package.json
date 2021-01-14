@@ -1,6 +1,6 @@
 {
   "name": "ibm-platform-services",
-  "version": "0.17.5",
+  "version": "0.17.6",
   "description": "Node.js client library for IBM Cloud Platform Services",
   "repository": {
     "type": "git",

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -150,11 +150,11 @@ describe('ConfigurationGovernanceV1', () => {
 
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createRules
-        const transactionId = 'testString';
         const rules = [createRuleRequestModel];
+        const transactionId = 'testString';
         const params = {
-          transactionId: transactionId,
           rules: rules,
+          transactionId: transactionId,
         };
 
         const createRulesResult = configurationGovernanceService.createRules(params);
@@ -177,12 +177,10 @@ describe('ConfigurationGovernanceV1', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const transactionId = 'testString';
         const rules = [createRuleRequestModel];
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
-          transactionId,
           rules,
           headers: {
             Accept: userAccept,
@@ -223,16 +221,16 @@ describe('ConfigurationGovernanceV1', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation listRules
-        const transactionId = 'testString';
         const accountId = '531fc3e28bfc43c5a2cea07786d93f5c';
+        const transactionId = 'testString';
         const attached = true;
         const labels = 'SOC2,ITCS300';
         const scopes = 'scope_id';
         const limit = 1000;
         const offset = 38;
         const params = {
-          transactionId: transactionId,
           accountId: accountId,
+          transactionId: transactionId,
           attached: attached,
           labels: labels,
           scopes: scopes,
@@ -265,12 +263,10 @@ describe('ConfigurationGovernanceV1', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const transactionId = 'testString';
         const accountId = '531fc3e28bfc43c5a2cea07786d93f5c';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
-          transactionId,
           accountId,
           headers: {
             Accept: userAccept,
@@ -339,12 +335,10 @@ describe('ConfigurationGovernanceV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const ruleId = 'testString';
-        const transactionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
           ruleId,
-          transactionId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -414,7 +408,6 @@ describe('ConfigurationGovernanceV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateRule
         const ruleId = 'testString';
-        const transactionId = 'testString';
         const ifMatch = 'testString';
         const name = 'Disable public access';
         const description = 'Ensure that public access to account resources is disabled.';
@@ -424,9 +417,9 @@ describe('ConfigurationGovernanceV1', () => {
         const accountId = '531fc3e28bfc43c5a2cea07786d93f5c';
         const ruleType = 'user_defined';
         const labels = ['testString'];
+        const transactionId = 'testString';
         const params = {
           ruleId: ruleId,
-          transactionId: transactionId,
           ifMatch: ifMatch,
           name: name,
           description: description,
@@ -436,6 +429,7 @@ describe('ConfigurationGovernanceV1', () => {
           accountId: accountId,
           ruleType: ruleType,
           labels: labels,
+          transactionId: transactionId,
         };
 
         const updateRuleResult = configurationGovernanceService.updateRule(params);
@@ -452,8 +446,8 @@ describe('ConfigurationGovernanceV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        checkUserHeader(createRequestMock, 'Transaction-Id', transactionId);
         checkUserHeader(createRequestMock, 'If-Match', ifMatch);
+        checkUserHeader(createRequestMock, 'Transaction-Id', transactionId);
         expect(options.body['name']).toEqual(name);
         expect(options.body['description']).toEqual(description);
         expect(options.body['target']).toEqual(target);
@@ -468,7 +462,6 @@ describe('ConfigurationGovernanceV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const ruleId = 'testString';
-        const transactionId = 'testString';
         const ifMatch = 'testString';
         const name = 'Disable public access';
         const description = 'Ensure that public access to account resources is disabled.';
@@ -479,7 +472,6 @@ describe('ConfigurationGovernanceV1', () => {
         const userContentType = 'fake/contentType';
         const params = {
           ruleId,
-          transactionId,
           ifMatch,
           name,
           description,
@@ -553,12 +545,10 @@ describe('ConfigurationGovernanceV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const ruleId = 'testString';
-        const transactionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
           ruleId,
-          transactionId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -615,12 +605,12 @@ describe('ConfigurationGovernanceV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createAttachments
         const ruleId = 'testString';
-        const transactionId = 'testString';
         const attachments = [attachmentRequestModel];
+        const transactionId = 'testString';
         const params = {
           ruleId: ruleId,
-          transactionId: transactionId,
           attachments: attachments,
+          transactionId: transactionId,
         };
 
         const createAttachmentsResult = configurationGovernanceService.createAttachments(params);
@@ -645,13 +635,11 @@ describe('ConfigurationGovernanceV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const ruleId = 'testString';
-        const transactionId = 'testString';
         const attachments = [attachmentRequestModel];
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
           ruleId,
-          transactionId,
           attachments,
           headers: {
             Accept: userAccept,
@@ -726,12 +714,10 @@ describe('ConfigurationGovernanceV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const ruleId = 'testString';
-        const transactionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
           ruleId,
-          transactionId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -803,13 +789,11 @@ describe('ConfigurationGovernanceV1', () => {
         // parameters
         const ruleId = 'testString';
         const attachmentId = 'testString';
-        const transactionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
           ruleId,
           attachmentId,
-          transactionId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -860,19 +844,19 @@ describe('ConfigurationGovernanceV1', () => {
         // Construct the params object for operation updateAttachment
         const ruleId = 'testString';
         const attachmentId = 'testString';
-        const transactionId = 'testString';
         const ifMatch = 'testString';
         const accountId = '531fc3e28bfc43c5a2cea07786d93f5c';
         const includedScope = ruleScopeModel;
         const excludedScopes = [ruleScopeModel];
+        const transactionId = 'testString';
         const params = {
           ruleId: ruleId,
           attachmentId: attachmentId,
-          transactionId: transactionId,
           ifMatch: ifMatch,
           accountId: accountId,
           includedScope: includedScope,
           excludedScopes: excludedScopes,
+          transactionId: transactionId,
         };
 
         const updateAttachmentResult = configurationGovernanceService.updateAttachment(params);
@@ -889,8 +873,8 @@ describe('ConfigurationGovernanceV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        checkUserHeader(createRequestMock, 'Transaction-Id', transactionId);
         checkUserHeader(createRequestMock, 'If-Match', ifMatch);
+        checkUserHeader(createRequestMock, 'Transaction-Id', transactionId);
         expect(options.body['account_id']).toEqual(accountId);
         expect(options.body['included_scope']).toEqual(includedScope);
         expect(options.body['excluded_scopes']).toEqual(excludedScopes);
@@ -902,7 +886,6 @@ describe('ConfigurationGovernanceV1', () => {
         // parameters
         const ruleId = 'testString';
         const attachmentId = 'testString';
-        const transactionId = 'testString';
         const ifMatch = 'testString';
         const accountId = '531fc3e28bfc43c5a2cea07786d93f5c';
         const includedScope = ruleScopeModel;
@@ -911,7 +894,6 @@ describe('ConfigurationGovernanceV1', () => {
         const params = {
           ruleId,
           attachmentId,
-          transactionId,
           ifMatch,
           accountId,
           includedScope,
@@ -986,13 +968,11 @@ describe('ConfigurationGovernanceV1', () => {
         // parameters
         const ruleId = 'testString';
         const attachmentId = 'testString';
-        const transactionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
           ruleId,
           attachmentId,
-          transactionId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,

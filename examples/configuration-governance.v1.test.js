@@ -36,9 +36,6 @@ const originalWarn = console.warn
 const consoleLogMock = jest.spyOn(console, 'log');
 const consoleWarnMock = jest.spyOn(console, 'warn');
 
-// Generate a txn-id to be used during this test run.
-const transactionId = uuidv4();
-
 describe('ConfigurationGovernanceV1', () => {
 
   // begin-common
@@ -82,7 +79,6 @@ describe('ConfigurationGovernanceV1', () => {
 
     const params = {
       rules: [{ request_id: '3cebc877-58e7-44a5-a292-32114fa73558', rule: { account_id: accountId, name: 'Disable public access', description: 'Ensure that public access to account resources is disabled.', labels: ['Access', 'IAM'], target: { service_name: serviceName, resource_kind: 'service' }, required_config: { description: 'Public access check', and: [{ property: 'public_access_enabled', operator: 'is_false' }] }, enforcement_actions: [{ action: 'disallow' }, { action: 'audit_log' }] } }],
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.createRules(params)
@@ -121,7 +117,6 @@ describe('ConfigurationGovernanceV1', () => {
     const params = {
       ruleId: ruleId,
       attachments: [{ attachment_id: 'attachment-4301178a-8028-4220-9cb6-dfb86f09da99', account_id: accountId, rule_id: 'rule-702d1db7-ca4a-414b-8464-2b517a065c14', included_scope: { note: 'My enterprise', scope_id: enterpriseScopeId, scope_type: 'enterprise' }, excluded_scopes: [{ note: 'Development account', scope_id: subacctScopeId, scope_type: 'enterprise.account' }] }],
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.createAttachments(params)
@@ -141,7 +136,6 @@ describe('ConfigurationGovernanceV1', () => {
       configurationGovernanceService.getAttachment({
         ruleId: ruleId,
         attachmentId: attachmentId,
-        transactionId: transactionId,
       }).then(res => {
         attachmentEtag = res.headers['etag'];
         done();
@@ -159,7 +153,6 @@ describe('ConfigurationGovernanceV1', () => {
     const params = {
       ruleId: ruleId,
       attachmentId: attachmentId,
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.getAttachment(params)
@@ -178,7 +171,6 @@ describe('ConfigurationGovernanceV1', () => {
       let responseBody = JSON.parse(output);
       configurationGovernanceService.getRule({
         ruleId: ruleId,
-        transactionId: transactionId,
       }).then(res => {
         ruleEtag = res.headers['etag'];
         done();
@@ -195,7 +187,6 @@ describe('ConfigurationGovernanceV1', () => {
 
     const params = {
       ruleId: ruleId,
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.getRule(params)
@@ -221,7 +212,6 @@ describe('ConfigurationGovernanceV1', () => {
 
     const params = {
       accountId: accountId,
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.listRules(params)
@@ -256,7 +246,6 @@ describe('ConfigurationGovernanceV1', () => {
       accountId: accountId,
       ruleType: 'user_defined',
       labels: ['SOC2', 'ITCS300'],
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.updateRule(params)
@@ -282,7 +271,6 @@ describe('ConfigurationGovernanceV1', () => {
 
     const params = {
       ruleId: ruleId,
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.listAttachments(params)
@@ -313,7 +301,6 @@ describe('ConfigurationGovernanceV1', () => {
       accountId: accountId,
       includedScope: { note: 'My enterprise', scope_id: enterpriseScopeId, scope_type: 'enterprise' },
       excludedScopes: [{ note: 'Development account', scope_id: subacctScopeId, scope_type: 'enterprise.account' }],
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.updateAttachment(params)
@@ -340,7 +327,6 @@ describe('ConfigurationGovernanceV1', () => {
     const params = {
       ruleId: ruleId,
       attachmentId: attachmentId,
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.deleteAttachment(params)
@@ -366,7 +352,6 @@ describe('ConfigurationGovernanceV1', () => {
 
     const params = {
       ruleId: ruleId,
-      transactionId: transactionId,
     };
 
     configurationGovernanceService.deleteRule(params)
@@ -390,7 +375,6 @@ describe('ConfigurationGovernanceV1', () => {
         labels: label,
         limit: 1000,
         offset: 0,
-        transactionId: transactionId,
       };
 
       const res = await configurationGovernanceService.listRules(params);
@@ -406,7 +390,6 @@ describe('ConfigurationGovernanceV1', () => {
         for (const rule of ruleListResult.rules) {
           const deleteRuleParams = {
             ruleId: rule.rule_id,
-            transactionId: transactionId,
           };
 
           console.log(`Deleting rule: name=${rule.name} id=${rule.rule_id}`);

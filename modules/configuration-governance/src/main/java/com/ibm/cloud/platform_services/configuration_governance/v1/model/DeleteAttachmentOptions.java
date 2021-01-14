@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -48,12 +48,10 @@ public class DeleteAttachmentOptions extends GenericModel {
      *
      * @param ruleId the ruleId
      * @param attachmentId the attachmentId
-     * @param transactionId the transactionId
      */
-    public Builder(String ruleId, String attachmentId, String transactionId) {
+    public Builder(String ruleId, String attachmentId) {
       this.ruleId = ruleId;
       this.attachmentId = attachmentId;
-      this.transactionId = transactionId;
     }
 
     /**
@@ -104,8 +102,6 @@ public class DeleteAttachmentOptions extends GenericModel {
       "ruleId cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.attachmentId,
       "attachmentId cannot be empty");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
-      "transactionId cannot be null");
     ruleId = builder.ruleId;
     attachmentId = builder.attachmentId;
     transactionId = builder.transactionId;
@@ -146,8 +142,8 @@ public class DeleteAttachmentOptions extends GenericModel {
    * Gets the transactionId.
    *
    * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
-   * sends a transaction ID in the
-   * `trace` field of the response body.
+   * sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+   * the `trace` field of the response body.
    *
    * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
    * with each request.

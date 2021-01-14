@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,19 +22,19 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class CreateRulesOptions extends GenericModel {
 
-  protected String transactionId;
   protected List<CreateRuleRequest> rules;
+  protected String transactionId;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private String transactionId;
     private List<CreateRuleRequest> rules;
+    private String transactionId;
 
     private Builder(CreateRulesOptions createRulesOptions) {
-      this.transactionId = createRulesOptions.transactionId;
       this.rules = createRulesOptions.rules;
+      this.transactionId = createRulesOptions.transactionId;
     }
 
     /**
@@ -46,11 +46,9 @@ public class CreateRulesOptions extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
-     * @param transactionId the transactionId
      * @param rules the rules
      */
-    public Builder(String transactionId, List<CreateRuleRequest> rules) {
-      this.transactionId = transactionId;
+    public Builder(List<CreateRuleRequest> rules) {
       this.rules = rules;
     }
 
@@ -80,17 +78,6 @@ public class CreateRulesOptions extends GenericModel {
     }
 
     /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the CreateRulesOptions builder
-     */
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
-
-    /**
      * Set the rules.
      * Existing rules will be replaced.
      *
@@ -101,15 +88,24 @@ public class CreateRulesOptions extends GenericModel {
       this.rules = rules;
       return this;
     }
+
+    /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the CreateRulesOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
   }
 
   protected CreateRulesOptions(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
-      "transactionId cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.rules,
       "rules cannot be null");
-    transactionId = builder.transactionId;
     rules = builder.rules;
+    transactionId = builder.transactionId;
   }
 
   /**
@@ -122,22 +118,6 @@ public class CreateRulesOptions extends GenericModel {
   }
 
   /**
-   * Gets the transactionId.
-   *
-   * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
-   * sends a transaction ID in the
-   * `trace` field of the response body.
-   *
-   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
-   * with each request.
-   *
-   * @return the transactionId
-   */
-  public String transactionId() {
-    return transactionId;
-  }
-
-  /**
    * Gets the rules.
    *
    * A list of rules to be created.
@@ -146,6 +126,22 @@ public class CreateRulesOptions extends GenericModel {
    */
   public List<CreateRuleRequest> rules() {
     return rules;
+  }
+
+  /**
+   * Gets the transactionId.
+   *
+   * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+   * sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+   * the `trace` field of the response body.
+   *
+   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+   * with each request.
+   *
+   * @return the transactionId
+   */
+  public String transactionId() {
+    return transactionId;
   }
 }
 

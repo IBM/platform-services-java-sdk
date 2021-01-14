@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,8 +19,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListRulesOptions extends GenericModel {
 
-  protected String transactionId;
   protected String accountId;
+  protected String transactionId;
   protected Boolean attached;
   protected String labels;
   protected String scopes;
@@ -31,8 +31,8 @@ public class ListRulesOptions extends GenericModel {
    * Builder.
    */
   public static class Builder {
-    private String transactionId;
     private String accountId;
+    private String transactionId;
     private Boolean attached;
     private String labels;
     private String scopes;
@@ -40,8 +40,8 @@ public class ListRulesOptions extends GenericModel {
     private Long offset;
 
     private Builder(ListRulesOptions listRulesOptions) {
-      this.transactionId = listRulesOptions.transactionId;
       this.accountId = listRulesOptions.accountId;
+      this.transactionId = listRulesOptions.transactionId;
       this.attached = listRulesOptions.attached;
       this.labels = listRulesOptions.labels;
       this.scopes = listRulesOptions.scopes;
@@ -58,11 +58,9 @@ public class ListRulesOptions extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
-     * @param transactionId the transactionId
      * @param accountId the accountId
      */
-    public Builder(String transactionId, String accountId) {
-      this.transactionId = transactionId;
+    public Builder(String accountId) {
       this.accountId = accountId;
     }
 
@@ -76,17 +74,6 @@ public class ListRulesOptions extends GenericModel {
     }
 
     /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the ListRulesOptions builder
-     */
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
-
-    /**
      * Set the accountId.
      *
      * @param accountId the accountId
@@ -94,6 +81,17 @@ public class ListRulesOptions extends GenericModel {
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
+      return this;
+    }
+
+    /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the ListRulesOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
       return this;
     }
 
@@ -154,12 +152,10 @@ public class ListRulesOptions extends GenericModel {
   }
 
   protected ListRulesOptions(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
-      "transactionId cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,
       "accountId cannot be null");
-    transactionId = builder.transactionId;
     accountId = builder.accountId;
+    transactionId = builder.transactionId;
     attached = builder.attached;
     labels = builder.labels;
     scopes = builder.scopes;
@@ -177,22 +173,6 @@ public class ListRulesOptions extends GenericModel {
   }
 
   /**
-   * Gets the transactionId.
-   *
-   * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
-   * sends a transaction ID in the
-   * `trace` field of the response body.
-   *
-   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
-   * with each request.
-   *
-   * @return the transactionId
-   */
-  public String transactionId() {
-    return transactionId;
-  }
-
-  /**
    * Gets the accountId.
    *
    * Your IBM Cloud account ID.
@@ -201,6 +181,22 @@ public class ListRulesOptions extends GenericModel {
    */
   public String accountId() {
     return accountId;
+  }
+
+  /**
+   * Gets the transactionId.
+   *
+   * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
+   * sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+   * the `trace` field of the response body.
+   *
+   * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
+   * with each request.
+   *
+   * @return the transactionId
+   */
+  public String transactionId() {
+    return transactionId;
   }
 
   /**

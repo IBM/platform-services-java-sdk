@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -55,12 +55,12 @@ public class CreateAttachmentsOptionsTest {
 
     CreateAttachmentsOptions createAttachmentsOptionsModel = new CreateAttachmentsOptions.Builder()
       .ruleId("testString")
-      .transactionId("testString")
       .attachments(new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)))
+      .transactionId("testString")
       .build();
     assertEquals(createAttachmentsOptionsModel.ruleId(), "testString");
-    assertEquals(createAttachmentsOptionsModel.transactionId(), "testString");
     assertEquals(createAttachmentsOptionsModel.attachments(), new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)));
+    assertEquals(createAttachmentsOptionsModel.transactionId(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -100,11 +100,11 @@ public class CreateRulesOptionsTest {
     assertEquals(createRuleRequestModel.rule(), ruleRequestModel);
 
     CreateRulesOptions createRulesOptionsModel = new CreateRulesOptions.Builder()
-      .transactionId("testString")
       .rules(new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)))
+      .transactionId("testString")
       .build();
-    assertEquals(createRulesOptionsModel.transactionId(), "testString");
     assertEquals(createRulesOptionsModel.rules(), new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)));
+    assertEquals(createRulesOptionsModel.transactionId(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

@@ -1,3 +1,10 @@
+## [0.17.4](https://github.com/IBM/platform-services-java-sdk/compare/0.17.3...0.17.4) (2021-01-14)
+
+
+### Bug Fixes
+
+* **Configuration Governance:** re-gen service after recent API changes ([a499ded](https://github.com/IBM/platform-services-java-sdk/commit/a499dedfad8d53d6661330eaa53d8822dd25e82f))
+
 ## [0.17.3](https://github.com/IBM/platform-services-java-sdk/compare/0.17.2...0.17.3) (2021-01-13)
 
 

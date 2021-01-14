@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -46,19 +46,19 @@ public class UpdateAttachmentOptionsTest {
     UpdateAttachmentOptions updateAttachmentOptionsModel = new UpdateAttachmentOptions.Builder()
       .ruleId("testString")
       .attachmentId("testString")
-      .transactionId("testString")
       .ifMatch("testString")
       .accountId("testString")
       .includedScope(ruleScopeModel)
       .excludedScopes(new java.util.ArrayList<RuleScope>(java.util.Arrays.asList(ruleScopeModel)))
+      .transactionId("testString")
       .build();
     assertEquals(updateAttachmentOptionsModel.ruleId(), "testString");
     assertEquals(updateAttachmentOptionsModel.attachmentId(), "testString");
-    assertEquals(updateAttachmentOptionsModel.transactionId(), "testString");
     assertEquals(updateAttachmentOptionsModel.ifMatch(), "testString");
     assertEquals(updateAttachmentOptionsModel.accountId(), "testString");
     assertEquals(updateAttachmentOptionsModel.includedScope(), ruleScopeModel);
     assertEquals(updateAttachmentOptionsModel.excludedScopes(), new java.util.ArrayList<RuleScope>(java.util.Arrays.asList(ruleScopeModel)));
+    assertEquals(updateAttachmentOptionsModel.transactionId(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

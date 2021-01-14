@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,21 +23,21 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class CreateAttachmentsOptions extends GenericModel {
 
   protected String ruleId;
-  protected String transactionId;
   protected List<AttachmentRequest> attachments;
+  protected String transactionId;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String ruleId;
-    private String transactionId;
     private List<AttachmentRequest> attachments;
+    private String transactionId;
 
     private Builder(CreateAttachmentsOptions createAttachmentsOptions) {
       this.ruleId = createAttachmentsOptions.ruleId;
-      this.transactionId = createAttachmentsOptions.transactionId;
       this.attachments = createAttachmentsOptions.attachments;
+      this.transactionId = createAttachmentsOptions.transactionId;
     }
 
     /**
@@ -50,12 +50,10 @@ public class CreateAttachmentsOptions extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param ruleId the ruleId
-     * @param transactionId the transactionId
      * @param attachments the attachments
      */
-    public Builder(String ruleId, String transactionId, List<AttachmentRequest> attachments) {
+    public Builder(String ruleId, List<AttachmentRequest> attachments) {
       this.ruleId = ruleId;
-      this.transactionId = transactionId;
       this.attachments = attachments;
     }
 
@@ -96,17 +94,6 @@ public class CreateAttachmentsOptions extends GenericModel {
     }
 
     /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the CreateAttachmentsOptions builder
-     */
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
-
-    /**
      * Set the attachments.
      * Existing attachments will be replaced.
      *
@@ -117,18 +104,27 @@ public class CreateAttachmentsOptions extends GenericModel {
       this.attachments = attachments;
       return this;
     }
+
+    /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the CreateAttachmentsOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
   }
 
   protected CreateAttachmentsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.ruleId,
       "ruleId cannot be empty");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.transactionId,
-      "transactionId cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.attachments,
       "attachments cannot be null");
     ruleId = builder.ruleId;
-    transactionId = builder.transactionId;
     attachments = builder.attachments;
+    transactionId = builder.transactionId;
   }
 
   /**
@@ -152,11 +148,20 @@ public class CreateAttachmentsOptions extends GenericModel {
   }
 
   /**
+   * Gets the attachments.
+   *
+   * @return the attachments
+   */
+  public List<AttachmentRequest> attachments() {
+    return attachments;
+  }
+
+  /**
    * Gets the transactionId.
    *
    * The unique identifier that is used to trace an entire request. If you omit this field, the service generates and
-   * sends a transaction ID in the
-   * `trace` field of the response body.
+   * sends a transaction ID as a response header of the request. In the case of an error, the transaction ID is set in
+   * the `trace` field of the response body.
    *
    * **Note:** To help with debugging logs, it is strongly recommended that you generate and supply a `Transaction-Id`
    * with each request.
@@ -165,15 +170,6 @@ public class CreateAttachmentsOptions extends GenericModel {
    */
   public String transactionId() {
     return transactionId;
-  }
-
-  /**
-   * Gets the attachments.
-   *
-   * @return the attachments
-   */
-  public List<AttachmentRequest> attachments() {
-    return attachments;
   }
 }
 

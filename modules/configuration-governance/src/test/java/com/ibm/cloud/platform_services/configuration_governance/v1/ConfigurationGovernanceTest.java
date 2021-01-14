@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -180,8 +180,8 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the CreateRulesOptions model
     CreateRulesOptions createRulesOptionsModel = new CreateRulesOptions.Builder()
-    .transactionId("testString")
     .rules(new java.util.ArrayList<CreateRuleRequest>(java.util.Arrays.asList(createRuleRequestModel)))
+    .transactionId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -194,7 +194,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "POST");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -232,8 +231,8 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
 
     // Construct an instance of the ListRulesOptions model
     ListRulesOptions listRulesOptionsModel = new ListRulesOptions.Builder()
-    .transactionId("testString")
     .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
+    .transactionId("testString")
     .attached(true)
     .labels("SOC2,ITCS300")
     .scopes("scope_id")
@@ -251,7 +250,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -309,7 +307,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -375,7 +372,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     // Construct an instance of the UpdateRuleOptions model
     UpdateRuleOptions updateRuleOptionsModel = new UpdateRuleOptions.Builder()
     .ruleId("testString")
-    .transactionId("testString")
     .ifMatch("testString")
     .name("Disable public access")
     .description("Ensure that public access to account resources is disabled.")
@@ -385,6 +381,7 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
     .ruleType("user_defined")
     .labels(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .transactionId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -397,7 +394,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "PUT");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
     assertEquals(request.getHeader("If-Match"), "testString");
 
     // Check query
@@ -450,7 +446,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "DELETE");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -503,8 +498,8 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     // Construct an instance of the CreateAttachmentsOptions model
     CreateAttachmentsOptions createAttachmentsOptionsModel = new CreateAttachmentsOptions.Builder()
     .ruleId("testString")
-    .transactionId("testString")
     .attachments(new java.util.ArrayList<AttachmentRequest>(java.util.Arrays.asList(attachmentRequestModel)))
+    .transactionId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -517,7 +512,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "POST");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -571,7 +565,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -626,7 +619,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
@@ -673,11 +665,11 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     UpdateAttachmentOptions updateAttachmentOptionsModel = new UpdateAttachmentOptions.Builder()
     .ruleId("testString")
     .attachmentId("testString")
-    .transactionId("testString")
     .ifMatch("testString")
     .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
     .includedScope(ruleScopeModel)
     .excludedScopes(new java.util.ArrayList<RuleScope>(java.util.Arrays.asList(ruleScopeModel)))
+    .transactionId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -690,7 +682,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "PUT");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
     assertEquals(request.getHeader("If-Match"), "testString");
 
     // Check query
@@ -744,7 +735,6 @@ public class ConfigurationGovernanceTest extends PowerMockTestCase {
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "DELETE");
-    assertEquals(request.getHeader("Transaction-Id"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);

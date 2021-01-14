@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -32,16 +32,16 @@ public class ListRulesOptionsTest {
   @Test
   public void testListRulesOptions() throws Throwable {
     ListRulesOptions listRulesOptionsModel = new ListRulesOptions.Builder()
-      .transactionId("testString")
       .accountId("531fc3e28bfc43c5a2cea07786d93f5c")
+      .transactionId("testString")
       .attached(true)
       .labels("SOC2,ITCS300")
       .scopes("scope_id")
       .limit(Long.valueOf("1000"))
       .offset(Long.valueOf("26"))
       .build();
-    assertEquals(listRulesOptionsModel.transactionId(), "testString");
     assertEquals(listRulesOptionsModel.accountId(), "531fc3e28bfc43c5a2cea07786d93f5c");
+    assertEquals(listRulesOptionsModel.transactionId(), "testString");
     assertEquals(listRulesOptionsModel.attached(), Boolean.valueOf(true));
     assertEquals(listRulesOptionsModel.labels(), "SOC2,ITCS300");
     assertEquals(listRulesOptionsModel.scopes(), "scope_id");

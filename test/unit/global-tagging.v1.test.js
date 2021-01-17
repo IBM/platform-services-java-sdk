@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -103,6 +103,7 @@ describe('GlobalTaggingV1', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation listTags
+        const impersonateUser = 'testString';
         const accountId = 'testString';
         const tagType = 'user';
         const fullData = true;
@@ -114,6 +115,7 @@ describe('GlobalTaggingV1', () => {
         const orderByName = 'asc';
         const attachedOnly = true;
         const params = {
+          impersonateUser: impersonateUser,
           accountId: accountId,
           tagType: tagType,
           fullData: fullData,
@@ -140,6 +142,7 @@ describe('GlobalTaggingV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['impersonate_user']).toEqual(impersonateUser);
         expect(options.qs['account_id']).toEqual(accountId);
         expect(options.qs['tag_type']).toEqual(tagType);
         expect(options.qs['full_data']).toEqual(fullData);
@@ -174,15 +177,94 @@ describe('GlobalTaggingV1', () => {
       });
     });
   });
+  describe('createTag', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation createTag
+        const tagNames = ['testString'];
+        const impersonateUser = 'testString';
+        const accountId = 'testString';
+        const tagType = 'access';
+        const params = {
+          tagNames: tagNames,
+          impersonateUser: impersonateUser,
+          accountId: accountId,
+          tagType: tagType,
+        };
+
+        const createTagResult = globalTaggingService.createTag(params);
+
+        // all methods should return a Promise
+        expectToBePromise(createTagResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v3/tags', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.body['tag_names']).toEqual(tagNames);
+        expect(options.qs['impersonate_user']).toEqual(impersonateUser);
+        expect(options.qs['account_id']).toEqual(accountId);
+        expect(options.qs['tag_type']).toEqual(tagType);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const tagNames = ['testString'];
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          tagNames,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        globalTaggingService.createTag(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await globalTaggingService.createTag({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const createTagPromise = globalTaggingService.createTag();
+        expectToBePromise(createTagPromise);
+
+        createTagPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
   describe('deleteTagAll', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation deleteTagAll
         const providers = 'ghost';
+        const impersonateUser = 'testString';
         const accountId = 'testString';
         const tagType = 'user';
         const params = {
           providers: providers,
+          impersonateUser: impersonateUser,
           accountId: accountId,
           tagType: tagType,
         };
@@ -202,6 +284,7 @@ describe('GlobalTaggingV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['providers']).toEqual(providers);
+        expect(options.qs['impersonate_user']).toEqual(impersonateUser);
         expect(options.qs['account_id']).toEqual(accountId);
         expect(options.qs['tag_type']).toEqual(tagType);
       });
@@ -234,11 +317,13 @@ describe('GlobalTaggingV1', () => {
         // Construct the params object for operation deleteTag
         const tagName = 'testString';
         const providers = ['ghost'];
+        const impersonateUser = 'testString';
         const accountId = 'testString';
         const tagType = 'user';
         const params = {
           tagName: tagName,
           providers: providers,
+          impersonateUser: impersonateUser,
           accountId: accountId,
           tagType: tagType,
         };
@@ -258,6 +343,7 @@ describe('GlobalTaggingV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['providers']).toEqual(providers);
+        expect(options.qs['impersonate_user']).toEqual(impersonateUser);
         expect(options.qs['account_id']).toEqual(accountId);
         expect(options.qs['tag_type']).toEqual(tagType);
         expect(options.path['tag_name']).toEqual(tagName);
@@ -320,12 +406,14 @@ describe('GlobalTaggingV1', () => {
         const resources = [resourceModel];
         const tagName = 'testString';
         const tagNames = ['testString'];
+        const impersonateUser = 'testString';
         const accountId = 'testString';
         const tagType = 'user';
         const params = {
           resources: resources,
           tagName: tagName,
           tagNames: tagNames,
+          impersonateUser: impersonateUser,
           accountId: accountId,
           tagType: tagType,
         };
@@ -347,6 +435,7 @@ describe('GlobalTaggingV1', () => {
         expect(options.body['resources']).toEqual(resources);
         expect(options.body['tag_name']).toEqual(tagName);
         expect(options.body['tag_names']).toEqual(tagNames);
+        expect(options.qs['impersonate_user']).toEqual(impersonateUser);
         expect(options.qs['account_id']).toEqual(accountId);
         expect(options.qs['tag_type']).toEqual(tagType);
       });
@@ -408,12 +497,14 @@ describe('GlobalTaggingV1', () => {
         const resources = [resourceModel];
         const tagName = 'testString';
         const tagNames = ['testString'];
+        const impersonateUser = 'testString';
         const accountId = 'testString';
         const tagType = 'user';
         const params = {
           resources: resources,
           tagName: tagName,
           tagNames: tagNames,
+          impersonateUser: impersonateUser,
           accountId: accountId,
           tagType: tagType,
         };
@@ -435,6 +526,7 @@ describe('GlobalTaggingV1', () => {
         expect(options.body['resources']).toEqual(resources);
         expect(options.body['tag_name']).toEqual(tagName);
         expect(options.body['tag_names']).toEqual(tagNames);
+        expect(options.qs['impersonate_user']).toEqual(impersonateUser);
         expect(options.qs['account_id']).toEqual(accountId);
         expect(options.qs['tag_type']).toEqual(tagType);
       });

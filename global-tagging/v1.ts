@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-a8493a65-20210115-083246
  */
 
 
@@ -27,9 +27,10 @@ import { getSdkHeaders } from '../lib/common';
 /**
  * Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete a tag or list all tags in your
  * billing account with the Tagging API. The tag name must be unique within a billing account. You can create tags in
- * two formats: `key:value` or `label`. The tagging API supports two types of tag: `user` and `service`. `service` tags
- * cannot be attached to IMS resources (see `providers=ims` query parameter). `service` tags must be in the form
- * `service_prefix:tag_label` where `service_prefix` identifies the Service owning the tag.
+ * two formats: `key:value` or `label`. The tagging API supports three types of tag: `user` `service`, and `access`
+ * tags. `service` tags cannot be attached to IMS resources. `service` tags must be in the form
+ * `service_prefix:tag_label` where `service_prefix` identifies the Service owning the tag. `access` tags cannot be
+ * attached to IMS and Cloud Foundry resources. They must be in the form `key:value`.
  */
 
 class GlobalTaggingV1 extends BaseService {
@@ -101,14 +102,17 @@ class GlobalTaggingV1 extends BaseService {
    * specified resource.
    *
    * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.impersonateUser] - The user on whose behalf the get operation must be performed (_for
+   * administrators only_).
    * @param {string} [params.accountId] - The ID of the billing account to list the tags for. If it is not set, then it
    * is taken from the authorization token. This parameter is required if `tag_type` is set to `service`.
-   * @param {string} [params.tagType] - The type of the tag you want to list. Supported values are `user` and `service`.
+   * @param {string} [params.tagType] - The type of the tag you want to list. Supported values are `user`, `service` and
+   * `access`.
    * @param {boolean} [params.fullData] - If set to `true`, this query returns the provider, `ghost`, `ims` or
    * `ghost,ims`, where the tag exists and the number of attached resources.
    * @param {string[]} [params.providers] - Select a provider. Supported values are `ghost` and `ims`. To list GhoST
-   * tags and infrastructure tags use `ghost,ims`. `service` tags can only be attached to GhoST onboarded resources, so
-   * you don't need to set this parameter when listing `service` tags.
+   * tags and infrastructure tags use `ghost,ims`. `service` and `access` tags can only be attached to GhoST onboarded
+   * resources, so you should not set this parameter when listing them.
    * @param {string} [params.attachedTo] - If you want to return only the list of tags attached to a specified resource,
    * pass the ID of the resource on this parameter. For GhoST onboarded resources, the resource ID is the CRN; for IMS
    * resources, it is the IMS ID. When using this parameter, you must specify the appropriate provider (`ims` or
@@ -128,6 +132,7 @@ class GlobalTaggingV1 extends BaseService {
     const _params = Object.assign({}, params);
 
     const query = {
+      'impersonate_user': _params.impersonateUser,
       'account_id': _params.accountId,
       'tag_type': _params.tagType,
       'full_data': _params.fullData,
@@ -159,16 +164,74 @@ class GlobalTaggingV1 extends BaseService {
   };
 
   /**
+   * Create an access tag.
+   *
+   * Create an access tag. To create an `access` tag, you must have the access listed in the [Granting users access to
+   * tag resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation. `service` and `user` tags
+   * cannot be created upfront. They are created when they are attached for the first time to a resource.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string[]} params.tagNames - An array of tag names to create.
+   * @param {string} [params.impersonateUser] - The user on whose behalf the create operation must be performed (_for
+   * administrators only_).
+   * @param {string} [params.accountId] - The ID of the billing account where the tag must be created. It is a required
+   * parameter if `impersonate_user` is set.
+   * @param {string} [params.tagType] - The type of the tags you want to create. The only allowed value is `access`.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.CreateTagResults>>}
+   */
+  public createTag(params: GlobalTaggingV1.CreateTagParams): Promise<GlobalTaggingV1.Response<GlobalTaggingV1.CreateTagResults>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['tagNames'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'tag_names': _params.tagNames
+    };
+
+    const query = {
+      'impersonate_user': _params.impersonateUser,
+      'account_id': _params.accountId,
+      'tag_type': _params.tagType
+    };
+
+    const sdkHeaders = getSdkHeaders(GlobalTaggingV1.DEFAULT_SERVICE_NAME, 'v1', 'createTag');
+
+    const parameters = {
+      options: {
+        url: '/v3/tags',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
    * Delete all unused tags.
    *
    * Delete the tags that are not attached to any resource.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.providers] - Select a provider. Supported values are `ghost` and `ims`.
+   * @param {string} [params.impersonateUser] - The user on whose behalf the delete all operation must be performed
+   * (_for administrators only_).
    * @param {string} [params.accountId] - The ID of the billing account to delete the tags for. If it is not set, then
    * it is taken from the authorization token. It is a required parameter if `tag_type` is set to `service`.
-   * @param {string} [params.tagType] - The type of the tag. Supported values are `user` and `service`. `service` is not
-   * supported if the `providers` parameter is set to `ims`.
+   * @param {string} [params.tagType] - The type of the tag. Supported values are `user`, `service` and `access`.
+   * `service` and `access` are not supported for IMS resources (`providers` parameter set to `ims`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.DeleteTagsResult>>}
    */
@@ -177,6 +240,7 @@ class GlobalTaggingV1 extends BaseService {
 
     const query = {
       'providers': _params.providers,
+      'impersonate_user': _params.impersonateUser,
       'account_id': _params.accountId,
       'tag_type': _params.tagType
     };
@@ -208,10 +272,12 @@ class GlobalTaggingV1 extends BaseService {
    * @param {string} params.tagName - The name of tag to be deleted.
    * @param {string[]} [params.providers] - Select a provider. Supported values are `ghost` and `ims`. To delete tag
    * both in GhoST in IMS, use `ghost,ims`.
+   * @param {string} [params.impersonateUser] - The user on whose behalf the delete operation must be performed (_for
+   * administrators only_).
    * @param {string} [params.accountId] - The ID of the billing account to delete the tag for. It is a required
    * parameter if `tag_type` is set to `service`, otherwise it is inferred from the authorization IAM token.
-   * @param {string} [params.tagType] - The type of the tag. Supported values are `user` and `service`. `service` is not
-   * supported for `providers=ims`.
+   * @param {string} [params.tagType] - The type of the tag. Supported values are `user`, `service` and `access`.
+   * `service` and `access` are not supported for IMS resources (`providers` parameter set to `ims`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.DeleteTagResults>>}
    */
@@ -226,6 +292,7 @@ class GlobalTaggingV1 extends BaseService {
 
     const query = {
       'providers': _params.providers,
+      'impersonate_user': _params.impersonateUser,
       'account_id': _params.accountId,
       'tag_type': _params.tagType
     };
@@ -260,16 +327,19 @@ class GlobalTaggingV1 extends BaseService {
    * listed in the [Granting users access to tag resources](https://cloud.ibm.com/docs/account?topic=account-access)
    * documentation. To attach a `service` tag, you must be an authorized service. If that is the case, then you can
    * attach a `service` tag with your registered `prefix` to any resource in any account. The account ID must be set
-   * through the `account_id` query parameter.
+   * through the `account_id` query parameter. To attach an `access` tag, you must be the resource administrator within
+   * the account. You can attach only `access` tags already existing.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Resource[]} params.resources - List of resources on which the tag or tags should be attached.
    * @param {string} [params.tagName] - The name of the tag to attach.
    * @param {string[]} [params.tagNames] - An array of tag names to attach.
+   * @param {string} [params.impersonateUser] - The user on whose behalf the attach operation must be performed (_for
+   * administrators only_).
    * @param {string} [params.accountId] - The ID of the billing account where the resources to be tagged lives. It is a
    * required parameter if `tag_type` is set to `service`. Otherwise, it is inferred from the authorization IAM token.
-   * @param {string} [params.tagType] - The type of the tag. Supported values are `user` and `service`. `service` is not
-   * supported if `providers` is set to `ims`.
+   * @param {string} [params.tagType] - The type of the tag. Supported values are `user`, `service` and `access`.
+   * `service` and `access` are not supported for IMS resources.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.TagResults>>}
    */
@@ -289,6 +359,7 @@ class GlobalTaggingV1 extends BaseService {
     };
 
     const query = {
+      'impersonate_user': _params.impersonateUser,
       'account_id': _params.accountId,
       'tag_type': _params.tagType
     };
@@ -320,16 +391,19 @@ class GlobalTaggingV1 extends BaseService {
    * permissions listed in the [Granting users access to tag
    * resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation. To detach a `service` tag you
    * must be an authorized Service. If that is the case, then you can detach a `service` tag with your registered
-   * `prefix` from any resource in any account. The account ID must be set through the `account_id` query parameter.
+   * `prefix` from any resource in any account. The account ID must be set through the `account_id` query parameter. To
+   * detach an `access` tag, you must be the resource administrator within the account.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {Resource[]} params.resources - List of resources on which the tag or tags should be detached.
    * @param {string} [params.tagName] - The name of the tag to detach.
    * @param {string[]} [params.tagNames] - An array of tag names to detach.
+   * @param {string} [params.impersonateUser] - The user on whose behalf the detach operation must be performed (_for
+   * administrators only_).
    * @param {string} [params.accountId] - The ID of the billing account where the resources to be un-tagged lives. It is
    * a required parameter if `tag_type` is set to `service`, otherwise it is inferred from the authorization IAM token.
-   * @param {string} [params.tagType] - The type of the tag. Supported values are `user` and `service`. `service` is not
-   * supported for `providers=ims`.
+   * @param {string} [params.tagType] - The type of the tag. Supported values are `user`, `service` and `access`.
+   * `service` and `access` are not supported for IMS resources.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalTaggingV1.Response<GlobalTaggingV1.TagResults>>}
    */
@@ -349,6 +423,7 @@ class GlobalTaggingV1 extends BaseService {
     };
 
     const query = {
+      'impersonate_user': _params.impersonateUser,
       'account_id': _params.accountId,
       'tag_type': _params.tagType
     };
@@ -406,19 +481,21 @@ namespace GlobalTaggingV1 {
 
   /** Parameters for the `listTags` operation. */
   export interface ListTagsParams {
+    /** The user on whose behalf the get operation must be performed (_for administrators only_). */
+    impersonateUser?: string;
     /** The ID of the billing account to list the tags for. If it is not set, then it is taken from the
      *  authorization token. This parameter is required if `tag_type` is set to `service`.
      */
     accountId?: string;
-    /** The type of the tag you want to list. Supported values are `user` and `service`. */
+    /** The type of the tag you want to list. Supported values are `user`, `service` and `access`. */
     tagType?: ListTagsConstants.TagType | string;
     /** If set to `true`, this query returns the provider, `ghost`, `ims` or `ghost,ims`, where the tag exists and
      *  the number of attached resources.
      */
     fullData?: boolean;
     /** Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and infrastructure tags use
-     *  `ghost,ims`. `service` tags can only be attached to GhoST onboarded resources, so you don't need to set this
-     *  parameter when listing `service` tags.
+     *  `ghost,ims`. `service` and `access` tags can only be attached to GhoST onboarded resources, so you should not
+     *  set this parameter when listing them.
      */
     providers?: ListTagsConstants.Providers[] | string[];
     /** If you want to return only the list of tags attached to a specified resource, pass the ID of the resource on
@@ -445,12 +522,13 @@ namespace GlobalTaggingV1 {
 
   /** Constants for the `listTags` operation. */
   export namespace ListTagsConstants {
-    /** The type of the tag you want to list. Supported values are `user` and `service`. */
+    /** The type of the tag you want to list. Supported values are `user`, `service` and `access`. */
     export enum TagType {
       USER = 'user',
       SERVICE = 'service',
+      ACCESS = 'access',
     }
-    /** Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and infrastructure tags use `ghost,ims`. `service` tags can only be attached to GhoST onboarded resources, so you don't need to set this parameter when listing `service` tags. */
+    /** Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and infrastructure tags use `ghost,ims`. `service` and `access` tags can only be attached to GhoST onboarded resources, so you should not set this parameter when listing them. */
     export enum Providers {
       GHOST = 'ghost',
       IMS = 'ims',
@@ -462,16 +540,41 @@ namespace GlobalTaggingV1 {
     }
   }
 
+  /** Parameters for the `createTag` operation. */
+  export interface CreateTagParams {
+    /** An array of tag names to create. */
+    tagNames: string[];
+    /** The user on whose behalf the create operation must be performed (_for administrators only_). */
+    impersonateUser?: string;
+    /** The ID of the billing account where the tag must be created. It is a required parameter if
+     *  `impersonate_user` is set.
+     */
+    accountId?: string;
+    /** The type of the tags you want to create. The only allowed value is `access`. */
+    tagType?: CreateTagConstants.TagType | string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `createTag` operation. */
+  export namespace CreateTagConstants {
+    /** The type of the tags you want to create. The only allowed value is `access`. */
+    export enum TagType {
+      ACCESS = 'access',
+    }
+  }
+
   /** Parameters for the `deleteTagAll` operation. */
   export interface DeleteTagAllParams {
     /** Select a provider. Supported values are `ghost` and `ims`. */
     providers?: DeleteTagAllConstants.Providers | string;
+    /** The user on whose behalf the delete all operation must be performed (_for administrators only_). */
+    impersonateUser?: string;
     /** The ID of the billing account to delete the tags for. If it is not set, then it is taken from the
      *  authorization token. It is a required parameter if `tag_type` is set to `service`.
      */
     accountId?: string;
-    /** The type of the tag. Supported values are `user` and `service`. `service` is not supported if the
-     *  `providers` parameter is set to `ims`.
+    /** The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not
+     *  supported for IMS resources (`providers` parameter set to `ims`).
      */
     tagType?: DeleteTagAllConstants.TagType | string;
     headers?: OutgoingHttpHeaders;
@@ -484,10 +587,11 @@ namespace GlobalTaggingV1 {
       GHOST = 'ghost',
       IMS = 'ims',
     }
-    /** The type of the tag. Supported values are `user` and `service`. `service` is not supported if the `providers` parameter is set to `ims`. */
+    /** The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported for IMS resources (`providers` parameter set to `ims`). */
     export enum TagType {
       USER = 'user',
       SERVICE = 'service',
+      ACCESS = 'access',
     }
   }
 
@@ -499,12 +603,14 @@ namespace GlobalTaggingV1 {
      *  `ghost,ims`.
      */
     providers?: DeleteTagConstants.Providers[] | string[];
+    /** The user on whose behalf the delete operation must be performed (_for administrators only_). */
+    impersonateUser?: string;
     /** The ID of the billing account to delete the tag for. It is a required parameter if `tag_type` is set to
      *  `service`, otherwise it is inferred from the authorization IAM token.
      */
     accountId?: string;
-    /** The type of the tag. Supported values are `user` and `service`. `service` is not supported for
-     *  `providers=ims`.
+    /** The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not
+     *  supported for IMS resources (`providers` parameter set to `ims`).
      */
     tagType?: DeleteTagConstants.TagType | string;
     headers?: OutgoingHttpHeaders;
@@ -517,10 +623,11 @@ namespace GlobalTaggingV1 {
       GHOST = 'ghost',
       IMS = 'ims',
     }
-    /** The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`. */
+    /** The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported for IMS resources (`providers` parameter set to `ims`). */
     export enum TagType {
       USER = 'user',
       SERVICE = 'service',
+      ACCESS = 'access',
     }
   }
 
@@ -532,12 +639,14 @@ namespace GlobalTaggingV1 {
     tagName?: string;
     /** An array of tag names to attach. */
     tagNames?: string[];
+    /** The user on whose behalf the attach operation must be performed (_for administrators only_). */
+    impersonateUser?: string;
     /** The ID of the billing account where the resources to be tagged lives. It is a required parameter if
      *  `tag_type` is set to `service`. Otherwise, it is inferred from the authorization IAM token.
      */
     accountId?: string;
-    /** The type of the tag. Supported values are `user` and `service`. `service` is not supported if `providers` is
-     *  set to `ims`.
+    /** The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not
+     *  supported for IMS resources.
      */
     tagType?: AttachTagConstants.TagType | string;
     headers?: OutgoingHttpHeaders;
@@ -545,10 +654,11 @@ namespace GlobalTaggingV1 {
 
   /** Constants for the `attachTag` operation. */
   export namespace AttachTagConstants {
-    /** The type of the tag. Supported values are `user` and `service`. `service` is not supported if `providers` is set to `ims`. */
+    /** The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported for IMS resources. */
     export enum TagType {
       USER = 'user',
       SERVICE = 'service',
+      ACCESS = 'access',
     }
   }
 
@@ -560,12 +670,14 @@ namespace GlobalTaggingV1 {
     tagName?: string;
     /** An array of tag names to detach. */
     tagNames?: string[];
+    /** The user on whose behalf the detach operation must be performed (_for administrators only_). */
+    impersonateUser?: string;
     /** The ID of the billing account where the resources to be un-tagged lives. It is a required parameter if
      *  `tag_type` is set to `service`, otherwise it is inferred from the authorization IAM token.
      */
     accountId?: string;
-    /** The type of the tag. Supported values are `user` and `service`. `service` is not supported for
-     *  `providers=ims`.
+    /** The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not
+     *  supported for IMS resources.
      */
     tagType?: DetachTagConstants.TagType | string;
     headers?: OutgoingHttpHeaders;
@@ -573,16 +685,31 @@ namespace GlobalTaggingV1 {
 
   /** Constants for the `detachTag` operation. */
   export namespace DetachTagConstants {
-    /** The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`. */
+    /** The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported for IMS resources. */
     export enum TagType {
       USER = 'user',
       SERVICE = 'service',
+      ACCESS = 'access',
     }
   }
 
   /*************************
    * model interfaces
    ************************/
+
+  /** Results of a create tag(s) request. */
+  export interface CreateTagResults {
+    /** Array of results of an set_tags request. */
+    results?: CreateTagResultsResultsItem[];
+  }
+
+  /** CreateTagResultsResultsItem. */
+  export interface CreateTagResultsResultsItem {
+    /** The name of the tag created. */
+    tag_name?: string;
+    /** true if the tag was not created. */
+    is_error?: boolean;
+  }
 
   /** Results of a delete_tag request. */
   export interface DeleteTagResults {

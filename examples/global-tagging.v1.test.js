@@ -44,7 +44,11 @@ const originalWarn = console.warn
 const consoleLogMock = jest.spyOn(console, 'log');
 const consoleWarnMock = jest.spyOn(console, 'warn');
 
+// testcase timeout value (30s).
+const timeout = 30000;
+
 describe('GlobalTaggingV1', () => {
+  jest.setTimeout(timeout);
 
   // begin-common
 
@@ -55,6 +59,34 @@ describe('GlobalTaggingV1', () => {
   const config = readExternalSources(GlobalTaggingV1.DEFAULT_SERVICE_NAME);
 
   let resourceCrn = config.resourceCrn;
+
+  test('createTag request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      originalLog(output);
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+
+    // begin-create_tag
+
+    const params = {
+      tagNames: ['env:example-access-tag'],
+      tagType: 'access',
+    };
+
+    globalTaggingService.createTag(params)
+      .then(res => {
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err)
+      });
+
+    // end-create_tag
+  });
 
   test('listTags request example', done => {
 
@@ -68,7 +100,11 @@ describe('GlobalTaggingV1', () => {
     // begin-list_tags
 
     const params = {
+      tagType: 'user',
       attachedOnly: true,
+      fullData: true,
+      providers: ['ghost'],
+      orderByName: 'asc',
     };
 
     globalTaggingService.listTags(params)
@@ -99,6 +135,7 @@ describe('GlobalTaggingV1', () => {
     const params = {
       resources: [resourceModel],
       tagNames: ["tag_test_1", "tag_test_2"],
+      tagType: 'user',
     };
 
     globalTaggingService.attachTag(params)
@@ -129,6 +166,7 @@ describe('GlobalTaggingV1', () => {
     const params = {
       resources: [resourceModel],
       tagNames: ["tag_test_1", "tag_test_2"],
+      tagType: 'user',
     };
 
     globalTaggingService.detachTag(params)
@@ -153,7 +191,8 @@ describe('GlobalTaggingV1', () => {
     // begin-delete_tag
 
     const params = {
-      tagName: "tag_test_1",
+      tagName: 'env:example-access-tag',
+      tagType: 'access',
     };
 
     globalTaggingService.deleteTag(params)
@@ -177,7 +216,11 @@ describe('GlobalTaggingV1', () => {
 
     // begin-delete_tag_all
 
-    globalTaggingService.deleteTagAll({})
+    const params = {
+      tagType: 'access',
+    };
+
+    globalTaggingService.deleteTagAll(params)
       .then(res => {
         console.log(JSON.stringify(res.result, null, 2));
       })

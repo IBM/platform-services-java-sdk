@@ -16,30 +16,30 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Result of an attach_tag or detach_tag request for a tagged resource.
+ * CreateTagResultsResultsItem.
  */
-public class TagResultsItem extends GenericModel {
+public class CreateTagResultsResultsItem extends GenericModel {
 
-  @SerializedName("resource_id")
-  protected String resourceId;
+  @SerializedName("tag_name")
+  protected String tagName;
   @SerializedName("is_error")
   protected Boolean isError;
 
   /**
-   * Gets the resourceId.
+   * Gets the tagName.
    *
-   * The CRN or IMS ID of the resource.
+   * The name of the tag created.
    *
-   * @return the resourceId
+   * @return the tagName
    */
-  public String getResourceId() {
-    return resourceId;
+  public String getTagName() {
+    return tagName;
   }
 
   /**
    * Gets the isError.
    *
-   * It is `true` if the operation exits with an error.
+   * true if the tag was not created.
    *
    * @return the isError
    */

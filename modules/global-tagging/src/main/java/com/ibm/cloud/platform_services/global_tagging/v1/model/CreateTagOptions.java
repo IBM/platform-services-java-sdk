@@ -12,37 +12,25 @@
  */
 package com.ibm.cloud.platform_services.global_tagging.v1.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The deleteTagAll options.
+ * The createTag options.
  */
-public class DeleteTagAllOptions extends GenericModel {
+public class CreateTagOptions extends GenericModel {
 
   /**
-   * Select a provider. Supported values are `ghost` and `ims`.
-   */
-  public interface Providers {
-    /** ghost. */
-    String GHOST = "ghost";
-    /** ims. */
-    String IMS = "ims";
-  }
-
-  /**
-   * The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported
-   * for IMS resources (`providers` parameter set to `ims`).
+   * The type of the tags you want to create. The only allowed value is `access`.
    */
   public interface TagType {
-    /** user. */
-    String USER = "user";
-    /** service. */
-    String SERVICE = "service";
     /** access. */
     String ACCESS = "access";
   }
 
-  protected String providers;
+  protected List<String> tagNames;
   protected String impersonateUser;
   protected String accountId;
   protected String tagType;
@@ -51,16 +39,16 @@ public class DeleteTagAllOptions extends GenericModel {
    * Builder.
    */
   public static class Builder {
-    private String providers;
+    private List<String> tagNames;
     private String impersonateUser;
     private String accountId;
     private String tagType;
 
-    private Builder(DeleteTagAllOptions deleteTagAllOptions) {
-      this.providers = deleteTagAllOptions.providers;
-      this.impersonateUser = deleteTagAllOptions.impersonateUser;
-      this.accountId = deleteTagAllOptions.accountId;
-      this.tagType = deleteTagAllOptions.tagType;
+    private Builder(CreateTagOptions createTagOptions) {
+      this.tagNames = createTagOptions.tagNames;
+      this.impersonateUser = createTagOptions.impersonateUser;
+      this.accountId = createTagOptions.accountId;
+      this.tagType = createTagOptions.tagType;
     }
 
     /**
@@ -70,22 +58,48 @@ public class DeleteTagAllOptions extends GenericModel {
     }
 
     /**
-     * Builds a DeleteTagAllOptions.
+     * Instantiates a new builder with required properties.
      *
-     * @return the new DeleteTagAllOptions instance
+     * @param tagNames the tagNames
      */
-    public DeleteTagAllOptions build() {
-      return new DeleteTagAllOptions(this);
+    public Builder(List<String> tagNames) {
+      this.tagNames = tagNames;
     }
 
     /**
-     * Set the providers.
+     * Builds a CreateTagOptions.
      *
-     * @param providers the providers
-     * @return the DeleteTagAllOptions builder
+     * @return the new CreateTagOptions instance
      */
-    public Builder providers(String providers) {
-      this.providers = providers;
+    public CreateTagOptions build() {
+      return new CreateTagOptions(this);
+    }
+
+    /**
+     * Adds an tagNames to tagNames.
+     *
+     * @param tagNames the new tagNames
+     * @return the CreateTagOptions builder
+     */
+    public Builder addTagNames(String tagNames) {
+      com.ibm.cloud.sdk.core.util.Validator.notNull(tagNames,
+        "tagNames cannot be null");
+      if (this.tagNames == null) {
+        this.tagNames = new ArrayList<String>();
+      }
+      this.tagNames.add(tagNames);
+      return this;
+    }
+
+    /**
+     * Set the tagNames.
+     * Existing tagNames will be replaced.
+     *
+     * @param tagNames the tagNames
+     * @return the CreateTagOptions builder
+     */
+    public Builder tagNames(List<String> tagNames) {
+      this.tagNames = tagNames;
       return this;
     }
 
@@ -93,7 +107,7 @@ public class DeleteTagAllOptions extends GenericModel {
      * Set the impersonateUser.
      *
      * @param impersonateUser the impersonateUser
-     * @return the DeleteTagAllOptions builder
+     * @return the CreateTagOptions builder
      */
     public Builder impersonateUser(String impersonateUser) {
       this.impersonateUser = impersonateUser;
@@ -104,7 +118,7 @@ public class DeleteTagAllOptions extends GenericModel {
      * Set the accountId.
      *
      * @param accountId the accountId
-     * @return the DeleteTagAllOptions builder
+     * @return the CreateTagOptions builder
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
@@ -115,7 +129,7 @@ public class DeleteTagAllOptions extends GenericModel {
      * Set the tagType.
      *
      * @param tagType the tagType
-     * @return the DeleteTagAllOptions builder
+     * @return the CreateTagOptions builder
      */
     public Builder tagType(String tagType) {
       this.tagType = tagType;
@@ -123,8 +137,10 @@ public class DeleteTagAllOptions extends GenericModel {
     }
   }
 
-  protected DeleteTagAllOptions(Builder builder) {
-    providers = builder.providers;
+  protected CreateTagOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.tagNames,
+      "tagNames cannot be null");
+    tagNames = builder.tagNames;
     impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
     tagType = builder.tagType;
@@ -133,27 +149,27 @@ public class DeleteTagAllOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a DeleteTagAllOptions builder
+   * @return a CreateTagOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);
   }
 
   /**
-   * Gets the providers.
+   * Gets the tagNames.
    *
-   * Select a provider. Supported values are `ghost` and `ims`.
+   * An array of tag names to create.
    *
-   * @return the providers
+   * @return the tagNames
    */
-  public String providers() {
-    return providers;
+  public List<String> tagNames() {
+    return tagNames;
   }
 
   /**
    * Gets the impersonateUser.
    *
-   * The user on whose behalf the delete all operation must be performed (_for administrators only_).
+   * The user on whose behalf the create operation must be performed (_for administrators only_).
    *
    * @return the impersonateUser
    */
@@ -164,8 +180,8 @@ public class DeleteTagAllOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The ID of the billing account to delete the tags for. If it is not set, then it is taken from the authorization
-   * token. It is a required parameter if `tag_type` is set to `service`.
+   * The ID of the billing account where the tag must be created. It is a required parameter if `impersonate_user` is
+   * set.
    *
    * @return the accountId
    */
@@ -176,8 +192,7 @@ public class DeleteTagAllOptions extends GenericModel {
   /**
    * Gets the tagType.
    *
-   * The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported
-   * for IMS resources (`providers` parameter set to `ims`).
+   * The type of the tags you want to create. The only allowed value is `access`.
    *
    * @return the tagType
    */

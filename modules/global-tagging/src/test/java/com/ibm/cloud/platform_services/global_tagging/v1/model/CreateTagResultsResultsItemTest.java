@@ -13,43 +13,26 @@
 
 package com.ibm.cloud.platform_services.global_tagging.v1.model;
 
-import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagResultsResultsItem;
 import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the DeleteTagOptions model.
+ * Unit test class for the CreateTagResultsResultsItem model.
  */
-public class DeleteTagOptionsTest {
+public class CreateTagResultsResultsItemTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testDeleteTagOptions() throws Throwable {
-    DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
-      .tagName("testString")
-      .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
-      .impersonateUser("testString")
-      .accountId("testString")
-      .tagType("user")
-      .build();
-    assertEquals(deleteTagOptionsModel.tagName(), "testString");
-    assertEquals(deleteTagOptionsModel.providers(), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
-    assertEquals(deleteTagOptionsModel.impersonateUser(), "testString");
-    assertEquals(deleteTagOptionsModel.accountId(), "testString");
-    assertEquals(deleteTagOptionsModel.tagType(), "user");
+  public void testCreateTagResultsResultsItem() throws Throwable {
+    CreateTagResultsResultsItem createTagResultsResultsItemModel = new CreateTagResultsResultsItem();
+    assertNull(createTagResultsResultsItemModel.getTagName());
+    assertNull(createTagResultsResultsItemModel.isIsError());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeleteTagOptionsError() throws Throwable {
-    new DeleteTagOptions.Builder().build();
-  }
-
 }

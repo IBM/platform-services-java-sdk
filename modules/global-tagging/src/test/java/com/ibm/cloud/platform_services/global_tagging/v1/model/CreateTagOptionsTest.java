@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_tagging.v1.model;
 
-import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -25,31 +25,29 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the DeleteTagOptions model.
+ * Unit test class for the CreateTagOptions model.
  */
-public class DeleteTagOptionsTest {
+public class CreateTagOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testDeleteTagOptions() throws Throwable {
-    DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
-      .tagName("testString")
-      .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
+  public void testCreateTagOptions() throws Throwable {
+    CreateTagOptions createTagOptionsModel = new CreateTagOptions.Builder()
+      .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .impersonateUser("testString")
       .accountId("testString")
-      .tagType("user")
+      .tagType("access")
       .build();
-    assertEquals(deleteTagOptionsModel.tagName(), "testString");
-    assertEquals(deleteTagOptionsModel.providers(), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
-    assertEquals(deleteTagOptionsModel.impersonateUser(), "testString");
-    assertEquals(deleteTagOptionsModel.accountId(), "testString");
-    assertEquals(deleteTagOptionsModel.tagType(), "user");
+    assertEquals(createTagOptionsModel.tagNames(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(createTagOptionsModel.impersonateUser(), "testString");
+    assertEquals(createTagOptionsModel.accountId(), "testString");
+    assertEquals(createTagOptionsModel.tagType(), "access");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeleteTagOptionsError() throws Throwable {
-    new DeleteTagOptions.Builder().build();
+  public void testCreateTagOptionsError() throws Throwable {
+    new CreateTagOptions.Builder().build();
   }
 
 }

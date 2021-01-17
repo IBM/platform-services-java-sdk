@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -30,17 +30,21 @@ public class DeleteTagOptions extends GenericModel {
   }
 
   /**
-   * The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`.
+   * The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported
+   * for IMS resources (`providers` parameter set to `ims`).
    */
   public interface TagType {
     /** user. */
     String USER = "user";
     /** service. */
     String SERVICE = "service";
+    /** access. */
+    String ACCESS = "access";
   }
 
   protected String tagName;
   protected List<String> providers;
+  protected String impersonateUser;
   protected String accountId;
   protected String tagType;
 
@@ -50,12 +54,14 @@ public class DeleteTagOptions extends GenericModel {
   public static class Builder {
     private String tagName;
     private List<String> providers;
+    private String impersonateUser;
     private String accountId;
     private String tagType;
 
     private Builder(DeleteTagOptions deleteTagOptions) {
       this.tagName = deleteTagOptions.tagName;
       this.providers = deleteTagOptions.providers;
+      this.impersonateUser = deleteTagOptions.impersonateUser;
       this.accountId = deleteTagOptions.accountId;
       this.tagType = deleteTagOptions.tagType;
     }
@@ -124,6 +130,17 @@ public class DeleteTagOptions extends GenericModel {
     }
 
     /**
+     * Set the impersonateUser.
+     *
+     * @param impersonateUser the impersonateUser
+     * @return the DeleteTagOptions builder
+     */
+    public Builder impersonateUser(String impersonateUser) {
+      this.impersonateUser = impersonateUser;
+      return this;
+    }
+
+    /**
      * Set the accountId.
      *
      * @param accountId the accountId
@@ -151,6 +168,7 @@ public class DeleteTagOptions extends GenericModel {
       "tagName cannot be empty");
     tagName = builder.tagName;
     providers = builder.providers;
+    impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
     tagType = builder.tagType;
   }
@@ -187,6 +205,17 @@ public class DeleteTagOptions extends GenericModel {
   }
 
   /**
+   * Gets the impersonateUser.
+   *
+   * The user on whose behalf the delete operation must be performed (_for administrators only_).
+   *
+   * @return the impersonateUser
+   */
+  public String impersonateUser() {
+    return impersonateUser;
+  }
+
+  /**
    * Gets the accountId.
    *
    * The ID of the billing account to delete the tag for. It is a required parameter if `tag_type` is set to `service`,
@@ -201,7 +230,8 @@ public class DeleteTagOptions extends GenericModel {
   /**
    * Gets the tagType.
    *
-   * The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`.
+   * The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported
+   * for IMS resources (`providers` parameter set to `ims`).
    *
    * @return the tagType
    */

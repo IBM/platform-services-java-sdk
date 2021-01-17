@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,18 +23,22 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class DetachTagOptions extends GenericModel {
 
   /**
-   * The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`.
+   * The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported
+   * for IMS resources.
    */
   public interface TagType {
     /** user. */
     String USER = "user";
     /** service. */
     String SERVICE = "service";
+    /** access. */
+    String ACCESS = "access";
   }
 
   protected List<Resource> resources;
   protected String tagName;
   protected List<String> tagNames;
+  protected String impersonateUser;
   protected String accountId;
   protected String tagType;
 
@@ -45,6 +49,7 @@ public class DetachTagOptions extends GenericModel {
     private List<Resource> resources;
     private String tagName;
     private List<String> tagNames;
+    private String impersonateUser;
     private String accountId;
     private String tagType;
 
@@ -52,6 +57,7 @@ public class DetachTagOptions extends GenericModel {
       this.resources = detachTagOptions.resources;
       this.tagName = detachTagOptions.tagName;
       this.tagNames = detachTagOptions.tagNames;
+      this.impersonateUser = detachTagOptions.impersonateUser;
       this.accountId = detachTagOptions.accountId;
       this.tagType = detachTagOptions.tagType;
     }
@@ -148,6 +154,17 @@ public class DetachTagOptions extends GenericModel {
     }
 
     /**
+     * Set the impersonateUser.
+     *
+     * @param impersonateUser the impersonateUser
+     * @return the DetachTagOptions builder
+     */
+    public Builder impersonateUser(String impersonateUser) {
+      this.impersonateUser = impersonateUser;
+      return this;
+    }
+
+    /**
      * Set the accountId.
      *
      * @param accountId the accountId
@@ -176,6 +193,7 @@ public class DetachTagOptions extends GenericModel {
     resources = builder.resources;
     tagName = builder.tagName;
     tagNames = builder.tagNames;
+    impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
     tagType = builder.tagType;
   }
@@ -223,6 +241,17 @@ public class DetachTagOptions extends GenericModel {
   }
 
   /**
+   * Gets the impersonateUser.
+   *
+   * The user on whose behalf the detach operation must be performed (_for administrators only_).
+   *
+   * @return the impersonateUser
+   */
+  public String impersonateUser() {
+    return impersonateUser;
+  }
+
+  /**
    * Gets the accountId.
    *
    * The ID of the billing account where the resources to be un-tagged lives. It is a required parameter if `tag_type`
@@ -237,7 +266,8 @@ public class DetachTagOptions extends GenericModel {
   /**
    * Gets the tagType.
    *
-   * The type of the tag. Supported values are `user` and `service`. `service` is not supported for `providers=ims`.
+   * The type of the tag. Supported values are `user`, `service` and `access`. `service` and `access` are not supported
+   * for IMS resources.
    *
    * @return the tagType
    */

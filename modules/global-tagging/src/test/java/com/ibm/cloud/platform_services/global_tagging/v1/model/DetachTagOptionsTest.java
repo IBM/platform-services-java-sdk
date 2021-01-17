@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -45,12 +45,14 @@ public class DetachTagOptionsTest {
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
       .tagName("testString")
       .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
     assertEquals(detachTagOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
     assertEquals(detachTagOptionsModel.tagName(), "testString");
     assertEquals(detachTagOptionsModel.tagNames(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(detachTagOptionsModel.impersonateUser(), "testString");
     assertEquals(detachTagOptionsModel.accountId(), "testString");
     assertEquals(detachTagOptionsModel.tagType(), "user");
   }

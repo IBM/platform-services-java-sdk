@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,13 +23,15 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class ListTagsOptions extends GenericModel {
 
   /**
-   * The type of the tag you want to list. Supported values are `user` and `service`.
+   * The type of the tag you want to list. Supported values are `user`, `service` and `access`.
    */
   public interface TagType {
     /** user. */
     String USER = "user";
     /** service. */
     String SERVICE = "service";
+    /** access. */
+    String ACCESS = "access";
   }
 
   public interface Providers {
@@ -49,6 +51,7 @@ public class ListTagsOptions extends GenericModel {
     String DESC = "desc";
   }
 
+  protected String impersonateUser;
   protected String accountId;
   protected String tagType;
   protected Boolean fullData;
@@ -64,6 +67,7 @@ public class ListTagsOptions extends GenericModel {
    * Builder.
    */
   public static class Builder {
+    private String impersonateUser;
     private String accountId;
     private String tagType;
     private Boolean fullData;
@@ -76,6 +80,7 @@ public class ListTagsOptions extends GenericModel {
     private Boolean attachedOnly;
 
     private Builder(ListTagsOptions listTagsOptions) {
+      this.impersonateUser = listTagsOptions.impersonateUser;
       this.accountId = listTagsOptions.accountId;
       this.tagType = listTagsOptions.tagType;
       this.fullData = listTagsOptions.fullData;
@@ -116,6 +121,17 @@ public class ListTagsOptions extends GenericModel {
         this.providers = new ArrayList<String>();
       }
       this.providers.add(providers);
+      return this;
+    }
+
+    /**
+     * Set the impersonateUser.
+     *
+     * @param impersonateUser the impersonateUser
+     * @return the ListTagsOptions builder
+     */
+    public Builder impersonateUser(String impersonateUser) {
+      this.impersonateUser = impersonateUser;
       return this;
     }
 
@@ -232,6 +248,7 @@ public class ListTagsOptions extends GenericModel {
   }
 
   protected ListTagsOptions(Builder builder) {
+    impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
     tagType = builder.tagType;
     fullData = builder.fullData;
@@ -254,6 +271,17 @@ public class ListTagsOptions extends GenericModel {
   }
 
   /**
+   * Gets the impersonateUser.
+   *
+   * The user on whose behalf the get operation must be performed (_for administrators only_).
+   *
+   * @return the impersonateUser
+   */
+  public String impersonateUser() {
+    return impersonateUser;
+  }
+
+  /**
    * Gets the accountId.
    *
    * The ID of the billing account to list the tags for. If it is not set, then it is taken from the authorization
@@ -268,7 +296,7 @@ public class ListTagsOptions extends GenericModel {
   /**
    * Gets the tagType.
    *
-   * The type of the tag you want to list. Supported values are `user` and `service`.
+   * The type of the tag you want to list. Supported values are `user`, `service` and `access`.
    *
    * @return the tagType
    */
@@ -292,8 +320,8 @@ public class ListTagsOptions extends GenericModel {
    * Gets the providers.
    *
    * Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and infrastructure tags use
-   * `ghost,ims`. `service` tags can only be attached to GhoST onboarded resources, so you don't need to set this
-   * parameter when listing `service` tags.
+   * `ghost,ims`. `service` and `access` tags can only be attached to GhoST onboarded resources, so you should not set
+   * this parameter when listing them.
    *
    * @return the providers
    */

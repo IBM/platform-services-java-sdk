@@ -14,6 +14,8 @@
 package com.ibm.cloud.platform_services.global_tagging.v1;
 
 import com.ibm.cloud.platform_services.global_tagging.v1.model.AttachTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagResults;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagAllOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagResults;
@@ -58,9 +60,29 @@ public class GlobalTaggingExamples {
         String resourceCRN = config.get("RESOURCE_CRN");
 
         try {
+            // begin-create_tag
+            CreateTagOptions createTagOptions = new CreateTagOptions.Builder()
+                    .addTagNames("env:example-access-tag")
+                    .tagType("access")
+                    .build();
+
+            Response<CreateTagResults> response = service.createTag(createTagOptions).execute();
+            CreateTagResults createTagResults = response.getResult();
+            System.out.println(createTagResults);
+            // end-create_tag
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
             // begin-list_tags
             ListTagsOptions listTagsOptions = new ListTagsOptions.Builder()
+                    .tagType("user")
                     .attachedOnly(true)
+                    .fullData(true)
+                    .addProviders("ghost")
+                    .orderByName("asc")
                     .build();
 
             Response<TagList> response = service.listTags(listTagsOptions).execute();
@@ -74,9 +96,7 @@ public class GlobalTaggingExamples {
 
         try {
             // begin-attach_tag
-            Resource resourceModel = new Resource.Builder()
-                    .resourceId(resourceCRN)
-                    .build();
+            Resource resourceModel = new Resource.Builder().resourceId(resourceCRN).build();
             AttachTagOptions attachTagOptions = new AttachTagOptions.Builder()
                     .addResources(resourceModel)
                     .addTagNames("tag_test_1")
@@ -94,13 +114,12 @@ public class GlobalTaggingExamples {
 
         try {
             // begin-detach_tag
-            Resource resourceModel = new Resource.Builder()
-                    .resourceId(resourceCRN)
-                    .build();
+            Resource resourceModel = new Resource.Builder().resourceId(resourceCRN).build();
             DetachTagOptions detachTagOptions = new DetachTagOptions.Builder()
                     .addResources(resourceModel)
                     .addTagNames("tag_test_1")
                     .addTagNames("tag_test_2")
+                    .tagType("user")
                     .build();
 
             Response<TagResults> response = service.detachTag(detachTagOptions).execute();
@@ -115,7 +134,8 @@ public class GlobalTaggingExamples {
         try {
             // begin-delete_tag
             DeleteTagOptions deleteTagOptions = new DeleteTagOptions.Builder()
-                    .tagName("tag_test_1")
+                    .tagName("env:example-access-tag")
+                    .tagType("access")
                     .build();
 
             Response<DeleteTagResults> response = service.deleteTag(deleteTagOptions).execute();
@@ -129,7 +149,9 @@ public class GlobalTaggingExamples {
 
         try {
             // begin-delete_tag_all
-            DeleteTagAllOptions deleteTagAllOptions = new DeleteTagAllOptions.Builder().build();
+            DeleteTagAllOptions deleteTagAllOptions = new DeleteTagAllOptions.Builder()
+                    .tagType("user")
+                    .build();
 
             Response<DeleteTagsResult> response = service.deleteTagAll(deleteTagAllOptions).execute();
             DeleteTagsResult deleteTagsResult = response.getResult();

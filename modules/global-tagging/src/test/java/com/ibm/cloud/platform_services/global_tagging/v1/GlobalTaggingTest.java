@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,6 +14,9 @@ package com.ibm.cloud.platform_services.global_tagging.v1;
 
 import com.ibm.cloud.platform_services.global_tagging.v1.GlobalTagging;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.AttachTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagResults;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagResultsResultsItem;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagAllOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagResults;
@@ -108,6 +111,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
 
     // Construct an instance of the ListTagsOptions model
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
+    .impersonateUser("testString")
     .accountId("testString")
     .tagType("user")
     .fullData(true)
@@ -135,6 +139,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
+    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
     assertEquals(Boolean.valueOf(query.get("full_data")), Boolean.valueOf(true));
@@ -148,6 +153,62 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listTagsPath);
+  }
+
+  @Test
+  public void testCreateTagWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"results\": [{\"tag_name\": \"tagName\", \"is_error\": false}]}";
+    String createTagPath = "/v3/tags";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the CreateTagOptions model
+    CreateTagOptions createTagOptionsModel = new CreateTagOptions.Builder()
+    .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .impersonateUser("testString")
+    .accountId("testString")
+    .tagType("access")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<CreateTagResults> response = globalTaggingService.createTag(createTagOptionsModel).execute();
+    assertNotNull(response);
+    CreateTagResults responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    // Get query params
+    assertEquals(query.get("impersonate_user"), "testString");
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("tag_type"), "access");
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createTagPath);
+  }
+
+  // Test the createTag operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateTagNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    globalTaggingService.createTag(null).execute();
   }
 
   @Test
@@ -166,6 +227,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     // Construct an instance of the DeleteTagAllOptions model
     DeleteTagAllOptions deleteTagAllOptionsModel = new DeleteTagAllOptions.Builder()
     .providers("ghost")
+    .impersonateUser("testString")
     .accountId("testString")
     .tagType("user")
     .build();
@@ -186,6 +248,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(query.get("providers"), "ghost");
+    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
     // Check request path
@@ -210,6 +273,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
     .tagName("testString")
     .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
+    .impersonateUser("testString")
     .accountId("testString")
     .tagType("user")
     .build();
@@ -230,6 +294,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(query.get("providers"), RequestUtils.join(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")), ","));
+    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
     // Check request path
@@ -273,6 +338,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
     .tagName("testString")
     .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .impersonateUser("testString")
     .accountId("testString")
     .tagType("user")
     .build();
@@ -292,6 +358,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
+    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
     // Check request path
@@ -335,6 +402,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
     .tagName("testString")
     .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .impersonateUser("testString")
     .accountId("testString")
     .tagType("user")
     .build();
@@ -354,6 +422,7 @@ public class GlobalTaggingTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
+    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
     // Check request path

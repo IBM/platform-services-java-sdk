@@ -12,39 +12,26 @@
  */
 package com.ibm.cloud.platform_services.global_tagging.v1.model;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
+
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Result of an attach_tag or detach_tag request for a tagged resource.
+ * Results of a create tag(s) request.
  */
-public class TagResultsItem extends GenericModel {
+public class CreateTagResults extends GenericModel {
 
-  @SerializedName("resource_id")
-  protected String resourceId;
-  @SerializedName("is_error")
-  protected Boolean isError;
+  protected List<CreateTagResultsResultsItem> results;
 
   /**
-   * Gets the resourceId.
+   * Gets the results.
    *
-   * The CRN or IMS ID of the resource.
+   * Array of results of an set_tags request.
    *
-   * @return the resourceId
+   * @return the results
    */
-  public String getResourceId() {
-    return resourceId;
-  }
-
-  /**
-   * Gets the isError.
-   *
-   * It is `true` if the operation exits with an error.
-   *
-   * @return the isError
-   */
-  public Boolean isIsError() {
-    return isError;
+  public List<CreateTagResultsResultsItem> getResults() {
+    return results;
   }
 }
 

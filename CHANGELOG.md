@@ -1,3 +1,10 @@
+## [0.17.5](https://github.com/IBM/platform-services-java-sdk/compare/0.17.4...0.17.5) (2021-01-19)
+
+
+### Bug Fixes
+
+* **Global Tagging:** update service after recent API changes ([58606f7](https://github.com/IBM/platform-services-java-sdk/commit/58606f7beeb9e567cd7ba83fda498a1a8fad3a4f))
+
 ## [0.17.4](https://github.com/IBM/platform-services-java-sdk/compare/0.17.3...0.17.4) (2021-01-14)
 
 

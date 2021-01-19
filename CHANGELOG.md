@@ -1,3 +1,10 @@
+## [0.17.7](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.6...v0.17.7) (2021-01-19)
+
+
+### Bug Fixes
+
+* **Global Tagging:** update service after recent API changes ([f1b98c2](https://github.com/IBM/platform-services-node-sdk/commit/f1b98c2411bcac29bded41a3eb503ce5611426ed))
+
 ## [0.17.6](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.5...v0.17.6) (2021-01-14)
 
 

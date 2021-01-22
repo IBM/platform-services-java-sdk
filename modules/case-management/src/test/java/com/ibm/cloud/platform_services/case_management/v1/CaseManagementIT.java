@@ -12,6 +12,19 @@
  */
 package com.ibm.cloud.platform_services.case_management.v1;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.case_management.v1.model.AddCommentOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.AddResourceOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.AddWatchlistOptions;
@@ -28,6 +41,7 @@ import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.Offering;
 import com.ibm.cloud.platform_services.case_management.v1.model.OfferingType;
 import com.ibm.cloud.platform_services.case_management.v1.model.ResolvePayload;
+import com.ibm.cloud.platform_services.case_management.v1.model.Resource;
 import com.ibm.cloud.platform_services.case_management.v1.model.UpdateCaseStatusOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.UploadFileOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.User;
@@ -35,27 +49,15 @@ import com.ibm.cloud.platform_services.case_management.v1.model.WatchlistAddResp
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.BadRequestException;
-import com.ibm.cloud.sdk.core.service.exception.InternalServerErrorException;
 import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 /**
  * Integration test class for the Case Management service
  */
 public class CaseManagementIT extends SdkIntegrationTestBase {
+
+    private static final String CRN = "crn:v1:staging:public:cloud-object-storage:global:a/19c52e57800c4d8bb9aefc66b3e49755:61848e72-6ba6-415e-84e2-91f3915e194d::";
 
     protected CaseManagement service;
 
@@ -259,7 +261,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
     }
 
     @Test (dependsOnMethods = {"testCreateCase"})
-    public void testAddWatchListMember() {
+    public void testAddWatchList() {
 
         // Users can be retrieved via the User Management API.
         User testUser = getWatchListModel();
@@ -347,19 +349,20 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         log("deleteFile() result:\n" + responseObj.toString());
     }
 
-    @Test (dependsOnMethods = {"testCreateCase"}, expectedExceptions = {InternalServerErrorException.class})
+    @Test (dependsOnMethods = {"testCreateCase"})
     public void testAddResource() {
 
-        // Adding a resource requires a valid CRN (Cloud Resource Name)
-        // CRN's can be retrieved via the Search and Tagging API
-        String invalidCrn = "invalid:crn";
         AddResourceOptions addResourceOptionsModel = new AddResourceOptions.Builder()
             .caseNumber(newCaseNumber)
-            .crn(invalidCrn)
+            .crn(CRN)
             .note("Test resource")
             .build();
 
-        service.addResource(addResourceOptionsModel).execute();
+        Response<Resource> response = service.addResource(addResourceOptionsModel).execute();
+        assertNotNull(response);
+        Resource responseObj = response.getResult();
+        assertNotNull(responseObj);
+        log("addResource() result:\n" + responseObj.toString());
     }
 
     @Test (dependsOnMethods = {"testDeleteFile", "testAddResource"})

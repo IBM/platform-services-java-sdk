@@ -51,11 +51,7 @@ describe('CaseManagementV1_integration', () => {
   const watchlistPayload = [
     {
       realm: 'IBMid',
-      user_id: 'ashwini.pc@ibm.com',
-    },
-    {
-      realm: 'IBMid',
-      user_id: 'bqegarci@us.ibm.com',
+      user_id: 'abc@ibm.com',
     },
   ];
 
@@ -299,14 +295,16 @@ describe('CaseManagementV1_integration', () => {
       response = undefined;
     });
 
-    test('Successfully added users to case watchlist', async done => {
+    test('Successfully added user to case watchlist', async done => {
       try {
         response = await service.addWatchlist(params);
         expect(response).toBeDefined();
         expect(response.status).toEqual(200);
 
         const { result } = response || {};
-        expect(result.added.length).toEqual(params.watchlist.length);
+
+        // We expect the call to fail because the fake user is not associated with the account.
+        expect(result.failed.length).toEqual(params.watchlist.length);
         done();
       } catch (err) {
         done(err);

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -28,6 +28,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyReso
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Role;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
@@ -101,7 +102,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testListPoliciesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"policies\": [{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"policies\": [{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listPoliciesPath = "/v1/policies";
 
     server.enqueue(new MockResponse()
@@ -119,6 +120,8 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .accessGroupId("testString")
     .type("testString")
     .serviceType("testString")
+    .tagName("testString")
+    .tagValue("testString")
     .sort("testString")
     .format("testString")
     .build();
@@ -143,6 +146,8 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     assertEquals(query.get("access_group_id"), "testString");
     assertEquals(query.get("type"), "testString");
     assertEquals(query.get("service_type"), "testString");
+    assertEquals(query.get("tag_name"), "testString");
+    assertEquals(query.get("tag_value"), "testString");
     assertEquals(query.get("sort"), "testString");
     assertEquals(query.get("format"), "testString");
     // Check request path
@@ -165,7 +170,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testCreatePolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createPolicyPath = "/v1/policies";
 
     server.enqueue(new MockResponse()
@@ -198,9 +203,17 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .operator("testString")
     .build();
 
+    // Construct an instance of the ResourceTag model
+    ResourceTag resourceTagModel = new ResourceTag.Builder()
+    .name("testString")
+    .value("testString")
+    .operator("testString")
+    .build();
+
     // Construct an instance of the PolicyResource model
     PolicyResource policyResourceModel = new PolicyResource.Builder()
     .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+    .tags(new java.util.ArrayList<ResourceTag>(java.util.Arrays.asList(resourceTagModel)))
     .build();
 
     // Construct an instance of the CreatePolicyOptions model
@@ -248,7 +261,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testUpdatePolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String updatePolicyPath = "/v1/policies/testString";
 
     server.enqueue(new MockResponse()
@@ -281,9 +294,17 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .operator("testString")
     .build();
 
+    // Construct an instance of the ResourceTag model
+    ResourceTag resourceTagModel = new ResourceTag.Builder()
+    .name("testString")
+    .value("testString")
+    .operator("testString")
+    .build();
+
     // Construct an instance of the PolicyResource model
     PolicyResource policyResourceModel = new PolicyResource.Builder()
     .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+    .tags(new java.util.ArrayList<ResourceTag>(java.util.Arrays.asList(resourceTagModel)))
     .build();
 
     // Construct an instance of the UpdatePolicyOptions model
@@ -333,7 +354,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testGetPolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getPolicyPath = "/v1/policies/testString";
 
     server.enqueue(new MockResponse()
@@ -433,7 +454,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testListRolesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"custom_roles\": [{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}], \"service_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}], \"system_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}]}";
+    String mockResponseBody = "{\"custom_roles\": [{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}], \"service_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}], \"system_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}]}";
     String listRolesPath = "/v2/roles";
 
     server.enqueue(new MockResponse()
@@ -475,7 +496,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testCreateRoleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
     String createRolePath = "/v2/roles";
 
     server.enqueue(new MockResponse()
@@ -531,7 +552,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testUpdateRoleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
     String updateRolePath = "/v2/roles/testString";
 
     server.enqueue(new MockResponse()
@@ -586,7 +607,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testGetRoleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
     String getRolePath = "/v2/roles/testString";
 
     server.enqueue(new MockResponse()

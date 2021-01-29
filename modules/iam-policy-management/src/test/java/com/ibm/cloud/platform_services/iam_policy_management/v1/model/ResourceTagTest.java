@@ -13,40 +13,45 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Role;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Role model.
+ * Unit test class for the ResourceTag model.
  */
-public class RoleTest {
+public class ResourceTagTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testRole() throws Throwable {
-    Role roleModel = new Role.Builder()
-      .displayName("testString")
-      .description("testString")
-      .actions(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+  public void testResourceTag() throws Throwable {
+    ResourceTag resourceTagModel = new ResourceTag.Builder()
+      .name("testString")
+      .value("testString")
+      .operator("testString")
       .build();
-    assertEquals(roleModel.displayName(), "testString");
-    assertEquals(roleModel.description(), "testString");
-    assertEquals(roleModel.actions(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(resourceTagModel.name(), "testString");
+    assertEquals(resourceTagModel.value(), "testString");
+    assertEquals(resourceTagModel.operator(), "testString");
 
-    String json = TestUtilities.serialize(roleModel);
+    String json = TestUtilities.serialize(resourceTagModel);
 
-    Role roleModelNew = TestUtilities.deserialize(json, Role.class);
-    assertTrue(roleModelNew instanceof Role);
-    assertEquals(roleModelNew.displayName(), "testString");
-    assertEquals(roleModelNew.description(), "testString");
+    ResourceTag resourceTagModelNew = TestUtilities.deserialize(json, ResourceTag.class);
+    assertTrue(resourceTagModelNew instanceof ResourceTag);
+    assertEquals(resourceTagModelNew.name(), "testString");
+    assertEquals(resourceTagModelNew.value(), "testString");
+    assertEquals(resourceTagModelNew.operator(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testResourceTagError() throws Throwable {
+    new ResourceTag.Builder().build();
+  }
+
 }

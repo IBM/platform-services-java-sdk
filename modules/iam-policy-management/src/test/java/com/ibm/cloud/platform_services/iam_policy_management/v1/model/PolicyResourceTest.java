@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -15,6 +15,7 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -43,10 +44,21 @@ public class PolicyResourceTest {
     assertEquals(resourceAttributeModel.value(), "testString");
     assertEquals(resourceAttributeModel.operator(), "testString");
 
+    ResourceTag resourceTagModel = new ResourceTag.Builder()
+      .name("testString")
+      .value("testString")
+      .operator("testString")
+      .build();
+    assertEquals(resourceTagModel.name(), "testString");
+    assertEquals(resourceTagModel.value(), "testString");
+    assertEquals(resourceTagModel.operator(), "testString");
+
     PolicyResource policyResourceModel = new PolicyResource.Builder()
       .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+      .tags(new java.util.ArrayList<ResourceTag>(java.util.Arrays.asList(resourceTagModel)))
       .build();
     assertEquals(policyResourceModel.attributes(), new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)));
+    assertEquals(policyResourceModel.tags(), new java.util.ArrayList<ResourceTag>(java.util.Arrays.asList(resourceTagModel)));
 
     String json = TestUtilities.serialize(policyResourceModel);
 

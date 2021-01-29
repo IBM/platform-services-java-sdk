@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b90c5f5-20210129-120415
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -95,10 +95,10 @@ public class IamPolicyManagement extends BaseService {
    * Get policies by attributes.
    *
    * Get policies and filter by attributes. While managing policies, you may want to retrieve policies in the account
-   * and filter by attribute values. This can be done through query parameters. Currently, we only support the following
-   * attributes: account_id, iam_id, access_group_id, type, and service_type. account_id is a required query parameter.
-   * Only policies that have the specified attributes and that the caller has read access to are returned. If the caller
-   * does not have read access to any policies an empty array is returned.
+   * and filter by attribute values. This can be done through query parameters. Currently, only the following attributes
+   * are supported: account_id, iam_id, access_group_id, type, service_type, sort and format. account_id is a required
+   * query parameter. Only policies that have the specified attributes and that the caller has read access to are
+   * returned. If the caller does not have read access to any policies an empty array is returned.
    *
    * @param listPoliciesOptions the {@link ListPoliciesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link PolicyList}
@@ -127,6 +127,12 @@ public class IamPolicyManagement extends BaseService {
     }
     if (listPoliciesOptions.serviceType() != null) {
       builder.query("service_type", String.valueOf(listPoliciesOptions.serviceType()));
+    }
+    if (listPoliciesOptions.tagName() != null) {
+      builder.query("tag_name", String.valueOf(listPoliciesOptions.tagName()));
+    }
+    if (listPoliciesOptions.tagValue() != null) {
+      builder.query("tag_value", String.valueOf(listPoliciesOptions.tagValue()));
     }
     if (listPoliciesOptions.sort() != null) {
       builder.query("sort", String.valueOf(listPoliciesOptions.sort()));

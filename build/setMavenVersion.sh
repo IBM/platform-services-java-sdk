@@ -8,6 +8,5 @@ if [[ -n "${TRAVIS_TAG}" ]]; then
     mvn versions:set -DnewVersion=${TRAVIS_TAG} -DgenerateBackupPoms=false
 else
     printf "\n>>>>> Bypassing artifact version setting for non-tagged build\n"
-    echo 
 fi
      

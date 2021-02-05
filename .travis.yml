@@ -19,8 +19,6 @@ cache:
 env:
   global:
     - MVN_ARGS="--settings build/.travis.settings.xml"
-    - BINTRAY_ORG=ibm-cloud-sdks
-    - BINTRAY_REPO=platform-services-java-sdk
 
 stages:
   - name: Build-Test
@@ -70,14 +68,6 @@ jobs:
         - build/publishJavadoc.sh
       after_success:
         - echo "Javadocs successfully published to gh-pages!"
-    - jdk: openjdk8
-      name: Publish-To-Bintray
-      install: true
-      script:
-        - build/setMavenVersion.sh
-        - mvn deploy $MVN_ARGS -DskipTests -P bintray
-      after_success:
-        - echo "Maven artifacts successfully published to Bintray!"
 
     - jdk: openjdk8
       name: Publish-To-Maven-Central

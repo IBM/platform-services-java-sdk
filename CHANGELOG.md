@@ -1,3 +1,10 @@
+## [0.17.6](https://github.com/IBM/platform-services-java-sdk/compare/0.17.5...0.17.6) (2021-02-04)
+
+
+### Bug Fixes
+
+* **build:** remove bintray publishing step ([ee09d57](https://github.com/IBM/platform-services-java-sdk/commit/ee09d57accb7042a948fdfdfcec8616c9ac6ff2f))
+
 ## [0.17.5](https://github.com/IBM/platform-services-java-sdk/compare/0.17.4...0.17.5) (2021-01-19)
 
 

@@ -1,3 +1,10 @@
+## [0.17.8](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.7...v0.17.8) (2021-02-09)
+
+
+### Bug Fixes
+
+* **build:** transition default branch master -> main ([ad06f76](https://github.com/IBM/platform-services-node-sdk/commit/ad06f762281c59df0d4f015f1c81cbd20932fd6f))
+
 ## [0.17.7](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.6...v0.17.7) (2021-01-19)
 
 

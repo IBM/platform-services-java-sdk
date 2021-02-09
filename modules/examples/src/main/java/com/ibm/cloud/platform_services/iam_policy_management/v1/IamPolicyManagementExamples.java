@@ -45,7 +45,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Below are examples on how to use IAM Policy Management service
+ * Below are examples on how to use IAM Policy Management service.
  *
  * The following environment variables are assumed to be defined when running examples below:
  *

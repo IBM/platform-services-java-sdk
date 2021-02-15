@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -25,7 +25,10 @@ public class ListCatalogEntriesOptions extends GenericModel {
   protected String sortBy;
   protected String descending;
   protected String languages;
-  protected String complete;
+  protected Boolean catalog;
+  protected Boolean complete;
+  protected Long offset;
+  protected Long limit;
 
   /**
    * Builder.
@@ -37,7 +40,10 @@ public class ListCatalogEntriesOptions extends GenericModel {
     private String sortBy;
     private String descending;
     private String languages;
-    private String complete;
+    private Boolean catalog;
+    private Boolean complete;
+    private Long offset;
+    private Long limit;
 
     private Builder(ListCatalogEntriesOptions listCatalogEntriesOptions) {
       this.account = listCatalogEntriesOptions.account;
@@ -46,7 +52,10 @@ public class ListCatalogEntriesOptions extends GenericModel {
       this.sortBy = listCatalogEntriesOptions.sortBy;
       this.descending = listCatalogEntriesOptions.descending;
       this.languages = listCatalogEntriesOptions.languages;
+      this.catalog = listCatalogEntriesOptions.catalog;
       this.complete = listCatalogEntriesOptions.complete;
+      this.offset = listCatalogEntriesOptions.offset;
+      this.limit = listCatalogEntriesOptions.limit;
     }
 
     /**
@@ -131,13 +140,46 @@ public class ListCatalogEntriesOptions extends GenericModel {
     }
 
     /**
+     * Set the catalog.
+     *
+     * @param catalog the catalog
+     * @return the ListCatalogEntriesOptions builder
+     */
+    public Builder catalog(Boolean catalog) {
+      this.catalog = catalog;
+      return this;
+    }
+
+    /**
      * Set the complete.
      *
      * @param complete the complete
      * @return the ListCatalogEntriesOptions builder
      */
-    public Builder complete(String complete) {
+    public Builder complete(Boolean complete) {
       this.complete = complete;
+      return this;
+    }
+
+    /**
+     * Set the offset.
+     *
+     * @param offset the offset
+     * @return the ListCatalogEntriesOptions builder
+     */
+    public Builder offset(long offset) {
+      this.offset = offset;
+      return this;
+    }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListCatalogEntriesOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
       return this;
     }
   }
@@ -149,7 +191,10 @@ public class ListCatalogEntriesOptions extends GenericModel {
     sortBy = builder.sortBy;
     descending = builder.descending;
     languages = builder.languages;
+    catalog = builder.catalog;
     complete = builder.complete;
+    offset = builder.offset;
+    limit = builder.limit;
   }
 
   /**
@@ -240,6 +285,19 @@ public class ListCatalogEntriesOptions extends GenericModel {
   }
 
   /**
+   * Gets the catalog.
+   *
+   * Checks to see if a catalog's object is visible, or if it's filtered by service, plan, deployment, or region. Use
+   * the value `?catalog=true`. If a `200` code is returned, the object is visible. If a `403` code is returned, the
+   * object is not visible for the user.
+   *
+   * @return the catalog
+   */
+  public Boolean catalog() {
+    return catalog;
+  }
+
+  /**
    * Gets the complete.
    *
    * Returns all available fields for all languages. Use the value `?complete=true` as shortcut for
@@ -247,8 +305,30 @@ public class ListCatalogEntriesOptions extends GenericModel {
    *
    * @return the complete
    */
-  public String complete() {
+  public Boolean complete() {
     return complete;
+  }
+
+  /**
+   * Gets the offset.
+   *
+   * Useful for pagination, specifies index (origin 0) of first item to return in response.
+   *
+   * @return the offset
+   */
+  public Long offset() {
+    return offset;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * Useful for pagination, specifies the maximum number of items to return in the response.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
   }
 }
 

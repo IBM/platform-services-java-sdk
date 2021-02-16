@@ -1,12 +1,12 @@
-[![Build Status](https://travis-ci.com/IBM/platform-services-java-sdk.svg?branch=master)](https://travis-ci.com/IBM/platform-services-java-sdk)
+[![Build Status](https://travis-ci.com/IBM/platform-services-java-sdk.svg?branch=main)](https://travis-ci.com/IBM/platform-services-java-sdk)
 [![Javadoc](https://img.shields.io/static/v1?label=javadoc&message=latest&color=blue)](https://ibm.github.io/platform-services-java-sdk/docs/latest)
 [![Release](https://img.shields.io/github/v/release/IBM/platform-services-java-sdk)](https://github.com/IBM/platform-services-java-sdk/releases/latest)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![codecov](https://codecov.io/gh/IBM/platform-services-java-sdk/branch/master/graph/badge.svg)](https://codecov.io/gh/IBM/platform-services-java-sdk)
+[![codecov](https://codecov.io/gh/IBM/platform-services-java-sdk/branch/main/graph/badge.svg)](https://codecov.io/gh/IBM/platform-services-java-sdk)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 
-# IBM Cloud Platform Services Java SDK Version 0.17.6
+# IBM Cloud Platform Services Java SDK Version 0.17.8
 
 Java client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
@@ -46,24 +46,24 @@ The IBM Cloud Platform Services Java SDK allows developers to programmatically i
 
 Service Name | Artifact Coordinates
 --- | --- 
-[Case Management](https://cloud.ibm.com/apidocs/case-management) | com.ibm.cloud:case-management:0.17.6
-[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | com.ibm.cloud:catalog-management:0.17.6
-[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | com.ibm.cloud:configuration-governance:0.17.6
-[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit) | com.ibm.cloud:enterprise-billing-units:0.17.6
-[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | com.ibm.cloud:enterprise-management:0.17.6
-[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | com.ibm.cloud:enterprise-usage-reports:0.17.6
-[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | com.ibm.cloud:global-catalog:0.17.6
-[Global Search](https://cloud.ibm.com/apidocs/search) | com.ibm.cloud:global-search:0.17.6
-[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | com.ibm.cloud:global-tagging:0.17.6
-[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | com.ibm.cloud:iam-access-groups:0.17.6
-[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | com.ibm.cloud:iam-identity:0.17.6
-[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | com.ibm.cloud:iam-policy-management:0.17.6
-[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | com.ibm.cloud:open-service-broker:0.17.6
-[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | com.ibm.cloud:resource-controller:0.17.6
-[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | com.ibm.cloud:resource-manager:0.17.6
-[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | com.ibm.cloud:usage-metering:0.17.6
-[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | com.ibm.cloud:usage-reports:0.17.6
-[User Management](https://cloud.ibm.com/apidocs/user-management) | com.ibm.cloud:user-management:0.17.6
+[Case Management](https://cloud.ibm.com/apidocs/case-management) | com.ibm.cloud:case-management:0.17.8
+[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | com.ibm.cloud:catalog-management:0.17.8
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | com.ibm.cloud:configuration-governance:0.17.8
+[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit) | com.ibm.cloud:enterprise-billing-units:0.17.8
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | com.ibm.cloud:enterprise-management:0.17.8
+[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | com.ibm.cloud:enterprise-usage-reports:0.17.8
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | com.ibm.cloud:global-catalog:0.17.8
+[Global Search](https://cloud.ibm.com/apidocs/search) | com.ibm.cloud:global-search:0.17.8
+[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | com.ibm.cloud:global-tagging:0.17.8
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | com.ibm.cloud:iam-access-groups:0.17.8
+[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | com.ibm.cloud:iam-identity:0.17.8
+[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | com.ibm.cloud:iam-policy-management:0.17.8
+[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | com.ibm.cloud:open-service-broker:0.17.8
+[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | com.ibm.cloud:resource-controller:0.17.8
+[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | com.ibm.cloud:resource-manager:0.17.8
+[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | com.ibm.cloud:usage-metering:0.17.8
+[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | com.ibm.cloud:usage-reports:0.17.8
+[User Management](https://cloud.ibm.com/apidocs/user-management) | com.ibm.cloud:user-management:0.17.8
 
 ## Prerequisites
 
@@ -74,7 +74,7 @@ Service Name | Artifact Coordinates
 * Java 8 or above.
 
 ## Installation
-The current version of this SDK is: 0.17.6
+The current version of this SDK is: 0.17.8
 
 Each service's artifact coordinates are listed in the table above.
 
@@ -96,17 +96,17 @@ artifact coordinates (group id, artifact id and version) for the service, like t
 <dependency>
     <groupId>com.ibm.cloud</groupId>
     <artifactId>case-management</artifactId>
-    <version>0.17.6</version>
+    <version>0.17.8</version>
 </dependency>
 ```
 
 ##### Gradle
 ```gradle
-'com.ibm.cloud:case-management:0.17.6'
+'com.ibm.cloud:case-management:0.17.8'
 ```
 
 ## Using the SDK
-For general SDK usage information, please see [this link](https://github.com/IBM/ibm-cloud-sdk-common/blob/master/README.md)
+For general SDK usage information, please see [this link](https://github.com/IBM/ibm-cloud-sdk-common/blob/main/README.md)
 
 ## Questions
 

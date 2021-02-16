@@ -1,3 +1,17 @@
+## [0.17.8](https://github.com/IBM/platform-services-java-sdk/compare/0.17.7...0.17.8) (2021-02-09)
+
+
+### Bug Fixes
+
+* **build:** transition default branch master -> main ([1fc1925](https://github.com/IBM/platform-services-java-sdk/commit/1fc1925eb873cc3f75d3817c86318c2862917131))
+
+## [0.17.7](https://github.com/IBM/platform-services-java-sdk/compare/0.17.6...0.17.7) (2021-02-08)
+
+
+### Bug Fixes
+
+* **build:** upgrade java core to v9.8.0 ([ad54869](https://github.com/IBM/platform-services-java-sdk/commit/ad548696fd4a2decf6a03c6f616fbde40ed84a95))
+
 ## [0.17.6](https://github.com/IBM/platform-services-java-sdk/compare/0.17.5...0.17.6) (2021-02-04)
 
 

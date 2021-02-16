@@ -37,7 +37,6 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 import java.util.Map;
-import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
@@ -55,7 +54,7 @@ import org.slf4j.LoggerFactory;
  * IAM_POLICY_MANAGEMENT_APIKEY= <YOUR_APIKEY>
  * IAM_POLICY_MANAGEMENT_TEST_ACCOUNT_ID= <YOUR_ACCOUNT_ID>
  *
- * Alternatively, above envirnmonet variables can be placed in a "credentials" file and then:
+ * Alternatively, above environment variables can be placed in a "credentials" file and then:
  * export IBM_CREDENTIALS_FILE=<name of credentials file>
  *
  */
@@ -64,16 +63,13 @@ public class IamPolicyManagementExamples {
   private static final Logger logger = LoggerFactory.getLogger(IamPolicyManagementExamples.class);
   protected IamPolicyManagementExamples() { }
 
-  private static Random random = new Random();
-  private static final String TEST_UNIQUE_ID = String.valueOf(random.nextInt(100000));
-  private static final String TEST_USER_PREFIX = "IBMid-SDKJava";
-  private static final String TEST_USER_ID = TEST_USER_PREFIX + TEST_UNIQUE_ID;
-  private static final String TEST_SERVICE_NAME = "iam-groups";
-  private static String testAccountId = null;
-  private static String testPolicyId = null;
-  private static String testPolicyEtag = null;
-  private static String testCustomRoleId = null;
-  private static String testCustomRoleEtag = null;
+  private static final String EXAMPLE_USER_ID = "IBMid-user1";
+  private static final String EXAMPLE_SERVICE_NAME = "iam-groups";
+  private static String exampleAccountId = null;
+  private static String examplePolicyId = null;
+  private static String examplePolicyEtag = null;
+  private static String exampleCustomRoleId = null;
+  private static String exampleCustomRoleEtag = null;
 
   static {
     System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_policy_management.env");
@@ -85,67 +81,63 @@ public class IamPolicyManagementExamples {
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(IamPolicyManagement.DEFAULT_SERVICE_NAME);
-    testAccountId = config.get("TEST_ACCOUNT_ID");
+    exampleAccountId = config.get("TEST_ACCOUNT_ID");
 
     try {
       // begin-create_policy
-      ResourceAttribute resourceAttributeAccount = new ResourceAttribute.Builder()
+
+      SubjectAttribute subjectAttribute = new SubjectAttribute.Builder()
+              .name("iam_id")
+              .value(EXAMPLE_USER_ID)
+              .build();
+
+      PolicySubject policySubjects = new PolicySubject.Builder()
+              .addAttributes(subjectAttribute)
+              .build();
+
+      PolicyRole policyRoles = new PolicyRole.Builder()
+              .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
+              .build();
+
+      ResourceAttribute accountIdResourceAttribute = new ResourceAttribute.Builder()
               .name("accountId")
-              .value(testAccountId)
+              .value(exampleAccountId)
               .operator("stringEquals")
               .build();
 
-      ResourceAttribute resourceAttributeService = new ResourceAttribute.Builder()
+      ResourceAttribute serviceNameResourceAttribute = new ResourceAttribute.Builder()
               .name("serviceName")
-              .value(TEST_SERVICE_NAME)
+              .value(EXAMPLE_SERVICE_NAME)
               .operator("stringEquals")
               .build();
 
-      ResourceAttribute resourceAttributeResource = new ResourceAttribute.Builder()
-              .name("resource")
-              .value("SDK-Java-Test")
-              .operator("stringEquals")
-              .build();
-
-      ResourceTag resourceAttributeTag = new ResourceTag.Builder()
+      ResourceTag policyResourceTag = new ResourceTag.Builder()
               .name("project")
               .value("prototype")
               .operator("stringEquals")
               .build();
 
-      SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
-              .name("iam_id")
-              .value(TEST_USER_ID)
-              .build();
-
-      PolicyResource policyResourceModel = new PolicyResource.Builder()
-              .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-                      resourceAttributeService, resourceAttributeResource)))
-              .tags(new ArrayList<ResourceTag>(Arrays.asList(resourceAttributeTag)))
-              .build();
-
-      PolicyRole policyRoleModel = new PolicyRole.Builder()
-              .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
-              .build();
-
-      PolicySubject policySubjectModel = new PolicySubject.Builder()
-              .attributes(new ArrayList<SubjectAttribute>(Arrays.asList(subjectAttributeModel)))
+      PolicyResource policyResources = new PolicyResource.Builder()
+              .addAttributes(accountIdResourceAttribute)
+              .addAttributes(serviceNameResourceAttribute)
+              .addTags(policyResourceTag)
               .build();
 
       CreatePolicyOptions options = new CreatePolicyOptions.Builder()
               .type("access")
-              .subjects(Arrays.asList(policySubjectModel))
-              .roles(Arrays.asList(policyRoleModel))
-              .resources(Arrays.asList(policyResourceModel))
+              .subjects(Arrays.asList(policySubjects))
+              .roles(Arrays.asList(policyRoles))
+              .resources(Arrays.asList(policyResources))
               .build();
 
       Response<Policy> response = service.createPolicy(options).execute();
       Policy policy = response.getResult();
 
       System.out.println(policy);
+
       // end-create_policy
 
-      testPolicyId = policy.getId();
+      examplePolicyId = policy.getId();
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -153,17 +145,19 @@ public class IamPolicyManagementExamples {
 
     try {
       // begin-get_policy
+
       GetPolicyOptions options = new GetPolicyOptions.Builder()
-              .policyId(testPolicyId)
+              .policyId(examplePolicyId)
               .build();
 
       Response<Policy> response = service.getPolicy(options).execute();
       Policy policy = response.getResult();
 
       System.out.println(policy);
+
       // end-get_policy
 
-      testPolicyEtag = response.getHeaders().values("Etag").get(0);
+      examplePolicyEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -171,55 +165,51 @@ public class IamPolicyManagementExamples {
 
     try {
       // begin-update_policy
-      ResourceAttribute resourceAttributeAccount = new ResourceAttribute.Builder()
-              .name("accountId")
-              .value(testAccountId)
-              .operator("stringEquals")
-              .build();
 
-      ResourceAttribute resourceAttributeService = new ResourceAttribute.Builder()
-              .name("serviceName")
-              .value(TEST_SERVICE_NAME)
-              .operator("stringEquals")
-              .build();
-
-      ResourceAttribute resourceAttributeResource = new ResourceAttribute.Builder()
-              .name("resource")
-              .value("SDK-Java-Test")
-              .operator("stringEquals")
-              .build();
-
-      SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
+      SubjectAttribute subjectAttribute = new SubjectAttribute.Builder()
               .name("iam_id")
-              .value(TEST_USER_ID)
+              .value(EXAMPLE_USER_ID)
               .build();
 
-      PolicyResource policyResourceModel = new PolicyResource.Builder()
-              .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-                      resourceAttributeService, resourceAttributeResource)))
+      PolicySubject policySubjects = new PolicySubject.Builder()
+              .addAttributes(subjectAttribute)
               .build();
 
-      PolicyRole policyRoleModel = new PolicyRole.Builder()
+      ResourceAttribute accountIdResourceAttribute = new ResourceAttribute.Builder()
+              .name("accountId")
+              .value(exampleAccountId)
+              .operator("stringEquals")
+              .build();
+
+      ResourceAttribute serviceNameResourceAttribute = new ResourceAttribute.Builder()
+              .name("serviceName")
+              .value(EXAMPLE_SERVICE_NAME)
+              .operator("stringEquals")
+              .build();
+
+      PolicyResource policyResources = new PolicyResource.Builder()
+              .addAttributes(accountIdResourceAttribute)
+              .addAttributes(serviceNameResourceAttribute)
+              .build();
+
+      PolicyRole updatedPolicyRole = new PolicyRole.Builder()
               .roleId("crn:v1:bluemix:public:iam::::role:Editor")
               .build();
 
-      PolicySubject policySubjectModel = new PolicySubject.Builder()
-              .attributes(new ArrayList<SubjectAttribute>(Arrays.asList(subjectAttributeModel)))
-              .build();
-
       UpdatePolicyOptions options = new UpdatePolicyOptions.Builder()
-              .policyId(testPolicyId)
-              .ifMatch(testPolicyEtag)
               .type("access")
-              .subjects(new ArrayList<PolicySubject>(Arrays.asList(policySubjectModel)))
-              .roles(new ArrayList<PolicyRole>(Arrays.asList(policyRoleModel)))
-              .resources(new ArrayList<PolicyResource>(Arrays.asList(policyResourceModel)))
+              .policyId(examplePolicyId)
+              .ifMatch(examplePolicyEtag)
+              .subjects(new ArrayList<PolicySubject>(Arrays.asList(policySubjects)))
+              .roles(new ArrayList<PolicyRole>(Arrays.asList(updatedPolicyRole)))
+              .resources(new ArrayList<PolicyResource>(Arrays.asList(policyResources)))
               .build();
 
       Response<Policy> response = service.updatePolicy(options).execute();
       Policy policy = response.getResult();
 
       System.out.println(policy);
+
       // end-update_policy
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -228,8 +218,10 @@ public class IamPolicyManagementExamples {
 
     try {
       // begin-list_policies
+
       ListPoliciesOptions options = new ListPoliciesOptions.Builder()
-              .accountId(testAccountId)
+              .accountId(exampleAccountId)
+              .iamId(EXAMPLE_USER_ID)
               .format("include_last_permit")
               .build();
 
@@ -237,6 +229,7 @@ public class IamPolicyManagementExamples {
       PolicyList policyList = response.getResult();
 
       System.out.println(policyList);
+
       // end-list_policies
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -245,11 +238,13 @@ public class IamPolicyManagementExamples {
 
     try {
       // begin-delete_policy
+
       DeletePolicyOptions options = new DeletePolicyOptions.Builder()
-              .policyId(testPolicyId)
+              .policyId(examplePolicyId)
               .build();
 
       service.deletePolicy(options).execute();
+
       // end-delete_policy
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -258,21 +253,23 @@ public class IamPolicyManagementExamples {
 
     try {
       // begin-create_role
+
       CreateRoleOptions options = new CreateRoleOptions.Builder()
-              .accountId(testAccountId)
-              .name("ExampleRoleIAMGroups")
               .displayName("IAM Groups read access")
-              .serviceName(TEST_SERVICE_NAME)
               .actions(Arrays.asList("iam-groups.groups.read"))
+              .name("ExampleRoleIAMGroups")
+              .accountId(exampleAccountId)
+              .serviceName(EXAMPLE_SERVICE_NAME)
               .build();
 
       Response<CustomRole> response = service.createRole(options).execute();
       CustomRole customRole = response.getResult();
 
       System.out.println(customRole);
+
       // end-create_role
 
-      testCustomRoleId = customRole.getId();
+      exampleCustomRoleId = customRole.getId();
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -280,17 +277,19 @@ public class IamPolicyManagementExamples {
 
     try {
       // begin-get_role
+
       GetRoleOptions options = new GetRoleOptions.Builder()
-              .roleId(testCustomRoleId)
+              .roleId(exampleCustomRoleId)
               .build();
 
       Response<CustomRole> response = service.getRole(options).execute();
       CustomRole customRole = response.getResult();
 
       System.out.println(customRole);
+
       // end-get_role
 
-      testCustomRoleEtag = response.getHeaders().values("Etag").get(0);
+      exampleCustomRoleEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -298,17 +297,19 @@ public class IamPolicyManagementExamples {
 
     try {
       // begin-update_role
-      List<String> updatedRoleId = Arrays.asList("iam-groups.groups.read", "iam-groups.groups.list");
+
+      List<String> updatedRoleActions = Arrays.asList("iam-groups.groups.read", "iam-groups.groups.list");
       UpdateRoleOptions options = new UpdateRoleOptions.Builder()
-              .roleId(testCustomRoleId)
-              .ifMatch(testCustomRoleEtag)
-              .actions(updatedRoleId)
+              .roleId(exampleCustomRoleId)
+              .ifMatch(exampleCustomRoleEtag)
+              .actions(updatedRoleActions)
               .build();
 
       Response<CustomRole> response = service.updateRole(options).execute();
       CustomRole customRole = response.getResult();
 
       System.out.println(customRole);
+
       // end-update_role
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -317,14 +318,16 @@ public class IamPolicyManagementExamples {
 
     try {
       // begin-list_roles
+
       ListRolesOptions options = new ListRolesOptions.Builder()
-              .accountId(testAccountId)
+              .accountId(exampleAccountId)
               .build();
 
       Response<RoleList> response = service.listRoles(options).execute();
       RoleList roleList = response.getResult();
 
       System.out.println(roleList);
+
       // end-list_roles
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -333,11 +336,13 @@ public class IamPolicyManagementExamples {
 
     try {
       // begin-delete_role
-      DeleteRoleOptions deleteRoleOptions = new DeleteRoleOptions.Builder()
-        .roleId(testCustomRoleId)
+
+      DeleteRoleOptions options = new DeleteRoleOptions.Builder()
+        .roleId(exampleCustomRoleId)
         .build();
 
-      service.deleteRole(deleteRoleOptions).execute();
+      service.deleteRole(options).execute();
+
       // end-delete_role
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

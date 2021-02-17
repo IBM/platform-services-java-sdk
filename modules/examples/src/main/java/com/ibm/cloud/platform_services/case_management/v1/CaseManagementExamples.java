@@ -54,21 +54,6 @@ public class CaseManagementExamples {
     Map<String, String> config = CredentialUtils.getServiceProperties(CaseManagement.DEFAULT_SERVICE_NAME);
 
     try {
-      // begin-getCases
-      GetCasesOptions getCasesOptions = new GetCasesOptions.Builder()
-        .build();
-
-      Response<CaseList> response = service.getCases(getCasesOptions).execute();
-      CaseList caseList = response.getResult();
-
-      System.out.println(caseList);
-      // end-getCases
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
       // begin-createCase
       CreateCaseOptions createCaseOptions = new CreateCaseOptions.Builder()
         .type("technical")
@@ -103,22 +88,15 @@ public class CaseManagementExamples {
     }
 
     try {
-      // begin-updateCaseStatus
-      ResolvePayload statusPayloadModel = new ResolvePayload.Builder()
-        .action("resolve")
-        .comment("It was actually a mistake")
-        .resolutionCode(Long.valueOf("1"))
-        .build();
-      UpdateCaseStatusOptions updateCaseStatusOptions = new UpdateCaseStatusOptions.Builder()
-        .caseNumber("testString")
-        .statusPayload(statusPayloadModel)
+      // begin-getCases
+      GetCasesOptions getCasesOptions = new GetCasesOptions.Builder()
         .build();
 
-      Response<Case> response = service.updateCaseStatus(updateCaseStatusOptions).execute();
-      Case xCase = response.getResult();
+      Response<CaseList> response = service.getCases(getCasesOptions).execute();
+      CaseList caseList = response.getResult();
 
-      System.out.println(xCase);
-      // end-updateCaseStatus
+      System.out.println(caseList);
+      // end-getCases
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -152,6 +130,22 @@ public class CaseManagementExamples {
 
       System.out.println(watchlistAddResponse);
       // end-addWatchlist
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-removeWatchlist
+      RemoveWatchlistOptions removeWatchlistOptions = new RemoveWatchlistOptions.Builder()
+        .caseNumber("testString")
+        .build();
+
+      Response<Watchlist> response = service.removeWatchlist(removeWatchlistOptions).execute();
+      Watchlist watchlist = response.getResult();
+
+      System.out.println(watchlist);
+      // end-removeWatchlist
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -208,22 +202,6 @@ public class CaseManagementExamples {
     }
 
     try {
-      // begin-removeWatchlist
-      RemoveWatchlistOptions removeWatchlistOptions = new RemoveWatchlistOptions.Builder()
-        .caseNumber("testString")
-        .build();
-
-      Response<Watchlist> response = service.removeWatchlist(removeWatchlistOptions).execute();
-      Watchlist watchlist = response.getResult();
-
-      System.out.println(watchlist);
-      // end-removeWatchlist
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
       // begin-deleteFile
       DeleteFileOptions deleteFileOptions = new DeleteFileOptions.Builder()
         .caseNumber("testString")
@@ -235,6 +213,28 @@ public class CaseManagementExamples {
 
       System.out.println(attachmentList);
       // end-deleteFile
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-updateCaseStatus
+      ResolvePayload statusPayloadModel = new ResolvePayload.Builder()
+        .action("resolve")
+        .comment("It was actually a mistake")
+        .resolutionCode(Long.valueOf("1"))
+        .build();
+      UpdateCaseStatusOptions updateCaseStatusOptions = new UpdateCaseStatusOptions.Builder()
+        .caseNumber("testString")
+        .statusPayload(statusPayloadModel)
+        .build();
+
+      Response<Case> response = service.updateCaseStatus(updateCaseStatusOptions).execute();
+      Case xCase = response.getResult();
+
+      System.out.println(xCase);
+      // end-updateCaseStatus
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

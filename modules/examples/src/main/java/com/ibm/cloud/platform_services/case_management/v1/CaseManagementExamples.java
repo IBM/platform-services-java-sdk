@@ -13,6 +13,15 @@
 
 package com.ibm.cloud.platform_services.case_management.v1;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ibm.cloud.platform_services.case_management.v1.model.AddCommentOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.AddResourceOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.AddWatchlistOptions;
@@ -41,17 +50,6 @@ import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class CaseManagementExamples {
   private static final Logger logger = LoggerFactory.getLogger(CaseManagementExamples.class);
   protected CaseManagementExamples() { }
@@ -64,18 +62,17 @@ public class CaseManagementExamples {
     System.setProperty("IBM_CREDENTIALS_FILE", "../../case_management.env");
   }
 
-  @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
     CaseManagement service = CaseManagement.newInstance();
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(CaseManagement.DEFAULT_SERVICE_NAME);
-    resourceCrn = config.get("REOURCE_CRN");
+    resourceCrn = config.get("RESOURCE_CRN");
 
     try {
       // begin-createCase
       OfferingType offeringType = new OfferingType.Builder()
-        .group("crn_service_name")
+        .group(OfferingType.Group.CRN_SERVICE_NAME)
         .key("cloud-object-storage")
         .build();
       Offering offeringPayload = new Offering.Builder()
@@ -104,15 +101,12 @@ public class CaseManagementExamples {
 
     try {
       // begin-getCase
-      List<String> fieldsToReturn = new ArrayList<String>();
-      fieldsToReturn.add(GetCaseOptions.Fields.DESCRIPTION);
-      fieldsToReturn.add(GetCaseOptions.Fields.STATUS);
-      fieldsToReturn.add(GetCaseOptions.Fields.SEVERITY);
-      fieldsToReturn.add(GetCaseOptions.Fields.CREATED_BY);
-
       GetCaseOptions getCaseOptions = new GetCaseOptions.Builder()
         .caseNumber(caseNumber)
-        .fields(fieldsToReturn)
+        .addFields(GetCaseOptions.Fields.DESCRIPTION)
+        .addFields(GetCaseOptions.Fields.STATUS)
+        .addFields(GetCaseOptions.Fields.SEVERITY)
+        .addFields(GetCaseOptions.Fields.CREATED_BY)
         .build();
 
       Response<Case> response = service.getCase(getCaseOptions).execute();
@@ -163,13 +157,10 @@ public class CaseManagementExamples {
 
     try {
       // begin-addWatchlist
-      List<User> wathcListUsers = new ArrayList<User>();
-      wathcListUsers.add(
-        new User.Builder().realm("IBMid").userId("abc@ibm.com").build()
-      );
+      User watchlistUser = new User.Builder().realm("IBMid").userId("abc@ibm.com").build();
       AddWatchlistOptions addWatchlistOptions = new AddWatchlistOptions.Builder()
         .caseNumber(caseNumber)
-        .watchlist(wathcListUsers)
+        .addWatchlist(watchlistUser)
         .build();
 
       Response<WatchlistAddResponse> response = service.addWatchlist(addWatchlistOptions).execute();
@@ -184,13 +175,10 @@ public class CaseManagementExamples {
 
     try {
       // begin-removeWatchlist
-      List<User> wathcListUsers = new ArrayList<User>();
-      wathcListUsers.add(
-        new User.Builder().realm("IBMid").userId("abc@ibm.com").build()
-      );
+      User watchlistUser = new User.Builder().realm("IBMid").userId("abc@ibm.com").build();
       RemoveWatchlistOptions removeWatchlistOptions = new RemoveWatchlistOptions.Builder()
         .caseNumber(caseNumber)
-        .watchlist(wathcListUsers)
+        .addWatchlist(watchlistUser)
         .build();
 
       Response<Watchlist> response = service.removeWatchlist(removeWatchlistOptions).execute();
@@ -223,20 +211,16 @@ public class CaseManagementExamples {
 
     try {
       // begin-uploadFile
-      InputStream exampleFileContent = new ByteArrayInputStream("This is the content of the file to upload.".getBytes());
-
+      String fileContent = "This is the content of the file to upload.";
       FileWithMetadata fileWithMetadata = new FileWithMetadata.Builder()
           .filename("example.log")
-          .data(exampleFileContent)
+          .data(new ByteArrayInputStream(fileContent.getBytes(StandardCharsets.UTF_8)))
           .contentType("application/octet-stream")
           .build();
 
-      List<FileWithMetadata> filesToUpload = new ArrayList<FileWithMetadata>();
-      filesToUpload.add(fileWithMetadata);
-
       UploadFileOptions uploadFileOptions = new UploadFileOptions.Builder()
         .caseNumber(caseNumber)
-        .file(filesToUpload)
+        .addFile(fileWithMetadata)
         .build();
 
       Response<Attachment> response = service.uploadFile(uploadFileOptions).execute();
@@ -309,6 +293,5 @@ public class CaseManagementExamples {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
-
   }
 }

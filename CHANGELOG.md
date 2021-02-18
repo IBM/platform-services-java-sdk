@@ -1,3 +1,10 @@
+## [0.17.9](https://github.com/IBM/platform-services-java-sdk/compare/0.17.8...0.17.9) (2021-02-18)
+
+
+### Bug Fixes
+
+* **Case Management:** regen service and add examples ([#77](https://github.com/IBM/platform-services-java-sdk/issues/77)) ([7681dc4](https://github.com/IBM/platform-services-java-sdk/commit/7681dc4aa3b4c70a5c53f2b71def55efff133263))
+
 ## [0.17.8](https://github.com/IBM/platform-services-java-sdk/compare/0.17.7...0.17.8) (2021-02-09)
 
 

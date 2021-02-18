@@ -44,9 +44,12 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -258,9 +261,11 @@ public class CaseManagementExamples {
 
       Response<InputStream> response = service.downloadFile(downloadFileOptions).execute();
       InputStream inputStream = response.getResult();
-
-      System.out.println("Attachment content-type: " + response.getHeaders().values("Content-type"));
-      System.out.println("Attachment contents: " + new String(inputStream.readAllBytes()));
+      if (inputStream != null) {
+        String attachmentContents = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        System.out.println("Attachment content-type: " + response.getHeaders().values("Content-Type"));
+        System.out.println("Attachment contents: " + attachmentContents);
+      }
       // end-downloadFile
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

@@ -1,3 +1,10 @@
+## [0.17.10](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.9...v0.17.10) (2021-02-18)
+
+
+### Bug Fixes
+
+* **Global Catalog:** re-gen service and add examples ([#76](https://github.com/IBM/platform-services-node-sdk/issues/76)) ([484a380](https://github.com/IBM/platform-services-node-sdk/commit/484a380310302f9c556d4de55dce6448d766ac71))
+
 ## [0.17.9](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.8...v0.17.9) (2021-02-18)
 
 

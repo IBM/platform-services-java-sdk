@@ -1,3 +1,10 @@
+## [0.17.10](https://github.com/IBM/platform-services-java-sdk/compare/0.17.9...0.17.10) (2021-02-18)
+
+
+### Bug Fixes
+
+* **Global Catalog:** regen service and add examples ([#78](https://github.com/IBM/platform-services-java-sdk/issues/78)) ([ef3eecc](https://github.com/IBM/platform-services-java-sdk/commit/ef3eeccec851ba0676a103a124158cce268204b7))
+
 ## [0.17.9](https://github.com/IBM/platform-services-java-sdk/compare/0.17.8...0.17.9) (2021-02-18)
 
 

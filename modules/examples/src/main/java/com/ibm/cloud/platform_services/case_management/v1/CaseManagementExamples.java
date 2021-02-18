@@ -36,7 +36,6 @@ import com.ibm.cloud.platform_services.case_management.v1.model.UploadFileOption
 import com.ibm.cloud.platform_services.case_management.v1.model.User;
 import com.ibm.cloud.platform_services.case_management.v1.model.Watchlist;
 import com.ibm.cloud.platform_services.case_management.v1.model.WatchlistAddResponse;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Offer;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;

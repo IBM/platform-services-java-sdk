@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-4c92c221-20210211-060810
  */
 
 
@@ -121,8 +121,15 @@ class GlobalCatalogV1 extends BaseService {
    * returned are of the language preferred by your browser through the Accept-Langauge header, which allows an override
    * of the header. Languages are specified in standard form, such as `en-us`. To include all languages use a wildcard
    * (*).
-   * @param {string} [params.complete] - Returns all available fields for all languages. Use the value `?complete=true`
+   * @param {boolean} [params.catalog] - Checks to see if a catalog's object is visible, or if it's filtered by service,
+   * plan, deployment, or region. Use the value `?catalog=true`. If a `200` code is returned, the object is visible. If
+   * a `403` code is returned, the object is not visible for the user.
+   * @param {boolean} [params.complete] - Returns all available fields for all languages. Use the value `?complete=true`
    * as shortcut for ?include=*&languages=*.
+   * @param {number} [params.offset] - Useful for pagination, specifies index (origin 0) of first item to return in
+   * response.
+   * @param {number} [params.limit] - Useful for pagination, specifies the maximum number of items to return in the
+   * response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>>}
    */
@@ -136,7 +143,10 @@ class GlobalCatalogV1 extends BaseService {
       'sort-by': _params.sortBy,
       'descending': _params.descending,
       'languages': _params.languages,
-      'complete': _params.complete
+      'catalog': _params.catalog,
+      'complete': _params.complete,
+      '_offset': _params.offset,
+      '_limit': _params.limit
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'listCatalogEntries');
@@ -255,7 +265,7 @@ class GlobalCatalogV1 extends BaseService {
    * returned are of the language preferred by your browser through the Accept-Langauge header, which allows an override
    * of the header. Languages are specified in standard form, such as `en-us`. To include all languages use a wildcard
    * (*).
-   * @param {string} [params.complete] - Returns all available fields for all languages. Use the value `?complete=true`
+   * @param {boolean} [params.complete] - Returns all available fields for all languages. Use the value `?complete=true`
    * as shortcut for ?include=*&languages=*.
    * @param {number} [params.depth] - Return the children down to the requested depth. Use * to include the entire
    * children tree. If there are more children than the maximum permitted an error will be returned. Be judicious with
@@ -467,7 +477,11 @@ class GlobalCatalogV1 extends BaseService {
    * returned are of the language preferred by your browser through the Accept-Langauge header. This allows an override
    * of the header. Languages are specified in standard form, such as `en-us`. To include all languages use the wildcard
    * (*).
-   * @param {string} [params.complete] - Use the value `?complete=true` as shortcut for ?include=*&languages=*.
+   * @param {boolean} [params.complete] - Use the value `?complete=true` as shortcut for ?include=*&languages=*.
+   * @param {number} [params.offset] - Useful for pagination, specifies index (origin 0) of first item to return in
+   * response.
+   * @param {number} [params.limit] - Useful for pagination, specifies the maximum number of items to return in the
+   * response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>>}
    */
@@ -487,7 +501,9 @@ class GlobalCatalogV1 extends BaseService {
       'sort-by': _params.sortBy,
       'descending': _params.descending,
       'languages': _params.languages,
-      'complete': _params.complete
+      'complete': _params.complete,
+      '_offset': _params.offset,
+      '_limit': _params.limit
     };
 
     const path = {
@@ -1072,10 +1088,19 @@ namespace GlobalCatalogV1 {
      *  are specified in standard form, such as `en-us`. To include all languages use a wildcard (*).
      */
     languages?: string;
+    /** Checks to see if a catalog's object is visible, or if it's filtered by service, plan, deployment, or region.
+     *  Use the value `?catalog=true`. If a `200` code is returned, the object is visible. If a `403` code is returned,
+     *  the object is not visible for the user.
+     */
+    catalog?: boolean;
     /** Returns all available fields for all languages. Use the value `?complete=true` as shortcut for
      *  ?include=*&languages=*.
      */
-    complete?: string;
+    complete?: boolean;
+    /** Useful for pagination, specifies index (origin 0) of first item to return in response. */
+    offset?: number;
+    /** Useful for pagination, specifies the maximum number of items to return in the response. */
+    limit?: number;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1152,7 +1177,7 @@ namespace GlobalCatalogV1 {
     /** Returns all available fields for all languages. Use the value `?complete=true` as shortcut for
      *  ?include=*&languages=*.
      */
-    complete?: string;
+    complete?: boolean;
     /** Return the children down to the requested depth. Use * to include the entire children tree. If there are
      *  more children than the maximum permitted an error will be returned. Be judicious with this as it can cause a
      *  large number of database accesses and can result in a large amount of data returned.
@@ -1267,7 +1292,11 @@ namespace GlobalCatalogV1 {
      */
     languages?: string;
     /** Use the value `?complete=true` as shortcut for ?include=*&languages=*. */
-    complete?: string;
+    complete?: boolean;
+    /** Useful for pagination, specifies index (origin 0) of first item to return in response. */
+    offset?: number;
+    /** Useful for pagination, specifies the maximum number of items to return in the response. */
+    limit?: number;
     headers?: OutgoingHttpHeaders;
   }
 

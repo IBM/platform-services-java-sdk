@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,7 +110,10 @@ describe('GlobalCatalogV1', () => {
         const sortBy = 'testString';
         const descending = 'testString';
         const languages = 'testString';
-        const complete = 'testString';
+        const catalog = true;
+        const complete = true;
+        const offset = 38;
+        const limit = 200;
         const params = {
           account: account,
           include: include,
@@ -118,7 +121,10 @@ describe('GlobalCatalogV1', () => {
           sortBy: sortBy,
           descending: descending,
           languages: languages,
+          catalog: catalog,
           complete: complete,
+          offset: offset,
+          limit: limit,
         };
 
         const listCatalogEntriesResult = globalCatalogService.listCatalogEntries(params);
@@ -141,7 +147,10 @@ describe('GlobalCatalogV1', () => {
         expect(options.qs['sort-by']).toEqual(sortBy);
         expect(options.qs['descending']).toEqual(descending);
         expect(options.qs['languages']).toEqual(languages);
+        expect(options.qs['catalog']).toEqual(catalog);
         expect(options.qs['complete']).toEqual(complete);
+        expect(options.qs['_offset']).toEqual(offset);
+        expect(options.qs['_limit']).toEqual(limit);
       });
 
       test('should prioritize user-given headers', () => {
@@ -308,7 +317,7 @@ describe('GlobalCatalogV1', () => {
         primary_offering_id: 'testString',
         accessible_during_provision: true,
         side_by_side_index: 38,
-        end_of_service_time: '2019-01-01T12:00:00',
+        end_of_service_time: '2019-01-01T12:00:00.000Z',
         hidden: true,
         hide_lite_metering: true,
         no_upgrade_next_step: true,
@@ -532,7 +541,7 @@ describe('GlobalCatalogV1', () => {
         const account = 'testString';
         const include = 'testString';
         const languages = 'testString';
-        const complete = 'testString';
+        const complete = true;
         const depth = 38;
         const params = {
           id: id,
@@ -749,7 +758,7 @@ describe('GlobalCatalogV1', () => {
         primary_offering_id: 'testString',
         accessible_during_provision: true,
         side_by_side_index: 38,
-        end_of_service_time: '2019-01-01T12:00:00',
+        end_of_service_time: '2019-01-01T12:00:00.000Z',
         hidden: true,
         hide_lite_metering: true,
         no_upgrade_next_step: true,
@@ -1054,7 +1063,9 @@ describe('GlobalCatalogV1', () => {
         const sortBy = 'testString';
         const descending = 'testString';
         const languages = 'testString';
-        const complete = 'testString';
+        const complete = true;
+        const offset = 38;
+        const limit = 200;
         const params = {
           id: id,
           kind: kind,
@@ -1065,6 +1076,8 @@ describe('GlobalCatalogV1', () => {
           descending: descending,
           languages: languages,
           complete: complete,
+          offset: offset,
+          limit: limit,
         };
 
         const getChildObjectsResult = globalCatalogService.getChildObjects(params);
@@ -1088,6 +1101,8 @@ describe('GlobalCatalogV1', () => {
         expect(options.qs['descending']).toEqual(descending);
         expect(options.qs['languages']).toEqual(languages);
         expect(options.qs['complete']).toEqual(complete);
+        expect(options.qs['_offset']).toEqual(offset);
+        expect(options.qs['_limit']).toEqual(limit);
         expect(options.path['id']).toEqual(id);
         expect(options.path['kind']).toEqual(kind);
       });

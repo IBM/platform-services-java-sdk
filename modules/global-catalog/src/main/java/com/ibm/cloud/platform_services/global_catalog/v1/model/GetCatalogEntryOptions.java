@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,7 +23,7 @@ public class GetCatalogEntryOptions extends GenericModel {
   protected String account;
   protected String include;
   protected String languages;
-  protected String complete;
+  protected Boolean complete;
   protected Long depth;
 
   /**
@@ -34,7 +34,7 @@ public class GetCatalogEntryOptions extends GenericModel {
     private String account;
     private String include;
     private String languages;
-    private String complete;
+    private Boolean complete;
     private Long depth;
 
     private Builder(GetCatalogEntryOptions getCatalogEntryOptions) {
@@ -120,7 +120,7 @@ public class GetCatalogEntryOptions extends GenericModel {
      * @param complete the complete
      * @return the GetCatalogEntryOptions builder
      */
-    public Builder complete(String complete) {
+    public Builder complete(Boolean complete) {
       this.complete = complete;
       return this;
     }
@@ -215,7 +215,7 @@ public class GetCatalogEntryOptions extends GenericModel {
    *
    * @return the complete
    */
-  public String complete() {
+  public Boolean complete() {
     return complete;
   }
 

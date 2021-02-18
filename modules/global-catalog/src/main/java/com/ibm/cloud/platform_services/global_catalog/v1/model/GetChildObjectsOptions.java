@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -27,7 +27,9 @@ public class GetChildObjectsOptions extends GenericModel {
   protected String sortBy;
   protected String descending;
   protected String languages;
-  protected String complete;
+  protected Boolean complete;
+  protected Long offset;
+  protected Long limit;
 
   /**
    * Builder.
@@ -41,7 +43,9 @@ public class GetChildObjectsOptions extends GenericModel {
     private String sortBy;
     private String descending;
     private String languages;
-    private String complete;
+    private Boolean complete;
+    private Long offset;
+    private Long limit;
 
     private Builder(GetChildObjectsOptions getChildObjectsOptions) {
       this.id = getChildObjectsOptions.id;
@@ -53,6 +57,8 @@ public class GetChildObjectsOptions extends GenericModel {
       this.descending = getChildObjectsOptions.descending;
       this.languages = getChildObjectsOptions.languages;
       this.complete = getChildObjectsOptions.complete;
+      this.offset = getChildObjectsOptions.offset;
+      this.limit = getChildObjectsOptions.limit;
     }
 
     /**
@@ -175,8 +181,30 @@ public class GetChildObjectsOptions extends GenericModel {
      * @param complete the complete
      * @return the GetChildObjectsOptions builder
      */
-    public Builder complete(String complete) {
+    public Builder complete(Boolean complete) {
       this.complete = complete;
+      return this;
+    }
+
+    /**
+     * Set the offset.
+     *
+     * @param offset the offset
+     * @return the GetChildObjectsOptions builder
+     */
+    public Builder offset(long offset) {
+      this.offset = offset;
+      return this;
+    }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the GetChildObjectsOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
       return this;
     }
   }
@@ -195,6 +223,8 @@ public class GetChildObjectsOptions extends GenericModel {
     descending = builder.descending;
     languages = builder.languages;
     complete = builder.complete;
+    offset = builder.offset;
+    limit = builder.limit;
   }
 
   /**
@@ -309,8 +339,30 @@ public class GetChildObjectsOptions extends GenericModel {
    *
    * @return the complete
    */
-  public String complete() {
+  public Boolean complete() {
     return complete;
+  }
+
+  /**
+   * Gets the offset.
+   *
+   * Useful for pagination, specifies index (origin 0) of first item to return in response.
+   *
+   * @return the offset
+   */
+  public Long offset() {
+    return offset;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * Useful for pagination, specifies the maximum number of items to return in the response.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
   }
 }
 

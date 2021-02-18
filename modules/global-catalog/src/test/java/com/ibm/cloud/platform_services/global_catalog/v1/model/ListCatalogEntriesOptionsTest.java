@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -38,7 +38,10 @@ public class ListCatalogEntriesOptionsTest {
       .sortBy("testString")
       .descending("testString")
       .languages("testString")
-      .complete("testString")
+      .catalog(true)
+      .complete(true)
+      .offset(Long.valueOf("26"))
+      .limit(Long.valueOf("200"))
       .build();
     assertEquals(listCatalogEntriesOptionsModel.account(), "testString");
     assertEquals(listCatalogEntriesOptionsModel.include(), "testString");
@@ -46,6 +49,9 @@ public class ListCatalogEntriesOptionsTest {
     assertEquals(listCatalogEntriesOptionsModel.sortBy(), "testString");
     assertEquals(listCatalogEntriesOptionsModel.descending(), "testString");
     assertEquals(listCatalogEntriesOptionsModel.languages(), "testString");
-    assertEquals(listCatalogEntriesOptionsModel.complete(), "testString");
+    assertEquals(listCatalogEntriesOptionsModel.catalog(), Boolean.valueOf(true));
+    assertEquals(listCatalogEntriesOptionsModel.complete(), Boolean.valueOf(true));
+    assertEquals(listCatalogEntriesOptionsModel.offset(), Long.valueOf("26"));
+    assertEquals(listCatalogEntriesOptionsModel.limit(), Long.valueOf("200"));
   }
 }

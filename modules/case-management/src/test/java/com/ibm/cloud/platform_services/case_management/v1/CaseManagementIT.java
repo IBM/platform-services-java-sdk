@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -51,18 +52,18 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.BadRequestException;
 import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 /**
  * Integration test class for the Case Management service
  */
 public class CaseManagementIT extends SdkIntegrationTestBase {
 
-    private static final String CRN = "crn:v1:staging:public:cloud-object-storage:global:a/19c52e57800c4d8bb9aefc66b3e49755:61848e72-6ba6-415e-84e2-91f3915e194d::";
-
     protected CaseManagement service;
-
     protected String newCaseNumber;
     protected String fileAttachmentId;
+
+    protected String resourceCrn;
 
     /**
      * This method provides our config filename to the base class.
@@ -97,6 +98,11 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
         assertNotNull(service.getServiceUrl());
 
         log("Using Service URL: " + service.getServiceUrl());
+
+        Map<String, String> config = CredentialUtils.getServiceProperties(CaseManagement.DEFAULT_SERVICE_NAME);
+
+        resourceCrn = config.get("RESOURCE_CRN");
+        assertNotNull(resourceCrn);
     }
 
     @Test (expectedExceptions = {BadRequestException.class})
@@ -354,7 +360,7 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
 
         AddResourceOptions addResourceOptionsModel = new AddResourceOptions.Builder()
             .caseNumber(newCaseNumber)
-            .crn(CRN)
+            .crn(resourceCrn)
             .note("Test resource")
             .build();
 

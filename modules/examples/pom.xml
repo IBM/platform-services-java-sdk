@@ -19,6 +19,11 @@
             below should reflect the "artifactId" value specified in each module's pom.xml file (i.e. not the module's directory name). -->
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>case-management</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>configuration-governance</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -30,6 +35,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>enterprise-usage-reports</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>global-catalog</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -82,6 +92,27 @@
             <artifactId>slf4j-jdk14</artifactId>
         </dependency>
     </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <configuration>
+                    <minimizeJar>true</minimizeJar>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <developers>
         <developer>

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,6 +20,7 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaMedia;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.URLS;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,7 +116,7 @@ public class UIMetaDataTest {
       .primaryOfferingId("testString")
       .accessibleDuringProvision(true)
       .sideBySideIndex(Long.valueOf("26"))
-      .endOfServiceTime(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .endOfServiceTime(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .hidden(true)
       .hideLiteMetering(true)
       .noUpgradeNextStep(true)
@@ -129,7 +130,7 @@ public class UIMetaDataTest {
     assertEquals(uiMetaDataModel.primaryOfferingId(), "testString");
     assertEquals(uiMetaDataModel.accessibleDuringProvision(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.sideBySideIndex(), Long.valueOf("26"));
-    assertEquals(uiMetaDataModel.endOfServiceTime(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(uiMetaDataModel.endOfServiceTime(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(uiMetaDataModel.hidden(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.hideLiteMetering(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModel.noUpgradeNextStep(), Boolean.valueOf(true));
@@ -145,7 +146,7 @@ public class UIMetaDataTest {
     assertEquals(uiMetaDataModelNew.primaryOfferingId(), "testString");
     assertEquals(uiMetaDataModelNew.accessibleDuringProvision(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModelNew.sideBySideIndex(), Long.valueOf("26"));
-    assertEquals(uiMetaDataModelNew.endOfServiceTime(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(uiMetaDataModelNew.endOfServiceTime(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(uiMetaDataModelNew.hidden(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModelNew.hideLiteMetering(), Boolean.valueOf(true));
     assertEquals(uiMetaDataModelNew.noUpgradeNextStep(), Boolean.valueOf(true));

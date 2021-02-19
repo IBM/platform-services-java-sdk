@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -36,14 +36,14 @@ public class GetCatalogEntryOptionsTest {
       .account("testString")
       .include("testString")
       .languages("testString")
-      .complete("testString")
+      .complete(true)
       .depth(Long.valueOf("26"))
       .build();
     assertEquals(getCatalogEntryOptionsModel.id(), "testString");
     assertEquals(getCatalogEntryOptionsModel.account(), "testString");
     assertEquals(getCatalogEntryOptionsModel.include(), "testString");
     assertEquals(getCatalogEntryOptionsModel.languages(), "testString");
-    assertEquals(getCatalogEntryOptionsModel.complete(), "testString");
+    assertEquals(getCatalogEntryOptionsModel.complete(), Boolean.valueOf(true));
     assertEquals(getCatalogEntryOptionsModel.depth(), Long.valueOf("26"));
   }
 

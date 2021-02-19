@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-4c92c221-20210211-060810
  */
 
 package com.ibm.cloud.platform_services.global_catalog.v1;
@@ -140,8 +140,17 @@ public class GlobalCatalog extends BaseService {
     if (listCatalogEntriesOptions.languages() != null) {
       builder.query("languages", String.valueOf(listCatalogEntriesOptions.languages()));
     }
+    if (listCatalogEntriesOptions.catalog() != null) {
+      builder.query("catalog", String.valueOf(listCatalogEntriesOptions.catalog()));
+    }
     if (listCatalogEntriesOptions.complete() != null) {
       builder.query("complete", String.valueOf(listCatalogEntriesOptions.complete()));
+    }
+    if (listCatalogEntriesOptions.offset() != null) {
+      builder.query("_offset", String.valueOf(listCatalogEntriesOptions.offset()));
+    }
+    if (listCatalogEntriesOptions.limit() != null) {
+      builder.query("_limit", String.valueOf(listCatalogEntriesOptions.limit()));
     }
     ResponseConverter<EntrySearchResult> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EntrySearchResult>() { }.getType());
@@ -372,6 +381,12 @@ public class GlobalCatalog extends BaseService {
     }
     if (getChildObjectsOptions.complete() != null) {
       builder.query("complete", String.valueOf(getChildObjectsOptions.complete()));
+    }
+    if (getChildObjectsOptions.offset() != null) {
+      builder.query("_offset", String.valueOf(getChildObjectsOptions.offset()));
+    }
+    if (getChildObjectsOptions.limit() != null) {
+      builder.query("_limit", String.valueOf(getChildObjectsOptions.limit()));
     }
     ResponseConverter<EntrySearchResult> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EntrySearchResult>() { }.getType());

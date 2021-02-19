@@ -106,8 +106,8 @@ public class IamPolicyManagementExamples {
               .build();
 
       ResourceAttribute serviceNameResourceAttribute = new ResourceAttribute.Builder()
-              .name("serviceName")
-              .value(EXAMPLE_SERVICE_NAME)
+              .name("serviceType")
+              .value("service")
               .operator("stringEquals")
               .build();
 
@@ -182,14 +182,21 @@ public class IamPolicyManagementExamples {
               .build();
 
       ResourceAttribute serviceNameResourceAttribute = new ResourceAttribute.Builder()
-              .name("serviceName")
-              .value(EXAMPLE_SERVICE_NAME)
+              .name("serviceType")
+              .value("service")
+              .operator("stringEquals")
+              .build();
+
+      ResourceTag policyResourceTag = new ResourceTag.Builder()
+              .name("project")
+              .value("prototype")
               .operator("stringEquals")
               .build();
 
       PolicyResource policyResources = new PolicyResource.Builder()
               .addAttributes(accountIdResourceAttribute)
               .addAttributes(serviceNameResourceAttribute)
+              .addTags(policyResourceTag)
               .build();
 
       PolicyRole updatedPolicyRole = new PolicyRole.Builder()

@@ -113,16 +113,10 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .build();
 
         ResourceAttribute resourceAttributeService = new ResourceAttribute.Builder()
-          .name("serviceName")
-          .value(TEST_SERVICE_NAME)
+          .name("serviceType")
+          .value("service")
           .operator("stringEquals")
           .build();
-
-        ResourceAttribute resourceAttributeResource = new ResourceAttribute.Builder()
-            .name("resource")
-            .value("SDK-Java-Test")
-            .operator("stringEquals")
-            .build();
 
         ResourceTag resourceAttributeTag = new ResourceTag.Builder()
                 .name("project")
@@ -137,7 +131,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         PolicyResource policyResourceModel = new PolicyResource.Builder()
           .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-            resourceAttributeService, resourceAttributeResource)))
+            resourceAttributeService)))
           .tags(new ArrayList<ResourceTag>(Arrays.asList(resourceAttributeTag)))
           .build();
 
@@ -209,12 +203,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .operator("stringEquals")
           .build();
 
-        ResourceAttribute resourceAttributeResource = new ResourceAttribute.Builder()
-          .name("resource")
-          .value("SDK-Java-Test")
-          .operator("stringEquals")
-          .build();
-
         SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
           .name("iam_id")
           .value(TEST_USER_ID)
@@ -222,7 +210,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         PolicyResource policyResourceModel = new PolicyResource.Builder()
           .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-            resourceAttributeService, resourceAttributeResource)))
+            resourceAttributeService)))
           .build();
 
         PolicyRole policyRoleModel = new PolicyRole.Builder()

@@ -43,21 +43,20 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Below are examples on how to use IAM Policy Management service.
- *
- * The following environment variables are assumed to be defined when running examples below:
- *
- * IAM_POLICY_MANAGEMENT_URL=https://iam.cloud.ibm.com
- * IAM_POLICY_MANAGEMENT_AUTH_TYPE=iam
- * IAM_POLICY_MANAGEMENT_AUTH_URL=https://iam.cloud.ibm.com/identity/token
- * IAM_POLICY_MANAGEMENT_APIKEY= <YOUR_APIKEY>
- * IAM_POLICY_MANAGEMENT_TEST_ACCOUNT_ID= <YOUR_ACCOUNT_ID>
- *
- * Alternatively, above environment variables can be placed in a "credentials" file and then:
- * export IBM_CREDENTIALS_FILE=<name of credentials file>
- *
- */
+//
+// This class provides an example of how to use the IAM Policy Management service.
+//
+// The following configuration properties are assumed to be defined:
+// IAM_POLICY_MANAGEMENT_URL=https://iam.cloud.ibm.com
+// IAM_POLICY_MANAGEMENT_AUTH_TYPE=iam
+// IAM_POLICY_MANAGEMENT_AUTH_URL=https://iam.cloud.ibm.com
+// IAM_POLICY_MANAGEMENT_APIKEY=<YOUR_APIKEY>
+// IAM_POLICY_MANAGEMENT_TEST_ACCOUNT_ID=<YOUR_ACCOUNT_ID>
+//
+// These configuration properties can be exported as environment variables, or stored
+// in a "credentials" file and then:
+// export IBM_CREDENTIALS_FILE=<name of credentials file>
+//
 
 public class IamPolicyManagementExamples {
   private static final Logger logger = LoggerFactory.getLogger(IamPolicyManagementExamples.class);

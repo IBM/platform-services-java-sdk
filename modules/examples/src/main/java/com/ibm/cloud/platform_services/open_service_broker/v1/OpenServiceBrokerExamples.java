@@ -39,6 +39,28 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//
+// This file provides an example of how to use the Open Service Broker service.
+//
+// The following configuration properties are assumed to be defined:
+//
+// OPEN_SERVICE_BROKER_URL=<Service broker's URL>
+// OPEN_SERVICE_BROKER_AUTH_TYPE=basic
+// OPEN_SERVICE_BROKER_USERNAME=<username>
+// OPEN_SERVICE_BROKER_PASSWORD=<password>
+// OPEN_SERVICE_BROKER_PLAN_ID=<The ID of the plan associated with the service offering>
+// OPEN_SERVICE_BROKER_RESOURCE_INSTANCE_ID=<The ID of a previously provisioned service instance>
+// OPEN_SERVICE_BROKER_SERVICE_ID=<The ID of the service being offered>
+// OPEN_SERVICE_BROKER_ACCOUNT_ID=<User's account ID>
+// OPEN_SERVICE_BROKER_BINDING_ID=<The ID of a previously provisioned binding for that service instance>
+// OPEN_SERVICE_BROKER_SPACE_GUID=<The identifier for the project space within the IBM Cloud platform organization>
+// OPEN_SERVICE_BROKER_APPLICATION_GUID=<GUID of an application associated with the binding>
+// OPEN_SERVICE_BROKER_ORGANIZATION_GUID=<The IBM Cloud platform GUID for the organization under which the service instance is to be provisioned>
+//
+// These configuration properties can be exported as environment variables, or stored
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
+//
 public class OpenServiceBrokerExamples {
   private static final Logger logger = LoggerFactory.getLogger(OpenServiceBrokerExamples.class);
   protected OpenServiceBrokerExamples() { }

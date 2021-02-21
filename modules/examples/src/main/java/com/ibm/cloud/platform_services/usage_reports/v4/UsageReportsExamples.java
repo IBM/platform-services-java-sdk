@@ -36,6 +36,7 @@ import org.slf4j.LoggerFactory;
 // This class provides an example of how to use the Usage Reports service.
 //
 // The following configuration properties are assumed to be defined:
+//
 // USAGE_REPORTS_URL=<service url>
 // USAGE_REPORTS_AUTHTYPE=iam
 // USAGE_REPORTS_APIKEY=<IAM api key of user with authority to create rules>
@@ -46,8 +47,8 @@ import org.slf4j.LoggerFactory;
 // USAGE_REPORTS_BILLING_MONTH=<the billing month (yyyy-mm) for which usage info will be retrieved>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-// export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
 public class UsageReportsExamples {
   private static final Logger logger = LoggerFactory.getLogger(UsageReportsExamples.class);

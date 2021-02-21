@@ -23,9 +23,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //
-// This file provides an example of how to use the Usage Reports service.
+// This file provides an example of how to use the Enterprise Usage Reports service.
 //
 // The following configuration properties are assumed to be defined:
+//
 // ENTERPRISE_USAGE_REPORTS_URL=<service url>
 // ENTERPRISE_USAGE_REPORTS_AUTHTYPE=iam
 // ENTERPRISE_USAGE_REPORTS_APIKEY=<IAM api key of user with authority to create rules>
@@ -36,8 +37,8 @@ import org.slf4j.LoggerFactory;
 // ENTERPRISE_USAGE_REPORTS_BILLING_MONTH=<the billing month (yyyy-mm) for which usage info will be retrieved>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-// export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
 public class EnterpriseUsageReportsExamples {
     private static final Logger logger = LoggerFactory.getLogger(EnterpriseUsageReportsExamples.class);

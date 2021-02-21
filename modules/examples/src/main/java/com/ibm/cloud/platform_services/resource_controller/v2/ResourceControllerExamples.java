@@ -72,10 +72,9 @@ import org.slf4j.LoggerFactory;
 // RESOURCE_CONTROLLER_BINDING_TARGET_CRN=<The CRN of application to bind to in a specific environment>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-// export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
-
 public class ResourceControllerExamples {
   private static final Logger logger = LoggerFactory.getLogger(ResourceControllerExamples.class);
   protected ResourceControllerExamples() { }

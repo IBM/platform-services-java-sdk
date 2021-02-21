@@ -22,15 +22,21 @@ const GlobalSearchV2 = require('../dist/global-search/v2');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
 const authHelper = require('../test/resources/auth-helper.js');
 
+//
 // This file provides an example of how to use the Global Search service.
+//
+// The following configuration properties are assumed to be defined:
 //
 // The following configuration properties are assumed to be defined in the external configuration file:
 // GLOBAL_SEARCH_URL=<service url>
 // GLOBAL_SEARCH_AUTHTYPE=iam
 // GLOBAL_SEARCH_APIKEY=<IAM api key>
 // GLOBAL_SEARCH_AUTH_URL=<IAM token service URL - omit this if using the production environment>
-
-// Location of our config file.
+//
+// These configuration properties can be exported as environment variables, or stored
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
+//
 const configFile = 'global_search.env';
 
 const describe = authHelper.prepareTests(configFile);

@@ -22,16 +22,21 @@ const GlobalTaggingV1 = require('../dist/global-tagging/v1');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
 const authHelper = require('../test/resources/auth-helper.js');
 
+//
 // This file provides an example of how to use the Global Tagging service.
 //
-// The following configuration properties are assumed to be defined in the external configuration file:
+// The following configuration properties are assumed to be defined:
+//
 // GLOBAL_TAGGING_URL=<service url>
 // GLOBAL_TAGGING_AUTHTYPE=iam
 // GLOBAL_TAGGING_APIKEY=<IAM api key>
 // GLOBAL_TAGGING_AUTH_URL=<IAM token service URL - omit this if using the production environment>
 // GLOBAL_TAGGING_RESOURCE_CRN=<the crn of the resource to be used in the examples>
-
-// Location of our config file.
+//
+// These configuration properties can be exported as environment variables, or stored
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
+//
 const configFile = 'global_tagging.env';
 
 const describe = authHelper.prepareTests(configFile);

@@ -25,7 +25,8 @@ const authHelper = require('../test/resources/auth-helper.js');
 //
 // This file provides an example of how to use the Enterprise Billing Units service.
 //
-// The following configuration properties are assumed to be defined in the external configuration file:
+// The following configuration properties are assumed to be defined:
+//
 // ENTERPRISE_BILLING_UNITS_URL=<service url>
 // ENTERPRISE_BILLING_UNITS_AUTHTYPE=iam
 // ENTERPRISE_BILLING_UNITS_APIKEY=<your iam apikey>
@@ -33,8 +34,10 @@ const authHelper = require('../test/resources/auth-helper.js');
 // ENTERPRISE_BILLING_UNITS_ENTERPRISE_ID=<id of enterprise to use for examples>
 // ENTERPRISE_BILLING_UNITS_BILLING_UNIT_ID=<id of billing unit to use for examples>
 //
-
-// Location of our config file.
+// These configuration properties can be exported as environment variables, or stored
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
+//
 const configFile = 'enterprise_billing_units.env';
 
 const describe = authHelper.prepareTests(configFile);

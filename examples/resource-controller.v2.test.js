@@ -22,9 +22,6 @@ const ResourceControllerV2 = require('../dist/resource-controller/v2');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
 const authHelper = require('../test/resources/auth-helper.js');
 
-// Location of our config file.
-const configFile = 'resource_controller.env';
-
 //
 // This file provides an example of how to use the Resource Controller service.
 //
@@ -41,10 +38,10 @@ const configFile = 'resource_controller.env';
 // RESOURCE_CONTROLLER_BINDING_TARGET_CRN=<The CRN of application to bind to in a specific environment>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-// export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
-
+const configFile = 'resource_controller.env';
 
 const describe = authHelper.prepareTests(configFile);
 

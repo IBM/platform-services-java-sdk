@@ -36,11 +36,9 @@ const authHelper = require('../test/resources/auth-helper.js');
 // USAGE_REPORTS_BILLING_MONTH=<the billing month (yyyy-mm) for which usage info will be retrieved>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-// export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
-
-// Location of our config file.
 const configFile = 'usage_reports.env';
 
 const describe = authHelper.prepareTests(configFile);

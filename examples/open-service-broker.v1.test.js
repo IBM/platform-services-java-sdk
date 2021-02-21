@@ -22,11 +22,8 @@ const OpenServiceBrokerV1 = require('../dist/open-service-broker/v1');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
 const authHelper = require('../test/resources/auth-helper.js');
 
-// Location of our config file.
-const configFile = 'open_service_broker.env';
-
 //
-// This file provides an example of how to use the Open Service broker service.
+// This file provides an example of how to use the Open Service Broker service.
 //
 // The following configuration properties are assumed to be defined:
 //
@@ -44,9 +41,10 @@ const configFile = 'open_service_broker.env';
 // OPEN_SERVICE_BROKER_ORGANIZATION_GUID=<The IBM Cloud platform GUID for the organization under which the service instance is to be provisioned>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-// export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
+const configFile = 'open_service_broker.env';
 
 const describe = authHelper.prepareTests(configFile);
 

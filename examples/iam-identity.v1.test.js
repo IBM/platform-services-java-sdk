@@ -24,7 +24,7 @@ const authHelper = require('../test/resources/auth-helper.js');
 const { expectToBePromise } = require('ibm-cloud-sdk-core/lib/sdk-test-helpers');
 
 //
-// This file provides an example of how to use the IAM-IDENTITY service.
+// This file provides an example of how to use the IAM Identity service.
 //
 // The following configuration properties are assumed to be defined:
 //
@@ -36,10 +36,9 @@ const { expectToBePromise } = require('ibm-cloud-sdk-core/lib/sdk-test-helpers')
 // IAM_IDENTITY_IAM_ID=<IAM ID which is unique to the User account>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-// export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
-
 const configFile = 'iam_identity.env';
 
 const describe = authHelper.prepareTests(configFile);

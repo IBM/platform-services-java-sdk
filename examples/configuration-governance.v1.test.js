@@ -23,7 +23,24 @@ const { readExternalSources } = require('ibm-cloud-sdk-core');
 const authHelper = require('../test/resources/auth-helper.js');
 const { v4: uuidv4 } = require('uuid');
 
-// Location of our config file.
+//
+// This file provides an example of how to use the Configuration Governance service.
+//
+// The following configuration properties are assumed to be defined:
+//
+// CONFIGURATION_GOVERNANCE_URL=<service url>
+// CONFIGURATION_GOVERNANCE_AUTHTYPE=iam
+// CONFIGURATION_GOVERNANCE_APIKEY=<IAM api key of user with authority to create rules>
+// CONFIGURATION_GOVERNANCE_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+// CONFIGURATION_GOVERNANCE_ACCOUNT_ID=<the id of the account under which rules/attachments should be created>
+// CONFIGURATION_GOVERNANCE_EXAMPLE_SERVICE_NAME=<the name of the service to be associated with rule>
+// CONFIGURATION_GOVERNANCE_ENTERPRISE_SCOPE_ID=<the id of the "enterprise" scope to be used in the examples>
+// CONFIGURATION_GOVERNANCE_SUBACCT_SCOPE_ID=<the id of the "leaf account" scope to be used in the examples>
+//
+// These configuration properties can be exported as environment variables, or stored
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
+//
 const configFile = 'configuration_governance.env';
 
 const describe = authHelper.prepareTests(configFile);

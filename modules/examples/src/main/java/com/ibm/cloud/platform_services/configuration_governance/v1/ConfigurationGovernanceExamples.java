@@ -48,9 +48,10 @@ import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 //
-// This class provides an example of how to use the Configuration Governance service.
+// This file provides an example of how to use the Configuration Governance service.
 //
 // The following configuration properties are assumed to be defined:
+//
 // CONFIGURATION_GOVERNANCE_URL=<service url>
 // CONFIGURATION_GOVERNANCE_AUTHTYPE=iam
 // CONFIGURATION_GOVERNANCE_APIKEY=<IAM api key of user with authority to create rules>
@@ -61,8 +62,8 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 // CONFIGURATION_GOVERNANCE_SUBACCT_SCOPE_ID=<the id of the "leaf account" scope to be used in the examples>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-// export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
 public class ConfigurationGovernanceExamples {
   private static final Logger logger = LoggerFactory.getLogger(ConfigurationGovernanceExamples.class);

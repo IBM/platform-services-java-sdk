@@ -53,15 +53,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //
-// This class provides an example of how to use the Global Catalog service.
+// This file provides an example of how to use the Global Catalog service.
+//
+// The following configuration properties are assumed to be defined:
 //
 // GLOBAL_CATALOG_URL=<service url>
 // GLOBAL_CATALOG_AUTH_TYPE=iam
 // GLOBAL_CATALOG_APIKEY=<IAM apikey>
 // GLOBAL_CATALOG_AUTH_URL=<IAM token service URL - omit this if using the production environment>
 //
-
-
+// These configuration properties can be exported as environment variables, or stored
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
+//
 public class GlobalCatalogExamples {
     private static final Logger logger = LoggerFactory.getLogger(GlobalCatalogExamples.class);
 

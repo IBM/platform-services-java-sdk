@@ -50,6 +50,21 @@ import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
+//
+// This file provides an example of how to use the Case Management service.
+//
+// The following configuration properties are assumed to be defined:
+//
+// CASE_MANAGEMENT_URL=<service url>
+// CASE_MANAGEMENT_AUTH_TYPE=iam
+// CASE_MANAGEMENT_AUTH_URL=<IAM token service URL - omit this if using the production environment>
+// CASE_MANAGEMENT_APIKEY=<IAM apikey>
+// CASE_MANAGEMENT_RESOURCE_CRN=<CRN of resource to use in examples>
+//
+// These configuration properties can be exported as environment variables, or stored
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
+//
 public class CaseManagementExamples {
   private static final Logger logger = LoggerFactory.getLogger(CaseManagementExamples.class);
   protected CaseManagementExamples() { }

@@ -42,7 +42,7 @@ import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 //
-// This class provides an example of how to use the IAM-IDENTITY service.
+// This class provides an example of how to use the IAM Identity service.
 //
 // The following configuration properties are assumed to be defined:
 //
@@ -54,8 +54,8 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 // IAM_IDENTITY_IAM_ID=<IAM ID which is unique to the User account>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-// export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
 public class IamIdentityExamples {
     private static final Logger logger = LoggerFactory.getLogger(IamIdentityExamples.class);

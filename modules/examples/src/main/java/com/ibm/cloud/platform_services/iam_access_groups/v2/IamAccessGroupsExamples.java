@@ -56,14 +56,18 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 //
 // This file provides an example of how to use the IAM Access Groups service.
 //
-// The following configuration properties are assumed to be defined in the external configuration file:
+// The following configuration properties are assumed to be defined:
+//
 // IAM_ACCESS_GROUPS_URL=<service url>
 // IAM_ACCESS_GROUPS_AUTHTYPE=iam
 // IAM_ACCESS_GROUPS_APIKEY=<your iam apikey>
 // IAM_ACCESS_GROUPS_AUTH_URL=<IAM token service URL - omit this if using the production environment>
 // IAM_ACCESS_GROUPS_TEST_ACCOUNT_ID=<id of an account used for testing>
 //
-
+// These configuration properties can be exported as environment variables, or stored
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
+//
 public class IamAccessGroupsExamples {
   private static final Logger logger = LoggerFactory.getLogger(IamAccessGroupsExamples.class);
   protected IamAccessGroupsExamples() { }

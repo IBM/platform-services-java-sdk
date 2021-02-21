@@ -27,17 +27,18 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 
 //
-// This class provides an example of how to use the Usage Metering service.
+// This file provides an example of how to use the Usage Metering service.
 //
 // The following configuration properties are assumed to be defined:
+//
 // USAGE_METERING_URL=<service url>
 // USAGE_METERING_AUTHTYPE=iam
 // USAGE_METERING_APIKEY=<IAM api key of user with authority to create rules>
 // USAGE_METERING_AUTH_URL=<IAM token service URL - omit this if using the production environment>
 //
 // These configuration properties can be exported as environment variables, or stored
-// in a "credentials" file and then:
-//    export IBM_CREDENTIALS_FILE=<name of credentials file>
+// in a configuration file and then:
+// export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
 public class UsageMeteringExamples {
     private static final Logger logger = LoggerFactory.getLogger(UsageMeteringExamples.class);

@@ -1,3 +1,10 @@
+## [0.17.11](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.10...v0.17.11) (2021-02-24)
+
+
+### Bug Fixes
+
+* **build:** upgrade to latest node core library ([ccb7353](https://github.com/IBM/platform-services-node-sdk/commit/ccb7353e7530337205af25570c3274730cf2546c))
+
 ## [0.17.10](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.9...v0.17.10) (2021-02-18)
 
 

@@ -64,6 +64,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>iam-policy-management</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>open-service-broker</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -80,6 +85,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>usage-reports</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>user-management</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

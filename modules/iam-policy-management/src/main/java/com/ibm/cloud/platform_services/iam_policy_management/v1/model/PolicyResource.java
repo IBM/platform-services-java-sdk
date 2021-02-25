@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,15 +23,18 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class PolicyResource extends GenericModel {
 
   protected List<ResourceAttribute> attributes;
+  protected List<ResourceTag> tags;
 
   /**
    * Builder.
    */
   public static class Builder {
     private List<ResourceAttribute> attributes;
+    private List<ResourceTag> tags;
 
     private Builder(PolicyResource policyResource) {
       this.attributes = policyResource.attributes;
+      this.tags = policyResource.tags;
     }
 
     /**
@@ -66,6 +69,22 @@ public class PolicyResource extends GenericModel {
     }
 
     /**
+     * Adds an tags to tags.
+     *
+     * @param tags the new tags
+     * @return the PolicyResource builder
+     */
+    public Builder addTags(ResourceTag tags) {
+      com.ibm.cloud.sdk.core.util.Validator.notNull(tags,
+        "tags cannot be null");
+      if (this.tags == null) {
+        this.tags = new ArrayList<ResourceTag>();
+      }
+      this.tags.add(tags);
+      return this;
+    }
+
+    /**
      * Set the attributes.
      * Existing attributes will be replaced.
      *
@@ -76,10 +95,23 @@ public class PolicyResource extends GenericModel {
       this.attributes = attributes;
       return this;
     }
+
+    /**
+     * Set the tags.
+     * Existing tags will be replaced.
+     *
+     * @param tags the tags
+     * @return the PolicyResource builder
+     */
+    public Builder tags(List<ResourceTag> tags) {
+      this.tags = tags;
+      return this;
+    }
   }
 
   protected PolicyResource(Builder builder) {
     attributes = builder.attributes;
+    tags = builder.tags;
   }
 
   /**
@@ -100,6 +132,17 @@ public class PolicyResource extends GenericModel {
    */
   public List<ResourceAttribute> attributes() {
     return attributes;
+  }
+
+  /**
+   * Gets the tags.
+   *
+   * List of access management tags.
+   *
+   * @return the tags
+   */
+  public List<ResourceTag> tags() {
+    return tags;
   }
 }
 

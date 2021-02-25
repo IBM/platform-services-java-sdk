@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -25,6 +25,8 @@ public class ListPoliciesOptions extends GenericModel {
   protected String accessGroupId;
   protected String type;
   protected String serviceType;
+  protected String tagName;
+  protected String tagValue;
   protected String sort;
   protected String format;
 
@@ -38,6 +40,8 @@ public class ListPoliciesOptions extends GenericModel {
     private String accessGroupId;
     private String type;
     private String serviceType;
+    private String tagName;
+    private String tagValue;
     private String sort;
     private String format;
 
@@ -48,6 +52,8 @@ public class ListPoliciesOptions extends GenericModel {
       this.accessGroupId = listPoliciesOptions.accessGroupId;
       this.type = listPoliciesOptions.type;
       this.serviceType = listPoliciesOptions.serviceType;
+      this.tagName = listPoliciesOptions.tagName;
+      this.tagValue = listPoliciesOptions.tagValue;
       this.sort = listPoliciesOptions.sort;
       this.format = listPoliciesOptions.format;
     }
@@ -143,6 +149,28 @@ public class ListPoliciesOptions extends GenericModel {
     }
 
     /**
+     * Set the tagName.
+     *
+     * @param tagName the tagName
+     * @return the ListPoliciesOptions builder
+     */
+    public Builder tagName(String tagName) {
+      this.tagName = tagName;
+      return this;
+    }
+
+    /**
+     * Set the tagValue.
+     *
+     * @param tagValue the tagValue
+     * @return the ListPoliciesOptions builder
+     */
+    public Builder tagValue(String tagValue) {
+      this.tagValue = tagValue;
+      return this;
+    }
+
+    /**
      * Set the sort.
      *
      * @param sort the sort
@@ -174,6 +202,8 @@ public class ListPoliciesOptions extends GenericModel {
     accessGroupId = builder.accessGroupId;
     type = builder.type;
     serviceType = builder.serviceType;
+    tagName = builder.tagName;
+    tagValue = builder.tagValue;
     sort = builder.sort;
     format = builder.format;
   }
@@ -251,6 +281,28 @@ public class ListPoliciesOptions extends GenericModel {
    */
   public String serviceType() {
     return serviceType;
+  }
+
+  /**
+   * Gets the tagName.
+   *
+   * The name of the access management tag in the policy.
+   *
+   * @return the tagName
+   */
+  public String tagName() {
+    return tagName;
+  }
+
+  /**
+   * Gets the tagValue.
+   *
+   * The value of the access management tag in the policy.
+   *
+   * @return the tagValue
+   */
+  public String tagValue() {
+    return tagValue;
   }
 
   /**

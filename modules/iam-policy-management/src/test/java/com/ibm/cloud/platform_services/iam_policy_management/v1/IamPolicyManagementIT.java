@@ -26,29 +26,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.TimeZone;
 
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -131,16 +113,16 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .build();
 
         ResourceAttribute resourceAttributeService = new ResourceAttribute.Builder()
-          .name("serviceName")
-          .value(TEST_SERVICE_NAME)
+          .name("serviceType")
+          .value("service")
           .operator("stringEquals")
           .build();
 
-          ResourceAttribute resourceAttributeResource = new ResourceAttribute.Builder()
-            .name("resource")
-            .value("SDK-Java-Test")
-            .operator("stringEquals")
-            .build();
+        ResourceTag resourceAttributeTag = new ResourceTag.Builder()
+                .name("project")
+                .value("prototype")
+                .operator("stringEquals")
+                .build();
 
         SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
           .name("iam_id")
@@ -149,7 +131,8 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         PolicyResource policyResourceModel = new PolicyResource.Builder()
           .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-            resourceAttributeService, resourceAttributeResource)))
+            resourceAttributeService)))
+          .tags(new ArrayList<ResourceTag>(Arrays.asList(resourceAttributeTag)))
           .build();
 
         PolicyRole policyRoleModel = new PolicyRole.Builder()
@@ -162,9 +145,9 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         CreatePolicyOptions options = new CreatePolicyOptions.Builder()
           .type(POLICY_TYPE)
-          .subjects(new ArrayList<PolicySubject>(Arrays.asList(policySubjectModel)))
-          .roles(new ArrayList<PolicyRole>(Arrays.asList(policyRoleModel)))
-          .resources(new ArrayList<PolicyResource>(Arrays.asList(policyResourceModel)))
+          .subjects(Arrays.asList(policySubjectModel))
+          .roles(Arrays.asList(policyRoleModel))
+          .resources(Arrays.asList(policyResourceModel))
           .build();
 
         Response<Policy> response = service.createPolicy(options).execute();
@@ -220,12 +203,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .operator("stringEquals")
           .build();
 
-        ResourceAttribute resourceAttributeResource = new ResourceAttribute.Builder()
-          .name("resource")
-          .value("SDK-Java-Test")
-          .operator("stringEquals")
-          .build();
-
         SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
           .name("iam_id")
           .value(TEST_USER_ID)
@@ -233,7 +210,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         PolicyResource policyResourceModel = new PolicyResource.Builder()
           .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-            resourceAttributeService, resourceAttributeResource)))
+            resourceAttributeService)))
           .build();
 
         PolicyRole policyRoleModel = new PolicyRole.Builder()

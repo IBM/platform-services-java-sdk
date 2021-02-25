@@ -1,3 +1,10 @@
+## [0.17.12](https://github.com/IBM/platform-services-java-sdk/compare/0.17.11...0.17.12) (2021-02-25)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** re-gen service and add examples after recent API changes ([#74](https://github.com/IBM/platform-services-java-sdk/issues/74)) ([6ee9286](https://github.com/IBM/platform-services-java-sdk/commit/6ee9286069a9b2302d4c706e0d021b245ba8e4c4))
+
 ## [0.17.11](https://github.com/IBM/platform-services-java-sdk/compare/0.17.10...0.17.11) (2021-02-25)
 
 

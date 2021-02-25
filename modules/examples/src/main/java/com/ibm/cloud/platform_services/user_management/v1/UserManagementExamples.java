@@ -111,24 +111,22 @@ public class UserManagementExamples {
               .value("*")
               .build();
 
-      Attribute[] attributeArray = new Attribute[] { attributeModel, attributeModel2 };
-
       Resource resourceModel = new Resource.Builder()
-              .attributes(new java.util.ArrayList<Attribute>(java.util.Arrays.asList(attributeArray)))
+              .addAttributes(attributeModel)
+              .addAttributes(attributeModel2)
               .build();
 
       InviteUserIamPolicy inviteUserIamPolicyModel = new InviteUserIamPolicy.Builder()
               .type("access")
-              .roles(new java.util.ArrayList<Role>(java.util.Arrays.asList(roleModel)))
-              .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+              .addRoles(roleModel)
+              .addResources(resourceModel)
               .build();
 
       InviteUsersOptions inviteUsersOptions = new InviteUsersOptions.Builder()
               .accountId(accountId)
-              .users(new java.util.ArrayList<InviteUser>(java.util.Arrays.asList(inviteUserModel)))
-              .iamPolicy(new java.util.ArrayList<InviteUserIamPolicy>(
-                      java.util.Arrays.asList(inviteUserIamPolicyModel)))
-              .accessGroups(new java.util.ArrayList<String>(java.util.Arrays.asList(accessGroupId)))
+              .addUsers(inviteUserModel)
+              .addIamPolicy(inviteUserIamPolicyModel)
+              .addAccessGroups(accessGroupId)
               .build();
 
       Response<InvitedUserList> response = adminService.inviteUsers(inviteUsersOptions).execute();

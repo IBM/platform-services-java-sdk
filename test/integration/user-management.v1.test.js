@@ -17,6 +17,7 @@
 
 'use strict';
 const UserManagementV1 = require('../../dist/user-management/v1');
+const { readExternalSources } = require('ibm-cloud-sdk-core');
 const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (200s).
@@ -27,19 +28,48 @@ const configFile = 'user_management.env';
 
 const describe = authHelper.prepareTests(configFile);
 
-let userId;
-
-const accountId = '1aa434630b594b8a88b961a44c9eb2a9';
-const iamUserId = 'IBMid-550008BJPR';
-const invitedUserEmail = 'aminttest+linked_account_owner_11@mail.test.ibm.com';
-const viewerRoleId = 'crn:v1:bluemix:public:iam::::role:Viewer';
-const accessGroupId = 'AccessGroupId-51675919-2bd7-4ce3-86e4-5faff8065574';
+const verbose = true;
 
 describe('UserManagementV1_integration', () => {
-  const userManagementService = UserManagementV1.newInstance({ serviceName: 'USERMGMT1' });
-  const alternateUserManagementService = UserManagementV1.newInstance({ serviceName: 'USERMGMT2' });
-
   jest.setTimeout(timeout);
+
+  let userManagementService;
+  let userManagementAdminService;
+
+  let userId;
+
+  let accountId;
+  let iamUserId;
+  let invitedUserEmail;
+  let viewerRoleId;
+  let accessGroupId;
+
+  beforeAll(async done => {
+    log('Starting setup...');
+
+    userManagementService = UserManagementV1.newInstance({ serviceName: UserManagementV1.DEFAULT_SERVICE_NAME });
+    userManagementAdminService = UserManagementV1.newInstance({ serviceName: 'USER_MANAGEMENT_ADMIN' });
+    expect(userManagementService).not.toBeNull();
+    expect(userManagementAdminService).not.toBeNull();
+
+    const config = readExternalSources(UserManagementV1.DEFAULT_SERVICE_NAME);
+    expect(config).not.toBeNull();
+
+    accountId = config.accountId;
+    iamUserId = config.userId;
+    invitedUserEmail = config.memberEmail;
+    viewerRoleId = config.viewerRoleId;
+    accessGroupId = config.accessGroupId;
+    expect(accountId).not.toBeNull();
+    expect(iamUserId).not.toBeNull();
+    expect(invitedUserEmail).not.toBeNull();
+    expect(viewerRoleId).not.toBeNull();
+    expect(accessGroupId).not.toBeNull();
+
+    log('Finished setup.');
+
+    done();
+  });
 
   test('getUserSettings()', done => {
     const params = {
@@ -170,7 +200,7 @@ describe('UserManagementV1_integration', () => {
       accessGroups: [accessGroupId],
     };
 
-    alternateUserManagementService
+    userManagementAdminService
       .inviteUsers(params)
       .then(res => {
         expect(res).not.toBeNull();
@@ -259,4 +289,10 @@ function getStartTokenFromURL(urlstring) {
     offset = url.searchParams.get('_start');
   }
   return offset;
+}
+
+function log(msg) {
+  if (verbose) {
+    console.log(msg);
+  }
 }

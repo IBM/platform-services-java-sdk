@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -18,6 +18,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyReso
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;

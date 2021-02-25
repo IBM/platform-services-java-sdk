@@ -15,12 +15,13 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * An attribute associated with a subject.
+ * A tag associated with a resource.
  */
-public class SubjectAttribute extends GenericModel {
+public class ResourceTag extends GenericModel {
 
   protected String name;
   protected String value;
+  protected String operator;
 
   /**
    * Builder.
@@ -28,10 +29,12 @@ public class SubjectAttribute extends GenericModel {
   public static class Builder {
     private String name;
     private String value;
+    private String operator;
 
-    private Builder(SubjectAttribute subjectAttribute) {
-      this.name = subjectAttribute.name;
-      this.value = subjectAttribute.value;
+    private Builder(ResourceTag resourceTag) {
+      this.name = resourceTag.name;
+      this.value = resourceTag.value;
+      this.operator = resourceTag.operator;
     }
 
     /**
@@ -52,19 +55,19 @@ public class SubjectAttribute extends GenericModel {
     }
 
     /**
-     * Builds a SubjectAttribute.
+     * Builds a ResourceTag.
      *
-     * @return the new SubjectAttribute instance
+     * @return the new ResourceTag instance
      */
-    public SubjectAttribute build() {
-      return new SubjectAttribute(this);
+    public ResourceTag build() {
+      return new ResourceTag(this);
     }
 
     /**
      * Set the name.
      *
      * @param name the name
-     * @return the SubjectAttribute builder
+     * @return the ResourceTag builder
      */
     public Builder name(String name) {
       this.name = name;
@@ -75,27 +78,39 @@ public class SubjectAttribute extends GenericModel {
      * Set the value.
      *
      * @param value the value
-     * @return the SubjectAttribute builder
+     * @return the ResourceTag builder
      */
     public Builder value(String value) {
       this.value = value;
       return this;
     }
+
+    /**
+     * Set the operator.
+     *
+     * @param operator the operator
+     * @return the ResourceTag builder
+     */
+    public Builder operator(String operator) {
+      this.operator = operator;
+      return this;
+    }
   }
 
-  protected SubjectAttribute(Builder builder) {
+  protected ResourceTag(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,
       "name cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.value,
       "value cannot be null");
     name = builder.name;
     value = builder.value;
+    operator = builder.operator;
   }
 
   /**
    * New builder.
    *
-   * @return a SubjectAttribute builder
+   * @return a ResourceTag builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -104,7 +119,7 @@ public class SubjectAttribute extends GenericModel {
   /**
    * Gets the name.
    *
-   * The name of an attribute.
+   * The name of an access management tag.
    *
    * @return the name
    */
@@ -115,12 +130,23 @@ public class SubjectAttribute extends GenericModel {
   /**
    * Gets the value.
    *
-   * The value of an attribute.
+   * The value of an access management tag.
    *
    * @return the value
    */
   public String value() {
     return value;
+  }
+
+  /**
+   * Gets the operator.
+   *
+   * The operator of an access management tag.
+   *
+   * @return the operator
+   */
+  public String operator() {
+    return operator;
   }
 }
 

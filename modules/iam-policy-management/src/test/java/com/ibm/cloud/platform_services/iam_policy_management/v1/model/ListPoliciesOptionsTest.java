@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -38,6 +38,8 @@ public class ListPoliciesOptionsTest {
       .accessGroupId("testString")
       .type("testString")
       .serviceType("testString")
+      .tagName("testString")
+      .tagValue("testString")
       .sort("testString")
       .format("testString")
       .build();
@@ -47,6 +49,8 @@ public class ListPoliciesOptionsTest {
     assertEquals(listPoliciesOptionsModel.accessGroupId(), "testString");
     assertEquals(listPoliciesOptionsModel.type(), "testString");
     assertEquals(listPoliciesOptionsModel.serviceType(), "testString");
+    assertEquals(listPoliciesOptionsModel.tagName(), "testString");
+    assertEquals(listPoliciesOptionsModel.tagValue(), "testString");
     assertEquals(listPoliciesOptionsModel.sort(), "testString");
     assertEquals(listPoliciesOptionsModel.format(), "testString");
   }

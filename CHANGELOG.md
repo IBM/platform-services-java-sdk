@@ -1,3 +1,10 @@
+## [0.17.13](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.12...v0.17.13) (2021-02-25)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** re-gen service and add examples after recent API changes ([#74](https://github.com/IBM/platform-services-node-sdk/issues/74)) ([9938847](https://github.com/IBM/platform-services-node-sdk/commit/99388477291304971131c7ab6685dd963558885c))
+
 ## [0.17.12](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.11...v0.17.12) (2021-02-25)
 
 

@@ -58,17 +58,17 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
  */
 public class UserManagementIT extends SdkIntegrationTestBase {
     public UserManagement service = null;
-    public UserManagement alternateService = null;
+    public UserManagement adminService = null;
     public static Map<String, String> config = null;
     final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
     final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
     public String userId = null;
 
-    public static final String ACCOUNT_ID = "1aa434630b594b8a88b961a44c9eb2a9";
-    public static final String IAM_USERID = "IBMid-550008BJPR";
-    public static final String INVITED_USER_EMAIL = "aminttest+linked_account_owner_11@mail.test.ibm.com";
-    public static final String VIEWER_ROLEID = "crn:v1:bluemix:public:iam::::role:Viewer";
-    public static final String ACCESS_GROUP_ID = "AccessGroupId-51675919-2bd7-4ce3-86e4-5faff8065574";
+    private static String ACCOUNT_ID;
+    private static String IAM_USERID;
+    private static String INVITED_USER_EMAIL;
+    private static String VIEWER_ROLEID;
+    private static String ACCESS_GROUP_ID;
 
     @Override
     public String getConfigFilename() {
@@ -87,19 +87,31 @@ public class UserManagementIT extends SdkIntegrationTestBase {
             return;
         }
 
-        service = UserManagement.newInstance("USERMGMT1");
+        service = UserManagement.newInstance(UserManagement.DEFAULT_SERVICE_NAME);
         assertNotNull(service);
         assertNotNull(service.getServiceUrl());
 
-        alternateService = UserManagement.newInstance("USERMGMT2");
-        assertNotNull(alternateService);
-        assertNotNull(alternateService.getServiceUrl());
+        adminService = UserManagement.newInstance("USER_MANAGEMENT_ADMIN");
+        assertNotNull(adminService);
+        assertNotNull(adminService.getServiceUrl());
 
         // Load up our test-specific config properties.
-        config = CredentialUtils.getServiceProperties("USERMGMT1");
+        config = CredentialUtils.getServiceProperties(UserManagement.DEFAULT_SERVICE_NAME);
         assertNotNull(config);
         assertFalse(config.isEmpty());
         assertEquals(service.getServiceUrl(), config.get("URL"));
+
+        ACCOUNT_ID = config.get("ACCOUNT_ID");
+        IAM_USERID = config.get("USER_ID");
+        INVITED_USER_EMAIL = config.get("MEMBER_EMAIL");
+        VIEWER_ROLEID = config.get("VIEWER_ROLE_ID");
+        ACCESS_GROUP_ID = config.get("ACCESS_GROUP_ID");
+
+        assertNotNull(ACCOUNT_ID);
+        assertNotNull(IAM_USERID);
+        assertNotNull(INVITED_USER_EMAIL);
+        assertNotNull(VIEWER_ROLEID);
+        assertNotNull(ACCESS_GROUP_ID);
 
         log(String.format("Service URL: %s", service.getServiceUrl()));
         log("Setup complete.");
@@ -234,7 +246,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<InvitedUserList> response = alternateService.inviteUsers(inviteUsersOptions).execute();
+            Response<InvitedUserList> response = adminService.inviteUsers(inviteUsersOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 202);

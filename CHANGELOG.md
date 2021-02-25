@@ -1,3 +1,10 @@
+## [0.17.11](https://github.com/IBM/platform-services-java-sdk/compare/0.17.10...0.17.11) (2021-02-25)
+
+
+### Bug Fixes
+
+* **User Management:** add examples ([#80](https://github.com/IBM/platform-services-java-sdk/issues/80)) ([2c152fb](https://github.com/IBM/platform-services-java-sdk/commit/2c152fb5f72a8151be7c8fc24d0a1bb325c9e87f))
+
 ## [0.17.10](https://github.com/IBM/platform-services-java-sdk/compare/0.17.9...0.17.10) (2021-02-18)
 
 

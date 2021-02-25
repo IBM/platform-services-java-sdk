@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-925238c4-20210122-102634
  */
 
 
@@ -94,10 +94,10 @@ class IamPolicyManagementV1 extends BaseService {
    * Get policies by attributes.
    *
    * Get policies and filter by attributes. While managing policies, you may want to retrieve policies in the account
-   * and filter by attribute values. This can be done through query parameters. Currently, we only support the following
-   * attributes: account_id, iam_id, access_group_id, type, and service_type. account_id is a required query parameter.
-   * Only policies that have the specified attributes and that the caller has read access to are returned. If the caller
-   * does not have read access to any policies an empty array is returned.
+   * and filter by attribute values. This can be done through query parameters. Currently, only the following attributes
+   * are supported: account_id, iam_id, access_group_id, type, service_type, sort and format. account_id is a required
+   * query parameter. Only policies that have the specified attributes and that the caller has read access to are
+   * returned. If the caller does not have read access to any policies an empty array is returned.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.accountId - The account GUID in which the policies belong to.
@@ -106,6 +106,8 @@ class IamPolicyManagementV1 extends BaseService {
    * @param {string} [params.accessGroupId] - The access group id.
    * @param {string} [params.type] - The type of policy (access or authorization).
    * @param {string} [params.serviceType] - The type of service.
+   * @param {string} [params.tagName] - The name of the access management tag in the policy.
+   * @param {string} [params.tagValue] - The value of the access management tag in the policy.
    * @param {string} [params.sort] - Sort the results by any of the top level policy fields (id, created_at,
    * created_by_id, last_modified_at, etc).
    * @param {string} [params.format] - Include additional data per policy returned [include_last_permit, display].
@@ -127,6 +129,8 @@ class IamPolicyManagementV1 extends BaseService {
       'access_group_id': _params.accessGroupId,
       'type': _params.type,
       'service_type': _params.serviceType,
+      'tag_name': _params.tagName,
+      'tag_value': _params.tagValue,
       'sort': _params.sort,
       'format': _params.format
     };
@@ -666,6 +670,10 @@ namespace IamPolicyManagementV1 {
     type?: string;
     /** The type of service. */
     serviceType?: string;
+    /** The name of the access management tag in the policy. */
+    tagName?: string;
+    /** The value of the access management tag in the policy. */
+    tagValue?: string;
     /** Sort the results by any of the top level policy fields (id, created_at, created_by_id, last_modified_at,
      *  etc).
      */
@@ -858,6 +866,8 @@ namespace IamPolicyManagementV1 {
   export interface PolicyResource {
     /** List of resource attributes. */
     attributes?: ResourceAttribute[];
+    /** List of access management tags. */
+    tags?: ResourceTag[];
   }
 
   /** A role associated with a policy. */
@@ -883,6 +893,16 @@ namespace IamPolicyManagementV1 {
     /** The value of an attribute. */
     value: string;
     /** The operator of an attribute. */
+    operator?: string;
+  }
+
+  /** A tag associated with a resource. */
+  export interface ResourceTag {
+    /** The name of an access management tag. */
+    name: string;
+    /** The value of an access management tag. */
+    value: string;
+    /** The operator of an access management tag. */
     operator?: string;
   }
 

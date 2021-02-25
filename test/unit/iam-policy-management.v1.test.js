@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -110,6 +110,8 @@ describe('IamPolicyManagementV1', () => {
         const accessGroupId = 'testString';
         const type = 'testString';
         const serviceType = 'testString';
+        const tagName = 'testString';
+        const tagValue = 'testString';
         const sort = 'testString';
         const format = 'testString';
         const params = {
@@ -119,6 +121,8 @@ describe('IamPolicyManagementV1', () => {
           accessGroupId: accessGroupId,
           type: type,
           serviceType: serviceType,
+          tagName: tagName,
+          tagValue: tagValue,
           sort: sort,
           format: format,
         };
@@ -143,6 +147,8 @@ describe('IamPolicyManagementV1', () => {
         expect(options.qs['access_group_id']).toEqual(accessGroupId);
         expect(options.qs['type']).toEqual(type);
         expect(options.qs['service_type']).toEqual(serviceType);
+        expect(options.qs['tag_name']).toEqual(tagName);
+        expect(options.qs['tag_value']).toEqual(tagValue);
         expect(options.qs['sort']).toEqual(sort);
         expect(options.qs['format']).toEqual(format);
       });
@@ -216,9 +222,17 @@ describe('IamPolicyManagementV1', () => {
         operator: 'testString',
       };
 
+      // ResourceTag
+      const resourceTagModel = {
+        name: 'testString',
+        value: 'testString',
+        operator: 'testString',
+      };
+
       // PolicyResource
       const policyResourceModel = {
         attributes: [resourceAttributeModel],
+        tags: [resourceTagModel],
       };
 
       test('should pass the right params to createRequest', () => {
@@ -335,9 +349,17 @@ describe('IamPolicyManagementV1', () => {
         operator: 'testString',
       };
 
+      // ResourceTag
+      const resourceTagModel = {
+        name: 'testString',
+        value: 'testString',
+        operator: 'testString',
+      };
+
       // PolicyResource
       const policyResourceModel = {
         attributes: [resourceAttributeModel],
+        tags: [resourceTagModel],
       };
 
       test('should pass the right params to createRequest', () => {

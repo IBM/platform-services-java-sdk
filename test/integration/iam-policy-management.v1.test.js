@@ -65,13 +65,19 @@ describe('IamPolicyManagementV1_integration', () => {
     operator: 'stringEquals',
   };
   const policyResourceServiceAttribute = {
-    name: 'serviceName',
-    value: testServiceName,
+    name: 'serviceType',
+    value: 'service',
     operator: 'stringEquals',
+  };
+  const policyResourceTag = {
+    name: 'project',
+    operator: 'stringEquals',
+    value: 'prototype',
   };
   const policyResources = [
     {
       attributes: [policyResourceAccountAttribute, policyResourceServiceAttribute],
+      tags: [policyResourceTag],
     },
   ];
 
@@ -108,7 +114,6 @@ describe('IamPolicyManagementV1_integration', () => {
         subjects: policySubjects,
         roles: policyRoles,
         resources: policyResources,
-        headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
       };
 
       let response;
@@ -137,7 +142,6 @@ describe('IamPolicyManagementV1_integration', () => {
 
       const params = {
         policyId: testPolicyId,
-        headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
       };
 
       let response;
@@ -179,7 +183,6 @@ describe('IamPolicyManagementV1_integration', () => {
         subjects: policySubjects,
         roles: updPolicyRoles,
         resources: policyResources,
-        headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
       };
 
       let response;
@@ -208,7 +211,6 @@ describe('IamPolicyManagementV1_integration', () => {
       const params = {
         accountId: testAccountId,
         iamId: testUserId,
-        headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
       };
 
       let response;
@@ -242,7 +244,6 @@ describe('IamPolicyManagementV1_integration', () => {
       const params = {
         accountId: testAccountId,
         iamId: testUserId,
-        headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
       };
 
       let response;
@@ -268,7 +269,6 @@ describe('IamPolicyManagementV1_integration', () => {
         if (policy.id === testPolicyId || createdAt < fiveMinutesAgo) {
           const params = {
             policyId: policy.id,
-            headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
           };
 
           let response;
@@ -296,7 +296,6 @@ describe('IamPolicyManagementV1_integration', () => {
         accountId: testAccountId,
         serviceName: testServiceName,
         actions: testCustomRoleActions,
-        headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
       };
 
       let response;
@@ -327,7 +326,6 @@ describe('IamPolicyManagementV1_integration', () => {
 
       const params = {
         roleId: testCustomRoleId,
-        headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
       };
 
       let response;
@@ -395,7 +393,6 @@ describe('IamPolicyManagementV1_integration', () => {
       const params = {
         accountId: testAccountId,
         serviceName: testServiceName,
-        headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
       };
 
       let response;
@@ -429,7 +426,6 @@ describe('IamPolicyManagementV1_integration', () => {
       const params = {
         accountId: testAccountId,
         serviceName: testServiceName,
-        headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
       };
 
       let response;
@@ -455,7 +451,6 @@ describe('IamPolicyManagementV1_integration', () => {
         if (role.id === testCustomRoleId || createdAt < fiveMinutesAgo) {
           const params = {
             roleId: role.id,
-            headers: { 'transaction-Id': 'SDKNode-' + testUniqueId },
           };
 
           let response;

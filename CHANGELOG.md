@@ -1,3 +1,10 @@
+## [0.17.12](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.11...v0.17.12) (2021-02-25)
+
+
+### Bug Fixes
+
+* **User Management:** add examples ([#80](https://github.com/IBM/platform-services-node-sdk/issues/80)) ([51dc65a](https://github.com/IBM/platform-services-node-sdk/commit/51dc65a970e31809921677e054b02dd5adfd137a))
+
 ## [0.17.11](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.10...v0.17.11) (2021-02-24)
 
 

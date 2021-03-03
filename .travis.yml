@@ -7,7 +7,11 @@ matrix:
     - node_js: 10
     - node_js: 12
 
+before_install:
+  - npm install -g npm@7
+
 script:
+- npm --version
 - npm run build
 - npm run test-unit-travis || travis_terminate 1
 - npm run lint

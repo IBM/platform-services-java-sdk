@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 import static org.testng.AssertJUnit.assertNotNull;
 
 import java.util.HashMap;
@@ -41,9 +42,12 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceB
 import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceKeyOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListReclamationsOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceAliasesForInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceAliasesOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceBindingsForAliasOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceBindingsOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceInstancesOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysForInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.LockResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.Reclamation;
@@ -51,10 +55,12 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.Reclamations
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceAlias;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceAliasesList;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBinding;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBindingPostParameters;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBindingsList;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstance;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstancesList;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKey;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKeyPostParameters;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKeysList;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.RunReclamationActionOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.UnlockResourceInstanceOptions;
@@ -311,7 +317,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test05ListResourceInstancesWithNameFilter() {
         ListResourceInstancesOptions options = new ListResourceInstancesOptions.Builder()
-            .name(instanceNames.get("name"))
+            .name(instanceNames.get("update"))
             .build();
 
         Response<ResourceInstancesList> response = service.listResourceInstances(options)
@@ -321,8 +327,8 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
 
         ResourceInstancesList result = response.getResult();
-        assertEquals(result.getResources().size(), 0);
-        assertEquals(result.getRowsCount(), Long.valueOf(0));
+        assertEquals(result.getResources().size(), 1);
+        assertEquals(result.getRowsCount(), Long.valueOf(1));
     }
 
     @Test
@@ -447,7 +453,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test11ListResourceAliasesWithNameFilter() {
         ListResourceAliasesOptions options = new ListResourceAliasesOptions.Builder()
-            .name(aliasNames.get("name"))
+            .name(aliasNames.get("update"))
             .build();
 
         Response<ResourceAliasesList> response = service.listResourceAliases(options)
@@ -457,18 +463,49 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
 
         ResourceAliasesList result = response.getResult();
-        assertEquals(result.getResources().size(), 0);
-        assertEquals(result.getRowsCount(), Long.valueOf(0));
+        assertEquals(result.getResources().size(), 1);
+        assertEquals(result.getRowsCount(), Long.valueOf(1));
+    }
+
+    @Test
+    public void test11aListResourceAliasesForInstance() throws Exception {
+      try {
+        assertNotNull(testInstanceGuid);
+
+        ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptions = new ListResourceAliasesForInstanceOptions.Builder()
+        .id(testInstanceGuid)
+        .build();
+
+        // Invoke operation
+        Response<ResourceAliasesList> response = service.listResourceAliasesForInstance(listResourceAliasesForInstanceOptions).execute();
+        // Validate response
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        ResourceAliasesList resourceAliasesListResult = response.getResult();
+
+        assertNotNull(resourceAliasesListResult);
+        assertFalse(resourceAliasesListResult.getResources().isEmpty());
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s\nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
 
     @Test
     public void test12CreateResoureBinding() {
+        ResourceBindingPostParameters parameters = new ResourceBindingPostParameters.Builder()
+                .add("parameter1", "value1")
+                .add("parameter2", "value2")
+                .build();
+
         String target = "crn:v1:staging:public:bluemix:us-south:s/" + TEST_SPACE_ID + "::cf-application:" + TEST_APP_ID;
         bindTargetCrn = "crn:v1:staging:public:cf:us-south:s/" + TEST_SPACE_ID + "::cf-application:" + TEST_APP_ID;
         CreateResourceBindingOptions options = new CreateResourceBindingOptions.Builder()
             .source(testAliasGuid)
             .target(target)
             .name(bindingNames.get("name"))
+            .parameters(parameters)
             .build();
 
         Response<ResourceBinding> response = service.createResourceBinding(options)
@@ -583,7 +620,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test17ListResourceBindingsWithNameFilter() {
         ListResourceBindingsOptions options = new ListResourceBindingsOptions.Builder()
-            .name(bindingNames.get("name"))
+            .name(bindingNames.get("update"))
             .build();
 
         Response<ResourceBindingsList> response = service.listResourceBindings(options)
@@ -593,15 +630,44 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
 
         ResourceBindingsList result = response.getResult();
-        assertEquals(result.getResources().size(), 0);
-        assertEquals(result.getRowsCount(), Long.valueOf(0));
+        assertEquals(result.getResources().size(), 1);
+        assertEquals(result.getRowsCount(), Long.valueOf(1));
     }
 
     @Test
-    public void test18CreateResoureKeyForInstance() {
+    public void test17aListResourceBindingsForAlias() throws Exception {
+      try {
+        ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptions = new ListResourceBindingsForAliasOptions.Builder()
+        .id(testAliasGuid)
+        .build();
+
+        // Invoke operation
+        Response<ResourceBindingsList> response = service.listResourceBindingsForAlias(listResourceBindingsForAliasOptions).execute();
+        // Validate response
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        ResourceBindingsList resourceBindingsListResult = response.getResult();
+
+        assertNotNull(resourceBindingsListResult);
+        assertFalse(resourceBindingsListResult.getResources().isEmpty());
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s\nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
+    }
+
+    @Test
+    public void test18CreateResoureKey() {
+        ResourceKeyPostParameters parameters = new ResourceKeyPostParameters.Builder()
+                .add("parameter1", "value1")
+                .add("parameter2", "value2")
+                .build();
+
         CreateResourceKeyOptions options = new CreateResourceKeyOptions.Builder()
             .name(keyNames.get("name"))
             .source(testInstanceGuid)
+            .parameters(parameters)
             .build();
 
         Response<ResourceKey> response = service.createResourceKey(options)
@@ -713,7 +779,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test23ListResourceKeysWithNameFilter() {
         ListResourceKeysOptions options = new ListResourceKeysOptions.Builder()
-            .name(keyNames.get("name"))
+            .name(keyNames.get("update"))
             .build();
 
         Response<ResourceKeysList> response = service.listResourceKeys(options)
@@ -723,8 +789,31 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
 
         ResourceKeysList result = response.getResult();
-        assertEquals(result.getResources().size(), 0);
-        assertEquals(result.getRowsCount(), Long.valueOf(0));
+        assertEquals(result.getResources().size(), 1);
+        assertEquals(result.getRowsCount(), Long.valueOf(1));
+    }
+
+    @Test
+    public void test23aListResourceKeysForInstance() throws Exception {
+      try {
+        ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptions = new ListResourceKeysForInstanceOptions.Builder()
+        .id(testInstanceGuid)
+        .build();
+
+        // Invoke operation
+        Response<ResourceKeysList> response = service.listResourceKeysForInstance(listResourceKeysForInstanceOptions).execute();
+        // Validate response
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        ResourceKeysList resourceKeysListResult = response.getResult();
+
+        assertNotNull(resourceKeysListResult);
+        assertFalse(resourceKeysListResult.getResources().isEmpty());
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s\nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
 
     @Test
@@ -843,7 +932,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     @Test
     public void test29ListResourceKeysWithNameFilter() {
         ListResourceKeysOptions options = new ListResourceKeysOptions.Builder()
-            .name(keyNames.get("name2"))
+            .name(keyNames.get("update2"))
             .build();
 
         Response<ResourceKeysList> response = service.listResourceKeys(options)
@@ -853,8 +942,8 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
 
         ResourceKeysList result = response.getResult();
-        assertEquals(result.getResources().size(), 0);
-        assertEquals(result.getRowsCount(), Long.valueOf(0));
+        assertEquals(result.getResources().size(), 1);
+        assertEquals(result.getRowsCount(), Long.valueOf(1));
     }
 
     @Test
@@ -864,7 +953,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .id(testAliasGuid)
                 .build();
 
-            Response<Void> response = service.deleteResourceAlias(options)
+            service.deleteResourceAlias(options)
                 .addHeader("Transaction-Id", "rc-sdk-java-test30-" + transactionId)
                 .execute();
         } catch (ServiceResponseException e) {
@@ -880,7 +969,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .id(testInstanceGuid)
                 .build();
 
-            Response<Void> response = service.deleteResourceInstance(options)
+            service.deleteResourceInstance(options)
                 .addHeader("Transaction-Id", "rc-sdk-java-test31-" + transactionId)
                 .execute();
         } catch (ServiceResponseException e) {
@@ -1032,7 +1121,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .name(lockedInstanceNameUpdate)
                 .build();
 
-            Response<ResourceInstance> response = service.updateResourceInstance(options)
+            service.updateResourceInstance(options)
                 .addHeader("Transaction-Id", "rc-sdk-java-test39-" + transactionId)
                 .execute();
         } catch (ServiceResponseException e) {
@@ -1048,7 +1137,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .id(testInstanceGuid)
                 .build();
 
-            Response<Void> response = service.deleteResourceInstance(options)
+            service.deleteResourceInstance(options)
                 .addHeader("Transaction-Id", "rc-sdk-java-test40-" + transactionId)
                 .execute();
         } catch (ServiceResponseException e) {
@@ -1082,6 +1171,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     public void test42DeleteResourceInstance() {
         DeleteResourceInstanceOptions options = new DeleteResourceInstanceOptions.Builder()
                 .id(testInstanceGuid)
+                .recursive(false)
                 .build();
 
         Response<Void> response = service.deleteResourceInstance(options)

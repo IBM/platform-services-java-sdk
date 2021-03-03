@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,15 +20,18 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class DeleteResourceInstanceOptions extends GenericModel {
 
   protected String id;
+  protected Boolean recursive;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String id;
+    private Boolean recursive;
 
     private Builder(DeleteResourceInstanceOptions deleteResourceInstanceOptions) {
       this.id = deleteResourceInstanceOptions.id;
+      this.recursive = deleteResourceInstanceOptions.recursive;
     }
 
     /**
@@ -65,12 +68,24 @@ public class DeleteResourceInstanceOptions extends GenericModel {
       this.id = id;
       return this;
     }
+
+    /**
+     * Set the recursive.
+     *
+     * @param recursive the recursive
+     * @return the DeleteResourceInstanceOptions builder
+     */
+    public Builder recursive(Boolean recursive) {
+      this.recursive = recursive;
+      return this;
+    }
   }
 
   protected DeleteResourceInstanceOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
     id = builder.id;
+    recursive = builder.recursive;
   }
 
   /**
@@ -91,6 +106,17 @@ public class DeleteResourceInstanceOptions extends GenericModel {
    */
   public String id() {
     return id;
+  }
+
+  /**
+   * Gets the recursive.
+   *
+   * Will delete resource bindings, keys and aliases associated with the instance.
+   *
+   * @return the recursive
+   */
+  public Boolean recursive() {
+    return recursive;
   }
 }
 

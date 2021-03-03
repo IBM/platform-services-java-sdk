@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9ae61cfc-20210302-143858
  */
 
 package com.ibm.cloud.platform_services.resource_controller.v2;
@@ -32,9 +32,12 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceB
 import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceKeyOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListReclamationsOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceAliasesForInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceAliasesOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceBindingsForAliasOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceBindingsOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceInstancesOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysForInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.LockResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.Reclamation;
@@ -259,6 +262,9 @@ public class ResourceController extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
+    if (deleteResourceInstanceOptions.recursive() != null) {
+      builder.query("recursive", String.valueOf(deleteResourceInstanceOptions.recursive()));
+    }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -298,6 +304,54 @@ public class ResourceController extends BaseService {
     builder.bodyJson(contentJson);
     ResponseConverter<ResourceInstance> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceInstance>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get a list of all resource aliases for the instance.
+   *
+   * Get a list of all resource aliases for the instance.
+   *
+   * @param listResourceAliasesForInstanceOptions the {@link ListResourceAliasesForInstanceOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ResourceAliasesList}
+   */
+  public ServiceCall<ResourceAliasesList> listResourceAliasesForInstance(ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listResourceAliasesForInstanceOptions,
+      "listResourceAliasesForInstanceOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", listResourceAliasesForInstanceOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances/{id}/resource_aliases", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "listResourceAliasesForInstance");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ResourceAliasesList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceAliasesList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get a list of all the resource keys for the instance.
+   *
+   * Get a list of all the resource keys for the instance.
+   *
+   * @param listResourceKeysForInstanceOptions the {@link ListResourceKeysForInstanceOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ResourceKeysList}
+   */
+  public ServiceCall<ResourceKeysList> listResourceKeysForInstance(ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listResourceKeysForInstanceOptions,
+      "listResourceKeysForInstanceOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", listResourceKeysForInstanceOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances/{id}/resource_keys", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "listResourceKeysForInstance");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ResourceKeysList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceKeysList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -834,6 +888,30 @@ public class ResourceController extends BaseService {
     builder.bodyJson(contentJson);
     ResponseConverter<ResourceAlias> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceAlias>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get a list of all resource bindings for the alias.
+   *
+   * Get a list of all resource bindings for the alias.
+   *
+   * @param listResourceBindingsForAliasOptions the {@link ListResourceBindingsForAliasOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ResourceBindingsList}
+   */
+  public ServiceCall<ResourceBindingsList> listResourceBindingsForAlias(ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listResourceBindingsForAliasOptions,
+      "listResourceBindingsForAliasOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", listResourceBindingsForAliasOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_aliases/{id}/resource_bindings", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "listResourceBindingsForAlias");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ResourceBindingsList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceBindingsList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

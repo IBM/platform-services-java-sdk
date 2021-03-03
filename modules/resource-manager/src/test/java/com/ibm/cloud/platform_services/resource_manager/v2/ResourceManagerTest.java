@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -31,6 +31,7 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import java.io.IOException;
 import java.io.InputStream;
@@ -94,7 +95,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
   @Test
   public void testListResourceGroupsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}]}";
+    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}]}";
     String listResourceGroupsPath = "/resource_groups";
 
     server.enqueue(new MockResponse()
@@ -108,6 +109,9 @@ public class ResourceManagerTest extends PowerMockTestCase {
     ListResourceGroupsOptions listResourceGroupsOptionsModel = new ListResourceGroupsOptions.Builder()
     .accountId("testString")
     .date("testString")
+    .name("testString")
+    .xDefault(true)
+    .includeDeleted(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -127,6 +131,9 @@ public class ResourceManagerTest extends PowerMockTestCase {
     // Get query params
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("date"), "testString");
+    assertEquals(query.get("name"), "testString");
+    assertEquals(Boolean.valueOf(query.get("default")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("include_deleted")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listResourceGroupsPath);
@@ -174,7 +181,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
   @Test
   public void testGetResourceGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}";
     String getResourceGroupPath = "/resource_groups/testString";
 
     server.enqueue(new MockResponse()
@@ -224,7 +231,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
   @Test
   public void testUpdateResourceGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}";
     String updateResourceGroupPath = "/resource_groups/testString";
 
     server.enqueue(new MockResponse()
@@ -326,7 +333,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
   @Test
   public void testListQuotaDefinitionsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": [{\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}], \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}]}";
+    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": [{\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}]}";
     String listQuotaDefinitionsPath = "/quota_definitions";
 
     server.enqueue(new MockResponse()
@@ -362,7 +369,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
   @Test
   public void testGetQuotaDefinitionWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": [{\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}], \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": [{\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}";
     String getQuotaDefinitionPath = "/quota_definitions/testString";
 
     server.enqueue(new MockResponse()

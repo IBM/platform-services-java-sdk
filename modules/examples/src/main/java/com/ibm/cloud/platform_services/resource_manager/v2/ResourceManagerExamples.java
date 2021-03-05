@@ -49,38 +49,30 @@ public class ResourceManagerExamples {
   private static final Logger logger = LoggerFactory.getLogger(ResourceManagerExamples.class);
   protected ResourceManagerExamples() { }
 
+  private static String testUserAccountId;
+  private static String resourceGroupId;
+
   @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
     ResourceManager service = ResourceManager.newInstance();
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(ResourceManager.DEFAULT_SERVICE_NAME);
-
-    try {
-      // begin-list_resource_groups
-      ListResourceGroupsOptions listResourceGroupsOptions = new ListResourceGroupsOptions.Builder()
-        .build();
-
-      Response<ResourceGroupList> response = service.listResourceGroups(listResourceGroupsOptions).execute();
-      ResourceGroupList resourceGroupList = response.getResult();
-
-      System.out.println(resourceGroupList);
-      // end-list_resource_groups
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
+    testUserAccountId = config.get("TEST_USER_ACCOUNT_ID");
 
     try {
       // begin-create_resource_group
       CreateResourceGroupOptions createResourceGroupOptions = new CreateResourceGroupOptions.Builder()
-        .build();
+              .accountId(testUserAccountId)
+              .name("ExampleGroup")
+              .build();
 
       Response<ResCreateResourceGroup> response = service.createResourceGroup(createResourceGroupOptions).execute();
       ResCreateResourceGroup resCreateResourceGroup = response.getResult();
 
       System.out.println(resCreateResourceGroup);
       // end-create_resource_group
+      resourceGroupId = resCreateResourceGroup.getId();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -89,7 +81,7 @@ public class ResourceManagerExamples {
     try {
       // begin-get_resource_group
       GetResourceGroupOptions getResourceGroupOptions = new GetResourceGroupOptions.Builder()
-        .id("testString")
+        .id(resourceGroupId)
         .build();
 
       Response<ResourceGroup> response = service.getResourceGroup(getResourceGroupOptions).execute();
@@ -105,7 +97,9 @@ public class ResourceManagerExamples {
     try {
       // begin-update_resource_group
       UpdateResourceGroupOptions updateResourceGroupOptions = new UpdateResourceGroupOptions.Builder()
-        .id("testString")
+        .id(resourceGroupId)
+        .name("RenamedExampleGroup")
+        .state("ACTIVE")
         .build();
 
       Response<ResourceGroup> response = service.updateResourceGroup(updateResourceGroupOptions).execute();
@@ -116,6 +110,23 @@ public class ResourceManagerExamples {
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-list_resource_groups
+      ListResourceGroupsOptions listResourceGroupsOptions = new ListResourceGroupsOptions.Builder()
+              .accountId(testUserAccountId)
+              .includeDeleted(true)
+              .build();
+
+      Response<ResourceGroupList> response = service.listResourceGroups(listResourceGroupsOptions).execute();
+      ResourceGroupList resourceGroupList = response.getResult();
+
+      System.out.println(resourceGroupList);
+      // end-list_resource_groups
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                                 e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
@@ -135,7 +146,7 @@ public class ResourceManagerExamples {
     try {
       // begin-get_quota_definition
       GetQuotaDefinitionOptions getQuotaDefinitionOptions = new GetQuotaDefinitionOptions.Builder()
-        .id("testString")
+        .id(resourceGroupId)
         .build();
 
       Response<QuotaDefinition> response = service.getQuotaDefinition(getQuotaDefinitionOptions).execute();
@@ -151,7 +162,7 @@ public class ResourceManagerExamples {
     try {
       // begin-delete_resource_group
       DeleteResourceGroupOptions deleteResourceGroupOptions = new DeleteResourceGroupOptions.Builder()
-        .id("testString")
+        .id(resourceGroupId)
         .build();
 
       service.deleteResourceGroup(deleteResourceGroupOptions).execute();

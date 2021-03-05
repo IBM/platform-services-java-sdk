@@ -273,7 +273,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: instanceNames.name,
+      name: instanceNames.update,
       headers: customHeader,
     };
 
@@ -289,8 +289,8 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.result).toBeDefined();
 
     const result = response.result;
-    expect(result.rows_count).toEqual(0);
-    expect(result.resources).toHaveLength(0);
+    expect(result.rows_count).toEqual(1);
+    expect(result.resources).toHaveLength(1);
 
     done();
   });
@@ -472,7 +472,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: aliasNames.name,
+      name: aliasNames.update,
       headers: customHeader,
     };
 
@@ -488,15 +488,36 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.result).toBeDefined();
 
     const result = response.result;
-    expect(result.rows_count).toEqual(0);
-    expect(result.resources).toHaveLength(0);
+    expect(result.rows_count).toEqual(1);
+    expect(result.resources).toHaveLength(1);
 
     done();
+  });
+
+  test('11a - List Resource Aliases For Instance', async () => {
+    expect(testInstanceGuid).toBeTruthy();
+
+    const params = {
+      id: testInstanceGuid,
+    };
+
+    const res = await service.listResourceAliasesForInstance(params);
+    expect(res).toBeDefined();
+    expect(res.result).toBeDefined();
+
+    const result = res.result;
+    expect(result.rows_count).toEqual(1);
+    expect(result.resources).toHaveLength(1);
   });
 
   test('12 - Create A Resource Binding', async done => {
     const customHeader = {
       'Transaction-Id': 'rc-sdk-node-test12-' + transactionId,
+    };
+
+    const parameters = {
+      'parameter1': 'value1',
+      'parameter2': 'value2',
     };
 
     const targetCrn = 'crn:v1:staging:public:bluemix:us-south:s/' + testSpaceGuid + '::cf-application:' + testAppGuid;
@@ -505,6 +526,7 @@ describe('ResourceControllerV2_integration', () => {
       name: bindingNames.name,
       source: testAliasGuid,
       target: targetCrn,
+      parameters: parameters,
       headers: customHeader,
     };
 
@@ -670,7 +692,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: bindingNames.name,
+      name: bindingNames.update,
       headers: customHeader,
     };
 
@@ -686,10 +708,27 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.result).toBeDefined();
 
     const result = response.result;
-    expect(result.rows_count).toEqual(0);
-    expect(result.resources).toHaveLength(0);
+    expect(result.rows_count).toEqual(1);
+    expect(result.resources).toHaveLength(1);
 
     done();
+  });
+
+  test('17a - ListResourceBindingsForAlias()', async () => {
+    expect(testAliasGuid).toBeTruthy();
+
+    const params = {
+      id: testAliasGuid,
+    };
+
+    const res = await service.listResourceBindingsForAlias(params);
+    expect(res).toBeDefined();
+    expect(res.status).toEqual(200);
+    expect(res.result).toBeDefined();
+
+    const result = res.result;
+    expect(result.rows_count).toEqual(1);
+    expect(result.resources).toHaveLength(1);
   });
 
   test('18 - Create A Resource Key For Instance', async done => {
@@ -697,9 +736,15 @@ describe('ResourceControllerV2_integration', () => {
       'Transaction-Id': 'rc-sdk-node-test18-' + transactionId,
     };
 
+    const parameters = {
+      'parameter1': 'value1',
+      'parameter2': 'value2',
+    };
+
     const params = {
       name: keyNames.name,
       source: testInstanceGuid,
+      parameters: parameters,
       headers: customHeader,
     };
 
@@ -862,7 +907,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: keyNames.name,
+      name: keyNames.update,
       headers: customHeader,
     };
 
@@ -878,10 +923,24 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.result).toBeDefined();
 
     const result = response.result;
-    expect(result.rows_count).toEqual(0);
-    expect(result.resources).toHaveLength(0);
+    expect(result.rows_count).toEqual(1);
+    expect(result.resources).toHaveLength(1);
 
     done();
+  });
+
+  test('23a - List Resource Keys For Instance', async () => {
+    const params = {
+      id: testInstanceGuid,
+    };
+
+    const res = await service.listResourceKeysForInstance(params);
+    expect(res).toBeDefined();
+    expect(res.result).toBeDefined();
+
+    const result = res.result;
+    expect(result.rows_count).toEqual(1);
+    expect(result.resources).toHaveLength(1);
   });
 
   test('24 - Create A Resource Key For Alias', async done => {
@@ -1054,7 +1113,7 @@ describe('ResourceControllerV2_integration', () => {
     };
 
     const params = {
-      name: keyNames.name2,
+      name: keyNames.update2,
       headers: customHeader,
     };
 
@@ -1070,8 +1129,8 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.result).toBeDefined();
 
     const result = response.result;
-    expect(result.rows_count).toEqual(0);
-    expect(result.resources).toHaveLength(0);
+    expect(result.rows_count).toEqual(1);
+    expect(result.resources).toHaveLength(1);
 
     done();
   });
@@ -1435,6 +1494,7 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       id: testInstanceGuid,
+      recursive: false,
       headers: customHeader,
     };
 

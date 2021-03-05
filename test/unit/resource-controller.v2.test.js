@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -186,7 +186,7 @@ describe('ResourceControllerV2', () => {
         const tags = ['testString'];
         const allowCleanup = true;
         const parameters = { 'key1': 'testString' };
-        const entityLock = 'testString';
+        const entityLock = true;
         const params = {
           name: name,
           target: target,
@@ -343,8 +343,10 @@ describe('ResourceControllerV2', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation deleteResourceInstance
         const id = 'testString';
+        const recursive = true;
         const params = {
           id: id,
+          recursive: recursive,
         };
 
         const deleteResourceInstanceResult = resourceControllerService.deleteResourceInstance(params);
@@ -361,6 +363,7 @@ describe('ResourceControllerV2', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['recursive']).toEqual(recursive);
         expect(options.path['id']).toEqual(id);
       });
 
@@ -480,6 +483,142 @@ describe('ResourceControllerV2', () => {
         expectToBePromise(updateResourceInstancePromise);
 
         updateResourceInstancePromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('listResourceAliasesForInstance', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation listResourceAliasesForInstance
+        const id = 'testString';
+        const params = {
+          id: id,
+        };
+
+        const listResourceAliasesForInstanceResult = resourceControllerService.listResourceAliasesForInstance(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listResourceAliasesForInstanceResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/resource_instances/{id}/resource_aliases', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['id']).toEqual(id);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const id = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          id,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        resourceControllerService.listResourceAliasesForInstance(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await resourceControllerService.listResourceAliasesForInstance({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const listResourceAliasesForInstancePromise = resourceControllerService.listResourceAliasesForInstance();
+        expectToBePromise(listResourceAliasesForInstancePromise);
+
+        listResourceAliasesForInstancePromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('listResourceKeysForInstance', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation listResourceKeysForInstance
+        const id = 'testString';
+        const params = {
+          id: id,
+        };
+
+        const listResourceKeysForInstanceResult = resourceControllerService.listResourceKeysForInstance(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listResourceKeysForInstanceResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/resource_instances/{id}/resource_keys', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['id']).toEqual(id);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const id = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          id,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        resourceControllerService.listResourceKeysForInstance(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await resourceControllerService.listResourceKeysForInstance({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const listResourceKeysForInstancePromise = resourceControllerService.listResourceKeysForInstance();
+        expectToBePromise(listResourceKeysForInstancePromise);
+
+        listResourceKeysForInstancePromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -695,6 +834,7 @@ describe('ResourceControllerV2', () => {
       // ResourceKeyPostParameters
       const resourceKeyPostParametersModel = {
         serviceid_crn: 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393',
+        foo: 'testString',
       };
 
       test('should pass the right params to createRequest', () => {
@@ -1059,12 +1199,13 @@ describe('ResourceControllerV2', () => {
       // ResourceBindingPostParameters
       const resourceBindingPostParametersModel = {
         serviceid_crn: 'crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393',
+        foo: 'testString',
       };
 
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createResourceBinding
         const source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd';
-        const target = 'crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c';
+        const target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c';
         const name = 'my-binding';
         const parameters = resourceBindingPostParametersModel;
         const role = 'Writer';
@@ -1100,7 +1241,7 @@ describe('ResourceControllerV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd';
-        const target = 'crn:v1:cf:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c';
+        const target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -1428,7 +1569,7 @@ describe('ResourceControllerV2', () => {
         // Construct the params object for operation createResourceAlias
         const name = 'my-alias';
         const source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d';
-        const target = 'crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5';
+        const target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5';
         const params = {
           name: name,
           source: source,
@@ -1458,7 +1599,7 @@ describe('ResourceControllerV2', () => {
         // parameters
         const name = 'my-alias';
         const source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d';
-        const target = 'crn:v1:cf:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5';
+        const target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -1703,6 +1844,74 @@ describe('ResourceControllerV2', () => {
         expectToBePromise(updateResourceAliasPromise);
 
         updateResourceAliasPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('listResourceBindingsForAlias', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation listResourceBindingsForAlias
+        const id = 'testString';
+        const params = {
+          id: id,
+        };
+
+        const listResourceBindingsForAliasResult = resourceControllerService.listResourceBindingsForAlias(params);
+
+        // all methods should return a Promise
+        expectToBePromise(listResourceBindingsForAliasResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v2/resource_aliases/{id}/resource_bindings', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.path['id']).toEqual(id);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const id = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          id,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        resourceControllerService.listResourceBindingsForAlias(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await resourceControllerService.listResourceBindingsForAlias({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const listResourceBindingsForAliasPromise = resourceControllerService.listResourceBindingsForAlias();
+        expectToBePromise(listResourceBindingsForAliasPromise);
+
+        listResourceBindingsForAliasPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

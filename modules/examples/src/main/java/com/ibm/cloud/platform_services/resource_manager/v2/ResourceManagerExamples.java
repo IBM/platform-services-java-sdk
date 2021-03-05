@@ -50,6 +50,7 @@ public class ResourceManagerExamples {
   protected ResourceManagerExamples() { }
 
   private static String testUserAccountId;
+  private static String testQuotaId;
   private static String resourceGroupId;
 
   @SuppressWarnings("checkstyle:methodlength")
@@ -58,7 +59,9 @@ public class ResourceManagerExamples {
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(ResourceManager.DEFAULT_SERVICE_NAME);
+    testQuotaId = config.get("TEST_QUOTA_ID");
     testUserAccountId = config.get("TEST_USER_ACCOUNT_ID");
+
 
     try {
       // begin-create_resource_group
@@ -130,6 +133,19 @@ public class ResourceManagerExamples {
     }
 
     try {
+      // begin-delete_resource_group
+      DeleteResourceGroupOptions deleteResourceGroupOptions = new DeleteResourceGroupOptions.Builder()
+              .id(resourceGroupId)
+              .build();
+
+      service.deleteResourceGroup(deleteResourceGroupOptions).execute();
+      // end-delete_resource_group
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                                 e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
       // begin-list_quota_definitions
       ListQuotaDefinitionsOptions listQuotaDefinitionsOptions = new ListQuotaDefinitionsOptions();
 
@@ -146,7 +162,7 @@ public class ResourceManagerExamples {
     try {
       // begin-get_quota_definition
       GetQuotaDefinitionOptions getQuotaDefinitionOptions = new GetQuotaDefinitionOptions.Builder()
-        .id(resourceGroupId)
+        .id(testQuotaId)
         .build();
 
       Response<QuotaDefinition> response = service.getQuotaDefinition(getQuotaDefinitionOptions).execute();
@@ -158,19 +174,5 @@ public class ResourceManagerExamples {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
-
-    try {
-      // begin-delete_resource_group
-      DeleteResourceGroupOptions deleteResourceGroupOptions = new DeleteResourceGroupOptions.Builder()
-        .id(resourceGroupId)
-        .build();
-
-      service.deleteResourceGroup(deleteResourceGroupOptions).execute();
-      // end-delete_resource_group
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
   }
 }

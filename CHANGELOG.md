@@ -1,3 +1,10 @@
+## [0.17.14](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.13...v0.17.14) (2021-03-05)
+
+
+### Bug Fixes
+
+* **Resource Controller:** update service after recent API changes ([#83](https://github.com/IBM/platform-services-node-sdk/issues/83)) ([2ae6dde](https://github.com/IBM/platform-services-node-sdk/commit/2ae6dde1b6ee4d983dd0a76be27f6cdc6e62b8d4))
+
 ## [0.17.13](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.12...v0.17.13) (2021-02-25)
 
 

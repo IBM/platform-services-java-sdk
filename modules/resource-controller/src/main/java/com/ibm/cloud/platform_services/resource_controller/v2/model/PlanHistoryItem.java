@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -26,6 +26,8 @@ public class PlanHistoryItem extends GenericModel {
   protected String resourcePlanId;
   @SerializedName("start_date")
   protected Date startDate;
+  @SerializedName("requestor_id")
+  protected String requestorId;
 
   /**
    * Gets the resourcePlanId.
@@ -47,6 +49,17 @@ public class PlanHistoryItem extends GenericModel {
    */
   public Date getStartDate() {
     return startDate;
+  }
+
+  /**
+   * Gets the requestorId.
+   *
+   * The subject who made the plan change.
+   *
+   * @return the requestorId
+   */
+  public String getRequestorId() {
+    return requestorId;
   }
 }
 

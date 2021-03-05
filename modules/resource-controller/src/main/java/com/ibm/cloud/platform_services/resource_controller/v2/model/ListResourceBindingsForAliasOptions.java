@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.resource_controller.v2.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The unlockResourceInstance options.
+ * The listResourceBindingsForAlias options.
  */
-public class UnlockResourceInstanceOptions extends GenericModel {
+public class ListResourceBindingsForAliasOptions extends GenericModel {
 
   protected String id;
 
@@ -27,8 +27,8 @@ public class UnlockResourceInstanceOptions extends GenericModel {
   public static class Builder {
     private String id;
 
-    private Builder(UnlockResourceInstanceOptions unlockResourceInstanceOptions) {
-      this.id = unlockResourceInstanceOptions.id;
+    private Builder(ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptions) {
+      this.id = listResourceBindingsForAliasOptions.id;
     }
 
     /**
@@ -47,19 +47,19 @@ public class UnlockResourceInstanceOptions extends GenericModel {
     }
 
     /**
-     * Builds a UnlockResourceInstanceOptions.
+     * Builds a ListResourceBindingsForAliasOptions.
      *
-     * @return the new UnlockResourceInstanceOptions instance
+     * @return the new ListResourceBindingsForAliasOptions instance
      */
-    public UnlockResourceInstanceOptions build() {
-      return new UnlockResourceInstanceOptions(this);
+    public ListResourceBindingsForAliasOptions build() {
+      return new ListResourceBindingsForAliasOptions(this);
     }
 
     /**
      * Set the id.
      *
      * @param id the id
-     * @return the UnlockResourceInstanceOptions builder
+     * @return the ListResourceBindingsForAliasOptions builder
      */
     public Builder id(String id) {
       this.id = id;
@@ -67,7 +67,7 @@ public class UnlockResourceInstanceOptions extends GenericModel {
     }
   }
 
-  protected UnlockResourceInstanceOptions(Builder builder) {
+  protected ListResourceBindingsForAliasOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
     id = builder.id;
@@ -76,7 +76,7 @@ public class UnlockResourceInstanceOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a UnlockResourceInstanceOptions builder
+   * @return a ListResourceBindingsForAliasOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -85,7 +85,7 @@ public class UnlockResourceInstanceOptions extends GenericModel {
   /**
    * Gets the id.
    *
-   * The short or long ID of the instance.
+   * The short or long ID of the alias.
    *
    * @return the id
    */

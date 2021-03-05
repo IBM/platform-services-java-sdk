@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,8 +34,10 @@ public class CreateResourceBindingOptionsTest {
   public void testCreateResourceBindingOptions() throws Throwable {
     ResourceBindingPostParameters resourceBindingPostParametersModel = new ResourceBindingPostParameters.Builder()
       .serviceidCrn("crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393")
+      .add("foo", "testString")
       .build();
-    assertEquals(resourceBindingPostParametersModel.serviceidCrn(), "crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393");
+    assertEquals(resourceBindingPostParametersModel.getServiceidCrn(), "crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393");
+    assertEquals(resourceBindingPostParametersModel.get("foo"), "testString");
 
     CreateResourceBindingOptions createResourceBindingOptionsModel = new CreateResourceBindingOptions.Builder()
       .source("25eba2a9-beef-450b-82cf-f5ad5e36c6dd")

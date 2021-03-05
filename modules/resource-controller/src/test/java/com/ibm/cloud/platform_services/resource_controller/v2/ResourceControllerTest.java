@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -27,9 +27,12 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceB
 import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.GetResourceKeyOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListReclamationsOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceAliasesForInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceAliasesOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceBindingsForAliasOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceBindingsOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceInstancesOptions;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysForInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.LockResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.PlanHistoryItem;
@@ -56,6 +59,7 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import java.io.IOException;
 import java.io.InputStream;
@@ -119,7 +123,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testListResourceInstancesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00\"}], \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00\", \"restored_by\": \"restoredBy\"}], \"rows_count\": 9}";
+    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00.000Z\", \"requestor_id\": \"requestorId\"}], \"extensions\": {\"mapKey\": \"anyValue\"}, \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00.000Z\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00.000Z\", \"restored_by\": \"restoredBy\"}], \"rows_count\": 9}";
     String listResourceInstancesPath = "/v2/resource_instances";
 
     server.enqueue(new MockResponse()
@@ -176,7 +180,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testCreateResourceInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00\"}], \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00\", \"restored_by\": \"restoredBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00.000Z\", \"requestor_id\": \"requestorId\"}], \"extensions\": {\"mapKey\": \"anyValue\"}, \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00.000Z\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00.000Z\", \"restored_by\": \"restoredBy\"}";
     String createResourceInstancePath = "/v2/resource_instances";
 
     server.enqueue(new MockResponse()
@@ -233,7 +237,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testGetResourceInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00\"}], \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00\", \"restored_by\": \"restoredBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00.000Z\", \"requestor_id\": \"requestorId\"}], \"extensions\": {\"mapKey\": \"anyValue\"}, \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00.000Z\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00.000Z\", \"restored_by\": \"restoredBy\"}";
     String getResourceInstancePath = "/v2/resource_instances/testString";
 
     server.enqueue(new MockResponse()
@@ -295,6 +299,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the DeleteResourceInstanceOptions model
     DeleteResourceInstanceOptions deleteResourceInstanceOptionsModel = new DeleteResourceInstanceOptions.Builder()
     .id("testString")
+    .recursive(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -311,8 +316,9 @@ public class ResourceControllerTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
+    assertNotNull(query);
+    // Get query params
+    assertEquals(Boolean.valueOf(query.get("recursive")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteResourceInstancePath);
@@ -333,7 +339,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testUpdateResourceInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00\"}], \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00\", \"restored_by\": \"restoredBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00.000Z\", \"requestor_id\": \"requestorId\"}], \"extensions\": {\"mapKey\": \"anyValue\"}, \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00.000Z\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00.000Z\", \"restored_by\": \"restoredBy\"}";
     String updateResourceInstancePath = "/v2/resource_instances/testString";
 
     server.enqueue(new MockResponse()
@@ -385,9 +391,109 @@ public class ResourceControllerTest extends PowerMockTestCase {
   }
 
   @Test
+  public void testListResourceAliasesForInstanceWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"state\": \"state\", \"resource_instance_id\": \"resourceInstanceId\", \"region_instance_id\": \"regionInstanceId\", \"resource_instance_url\": \"resourceInstanceUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}], \"rows_count\": 9}";
+    String listResourceAliasesForInstancePath = "/v2/resource_instances/testString/resource_aliases";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the ListResourceAliasesForInstanceOptions model
+    ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptionsModel = new ListResourceAliasesForInstanceOptions.Builder()
+    .id("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ResourceAliasesList> response = resourceControllerService.listResourceAliasesForInstance(listResourceAliasesForInstanceOptionsModel).execute();
+    assertNotNull(response);
+    ResourceAliasesList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listResourceAliasesForInstancePath);
+  }
+
+  // Test the listResourceAliasesForInstance operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListResourceAliasesForInstanceNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    resourceControllerService.listResourceAliasesForInstance(null).execute();
+  }
+
+  @Test
+  public void testListResourceKeysForInstanceWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"role\": \"role\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_instance_url\": \"resourceInstanceUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}], \"rows_count\": 9}";
+    String listResourceKeysForInstancePath = "/v2/resource_instances/testString/resource_keys";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the ListResourceKeysForInstanceOptions model
+    ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptionsModel = new ListResourceKeysForInstanceOptions.Builder()
+    .id("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ResourceKeysList> response = resourceControllerService.listResourceKeysForInstance(listResourceKeysForInstanceOptionsModel).execute();
+    assertNotNull(response);
+    ResourceKeysList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listResourceKeysForInstancePath);
+  }
+
+  // Test the listResourceKeysForInstance operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListResourceKeysForInstanceNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    resourceControllerService.listResourceKeysForInstance(null).execute();
+  }
+
+  @Test
   public void testLockResourceInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00\"}], \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00\", \"restored_by\": \"restoredBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00.000Z\", \"requestor_id\": \"requestorId\"}], \"extensions\": {\"mapKey\": \"anyValue\"}, \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00.000Z\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00.000Z\", \"restored_by\": \"restoredBy\"}";
     String lockResourceInstancePath = "/v2/resource_instances/testString/lock";
 
     server.enqueue(new MockResponse()
@@ -437,7 +543,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testUnlockResourceInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00\"}], \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00\", \"restored_by\": \"restoredBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"resource_id\": \"resourceId\", \"resource_plan_id\": \"resourcePlanId\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"allow_cleanup\": true, \"locked\": true, \"last_operation\": {\"mapKey\": \"anyValue\"}, \"dashboard_url\": \"dashboardUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00.000Z\", \"requestor_id\": \"requestorId\"}], \"extensions\": {\"mapKey\": \"anyValue\"}, \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00.000Z\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"restored_at\": \"2019-01-01T12:00:00.000Z\", \"restored_by\": \"restoredBy\"}";
     String unlockResourceInstancePath = "/v2/resource_instances/testString/lock";
 
     server.enqueue(new MockResponse()
@@ -487,7 +593,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testListResourceKeysWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"role\": \"role\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_instance_url\": \"resourceInstanceUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}], \"rows_count\": 9}";
+    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"role\": \"role\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_instance_url\": \"resourceInstanceUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}], \"rows_count\": 9}";
     String listResourceKeysPath = "/v2/resource_keys";
 
     server.enqueue(new MockResponse()
@@ -538,7 +644,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testCreateResourceKeyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"role\": \"role\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_instance_url\": \"resourceInstanceUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"role\": \"role\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_instance_url\": \"resourceInstanceUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
     String createResourceKeyPath = "/v2/resource_keys";
 
     server.enqueue(new MockResponse()
@@ -551,6 +657,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the ResourceKeyPostParameters model
     ResourceKeyPostParameters resourceKeyPostParametersModel = new ResourceKeyPostParameters.Builder()
     .serviceidCrn("crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393")
+    .add("foo", "testString")
     .build();
 
     // Construct an instance of the CreateResourceKeyOptions model
@@ -596,7 +703,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testGetResourceKeyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"role\": \"role\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_instance_url\": \"resourceInstanceUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"role\": \"role\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_instance_url\": \"resourceInstanceUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
     String getResourceKeyPath = "/v2/resource_keys/testString";
 
     server.enqueue(new MockResponse()
@@ -696,7 +803,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testUpdateResourceKeyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"role\": \"role\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_instance_url\": \"resourceInstanceUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"role\": \"role\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_instance_url\": \"resourceInstanceUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
     String updateResourceKeyPath = "/v2/resource_keys/testString";
 
     server.enqueue(new MockResponse()
@@ -747,7 +854,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testListResourceBindingsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"target_crn\": \"targetCrn\", \"role\": \"role\", \"region_binding_id\": \"regionBindingId\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_alias_url\": \"resourceAliasUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}], \"rows_count\": 9}";
+    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"target_crn\": \"targetCrn\", \"role\": \"role\", \"region_binding_id\": \"regionBindingId\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_alias_url\": \"resourceAliasUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}], \"rows_count\": 9}";
     String listResourceBindingsPath = "/v2/resource_bindings";
 
     server.enqueue(new MockResponse()
@@ -800,7 +907,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testCreateResourceBindingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"target_crn\": \"targetCrn\", \"role\": \"role\", \"region_binding_id\": \"regionBindingId\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_alias_url\": \"resourceAliasUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"target_crn\": \"targetCrn\", \"role\": \"role\", \"region_binding_id\": \"regionBindingId\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_alias_url\": \"resourceAliasUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
     String createResourceBindingPath = "/v2/resource_bindings";
 
     server.enqueue(new MockResponse()
@@ -813,6 +920,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the ResourceBindingPostParameters model
     ResourceBindingPostParameters resourceBindingPostParametersModel = new ResourceBindingPostParameters.Builder()
     .serviceidCrn("crn:v1:bluemix:public:iam-identity::a/9fceaa56d1ab84893af6b9eec5ab81bb::serviceid:ServiceId-fe4c29b5-db13-410a-bacc-b5779a03d393")
+    .add("foo", "testString")
     .build();
 
     // Construct an instance of the CreateResourceBindingOptions model
@@ -859,7 +967,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testGetResourceBindingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"target_crn\": \"targetCrn\", \"role\": \"role\", \"region_binding_id\": \"regionBindingId\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_alias_url\": \"resourceAliasUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"target_crn\": \"targetCrn\", \"role\": \"role\", \"region_binding_id\": \"regionBindingId\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_alias_url\": \"resourceAliasUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
     String getResourceBindingPath = "/v2/resource_bindings/testString";
 
     server.enqueue(new MockResponse()
@@ -959,7 +1067,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testUpdateResourceBindingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"target_crn\": \"targetCrn\", \"role\": \"role\", \"region_binding_id\": \"regionBindingId\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_alias_url\": \"resourceAliasUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"target_crn\": \"targetCrn\", \"role\": \"role\", \"region_binding_id\": \"regionBindingId\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_alias_url\": \"resourceAliasUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
     String updateResourceBindingPath = "/v2/resource_bindings/testString";
 
     server.enqueue(new MockResponse()
@@ -1010,7 +1118,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testListResourceAliasesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"state\": \"state\", \"resource_instance_id\": \"resourceInstanceId\", \"region_instance_id\": \"regionInstanceId\", \"resource_instance_url\": \"resourceInstanceUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}], \"rows_count\": 9}";
+    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"state\": \"state\", \"resource_instance_id\": \"resourceInstanceId\", \"region_instance_id\": \"regionInstanceId\", \"resource_instance_url\": \"resourceInstanceUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}], \"rows_count\": 9}";
     String listResourceAliasesPath = "/v2/resource_aliases";
 
     server.enqueue(new MockResponse()
@@ -1065,7 +1173,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testCreateResourceAliasWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"state\": \"state\", \"resource_instance_id\": \"resourceInstanceId\", \"region_instance_id\": \"regionInstanceId\", \"resource_instance_url\": \"resourceInstanceUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"state\": \"state\", \"resource_instance_id\": \"resourceInstanceId\", \"region_instance_id\": \"regionInstanceId\", \"resource_instance_url\": \"resourceInstanceUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
     String createResourceAliasPath = "/v2/resource_aliases";
 
     server.enqueue(new MockResponse()
@@ -1079,7 +1187,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     CreateResourceAliasOptions createResourceAliasOptionsModel = new CreateResourceAliasOptions.Builder()
     .name("my-alias")
     .source("a8dff6d3-d287-4668-a81d-c87c55c2656d")
-    .target("crn:v1:staging:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5")
+    .target("crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -1117,7 +1225,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testGetResourceAliasWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"state\": \"state\", \"resource_instance_id\": \"resourceInstanceId\", \"region_instance_id\": \"regionInstanceId\", \"resource_instance_url\": \"resourceInstanceUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"state\": \"state\", \"resource_instance_id\": \"resourceInstanceId\", \"region_instance_id\": \"regionInstanceId\", \"resource_instance_url\": \"resourceInstanceUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
     String getResourceAliasPath = "/v2/resource_aliases/testString";
 
     server.enqueue(new MockResponse()
@@ -1217,7 +1325,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testUpdateResourceAliasWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"state\": \"state\", \"resource_instance_id\": \"resourceInstanceId\", \"region_instance_id\": \"regionInstanceId\", \"resource_instance_url\": \"resourceInstanceUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00\", \"updated_at\": \"2019-01-01T12:00:00\", \"deleted_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"state\": \"state\", \"resource_instance_id\": \"resourceInstanceId\", \"region_instance_id\": \"regionInstanceId\", \"resource_instance_url\": \"resourceInstanceUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}";
     String updateResourceAliasPath = "/v2/resource_aliases/testString";
 
     server.enqueue(new MockResponse()
@@ -1266,9 +1374,59 @@ public class ResourceControllerTest extends PowerMockTestCase {
   }
 
   @Test
+  public void testListResourceBindingsForAliasWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"guid\": \"guid\", \"crn\": \"crn\", \"url\": \"url\", \"name\": \"name\", \"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"source_crn\": \"sourceCrn\", \"target_crn\": \"targetCrn\", \"role\": \"role\", \"region_binding_id\": \"regionBindingId\", \"state\": \"state\", \"credentials\": {\"apikey\": \"apikey\", \"iam_apikey_description\": \"iamApikeyDescription\", \"iam_apikey_name\": \"iamApikeyName\", \"iam_role_crn\": \"iamRoleCrn\", \"iam_serviceid_crn\": \"iamServiceidCrn\"}, \"iam_compatible\": false, \"resource_alias_url\": \"resourceAliasUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\"}], \"rows_count\": 9}";
+    String listResourceBindingsForAliasPath = "/v2/resource_aliases/testString/resource_bindings";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the ListResourceBindingsForAliasOptions model
+    ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptionsModel = new ListResourceBindingsForAliasOptions.Builder()
+    .id("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ResourceBindingsList> response = resourceControllerService.listResourceBindingsForAlias(listResourceBindingsForAliasOptionsModel).execute();
+    assertNotNull(response);
+    ResourceBindingsList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listResourceBindingsForAliasPath);
+  }
+
+  // Test the listResourceBindingsForAlias operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListResourceBindingsForAliasNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    resourceControllerService.listResourceBindingsForAlias(null).execute();
+  }
+
+  @Test
   public void testListReclamationsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"entity_id\": \"entityId\", \"entity_type_id\": \"entityTypeId\", \"entity_crn\": \"entityCrn\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_group_id\": \"resourceGroupId\", \"account_id\": \"accountId\", \"policy_id\": \"policyId\", \"state\": \"state\", \"target_time\": \"targetTime\", \"custom_properties\": {\"mapKey\": \"anyValue\"}, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}]}";
+    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"entity_id\": \"entityId\", \"entity_type_id\": \"entityTypeId\", \"entity_crn\": \"entityCrn\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_group_id\": \"resourceGroupId\", \"account_id\": \"accountId\", \"policy_id\": \"policyId\", \"state\": \"state\", \"target_time\": \"targetTime\", \"custom_properties\": {\"mapKey\": \"anyValue\"}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
     String listReclamationsPath = "/v1/reclamations";
 
     server.enqueue(new MockResponse()
@@ -1309,7 +1467,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testRunReclamationActionWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"entity_id\": \"entityId\", \"entity_type_id\": \"entityTypeId\", \"entity_crn\": \"entityCrn\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_group_id\": \"resourceGroupId\", \"account_id\": \"accountId\", \"policy_id\": \"policyId\", \"state\": \"state\", \"target_time\": \"targetTime\", \"custom_properties\": {\"mapKey\": \"anyValue\"}, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"entity_id\": \"entityId\", \"entity_type_id\": \"entityTypeId\", \"entity_crn\": \"entityCrn\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_group_id\": \"resourceGroupId\", \"account_id\": \"accountId\", \"policy_id\": \"policyId\", \"state\": \"state\", \"target_time\": \"targetTime\", \"custom_properties\": {\"mapKey\": \"anyValue\"}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
     String runReclamationActionPath = "/v1/reclamations/testString/actions/testString";
 
     server.enqueue(new MockResponse()

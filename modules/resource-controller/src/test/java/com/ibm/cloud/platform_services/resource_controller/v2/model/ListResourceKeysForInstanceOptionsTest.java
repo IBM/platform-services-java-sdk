@@ -13,11 +13,9 @@
 
 package com.ibm.cloud.platform_services.resource_controller.v2.model;
 
-import com.ibm.cloud.platform_services.resource_controller.v2.model.Reclamation;
-import com.ibm.cloud.platform_services.resource_controller.v2.model.ReclamationsList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysForInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -25,15 +23,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ReclamationsList model.
+ * Unit test class for the ListResourceKeysForInstanceOptions model.
  */
-public class ReclamationsListTest {
+public class ListResourceKeysForInstanceOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testReclamationsList() throws Throwable {
-    ReclamationsList reclamationsListModel = new ReclamationsList();
-    assertNull(reclamationsListModel.getResources());
+  public void testListResourceKeysForInstanceOptions() throws Throwable {
+    ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptionsModel = new ListResourceKeysForInstanceOptions.Builder()
+      .id("testString")
+      .build();
+    assertEquals(listResourceKeysForInstanceOptionsModel.id(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListResourceKeysForInstanceOptionsError() throws Throwable {
+    new ListResourceKeysForInstanceOptions.Builder().build();
+  }
+
 }

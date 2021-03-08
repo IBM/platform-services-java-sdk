@@ -80,8 +80,10 @@ The current version of this SDK is: 0.17.13
 
 Each service's artifact coordinates are listed in the table above.
 
-The project artifacts are published on the [Maven Central](https://repo1.maven.org/maven2/) public
-artifact repository.
+The project artifacts are published on the public [Maven Central](https://repo1.maven.org/maven2/)
+artifact repository.  This is the default public repository used by maven when searching for dependencies.
+To use this repository within a gradle build, please see
+[this link](https://docs.gradle.org/current/userguide/declaring_repositories.html).
 
 To use a particular service in your application, define a dependency that contains the
 artifact coordinates (group id, artifact id and version) for the service.

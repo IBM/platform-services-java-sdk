@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,12 +29,14 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
@@ -46,6 +48,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
@@ -660,6 +663,58 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
             assertEquals(e.getStatusCode(), 404);
         }
+    }
+
+    @Test
+    public void testGetAccountSettings() throws Exception {
+      try {
+        GetAccountSettingsOptions getAccountSettingsOptions = new GetAccountSettingsOptions.Builder()
+        .accountId("testString")
+        .includeHistory(true)
+        .build();
+
+        // Invoke operation
+        Response<AccountSettingsResponse> response = service.getAccountSettings(getAccountSettingsOptions).execute();
+        // Validate response
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        AccountSettingsResponse accountSettingsResponseResult = response.getResult();
+
+        assertNotNull(accountSettingsResponseResult);
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s\nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
+    }
+
+    @Test
+    public void testUpdateAccountSettings() throws Exception {
+      try {
+        UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
+        .ifMatch("testString")
+        .accountId("testString")
+        .restrictCreateServiceId("RESTRICTED")
+        .restrictCreatePlatformApikey("RESTRICTED")
+        .allowedIpAddresses("testString")
+        .mfa("NONE")
+        .sessionExpirationInSeconds("testString")
+        .sessionInvalidationInSeconds("testString")
+        .build();
+
+        // Invoke operation
+        Response<AccountSettingsResponse> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();
+        // Validate response
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        AccountSettingsResponse accountSettingsResponseResult = response.getResult();
+
+        assertNotNull(accountSettingsResponseResult);
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s\nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
 
     @AfterClass

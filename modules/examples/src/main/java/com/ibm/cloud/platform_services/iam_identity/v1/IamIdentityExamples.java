@@ -79,6 +79,7 @@ public class IamIdentityExamples {
     private static String apikeyEtag;
     private static String svcId;
     private static String svcIdEtag;
+    private static String accountSettingsEtag;
 
     static {
         System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_identity.env");
@@ -324,36 +325,42 @@ public class IamIdentityExamples {
         }
 
         try {
-          // begin-getAccountSettings
-          GetAccountSettingsOptions getAccountSettingsOptions = new GetAccountSettingsOptions.Builder()
-            .accountId("testString")
-            .build();
+            // begin-getAccountSettings
+            GetAccountSettingsOptions getAccountSettingsOptions = new GetAccountSettingsOptions.Builder()
+                    .accountId(accountId)
+                    .build();
 
-          Response<AccountSettingsResponse> response = service.getAccountSettings(getAccountSettingsOptions).execute();
-          AccountSettingsResponse accountSettingsResponse = response.getResult();
+            Response<AccountSettingsResponse> response = service.getAccountSettings(getAccountSettingsOptions).execute();
+            AccountSettingsResponse accountSettingsResponse = response.getResult();
 
-          System.out.println(accountSettingsResponse);
-          // end-getAccountSettings
+            accountSettingsEtag = response.getHeaders().values("Etag").get(0);
+            System.out.println(accountSettingsResponse);
+            // end-getAccountSettings
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
-          // begin-updateAccountSettings
-          UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
-            .ifMatch("testString")
-            .accountId("testString")
-            .build();
+            // begin-updateAccountSettings
+            UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
+                    .ifMatch(accountSettingsEtag)
+                    .accountId(accountId)
+                    .sessionExpirationInSeconds("86400")
+                    .sessionInvalidationInSeconds("7200")
+                    .restrictCreatePlatformApikey("NOT_RESTRICTED")
+                    .restrictCreateServiceId("NOT_RESTRICTED")
+                    .mfa("NONE")
+                    .build();
 
-          Response<AccountSettingsResponse> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();
-          AccountSettingsResponse accountSettingsResponse = response.getResult();
+            Response<AccountSettingsResponse> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();
+            AccountSettingsResponse accountSettingsResponse = response.getResult();
 
-          System.out.println(accountSettingsResponse);
-          // end-updateAccountSettings
+            System.out.println(accountSettingsResponse);
+            // end-updateAccountSettings
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
     }
 }

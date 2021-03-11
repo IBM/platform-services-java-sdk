@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -55,6 +55,7 @@ public class ResourceInstance extends GenericModel {
   protected String dashboardUrl;
   @SerializedName("plan_history")
   protected List<PlanHistoryItem> planHistory;
+  protected Map<String, Object> extensions;
   @SerializedName("resource_aliases_url")
   protected String resourceAliasesUrl;
   @SerializedName("resource_bindings_url")
@@ -304,6 +305,17 @@ public class ResourceInstance extends GenericModel {
    */
   public List<PlanHistoryItem> getPlanHistory() {
     return planHistory;
+  }
+
+  /**
+   * Gets the extensions.
+   *
+   * Additional instance properties, contributed by the service and/or platform, are represented as key-value pairs.
+   *
+   * @return the extensions
+   */
+  public Map<String, Object> getExtensions() {
+    return extensions;
   }
 
   /**

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-e6cfc86e-20210308-084627
  */
 
 
@@ -25,7 +25,7 @@ import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissing
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * The IAM Identity Service API allows for the management of Identities (Service IDs, ApiKeys).
+ * The IAM Identity Service API allows for the management of Account Settings and Identities (Service IDs, ApiKeys).
  */
 
 class IamIdentityV1 extends BaseService {
@@ -838,6 +838,141 @@ class IamIdentityV1 extends BaseService {
     return this.createRequest(parameters);
   };
 
+  /*************************
+   * accountSettings
+   ************************/
+
+  /**
+   * Get account configurations.
+   *
+   * Returns the details of an account's configuration.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.accountId - Unique ID of the account.
+   * @param {boolean} [params.includeHistory] - Defines if the entity history is included in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>>}
+   */
+  public getAccountSettings(params: IamIdentityV1.GetAccountSettingsParams): Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['accountId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'include_history': _params.includeHistory
+    };
+
+    const path = {
+      'account_id': _params.accountId
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'getAccountSettings');
+
+    const parameters = {
+      options: {
+        url: '/v1/accounts/{account_id}/settings/identity',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Update account configurations.
+   *
+   * Allows a user to configure settings on their account with regards to MFA, session lifetimes,  access control for
+   * creating new identities, and enforcing IP restrictions on  token creation.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.ifMatch - Version of the account settings to be updated. Specify the version that you
+   * retrieved as entity_tag (ETag header) when reading the account. This value helps  identifying parallel usage of
+   * this API. Pass * to indicate to update any version  available. This might result in stale updates.
+   * @param {string} params.accountId - The id of the account to update the settings for.
+   * @param {string} [params.restrictCreateServiceId] - Defines whether or not creating a Service Id is access
+   * controlled. Valid values:
+   *   * RESTRICTED - to apply access control
+   *   * NOT_RESTRICTED - to remove access control
+   *   * NOT_SET - to unset a previously set value.
+   * @param {string} [params.restrictCreatePlatformApikey] - Defines whether or not creating a Service Id is access
+   * controlled. Valid values:
+   *   * RESTRICTED - to apply access control
+   *   * NOT_RESTRICTED - to remove access control
+   *   * NOT_SET - to 'unset' a previous set value.
+   * @param {string} [params.allowedIpAddresses] - Defines the IP addresses and subnets from which IAM tokens can be
+   * created for the account.
+   * @param {string} [params.mfa] - Defines the MFA trait for the account. Valid values:
+   *   * NONE - No MFA trait set
+   *   * TOTP - For all non-federated IBMId users
+   *   * TOTP4ALL - For all users
+   *   * LEVEL1 - Email-based MFA for all users
+   *   * LEVEL2 - TOTP-based MFA for all users
+   *   * LEVEL3 - U2F MFA for all users.
+   * @param {string} [params.sessionExpirationInSeconds] - Defines the session expiration in seconds for the account.
+   * Valid values:
+   *   * Any whole number between between '900' and '86400'
+   *   * NOT_SET - To unset account setting and use service default.
+   * @param {string} [params.sessionInvalidationInSeconds] - Defines the period of time in seconds in which a session
+   * will be invalidated due  to inactivity. Valid values:
+   *   * Any whole number between '900' and '7200'
+   *   * NOT_SET - To unset account setting and use service default.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>>}
+   */
+  public updateAccountSettings(params: IamIdentityV1.UpdateAccountSettingsParams): Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['ifMatch', 'accountId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'restrict_create_service_id': _params.restrictCreateServiceId,
+      'restrict_create_platform_apikey': _params.restrictCreatePlatformApikey,
+      'allowed_ip_addresses': _params.allowedIpAddresses,
+      'mfa': _params.mfa,
+      'session_expiration_in_seconds': _params.sessionExpirationInSeconds,
+      'session_invalidation_in_seconds': _params.sessionInvalidationInSeconds
+    };
+
+    const path = {
+      'account_id': _params.accountId
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'updateAccountSettings');
+
+    const parameters = {
+      options: {
+        url: '/v1/accounts/{account_id}/settings/identity',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'If-Match': _params.ifMatch
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
 }
 
 /*************************
@@ -1112,9 +1247,135 @@ namespace IamIdentityV1 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `getAccountSettings` operation. */
+  export interface GetAccountSettingsParams {
+    /** Unique ID of the account. */
+    accountId: string;
+    /** Defines if the entity history is included in the response. */
+    includeHistory?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateAccountSettings` operation. */
+  export interface UpdateAccountSettingsParams {
+    /** Version of the account settings to be updated. Specify the version that you  retrieved as entity_tag (ETag
+     *  header) when reading the account. This value helps  identifying parallel usage of this API. Pass * to indicate
+     *  to update any version  available. This might result in stale updates.
+     */
+    ifMatch: string;
+    /** The id of the account to update the settings for. */
+    accountId: string;
+    /** Defines whether or not creating a Service Id is access controlled. Valid values:
+     *    * RESTRICTED - to apply access control
+     *    * NOT_RESTRICTED - to remove access control
+     *    * NOT_SET - to unset a previously set value.
+     */
+    restrictCreateServiceId?: UpdateAccountSettingsConstants.RestrictCreateServiceId | string;
+    /** Defines whether or not creating a Service Id is access controlled. Valid values:
+     *    * RESTRICTED - to apply access control
+     *    * NOT_RESTRICTED - to remove access control
+     *    * NOT_SET - to 'unset' a previous set value.
+     */
+    restrictCreatePlatformApikey?: UpdateAccountSettingsConstants.RestrictCreatePlatformApikey | string;
+    /** Defines the IP addresses and subnets from which IAM tokens can be created for the account. */
+    allowedIpAddresses?: string;
+    /** Defines the MFA trait for the account. Valid values:
+     *    * NONE - No MFA trait set
+     *    * TOTP - For all non-federated IBMId users
+     *    * TOTP4ALL - For all users
+     *    * LEVEL1 - Email-based MFA for all users
+     *    * LEVEL2 - TOTP-based MFA for all users
+     *    * LEVEL3 - U2F MFA for all users.
+     */
+    mfa?: UpdateAccountSettingsConstants.Mfa | string;
+    /** Defines the session expiration in seconds for the account. Valid values:
+     *    * Any whole number between between '900' and '86400'
+     *    * NOT_SET - To unset account setting and use service default.
+     */
+    sessionExpirationInSeconds?: string;
+    /** Defines the period of time in seconds in which a session will be invalidated due  to inactivity. Valid
+     *  values:
+     *    * Any whole number between '900' and '7200'
+     *    * NOT_SET - To unset account setting and use service default.
+     */
+    sessionInvalidationInSeconds?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `updateAccountSettings` operation. */
+  export namespace UpdateAccountSettingsConstants {
+    /** Defines whether or not creating a Service Id is access controlled. Valid values: * RESTRICTED - to apply access control * NOT_RESTRICTED - to remove access control * NOT_SET - to unset a previously set value. */
+    export enum RestrictCreateServiceId {
+      RESTRICTED = 'RESTRICTED',
+      NOT_RESTRICTED = 'NOT_RESTRICTED',
+      NOT_SET = 'NOT_SET',
+    }
+    /** Defines whether or not creating a Service Id is access controlled. Valid values: * RESTRICTED - to apply access control * NOT_RESTRICTED - to remove access control * NOT_SET - to 'unset' a previous set value. */
+    export enum RestrictCreatePlatformApikey {
+      RESTRICTED = 'RESTRICTED',
+      NOT_RESTRICTED = 'NOT_RESTRICTED',
+      NOT_SET = 'NOT_SET',
+    }
+    /** Defines the MFA trait for the account. Valid values: * NONE - No MFA trait set * TOTP - For all non-federated IBMId users * TOTP4ALL - For all users * LEVEL1 - Email-based MFA for all users * LEVEL2 - TOTP-based MFA for all users * LEVEL3 - U2F MFA for all users. */
+    export enum Mfa {
+      NONE = 'NONE',
+      TOTP = 'TOTP',
+      TOTP4ALL = 'TOTP4ALL',
+      LEVEL1 = 'LEVEL1',
+      LEVEL2 = 'LEVEL2',
+      LEVEL3 = 'LEVEL3',
+    }
+  }
+
   /*************************
    * model interfaces
    ************************/
+
+  /** Response body format for Account Settings REST requests. */
+  export interface AccountSettingsResponse {
+    /** Context with key properties for problem determination. */
+    context?: ResponseContext;
+    /** Unique ID of the account. */
+    account_id: string;
+    /** Defines whether or not creating a Service Id is access controlled. Valid values:
+     *    * RESTRICTED - to apply access control
+     *    * NOT_RESTRICTED - to remove access control
+     *    * NOT_SET - to 'unset' a previous set value.
+     */
+    restrict_create_service_id: string;
+    /** Defines whether or not creating a Service Id is access controlled. Valid values:
+     *    * RESTRICTED - to apply access control
+     *    * NOT_RESTRICTED - to remove access control
+     *    * NOT_SET - to 'unset' a previous set value.
+     */
+    restrict_create_platform_apikey: string;
+    /** Defines the IP addresses and subnets from which IAM tokens can be created for the account. */
+    allowed_ip_addresses: string;
+    /** Version of the account settings. */
+    entity_tag: string;
+    /** Defines the MFA trait for the account. Valid values:
+     *    * NONE - No MFA trait set
+     *    * TOTP - For all non-federated IBMId users
+     *    * TOTP4ALL - For all users
+     *    * LEVEL1 - Email-based MFA for all users
+     *    * LEVEL2 - TOTP-based MFA for all users
+     *    * LEVEL3 - U2F MFA for all users.
+     */
+    mfa: string;
+    /** History of the Account Settings. */
+    history?: EnityHistoryRecord[];
+    /** Defines the session expiration in seconds for the account. Valid values:
+     *    * Any whole number between between '900' and '86400'
+     *    * NOT_SET - To unset account setting and use service default.
+     */
+    session_expiration_in_seconds: string;
+    /** Defines the period of time in seconds in which a session will be invalidated due  to inactivity. Valid
+     *  values:
+     *    * Any whole number between '900' and '7200'
+     *    * NOT_SET - To unset account setting and use service default.
+     */
+    session_invalidation_in_seconds: string;
+  }
 
   /** Response body format for API key V1 REST requests. */
   export interface ApiKey {

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1177,6 +1177,168 @@ describe('IamIdentityV1', () => {
         expectToBePromise(unlockServiceIdPromise);
 
         unlockServiceIdPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('getAccountSettings', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getAccountSettings
+        const accountId = 'testString';
+        const includeHistory = true;
+        const params = {
+          accountId: accountId,
+          includeHistory: includeHistory,
+        };
+
+        const getAccountSettingsResult = iamIdentityService.getAccountSettings(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getAccountSettingsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/accounts/{account_id}/settings/identity', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(options.qs['include_history']).toEqual(includeHistory);
+        expect(options.path['account_id']).toEqual(accountId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const accountId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          accountId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        iamIdentityService.getAccountSettings(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await iamIdentityService.getAccountSettings({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getAccountSettingsPromise = iamIdentityService.getAccountSettings();
+        expectToBePromise(getAccountSettingsPromise);
+
+        getAccountSettingsPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('updateAccountSettings', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation updateAccountSettings
+        const ifMatch = 'testString';
+        const accountId = 'testString';
+        const restrictCreateServiceId = 'RESTRICTED';
+        const restrictCreatePlatformApikey = 'RESTRICTED';
+        const allowedIpAddresses = 'testString';
+        const mfa = 'NONE';
+        const sessionExpirationInSeconds = 'testString';
+        const sessionInvalidationInSeconds = 'testString';
+        const params = {
+          ifMatch: ifMatch,
+          accountId: accountId,
+          restrictCreateServiceId: restrictCreateServiceId,
+          restrictCreatePlatformApikey: restrictCreatePlatformApikey,
+          allowedIpAddresses: allowedIpAddresses,
+          mfa: mfa,
+          sessionExpirationInSeconds: sessionExpirationInSeconds,
+          sessionInvalidationInSeconds: sessionInvalidationInSeconds,
+        };
+
+        const updateAccountSettingsResult = iamIdentityService.updateAccountSettings(params);
+
+        // all methods should return a Promise
+        expectToBePromise(updateAccountSettingsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v1/accounts/{account_id}/settings/identity', 'PUT');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        checkUserHeader(createRequestMock, 'If-Match', ifMatch);
+        expect(options.body['restrict_create_service_id']).toEqual(restrictCreateServiceId);
+        expect(options.body['restrict_create_platform_apikey']).toEqual(restrictCreatePlatformApikey);
+        expect(options.body['allowed_ip_addresses']).toEqual(allowedIpAddresses);
+        expect(options.body['mfa']).toEqual(mfa);
+        expect(options.body['session_expiration_in_seconds']).toEqual(sessionExpirationInSeconds);
+        expect(options.body['session_invalidation_in_seconds']).toEqual(sessionInvalidationInSeconds);
+        expect(options.path['account_id']).toEqual(accountId);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const ifMatch = 'testString';
+        const accountId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          ifMatch,
+          accountId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        iamIdentityService.updateAccountSettings(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await iamIdentityService.updateAccountSettings({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const updateAccountSettingsPromise = iamIdentityService.updateAccountSettings();
+        expectToBePromise(updateAccountSettingsPromise);
+
+        updateAccountSettingsPromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

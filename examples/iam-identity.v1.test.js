@@ -2,7 +2,7 @@
 * @jest-environment node
 */
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -73,6 +73,8 @@ describe('IamIdentityV1', () => {
 
   let svcId = null;
   let svcIdEtag = null;
+
+  let accountSettingsEtag = null;
 
   test('createApiKey request example', done => {
 
@@ -487,5 +489,68 @@ describe('IamIdentityV1', () => {
       });
 
     // end-delete_service_id
+  });
+  test('getAccountSettings request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      originalLog(output);
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+
+    expect(accountSettingsEtag).toBeNull();
+
+    // begin-getAccountSettings
+
+    const params = {
+      accountId: accountId,
+    };
+
+    iamIdentityService.getAccountSettings(params)
+      .then(res => {
+        accountSettingsEtag = res.headers['etag'];
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err)
+      });
+
+    // end-getAccountSettings
+  });
+  test('updateAccountSettings request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      originalLog(output);
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+
+    expect(accountSettingsEtag).not.toBeNull();
+
+    // begin-updateAccountSettings
+
+    const params = {
+      ifMatch: accountSettingsEtag,
+      accountId: accountId,
+      restrict_create_service_id: "NOT_RESTRICTED",
+      restrict_create_platform_apikey: "NOT_RESTRICTED",
+      mfa: "NONE",
+      session_expiration_in_seconds: "86400",
+      session_invalidation_in_seconds: "7200",
+    };
+
+    iamIdentityService.updateAccountSettings(params)
+      .then(res => {
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err)
+      });
+
+    // end-updateAccountSettings
   });
 });

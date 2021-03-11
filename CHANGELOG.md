@@ -1,3 +1,10 @@
+## [0.17.14](https://github.com/IBM/platform-services-java-sdk/compare/0.17.13...0.17.14) (2021-03-11)
+
+
+### Bug Fixes
+
+* **IAM Identity:** update service after recent API changes ([#84](https://github.com/IBM/platform-services-java-sdk/issues/84)) ([0b475a2](https://github.com/IBM/platform-services-java-sdk/commit/0b475a2ea8f237e48ed987db9ca462a7b968027f))
+
 ## [0.17.13](https://github.com/IBM/platform-services-java-sdk/compare/0.17.12...0.17.13) (2021-03-05)
 
 

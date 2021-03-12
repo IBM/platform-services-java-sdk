@@ -32,8 +32,11 @@ import org.slf4j.LoggerFactory;
 // The following configuration properties are assumed to be defined:
 // POSTURE_MANAGEMENT_URL=<service base url>
 // POSTURE_MANAGEMENT_AUTH_TYPE=iam
-// POSTURE_MANAGEMENT_APIKEY=<IAM apikey>
+// POSTURE_MANAGEMENT_APIKEY=<IAM Api key>
 // POSTURE_MANAGEMENT_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
+// POSTURE_MANAGEMENT_ACCOUNT_ID=<IBM Cloud Account ID>
+// POSTURE_MANAGEMENT_PROFILE_NAME=<Name of the Profile>
+// POSTURE_MANAGEMENT_SCOPES_NAME=<Name of the Scope>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
@@ -50,26 +53,18 @@ public class PostureManagementExamples {
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(PostureManagement.DEFAULT_SERVICE_NAME);
 
-    try {
-      // begin-create_validation_scan
-      CreateValidationScanOptions createValidationScanOptions = new CreateValidationScanOptions.Builder()
-        .accountId("testString")
-        .build();
+    String accountId = config.get("ACCOUNT_ID");
+    String profileName = config.get("PROFILE_NAME");
+    String scopesName = config.get("SCOPES_NAME");
 
-      Response<Result> response = service.createValidationScan(createValidationScanOptions).execute();
-      Result result = response.getResult();
-
-      System.out.println(result);
-      // end-create_validation_scan
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
+    Long profileId = null;
+    Long scopeId = null;
 
     try {
       // begin-list_profile
       ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
-        .accountId("testString")
+        .accountId(accountId)
+        .name(profileName)
         .build();
 
       Response<ProfilesList> response = service.listProfile(listProfileOptions).execute();
@@ -77,6 +72,7 @@ public class PostureManagementExamples {
 
       System.out.println(profilesList);
       // end-list_profile
+      profileId = profilesList.getProfiles().get(0).getProfileId();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -86,6 +82,7 @@ public class PostureManagementExamples {
       // begin-list_scopes
       ListScopesOptions listScopesOptions = new ListScopesOptions.Builder()
         .accountId("testString")
+        .name(scopesName)
         .build();
 
       Response<ScopesList> response = service.listScopes(listScopesOptions).execute();
@@ -93,9 +90,29 @@ public class PostureManagementExamples {
 
       System.out.println(scopesList);
       // end-list_scopes
+      scopeId = scopesList.getScopes().get(0).getScopeId();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-create_validation_scan
+      CreateValidationScanOptions createValidationScanOptions = new CreateValidationScanOptions.Builder()
+              .accountId(accountId)
+              .profileId(profileId)
+              .scopeId(scopeId)
+              .build();
+
+      Response<Result> response = service.createValidationScan(createValidationScanOptions).execute();
+      Result result = response.getResult();
+
+      System.out.println(result);
+      // end-create_validation_scan
+
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                                 e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
   }

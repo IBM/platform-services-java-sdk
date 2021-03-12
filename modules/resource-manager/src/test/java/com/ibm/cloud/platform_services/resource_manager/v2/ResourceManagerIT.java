@@ -31,17 +31,17 @@ import static org.testng.Assert.assertFalse;
  */
 public class ResourceManagerIT extends SdkIntegrationTestBase {
     public static Map<String, String> config = null;
-    ResourceManager canCreateRetrieveAndUpdateResourceGroupService = null;
+    ResourceManager resourceManagerService = null;
 
     private static String URL;
     private static String AUTH_TYPE;
     private static String APIKEY;
     private static String AUTH_URL;
-    private static String TEST_QUOTA_ID;
-    private static String TEST_USER_ACCOUNT_ID;
+    private static String QUOTA_ID;
+    private static String USER_ACCOUNT_ID;
 
     // Simulates the user's activity. Only a user from account can delete resource group
-    ResourceManager usersService = null;
+    ResourceManager resourceManagerUsersService = null;
     String newResourceGroupID = null;
 
     @Override
@@ -67,42 +67,42 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
         }
 
         // Construct the service1 instance from our external configuration.
-        canCreateRetrieveAndUpdateResourceGroupService = ResourceManager.newInstance("RMGR1");
-        assertNotNull(canCreateRetrieveAndUpdateResourceGroupService);
-        assertNotNull(canCreateRetrieveAndUpdateResourceGroupService.getServiceUrl());
+        resourceManagerService = ResourceManager.newInstance("RESOURCE_MANAGER_SERVICE");
+        assertNotNull(resourceManagerService);
+        assertNotNull(resourceManagerService.getServiceUrl());
 
         // Construct the service2 instance from our external configuration.
-        usersService = ResourceManager.newInstance("RMGR2");
-        assertNotNull(usersService);
-        assertNotNull(usersService.getServiceUrl());
+        resourceManagerUsersService = ResourceManager.newInstance(ResourceManager.DEFAULT_SERVICE_NAME);
+        assertNotNull(resourceManagerUsersService);
+        assertNotNull(resourceManagerUsersService.getServiceUrl());
 
         //Load up our test-specific config properties
         config = CredentialUtils.getServiceProperties(ResourceManager.DEFAULT_SERVICE_NAME);
         assertNotNull(config);
         assertFalse(config.isEmpty());
-        assertEquals(usersService.getServiceUrl(), config.get("URL"));
+        assertEquals(resourceManagerUsersService.getServiceUrl(), config.get("URL"));
 
         URL = config.get("URL");
         AUTH_TYPE = config.get("AUTH_TYPE");
         APIKEY = config.get("APIKEY");
         AUTH_URL = config.get("AUTH_URL");
-        TEST_QUOTA_ID = config.get("TEST_QUOTA_ID");
-        TEST_USER_ACCOUNT_ID = config.get("TEST_USER_ACCOUNT_ID");
+        QUOTA_ID = config.get("QUOTA_ID");
+        USER_ACCOUNT_ID = config.get("USER_ACCOUNT_ID");
 
         assertNotNull(URL);
         assertNotNull(AUTH_TYPE);
         assertNotNull(APIKEY);
         assertNotNull(AUTH_URL);
-        assertNotNull(TEST_QUOTA_ID);
-        assertNotNull(TEST_USER_ACCOUNT_ID);
+        assertNotNull(QUOTA_ID);
+        assertNotNull(USER_ACCOUNT_ID);
 
-        log("Service URL: " + usersService.getServiceUrl());
+        log("Service URL: " + resourceManagerUsersService.getServiceUrl());
         log("Setup Complete.");
     }
 
     @Test
     public void testListQuotaDefinitions() {
-        Response<QuotaDefinitionList> response = canCreateRetrieveAndUpdateResourceGroupService.listQuotaDefinitions().execute();
+        Response<QuotaDefinitionList> response = resourceManagerService.listQuotaDefinitions().execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
@@ -114,10 +114,10 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
     @Test
     public void testGetQuotaDefinition() {
         GetQuotaDefinitionOptions options = new GetQuotaDefinitionOptions.Builder()
-                .id(TEST_QUOTA_ID)
+                .id(QUOTA_ID)
                 .build();
 
-        Response<QuotaDefinition> response = canCreateRetrieveAndUpdateResourceGroupService.getQuotaDefinition(options).execute();
+        Response<QuotaDefinition> response = resourceManagerService.getQuotaDefinition(options).execute();
         assertEquals(response.getStatusCode(), 200);
 
         QuotaDefinition result = response.getResult();
@@ -128,10 +128,10 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
     @Test
     public void testListResourceGroupsInAccount() {
         ListResourceGroupsOptions options = new ListResourceGroupsOptions.Builder()
-                .accountId(TEST_USER_ACCOUNT_ID)
+                .accountId(USER_ACCOUNT_ID)
                 .build();
 
-        Response<ResourceGroupList> response = canCreateRetrieveAndUpdateResourceGroupService.listResourceGroups(options).execute();
+        Response<ResourceGroupList> response = resourceManagerService.listResourceGroups(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
@@ -151,11 +151,11 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
     @Test
     public void testCreateResourceGroupInAccount() {
         CreateResourceGroupOptions options = new CreateResourceGroupOptions.Builder()
-                .accountId(TEST_USER_ACCOUNT_ID)
+                .accountId(USER_ACCOUNT_ID)
                 .name("TestGroup")
                 .build();
 
-        Response<ResCreateResourceGroup> response = canCreateRetrieveAndUpdateResourceGroupService.createResourceGroup(options).execute();
+        Response<ResCreateResourceGroup> response = resourceManagerService.createResourceGroup(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 201);
 
@@ -171,7 +171,7 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
                 .id(newResourceGroupID)
                 .build();
 
-        Response<ResourceGroup> response = canCreateRetrieveAndUpdateResourceGroupService.getResourceGroup(options).execute();
+        Response<ResourceGroup> response = resourceManagerService.getResourceGroup(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
@@ -187,7 +187,7 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
                 .state("ACTIVE")
                 .build();
 
-        Response<ResourceGroup> response = canCreateRetrieveAndUpdateResourceGroupService.updateResourceGroup(options).execute();
+        Response<ResourceGroup> response = resourceManagerService.updateResourceGroup(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
@@ -201,7 +201,7 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
                 .id(newResourceGroupID)
                 .build();
 
-        Response<Void> response = usersService.deleteResourceGroup(options).execute();
+        Response<Void> response = resourceManagerUsersService.deleteResourceGroup(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 204);
     }

@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,29 +23,25 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListServiceIdsOptions model.
+ * Unit test class for the GetAccountSettingsOptions model.
  */
-public class ListServiceIdsOptionsTest {
+public class GetAccountSettingsOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListServiceIdsOptions() throws Throwable {
-    ListServiceIdsOptions listServiceIdsOptionsModel = new ListServiceIdsOptions.Builder()
+  public void testGetAccountSettingsOptions() throws Throwable {
+    GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
       .accountId("testString")
-      .name("testString")
-      .pagesize(Long.valueOf("26"))
-      .pagetoken("testString")
-      .sort("testString")
-      .order("asc")
       .includeHistory(true)
       .build();
-    assertEquals(listServiceIdsOptionsModel.accountId(), "testString");
-    assertEquals(listServiceIdsOptionsModel.name(), "testString");
-    assertEquals(listServiceIdsOptionsModel.pagesize(), Long.valueOf("26"));
-    assertEquals(listServiceIdsOptionsModel.pagetoken(), "testString");
-    assertEquals(listServiceIdsOptionsModel.sort(), "testString");
-    assertEquals(listServiceIdsOptionsModel.order(), "asc");
-    assertEquals(listServiceIdsOptionsModel.includeHistory(), Boolean.valueOf(true));
+    assertEquals(getAccountSettingsOptionsModel.accountId(), "testString");
+    assertEquals(getAccountSettingsOptionsModel.includeHistory(), Boolean.valueOf(true));
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetAccountSettingsOptionsError() throws Throwable {
+    new GetAccountSettingsOptions.Builder().build();
+  }
+
 }

@@ -13,30 +13,38 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ResponseContext;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the EnityHistoryRecord model.
+ * Unit test class for the AccountSettingsResponse model.
  */
-public class EnityHistoryRecordTest {
+public class AccountSettingsResponseTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testEnityHistoryRecord() throws Throwable {
-    EnityHistoryRecord enityHistoryRecordModel = new EnityHistoryRecord();
-    assertNull(enityHistoryRecordModel.getTimestamp());
-    assertNull(enityHistoryRecordModel.getIamId());
-    assertNull(enityHistoryRecordModel.getIamIdAccount());
-    assertNull(enityHistoryRecordModel.getAction());
-    assertNull(enityHistoryRecordModel.getParams());
-    assertNull(enityHistoryRecordModel.getMessage());
+  public void testAccountSettingsResponse() throws Throwable {
+    AccountSettingsResponse accountSettingsResponseModel = new AccountSettingsResponse();
+    assertNull(accountSettingsResponseModel.getContext());
+    assertNull(accountSettingsResponseModel.getAccountId());
+    assertNull(accountSettingsResponseModel.getRestrictCreateServiceId());
+    assertNull(accountSettingsResponseModel.getRestrictCreatePlatformApikey());
+    assertNull(accountSettingsResponseModel.getAllowedIpAddresses());
+    assertNull(accountSettingsResponseModel.getEntityTag());
+    assertNull(accountSettingsResponseModel.getMfa());
+    assertNull(accountSettingsResponseModel.getHistory());
+    assertNull(accountSettingsResponseModel.getSessionExpirationInSeconds());
+    assertNull(accountSettingsResponseModel.getSessionInvalidationInSeconds());
   }
 }

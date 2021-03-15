@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,19 +12,21 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-e6cfc86e-20210308-084627
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
 
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
@@ -36,6 +38,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
@@ -50,7 +53,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * The IAM Identity Service API allows for the management of Identities (Service IDs, ApiKeys).
+ * The IAM Identity Service API allows for the management of Account Settings and Identities (Service IDs, ApiKeys).
  *
  * @version v1
  */
@@ -619,6 +622,79 @@ public class IamIdentity extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get account configurations.
+   *
+   * Returns the details of an account's configuration.
+   *
+   * @param getAccountSettingsOptions the {@link GetAccountSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsResponse}
+   */
+  public ServiceCall<AccountSettingsResponse> getAccountSettings(GetAccountSettingsOptions getAccountSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountSettingsOptions,
+      "getAccountSettingsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getAccountSettingsOptions.accountId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/accounts/{account_id}/settings/identity", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getAccountSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getAccountSettingsOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(getAccountSettingsOptions.includeHistory()));
+    }
+    ResponseConverter<AccountSettingsResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update account configurations.
+   *
+   * Allows a user to configure settings on their account with regards to MFA, session lifetimes,  access control for
+   * creating new identities, and enforcing IP restrictions on  token creation.
+   *
+   * @param updateAccountSettingsOptions the {@link UpdateAccountSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsResponse}
+   */
+  public ServiceCall<AccountSettingsResponse> updateAccountSettings(UpdateAccountSettingsOptions updateAccountSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountSettingsOptions,
+      "updateAccountSettingsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", updateAccountSettingsOptions.accountId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/accounts/{account_id}/settings/identity", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateAccountSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateAccountSettingsOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    if (updateAccountSettingsOptions.restrictCreateServiceId() != null) {
+      contentJson.addProperty("restrict_create_service_id", updateAccountSettingsOptions.restrictCreateServiceId());
+    }
+    if (updateAccountSettingsOptions.restrictCreatePlatformApikey() != null) {
+      contentJson.addProperty("restrict_create_platform_apikey", updateAccountSettingsOptions.restrictCreatePlatformApikey());
+    }
+    if (updateAccountSettingsOptions.allowedIpAddresses() != null) {
+      contentJson.addProperty("allowed_ip_addresses", updateAccountSettingsOptions.allowedIpAddresses());
+    }
+    if (updateAccountSettingsOptions.mfa() != null) {
+      contentJson.addProperty("mfa", updateAccountSettingsOptions.mfa());
+    }
+    if (updateAccountSettingsOptions.sessionExpirationInSeconds() != null) {
+      contentJson.addProperty("session_expiration_in_seconds", updateAccountSettingsOptions.sessionExpirationInSeconds());
+    }
+    if (updateAccountSettingsOptions.sessionInvalidationInSeconds() != null) {
+      contentJson.addProperty("session_invalidation_in_seconds", updateAccountSettingsOptions.sessionInvalidationInSeconds());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<AccountSettingsResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

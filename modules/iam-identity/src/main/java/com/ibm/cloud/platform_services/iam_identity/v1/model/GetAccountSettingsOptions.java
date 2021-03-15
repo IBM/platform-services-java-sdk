@@ -15,23 +15,23 @@ package com.ibm.cloud.platform_services.iam_identity.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The getApiKey options.
+ * The getAccountSettings options.
  */
-public class GetApiKeyOptions extends GenericModel {
+public class GetAccountSettingsOptions extends GenericModel {
 
-  protected String id;
+  protected String accountId;
   protected Boolean includeHistory;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private String id;
+    private String accountId;
     private Boolean includeHistory;
 
-    private Builder(GetApiKeyOptions getApiKeyOptions) {
-      this.id = getApiKeyOptions.id;
-      this.includeHistory = getApiKeyOptions.includeHistory;
+    private Builder(GetAccountSettingsOptions getAccountSettingsOptions) {
+      this.accountId = getAccountSettingsOptions.accountId;
+      this.includeHistory = getAccountSettingsOptions.includeHistory;
     }
 
     /**
@@ -43,29 +43,29 @@ public class GetApiKeyOptions extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
-     * @param id the id
+     * @param accountId the accountId
      */
-    public Builder(String id) {
-      this.id = id;
+    public Builder(String accountId) {
+      this.accountId = accountId;
     }
 
     /**
-     * Builds a GetApiKeyOptions.
+     * Builds a GetAccountSettingsOptions.
      *
-     * @return the new GetApiKeyOptions instance
+     * @return the new GetAccountSettingsOptions instance
      */
-    public GetApiKeyOptions build() {
-      return new GetApiKeyOptions(this);
+    public GetAccountSettingsOptions build() {
+      return new GetAccountSettingsOptions(this);
     }
 
     /**
-     * Set the id.
+     * Set the accountId.
      *
-     * @param id the id
-     * @return the GetApiKeyOptions builder
+     * @param accountId the accountId
+     * @return the GetAccountSettingsOptions builder
      */
-    public Builder id(String id) {
-      this.id = id;
+    public Builder accountId(String accountId) {
+      this.accountId = accountId;
       return this;
     }
 
@@ -73,7 +73,7 @@ public class GetApiKeyOptions extends GenericModel {
      * Set the includeHistory.
      *
      * @param includeHistory the includeHistory
-     * @return the GetApiKeyOptions builder
+     * @return the GetAccountSettingsOptions builder
      */
     public Builder includeHistory(Boolean includeHistory) {
       this.includeHistory = includeHistory;
@@ -81,31 +81,31 @@ public class GetApiKeyOptions extends GenericModel {
     }
   }
 
-  protected GetApiKeyOptions(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
-      "id cannot be empty");
-    id = builder.id;
+  protected GetAccountSettingsOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
+      "accountId cannot be empty");
+    accountId = builder.accountId;
     includeHistory = builder.includeHistory;
   }
 
   /**
    * New builder.
    *
-   * @return a GetApiKeyOptions builder
+   * @return a GetAccountSettingsOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);
   }
 
   /**
-   * Gets the id.
+   * Gets the accountId.
    *
-   * Unique ID of the API key.
+   * Unique ID of the account.
    *
-   * @return the id
+   * @return the accountId
    */
-  public String id() {
-    return id;
+  public String accountId() {
+    return accountId;
   }
 
   /**

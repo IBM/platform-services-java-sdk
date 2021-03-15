@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,12 +29,14 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
@@ -46,6 +48,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
@@ -80,6 +83,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private String serviceId1;
     private String serviceIdEtag1;
+
+    private String accountSettingsEtag;
 
     @Override
     public String getConfigFilename() {
@@ -598,8 +603,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.createApiKey(createApiKeyOptions).execute();
             fail("Invalid iam_id should not have succeeded!");
         } catch (ServiceResponseException e) {
-             log(String.format("Service returned status code %s: %s\nError details: %s",
-                  e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            log(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
             assertEquals(e.getStatusCode(), 400);
         }
     }
@@ -613,8 +618,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.deleteApiKey(deleteApiKeyOptions).execute();
             fail("Invalid apikey id should not have succeeded!");
         } catch (ServiceResponseException e) {
-             log(String.format("Service returned status code %s: %s\nError details: %s",
-                  e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            log(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
             assertEquals(e.getStatusCode(), 404);
         }
     }
@@ -639,7 +644,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.createServiceId(createServiceIdOptions).execute();
             fail("Invalid account_id should not have succeeded!");
         } catch (ServiceResponseException e) {
-             log(String.format("Service returned status code %s: %s\nError details: %s",
+            log(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
             assertEquals(e.getStatusCode(), 400);
         }
@@ -656,9 +661,85 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.getServiceId(getServiceIdOptions).execute();
             fail("Invalid service id should not have succeeded!");
         } catch (ServiceResponseException e) {
-             log(String.format("Service returned status code %s: %s\nError details: %s",
+            log(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
             assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testGetAccountSettings() throws Exception {
+        try {
+            GetAccountSettingsOptions getAccountSettingsOptions = new GetAccountSettingsOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .includeHistory(false)
+                    .build();
+
+            // Invoke operation
+            Response<AccountSettingsResponse> response = service.getAccountSettings(getAccountSettingsOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            AccountSettingsResponse accountSettingsResponseResult = response.getResult();
+
+            assertNotNull(accountSettingsResponseResult);
+            log(String.format("\n>>> getAccountSettings response:\n%s", accountSettingsResponseResult));
+
+            assertEquals(accountSettingsResponseResult.getAccountId(), ACCOUNT_ID);
+            assertNotNull(accountSettingsResponseResult.getRestrictCreatePlatformApikey());
+            assertNotNull(accountSettingsResponseResult.getRestrictCreateServiceId());
+            assertNotNull(accountSettingsResponseResult.getMfa());
+            assertNotNull(accountSettingsResponseResult.getSessionExpirationInSeconds());
+            assertNotNull(accountSettingsResponseResult.getSessionInvalidationInSeconds());
+
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(response.getHeaders().values("Etag"));
+            assertEquals(response.getHeaders().values("Etag").size(), 1);
+            accountSettingsEtag = response.getHeaders().values("Etag").get(0);
+            assertNotNull(accountSettingsEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testGetAccountSettings" })
+    public void testUpdateAccountSettings() throws Exception {
+        assertNotNull(accountSettingsEtag);
+        try {
+            UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
+                    .ifMatch(accountSettingsEtag)
+                    .accountId(ACCOUNT_ID)
+                    .restrictCreateServiceId("NOT_RESTRICTED")
+                    .restrictCreatePlatformApikey("NOT_RESTRICTED")
+//                    .allowedIpAddresses("testString")
+                    .mfa("NONE")
+                    .sessionExpirationInSeconds("86400")
+                    .sessionInvalidationInSeconds("7200")
+                    .build();
+
+            // Invoke operation
+            Response<AccountSettingsResponse> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            AccountSettingsResponse accountSettingsResponseResult = response.getResult();
+            assertNotNull(accountSettingsResponseResult);
+            log(String.format("\n>>> updateAccountSettings response:\n%s", accountSettingsResponseResult));
+
+            assertNull(accountSettingsResponseResult.getAllowedIpAddresses());
+            assertEquals(accountSettingsResponseResult.getAccountId(), updateAccountSettingsOptions.accountId());
+            assertEquals(accountSettingsResponseResult.getMfa(), updateAccountSettingsOptions.mfa());
+            assertEquals(accountSettingsResponseResult.getRestrictCreatePlatformApikey(), updateAccountSettingsOptions.restrictCreatePlatformApikey());
+            assertEquals(accountSettingsResponseResult.getRestrictCreateServiceId(), updateAccountSettingsOptions.restrictCreateServiceId());
+            assertEquals(accountSettingsResponseResult.getSessionExpirationInSeconds(), updateAccountSettingsOptions.sessionExpirationInSeconds());
+            assertEquals(accountSettingsResponseResult.getSessionInvalidationInSeconds(), updateAccountSettingsOptions.sessionInvalidationInSeconds());
+            assertNotEquals(accountSettingsResponseResult.getEntityTag(), accountSettingsEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
 

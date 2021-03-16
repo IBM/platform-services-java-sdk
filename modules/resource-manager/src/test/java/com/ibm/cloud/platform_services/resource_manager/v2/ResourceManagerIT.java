@@ -44,7 +44,7 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
     private static String NEW_RESOURCE_GROUP_ID = "NEW_RESOURCE_GROUP_ID";
 
     // Simulates the user's activity. Only a user from account can delete resource group
-    ResourceManager resourceManagerUsersService = null;
+    ResourceManager deleteResourceManagerService = null;
 
     @Override
     public String getConfigFilename() {
@@ -69,20 +69,20 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
         }
 
         // Construct the service1 instance from our external configuration.
-        resourceManagerService = ResourceManager.newInstance("RESOURCE_MANAGER_SERVICE");
+        resourceManagerService = ResourceManager.newInstance(ResourceManager.DEFAULT_SERVICE_NAME);
         assertNotNull(resourceManagerService);
         assertNotNull(resourceManagerService.getServiceUrl());
 
         // Construct the service2 instance from our external configuration.
-        resourceManagerUsersService = ResourceManager.newInstance(ResourceManager.DEFAULT_SERVICE_NAME);
-        assertNotNull(resourceManagerUsersService);
-        assertNotNull(resourceManagerUsersService.getServiceUrl());
+        deleteResourceManagerService = ResourceManager.newInstance("ALT_RESOURCE_MANAGER");
+        assertNotNull(deleteResourceManagerService);
+        assertNotNull(deleteResourceManagerService.getServiceUrl());
 
         //Load up our test-specific config properties
         config = CredentialUtils.getServiceProperties(ResourceManager.DEFAULT_SERVICE_NAME);
         assertNotNull(config);
         assertFalse(config.isEmpty());
-        assertEquals(resourceManagerUsersService.getServiceUrl(), config.get("URL"));
+        assertEquals(deleteResourceManagerService.getServiceUrl(), config.get("URL"));
 
         URL = config.get("URL");
         AUTH_TYPE = config.get("AUTH_TYPE");
@@ -98,7 +98,7 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
         assertNotNull(QUOTA_ID);
         assertNotNull(USER_ACCOUNT_ID);
 
-        log("Service URL: " + resourceManagerUsersService.getServiceUrl());
+        log("Service URL: " + deleteResourceManagerService.getServiceUrl());
         log("Setup Complete.");
     }
 
@@ -212,7 +212,7 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
                 .id(newResourceGroupId)
                 .build();
 
-        Response<Void> response = resourceManagerUsersService.deleteResourceGroup(options).execute();
+        Response<Void> response = deleteResourceManagerService.deleteResourceGroup(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 204);
     }

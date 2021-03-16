@@ -62,7 +62,7 @@ public class ResourceManagerExamples {
 
   @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
-    ResourceManager resourceManagerService = ResourceManager.newInstance();
+    ResourceManager resourceManagerService = ResourceManager.newInstance(ResourceManager.DEFAULT_SERVICE_NAME);
     ResourceManager deleteResourceManagerService = ResourceManager.newInstance("ALT_RESOURCE_MANAGER");
 
     // Load up our test-specific config properties.

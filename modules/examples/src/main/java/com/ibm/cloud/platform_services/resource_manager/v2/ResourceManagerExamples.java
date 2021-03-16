@@ -38,10 +38,15 @@ import org.slf4j.LoggerFactory;
 // The following configuration properties are assumed to be defined:
 // RESOURCE_MANAGER_URL=<service base url>
 // RESOURCE_MANAGER_AUTH_TYPE=iam
-// RESOURCE_MANAGER_APIKEY=<IAM apikey>
+// RESOURCE_MANAGER_APIKEY=<IAM apikey of the service>
 // RESOURCE_MANAGER_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
-// RESOURCE_MANAGER_TEST_QUOTA_ID=<Quota Id used in testing>
-// RESOURCE_MANAGER_TEST_USER_ACCOUNT_ID=<User Id used in testing>
+// RESOURCE_MANAGER_QUOTA_ID=<quota ID>
+// RESOURCE_MANAGER_USER_ACCOUNT_ID=<account ID of the user with delete permission>
+//
+// ALT_RESOURCE_MANAGER_URL=<service base url>
+// ALT_RESOURCE_MANAGER_AUTH_TYPE=iam
+// ALT_RESOURCE_MANAGER_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
+// ALT_RESOURCE_MANAGER_APIKEY=<IAM apikey of the user with delete permission>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
@@ -51,28 +56,29 @@ public class ResourceManagerExamples {
   private static final Logger logger = LoggerFactory.getLogger(ResourceManagerExamples.class);
   protected ResourceManagerExamples() { }
 
-  private static String testUserAccountId;
-  private static String testQuotaId;
+  private static String userAccountId;
+  private static String quotaId;
   private static String resourceGroupId;
 
   @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
-    ResourceManager service = ResourceManager.newInstance();
+    ResourceManager resourceManagerService = ResourceManager.newInstance();
+    ResourceManager deleteResourceManagerService = ResourceManager.newInstance("ALT_RESOURCE_MANAGER");
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(ResourceManager.DEFAULT_SERVICE_NAME);
-    testQuotaId = config.get("TEST_QUOTA_ID");
-    testUserAccountId = config.get("TEST_USER_ACCOUNT_ID");
+    quotaId = config.get("QUOTA_ID");
+    userAccountId = config.get("USER_ACCOUNT_ID");
 
 
     try {
       // begin-create_resource_group
       CreateResourceGroupOptions createResourceGroupOptions = new CreateResourceGroupOptions.Builder()
-              .accountId(testUserAccountId)
+              .accountId(userAccountId)
               .name("ExampleGroup")
               .build();
 
-      Response<ResCreateResourceGroup> response = service.createResourceGroup(createResourceGroupOptions).execute();
+      Response<ResCreateResourceGroup> response = resourceManagerService.createResourceGroup(createResourceGroupOptions).execute();
       ResCreateResourceGroup resCreateResourceGroup = response.getResult();
 
       System.out.println(resCreateResourceGroup);
@@ -89,7 +95,7 @@ public class ResourceManagerExamples {
         .id(resourceGroupId)
         .build();
 
-      Response<ResourceGroup> response = service.getResourceGroup(getResourceGroupOptions).execute();
+      Response<ResourceGroup> response = resourceManagerService.getResourceGroup(getResourceGroupOptions).execute();
       ResourceGroup resourceGroup = response.getResult();
 
       System.out.println(resourceGroup);
@@ -107,7 +113,7 @@ public class ResourceManagerExamples {
         .state("ACTIVE")
         .build();
 
-      Response<ResourceGroup> response = service.updateResourceGroup(updateResourceGroupOptions).execute();
+      Response<ResourceGroup> response = resourceManagerService.updateResourceGroup(updateResourceGroupOptions).execute();
       ResourceGroup resourceGroup = response.getResult();
 
       System.out.println(resourceGroup);
@@ -120,11 +126,11 @@ public class ResourceManagerExamples {
     try {
       // begin-list_resource_groups
       ListResourceGroupsOptions listResourceGroupsOptions = new ListResourceGroupsOptions.Builder()
-              .accountId(testUserAccountId)
+              .accountId(userAccountId)
               .includeDeleted(true)
               .build();
 
-      Response<ResourceGroupList> response = service.listResourceGroups(listResourceGroupsOptions).execute();
+      Response<ResourceGroupList> response = resourceManagerService.listResourceGroups(listResourceGroupsOptions).execute();
       ResourceGroupList resourceGroupList = response.getResult();
 
       System.out.println(resourceGroupList);
@@ -140,7 +146,7 @@ public class ResourceManagerExamples {
               .id(resourceGroupId)
               .build();
 
-      service.deleteResourceGroup(deleteResourceGroupOptions).execute();
+      deleteResourceManagerService.deleteResourceGroup(deleteResourceGroupOptions).execute();
       // end-delete_resource_group
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -151,7 +157,7 @@ public class ResourceManagerExamples {
       // begin-list_quota_definitions
       ListQuotaDefinitionsOptions listQuotaDefinitionsOptions = new ListQuotaDefinitionsOptions();
 
-      Response<QuotaDefinitionList> response = service.listQuotaDefinitions(listQuotaDefinitionsOptions).execute();
+      Response<QuotaDefinitionList> response = resourceManagerService.listQuotaDefinitions(listQuotaDefinitionsOptions).execute();
       QuotaDefinitionList quotaDefinitionList = response.getResult();
 
       System.out.println(quotaDefinitionList);
@@ -164,10 +170,10 @@ public class ResourceManagerExamples {
     try {
       // begin-get_quota_definition
       GetQuotaDefinitionOptions getQuotaDefinitionOptions = new GetQuotaDefinitionOptions.Builder()
-        .id(testQuotaId)
+        .id(quotaId)
         .build();
 
-      Response<QuotaDefinition> response = service.getQuotaDefinition(getQuotaDefinitionOptions).execute();
+      Response<QuotaDefinition> response = resourceManagerService.getQuotaDefinition(getQuotaDefinitionOptions).execute();
       QuotaDefinition quotaDefinition = response.getResult();
 
       System.out.println(quotaDefinition);

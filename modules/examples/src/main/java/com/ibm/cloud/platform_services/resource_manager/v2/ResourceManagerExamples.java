@@ -40,6 +40,8 @@ import org.slf4j.LoggerFactory;
 // RESOURCE_MANAGER_AUTH_TYPE=iam
 // RESOURCE_MANAGER_APIKEY=<IAM apikey>
 // RESOURCE_MANAGER_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
+// RESOURCE_MANAGER_TEST_QUOTA_ID=<Quota Id used in testing>
+// RESOURCE_MANAGER_TEST_USER_ACCOUNT_ID=<User Id used in testing>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:

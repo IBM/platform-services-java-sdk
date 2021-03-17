@@ -17,7 +17,6 @@ import com.ibm.cloud.platform_services.resource_manager.v2.model.*;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
-import org.testng.ITestContext;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -26,6 +25,7 @@ import java.util.Map;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Integration test class for the IamAccessGroups service.
@@ -41,7 +41,7 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
     private static String QUOTA_ID;
     private static String USER_ACCOUNT_ID;
 
-    private static String NEW_RESOURCE_GROUP_ID = "NEW_RESOURCE_GROUP_ID";
+    private String newResourceGroupId;
 
     // Simulates the user's activity. Only a user from account can delete resource group
     ResourceManager deleteResourceManagerService = null;
@@ -150,8 +150,8 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
         assertNotNull(result.getResources().get(0).getUpdatedAt());
     }
 
-    @Test(priority = 0)
-    public void testCreateResourceGroupInAccount(ITestContext iTestContext) {
+    @Test
+    public void testCreateResourceGroupInAccount() {
         CreateResourceGroupOptions options = new CreateResourceGroupOptions.Builder()
                 .accountId(USER_ACCOUNT_ID)
                 .name("TestGroup")
@@ -163,15 +163,13 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
 
         ResCreateResourceGroup result = response.getResult();
         assertNotNull(result.getId());
+        assertFalse(result.getId().isEmpty());
 
-        iTestContext.setAttribute(NEW_RESOURCE_GROUP_ID, result.getId());
+        newResourceGroupId = result.getId();
     }
 
-    @Test(priority = 1)
-    public void testGetResourceGroupById(ITestContext iTestContext) {
-        String newResourceGroupId = (String) iTestContext.getAttribute(NEW_RESOURCE_GROUP_ID);
-        assertNotNull(newResourceGroupId);
-
+    @Test(dependsOnMethods = { "testCreateResourceGroupInAccount" })
+    public void testGetResourceGroupById() {
         GetResourceGroupOptions options = new GetResourceGroupOptions.Builder()
                 .id(newResourceGroupId)
                 .build();
@@ -184,11 +182,8 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
         assertNotNull(result);
     }
 
-    @Test(priority = 1)
-    public void testUpdateResourceGroupById(ITestContext iTestContext) {
-        String newResourceGroupId = (String) iTestContext.getAttribute(NEW_RESOURCE_GROUP_ID);
-        assertNotNull(newResourceGroupId);
-
+    @Test(dependsOnMethods = { "testCreateResourceGroupInAccount" })
+    public void testUpdateResourceGroupById() {
         UpdateResourceGroupOptions options = new UpdateResourceGroupOptions.Builder()
                 .id(newResourceGroupId)
                 .name("TestGroup2")
@@ -203,11 +198,8 @@ public class ResourceManagerIT extends SdkIntegrationTestBase {
         assertNotNull(result);
     }
 
-    @Test(priority = 1)
-    public void testDeleteResourceGroupById(ITestContext iTestContext) {
-        String newResourceGroupId = (String) iTestContext.getAttribute(NEW_RESOURCE_GROUP_ID);
-        assertNotNull(newResourceGroupId);
-
+    @Test(dependsOnMethods = { "testCreateResourceGroupInAccount" })
+    public void testDeleteResourceGroupById() {
         DeleteResourceGroupOptions options = new DeleteResourceGroupOptions.Builder()
                 .id(newResourceGroupId)
                 .build();

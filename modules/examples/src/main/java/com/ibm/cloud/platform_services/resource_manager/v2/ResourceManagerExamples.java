@@ -56,8 +56,8 @@ public class ResourceManagerExamples {
   private static final Logger logger = LoggerFactory.getLogger(ResourceManagerExamples.class);
   protected ResourceManagerExamples() { }
 
-  private static String userAccountId;
-  private static String quotaId;
+  private static String exampleUserAccountId;
+  private static String exampleQuotaId;
   private static String resourceGroupId;
 
   @SuppressWarnings("checkstyle:methodlength")
@@ -67,14 +67,14 @@ public class ResourceManagerExamples {
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(ResourceManager.DEFAULT_SERVICE_NAME);
-    quotaId = config.get("QUOTA_ID");
-    userAccountId = config.get("USER_ACCOUNT_ID");
+    exampleQuotaId = config.get("QUOTA_ID");
+    exampleUserAccountId = config.get("USER_ACCOUNT_ID");
 
 
     try {
       // begin-create_resource_group
       CreateResourceGroupOptions createResourceGroupOptions = new CreateResourceGroupOptions.Builder()
-              .accountId(userAccountId)
+              .accountId(exampleUserAccountId)
               .name("ExampleGroup")
               .build();
 
@@ -126,7 +126,7 @@ public class ResourceManagerExamples {
     try {
       // begin-list_resource_groups
       ListResourceGroupsOptions listResourceGroupsOptions = new ListResourceGroupsOptions.Builder()
-              .accountId(userAccountId)
+              .accountId(exampleUserAccountId)
               .includeDeleted(true)
               .build();
 
@@ -170,7 +170,7 @@ public class ResourceManagerExamples {
     try {
       // begin-get_quota_definition
       GetQuotaDefinitionOptions getQuotaDefinitionOptions = new GetQuotaDefinitionOptions.Builder()
-        .id(quotaId)
+        .id(exampleQuotaId)
         .build();
 
       Response<QuotaDefinition> response = resourceManagerService.getQuotaDefinition(getQuotaDefinitionOptions).execute();

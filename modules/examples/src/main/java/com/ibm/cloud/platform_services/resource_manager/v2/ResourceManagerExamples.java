@@ -60,6 +60,10 @@ public class ResourceManagerExamples {
   private static String exampleQuotaId;
   private static String resourceGroupId;
 
+  static {
+    System.setProperty("IBM_CREDENTIALS_FILE", "../../resource_manager.env");
+  }
+
   @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
     ResourceManager resourceManagerService = ResourceManager.newInstance(ResourceManager.DEFAULT_SERVICE_NAME);

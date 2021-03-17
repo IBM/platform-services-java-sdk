@@ -157,7 +157,7 @@ public class ResourceManagerExamples {
       // begin-list_quota_definitions
       ListQuotaDefinitionsOptions listQuotaDefinitionsOptions = new ListQuotaDefinitionsOptions();
 
-      Response<QuotaDefinitionList> response = resourceManagerService.listQuotaDefinitions(listQuotaDefinitionsOptions).execute();
+      Response<QuotaDefinitionList> response = resourceManagerService.listQuotaDefinitions().execute();
       QuotaDefinitionList quotaDefinitionList = response.getResult();
 
       System.out.println(quotaDefinitionList);

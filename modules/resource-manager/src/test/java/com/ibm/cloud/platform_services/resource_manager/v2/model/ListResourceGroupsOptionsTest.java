@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,8 +34,14 @@ public class ListResourceGroupsOptionsTest {
     ListResourceGroupsOptions listResourceGroupsOptionsModel = new ListResourceGroupsOptions.Builder()
       .accountId("testString")
       .date("testString")
+      .name("testString")
+      .xDefault(true)
+      .includeDeleted(true)
       .build();
     assertEquals(listResourceGroupsOptionsModel.accountId(), "testString");
     assertEquals(listResourceGroupsOptionsModel.date(), "testString");
+    assertEquals(listResourceGroupsOptionsModel.name(), "testString");
+    assertEquals(listResourceGroupsOptionsModel.xDefault(), Boolean.valueOf(true));
+    assertEquals(listResourceGroupsOptionsModel.includeDeleted(), Boolean.valueOf(true));
   }
 }

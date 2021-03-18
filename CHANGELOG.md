@@ -1,3 +1,10 @@
+## [0.17.15](https://github.com/IBM/platform-services-java-sdk/compare/0.17.14...0.17.15) (2021-03-18)
+
+
+### Bug Fixes
+
+* **Resource Manager:** update service after recent API changes and generate examples ([#83](https://github.com/IBM/platform-services-java-sdk/issues/83)) ([b89f3d6](https://github.com/IBM/platform-services-java-sdk/commit/b89f3d64bdff0c2e25a46700b150ca25f0d4b6b9))
+
 ## [0.17.14](https://github.com/IBM/platform-services-java-sdk/compare/0.17.13...0.17.14) (2021-03-11)
 
 

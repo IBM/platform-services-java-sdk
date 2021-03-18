@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -53,7 +53,7 @@ public class ResourceQuota extends GenericModel {
    * Gets the crn.
    *
    * The full CRN (cloud resource name) associated with the quota. For more on this format, see
-   * https://cloud.ibm.com/docs/resources?topic=resources-crn#crn.
+   * https://cloud.ibm.com/docs/account?topic=account-crn.
    *
    * @return the crn
    */

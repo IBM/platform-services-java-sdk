@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,6 +21,9 @@ public class ListResourceGroupsOptions extends GenericModel {
 
   protected String accountId;
   protected String date;
+  protected String name;
+  protected Boolean xDefault;
+  protected Boolean includeDeleted;
 
   /**
    * Builder.
@@ -28,10 +31,16 @@ public class ListResourceGroupsOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private String date;
+    private String name;
+    private Boolean xDefault;
+    private Boolean includeDeleted;
 
     private Builder(ListResourceGroupsOptions listResourceGroupsOptions) {
       this.accountId = listResourceGroupsOptions.accountId;
       this.date = listResourceGroupsOptions.date;
+      this.name = listResourceGroupsOptions.name;
+      this.xDefault = listResourceGroupsOptions.xDefault;
+      this.includeDeleted = listResourceGroupsOptions.includeDeleted;
     }
 
     /**
@@ -70,11 +79,47 @@ public class ListResourceGroupsOptions extends GenericModel {
       this.date = date;
       return this;
     }
+
+    /**
+     * Set the name.
+     *
+     * @param name the name
+     * @return the ListResourceGroupsOptions builder
+     */
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    /**
+     * Set the xDefault.
+     *
+     * @param xDefault the xDefault
+     * @return the ListResourceGroupsOptions builder
+     */
+    public Builder xDefault(Boolean xDefault) {
+      this.xDefault = xDefault;
+      return this;
+    }
+
+    /**
+     * Set the includeDeleted.
+     *
+     * @param includeDeleted the includeDeleted
+     * @return the ListResourceGroupsOptions builder
+     */
+    public Builder includeDeleted(Boolean includeDeleted) {
+      this.includeDeleted = includeDeleted;
+      return this;
+    }
   }
 
   protected ListResourceGroupsOptions(Builder builder) {
     accountId = builder.accountId;
     date = builder.date;
+    name = builder.name;
+    xDefault = builder.xDefault;
+    includeDeleted = builder.includeDeleted;
   }
 
   /**
@@ -100,12 +145,46 @@ public class ListResourceGroupsOptions extends GenericModel {
   /**
    * Gets the date.
    *
-   * The date would be in a format of YYYY-MM which returns resource groups exclude the deleted ones before this month.
+   * The date in the format of YYYY-MM which returns resource groups. Deleted resource groups will be excluded before
+   * this month.
    *
    * @return the date
    */
   public String date() {
     return date;
+  }
+
+  /**
+   * Gets the name.
+   *
+   * The name of the resource group.
+   *
+   * @return the name
+   */
+  public String name() {
+    return name;
+  }
+
+  /**
+   * Gets the xDefault.
+   *
+   * Boolean value to specify whether or not to list default resource groups.
+   *
+   * @return the xDefault
+   */
+  public Boolean xDefault() {
+    return xDefault;
+  }
+
+  /**
+   * Gets the includeDeleted.
+   *
+   * Boolean value to specify whether or not to list default resource groups.
+   *
+   * @return the includeDeleted
+   */
+  public Boolean includeDeleted() {
+    return includeDeleted;
   }
 }
 

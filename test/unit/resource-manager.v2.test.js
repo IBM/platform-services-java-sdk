@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -105,9 +105,15 @@ describe('ResourceManagerV2', () => {
         // Construct the params object for operation listResourceGroups
         const accountId = 'testString';
         const date = 'testString';
+        const name = 'testString';
+        const _default = true;
+        const includeDeleted = true;
         const params = {
           accountId: accountId,
           date: date,
+          name: name,
+          _default: _default,
+          includeDeleted: includeDeleted,
         };
 
         const listResourceGroupsResult = resourceManagerService.listResourceGroups(params);
@@ -126,6 +132,9 @@ describe('ResourceManagerV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['account_id']).toEqual(accountId);
         expect(options.qs['date']).toEqual(date);
+        expect(options.qs['name']).toEqual(name);
+        expect(options.qs['default']).toEqual(_default);
+        expect(options.qs['include_deleted']).toEqual(includeDeleted);
       });
 
       test('should prioritize user-given headers', () => {

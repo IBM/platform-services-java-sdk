@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-4883cbcd-20210301-143711
  */
 
 
@@ -97,8 +97,11 @@ class ResourceManagerV2 extends BaseService {
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.accountId] - The ID of the account that contains the resource groups that you want to get.
-   * @param {string} [params.date] - The date would be in a format of YYYY-MM which returns resource groups exclude the
-   * deleted ones before this month.
+   * @param {string} [params.date] - The date in the format of YYYY-MM which returns resource groups. Deleted resource
+   * groups will be excluded before this month.
+   * @param {string} [params.name] - The name of the resource group.
+   * @param {boolean} [params._default] - Boolean value to specify whether or not to list default resource groups.
+   * @param {boolean} [params.includeDeleted] - Boolean value to specify whether or not to list default resource groups.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceManagerV2.Response<ResourceManagerV2.ResourceGroupList>>}
    */
@@ -107,7 +110,10 @@ class ResourceManagerV2 extends BaseService {
 
     const query = {
       'account_id': _params.accountId,
-      'date': _params.date
+      'date': _params.date,
+      'name': _params.name,
+      'default': _params._default,
+      'include_deleted': _params.includeDeleted
     };
 
     const sdkHeaders = getSdkHeaders(ResourceManagerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceGroups');
@@ -406,10 +412,16 @@ namespace ResourceManagerV2 {
   export interface ListResourceGroupsParams {
     /** The ID of the account that contains the resource groups that you want to get. */
     accountId?: string;
-    /** The date would be in a format of YYYY-MM which returns resource groups exclude the deleted ones before this
-     *  month.
+    /** The date in the format of YYYY-MM which returns resource groups. Deleted resource groups will be excluded
+     *  before this month.
      */
     date?: string;
+    /** The name of the resource group. */
+    name?: string;
+    /** Boolean value to specify whether or not to list default resource groups. */
+    _default?: boolean;
+    /** Boolean value to specify whether or not to list default resource groups. */
+    includeDeleted?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -504,7 +516,7 @@ namespace ResourceManagerV2 {
     /** An alpha-numeric value identifying the resource group. */
     id?: string;
     /** The full CRN (cloud resource name) associated with the resource group. For more on this format, see [Cloud
-     *  Resource Names](https://cloud.ibm.com/docs/resources?topic=resources-crn).
+     *  Resource Names](https://cloud.ibm.com/docs/account?topic=account-crn).
      */
     crn?: string;
   }
@@ -514,7 +526,7 @@ namespace ResourceManagerV2 {
     /** An alpha-numeric value identifying the resource group. */
     id?: string;
     /** The full CRN (cloud resource name) associated with the resource group. For more on this format, see [Cloud
-     *  Resource Names](https://cloud.ibm.com/docs/resources?topic=resources-crn).
+     *  Resource Names](https://cloud.ibm.com/docs/account?topic=account-crn).
      */
     crn?: string;
     /** An alpha-numeric value identifying the account ID. */
@@ -554,7 +566,7 @@ namespace ResourceManagerV2 {
     /** The human-readable name of the quota. */
     resource_id?: string;
     /** The full CRN (cloud resource name) associated with the quota. For more on this format, see
-     *  https://cloud.ibm.com/docs/resources?topic=resources-crn#crn.
+     *  https://cloud.ibm.com/docs/account?topic=account-crn.
      */
     crn?: string;
     /** The limit number of this resource. */

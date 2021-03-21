@@ -72,7 +72,7 @@ public class EnterpriseUsageReportsExamples {
             Response<Reports> response = service.getResourceUsageReport(getResourceUsageReportOptions).execute();
             Reports reports = response.getResult();
 
-            System.out.println(reports);
+            System.out.printf("getResourceUsageReport() result: \n%s\n", reports.toString());
             // end-get_resource_usage_report
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),

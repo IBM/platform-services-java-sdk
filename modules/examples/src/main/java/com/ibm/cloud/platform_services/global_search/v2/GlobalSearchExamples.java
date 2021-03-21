@@ -60,7 +60,7 @@ public class GlobalSearchExamples {
       Response<ScanResult> response = service.search(searchOptions).execute();
       ScanResult scanResult = response.getResult();
 
-      System.out.println(scanResult);
+      System.out.printf("search() result: \n%s\n", scanResult.toString());
       // end-search
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -74,7 +74,7 @@ public class GlobalSearchExamples {
       Response<SupportedTypesList> response = service.getSupportedTypes(getSupportedTypesOptions).execute();
       SupportedTypesList supportedTypesList = response.getResult();
 
-      System.out.println(supportedTypesList);
+      System.out.printf("getSupportedTypes() result: \n%s\n", supportedTypesList.toString());
       // end-get_supported_types
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

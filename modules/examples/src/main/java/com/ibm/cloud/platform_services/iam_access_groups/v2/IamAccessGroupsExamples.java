@@ -100,7 +100,7 @@ public class IamAccessGroupsExamples {
       Response<Group> response = service.createAccessGroup(createAccessGroupOptions).execute();
       Group group = response.getResult();
 
-      System.out.println(group);
+      System.out.printf("createAccessGroup() result: \n%s \n", group.toString());
       // end-create_access_group
 
       testGroupId = group.getId();
@@ -118,7 +118,7 @@ public class IamAccessGroupsExamples {
       Response<Group> response = service.getAccessGroup(getAccessGroupOptions).execute();
       Group group = response.getResult();
 
-      System.out.println(group);
+      System.out.printf("getAccessGroup() result: \n%s\n", group.toString());
       // end-get_access_group
 
       testGroupETag = response.getHeaders().values("Etag").get(0);
@@ -139,7 +139,7 @@ public class IamAccessGroupsExamples {
       Response<Group> response = service.updateAccessGroup(updateAccessGroupOptions).execute();
       Group group = response.getResult();
 
-      System.out.println(group);
+      System.out.printf("updateAccessGroup() result: \n%s\n", group.toString());
       // end-update_access_group
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -155,7 +155,7 @@ public class IamAccessGroupsExamples {
       Response<GroupsList> response = service.listAccessGroups(listAccessGroupsOptions).execute();
       GroupsList groupsList = response.getResult();
 
-      System.out.println(groupsList);
+      System.out.printf("listAccessGroups() result: \n%s\n", groupsList.toString());
       // end-list_access_groups
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -181,7 +181,7 @@ public class IamAccessGroupsExamples {
       Response<AddGroupMembersResponse> response = service.addMembersToAccessGroup(addMembersToAccessGroupOptions).execute();
       AddGroupMembersResponse addGroupMembersResponse = response.getResult();
 
-      System.out.println(addGroupMembersResponse);
+      System.out.printf("addMembersToAccessGroup() result: \n%s\n", addGroupMembersResponse.toString());
       // end-add_members_to_access_group
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -196,6 +196,7 @@ public class IamAccessGroupsExamples {
         .build();
 
       service.isMemberOfAccessGroup(isMemberOfAccessGroupOptions).execute();
+      System.out.println("isMemberOfAccessGroup() is executed successfully.");
       // end-is_member_of_access_group
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -211,7 +212,7 @@ public class IamAccessGroupsExamples {
       Response<GroupMembersList> response = service.listAccessGroupMembers(listAccessGroupMembersOptions).execute();
       GroupMembersList groupMembersList = response.getResult();
 
-      System.out.println(groupMembersList);
+      System.out.printf("listAccessGroupMembers() result: \n%s\n", groupMembersList.toString());
       // end-list_access_group_members
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -226,6 +227,7 @@ public class IamAccessGroupsExamples {
         .build();
 
       service.removeMemberFromAccessGroup(removeMemberFromAccessGroupOptions).execute();
+      System.out.println("removeMemberFromAccessGroup() is executed successfully.");
       // end-remove_member_from_access_group
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -242,7 +244,7 @@ public class IamAccessGroupsExamples {
       Response<DeleteGroupBulkMembersResponse> response = service.removeMembersFromAccessGroup(removeMembersFromAccessGroupOptions).execute();
       DeleteGroupBulkMembersResponse deleteGroupBulkMembersResponse = response.getResult();
 
-      System.out.println(deleteGroupBulkMembersResponse);
+      System.out.printf("removeMembersFromAccessGroup() result: \n%s\n", deleteGroupBulkMembersResponse.toString());
       // end-remove_members_from_access_group
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -261,7 +263,7 @@ public class IamAccessGroupsExamples {
       Response<AddMembershipMultipleGroupsResponse> response = service.addMemberToMultipleAccessGroups(addMemberToMultipleAccessGroupsOptions).execute();
       AddMembershipMultipleGroupsResponse addMembershipMultipleGroupsResponse = response.getResult();
 
-      System.out.println(addMembershipMultipleGroupsResponse);
+      System.out.printf("addMemberToMultipleAccessGroups() result: \n%s\n", addMembershipMultipleGroupsResponse.toString());
       // end-add_member_to_multiple_access_groups
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -278,7 +280,7 @@ public class IamAccessGroupsExamples {
       Response<DeleteFromAllGroupsResponse> response = service.removeMemberFromAllAccessGroups(removeMemberFromAllAccessGroupsOptions).execute();
       DeleteFromAllGroupsResponse deleteFromAllGroupsResponse = response.getResult();
 
-      System.out.println(deleteFromAllGroupsResponse);
+      System.out.printf("removeMemberFromAllAccessGroups() result: \n%s\n", deleteFromAllGroupsResponse.toString());
       // end-remove_member_from_all_access_groups
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -303,7 +305,7 @@ public class IamAccessGroupsExamples {
       Response<Rule> response = service.addAccessGroupRule(addAccessGroupRuleOptions).execute();
       Rule rule = response.getResult();
 
-      System.out.println(rule);
+      System.out.printf("addAccessGroupRule() result: \n%s\n", rule.toString());
       // end-add_access_group_rule
 
       testClaimRuleId = rule.getId();
@@ -322,7 +324,7 @@ public class IamAccessGroupsExamples {
       Response<Rule> response = service.getAccessGroupRule(getAccessGroupRuleOptions).execute();
       Rule rule = response.getResult();
 
-      System.out.println(rule);
+      System.out.printf("getAccessGroupRule() result: \n%s\n", rule.toString());
       // end-get_access_group_rule
 
       testClaimRuleETag = response.getHeaders().values("Etag").get(0);
@@ -351,7 +353,7 @@ public class IamAccessGroupsExamples {
       Response<Rule> response = service.replaceAccessGroupRule(replaceAccessGroupRuleOptions).execute();
       Rule rule = response.getResult();
 
-      System.out.println(rule);
+      System.out.printf("replaceAccessGroupRule() result: \n%s\n", rule.toString());
       // end-replace_access_group_rule
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -367,7 +369,7 @@ public class IamAccessGroupsExamples {
       Response<RulesList> response = service.listAccessGroupRules(listAccessGroupRulesOptions).execute();
       RulesList rulesList = response.getResult();
 
-      System.out.println(rulesList);
+      System.out.printf("listAccessGroupRules() result: \n%s\n", rulesList.toString());
       // end-list_access_group_rules
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -382,6 +384,7 @@ public class IamAccessGroupsExamples {
         .build();
 
       service.removeAccessGroupRule(removeAccessGroupRuleOptions).execute();
+      System.out.println("removeAccessGroupRule() is executed successfully.");
       // end-remove_access_group_rule
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -397,7 +400,7 @@ public class IamAccessGroupsExamples {
       Response<AccountSettings> response = service.getAccountSettings(getAccountSettingsOptions).execute();
       AccountSettings accountSettings = response.getResult();
 
-      System.out.println(accountSettings);
+      System.out.printf("getAccountSettings() result: \n%s\n", accountSettings.toString());
       // end-get_account_settings
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -414,7 +417,7 @@ public class IamAccessGroupsExamples {
       Response<AccountSettings> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();
       AccountSettings accountSettings = response.getResult();
 
-      System.out.println(accountSettings);
+      System.out.printf("updateAccountSettings() result: \n%s\n", accountSettings.toString());
       // end-update_account_settings
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -428,6 +431,7 @@ public class IamAccessGroupsExamples {
         .build();
 
       service.deleteAccessGroup(deleteAccessGroupOptions).execute();
+      System.out.println("deleteAccessGroup() is executed successfully.");
       // end-delete_access_group
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

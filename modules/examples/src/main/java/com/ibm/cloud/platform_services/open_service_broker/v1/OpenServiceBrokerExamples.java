@@ -104,7 +104,7 @@ public class OpenServiceBrokerExamples {
       Response<Resp1874644Root> response = service.getServiceInstanceState(getServiceInstanceStateOptions).execute();
       Resp1874644Root result = response.getResult();
 
-      System.out.println(result);
+      System.out.printf("getServiceInstanceState() result: %n %s %n", result.toString());
       // end-get_service_instance_state
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -123,7 +123,7 @@ public class OpenServiceBrokerExamples {
       Response<Resp2448145Root> response = service.replaceServiceInstanceState(replaceServiceInstanceStateOptions).execute();
       Resp2448145Root result = response.getResult();
 
-      System.out.println(result);
+      System.out.printf("replaceServiceInstanceState() result: %n %s %n", result.toString());
       // end-replace_service_instance_state
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -155,7 +155,7 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079872Root> response = service.replaceServiceInstance(replaceServiceInstanceOptions).execute();
       Resp2079872Root result = response.getResult();
 
-      System.out.println(result);
+      System.out.printf("replaceServiceInstance() result: %n %s %n", result.toString());
       // end-replace_service_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -189,7 +189,7 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079874Root> response = service.updateServiceInstance(updateServiceInstanceOptions).execute();
       Resp2079874Root result = response.getResult();
 
-      System.out.println(result);
+      System.out.printf("updateServiceInstance() result: %n %s %n", result.toString());
       // end-update_service_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -203,7 +203,7 @@ public class OpenServiceBrokerExamples {
       Response<Resp1874650Root> response = service.listCatalog(listCatalogOptions).execute();
       Resp1874650Root result = response.getResult();
 
-      System.out.println(result);
+      System.out.printf("listCatalog() result: %n %s %n", result.toString());
       // end-list_catalog
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -222,7 +222,7 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079894Root> response = service.getLastOperation(getLastOperationOptions).execute();
       Resp2079894Root result = response.getResult();
 
-      System.out.println(result);
+      System.out.printf("getLastOperation() result: %n %s %n", result.toString());
       // end-get_last_operation
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -251,7 +251,7 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079876Root> response = service.replaceServiceBinding(replaceServiceBindingOptions).execute();
       Resp2079876Root result = response.getResult();
 
-      System.out.println(result);
+      System.out.printf("replaceServiceBinding() result: %n %s %n", result.toString());
       // end-replace_service_binding
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -270,7 +270,7 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079874Root> response = service.deleteServiceInstance(deleteServiceInstanceOptions).execute();
       Resp2079874Root result = response.getResult();
 
-      System.out.println(result);
+      System.out.printf("deleteServiceInstance() result: %n %s %n", result.toString());
       // end-delete_service_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -287,6 +287,7 @@ public class OpenServiceBrokerExamples {
         .build();
 
       service.deleteServiceBinding(deleteServiceBindingOptions).execute();
+      System.out.println("deleteServiceBinding() is executed successfully.");
       // end-delete_service_binding
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

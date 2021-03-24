@@ -105,7 +105,7 @@ public class IamIdentityExamples {
             Response<ApiKey> response = service.createApiKey(createApiKeyOptions).execute();
             ApiKey apiKey = response.getResult();
             apikeyId = apiKey.getId();
-            System.out.printf("createApiKey() result: %n %s %n", apiKey.toString());
+            System.out.printf("createApiKey() result:%n%s%n", apiKey.toString());
             // end-create_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -122,7 +122,7 @@ public class IamIdentityExamples {
 
             Response<ApiKeyList> response = service.listApiKeys(listApiKeysOptions).execute();
             ApiKeyList apiKeyList = response.getResult();
-            System.out.printf("listApiKeys() result: %n %s %n", apiKeyList.toString());
+            System.out.printf("listApiKeys() result:%n%s%n", apiKeyList.toString());
             // end-list_api_keys
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -138,7 +138,7 @@ public class IamIdentityExamples {
 
             Response<ApiKey> response = service.getApiKeysDetails(getApiKeysDetailsOptions).execute();
             ApiKey apiKey = response.getResult();
-            System.out.printf("getApiKeysDetails() result: %n %s %n", apiKey.toString());
+            System.out.printf("getApiKeysDetails() result:%n%s%n", apiKey.toString());
             // end-get_api_keys_details
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -155,7 +155,7 @@ public class IamIdentityExamples {
             Response<ApiKey> response = service.getApiKey(getApiKeyOptions).execute();
             ApiKey apiKey = response.getResult();
             apikeyEtag = response.getHeaders().values("Etag").get(0);
-            System.out.printf("getApiKey() result: %n %s %n", apiKey.toString());
+            System.out.printf("getApiKey() result:%n%s%n", apiKey.toString());
             // end-get_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -172,7 +172,7 @@ public class IamIdentityExamples {
 
             Response<ApiKey> response = service.updateApiKey(updateApiKeyOptions).execute();
             ApiKey apiKey = response.getResult();
-            System.out.printf("updateApiKey() result: %n %s %n", apiKey.toString());
+            System.out.printf("updateApiKey() result:%n%s%n", apiKey.toString());
             // end-update_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -185,8 +185,8 @@ public class IamIdentityExamples {
                     .id(apikeyId)
                     .build();
 
-            service.lockApiKey(lockApiKeyOptions).execute();
-            System.out.println("lockApiKey() is successfully executed.");
+            Response<Void> response = service.lockApiKey(lockApiKeyOptions).execute();
+            System.out.printf("lockApiKey() response status code: %d%n", response.getStatusCode());
             // end-lock_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -199,8 +199,8 @@ public class IamIdentityExamples {
                     .id(apikeyId)
                     .build();
 
-            service.unlockApiKey(unlockApiKeyOptions).execute();
-            System.out.println("unlockApiKey() is successfully executed.");
+            Response<Void> response = service.unlockApiKey(unlockApiKeyOptions).execute();
+            System.out.printf("unlockApiKey() response status code: %d%n", response.getStatusCode());
             // end-unlock_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -213,8 +213,8 @@ public class IamIdentityExamples {
                     .id(apikeyId)
                     .build();
 
-            service.deleteApiKey(deleteApiKeyOptions).execute();
-            System.out.println("deleteApiKey() is successfully executed.");
+            Response<Void> response = service.deleteApiKey(deleteApiKeyOptions).execute();
+            System.out.printf("deleteApiKey() response status code: %d%n", response.getStatusCode());
             // end-delete_api_key
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -232,7 +232,7 @@ public class IamIdentityExamples {
             Response<ServiceId> response = service.createServiceId(createServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
             svcId = serviceId.getId();
-            System.out.printf("createServiceId() result: %n %s %n", serviceId.toString());
+            System.out.printf("createServiceId() result:%n%s%n", serviceId.toString());
             // end-create_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -248,7 +248,7 @@ public class IamIdentityExamples {
             Response<ServiceId> response = service.getServiceId(getServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
             svcIdEtag = response.getHeaders().values("Etag").get(0);
-            System.out.printf("getServiceId() result: %n %s %n", serviceId.toString());
+            System.out.printf("getServiceId() result:%n%s%n", serviceId.toString());
             // end-get_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -264,7 +264,7 @@ public class IamIdentityExamples {
 
             Response<ServiceIdList> response = service.listServiceIds(listServiceIdsOptions).execute();
             ServiceIdList serviceIdList = response.getResult();
-            System.out.printf("listServiceIds() result: %n %s %n", serviceIdList.toString());
+            System.out.printf("listServiceIds() result:%n%s%n", serviceIdList.toString());
             // end-list_service_ids
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -281,7 +281,7 @@ public class IamIdentityExamples {
 
             Response<ServiceId> response = service.updateServiceId(updateServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
-            System.out.printf("updateServiceId() result: %n %s %n" , serviceId.toString());
+            System.out.printf("updateServiceId() result:%n%s%n" , serviceId.toString());
             // end-update_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -294,8 +294,8 @@ public class IamIdentityExamples {
                     .id(svcId)
                     .build();
 
-            service.lockServiceId(lockServiceIdOptions).execute();
-            System.out.println("lockServiceId() is successfully executed.");
+            Response<Void> response = service.lockServiceId(lockServiceIdOptions).execute();
+            System.out.printf("lockServiceId() response status code: %d%n", response.getStatusCode());
             // end-lock_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -308,8 +308,8 @@ public class IamIdentityExamples {
                     .id(svcId)
                     .build();
 
-            service.unlockServiceId(unlockServiceIdOptions).execute();
-            System.out.println("unlockServiceId() is successfully executed.");
+            Response<Void> response = service.unlockServiceId(unlockServiceIdOptions).execute();
+            System.out.printf("unlockServiceId() response status code: %d%n", response.getStatusCode());
             // end-unlock_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -322,8 +322,8 @@ public class IamIdentityExamples {
                     .id(svcId)
                     .build();
 
-            service.deleteServiceId(deleteServiceIdOptions).execute();
-            System.out.println("deleteServiceId() is successfully executed.");
+            Response<Void> response = service.deleteServiceId(deleteServiceIdOptions).execute();
+            System.out.printf("deleteServiceId() response status code: %d%n", response.getStatusCode());
             // end-delete_service_id
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -340,7 +340,7 @@ public class IamIdentityExamples {
             AccountSettingsResponse accountSettingsResponse = response.getResult();
 
             accountSettingsEtag = response.getHeaders().values("Etag").get(0);
-            System.out.printf("getAccountSettings() result: %n %s %n", accountSettingsResponse.toString());
+            System.out.printf("getAccountSettings() result:%n%s%n", accountSettingsResponse.toString());
             // end-getAccountSettings
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -362,7 +362,7 @@ public class IamIdentityExamples {
             Response<AccountSettingsResponse> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();
             AccountSettingsResponse accountSettingsResponse = response.getResult();
 
-            System.out.printf("updateAccountSettings() result: %n %s %n", accountSettingsResponse.toString());
+            System.out.printf("updateAccountSettings() result:%n%s%n", accountSettingsResponse.toString());
             // end-updateAccountSettings
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

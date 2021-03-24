@@ -72,7 +72,7 @@ public class EnterpriseBillingUnitsExamples {
       Response<BillingUnit> response = service.getBillingUnit(getBillingUnitOptions).execute();
       BillingUnit billingUnit = response.getResult();
 
-      System.out.printf("getBillingUnit() result: %n %s %n", billingUnit.toString());
+      System.out.printf("getBillingUnit() result:%n%s%n", billingUnit.toString());
       // end-get_billing_unit
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -88,7 +88,7 @@ public class EnterpriseBillingUnitsExamples {
       Response<BillingUnitsList> response = service.listBillingUnits(listBillingUnitsOptions).execute();
       BillingUnitsList billingUnitsList = response.getResult();
 
-      System.out.printf("listBillingUnits() result: %n %s %n", billingUnitsList.toString());
+      System.out.printf("listBillingUnits() result:%n%s%n", billingUnitsList.toString());
       // end-list_billing_units
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -104,7 +104,7 @@ public class EnterpriseBillingUnitsExamples {
       Response<BillingOptionsList> response = service.listBillingOptions(listBillingOptionsOptions).execute();
       BillingOptionsList billingOptionsList = response.getResult();
 
-      System.out.printf("listBillingOptions() result: %n %s %n", billingOptionsList.toString());
+      System.out.printf("listBillingOptions() result:%n%s%n", billingOptionsList.toString());
       // end-list_billing_options
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -120,7 +120,7 @@ public class EnterpriseBillingUnitsExamples {
       Response<CreditPoolsList> response = service.getCreditPools(getCreditPoolsOptions).execute();
       CreditPoolsList creditPoolsList = response.getResult();
 
-      System.out.printf("getCreditPools() result: %n %s %n", creditPoolsList.toString());
+      System.out.printf("getCreditPools() result:%n%s%n", creditPoolsList.toString());
       // end-get_credit_pools
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

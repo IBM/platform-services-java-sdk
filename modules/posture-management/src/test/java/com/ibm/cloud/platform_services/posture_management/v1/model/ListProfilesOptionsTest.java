@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.posture_management.v1.model;
 
-import com.ibm.cloud.platform_services.posture_management.v1.model.CreateValidationScanOptions;
+import com.ibm.cloud.platform_services.posture_management.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.posture_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,29 +23,25 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the CreateValidationScanOptions model.
+ * Unit test class for the ListProfilesOptions model.
  */
-public class CreateValidationScanOptionsTest {
+public class ListProfilesOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testCreateValidationScanOptions() throws Throwable {
-    CreateValidationScanOptions createValidationScanOptionsModel = new CreateValidationScanOptions.Builder()
+  public void testListProfilesOptions() throws Throwable {
+    ListProfilesOptions listProfilesOptionsModel = new ListProfilesOptions.Builder()
       .accountId("testString")
-      .scopeId(Long.valueOf("1"))
-      .profileId(Long.valueOf("6"))
-      .groupProfileId(Long.valueOf("13"))
+      .name("testString")
       .build();
-    assertEquals(createValidationScanOptionsModel.accountId(), "testString");
-    assertEquals(createValidationScanOptionsModel.scopeId(), Long.valueOf("1"));
-    assertEquals(createValidationScanOptionsModel.profileId(), Long.valueOf("6"));
-    assertEquals(createValidationScanOptionsModel.groupProfileId(), Long.valueOf("13"));
+    assertEquals(listProfilesOptionsModel.accountId(), "testString");
+    assertEquals(listProfilesOptionsModel.name(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateValidationScanOptionsError() throws Throwable {
-    new CreateValidationScanOptions.Builder().build();
+  public void testListProfilesOptionsError() throws Throwable {
+    new ListProfilesOptions.Builder().build();
   }
 
 }

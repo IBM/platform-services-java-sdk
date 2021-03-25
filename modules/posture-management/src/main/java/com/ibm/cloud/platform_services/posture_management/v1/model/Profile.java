@@ -12,6 +12,8 @@
  */
 package com.ibm.cloud.platform_services.posture_management.v1.model;
 
+import java.util.Date;
+
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
@@ -28,13 +30,11 @@ public class Profile extends GenericModel {
     String PREDEFINED = "predefined";
     /** custom. */
     String CUSTOM = "custom";
-    /** group. */
-    String GROUP = "group";
+    /** template_group. */
+    String TEMPLATE_GROUP = "template_group";
   }
 
   protected String name;
-  @SerializedName("no_of_goals")
-  protected Long noOfGoals;
   protected String description;
   protected Long version;
   @SerializedName("created_by")
@@ -46,15 +46,15 @@ public class Profile extends GenericModel {
   @SerializedName("applicability_criteria")
   protected ApplicabilityCriteria applicabilityCriteria;
   @SerializedName("profile_id")
-  protected Long profileId;
+  protected String profileId;
   @SerializedName("base_profile")
   protected String baseProfile;
   @SerializedName("profile_type")
   protected String profileType;
   @SerializedName("created_time")
-  protected String createdTime;
+  protected Date createdTime;
   @SerializedName("modified_time")
-  protected String modifiedTime;
+  protected Date modifiedTime;
   protected Boolean enabled;
 
   /**
@@ -66,17 +66,6 @@ public class Profile extends GenericModel {
    */
   public String getName() {
     return name;
-  }
-
-  /**
-   * Gets the noOfGoals.
-   *
-   * The number of goals that are in the profile.
-   *
-   * @return the noOfGoals
-   */
-  public Long getNoOfGoals() {
-    return noOfGoals;
   }
 
   /**
@@ -152,7 +141,7 @@ public class Profile extends GenericModel {
    *
    * @return the profileId
    */
-  public Long getProfileId() {
+  public String getProfileId() {
     return profileId;
   }
 
@@ -185,7 +174,7 @@ public class Profile extends GenericModel {
    *
    * @return the createdTime
    */
-  public String getCreatedTime() {
+  public Date getCreatedTime() {
     return createdTime;
   }
 
@@ -196,7 +185,7 @@ public class Profile extends GenericModel {
    *
    * @return the modifiedTime
    */
-  public String getModifiedTime() {
+  public Date getModifiedTime() {
     return modifiedTime;
   }
 

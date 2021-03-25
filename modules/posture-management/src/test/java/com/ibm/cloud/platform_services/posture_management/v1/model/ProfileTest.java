@@ -36,7 +36,6 @@ public class ProfileTest {
   public void testProfile() throws Throwable {
     Profile profileModel = new Profile();
     assertNull(profileModel.getName());
-    assertNull(profileModel.getNoOfGoals());
     assertNull(profileModel.getDescription());
     assertNull(profileModel.getVersion());
     assertNull(profileModel.getCreatedBy());

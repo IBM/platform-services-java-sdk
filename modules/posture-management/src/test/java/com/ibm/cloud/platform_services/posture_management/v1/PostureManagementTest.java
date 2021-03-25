@@ -14,8 +14,8 @@ package com.ibm.cloud.platform_services.posture_management.v1;
 
 import com.ibm.cloud.platform_services.posture_management.v1.PostureManagement;
 import com.ibm.cloud.platform_services.posture_management.v1.model.ApplicabilityCriteria;
-import com.ibm.cloud.platform_services.posture_management.v1.model.CreateValidationScanOptions;
-import com.ibm.cloud.platform_services.posture_management.v1.model.ListProfileOptions;
+import com.ibm.cloud.platform_services.posture_management.v1.model.CreateValidationOptions;
+import com.ibm.cloud.platform_services.posture_management.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.posture_management.v1.model.ListScopesOptions;
 import com.ibm.cloud.platform_services.posture_management.v1.model.Profile;
 import com.ibm.cloud.platform_services.posture_management.v1.model.ProfilesList;
@@ -28,6 +28,7 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import java.io.IOException;
 import java.io.InputStream;
@@ -89,28 +90,28 @@ public class PostureManagementTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testCreateValidationScanWOptions() throws Throwable {
+  public void testCreateValidationWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"result\": true, \"message\": \"message\"}";
-    String createValidationScanPath = "/posture/v1/scans/validation";
+    String mockResponseBody = "{\"result\": true, \"message\": \"Success: The validation is in progress. To see the results, go to Security & Compliance > Assess > Scans in the service dashboard and select the scan My_Example_scan.\"}";
+    String createValidationPath = "/posture/v1/scans/validations";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
+    .setResponseCode(202)
     .setBody(mockResponseBody));
 
     constructClientService();
 
-    // Construct an instance of the CreateValidationScanOptions model
-    CreateValidationScanOptions createValidationScanOptionsModel = new CreateValidationScanOptions.Builder()
+    // Construct an instance of the CreateValidationOptions model
+    CreateValidationOptions createValidationOptionsModel = new CreateValidationOptions.Builder()
     .accountId("testString")
-    .scopeId(Long.valueOf("1"))
-    .profileId(Long.valueOf("6"))
-    .groupProfileId(Long.valueOf("13"))
+    .scopeId("1")
+    .profileId("6")
+    .groupProfileId("13")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Result> response = postureManagementService.createValidationScan(createValidationScanOptionsModel).execute();
+    Response<Result> response = postureManagementService.createValidation(createValidationOptionsModel).execute();
     assertNotNull(response);
     Result responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -127,26 +128,26 @@ public class PostureManagementTest extends PowerMockTestCase {
     assertEquals(query.get("account_id"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createValidationScanPath);
+    assertEquals(parsedPath, createValidationPath);
   }
 
-  // Test the createValidationScan operation with null options model parameter
+  // Test the createValidation operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateValidationScanNoOptions() throws Throwable {
+  public void testCreateValidationNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    postureManagementService.createValidationScan(null).execute();
+    postureManagementService.createValidation(null).execute();
   }
 
   @Test
-  public void testListProfileWOptions() throws Throwable {
+  public void testListProfilesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"profiles\": [{\"name\": \"CIS IBM Foundations Benchmark 1.0.0\", \"no_of_goals\": 58, \"description\": \"CIS IBM Foundations Benchmark 1.0.0\", \"version\": 1, \"created_by\": \"IBMid-5500081P68\", \"modified_by\": \"IBMid-5500081P68\", \"reason_for_delete\": \"reasonForDelete\", \"applicability_criteria\": {\"environment\": [\"[IBM Cloud]\"], \"resource\": [\"[My_example_bucket]\"], \"environment_category\": [\"[Cloud]\"], \"resource_category\": [\"[Storage]\"], \"resource_type\": [\"Bucket\"], \"software_details\": {\"mapKey\": \"anyValue\"}, \"os_details\": {\"mapKey\": \"anyValue\"}, \"additional_details\": {\"mapKey\": \"anyValue\"}, \"environment_category_description\": {\"mapKey\": \"Cloud\"}, \"environment_description\": {\"mapKey\": \"IBM Cloud\"}, \"resource_category_description\": {\"mapKey\": \"Storage\"}, \"resource_type_description\": {\"mapKey\": \"Bucket\"}, \"resource_description\": {\"mapKey\": \"My_specific_bucket\"}}, \"profile_id\": 3045, \"base_profile\": \"CIS IBM Foundations Benchmark 1.0.0\", \"profile_type\": \"predefined\", \"created_time\": \"2021-02-26T04:07:25Z\", \"modified_time\": \"2021-02-26T04:07:25Z\", \"enabled\": true}]}";
-    String listProfilePath = "/posture/v1/profiles";
+    String mockResponseBody = "{\"profiles\": [{\"name\": \"CIS IBM Foundations Benchmark 1.0.0\", \"description\": \"CIS IBM Foundations Benchmark 1.0.0\", \"version\": 1, \"created_by\": \"IBMid-5500081P68\", \"modified_by\": \"IBMid-5500081P68\", \"reason_for_delete\": \"reasonForDelete\", \"applicability_criteria\": {\"environment\": [\"ibm\"], \"resource\": [\"cloud_object_storage\"], \"environment_category\": [\"cloud_platform\"], \"resource_category\": [\"xaas\"], \"resource_type\": [\"storage\"], \"software_details\": {\"mapKey\": \"anyValue\"}, \"os_details\": {\"mapKey\": \"anyValue\"}, \"additional_details\": {\"mapKey\": \"anyValue\"}, \"environment_category_description\": {\"mapKey\": \"Cloud\"}, \"environment_description\": {\"mapKey\": \"IBM Cloud\"}, \"resource_category_description\": {\"mapKey\": \"Storage\"}, \"resource_type_description\": {\"mapKey\": \"Bucket\"}, \"resource_description\": {\"mapKey\": \"My_specific_bucket\"}}, \"profile_id\": \"3045\", \"base_profile\": \"CIS IBM Foundations Benchmark 1.0.0\", \"profile_type\": \"predefined\", \"created_time\": \"2021-02-26T04:07:25.000Z\", \"modified_time\": \"2021-02-26T04:07:25.000Z\", \"enabled\": true}]}";
+    String listProfilesPath = "/posture/v1/profiles";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -155,14 +156,14 @@ public class PostureManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ListProfileOptions model
-    ListProfileOptions listProfileOptionsModel = new ListProfileOptions.Builder()
+    // Construct an instance of the ListProfilesOptions model
+    ListProfilesOptions listProfilesOptionsModel = new ListProfilesOptions.Builder()
     .accountId("testString")
     .name("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ProfilesList> response = postureManagementService.listProfile(listProfileOptionsModel).execute();
+    Response<ProfilesList> response = postureManagementService.listProfiles(listProfilesOptionsModel).execute();
     assertNotNull(response);
     ProfilesList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -180,25 +181,25 @@ public class PostureManagementTest extends PowerMockTestCase {
     assertEquals(query.get("name"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listProfilePath);
+    assertEquals(parsedPath, listProfilesPath);
   }
 
-  // Test the listProfile operation with null options model parameter
+  // Test the listProfiles operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListProfileNoOptions() throws Throwable {
+  public void testListProfilesNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    postureManagementService.listProfile(null).execute();
+    postureManagementService.listProfiles(null).execute();
   }
 
   @Test
   public void testListScopesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"scopes\": [{\"description\": \"This scope targets all of the resources that are available in our IBM Cloud staging environment.\", \"created_by\": \"IBMid-5500081P68\", \"modified_by\": \"IBMid-5500081P68\", \"scope_id\": 1, \"name\": \"My_Example_Scope\", \"enabled\": true, \"environment_type\": \"ibm\", \"created_time\": \"2021-02-26T04:07:25Z\", \"modified_time\": \"2021-02-26T04:07:25Z\", \"last_scan_type\": \"fact_collection\", \"last_scan_type_description\": \"Fact collection\", \"last_scan_status_updated_time\": \"2021-02-26T04:07:25Z\", \"collectors_id\": [12], \"scans\": [{\"scan_id\": 235, \"discover_id\": 49, \"status\": \"validation_completed\", \"status_message\": \"The collector aborted the task during upgrade.\"}]}]}";
+    String mockResponseBody = "{\"scopes\": [{\"description\": \"This scope targets all of the resources that are available in our IBM Cloud staging environment.\", \"created_by\": \"IBMid-5500081P68\", \"modified_by\": \"IBMid-5500081P68\", \"scope_id\": \"1\", \"name\": \"My_Example_Scope\", \"enabled\": true, \"environment_type\": \"ibm\", \"created_time\": \"2021-02-26T04:07:25.000Z\", \"modified_time\": \"2021-02-26T04:07:25.000Z\", \"last_scan_type\": \"fact_collection\", \"last_scan_type_description\": \"Fact collection\", \"last_scan_status_updated_time\": \"2021-02-26T04:07:25.000Z\", \"collectors_id\": [\"collectorsId\"], \"scans\": [{\"scan_id\": \"235\", \"discover_id\": \"49\", \"status\": \"validation_completed\", \"status_message\": \"The collector aborted the task during upgrade.\"}]}]}";
     String listScopesPath = "/posture/v1/scopes";
 
     server.enqueue(new MockResponse()

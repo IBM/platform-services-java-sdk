@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.posture_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The listProfile options.
+ * The listProfiles options.
  */
-public class ListProfileOptions extends GenericModel {
+public class ListProfilesOptions extends GenericModel {
 
   protected String accountId;
   protected String name;
@@ -29,9 +29,9 @@ public class ListProfileOptions extends GenericModel {
     private String accountId;
     private String name;
 
-    private Builder(ListProfileOptions listProfileOptions) {
-      this.accountId = listProfileOptions.accountId;
-      this.name = listProfileOptions.name;
+    private Builder(ListProfilesOptions listProfilesOptions) {
+      this.accountId = listProfilesOptions.accountId;
+      this.name = listProfilesOptions.name;
     }
 
     /**
@@ -50,19 +50,19 @@ public class ListProfileOptions extends GenericModel {
     }
 
     /**
-     * Builds a ListProfileOptions.
+     * Builds a ListProfilesOptions.
      *
-     * @return the new ListProfileOptions instance
+     * @return the new ListProfilesOptions instance
      */
-    public ListProfileOptions build() {
-      return new ListProfileOptions(this);
+    public ListProfilesOptions build() {
+      return new ListProfilesOptions(this);
     }
 
     /**
      * Set the accountId.
      *
      * @param accountId the accountId
-     * @return the ListProfileOptions builder
+     * @return the ListProfilesOptions builder
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
@@ -73,7 +73,7 @@ public class ListProfileOptions extends GenericModel {
      * Set the name.
      *
      * @param name the name
-     * @return the ListProfileOptions builder
+     * @return the ListProfilesOptions builder
      */
     public Builder name(String name) {
       this.name = name;
@@ -81,7 +81,7 @@ public class ListProfileOptions extends GenericModel {
     }
   }
 
-  protected ListProfileOptions(Builder builder) {
+  protected ListProfilesOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,
       "accountId cannot be null");
     accountId = builder.accountId;
@@ -91,7 +91,7 @@ public class ListProfileOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ListProfileOptions builder
+   * @return a ListProfilesOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

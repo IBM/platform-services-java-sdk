@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.posture_management.v1.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -74,23 +75,23 @@ public class Scope extends GenericModel {
   @SerializedName("modified_by")
   protected String modifiedBy;
   @SerializedName("scope_id")
-  protected Long scopeId;
+  protected String scopeId;
   protected String name;
   protected Boolean enabled;
   @SerializedName("environment_type")
   protected String environmentType;
   @SerializedName("created_time")
-  protected String createdTime;
+  protected Date createdTime;
   @SerializedName("modified_time")
-  protected String modifiedTime;
+  protected Date modifiedTime;
   @SerializedName("last_scan_type")
   protected String lastScanType;
   @SerializedName("last_scan_type_description")
   protected String lastScanTypeDescription;
   @SerializedName("last_scan_status_updated_time")
-  protected String lastScanStatusUpdatedTime;
+  protected Date lastScanStatusUpdatedTime;
   @SerializedName("collectors_id")
-  protected List<Long> collectorsId;
+  protected List<String> collectorsId;
   protected List<Scan> scans;
 
   /**
@@ -133,7 +134,7 @@ public class Scope extends GenericModel {
    *
    * @return the scopeId
    */
-  public Long getScopeId() {
+  public String getScopeId() {
     return scopeId;
   }
 
@@ -177,7 +178,7 @@ public class Scope extends GenericModel {
    *
    * @return the createdTime
    */
-  public String getCreatedTime() {
+  public Date getCreatedTime() {
     return createdTime;
   }
 
@@ -188,7 +189,7 @@ public class Scope extends GenericModel {
    *
    * @return the modifiedTime
    */
-  public String getModifiedTime() {
+  public Date getModifiedTime() {
     return modifiedTime;
   }
 
@@ -221,7 +222,7 @@ public class Scope extends GenericModel {
    *
    * @return the lastScanStatusUpdatedTime
    */
-  public String getLastScanStatusUpdatedTime() {
+  public Date getLastScanStatusUpdatedTime() {
     return lastScanStatusUpdatedTime;
   }
 
@@ -232,7 +233,7 @@ public class Scope extends GenericModel {
    *
    * @return the collectorsId
    */
-  public List<Long> getCollectorsId() {
+  public List<String> getCollectorsId() {
     return collectorsId;
   }
 

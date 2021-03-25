@@ -107,9 +107,9 @@ public class Scan extends GenericModel {
   }
 
   @SerializedName("scan_id")
-  protected Long scanId;
+  protected String scanId;
   @SerializedName("discover_id")
-  protected Long discoverId;
+  protected String discoverId;
   protected String status;
   @SerializedName("status_message")
   protected String statusMessage;
@@ -121,7 +121,7 @@ public class Scan extends GenericModel {
    *
    * @return the scanId
    */
-  public Long getScanId() {
+  public String getScanId() {
     return scanId;
   }
 
@@ -132,7 +132,7 @@ public class Scan extends GenericModel {
    *
    * @return the discoverId
    */
-  public Long getDiscoverId() {
+  public String getDiscoverId() {
     return discoverId;
   }
 

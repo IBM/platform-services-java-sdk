@@ -12,15 +12,15 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.29.0-cd9ba74f-20210305-183535
+ * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
 package com.ibm.cloud.platform_services.posture_management.v1;
 
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
-import com.ibm.cloud.platform_services.posture_management.v1.model.CreateValidationScanOptions;
-import com.ibm.cloud.platform_services.posture_management.v1.model.ListProfileOptions;
+import com.ibm.cloud.platform_services.posture_management.v1.model.CreateValidationOptions;
+import com.ibm.cloud.platform_services.posture_management.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.posture_management.v1.model.ListScopesOptions;
 import com.ibm.cloud.platform_services.posture_management.v1.model.ProfilesList;
 import com.ibm.cloud.platform_services.posture_management.v1.model.Result;
@@ -83,35 +83,35 @@ public class PostureManagement extends BaseService {
   }
 
   /**
-   * Initiate a validation scan.
+   * Initiate a validations scan.
    *
-   * Validation scans determine a specified scope's adherence to regulatory controls by validating the configuration of
+   * Validations scans determine a specified scope's adherence to regulatory controls by validating the configuration of
    * the resources in your scope to the attached profile. To initiate a scan, you must have configured a collector,
    * provided credentials, and completed both a fact collection and discovery scan. [Learn
    * more](/docs/security-compliance?topic=security-compliance-schedule-scan).
    *
-   * @param createValidationScanOptions the {@link CreateValidationScanOptions} containing the options for the call
+   * @param createValidationOptions the {@link CreateValidationOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Result}
    */
-  public ServiceCall<Result> createValidationScan(CreateValidationScanOptions createValidationScanOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createValidationScanOptions,
-      "createValidationScanOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/posture/v1/scans/validation"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("posture_management", "v1", "createValidationScan");
+  public ServiceCall<Result> createValidation(CreateValidationOptions createValidationOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createValidationOptions,
+      "createValidationOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/posture/v1/scans/validations"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("posture_management", "v1", "createValidation");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.query("account_id", String.valueOf(createValidationScanOptions.accountId()));
+    builder.query("account_id", String.valueOf(createValidationOptions.accountId()));
     final JsonObject contentJson = new JsonObject();
-    if (createValidationScanOptions.scopeId() != null) {
-      contentJson.addProperty("scope_id", createValidationScanOptions.scopeId());
+    if (createValidationOptions.scopeId() != null) {
+      contentJson.addProperty("scope_id", createValidationOptions.scopeId());
     }
-    if (createValidationScanOptions.profileId() != null) {
-      contentJson.addProperty("profile_id", createValidationScanOptions.profileId());
+    if (createValidationOptions.profileId() != null) {
+      contentJson.addProperty("profile_id", createValidationOptions.profileId());
     }
-    if (createValidationScanOptions.groupProfileId() != null) {
-      contentJson.addProperty("group_profile_id", createValidationScanOptions.groupProfileId());
+    if (createValidationOptions.groupProfileId() != null) {
+      contentJson.addProperty("group_profile_id", createValidationOptions.groupProfileId());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Result> responseConverter =
@@ -124,21 +124,21 @@ public class PostureManagement extends BaseService {
    *
    * List all of the profiles that are available in your account. To view a specific profile, you can filter by name.
    *
-   * @param listProfileOptions the {@link ListProfileOptions} containing the options for the call
+   * @param listProfilesOptions the {@link ListProfilesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfilesList}
    */
-  public ServiceCall<ProfilesList> listProfile(ListProfileOptions listProfileOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(listProfileOptions,
-      "listProfileOptions cannot be null");
+  public ServiceCall<ProfilesList> listProfiles(ListProfilesOptions listProfilesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listProfilesOptions,
+      "listProfilesOptions cannot be null");
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/posture/v1/profiles"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("posture_management", "v1", "listProfile");
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("posture_management", "v1", "listProfiles");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.query("account_id", String.valueOf(listProfileOptions.accountId()));
-    if (listProfileOptions.name() != null) {
-      builder.query("name", String.valueOf(listProfileOptions.name()));
+    builder.query("account_id", String.valueOf(listProfilesOptions.accountId()));
+    if (listProfilesOptions.name() != null) {
+      builder.query("name", String.valueOf(listProfilesOptions.name()));
     }
     ResponseConverter<ProfilesList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfilesList>() { }.getType());

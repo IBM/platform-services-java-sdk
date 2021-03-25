@@ -13,8 +13,8 @@
 
 package com.ibm.cloud.platform_services.posture_management.v1;
 
-import com.ibm.cloud.platform_services.posture_management.v1.model.CreateValidationScanOptions;
-import com.ibm.cloud.platform_services.posture_management.v1.model.ListProfileOptions;
+import com.ibm.cloud.platform_services.posture_management.v1.model.CreateValidationOptions;
+import com.ibm.cloud.platform_services.posture_management.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.posture_management.v1.model.ListScopesOptions;
 import com.ibm.cloud.platform_services.posture_management.v1.model.ProfilesList;
 import com.ibm.cloud.platform_services.posture_management.v1.model.Result;
@@ -46,6 +46,10 @@ public class PostureManagementExamples {
   private static final Logger logger = LoggerFactory.getLogger(PostureManagementExamples.class);
   protected PostureManagementExamples() { }
 
+  static {
+    System.setProperty("IBM_CREDENTIALS_FILE", "../../posture_management.env");
+  }
+
   @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
     PostureManagement service = PostureManagement.newInstance();
@@ -57,20 +61,21 @@ public class PostureManagementExamples {
     String profileName = config.get("PROFILE_NAME");
     String scopesName = config.get("SCOPES_NAME");
 
-    Long profileId = null;
-    Long scopeId = null;
+    String profileId = null;
+    String scopeId = null;
+    String groupProfileId = "0";
 
     try {
       // begin-list_profile
-      ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
+      ListProfilesOptions listProfileOptions = new ListProfilesOptions.Builder()
         .accountId(accountId)
         .name(profileName)
         .build();
 
-      Response<ProfilesList> response = service.listProfile(listProfileOptions).execute();
+      Response<ProfilesList> response = service.listProfiles(listProfileOptions).execute();
       ProfilesList profilesList = response.getResult();
 
-      System.out.println(profilesList);
+      System.out.printf("listProfiles() result:%n%s%n", profilesList);
       // end-list_profile
       profileId = profilesList.getProfiles().get(0).getProfileId();
     } catch (ServiceResponseException e) {
@@ -81,14 +86,14 @@ public class PostureManagementExamples {
     try {
       // begin-list_scopes
       ListScopesOptions listScopesOptions = new ListScopesOptions.Builder()
-        .accountId("testString")
+        .accountId(accountId)
         .name(scopesName)
         .build();
 
       Response<ScopesList> response = service.listScopes(listScopesOptions).execute();
       ScopesList scopesList = response.getResult();
 
-      System.out.println(scopesList);
+      System.out.printf("listScopes() result:%n%s%n", scopesList);
       // end-list_scopes
       scopeId = scopesList.getScopes().get(0).getScopeId();
     } catch (ServiceResponseException e) {
@@ -98,16 +103,17 @@ public class PostureManagementExamples {
 
     try {
       // begin-create_validation_scan
-      CreateValidationScanOptions createValidationScanOptions = new CreateValidationScanOptions.Builder()
+      CreateValidationOptions createValidationScanOptions = new CreateValidationOptions.Builder()
               .accountId(accountId)
               .profileId(profileId)
               .scopeId(scopeId)
+              .groupProfileId(groupProfileId)
               .build();
 
-      Response<Result> response = service.createValidationScan(createValidationScanOptions).execute();
+      Response<Result> response = service.createValidation(createValidationScanOptions).execute();
       Result result = response.getResult();
 
-      System.out.println(result);
+      System.out.printf("createValidation() result:%n%s%n", result);
       // end-create_validation_scan
 
     } catch (ServiceResponseException e) {

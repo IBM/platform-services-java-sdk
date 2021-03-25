@@ -18,6 +18,7 @@ import com.ibm.cloud.platform_services.posture_management.v1.model.Profile;
 import com.ibm.cloud.platform_services.posture_management.v1.model.ProfilesList;
 import com.ibm.cloud.platform_services.posture_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;

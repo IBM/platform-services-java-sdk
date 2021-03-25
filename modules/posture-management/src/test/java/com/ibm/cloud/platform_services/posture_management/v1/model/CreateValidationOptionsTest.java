@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.posture_management.v1.model;
 
-import com.ibm.cloud.platform_services.posture_management.v1.model.ListProfileOptions;
+import com.ibm.cloud.platform_services.posture_management.v1.model.CreateValidationOptions;
 import com.ibm.cloud.platform_services.posture_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,25 +23,29 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListProfileOptions model.
+ * Unit test class for the CreateValidationOptions model.
  */
-public class ListProfileOptionsTest {
+public class CreateValidationOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListProfileOptions() throws Throwable {
-    ListProfileOptions listProfileOptionsModel = new ListProfileOptions.Builder()
+  public void testCreateValidationOptions() throws Throwable {
+    CreateValidationOptions createValidationOptionsModel = new CreateValidationOptions.Builder()
       .accountId("testString")
-      .name("testString")
+      .scopeId("1")
+      .profileId("6")
+      .groupProfileId("13")
       .build();
-    assertEquals(listProfileOptionsModel.accountId(), "testString");
-    assertEquals(listProfileOptionsModel.name(), "testString");
+    assertEquals(createValidationOptionsModel.accountId(), "testString");
+    assertEquals(createValidationOptionsModel.scopeId(), "1");
+    assertEquals(createValidationOptionsModel.profileId(), "6");
+    assertEquals(createValidationOptionsModel.groupProfileId(), "13");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListProfileOptionsError() throws Throwable {
-    new ListProfileOptions.Builder().build();
+  public void testCreateValidationOptionsError() throws Throwable {
+    new CreateValidationOptions.Builder().build();
   }
 
 }

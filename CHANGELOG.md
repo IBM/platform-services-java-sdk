@@ -1,3 +1,10 @@
+## [0.17.17](https://github.com/IBM/platform-services-java-sdk/compare/0.17.16...0.17.17) (2021-03-25)
+
+
+### Bug Fixes
+
+* **global search:** update service after changes in API ([#89](https://github.com/IBM/platform-services-java-sdk/issues/89)) ([9a31268](https://github.com/IBM/platform-services-java-sdk/commit/9a312683514cf60a56c90a84696b5c91d8ced230))
+
 ## [0.17.16](https://github.com/IBM/platform-services-java-sdk/compare/0.17.15...0.17.16) (2021-03-25)
 
 

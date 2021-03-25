@@ -66,7 +66,7 @@ public class PostureManagementExamples {
     String groupProfileId = "0";
 
     try {
-      // begin-list_profile
+      // begin-list_profiles
       ListProfilesOptions listProfileOptions = new ListProfilesOptions.Builder()
         .accountId(accountId)
         .name(profileName)
@@ -76,7 +76,7 @@ public class PostureManagementExamples {
       ProfilesList profilesList = response.getResult();
 
       System.out.printf("listProfiles() result:%n%s%n", profilesList);
-      // end-list_profile
+      // end-list_profiles
       profileId = profilesList.getProfiles().get(0).getProfileId();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -102,7 +102,7 @@ public class PostureManagementExamples {
     }
 
     try {
-      // begin-create_validation_scan
+      // begin-create_validation
       CreateValidationOptions createValidationScanOptions = new CreateValidationOptions.Builder()
               .accountId(accountId)
               .profileId(profileId)
@@ -114,7 +114,7 @@ public class PostureManagementExamples {
       Result result = response.getResult();
 
       System.out.printf("createValidation() result:%n%s%n", result);
-      // end-create_validation_scan
+      // end-create_validation
 
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",

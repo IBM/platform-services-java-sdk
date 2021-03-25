@@ -85,7 +85,7 @@ public class ResourceManagerExamples {
       Response<ResCreateResourceGroup> response = resourceManagerService.createResourceGroup(createResourceGroupOptions).execute();
       ResCreateResourceGroup resCreateResourceGroup = response.getResult();
 
-      System.out.println(resCreateResourceGroup);
+      System.out.printf("createResourceGroup() result:%n%s%n", resCreateResourceGroup.toString());
       // end-create_resource_group
       resourceGroupId = resCreateResourceGroup.getId();
     } catch (ServiceResponseException e) {
@@ -102,7 +102,7 @@ public class ResourceManagerExamples {
       Response<ResourceGroup> response = resourceManagerService.getResourceGroup(getResourceGroupOptions).execute();
       ResourceGroup resourceGroup = response.getResult();
 
-      System.out.println(resourceGroup);
+      System.out.printf("getResourceGroup() result:%n%s%n", resourceGroup.toString());
       // end-get_resource_group
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -120,7 +120,7 @@ public class ResourceManagerExamples {
       Response<ResourceGroup> response = resourceManagerService.updateResourceGroup(updateResourceGroupOptions).execute();
       ResourceGroup resourceGroup = response.getResult();
 
-      System.out.println(resourceGroup);
+      System.out.printf("updateResourceGroup() result:%n%s%n", resourceGroup.toString());
       // end-update_resource_group
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -137,7 +137,7 @@ public class ResourceManagerExamples {
       Response<ResourceGroupList> response = resourceManagerService.listResourceGroups(listResourceGroupsOptions).execute();
       ResourceGroupList resourceGroupList = response.getResult();
 
-      System.out.println(resourceGroupList);
+      System.out.printf("listResourceGroups() result:%n%s%n", resourceGroupList.toString());
       // end-list_resource_groups
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -150,7 +150,8 @@ public class ResourceManagerExamples {
               .id(resourceGroupId)
               .build();
 
-      deleteResourceManagerService.deleteResourceGroup(deleteResourceGroupOptions).execute();
+      Response<Void> response = deleteResourceManagerService.deleteResourceGroup(deleteResourceGroupOptions).execute();
+      System.out.printf("deleteResourceGroup() response status code: %d%n", response.getStatusCode());
       // end-delete_resource_group
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -164,7 +165,7 @@ public class ResourceManagerExamples {
       Response<QuotaDefinitionList> response = resourceManagerService.listQuotaDefinitions().execute();
       QuotaDefinitionList quotaDefinitionList = response.getResult();
 
-      System.out.println(quotaDefinitionList);
+      System.out.printf("listQuotaDefinitions() result:%n%s%n", quotaDefinitionList.toString());
       // end-list_quota_definitions
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -180,7 +181,7 @@ public class ResourceManagerExamples {
       Response<QuotaDefinition> response = resourceManagerService.getQuotaDefinition(getQuotaDefinitionOptions).execute();
       QuotaDefinition quotaDefinition = response.getResult();
 
-      System.out.println(quotaDefinition);
+      System.out.printf("getQuotaDefinition() result:%n%s%n", quotaDefinition.toString());
       // end-get_quota_definition
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

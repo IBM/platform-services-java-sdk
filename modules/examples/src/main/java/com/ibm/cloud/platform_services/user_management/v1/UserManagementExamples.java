@@ -132,7 +132,7 @@ public class UserManagementExamples {
       Response<InvitedUserList> response = adminService.inviteUsers(inviteUsersOptions).execute();
       InvitedUserList invitedUserList = response.getResult();
 
-      System.out.println(invitedUserList);
+      System.out.printf("inviteUsers() result:%n%s%n", invitedUserList.toString());
       // end-invite_users
       deleteUserId = invitedUserList.getResources().get(0).getId();
     } catch (ServiceResponseException e) {
@@ -151,7 +151,7 @@ public class UserManagementExamples {
       Response<UserList> response = service.listUsers(listUsersOptions).execute();
       UserList userList = response.getResult();
 
-      System.out.println(userList);
+      System.out.printf("listUsers() result:%n%s%n", userList.toString());
       // end-list_users
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -165,7 +165,8 @@ public class UserManagementExamples {
         .iamId(deleteUserId)
         .build();
 
-      service.removeUser(removeUserOptions).execute();
+      Response<Void> response = service.removeUser(removeUserOptions).execute();
+      System.out.printf("removeUser() response status code: %d%n", response.getStatusCode());
       // end-remove_user
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -182,7 +183,7 @@ public class UserManagementExamples {
       Response<UserProfile> response = service.getUserProfile(getUserProfileOptions).execute();
       UserProfile userProfile = response.getResult();
 
-      System.out.println(userProfile);
+      System.out.printf("getUserProfile() result:%n%s%n", userProfile.toString());
       // end-get_user_profile
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -197,7 +198,8 @@ public class UserManagementExamples {
         .phonenumber("123456789")
         .build();
 
-      service.updateUserProfile(updateUserProfileOptions).execute();
+      Response<Void> response = service.updateUserProfile(updateUserProfileOptions).execute();
+      System.out.printf("updateUserProfile() response status code: %d%n", response.getStatusCode());
       // end-update_user_profile
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -214,7 +216,7 @@ public class UserManagementExamples {
       Response<UserSettings> response = service.getUserSettings(getUserSettingsOptions).execute();
       UserSettings userSettings = response.getResult();
 
-      System.out.println(userSettings);
+      System.out.printf("getUserSettings() result:%n%s%n", userSettings.toString());
       // end-get_user_settings
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -230,7 +232,8 @@ public class UserManagementExamples {
         .allowedIpAddresses("192.168.0.2,192.168.0.3")
         .build();
 
-      service.updateUserSettings(updateUserSettingsOptions).execute();
+      Response<Void> response = service.updateUserSettings(updateUserSettingsOptions).execute();
+      System.out.printf("updateUserSettings() response status code: %d%n", response.getStatusCode());
       // end-update_user_settings
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

@@ -83,7 +83,7 @@ describe('EnterpriseUsageReportsV1', () => {
 
     enterpriseUsageReportsService.getResourceUsageReport(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getResourceUsageReport() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

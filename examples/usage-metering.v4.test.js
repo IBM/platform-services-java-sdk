@@ -110,7 +110,7 @@ describe('UsageMeteringV4', () => {
 
     usageMeteringService.reportResourceUsage(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('reportResourceUsage() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

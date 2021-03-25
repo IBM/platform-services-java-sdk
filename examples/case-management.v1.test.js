@@ -97,7 +97,7 @@ describe('CaseManagementV1', () => {
     caseManagementService.createCase(params)
       .then(res => {
         caseNumber = res.result.number
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('createCase() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -133,7 +133,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.getCase(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getCase() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -162,7 +162,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.getCases({})
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getCases() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -192,7 +192,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.addComment(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('addComment() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -225,7 +225,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.addWatchlist(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('addWatchlist() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -258,7 +258,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.removeWatchlist(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('removeWatchlist() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -289,7 +289,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.addResource(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('addResource() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -329,7 +329,7 @@ describe('CaseManagementV1', () => {
     caseManagementService.uploadFile(params)
       .then(res => {
         attachmentId = res.result.id;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('uploadFile() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -365,6 +365,7 @@ describe('CaseManagementV1', () => {
         return streamToPromise(res.result);
       })
       .then(contents => {
+        console.log('downloadFile() result:\n');
         console.log(`Attachment content-type: ${responseContentType}\nAttachment contents: ${contents}`);
       })
       .catch(err => {
@@ -395,7 +396,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.deleteFile(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteFile() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -430,7 +431,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.updateCaseStatus(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateCaseStatus() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

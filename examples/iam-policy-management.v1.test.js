@@ -132,7 +132,7 @@ describe('IamPolicyManagementV1', () => {
     iamPolicyManagementService.createPolicy(params)
       .then(res => {
         examplePolicyId = res.result.id;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('createPolicy() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -160,7 +160,7 @@ describe('IamPolicyManagementV1', () => {
     iamPolicyManagementService.getPolicy(params)
       .then(res => {
         examplePolicyETag = res.headers.etag;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getPolicy() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -230,7 +230,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.updatePolicy(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updatePolicy() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -259,7 +259,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.listPolicies(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listPolicies() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -285,7 +285,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.deletePolicy(params)
       .then(res => {
-        console.log(JSON.stringify(res, null, 2));
+        console.log('deletePolicy() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)
@@ -317,7 +317,7 @@ describe('IamPolicyManagementV1', () => {
     iamPolicyManagementService.createRole(params)
       .then(res => {
         exampleCustomRoleId = res.result.id;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('createRole() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -345,7 +345,7 @@ describe('IamPolicyManagementV1', () => {
     iamPolicyManagementService.getRole(params)
       .then(res => {
         exampleCustomRoleEtag = res.headers.etag;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getRole() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -376,7 +376,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.updateRole(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateRole() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -402,7 +402,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.listRoles(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listRoles() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -429,7 +429,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.deleteRole(params)
       .then(res => {
-        console.log(JSON.stringify(res, null, 2));
+        console.log('deleteRole() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)

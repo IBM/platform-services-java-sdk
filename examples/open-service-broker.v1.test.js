@@ -95,7 +95,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.getServiceInstanceState(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getServiceInstanceState() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -123,7 +123,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.replaceServiceInstanceState(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('replaceServiceInstanceState() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -163,7 +163,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.replaceServiceInstance(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('replaceServiceInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -203,7 +203,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.updateServiceInstance(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateServiceInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -224,7 +224,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.listCatalog({})
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listCatalog() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -252,7 +252,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.getLastOperation(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getLastOperation() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -289,7 +289,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.replaceServiceBinding(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('replaceServiceBinding() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -316,7 +316,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.deleteServiceInstance(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteServiceInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -344,7 +344,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.deleteServiceBinding(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteServiceBinding() response status: ' + res.status);
       })
       .catch(err => {
         console.warn(err)

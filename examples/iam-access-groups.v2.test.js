@@ -86,7 +86,7 @@ describe('IamAccessGroupsV2', () => {
     iamAccessGroupsService.createAccessGroup(params)
       .then(res => {
         testGroupId = res.result.id;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('createAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -112,7 +112,7 @@ describe('IamAccessGroupsV2', () => {
     iamAccessGroupsService.getAccessGroup(params)
       .then(res => {
         testGroupETag = res.headers['etag'];
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -140,7 +140,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.updateAccessGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -165,7 +165,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.listAccessGroups(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listAccessGroups() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -199,7 +199,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.addMembersToAccessGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('addMembersToAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -225,7 +225,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.isMemberOfAccessGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('isMemberOfAccessGroup() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)
@@ -250,7 +250,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.listAccessGroupMembers(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listAccessGroupMembers() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -276,7 +276,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.removeMemberFromAccessGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('removeMemberFromAccessGroup() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)
@@ -302,7 +302,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.removeMembersFromAccessGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('removeMembersFromAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -330,7 +330,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.addMemberToMultipleAccessGroups(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('addMemberToMultipleAccessGroups() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -356,7 +356,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.removeMemberFromAllAccessGroups(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('removeMemberFromAllAccessGroups() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -392,7 +392,7 @@ describe('IamAccessGroupsV2', () => {
     iamAccessGroupsService.addAccessGroupRule(params)
       .then(res => {
         testClaimRuleId = res.result.id;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('addAccessGroupRule() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -419,7 +419,7 @@ describe('IamAccessGroupsV2', () => {
     iamAccessGroupsService.getAccessGroupRule(params)
       .then(res => {
         testClaimRuleETag = res.headers['etag'];
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getAccessGroupRule() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -456,7 +456,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.replaceAccessGroupRule(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('replaceAccessGroupRule() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -481,7 +481,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.listAccessGroupRules(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listAccessGroupRules() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -507,7 +507,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.removeAccessGroupRule(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('removeAccessGroupRule() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)
@@ -532,7 +532,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.getAccountSettings(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getAccountSettings() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -558,7 +558,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.updateAccountSettings(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateAccountSettings() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -583,7 +583,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.deleteAccessGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteAccessGroup() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)

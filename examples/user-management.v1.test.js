@@ -138,7 +138,7 @@ describe('UserManagementV1', () => {
     userManagementAdminService.inviteUsers(params)
       .then(res => {
         deleteUserId = res.result.resources[0].id;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('inviteUsers() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -168,7 +168,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.listUsers(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listUsers() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -198,7 +198,7 @@ describe('UserManagementV1', () => {
 
     userManagementAdminService.removeUser(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('removeUser() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)
@@ -228,7 +228,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.getUserProfile(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getUserProfile() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -259,7 +259,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.updateUserProfile(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateUserProfile() response status code:' + res.status);
       })
       .catch(err => {
         console.warn(err)
@@ -289,7 +289,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.getUserSettings(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getUserSettings() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -321,7 +321,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.updateUserSettings(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateUserSettings() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)

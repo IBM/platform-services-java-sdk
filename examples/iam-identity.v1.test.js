@@ -96,7 +96,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.createApiKey(params)
       .then(res => {
         apikeyId = res.result.id
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('createApiKey() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -123,7 +123,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.listApiKeys(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listApiKeys() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -149,7 +149,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.getApiKeysDetails(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getApiKeysDetails() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -177,7 +177,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.getApiKey(params)
       .then(res => {
         apikeyEtag = res.headers['etag'];
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getApiKey() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -207,7 +207,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.updateApiKey(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateApiKey() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -234,7 +234,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.lockApiKey(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('lockApiKey() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err);
@@ -261,7 +261,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.unlockApiKey(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('unlockApiKey() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err);
@@ -288,7 +288,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.deleteApiKey(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteApiKey() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err);
@@ -316,7 +316,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.createServiceId(params)
       .then(res => {
         svcId = res.result.id;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('createServiceId() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -344,7 +344,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.getServiceId(params)
       .then(res => {
         svcIdEtag = res.headers['etag'];
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getServiceId() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -370,7 +370,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.listServiceIds(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listServiceIds() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -400,7 +400,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.updateServiceId(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateServiceId() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -427,7 +427,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.lockServiceId(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('lockServiceId() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err);
@@ -454,7 +454,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.unlockServiceId(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('unlockServiceId() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err);
@@ -482,7 +482,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.deleteServiceId(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteServiceId() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err);
@@ -511,7 +511,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.getAccountSettings(params)
       .then(res => {
         accountSettingsEtag = res.headers['etag'];
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getAccountSettings() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -545,7 +545,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.updateAccountSettings(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateAccountSettings() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

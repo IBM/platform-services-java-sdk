@@ -82,7 +82,7 @@ describe('EnterpriseBillingUnitsV1', () => {
 
     enterpriseBillingUnitsService.getBillingUnit(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getBillingUnit() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -107,7 +107,7 @@ describe('EnterpriseBillingUnitsV1', () => {
     };
     enterpriseBillingUnitsService.listBillingUnits(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listBillingUnits() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -133,7 +133,7 @@ describe('EnterpriseBillingUnitsV1', () => {
 
     enterpriseBillingUnitsService.listBillingOptions(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listBillingOptions() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -159,7 +159,7 @@ describe('EnterpriseBillingUnitsV1', () => {
 
     enterpriseBillingUnitsService.getCreditPools(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getCreditPools() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

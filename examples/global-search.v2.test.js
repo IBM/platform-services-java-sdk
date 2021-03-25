@@ -82,7 +82,7 @@ describe('GlobalSearchV2', () => {
 
     globalSearchService.search(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('search() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -104,7 +104,7 @@ describe('GlobalSearchV2', () => {
 
     globalSearchService.getSupportedTypes({})
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getSupportedTypes() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

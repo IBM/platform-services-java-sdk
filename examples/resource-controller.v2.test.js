@@ -107,7 +107,7 @@ describe('ResourceControllerV2', () => {
     resourceControllerService.createResourceInstance(params)
       .then(res => {
         instanceGuid = res.result.guid;
-        console.log('createResourceInstance() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('createResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -133,7 +133,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.getResourceInstance(params)
       .then(res => {
-        console.log('getResourceInstance() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('getResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -159,7 +159,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceInstances(params)
       .then(res => {
-        console.log('listResourceInstances() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('listResourceInstances() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -191,7 +191,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.updateResourceInstance(params)
       .then(res => {
-        console.log('updateResourceInstance() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('updateResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -220,7 +220,7 @@ describe('ResourceControllerV2', () => {
     resourceControllerService.createResourceAlias(params)
       .then(res => {
         aliasGuid = res.result.guid;
-        console.log('createResourceAlias() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('createResourceAlias() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -246,7 +246,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.getResourceAlias(params)
       .then(res => {
-        console.log('getResourceAlias() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('getResourceAlias() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -272,7 +272,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceAliases(params)
       .then(res => {
-        console.log('listResourceAliases() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('listResourceAliases() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -300,7 +300,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.updateResourceAlias(params)
       .then(res => {
-        console.log('updateResourceAlias() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('updateResourceAlias() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -328,7 +328,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceAliasesForInstance(params)
       .then(res => {
-        console.log('listResourceAliasesForInstance() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('listResourceAliasesForInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -361,7 +361,7 @@ describe('ResourceControllerV2', () => {
     resourceControllerService.createResourceBinding(params)
       .then(res => {
         bindingGuid = res.result.guid;
-        console.log('createResourceBinding() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('createResourceBinding() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -387,7 +387,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.getResourceBinding(params)
       .then(res => {
-        console.log('getResourceBinding() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('getResourceBinding() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -413,7 +413,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceBindings(params)
       .then(res => {
-        console.log('listResourceBindings() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('listResourceBindings() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -440,7 +440,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.updateResourceBinding(params)
       .then(res => {
-        console.log('updateResourceBinding() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('updateResourceBinding() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -468,7 +468,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceBindingsForAlias(params)
       .then(res => {
-        console.log('listResourceBindingsForAlias() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('listResourceBindingsForAlias() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -501,7 +501,7 @@ describe('ResourceControllerV2', () => {
     resourceControllerService.createResourceKey(params)
       .then(res => {
         instanceKeyGuid = res.result.guid;
-        console.log('createResourceKey() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('createResourceKey() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -527,7 +527,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.getResourceKey(params)
       .then(res => {
-        console.log('getResourceKey() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('getResourceKey() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -553,7 +553,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceKeys(params)
       .then(res => {
-        console.log('listResourceKeys() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('listResourceKeys() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -580,7 +580,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.updateResourceKey(params)
       .then(res => {
-        console.log('updateResourceKey() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('updateResourceKey() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -608,7 +608,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceKeysForInstance(params)
       .then(res => {
-        console.log('listResourceKeysForInstance() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('listResourceKeysForInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -712,7 +712,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.lockResourceInstance(params)
       .then(res => {
-        console.log('lockResourceInstance() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('lockResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -738,7 +738,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.unlockResourceInstance(params)
       .then(res => {
-        console.log('unlockResourceInstance() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('unlockResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -799,7 +799,7 @@ describe('ResourceControllerV2', () => {
             reclamationId = reclaim.id;
           }
         });
-        console.log('listReclamations() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('listReclamations() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -826,7 +826,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.runReclamationAction(params)
       .then(res => {
-        console.log('runReclamationAction() response:\n' + JSON.stringify(res.result, null, 2));
+        console.log('runReclamationAction() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

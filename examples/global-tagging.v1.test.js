@@ -84,7 +84,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.createTag(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('createTag() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -114,7 +114,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.listTags(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listTags() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -145,7 +145,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.attachTag(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('attachTag() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -176,7 +176,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.detachTag(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('detachTag() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -202,7 +202,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.deleteTag(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteTag() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -227,7 +227,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.deleteTagAll(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteTagAll() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

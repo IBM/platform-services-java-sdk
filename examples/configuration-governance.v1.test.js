@@ -102,7 +102,7 @@ describe('ConfigurationGovernanceV1', () => {
       .then(res => {
         const { result, status } = res;
         if (status === 201) {
-          console.log(JSON.stringify(result, null, 2));
+          console.log('createRules() result:\n' + JSON.stringify(result, null, 2));
         } else {
           // some rules may have failed
           for (rule of result.rules) {
@@ -138,7 +138,7 @@ describe('ConfigurationGovernanceV1', () => {
 
     configurationGovernanceService.createAttachments(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('createAttachments() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -174,7 +174,7 @@ describe('ConfigurationGovernanceV1', () => {
 
     configurationGovernanceService.getAttachment(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getAttachment() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -208,7 +208,7 @@ describe('ConfigurationGovernanceV1', () => {
 
     configurationGovernanceService.getRule(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getRule() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -233,7 +233,7 @@ describe('ConfigurationGovernanceV1', () => {
 
     configurationGovernanceService.listRules(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listRules() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -267,7 +267,7 @@ describe('ConfigurationGovernanceV1', () => {
 
     configurationGovernanceService.updateRule(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateRule() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -292,7 +292,7 @@ describe('ConfigurationGovernanceV1', () => {
 
     configurationGovernanceService.listAttachments(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listAttachments() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -322,7 +322,7 @@ describe('ConfigurationGovernanceV1', () => {
 
     configurationGovernanceService.updateAttachment(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateAttachment() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -348,7 +348,7 @@ describe('ConfigurationGovernanceV1', () => {
 
     configurationGovernanceService.deleteAttachment(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteAttachment() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)
@@ -373,7 +373,7 @@ describe('ConfigurationGovernanceV1', () => {
 
     configurationGovernanceService.deleteRule(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteRule() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)

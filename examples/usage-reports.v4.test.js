@@ -85,7 +85,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getAccountSummary(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getAccountSummary() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -111,7 +111,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getAccountUsage(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getAccountUsage() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -138,7 +138,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getResourceGroupUsage(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getResourceGroupUsage() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -165,7 +165,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getOrgUsage(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getOrgUsage() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -191,7 +191,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getResourceUsageAccount(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getResourceUsageAccount() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -218,7 +218,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getResourceUsageResourceGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getResourceUsageResourceGroup() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -245,7 +245,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getResourceUsageOrg(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getResourceUsageOrg() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

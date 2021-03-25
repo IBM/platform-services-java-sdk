@@ -90,7 +90,7 @@ describe('ResourceManagerV2', () => {
     resourceManagerService.createResourceGroup(params)
       .then(res => {
         resourceGroupId = res.result.id;
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('createResourceGroup() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -116,7 +116,7 @@ describe('ResourceManagerV2', () => {
     
     resourceManagerService.getResourceGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getResourceGroup() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -144,7 +144,7 @@ describe('ResourceManagerV2', () => {
     
     resourceManagerService.updateResourceGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('updateResourceGroup() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -171,7 +171,7 @@ describe('ResourceManagerV2', () => {
     
     resourceManagerService.listResourceGroups(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listResourceGroups() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -197,7 +197,7 @@ describe('ResourceManagerV2', () => {
     
     deleteResourceManagerService.deleteResourceGroup(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('deleteResourceGroup() response status code: ' + res.status);
       })
       .catch(err => {
         console.warn(err)
@@ -220,7 +220,7 @@ describe('ResourceManagerV2', () => {
     
     resourceManagerService.listQuotaDefinitions({})
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('listQuotaDefinitions() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -246,7 +246,7 @@ describe('ResourceManagerV2', () => {
     
     resourceManagerService.getQuotaDefinition(params)
       .then(res => {
-        console.log(JSON.stringify(res.result, null, 2));
+        console.log('getQuotaDefinition() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

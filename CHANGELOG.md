@@ -1,3 +1,10 @@
+## [0.17.17](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.16...v0.17.17) (2021-03-25)
+
+
+### Bug Fixes
+
+* add labels to example output ([#87](https://github.com/IBM/platform-services-node-sdk/issues/87)) ([7cc8e2a](https://github.com/IBM/platform-services-node-sdk/commit/7cc8e2aa68bfd50a912ced2a73b17a2d0ae604d8))
+
 ## [0.17.16](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.15...v0.17.16) (2021-03-18)
 
 

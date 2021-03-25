@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
 
@@ -97,7 +97,7 @@ class GlobalSearchV2 extends BaseService {
    ************************/
 
   /**
-   * Find instances of resources.
+   * Find instances of resources (v3).
    *
    * Find cloud foundry resources, resource controller-enabled resources, or storage and network resources running on
    * classic infrastructure in a specific account ID. You can apply query strings if necessary. To filter results, you
@@ -170,9 +170,9 @@ class GlobalSearchV2 extends BaseService {
    ************************/
 
   /**
-   * Get all supported resource types.
+   * DEPRECATED. Get all GhoST indices.
    *
-   * Retrieves a list of all the resource types supported by GhoST.
+   * Retrieves a list of all GhoST indices.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -283,9 +283,9 @@ namespace GlobalSearchV2 {
     items: ResultItem[];
   }
 
-  /** A list of resource types supported by GhoST. */
+  /** A list of all GhoST indices. */
   export interface SupportedTypesList {
-    /** A list of resource types supported by GhoST. */
+    /** A list of all GhoST indices. */
     supported_types?: string[];
   }
 

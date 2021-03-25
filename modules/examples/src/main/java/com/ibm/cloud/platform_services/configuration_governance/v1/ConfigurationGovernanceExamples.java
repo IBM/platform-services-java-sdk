@@ -144,7 +144,7 @@ public class ConfigurationGovernanceExamples {
               }
           }
       }
-      System.out.println("createRules() result:\n" + result.toString());
+      System.out.printf("createRules() result:%n%s%n", result.toString());
       // end-create_rules
 
       // Retrieve the id of the new rule to use in other operations below.
@@ -162,7 +162,7 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       RuleList result = service.listRules(listRulesOptions).execute().getResult();
-      System.out.println("listRules() result:\n" + result.toString());
+      System.out.printf("listRules() result:%n%s%n", result.toString());
       // end-list_rules
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -177,7 +177,7 @@ public class ConfigurationGovernanceExamples {
 
       Response<Rule> response = service.getRule(getRuleOptions).execute();
       Rule result = response.getResult();
-      System.out.println("getRule() result:\n" + result.toString());
+      System.out.printf("getRule() result:%n%s%n", result.toString());
       // end-get_rule
 
       // Save the rule and its Etag header value so we can update it below.
@@ -205,7 +205,7 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       Rule result = service.updateRule(updateRuleOptions).execute().getResult();
-      System.out.println("updateRule() result:\n" + result.toString());
+      System.out.printf("updateRule() result:%n%s%n", result.toString());
       // end-update_rule
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -235,7 +235,7 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       CreateAttachmentsResponse result = service.createAttachments(createAttachmentsOptions).execute().getResult();
-      System.out.println("createAttachments() result:\n" + result.toString());
+      System.out.printf("createAttachments() result:%n%s%n", result.toString());
       // end-create_attachments
 
       // Retrieve the id of the new attachment to use in other operations below.
@@ -252,7 +252,7 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       AttachmentList result = service.listAttachments(listAttachmentsOptions).execute().getResult();
-      System.out.println("listAttachments() result:\n" + result.toString());
+      System.out.printf("listAttachments() result:%n%s%n", result.toString());
       // end-list_attachments
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -268,7 +268,7 @@ public class ConfigurationGovernanceExamples {
 
       Response<Attachment> response = service.getAttachment(getAttachmentOptions).execute();
       Attachment result = response.getResult();
-      System.out.println("getAttachment() result:\n" + result.toString());
+      System.out.printf("getAttachment() result:%n%s%n", result.toString());
       // end-get_attachment
 
       // Save the attachment and its Etag header value so we can update it below.
@@ -294,7 +294,7 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       Attachment result = service.updateAttachment(updateAttachmentOptions).execute().getResult();
-      System.out.println("updateAttachment() result:\n" + result.toString());
+      System.out.printf("updateAttachment() result:%n%s%n", result.toString());
       // end-update_attachment
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -309,7 +309,7 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       Response<Void> response = service.deleteAttachment(deleteAttachmentOptions).execute();
-      System.out.println("deleteAttachment() status code: " + response.getStatusCode());
+      System.out.printf("deleteAttachment() response status code: %d%n", response.getStatusCode());
       // end-delete_attachment
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -323,7 +323,7 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       Response<Void> response = service.deleteRule(deleteRuleOptions).execute();
-      System.out.println("deleteRule() status code: " + response.getStatusCode());
+      System.out.printf("deleteRule() response status code: %d%n", response.getStatusCode());
       // end-delete_rule
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

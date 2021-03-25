@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+ * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
 package com.ibm.cloud.platform_services.global_search.v2;
@@ -88,7 +88,7 @@ public class GlobalSearch extends BaseService {
   }
 
   /**
-   * Find instances of resources.
+   * Find instances of resources (v3).
    *
    * Find cloud foundry resources, resource controller-enabled resources, or storage and network resources running on
    * classic infrastructure in a specific account ID. You can apply query strings if necessary. To filter results, you
@@ -146,7 +146,7 @@ public class GlobalSearch extends BaseService {
   }
 
   /**
-   * Find instances of resources.
+   * Find instances of resources (v3).
    *
    * Find cloud foundry resources, resource controller-enabled resources, or storage and network resources running on
    * classic infrastructure in a specific account ID. You can apply query strings if necessary. To filter results, you
@@ -167,9 +167,9 @@ public class GlobalSearch extends BaseService {
   }
 
   /**
-   * Get all supported resource types.
+   * DEPRECATED. Get all GhoST indices.
    *
-   * Retrieves a list of all the resource types supported by GhoST.
+   * Retrieves a list of all GhoST indices.
    *
    * @param getSupportedTypesOptions the {@link GetSupportedTypesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link SupportedTypesList}
@@ -187,9 +187,9 @@ public class GlobalSearch extends BaseService {
   }
 
   /**
-   * Get all supported resource types.
+   * DEPRECATED. Get all GhoST indices.
    *
-   * Retrieves a list of all the resource types supported by GhoST.
+   * Retrieves a list of all GhoST indices.
    *
    * @return a {@link ServiceCall} with a result of type {@link SupportedTypesList}
    */

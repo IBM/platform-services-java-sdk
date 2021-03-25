@@ -107,7 +107,7 @@ public class UsageMeteringExamples {
             Response<ResponseAccepted> response = service.reportResourceUsage(reportResourceUsageOptions).execute();
             ResponseAccepted responseAccepted = response.getResult();
 
-            System.out.println(responseAccepted);
+            System.out.printf("reportResourceUsage() result:%n%s%n", responseAccepted.toString());
             // end-report_resource_usage
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),

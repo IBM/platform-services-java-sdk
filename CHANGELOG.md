@@ -1,3 +1,10 @@
+## [0.17.16](https://github.com/IBM/platform-services-java-sdk/compare/0.17.15...0.17.16) (2021-03-25)
+
+
+### Bug Fixes
+
+* add labels to service examples ([#87](https://github.com/IBM/platform-services-java-sdk/issues/87)) ([00b0e34](https://github.com/IBM/platform-services-java-sdk/commit/00b0e34b11c40be7f52c491935249129843371fb))
+
 ## [0.17.15](https://github.com/IBM/platform-services-java-sdk/compare/0.17.14...0.17.15) (2021-03-18)
 
 

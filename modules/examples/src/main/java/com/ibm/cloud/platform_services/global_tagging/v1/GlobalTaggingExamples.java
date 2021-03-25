@@ -73,7 +73,7 @@ public class GlobalTaggingExamples {
 
             Response<CreateTagResults> response = service.createTag(createTagOptions).execute();
             CreateTagResults createTagResults = response.getResult();
-            System.out.println(createTagResults);
+            System.out.printf("createTag() result:%n%s%n", createTagResults.toString());
             // end-create_tag
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
@@ -92,7 +92,7 @@ public class GlobalTaggingExamples {
 
             Response<TagList> response = service.listTags(listTagsOptions).execute();
             TagList tagList = response.getResult();
-            System.out.println(tagList.toString());
+            System.out.printf("listTags() result:%n%s%n", tagList.toString());
             // end-list_tags
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
@@ -110,7 +110,7 @@ public class GlobalTaggingExamples {
 
             Response<TagResults> response = service.attachTag(attachTagOptions).execute();
             TagResults tagResults = response.getResult();
-            System.out.println(tagResults.toString());
+            System.out.printf("attachTag() result:%n%s%n", tagResults.toString());
             // end-attach_tag
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
@@ -129,7 +129,7 @@ public class GlobalTaggingExamples {
 
             Response<TagResults> response = service.detachTag(detachTagOptions).execute();
             TagResults tagResults = response.getResult();
-            System.out.println(tagResults.toString());
+            System.out.printf("detachTag() result:%n%s%n", tagResults.toString());
             // end-detach_tag
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
@@ -145,7 +145,7 @@ public class GlobalTaggingExamples {
 
             Response<DeleteTagResults> response = service.deleteTag(deleteTagOptions).execute();
             DeleteTagResults deleteTagResults = response.getResult();
-            System.out.println(deleteTagResults.toString());
+            System.out.printf("deleteTag() result:%n%s%n", deleteTagResults.toString());
             // end-delete_tag
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
@@ -161,7 +161,7 @@ public class GlobalTaggingExamples {
             Response<DeleteTagsResult> response = service.deleteTagAll(deleteTagAllOptions).execute();
             DeleteTagsResult deleteTagsResult = response.getResult();
 
-            System.out.println(deleteTagsResult.toString());
+            System.out.printf("deleteTagAll() result:%n%s%n", deleteTagsResult.toString());
             // end-delete_tag_all
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),

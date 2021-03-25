@@ -15,29 +15,29 @@ package com.ibm.cloud.platform_services.posture_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The createValidationScan options.
+ * The createValidation options.
  */
-public class CreateValidationScanOptions extends GenericModel {
+public class CreateValidationOptions extends GenericModel {
 
   protected String accountId;
-  protected Long scopeId;
-  protected Long profileId;
-  protected Long groupProfileId;
+  protected String scopeId;
+  protected String profileId;
+  protected String groupProfileId;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String accountId;
-    private Long scopeId;
-    private Long profileId;
-    private Long groupProfileId;
+    private String scopeId;
+    private String profileId;
+    private String groupProfileId;
 
-    private Builder(CreateValidationScanOptions createValidationScanOptions) {
-      this.accountId = createValidationScanOptions.accountId;
-      this.scopeId = createValidationScanOptions.scopeId;
-      this.profileId = createValidationScanOptions.profileId;
-      this.groupProfileId = createValidationScanOptions.groupProfileId;
+    private Builder(CreateValidationOptions createValidationOptions) {
+      this.accountId = createValidationOptions.accountId;
+      this.scopeId = createValidationOptions.scopeId;
+      this.profileId = createValidationOptions.profileId;
+      this.groupProfileId = createValidationOptions.groupProfileId;
     }
 
     /**
@@ -56,19 +56,19 @@ public class CreateValidationScanOptions extends GenericModel {
     }
 
     /**
-     * Builds a CreateValidationScanOptions.
+     * Builds a CreateValidationOptions.
      *
-     * @return the new CreateValidationScanOptions instance
+     * @return the new CreateValidationOptions instance
      */
-    public CreateValidationScanOptions build() {
-      return new CreateValidationScanOptions(this);
+    public CreateValidationOptions build() {
+      return new CreateValidationOptions(this);
     }
 
     /**
      * Set the accountId.
      *
      * @param accountId the accountId
-     * @return the CreateValidationScanOptions builder
+     * @return the CreateValidationOptions builder
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
@@ -79,9 +79,9 @@ public class CreateValidationScanOptions extends GenericModel {
      * Set the scopeId.
      *
      * @param scopeId the scopeId
-     * @return the CreateValidationScanOptions builder
+     * @return the CreateValidationOptions builder
      */
-    public Builder scopeId(long scopeId) {
+    public Builder scopeId(String scopeId) {
       this.scopeId = scopeId;
       return this;
     }
@@ -90,9 +90,9 @@ public class CreateValidationScanOptions extends GenericModel {
      * Set the profileId.
      *
      * @param profileId the profileId
-     * @return the CreateValidationScanOptions builder
+     * @return the CreateValidationOptions builder
      */
-    public Builder profileId(long profileId) {
+    public Builder profileId(String profileId) {
       this.profileId = profileId;
       return this;
     }
@@ -101,15 +101,15 @@ public class CreateValidationScanOptions extends GenericModel {
      * Set the groupProfileId.
      *
      * @param groupProfileId the groupProfileId
-     * @return the CreateValidationScanOptions builder
+     * @return the CreateValidationOptions builder
      */
-    public Builder groupProfileId(long groupProfileId) {
+    public Builder groupProfileId(String groupProfileId) {
       this.groupProfileId = groupProfileId;
       return this;
     }
   }
 
-  protected CreateValidationScanOptions(Builder builder) {
+  protected CreateValidationOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,
       "accountId cannot be null");
     accountId = builder.accountId;
@@ -121,7 +121,7 @@ public class CreateValidationScanOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a CreateValidationScanOptions builder
+   * @return a CreateValidationOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -145,7 +145,7 @@ public class CreateValidationScanOptions extends GenericModel {
    *
    * @return the scopeId
    */
-  public Long scopeId() {
+  public String scopeId() {
     return scopeId;
   }
 
@@ -156,7 +156,7 @@ public class CreateValidationScanOptions extends GenericModel {
    *
    * @return the profileId
    */
-  public Long profileId() {
+  public String profileId() {
     return profileId;
   }
 
@@ -167,7 +167,7 @@ public class CreateValidationScanOptions extends GenericModel {
    *
    * @return the groupProfileId
    */
-  public Long groupProfileId() {
+  public String groupProfileId() {
     return groupProfileId;
   }
 }

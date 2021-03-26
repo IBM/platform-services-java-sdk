@@ -1,3 +1,10 @@
+# [0.18.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.18...v0.18.0) (2021-03-26)
+
+
+### Features
+
+* **Posture Management:** Add service to project ([#86](https://github.com/IBM/platform-services-node-sdk/issues/86)) ([9932725](https://github.com/IBM/platform-services-node-sdk/commit/9932725297c6ed5d99878a49a3c9c38fb6cc261f))
+
 ## [0.17.18](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.17...v0.17.18) (2021-03-25)
 
 

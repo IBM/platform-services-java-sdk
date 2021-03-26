@@ -1,3 +1,10 @@
+# [0.18.0](https://github.com/IBM/platform-services-java-sdk/compare/0.17.17...0.18.0) (2021-03-26)
+
+
+### Features
+
+* **Posture Management:** Add service to project ([#86](https://github.com/IBM/platform-services-java-sdk/issues/86)) ([395de63](https://github.com/IBM/platform-services-java-sdk/commit/395de63e847c61def61da6f897ad293a131e90ff))
+
 ## [0.17.17](https://github.com/IBM/platform-services-java-sdk/compare/0.17.16...0.17.17) (2021-03-25)
 
 

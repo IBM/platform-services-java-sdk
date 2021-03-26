@@ -61,6 +61,7 @@ Service Name | Import Path
 [IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | ibm-platform-services/iam-identity/v1
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | ibm-platform-services/iam-policy-management/v1
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | ibm-platform-services/open-service-broker/v1
+[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture) | ibm-platform-services/posture-management/v1
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | ibm-platform-services/resource-controller/v2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ibm-platform-services/resource-manager/v2
 [Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | ibm-platform-services/usage-metering/v4

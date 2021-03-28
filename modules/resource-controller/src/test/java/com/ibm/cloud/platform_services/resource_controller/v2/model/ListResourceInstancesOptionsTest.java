@@ -40,6 +40,8 @@ public class ListResourceInstancesOptionsTest {
       .type("testString")
       .subType("testString")
       .limit("testString")
+      .state("active")
+      .orderDirection("asc")
       .updatedFrom("2019-01-08T00:00:00.000Z")
       .updatedTo("2019-01-08T00:00:00.000Z")
       .build();
@@ -51,6 +53,8 @@ public class ListResourceInstancesOptionsTest {
     assertEquals(listResourceInstancesOptionsModel.type(), "testString");
     assertEquals(listResourceInstancesOptionsModel.subType(), "testString");
     assertEquals(listResourceInstancesOptionsModel.limit(), "testString");
+    assertEquals(listResourceInstancesOptionsModel.state(), "active");
+    assertEquals(listResourceInstancesOptionsModel.orderDirection(), "asc");
     assertEquals(listResourceInstancesOptionsModel.updatedFrom(), "2019-01-08T00:00:00.000Z");
     assertEquals(listResourceInstancesOptionsModel.updatedTo(), "2019-01-08T00:00:00.000Z");
   }

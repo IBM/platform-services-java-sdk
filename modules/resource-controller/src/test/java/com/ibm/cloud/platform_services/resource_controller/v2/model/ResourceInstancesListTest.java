@@ -37,8 +37,8 @@ public class ResourceInstancesListTest {
   @Test
   public void testResourceInstancesList() throws Throwable {
     ResourceInstancesList resourceInstancesListModel = new ResourceInstancesList();
+    assertNull(resourceInstancesListModel.getRowsCount());
     assertNull(resourceInstancesListModel.getNextUrl());
     assertNull(resourceInstancesListModel.getResources());
-    assertNull(resourceInstancesListModel.getRowsCount());
   }
 }

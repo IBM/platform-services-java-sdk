@@ -34,8 +34,8 @@ public class ResourceAliasesListTest {
   @Test
   public void testResourceAliasesList() throws Throwable {
     ResourceAliasesList resourceAliasesListModel = new ResourceAliasesList();
+    assertNull(resourceAliasesListModel.getRowsCount());
     assertNull(resourceAliasesListModel.getNextUrl());
     assertNull(resourceAliasesListModel.getResources());
-    assertNull(resourceAliasesListModel.getRowsCount());
   }
 }

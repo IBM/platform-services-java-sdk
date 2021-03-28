@@ -35,8 +35,8 @@ public class ResourceKeysListTest {
   @Test
   public void testResourceKeysList() throws Throwable {
     ResourceKeysList resourceKeysListModel = new ResourceKeysList();
+    assertNull(resourceKeysListModel.getRowsCount());
     assertNull(resourceKeysListModel.getNextUrl());
     assertNull(resourceKeysListModel.getResources());
-    assertNull(resourceKeysListModel.getRowsCount());
   }
 }

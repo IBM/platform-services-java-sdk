@@ -24,26 +24,7 @@ public class ResourceBinding extends GenericModel {
 
   protected String id;
   protected String guid;
-  protected String crn;
   protected String url;
-  protected String name;
-  @SerializedName("account_id")
-  protected String accountId;
-  @SerializedName("resource_group_id")
-  protected String resourceGroupId;
-  @SerializedName("source_crn")
-  protected String sourceCrn;
-  @SerializedName("target_crn")
-  protected String targetCrn;
-  protected String role;
-  @SerializedName("region_binding_id")
-  protected String regionBindingId;
-  protected String state;
-  protected Credentials credentials;
-  @SerializedName("iam_compatible")
-  protected Boolean iamCompatible;
-  @SerializedName("resource_alias_url")
-  protected String resourceAliasUrl;
   @SerializedName("created_at")
   protected Date createdAt;
   @SerializedName("updated_at")
@@ -56,6 +37,29 @@ public class ResourceBinding extends GenericModel {
   protected String updatedBy;
   @SerializedName("deleted_by")
   protected String deletedBy;
+  @SerializedName("source_crn")
+  protected String sourceCrn;
+  @SerializedName("target_crn")
+  protected String targetCrn;
+  protected String crn;
+  @SerializedName("region_binding_id")
+  protected String regionBindingId;
+  @SerializedName("region_binding_crn")
+  protected String regionBindingCrn;
+  protected String name;
+  @SerializedName("account_id")
+  protected String accountId;
+  @SerializedName("resource_group_id")
+  protected String resourceGroupId;
+  protected String state;
+  protected Credentials credentials;
+  @SerializedName("iam_compatible")
+  protected Boolean iamCompatible;
+  @SerializedName("resource_id")
+  protected String resourceId;
+  protected Boolean migrated;
+  @SerializedName("resource_alias_url")
+  protected String resourceAliasUrl;
 
   /**
    * Gets the id.
@@ -81,18 +85,6 @@ public class ResourceBinding extends GenericModel {
   }
 
   /**
-   * Gets the crn.
-   *
-   * The full Cloud Resource Name (CRN) associated with the binding. For more information about this format, see [Cloud
-   * Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-   *
-   * @return the crn
-   */
-  public String getCrn() {
-    return crn;
-  }
-
-  /**
    * Gets the url.
    *
    * When you provision a new binding, a relative URL path is created identifying the location of the binding.
@@ -101,129 +93,6 @@ public class ResourceBinding extends GenericModel {
    */
   public String getUrl() {
     return url;
-  }
-
-  /**
-   * Gets the name.
-   *
-   * The human-readable name of the binding.
-   *
-   * @return the name
-   */
-  public String getName() {
-    return name;
-  }
-
-  /**
-   * Gets the accountId.
-   *
-   * An alpha-numeric value identifying the account ID.
-   *
-   * @return the accountId
-   */
-  public String getAccountId() {
-    return accountId;
-  }
-
-  /**
-   * Gets the resourceGroupId.
-   *
-   * The short ID of the resource group.
-   *
-   * @return the resourceGroupId
-   */
-  public String getResourceGroupId() {
-    return resourceGroupId;
-  }
-
-  /**
-   * Gets the sourceCrn.
-   *
-   * The CRN of resource alias associated to the binding.
-   *
-   * @return the sourceCrn
-   */
-  public String getSourceCrn() {
-    return sourceCrn;
-  }
-
-  /**
-   * Gets the targetCrn.
-   *
-   * The CRN of target resource, e.g. application, in a specific environment.
-   *
-   * @return the targetCrn
-   */
-  public String getTargetCrn() {
-    return targetCrn;
-  }
-
-  /**
-   * Gets the role.
-   *
-   * The role CRN.
-   *
-   * @return the role
-   */
-  public String getRole() {
-    return role;
-  }
-
-  /**
-   * Gets the regionBindingId.
-   *
-   * The short ID of the binding in specific targeted environment, e.g. `service_binding_id` in a given IBM Cloud
-   * environment.
-   *
-   * @return the regionBindingId
-   */
-  public String getRegionBindingId() {
-    return regionBindingId;
-  }
-
-  /**
-   * Gets the state.
-   *
-   * The state of the binding.
-   *
-   * @return the state
-   */
-  public String getState() {
-    return state;
-  }
-
-  /**
-   * Gets the credentials.
-   *
-   * The credentials for the binding. Additional key-value pairs are passed through from the resource brokers.  For
-   * additional details, see the service’s documentation.
-   *
-   * @return the credentials
-   */
-  public Credentials getCredentials() {
-    return credentials;
-  }
-
-  /**
-   * Gets the iamCompatible.
-   *
-   * Specifies whether the binding’s credentials support IAM.
-   *
-   * @return the iamCompatible
-   */
-  public Boolean isIamCompatible() {
-    return iamCompatible;
-  }
-
-  /**
-   * Gets the resourceAliasUrl.
-   *
-   * The relative path to the resource alias that this binding is associated with.
-   *
-   * @return the resourceAliasUrl
-   */
-  public String getResourceAliasUrl() {
-    return resourceAliasUrl;
   }
 
   /**
@@ -290,6 +159,163 @@ public class ResourceBinding extends GenericModel {
    */
   public String getDeletedBy() {
     return deletedBy;
+  }
+
+  /**
+   * Gets the sourceCrn.
+   *
+   * The CRN of resource alias associated to the binding.
+   *
+   * @return the sourceCrn
+   */
+  public String getSourceCrn() {
+    return sourceCrn;
+  }
+
+  /**
+   * Gets the targetCrn.
+   *
+   * The CRN of target resource, for example, application, in a specific environment.
+   *
+   * @return the targetCrn
+   */
+  public String getTargetCrn() {
+    return targetCrn;
+  }
+
+  /**
+   * Gets the crn.
+   *
+   * The full Cloud Resource Name (CRN) associated with the binding. For more information about this format, see [Cloud
+   * Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
+   *
+   * @return the crn
+   */
+  public String getCrn() {
+    return crn;
+  }
+
+  /**
+   * Gets the regionBindingId.
+   *
+   * The ID of the binding in the specific target environment, for example, `service_binding_id` in a given IBM Cloud
+   * environment.
+   *
+   * @return the regionBindingId
+   */
+  public String getRegionBindingId() {
+    return regionBindingId;
+  }
+
+  /**
+   * Gets the regionBindingCrn.
+   *
+   * The CRN of the binding in the specific target environment.
+   *
+   * @return the regionBindingCrn
+   */
+  public String getRegionBindingCrn() {
+    return regionBindingCrn;
+  }
+
+  /**
+   * Gets the name.
+   *
+   * The human-readable name of the binding.
+   *
+   * @return the name
+   */
+  public String getName() {
+    return name;
+  }
+
+  /**
+   * Gets the accountId.
+   *
+   * An alpha-numeric value identifying the account ID.
+   *
+   * @return the accountId
+   */
+  public String getAccountId() {
+    return accountId;
+  }
+
+  /**
+   * Gets the resourceGroupId.
+   *
+   * The ID of the resource group.
+   *
+   * @return the resourceGroupId
+   */
+  public String getResourceGroupId() {
+    return resourceGroupId;
+  }
+
+  /**
+   * Gets the state.
+   *
+   * The state of the binding.
+   *
+   * @return the state
+   */
+  public String getState() {
+    return state;
+  }
+
+  /**
+   * Gets the credentials.
+   *
+   * The credentials for the binding. Additional key-value pairs are passed through from the resource brokers.  For
+   * additional details, see the service’s documentation.
+   *
+   * @return the credentials
+   */
+  public Credentials getCredentials() {
+    return credentials;
+  }
+
+  /**
+   * Gets the iamCompatible.
+   *
+   * Specifies whether the binding’s credentials support IAM.
+   *
+   * @return the iamCompatible
+   */
+  public Boolean isIamCompatible() {
+    return iamCompatible;
+  }
+
+  /**
+   * Gets the resourceId.
+   *
+   * The unique ID of the offering. This value is provided by and stored in the global catalog.
+   *
+   * @return the resourceId
+   */
+  public String getResourceId() {
+    return resourceId;
+  }
+
+  /**
+   * Gets the migrated.
+   *
+   * A boolean that dictates if the alias was migrated from a previous CF instance.
+   *
+   * @return the migrated
+   */
+  public Boolean isMigrated() {
+    return migrated;
+  }
+
+  /**
+   * Gets the resourceAliasUrl.
+   *
+   * The relative path to the resource alias that this binding is associated with.
+   *
+   * @return the resourceAliasUrl
+   */
+  public String getResourceAliasUrl() {
+    return resourceAliasUrl;
   }
 }
 

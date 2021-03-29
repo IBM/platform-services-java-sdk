@@ -84,7 +84,7 @@ public class UsageReportsExamples {
       Response<AccountSummary> response = service.getAccountSummary(getAccountSummaryOptions).execute();
       AccountSummary accountSummary = response.getResult();
 
-      System.out.println("getAccountSummary() result:\n" + accountSummary.toString());
+      System.out.printf("getAccountSummary() result:%n%s%n", accountSummary.toString());
       // end-get_account_summary
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -101,7 +101,7 @@ public class UsageReportsExamples {
       Response<AccountUsage> response = service.getAccountUsage(getAccountUsageOptions).execute();
       AccountUsage accountUsage = response.getResult();
 
-      System.out.println("getAccountUsage() result:\n" + accountUsage.toString());
+      System.out.printf("getAccountUsage() result:%n%s%n", accountUsage.toString());
       // end-get_account_usage
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -119,7 +119,7 @@ public class UsageReportsExamples {
       Response<ResourceGroupUsage> response = service.getResourceGroupUsage(getResourceGroupUsageOptions).execute();
       ResourceGroupUsage resourceGroupUsage = response.getResult();
 
-      System.out.println("getResourceGroupUsage() result:\n" + resourceGroupUsage.toString());
+      System.out.printf("getResourceGroupUsage() result:%n%s%n", resourceGroupUsage.toString());
       // end-get_resource_group_usage
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -137,7 +137,7 @@ public class UsageReportsExamples {
       Response<OrgUsage> response = service.getOrgUsage(getOrgUsageOptions).execute();
       OrgUsage orgUsage = response.getResult();
 
-      System.out.println("getOrgUsage() result:\n" + orgUsage.toString());
+      System.out.printf("getOrgUsage() result:%n%s%n", orgUsage.toString());
       // end-get_org_usage
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -154,7 +154,7 @@ public class UsageReportsExamples {
       Response<InstancesUsage> response = service.getResourceUsageAccount(getResourceUsageAccountOptions).execute();
       InstancesUsage instancesUsage = response.getResult();
 
-      System.out.println("getResourceUsageAccount() result:\n" + instancesUsage.toString());
+      System.out.printf("getResourceUsageAccount() result:%n%s%n", instancesUsage.toString());
       // end-get_resource_usage_account
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -172,7 +172,7 @@ public class UsageReportsExamples {
       Response<InstancesUsage> response = service.getResourceUsageResourceGroup(getResourceUsageResourceGroupOptions).execute();
       InstancesUsage instancesUsage = response.getResult();
 
-      System.out.println("getResourceUsageResourceGroup() result:\n" + instancesUsage.toString());
+      System.out.printf("getResourceUsageResourceGroup() result:%n%s%n", instancesUsage.toString());
       // end-get_resource_usage_resource_group
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -190,7 +190,7 @@ public class UsageReportsExamples {
       Response<InstancesUsage> response = service.getResourceUsageOrg(getResourceUsageOrgOptions).execute();
       InstancesUsage instancesUsage = response.getResult();
 
-      System.out.println("getResourceUsageOrg() result:\n" + instancesUsage.toString());
+      System.out.printf("getResourceUsageOrg() result:%n%s%n", instancesUsage.toString());
       // end-get_resource_usage_org
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",

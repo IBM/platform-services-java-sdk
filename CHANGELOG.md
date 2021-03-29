@@ -1,3 +1,24 @@
+# [0.18.0](https://github.com/IBM/platform-services-java-sdk/compare/0.17.17...0.18.0) (2021-03-26)
+
+
+### Features
+
+* **Posture Management:** Add service to project ([#86](https://github.com/IBM/platform-services-java-sdk/issues/86)) ([395de63](https://github.com/IBM/platform-services-java-sdk/commit/395de63e847c61def61da6f897ad293a131e90ff))
+
+## [0.17.17](https://github.com/IBM/platform-services-java-sdk/compare/0.17.16...0.17.17) (2021-03-25)
+
+
+### Bug Fixes
+
+* **global search:** update service after changes in API ([#89](https://github.com/IBM/platform-services-java-sdk/issues/89)) ([9a31268](https://github.com/IBM/platform-services-java-sdk/commit/9a312683514cf60a56c90a84696b5c91d8ced230))
+
+## [0.17.16](https://github.com/IBM/platform-services-java-sdk/compare/0.17.15...0.17.16) (2021-03-25)
+
+
+### Bug Fixes
+
+* add labels to service examples ([#87](https://github.com/IBM/platform-services-java-sdk/issues/87)) ([00b0e34](https://github.com/IBM/platform-services-java-sdk/commit/00b0e34b11c40be7f52c491935249129843371fb))
+
 ## [0.17.15](https://github.com/IBM/platform-services-java-sdk/compare/0.17.14...0.17.15) (2021-03-18)
 
 

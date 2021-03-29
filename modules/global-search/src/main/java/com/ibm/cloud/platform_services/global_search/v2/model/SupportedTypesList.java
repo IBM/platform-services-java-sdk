@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * A list of resource types supported by GhoST.
+ * A list of all GhoST indices.
  */
 public class SupportedTypesList extends GenericModel {
 
@@ -28,7 +28,7 @@ public class SupportedTypesList extends GenericModel {
   /**
    * Gets the supportedTypes.
    *
-   * A list of resource types supported by GhoST.
+   * A list of all GhoST indices.
    *
    * @return the supportedTypes
    */

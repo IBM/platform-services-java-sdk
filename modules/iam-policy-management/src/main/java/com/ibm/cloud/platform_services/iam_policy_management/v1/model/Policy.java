@@ -38,6 +38,7 @@ public class Policy extends GenericModel {
   protected Date lastModifiedAt;
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
+  protected String state;
 
   /**
    * Gets the id.
@@ -158,6 +159,17 @@ public class Policy extends GenericModel {
    */
   public String getLastModifiedById() {
     return lastModifiedById;
+  }
+
+  /**
+   * Gets the state.
+   *
+   * The policy state; either 'active' or 'deleted'.
+   *
+   * @return the state
+   */
+  public String getState() {
+    return state;
   }
 }
 

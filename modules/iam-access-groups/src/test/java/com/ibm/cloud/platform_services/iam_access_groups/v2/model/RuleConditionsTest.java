@@ -33,11 +33,11 @@ public class RuleConditionsTest {
   public void testRuleConditions() throws Throwable {
     RuleConditions ruleConditionsModel = new RuleConditions.Builder()
       .claim("testString")
-      .operator("testString")
+      .operator("EQUALS")
       .value("testString")
       .build();
     assertEquals(ruleConditionsModel.claim(), "testString");
-    assertEquals(ruleConditionsModel.operator(), "testString");
+    assertEquals(ruleConditionsModel.operator(), "EQUALS");
     assertEquals(ruleConditionsModel.value(), "testString");
 
     String json = TestUtilities.serialize(ruleConditionsModel);
@@ -45,7 +45,7 @@ public class RuleConditionsTest {
     RuleConditions ruleConditionsModelNew = TestUtilities.deserialize(json, RuleConditions.class);
     assertTrue(ruleConditionsModelNew instanceof RuleConditions);
     assertEquals(ruleConditionsModelNew.claim(), "testString");
-    assertEquals(ruleConditionsModelNew.operator(), "testString");
+    assertEquals(ruleConditionsModelNew.operator(), "EQUALS");
     assertEquals(ruleConditionsModelNew.value(), "testString");
   }
 

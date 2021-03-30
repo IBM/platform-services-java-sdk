@@ -230,7 +230,7 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The Access Group identifier.
+   * The access group identifier.
    *
    * @return the accessGroupId
    */
@@ -252,7 +252,7 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * The current revision number of the rule being updated. This can be found in the Get Rule response Etag header.
+   * The current revision number of the rule being updated. This can be found in the Get Rule response ETag header.
    *
    * @return the ifMatch
    */
@@ -263,7 +263,7 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the expiration.
    *
-   * The number of hours that the rule lives for (Must be between 1 and 24).
+   * The number of hours that the rule lives for.
    *
    * @return the expiration
    */
@@ -307,7 +307,9 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the transactionId.
    *
-   * An optional transaction id for the request.
+   * An optional transaction ID can be passed to your request, which can be useful for tracking calls through multiple
+   * services by using one identifier. The header key must be set to Transaction-Id and the value is anything that you
+   * choose. If no transaction ID is passed in, then a random ID is generated.
    *
    * @return the transactionId
    */

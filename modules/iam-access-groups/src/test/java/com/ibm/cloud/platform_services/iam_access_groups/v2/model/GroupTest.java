@@ -36,10 +36,6 @@ public class GroupTest {
     assertNull(groupModel.getName());
     assertNull(groupModel.getDescription());
     assertNull(groupModel.getAccountId());
-    assertNull(groupModel.getCreatedAt());
-    assertNull(groupModel.getCreatedById());
-    assertNull(groupModel.getLastModifiedAt());
-    assertNull(groupModel.getLastModifiedById());
     assertNull(groupModel.getHref());
     assertNull(groupModel.isIsFederated());
   }

@@ -36,18 +36,18 @@ public class ReplaceAccessGroupRuleOptionsTest {
   public void testReplaceAccessGroupRuleOptions() throws Throwable {
     RuleConditions ruleConditionsModel = new RuleConditions.Builder()
       .claim("testString")
-      .operator("testString")
+      .operator("EQUALS")
       .value("testString")
       .build();
     assertEquals(ruleConditionsModel.claim(), "testString");
-    assertEquals(ruleConditionsModel.operator(), "testString");
+    assertEquals(ruleConditionsModel.operator(), "EQUALS");
     assertEquals(ruleConditionsModel.value(), "testString");
 
     ReplaceAccessGroupRuleOptions replaceAccessGroupRuleOptionsModel = new ReplaceAccessGroupRuleOptions.Builder()
       .accessGroupId("testString")
       .ruleId("testString")
       .ifMatch("testString")
-      .expiration(Long.valueOf("26"))
+      .expiration(Long.valueOf("1"))
       .realmName("testString")
       .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
       .name("testString")
@@ -56,7 +56,7 @@ public class ReplaceAccessGroupRuleOptionsTest {
     assertEquals(replaceAccessGroupRuleOptionsModel.accessGroupId(), "testString");
     assertEquals(replaceAccessGroupRuleOptionsModel.ruleId(), "testString");
     assertEquals(replaceAccessGroupRuleOptionsModel.ifMatch(), "testString");
-    assertEquals(replaceAccessGroupRuleOptionsModel.expiration(), Long.valueOf("26"));
+    assertEquals(replaceAccessGroupRuleOptionsModel.expiration(), Long.valueOf("1"));
     assertEquals(replaceAccessGroupRuleOptionsModel.realmName(), "testString");
     assertEquals(replaceAccessGroupRuleOptionsModel.conditions(), new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)));
     assertEquals(replaceAccessGroupRuleOptionsModel.name(), "testString");

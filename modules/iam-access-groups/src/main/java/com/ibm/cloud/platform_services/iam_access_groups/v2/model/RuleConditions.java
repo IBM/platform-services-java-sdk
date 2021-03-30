@@ -19,6 +19,24 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class RuleConditions extends GenericModel {
 
+  /**
+   * The operation to perform on the claim.
+   */
+  public interface Operator {
+    /** EQUALS. */
+    String EQUALS = "EQUALS";
+    /** EQUALS_IGNORE_CASE. */
+    String EQUALS_IGNORE_CASE = "EQUALS_IGNORE_CASE";
+    /** IN. */
+    String IN = "IN";
+    /** NOT_EQUALS_IGNORE_CASE. */
+    String NOT_EQUALS_IGNORE_CASE = "NOT_EQUALS_IGNORE_CASE";
+    /** NOT_EQUALS. */
+    String NOT_EQUALS = "NOT_EQUALS";
+    /** CONTAINS. */
+    String CONTAINS = "CONTAINS";
+  }
+
   protected String claim;
   protected String operator;
   protected String value;
@@ -134,8 +152,7 @@ public class RuleConditions extends GenericModel {
   /**
    * Gets the operator.
    *
-   * The operation to perform on the claim. Valid operators are EQUALS, EQUALS_IGNORE_CASE, IN, NOT_EQUALS_IGNORE_CASE,
-   * NOT_EQUALS, and CONTAINS.
+   * The operation to perform on the claim.
    *
    * @return the operator
    */

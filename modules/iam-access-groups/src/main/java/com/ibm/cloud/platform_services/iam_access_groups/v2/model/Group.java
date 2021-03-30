@@ -42,7 +42,7 @@ public class Group extends GenericModel {
   /**
    * Gets the id.
    *
-   * The group's Access Group ID.
+   * The group's access group ID.
    *
    * @return the id
    */

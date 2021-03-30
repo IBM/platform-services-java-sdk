@@ -95,6 +95,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('createResourceInstance() result:');
     // begin-create_resource_instance
 
     const params = {
@@ -107,7 +108,7 @@ describe('ResourceControllerV2', () => {
     resourceControllerService.createResourceInstance(params)
       .then(res => {
         instanceGuid = res.result.guid;
-        console.log('createResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -125,6 +126,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('getResourceInstance() result:');
     // begin-get_resource_instance
 
     const params = {
@@ -133,7 +135,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.getResourceInstance(params)
       .then(res => {
-        console.log('getResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -151,6 +153,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('listResourceInstances() result:');
     // begin-list_resource_instances
 
     const params = {
@@ -159,7 +162,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceInstances(params)
       .then(res => {
-        console.log('listResourceInstances() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -177,6 +180,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('updateResourceInstance() result:');
     // begin-update_resource_instance
 
     const parameters = {
@@ -191,7 +195,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.updateResourceInstance(params)
       .then(res => {
-        console.log('updateResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -209,6 +213,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('createResourceAlias() result:');
     // begin-create_resource_alias
 
     const params = {
@@ -220,7 +225,7 @@ describe('ResourceControllerV2', () => {
     resourceControllerService.createResourceAlias(params)
       .then(res => {
         aliasGuid = res.result.guid;
-        console.log('createResourceAlias() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -238,6 +243,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('getResourceAlias() result:');
     // begin-get_resource_alias
 
     const params = {
@@ -246,7 +252,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.getResourceAlias(params)
       .then(res => {
-        console.log('getResourceAlias() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -264,6 +270,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('listResourceAliases() result:');
     // begin-list_resource_aliases
 
     const params = {
@@ -272,7 +279,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceAliases(params)
       .then(res => {
-        console.log('listResourceAliases() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -291,6 +298,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('updateResourceAlias() result:');
     // begin-update_resource_alias
 
     const params = {
@@ -300,7 +308,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.updateResourceAlias(params)
       .then(res => {
-        console.log('updateResourceAlias() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -320,6 +328,7 @@ describe('ResourceControllerV2', () => {
 
     expect(instanceGuid).toBeTruthy();
 
+    originalLog('listResourceAliasesForInstance() result:');
     // begin-list_resource_aliases_for_instance
 
     const params = {
@@ -328,7 +337,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceAliasesForInstance(params)
       .then(res => {
-        console.log('listResourceAliasesForInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -346,7 +355,9 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('createResourceBinding() result:');
     // begin-create_resource_binding
+
     const parameters = {
       'exampleParameter': 'exampleValue'
     };
@@ -361,7 +372,7 @@ describe('ResourceControllerV2', () => {
     resourceControllerService.createResourceBinding(params)
       .then(res => {
         bindingGuid = res.result.guid;
-        console.log('createResourceBinding() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -379,6 +390,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('getResourceBinding() result:');
     // begin-get_resource_binding
 
     const params = {
@@ -387,7 +399,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.getResourceBinding(params)
       .then(res => {
-        console.log('getResourceBinding() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -405,6 +417,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('listResourceBindings() result:');
     // begin-list_resource_bindings
 
     const params = {
@@ -413,7 +426,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceBindings(params)
       .then(res => {
-        console.log('listResourceBindings() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -431,6 +444,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('updateResourceBinding() result:');
     // begin-update_resource_binding
 
     const params = {
@@ -440,7 +454,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.updateResourceBinding(params)
       .then(res => {
-        console.log('updateResourceBinding() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -460,6 +474,7 @@ describe('ResourceControllerV2', () => {
 
     expect(aliasGuid).toBeTruthy();
 
+    originalLog('listResourceBindingsForAlias() result:');
     // begin-list_resource_bindings_for_alias
 
     const params = {
@@ -468,7 +483,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceBindingsForAlias(params)
       .then(res => {
-        console.log('listResourceBindingsForAlias() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -486,6 +501,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('createResourceKey() result:');
     // begin-create_resource_key
 
     const parameters = {
@@ -501,7 +517,7 @@ describe('ResourceControllerV2', () => {
     resourceControllerService.createResourceKey(params)
       .then(res => {
         instanceKeyGuid = res.result.guid;
-        console.log('createResourceKey() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -519,6 +535,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('getResourceKey() result:');
     // begin-get_resource_key
 
     const params = {
@@ -527,7 +544,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.getResourceKey(params)
       .then(res => {
-        console.log('getResourceKey() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -545,6 +562,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('listResourceKeys() result:');
     // begin-list_resource_keys
 
     const params = {
@@ -553,7 +571,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceKeys(params)
       .then(res => {
-        console.log('listResourceKeys() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -571,6 +589,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('updateResourceKey() result:');
     // begin-update_resource_key
 
     const params = {
@@ -580,7 +599,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.updateResourceKey(params)
       .then(res => {
-        console.log('updateResourceKey() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -600,6 +619,7 @@ describe('ResourceControllerV2', () => {
 
     expect(instanceGuid).toBeTruthy();
 
+    originalLog('listResourceKeysForInstance() result:');
     // begin-list_resource_keys_for_instance
 
     const params = {
@@ -608,7 +628,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.listResourceKeysForInstance(params)
       .then(res => {
-        console.log('listResourceKeysForInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -634,7 +654,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.deleteResourceBinding(params)
       .then(res => {
-        console.log('deleteResourceBinding() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -660,7 +680,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.deleteResourceKey(params)
       .then(res => {
-        console.log('deleteResourceKey() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -686,7 +706,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.deleteResourceAlias(params)
       .then(res => {
-        console.log('deleteResourceAlias() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -704,6 +724,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('lockResourceInstance() result:');
     // begin-lock_resource_instance
 
     const params = {
@@ -712,7 +733,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.lockResourceInstance(params)
       .then(res => {
-        console.log('lockResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -730,6 +751,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('unlockResourceInstance() result:');
     // begin-unlock_resource_instance
 
     const params = {
@@ -738,7 +760,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.unlockResourceInstance(params)
       .then(res => {
-        console.log('unlockResourceInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -765,7 +787,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.deleteResourceInstance(params)
       .then(res => {
-        console.log('deleteResourceInstance() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -785,6 +807,7 @@ describe('ResourceControllerV2', () => {
     });
     await new Promise(resolve => setTimeout(resolve, 20000));
 
+    originalLog('listReclamations() result:');
     // begin-list_reclamations
 
     const params = {
@@ -799,7 +822,7 @@ describe('ResourceControllerV2', () => {
             reclamationId = reclaim.id;
           }
         });
-        console.log('listReclamations() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -817,6 +840,7 @@ describe('ResourceControllerV2', () => {
       done(output);
     });
 
+    originalLog('runReclamationAction() result:');
     // begin-run_reclamation_action
 
     const params = {
@@ -826,7 +850,7 @@ describe('ResourceControllerV2', () => {
 
     resourceControllerService.runReclamationAction(params)
       .then(res => {
-        console.log('runReclamationAction() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

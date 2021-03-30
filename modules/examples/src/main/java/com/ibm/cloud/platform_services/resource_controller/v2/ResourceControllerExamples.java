@@ -108,6 +108,7 @@ public class ResourceControllerExamples {
       System.setProperty("IBM_CREDENTIALS_FILE", "../../resource_controller.env");
   }
 
+  @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
     ResourceController service = ResourceController.newInstance();
 
@@ -120,6 +121,7 @@ public class ResourceControllerExamples {
     bindingTargetCRN = config.get("BINDING_TARGET_CRN");
 
     try {
+      System.out.println("createResourceInstance() result:");
       // begin-create_resource_instance
       CreateResourceInstanceOptions createResourceInstanceOptions = new CreateResourceInstanceOptions.Builder()
         .name(resourceInstanceName)
@@ -131,7 +133,7 @@ public class ResourceControllerExamples {
       Response<ResourceInstance> response = service.createResourceInstance(createResourceInstanceOptions).execute();
       ResourceInstance resourceInstance = response.getResult();
 
-      System.out.printf("createResourceInstance() result:%n%s%n", resourceInstance.toString());
+      System.out.println(resourceInstance);
       // end-create_resource_instance
 
       instanceGuid = resourceInstance.getGuid();
@@ -142,6 +144,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("getResourceInstance() result:");
       // begin-get_resource_instance
       GetResourceInstanceOptions getResourceInstanceOptions = new GetResourceInstanceOptions.Builder()
         .id(instanceGuid)
@@ -150,7 +153,7 @@ public class ResourceControllerExamples {
       Response<ResourceInstance> response = service.getResourceInstance(getResourceInstanceOptions).execute();
       ResourceInstance resourceInstance = response.getResult();
 
-      System.out.printf("getResourceInstance() result:%n%s%n", resourceInstance.toString());
+      System.out.println(resourceInstance);
       // end-get_resource_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -158,6 +161,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("listResourceInstances() result:");
       // begin-list_resource_instances
       ListResourceInstancesOptions listResourceInstancesOptions = new ListResourceInstancesOptions.Builder()
         .name(resourceInstanceName)
@@ -166,7 +170,7 @@ public class ResourceControllerExamples {
       Response<ResourceInstancesList> response = service.listResourceInstances(listResourceInstancesOptions).execute();
       ResourceInstancesList resourceInstancesList = response.getResult();
 
-      System.out.printf("listResourceInstances() result:%n%s%n", resourceInstancesList.toString());
+      System.out.println(resourceInstancesList);
       // end-list_resource_instances
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -174,6 +178,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("updateResourceInstance() result:");
       // begin-update_resource_instance
       Map<String, Object> parameters = new HashMap<String, Object>();
       parameters.put("exampleProperty", "exampleValue");
@@ -187,7 +192,7 @@ public class ResourceControllerExamples {
       Response<ResourceInstance> response = service.updateResourceInstance(updateResourceInstanceOptions).execute();
       ResourceInstance resourceInstance = response.getResult();
 
-      System.out.printf("updateResourceInstance() result:%n%s%n", resourceInstance.toString());
+      System.out.println(resourceInstance);
       // end-update_resource_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -195,6 +200,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("createResourceAlias() result:");
       // begin-create_resource_alias
       CreateResourceAliasOptions createResourceAliasOptions = new CreateResourceAliasOptions.Builder()
         .name(aliasName)
@@ -205,7 +211,7 @@ public class ResourceControllerExamples {
       Response<ResourceAlias> response = service.createResourceAlias(createResourceAliasOptions).execute();
       ResourceAlias resourceAlias = response.getResult();
 
-      System.out.printf("createResourceAlias() result:%n%s%n", resourceAlias.toString());
+      System.out.println(resourceAlias);
       // end-create_resource_alias
 
       aliasGuid = resourceAlias.getGuid();
@@ -216,6 +222,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("getResourceAlias() result:");
       // begin-get_resource_alias
       GetResourceAliasOptions getResourceAliasOptions = new GetResourceAliasOptions.Builder()
         .id(aliasGuid)
@@ -224,7 +231,7 @@ public class ResourceControllerExamples {
       Response<ResourceAlias> response = service.getResourceAlias(getResourceAliasOptions).execute();
       ResourceAlias resourceAlias = response.getResult();
 
-      System.out.printf("getResourceAlias() result:%n%s%n", resourceAlias.toString());
+      System.out.println(resourceAlias);
       // end-get_resource_alias
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -232,6 +239,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("listResourceAliases() result:");
       // begin-list_resource_aliases
       ListResourceAliasesOptions listResourceAliasesOptions = new ListResourceAliasesOptions.Builder()
         .name(aliasName)
@@ -240,7 +248,7 @@ public class ResourceControllerExamples {
       Response<ResourceAliasesList> response = service.listResourceAliases(listResourceAliasesOptions).execute();
       ResourceAliasesList resourceAliasesList = response.getResult();
 
-      System.out.printf("listResourceAliases() result:%n%s%n", resourceAliasesList.toString());
+      System.out.println(resourceAliasesList);
       // end-list_resource_aliases
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -248,6 +256,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("updateResourceAlias() result:");
       // begin-update_resource_alias
       UpdateResourceAliasOptions updateResourceAliasOptions = new UpdateResourceAliasOptions.Builder()
         .id(aliasGuid)
@@ -257,7 +266,7 @@ public class ResourceControllerExamples {
       Response<ResourceAlias> response = service.updateResourceAlias(updateResourceAliasOptions).execute();
       ResourceAlias resourceAlias = response.getResult();
 
-      System.out.printf("updateResourceAlias() result:%n%s%n", resourceAlias.toString());
+      System.out.println(resourceAlias);
       // end-update_resource_alias
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -265,6 +274,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("listResourceAliasesForInstance() result:");
       // begin-list_resource_aliases_for_instance
       ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptions = new ListResourceAliasesForInstanceOptions.Builder()
         .id(instanceGuid)
@@ -273,7 +283,7 @@ public class ResourceControllerExamples {
       Response<ResourceAliasesList> response = service.listResourceAliasesForInstance(listResourceAliasesForInstanceOptions).execute();
       ResourceAliasesList resourceAliasesList = response.getResult();
 
-      System.out.printf("listResourceAliasesForInstance() result:%n%s%n", resourceAliasesList.toString());
+      System.out.println(resourceAliasesList);
       // end-list_resource_aliases_for_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -281,6 +291,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("createResourceBinding() result:");
       // begin-create_resource_binding
       ResourceBindingPostParameters parameters = new ResourceBindingPostParameters.Builder()
         .add("exampleParameter", "exampleValue")
@@ -295,7 +306,7 @@ public class ResourceControllerExamples {
       Response<ResourceBinding> response = service.createResourceBinding(createResourceBindingOptions).execute();
       ResourceBinding resourceBinding = response.getResult();
 
-      System.out.printf("createResourceBinding() result:%n%s%n", resourceBinding.toString());
+      System.out.println(resourceBinding);
       // end-create_resource_binding
 
       bindingGuid = resourceBinding.getGuid();
@@ -306,6 +317,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("getResourceBinding() result:");
       // begin-get_resource_binding
       GetResourceBindingOptions getResourceBindingOptions = new GetResourceBindingOptions.Builder()
         .id(bindingGuid)
@@ -314,7 +326,7 @@ public class ResourceControllerExamples {
       Response<ResourceBinding> response = service.getResourceBinding(getResourceBindingOptions).execute();
       ResourceBinding resourceBinding = response.getResult();
 
-      System.out.printf("getResourceBinding() result:%n%s%n", resourceBinding.toString());
+      System.out.println(resourceBinding);
       // end-get_resource_binding
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -322,6 +334,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("listResourceBindings() result:");
       // begin-list_resource_bindings
       ListResourceBindingsOptions listResourceBindingsOptions = new ListResourceBindingsOptions.Builder()
         .name(bindingName)
@@ -330,7 +343,7 @@ public class ResourceControllerExamples {
       Response<ResourceBindingsList> response = service.listResourceBindings(listResourceBindingsOptions).execute();
       ResourceBindingsList resourceBindingsList = response.getResult();
 
-      System.out.printf("listResourceBindings() result:%n%s%n", resourceBindingsList.toString());
+      System.out.println(resourceBindingsList);
       // end-list_resource_bindings
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -338,6 +351,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("updateResourceBinding() result:");
       // begin-update_resource_binding
       UpdateResourceBindingOptions updateResourceBindingOptions = new UpdateResourceBindingOptions.Builder()
         .id(bindingGuid)
@@ -347,7 +361,7 @@ public class ResourceControllerExamples {
       Response<ResourceBinding> response = service.updateResourceBinding(updateResourceBindingOptions).execute();
       ResourceBinding resourceBinding = response.getResult();
 
-      System.out.printf("updateResourceBinding() result:%n%s%n", resourceBinding.toString());
+      System.out.println(resourceBinding);
       // end-update_resource_binding
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -355,6 +369,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("listResourceBindingsForAlias() result:");
       // begin-list_resource_bindings_for_alias
       ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptions = new ListResourceBindingsForAliasOptions.Builder()
         .id(aliasGuid)
@@ -363,7 +378,7 @@ public class ResourceControllerExamples {
       Response<ResourceBindingsList> response = service.listResourceBindingsForAlias(listResourceBindingsForAliasOptions).execute();
       ResourceBindingsList resourceBindingsList = response.getResult();
 
-      System.out.printf("listResourceBindingsForAlias() result:%n%s%n", resourceBindingsList.toString());
+      System.out.println(resourceBindingsList);
       // end-list_resource_bindings_for_alias
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -371,6 +386,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("createResourceKey() result:");
       // begin-create_resource_key
       ResourceKeyPostParameters parameters = new ResourceKeyPostParameters.Builder()
         .add("exampleParameter", "exampleValue")
@@ -384,7 +400,7 @@ public class ResourceControllerExamples {
       Response<ResourceKey> response = service.createResourceKey(createResourceKeyOptions).execute();
       ResourceKey resourceKey = response.getResult();
 
-      System.out.printf("createResourceKey() result:%n%s%n", resourceKey.toString());
+      System.out.println(resourceKey);
       // end-create_resource_key
 
       instanceKeyGuid = resourceKey.getGuid();
@@ -395,6 +411,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("getResourceKey() result:");
       // begin-get_resource_key
       GetResourceKeyOptions getResourceKeyOptions = new GetResourceKeyOptions.Builder()
         .id(instanceKeyGuid)
@@ -403,7 +420,7 @@ public class ResourceControllerExamples {
       Response<ResourceKey> response = service.getResourceKey(getResourceKeyOptions).execute();
       ResourceKey resourceKey = response.getResult();
 
-      System.out.printf("getResourceKey() result:%n%s%n", resourceKey.toString());
+      System.out.println(resourceKey);
       // end-get_resource_key
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -411,6 +428,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("listResourceKeys() result:");
       // begin-list_resource_keys
       ListResourceKeysOptions listResourceKeysOptions = new ListResourceKeysOptions.Builder()
         .name(keyName)
@@ -419,7 +437,7 @@ public class ResourceControllerExamples {
       Response<ResourceKeysList> response = service.listResourceKeys(listResourceKeysOptions).execute();
       ResourceKeysList resourceKeysList = response.getResult();
 
-      System.out.printf("listResourceKeys() result:%n%s%n", resourceKeysList.toString());
+      System.out.println(resourceKeysList);
       // end-list_resource_keys
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -427,6 +445,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("updateResourceKey() result:");
       // begin-update_resource_key
       UpdateResourceKeyOptions updateResourceKeyOptions = new UpdateResourceKeyOptions.Builder()
         .id(instanceKeyGuid)
@@ -436,7 +455,7 @@ public class ResourceControllerExamples {
       Response<ResourceKey> response = service.updateResourceKey(updateResourceKeyOptions).execute();
       ResourceKey resourceKey = response.getResult();
 
-      System.out.printf("updateResourceKey() result:%n%s%n", resourceKey.toString());
+      System.out.println(resourceKey);
       // end-update_resource_key
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -444,6 +463,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("listResourceKeysForInstance() result:");
       // begin-list_resource_keys_for_instance
       ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptions = new ListResourceKeysForInstanceOptions.Builder()
         .id(instanceGuid)
@@ -452,7 +472,7 @@ public class ResourceControllerExamples {
       Response<ResourceKeysList> response = service.listResourceKeysForInstance(listResourceKeysForInstanceOptions).execute();
       ResourceKeysList resourceKeysList = response.getResult();
 
-      System.out.printf("listResourceKeysForInstance() result:%n%s%n", resourceKeysList.toString());
+      System.out.println(resourceKeysList);
       // end-list_resource_keys_for_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -467,8 +487,8 @@ public class ResourceControllerExamples {
 
       Response<Void> response = service.deleteResourceBinding(deleteResourceBindingOptions).execute();
 
-      System.out.printf("deleteResourceBinding() response status code: %d%n", response.getStatusCode());
       // end-delete_resource_binding
+      System.out.printf("deleteResourceBinding() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -482,8 +502,8 @@ public class ResourceControllerExamples {
 
       Response<Void> response = service.deleteResourceKey(deleteResourceKeyOptions).execute();
 
-      System.out.printf("deleteResourceKey() response status code: %d%n", response.getStatusCode());
       // end-delete_resource_key
+      System.out.printf("deleteResourceKey() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -497,14 +517,15 @@ public class ResourceControllerExamples {
 
       Response<Void> response = service.deleteResourceAlias(deleteResourceAliasOptions).execute();
 
-      System.out.printf("deleteResourceAlias() response status code: %d%n", response.getStatusCode());
       // end-delete_resource_alias
+      System.out.printf("deleteResourceAlias() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("lockResourceInstance() result:");
       // begin-lock_resource_instance
       LockResourceInstanceOptions lockResourceInstanceOptions = new LockResourceInstanceOptions.Builder()
         .id(instanceGuid)
@@ -513,7 +534,7 @@ public class ResourceControllerExamples {
       Response<ResourceInstance> response = service.lockResourceInstance(lockResourceInstanceOptions).execute();
       ResourceInstance resourceInstance = response.getResult();
 
-      System.out.printf("lockResourceInstance() result:%n%s%n", resourceInstance.toString());
+      System.out.println(resourceInstance);
       // end-lock_resource_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -521,6 +542,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("unlockResourceInstance() result:");
       // begin-unlock_resource_instance
       UnlockResourceInstanceOptions unlockResourceInstanceOptions = new UnlockResourceInstanceOptions.Builder()
         .id(instanceGuid)
@@ -529,7 +551,7 @@ public class ResourceControllerExamples {
       Response<ResourceInstance> response = service.unlockResourceInstance(unlockResourceInstanceOptions).execute();
       ResourceInstance resourceInstance = response.getResult();
 
-      System.out.printf("unlockResourceInstance() result:%n%s%n", resourceInstance.toString());
+      System.out.println(resourceInstance);
       // end-unlock_resource_instance
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -545,8 +567,9 @@ public class ResourceControllerExamples {
 
       Response<Void> response = service.deleteResourceInstance(deleteResourceInstanceOptions).execute();
 
-      System.out.printf("deleteResourceInstance() response status code: %d%n", response.getStatusCode());
       // end-delete_resource_instance
+      System.out.printf("deleteResourceInstance() response status code: %d%n", response.getStatusCode());
+
       try {
         TimeUnit.SECONDS.sleep(20);
       } catch (Exception e) {
@@ -558,6 +581,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("listReclamations() result:");
       // begin-list_reclamations
       ListReclamationsOptions listReclamationsOptions = new ListReclamationsOptions.Builder()
         .accountId(accountId)
@@ -566,7 +590,7 @@ public class ResourceControllerExamples {
       Response<ReclamationsList> response = service.listReclamations(listReclamationsOptions).execute();
       ReclamationsList reclamationsList = response.getResult();
 
-      System.out.printf("listReclamations() result:%n%s%n", reclamationsList.toString());
+      System.out.println(reclamationsList);
       // end-list_reclamations
 
       for (Reclamation r : reclamationsList.getResources()) {
@@ -580,6 +604,7 @@ public class ResourceControllerExamples {
     }
 
     try {
+      System.out.println("runReclamationAction() result:");
       // begin-run_reclamation_action
       RunReclamationActionOptions runReclamationActionOptions = new RunReclamationActionOptions.Builder()
         .id(reclamationId)
@@ -589,7 +614,7 @@ public class ResourceControllerExamples {
       Response<Reclamation> response = service.runReclamationAction(runReclamationActionOptions).execute();
       Reclamation reclamation = response.getResult();
 
-      System.out.printf("runReclamationAction() result:%n%s%n", reclamation.toString());
+      System.out.println(reclamation);
       // end-run_reclamation_action
       try {
         TimeUnit.SECONDS.sleep(20);

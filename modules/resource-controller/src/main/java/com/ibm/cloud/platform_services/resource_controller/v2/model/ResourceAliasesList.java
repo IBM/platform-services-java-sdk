@@ -22,11 +22,22 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ResourceAliasesList extends GenericModel {
 
+  @SerializedName("rows_count")
+  protected Long rowsCount;
   @SerializedName("next_url")
   protected String nextUrl;
   protected List<ResourceAlias> resources;
-  @SerializedName("rows_count")
-  protected Long rowsCount;
+
+  /**
+   * Gets the rowsCount.
+   *
+   * The number of resource aliases in `resources`.
+   *
+   * @return the rowsCount
+   */
+  public Long getRowsCount() {
+    return rowsCount;
+  }
 
   /**
    * Gets the nextUrl.
@@ -48,17 +59,6 @@ public class ResourceAliasesList extends GenericModel {
    */
   public List<ResourceAlias> getResources() {
     return resources;
-  }
-
-  /**
-   * Gets the rowsCount.
-   *
-   * The number of resource aliases in `resources`.
-   *
-   * @return the rowsCount
-   */
-  public Long getRowsCount() {
-    return rowsCount;
   }
 }
 

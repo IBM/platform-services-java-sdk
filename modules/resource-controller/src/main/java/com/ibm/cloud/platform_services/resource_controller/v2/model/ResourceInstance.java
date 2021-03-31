@@ -26,62 +26,69 @@ public class ResourceInstance extends GenericModel {
 
   protected String id;
   protected String guid;
-  protected String crn;
   protected String url;
+  @SerializedName("created_at")
+  protected Date createdAt;
+  @SerializedName("updated_at")
+  protected Date updatedAt;
+  @SerializedName("deleted_at")
+  protected Date deletedAt;
+  @SerializedName("created_by")
+  protected String createdBy;
+  @SerializedName("updated_by")
+  protected String updatedBy;
+  @SerializedName("deleted_by")
+  protected String deletedBy;
+  @SerializedName("scheduled_reclaim_at")
+  protected Date scheduledReclaimAt;
+  @SerializedName("restored_at")
+  protected Date restoredAt;
+  @SerializedName("restored_by")
+  protected String restoredBy;
+  @SerializedName("scheduled_reclaim_by")
+  protected String scheduledReclaimBy;
   protected String name;
+  @SerializedName("region_id")
+  protected String regionId;
   @SerializedName("account_id")
   protected String accountId;
+  @SerializedName("reseller_channel_id")
+  protected String resellerChannelId;
+  @SerializedName("resource_plan_id")
+  protected String resourcePlanId;
   @SerializedName("resource_group_id")
   protected String resourceGroupId;
   @SerializedName("resource_group_crn")
   protected String resourceGroupCrn;
-  @SerializedName("resource_id")
-  protected String resourceId;
-  @SerializedName("resource_plan_id")
-  protected String resourcePlanId;
   @SerializedName("target_crn")
   protected String targetCrn;
   protected Map<String, Object> parameters;
+  @SerializedName("allow_cleanup")
+  protected Boolean allowCleanup;
+  protected String crn;
   protected String state;
   protected String type;
   @SerializedName("sub_type")
   protected String subType;
-  @SerializedName("allow_cleanup")
-  protected Boolean allowCleanup;
-  protected Boolean locked;
-  @SerializedName("last_operation")
-  protected Map<String, Object> lastOperation;
+  @SerializedName("resource_id")
+  protected String resourceId;
   @SerializedName("dashboard_url")
   protected String dashboardUrl;
-  @SerializedName("plan_history")
-  protected List<PlanHistoryItem> planHistory;
-  protected Map<String, Object> extensions;
+  @SerializedName("last_operation")
+  protected Map<String, Object> lastOperation;
   @SerializedName("resource_aliases_url")
   protected String resourceAliasesUrl;
   @SerializedName("resource_bindings_url")
   protected String resourceBindingsUrl;
   @SerializedName("resource_keys_url")
   protected String resourceKeysUrl;
-  @SerializedName("created_at")
-  protected Date createdAt;
-  @SerializedName("created_by")
-  protected String createdBy;
-  @SerializedName("updated_at")
-  protected Date updatedAt;
-  @SerializedName("updated_by")
-  protected String updatedBy;
-  @SerializedName("deleted_at")
-  protected Date deletedAt;
-  @SerializedName("deleted_by")
-  protected String deletedBy;
-  @SerializedName("scheduled_reclaim_at")
-  protected Date scheduledReclaimAt;
-  @SerializedName("scheduled_reclaim_by")
-  protected String scheduledReclaimBy;
-  @SerializedName("restored_at")
-  protected Date restoredAt;
-  @SerializedName("restored_by")
-  protected String restoredBy;
+  @SerializedName("plan_history")
+  protected List<PlanHistoryItem> planHistory;
+  protected Boolean migrated;
+  protected Map<String, Object> extensions;
+  @SerializedName("controlled_by")
+  protected String controlledBy;
+  protected Boolean locked;
 
   /**
    * Gets the id.
@@ -107,18 +114,6 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
-   * Gets the crn.
-   *
-   * The full Cloud Resource Name (CRN) associated with the instance. For more information about this format, see [Cloud
-   * Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-   *
-   * @return the crn
-   */
-  public String getCrn() {
-    return crn;
-  }
-
-  /**
    * Gets the url.
    *
    * When you provision a new resource, a relative URL path is created identifying the location of the instance.
@@ -127,6 +122,116 @@ public class ResourceInstance extends GenericModel {
    */
   public String getUrl() {
     return url;
+  }
+
+  /**
+   * Gets the createdAt.
+   *
+   * The date when the instance was created.
+   *
+   * @return the createdAt
+   */
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  /**
+   * Gets the updatedAt.
+   *
+   * The date when the instance was last updated.
+   *
+   * @return the updatedAt
+   */
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
+
+  /**
+   * Gets the deletedAt.
+   *
+   * The date when the instance was deleted.
+   *
+   * @return the deletedAt
+   */
+  public Date getDeletedAt() {
+    return deletedAt;
+  }
+
+  /**
+   * Gets the createdBy.
+   *
+   * The subject who created the instance.
+   *
+   * @return the createdBy
+   */
+  public String getCreatedBy() {
+    return createdBy;
+  }
+
+  /**
+   * Gets the updatedBy.
+   *
+   * The subject who updated the instance.
+   *
+   * @return the updatedBy
+   */
+  public String getUpdatedBy() {
+    return updatedBy;
+  }
+
+  /**
+   * Gets the deletedBy.
+   *
+   * The subject who deleted the instance.
+   *
+   * @return the deletedBy
+   */
+  public String getDeletedBy() {
+    return deletedBy;
+  }
+
+  /**
+   * Gets the scheduledReclaimAt.
+   *
+   * The date when the instance was scheduled for reclamation.
+   *
+   * @return the scheduledReclaimAt
+   */
+  public Date getScheduledReclaimAt() {
+    return scheduledReclaimAt;
+  }
+
+  /**
+   * Gets the restoredAt.
+   *
+   * The date when the instance under reclamation was restored.
+   *
+   * @return the restoredAt
+   */
+  public Date getRestoredAt() {
+    return restoredAt;
+  }
+
+  /**
+   * Gets the restoredBy.
+   *
+   * The subject who restored the instance back from reclamation.
+   *
+   * @return the restoredBy
+   */
+  public String getRestoredBy() {
+    return restoredBy;
+  }
+
+  /**
+   * Gets the scheduledReclaimBy.
+   *
+   * The subject who initiated the instance reclamation.
+   *
+   * @return the scheduledReclaimBy
+   */
+  public String getScheduledReclaimBy() {
+    return scheduledReclaimBy;
   }
 
   /**
@@ -141,6 +246,17 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
+   * Gets the regionId.
+   *
+   * The deployment location where the instance was provisioned.
+   *
+   * @return the regionId
+   */
+  public String getRegionId() {
+    return regionId;
+  }
+
+  /**
    * Gets the accountId.
    *
    * An alpha-numeric value identifying the account ID.
@@ -152,36 +268,14 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
-   * Gets the resourceGroupId.
+   * Gets the resellerChannelId.
    *
-   * The short ID of the resource group.
+   * The unique ID of the reseller channel where the instance was provisioned from.
    *
-   * @return the resourceGroupId
+   * @return the resellerChannelId
    */
-  public String getResourceGroupId() {
-    return resourceGroupId;
-  }
-
-  /**
-   * Gets the resourceGroupCrn.
-   *
-   * The long ID (full CRN) of the resource group.
-   *
-   * @return the resourceGroupCrn
-   */
-  public String getResourceGroupCrn() {
-    return resourceGroupCrn;
-  }
-
-  /**
-   * Gets the resourceId.
-   *
-   * The unique ID of the offering. This value is provided by and stored in the global catalog.
-   *
-   * @return the resourceId
-   */
-  public String getResourceId() {
-    return resourceId;
+  public String getResellerChannelId() {
+    return resellerChannelId;
   }
 
   /**
@@ -196,10 +290,32 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
+   * Gets the resourceGroupId.
+   *
+   * The ID of the resource group.
+   *
+   * @return the resourceGroupId
+   */
+  public String getResourceGroupId() {
+    return resourceGroupId;
+  }
+
+  /**
+   * Gets the resourceGroupCrn.
+   *
+   * The CRN of the resource group.
+   *
+   * @return the resourceGroupCrn
+   */
+  public String getResourceGroupCrn() {
+    return resourceGroupCrn;
+  }
+
+  /**
    * Gets the targetCrn.
    *
-   * The full deployment CRN as defined in the global catalog. The Cloud Resource Name (CRN) of the deployment location
-   * where the instance is provisioned.
+   * The deployment CRN as defined in the global catalog. The Cloud Resource Name (CRN) of the deployment location where
+   * the instance is provisioned.
    *
    * @return the targetCrn
    */
@@ -219,6 +335,30 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
+   * Gets the allowCleanup.
+   *
+   * A boolean that dictates if the resource instance should be deleted (cleaned up) during the processing of a region
+   * instance delete call.
+   *
+   * @return the allowCleanup
+   */
+  public Boolean isAllowCleanup() {
+    return allowCleanup;
+  }
+
+  /**
+   * Gets the crn.
+   *
+   * The full Cloud Resource Name (CRN) associated with the instance. For more information about this format, see [Cloud
+   * Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
+   *
+   * @return the crn
+   */
+  public String getCrn() {
+    return crn;
+  }
+
+  /**
    * Gets the state.
    *
    * The current state of the instance. For example, if the instance is deleted, it will return removed.
@@ -232,7 +372,7 @@ public class ResourceInstance extends GenericModel {
   /**
    * Gets the type.
    *
-   * The type of the instance, e.g. `service_instance`.
+   * The type of the instance, for example, `service_instance`.
    *
    * @return the type
    */
@@ -243,7 +383,7 @@ public class ResourceInstance extends GenericModel {
   /**
    * Gets the subType.
    *
-   * The sub-type of instance, e.g. `cfaas`.
+   * The sub-type of instance, for example, `cfaas`.
    *
    * @return the subType
    */
@@ -252,37 +392,14 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
-   * Gets the allowCleanup.
+   * Gets the resourceId.
    *
-   * A boolean that dictates if the resource instance should be deleted (cleaned up) during the processing of a region
-   * instance delete call.
+   * The unique ID of the offering. This value is provided by and stored in the global catalog.
    *
-   * @return the allowCleanup
+   * @return the resourceId
    */
-  public Boolean isAllowCleanup() {
-    return allowCleanup;
-  }
-
-  /**
-   * Gets the locked.
-   *
-   * A boolean that dictates if the resource instance is locked or not.
-   *
-   * @return the locked
-   */
-  public Boolean isLocked() {
-    return locked;
-  }
-
-  /**
-   * Gets the lastOperation.
-   *
-   * The status of the last operation requested on the instance.
-   *
-   * @return the lastOperation
-   */
-  public Map<String, Object> getLastOperation() {
-    return lastOperation;
+  public String getResourceId() {
+    return resourceId;
   }
 
   /**
@@ -297,25 +414,14 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
-   * Gets the planHistory.
+   * Gets the lastOperation.
    *
-   * The plan history of the instance.
+   * The status of the last operation requested on the instance.
    *
-   * @return the planHistory
+   * @return the lastOperation
    */
-  public List<PlanHistoryItem> getPlanHistory() {
-    return planHistory;
-  }
-
-  /**
-   * Gets the extensions.
-   *
-   * Additional instance properties, contributed by the service and/or platform, are represented as key-value pairs.
-   *
-   * @return the extensions
-   */
-  public Map<String, Object> getExtensions() {
-    return extensions;
+  public Map<String, Object> getLastOperation() {
+    return lastOperation;
   }
 
   /**
@@ -352,113 +458,58 @@ public class ResourceInstance extends GenericModel {
   }
 
   /**
-   * Gets the createdAt.
+   * Gets the planHistory.
    *
-   * The date when the instance was created.
+   * The plan history of the instance.
    *
-   * @return the createdAt
+   * @return the planHistory
    */
-  public Date getCreatedAt() {
-    return createdAt;
+  public List<PlanHistoryItem> getPlanHistory() {
+    return planHistory;
   }
 
   /**
-   * Gets the createdBy.
+   * Gets the migrated.
    *
-   * The subject who created the instance.
+   * A boolean that dictates if the resource instance was migrated from a previous CF instance.
    *
-   * @return the createdBy
+   * @return the migrated
    */
-  public String getCreatedBy() {
-    return createdBy;
+  public Boolean isMigrated() {
+    return migrated;
   }
 
   /**
-   * Gets the updatedAt.
+   * Gets the extensions.
    *
-   * The date when the instance was last updated.
+   * Additional instance properties, contributed by the service and/or platform, are represented as key-value pairs.
    *
-   * @return the updatedAt
+   * @return the extensions
    */
-  public Date getUpdatedAt() {
-    return updatedAt;
+  public Map<String, Object> getExtensions() {
+    return extensions;
   }
 
   /**
-   * Gets the updatedBy.
+   * Gets the controlledBy.
    *
-   * The subject who updated the instance.
+   * The CRN of the resource that has control of the instance.
    *
-   * @return the updatedBy
+   * @return the controlledBy
    */
-  public String getUpdatedBy() {
-    return updatedBy;
+  public String getControlledBy() {
+    return controlledBy;
   }
 
   /**
-   * Gets the deletedAt.
+   * Gets the locked.
    *
-   * The date when the instance was deleted.
+   * A boolean that dictates if the resource instance is locked or not.
    *
-   * @return the deletedAt
+   * @return the locked
    */
-  public Date getDeletedAt() {
-    return deletedAt;
-  }
-
-  /**
-   * Gets the deletedBy.
-   *
-   * The subject who deleted the instance.
-   *
-   * @return the deletedBy
-   */
-  public String getDeletedBy() {
-    return deletedBy;
-  }
-
-  /**
-   * Gets the scheduledReclaimAt.
-   *
-   * The date when the instance was scheduled for reclamation.
-   *
-   * @return the scheduledReclaimAt
-   */
-  public Date getScheduledReclaimAt() {
-    return scheduledReclaimAt;
-  }
-
-  /**
-   * Gets the scheduledReclaimBy.
-   *
-   * The subject who initiated the instance reclamation.
-   *
-   * @return the scheduledReclaimBy
-   */
-  public String getScheduledReclaimBy() {
-    return scheduledReclaimBy;
-  }
-
-  /**
-   * Gets the restoredAt.
-   *
-   * The date when the instance under reclamation was restored.
-   *
-   * @return the restoredAt
-   */
-  public Date getRestoredAt() {
-    return restoredAt;
-  }
-
-  /**
-   * Gets the restoredBy.
-   *
-   * The subject who restored the instance back from reclamation.
-   *
-   * @return the restoredBy
-   */
-  public String getRestoredBy() {
-    return restoredBy;
+  public Boolean isLocked() {
+    return locked;
   }
 }
 

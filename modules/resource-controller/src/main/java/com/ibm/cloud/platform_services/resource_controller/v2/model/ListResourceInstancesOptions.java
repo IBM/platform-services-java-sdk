@@ -19,6 +19,28 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListResourceInstancesOptions extends GenericModel {
 
+  /**
+   * The state of the instance. If not specified, instances in state `active` and `provisioning` are returned.
+   */
+  public interface State {
+    /** active. */
+    String ACTIVE = "active";
+    /** provisioning. */
+    String PROVISIONING = "provisioning";
+    /** removed. */
+    String REMOVED = "removed";
+  }
+
+  /**
+   * Order of results.
+   */
+  public interface OrderDirection {
+    /** asc. */
+    String ASC = "asc";
+    /** desc. */
+    String DESC = "desc";
+  }
+
   protected String guid;
   protected String name;
   protected String resourceGroupId;
@@ -27,6 +49,8 @@ public class ListResourceInstancesOptions extends GenericModel {
   protected String type;
   protected String subType;
   protected String limit;
+  protected String state;
+  protected String orderDirection;
   protected String updatedFrom;
   protected String updatedTo;
 
@@ -42,6 +66,8 @@ public class ListResourceInstancesOptions extends GenericModel {
     private String type;
     private String subType;
     private String limit;
+    private String state;
+    private String orderDirection;
     private String updatedFrom;
     private String updatedTo;
 
@@ -54,6 +80,8 @@ public class ListResourceInstancesOptions extends GenericModel {
       this.type = listResourceInstancesOptions.type;
       this.subType = listResourceInstancesOptions.subType;
       this.limit = listResourceInstancesOptions.limit;
+      this.state = listResourceInstancesOptions.state;
+      this.orderDirection = listResourceInstancesOptions.orderDirection;
       this.updatedFrom = listResourceInstancesOptions.updatedFrom;
       this.updatedTo = listResourceInstancesOptions.updatedTo;
     }
@@ -162,6 +190,28 @@ public class ListResourceInstancesOptions extends GenericModel {
     }
 
     /**
+     * Set the state.
+     *
+     * @param state the state
+     * @return the ListResourceInstancesOptions builder
+     */
+    public Builder state(String state) {
+      this.state = state;
+      return this;
+    }
+
+    /**
+     * Set the orderDirection.
+     *
+     * @param orderDirection the orderDirection
+     * @return the ListResourceInstancesOptions builder
+     */
+    public Builder orderDirection(String orderDirection) {
+      this.orderDirection = orderDirection;
+      return this;
+    }
+
+    /**
      * Set the updatedFrom.
      *
      * @param updatedFrom the updatedFrom
@@ -193,6 +243,8 @@ public class ListResourceInstancesOptions extends GenericModel {
     type = builder.type;
     subType = builder.subType;
     limit = builder.limit;
+    state = builder.state;
+    orderDirection = builder.orderDirection;
     updatedFrom = builder.updatedFrom;
     updatedTo = builder.updatedTo;
   }
@@ -266,7 +318,7 @@ public class ListResourceInstancesOptions extends GenericModel {
   /**
    * Gets the type.
    *
-   * The type of the instance. For example, `service_instance`.
+   * The type of the instance, for example, `service_instance`.
    *
    * @return the type
    */
@@ -277,7 +329,7 @@ public class ListResourceInstancesOptions extends GenericModel {
   /**
    * Gets the subType.
    *
-   * The sub-type of instance, e.g. `cfaas`.
+   * The sub-type of instance, for example, `cfaas`.
    *
    * @return the subType
    */
@@ -294,6 +346,28 @@ public class ListResourceInstancesOptions extends GenericModel {
    */
   public String limit() {
     return limit;
+  }
+
+  /**
+   * Gets the state.
+   *
+   * The state of the instance. If not specified, instances in state `active` and `provisioning` are returned.
+   *
+   * @return the state
+   */
+  public String state() {
+    return state;
+  }
+
+  /**
+   * Gets the orderDirection.
+   *
+   * Order of results.
+   *
+   * @return the orderDirection
+   */
+  public String orderDirection() {
+    return orderDirection;
   }
 
   /**

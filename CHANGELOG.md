@@ -1,3 +1,10 @@
+## [0.18.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.0...v0.18.1) (2021-03-31)
+
+
+### Bug Fixes
+
+* **resource controller:** update sdk after recent api changes ([#91](https://github.com/IBM/platform-services-node-sdk/issues/91)) ([c01a258](https://github.com/IBM/platform-services-node-sdk/commit/c01a258054a35c593541aa3deeb1d9dbc831659a))
+
 # [0.18.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.17.18...v0.18.0) (2021-03-26)
 
 

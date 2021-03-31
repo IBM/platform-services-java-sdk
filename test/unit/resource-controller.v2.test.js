@@ -112,6 +112,8 @@ describe('ResourceControllerV2', () => {
         const type = 'testString';
         const subType = 'testString';
         const limit = 'testString';
+        const state = 'active';
+        const orderDirection = 'asc';
         const updatedFrom = '2019-01-08T00:00:00.000Z';
         const updatedTo = '2019-01-08T00:00:00.000Z';
         const params = {
@@ -123,6 +125,8 @@ describe('ResourceControllerV2', () => {
           type: type,
           subType: subType,
           limit: limit,
+          state: state,
+          orderDirection: orderDirection,
           updatedFrom: updatedFrom,
           updatedTo: updatedTo,
         };
@@ -149,6 +153,8 @@ describe('ResourceControllerV2', () => {
         expect(options.qs['type']).toEqual(type);
         expect(options.qs['sub_type']).toEqual(subType);
         expect(options.qs['limit']).toEqual(limit);
+        expect(options.qs['state']).toEqual(state);
+        expect(options.qs['order_direction']).toEqual(orderDirection);
         expect(options.qs['updated_from']).toEqual(updatedFrom);
         expect(options.qs['updated_to']).toEqual(updatedTo);
       });

@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9ae61cfc-20210302-143858
+ * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
 
@@ -107,9 +107,12 @@ class ResourceControllerV2 extends BaseService {
    * global catalog.
    * @param {string} [params.resourcePlanId] - The unique ID of the plan associated with the offering. This value is
    * provided by and stored in the global catalog.
-   * @param {string} [params.type] - The type of the instance. For example, `service_instance`.
-   * @param {string} [params.subType] - The sub-type of instance, e.g. `cfaas`.
+   * @param {string} [params.type] - The type of the instance, for example, `service_instance`.
+   * @param {string} [params.subType] - The sub-type of instance, for example, `cfaas`.
    * @param {string} [params.limit] - Limit on how many items should be returned.
+   * @param {string} [params.state] - The state of the instance. If not specified, instances in state `active` and
+   * `provisioning` are returned.
+   * @param {string} [params.orderDirection] - Order of results.
    * @param {string} [params.updatedFrom] - Start date inclusive filter.
    * @param {string} [params.updatedTo] - End date inclusive filter.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -127,6 +130,8 @@ class ResourceControllerV2 extends BaseService {
       'type': _params.type,
       'sub_type': _params.subType,
       'limit': _params.limit,
+      'state': _params.state,
+      'order_direction': _params.orderDirection,
       'updated_from': _params.updatedFrom,
       'updated_to': _params.updatedTo
     };
@@ -769,8 +774,8 @@ class ResourceControllerV2 extends BaseService {
    * @param {string} [params.resourceGroupId] - Short ID of the resource group.
    * @param {string} [params.resourceId] - The unique ID of the offering (service name). This value is provided by and
    * stored in the global catalog.
-   * @param {string} [params.regionBindingId] - Short ID of the binding in the specific targeted environment, e.g.
-   * service_binding_id in a given IBM Cloud environment.
+   * @param {string} [params.regionBindingId] - Short ID of the binding in the specific targeted environment, for
+   * example, service_binding_id in a given IBM Cloud environment.
    * @param {string} [params.limit] - Limit on how many items should be returned.
    * @param {string} [params.updatedFrom] - Start date inclusive filter.
    * @param {string} [params.updatedTo] - End date inclusive filter.
@@ -816,8 +821,8 @@ class ResourceControllerV2 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.source - The short or long ID of resource alias.
-   * @param {string} params.target - The CRN of application to bind to in a specific environment, e.g. Dallas YP, CFEE
-   * instance.
+   * @param {string} params.target - The CRN of application to bind to in a specific environment, for example, Dallas
+   * YP, CFEE instance.
    * @param {string} [params.name] - The name of the binding. Must be 180 characters or less and cannot include any
    * special characters other than `(space) - . _ :`.
    * @param {ResourceBindingPostParameters} [params.parameters] - Configuration options represented as key-value pairs.
@@ -1059,8 +1064,8 @@ class ResourceControllerV2 extends BaseService {
    * @param {string} params.name - The name of the alias. Must be 180 characters or less and cannot include any special
    * characters other than `(space) - . _ :`.
    * @param {string} params.source - The short or long ID of resource instance.
-   * @param {string} params.target - The CRN of target name(space) in a specific environment, e.g. space in Dallas YP,
-   * CFEE instance etc.
+   * @param {string} params.target - The CRN of target name(space) in a specific environment, for example, space in
+   * Dallas YP, CFEE instance etc.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>>}
    */
@@ -1412,17 +1417,36 @@ namespace ResourceControllerV2 {
      *  catalog.
      */
     resourcePlanId?: string;
-    /** The type of the instance. For example, `service_instance`. */
+    /** The type of the instance, for example, `service_instance`. */
     type?: string;
-    /** The sub-type of instance, e.g. `cfaas`. */
+    /** The sub-type of instance, for example, `cfaas`. */
     subType?: string;
     /** Limit on how many items should be returned. */
     limit?: string;
+    /** The state of the instance. If not specified, instances in state `active` and `provisioning` are returned. */
+    state?: ListResourceInstancesConstants.State | string;
+    /** Order of results. */
+    orderDirection?: ListResourceInstancesConstants.OrderDirection | string;
     /** Start date inclusive filter. */
     updatedFrom?: string;
     /** End date inclusive filter. */
     updatedTo?: string;
     headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `listResourceInstances` operation. */
+  export namespace ListResourceInstancesConstants {
+    /** The state of the instance. If not specified, instances in state `active` and `provisioning` are returned. */
+    export enum State {
+      ACTIVE = 'active',
+      PROVISIONING = 'provisioning',
+      REMOVED = 'removed',
+    }
+    /** Order of results. */
+    export enum OrderDirection {
+      ASC = 'asc',
+      DESC = 'desc',
+    }
   }
 
   /** Parameters for the `createResourceInstance` operation. */
@@ -1592,8 +1616,8 @@ namespace ResourceControllerV2 {
     resourceGroupId?: string;
     /** The unique ID of the offering (service name). This value is provided by and stored in the global catalog. */
     resourceId?: string;
-    /** Short ID of the binding in the specific targeted environment, e.g. service_binding_id in a given IBM Cloud
-     *  environment.
+    /** Short ID of the binding in the specific targeted environment, for example, service_binding_id in a given IBM
+     *  Cloud environment.
      */
     regionBindingId?: string;
     /** Limit on how many items should be returned. */
@@ -1609,7 +1633,7 @@ namespace ResourceControllerV2 {
   export interface CreateResourceBindingParams {
     /** The short or long ID of resource alias. */
     source: string;
-    /** The CRN of application to bind to in a specific environment, e.g. Dallas YP, CFEE instance. */
+    /** The CRN of application to bind to in a specific environment, for example, Dallas YP, CFEE instance. */
     target: string;
     /** The name of the binding. Must be 180 characters or less and cannot include any special characters other than
      *  `(space) - . _ :`.
@@ -1682,7 +1706,7 @@ namespace ResourceControllerV2 {
     name: string;
     /** The short or long ID of resource instance. */
     source: string;
-    /** The CRN of target name(space) in a specific environment, e.g. space in Dallas YP, CFEE instance etc. */
+    /** The CRN of target name(space) in a specific environment, for example, space in Dallas YP, CFEE instance etc. */
     target: string;
     headers?: OutgoingHttpHeaders;
   }
@@ -1823,36 +1847,8 @@ namespace ResourceControllerV2 {
      *  indentifier managed by the resource controller that corresponds to the alias.
      */
     guid?: string;
-    /** The full Cloud Resource Name (CRN) associated with the alias. For more information about this format, see
-     *  [Cloud Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-     */
-    crn?: string;
     /** When you created a new alias, a relative URL path is created identifying the location of the alias. */
     url?: string;
-    /** The human-readable name of the alias. */
-    name?: string;
-    /** An alpha-numeric value identifying the account ID. */
-    account_id?: string;
-    /** The short ID of the resource group. */
-    resource_group_id?: string;
-    /** The long ID (full CRN) of the resource group. */
-    resource_group_crn?: string;
-    /** The CRN of the target namespace in the specific environment. */
-    target_crn?: string;
-    /** The state of the alias. */
-    state?: string;
-    /** The short ID of the resource instance that is being aliased. */
-    resource_instance_id?: string;
-    /** The short ID of the instance in the specific target environment, e.g. `service_instance_id` in a given IBM
-     *  Cloud environment.
-     */
-    region_instance_id?: string;
-    /** The relative path to the instance. */
-    resource_instance_url?: string;
-    /** The relative path to the resource bindings for the alias. */
-    resource_bindings_url?: string;
-    /** The relative path to the resource keys for the alias. */
-    resource_keys_url?: string;
     /** The date when the alias was created. */
     created_at?: string;
     /** The date when the alias was last updated. */
@@ -1865,16 +1861,48 @@ namespace ResourceControllerV2 {
     updated_by?: string;
     /** The subject who deleted the alias. */
     deleted_by?: string;
+    /** The human-readable name of the alias. */
+    name?: string;
+    /** The ID of the resource instance that is being aliased. */
+    resource_instance_id?: string;
+    /** The CRN of the target namespace in the specific environment. */
+    target_crn?: string;
+    /** An alpha-numeric value identifying the account ID. */
+    account_id?: string;
+    /** The unique ID of the offering. This value is provided by and stored in the global catalog. */
+    resource_id?: string;
+    /** The ID of the resource group. */
+    resource_group_id?: string;
+    /** The CRN of the alias. For more information about this format, see [Cloud Resource
+     *  Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
+     */
+    crn?: string;
+    /** The ID of the instance in the specific target environment, for example, `service_instance_id` in a given IBM
+     *  Cloud environment.
+     */
+    region_instance_id?: string;
+    /** The CRN of the instance in the specific target environment. */
+    region_instance_crn?: string;
+    /** The state of the alias. */
+    state?: string;
+    /** A boolean that dictates if the alias was migrated from a previous CF instance. */
+    migrated?: boolean;
+    /** The relative path to the resource instance. */
+    resource_instance_url?: string;
+    /** The relative path to the resource bindings for the alias. */
+    resource_bindings_url?: string;
+    /** The relative path to the resource keys for the alias. */
+    resource_keys_url?: string;
   }
 
   /** A list of resource aliases. */
   export interface ResourceAliasesList {
+    /** The number of resource aliases in `resources`. */
+    rows_count: number;
     /** The URL for requesting the next page of results. */
     next_url: string;
     /** A list of resource aliases. */
     resources: ResourceAlias[];
-    /** The number of resource aliases in `resources`. */
-    rows_count: number;
   }
 
   /** A resource binding. */
@@ -1885,38 +1913,8 @@ namespace ResourceControllerV2 {
      *  internal identifier managed by the resource controller that corresponds to the binding.
      */
     guid?: string;
-    /** The full Cloud Resource Name (CRN) associated with the binding. For more information about this format, see
-     *  [Cloud Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-     */
-    crn?: string;
     /** When you provision a new binding, a relative URL path is created identifying the location of the binding. */
     url?: string;
-    /** The human-readable name of the binding. */
-    name?: string;
-    /** An alpha-numeric value identifying the account ID. */
-    account_id?: string;
-    /** The short ID of the resource group. */
-    resource_group_id?: string;
-    /** The CRN of resource alias associated to the binding. */
-    source_crn?: string;
-    /** The CRN of target resource, e.g. application, in a specific environment. */
-    target_crn?: string;
-    /** The role CRN. */
-    role?: string;
-    /** The short ID of the binding in specific targeted environment, e.g. `service_binding_id` in a given IBM Cloud
-     *  environment.
-     */
-    region_binding_id?: string;
-    /** The state of the binding. */
-    state?: string;
-    /** The credentials for the binding. Additional key-value pairs are passed through from the resource brokers.
-     *  For additional details, see the service’s documentation.
-     */
-    credentials?: Credentials;
-    /** Specifies whether the binding’s credentials support IAM. */
-    iam_compatible?: boolean;
-    /** The relative path to the resource alias that this binding is associated with. */
-    resource_alias_url?: string;
     /** The date when the binding was created. */
     created_at?: string;
     /** The date when the binding was last updated. */
@@ -1929,6 +1927,40 @@ namespace ResourceControllerV2 {
     updated_by?: string;
     /** The subject who deleted the binding. */
     deleted_by?: string;
+    /** The CRN of resource alias associated to the binding. */
+    source_crn?: string;
+    /** The CRN of target resource, for example, application, in a specific environment. */
+    target_crn?: string;
+    /** The full Cloud Resource Name (CRN) associated with the binding. For more information about this format, see
+     *  [Cloud Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
+     */
+    crn?: string;
+    /** The ID of the binding in the specific target environment, for example, `service_binding_id` in a given IBM
+     *  Cloud environment.
+     */
+    region_binding_id?: string;
+    /** The CRN of the binding in the specific target environment. */
+    region_binding_crn?: string;
+    /** The human-readable name of the binding. */
+    name?: string;
+    /** An alpha-numeric value identifying the account ID. */
+    account_id?: string;
+    /** The ID of the resource group. */
+    resource_group_id?: string;
+    /** The state of the binding. */
+    state?: string;
+    /** The credentials for the binding. Additional key-value pairs are passed through from the resource brokers.
+     *  For additional details, see the service’s documentation.
+     */
+    credentials?: Credentials;
+    /** Specifies whether the binding’s credentials support IAM. */
+    iam_compatible?: boolean;
+    /** The unique ID of the offering. This value is provided by and stored in the global catalog. */
+    resource_id?: string;
+    /** A boolean that dictates if the alias was migrated from a previous CF instance. */
+    migrated?: boolean;
+    /** The relative path to the resource alias that this binding is associated with. */
+    resource_alias_url?: string;
   }
 
   /** Configuration options represented as key-value pairs. Service defined options are passed through to the target resource brokers, whereas platform defined options are not. */
@@ -1941,12 +1973,12 @@ namespace ResourceControllerV2 {
 
   /** A list of resource bindings. */
   export interface ResourceBindingsList {
+    /** The number of resource bindings in `resources`. */
+    rows_count: number;
     /** The URL for requesting the next page of results. */
     next_url: string;
     /** A list of resource bindings. */
     resources: ResourceBinding[];
-    /** The number of resource bindings in `resources`. */
-    rows_count: number;
   }
 
   /** A resource instance. */
@@ -1957,90 +1989,98 @@ namespace ResourceControllerV2 {
      *  internal identifier managed by the resource controller that corresponds to the instance.
      */
     guid?: string;
-    /** The full Cloud Resource Name (CRN) associated with the instance. For more information about this format, see
-     *  [Cloud Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-     */
-    crn?: string;
     /** When you provision a new resource, a relative URL path is created identifying the location of the instance. */
     url?: string;
+    /** The date when the instance was created. */
+    created_at?: string;
+    /** The date when the instance was last updated. */
+    updated_at?: string;
+    /** The date when the instance was deleted. */
+    deleted_at?: string;
+    /** The subject who created the instance. */
+    created_by?: string;
+    /** The subject who updated the instance. */
+    updated_by?: string;
+    /** The subject who deleted the instance. */
+    deleted_by?: string;
+    /** The date when the instance was scheduled for reclamation. */
+    scheduled_reclaim_at?: string;
+    /** The date when the instance under reclamation was restored. */
+    restored_at?: string;
+    /** The subject who restored the instance back from reclamation. */
+    restored_by?: string;
+    /** The subject who initiated the instance reclamation. */
+    scheduled_reclaim_by?: string;
     /** The human-readable name of the instance. */
     name?: string;
+    /** The deployment location where the instance was provisioned. */
+    region_id?: string;
     /** An alpha-numeric value identifying the account ID. */
     account_id?: string;
-    /** The short ID of the resource group. */
-    resource_group_id?: string;
-    /** The long ID (full CRN) of the resource group. */
-    resource_group_crn?: string;
-    /** The unique ID of the offering. This value is provided by and stored in the global catalog. */
-    resource_id?: string;
+    /** The unique ID of the reseller channel where the instance was provisioned from. */
+    reseller_channel_id?: string;
     /** The unique ID of the plan associated with the offering. This value is provided by and stored in the global
      *  catalog.
      */
     resource_plan_id?: string;
-    /** The full deployment CRN as defined in the global catalog. The Cloud Resource Name (CRN) of the deployment
+    /** The ID of the resource group. */
+    resource_group_id?: string;
+    /** The CRN of the resource group. */
+    resource_group_crn?: string;
+    /** The deployment CRN as defined in the global catalog. The Cloud Resource Name (CRN) of the deployment
      *  location where the instance is provisioned.
      */
     target_crn?: string;
     /** The current configuration parameters of the instance. */
     parameters?: JsonObject;
-    /** The current state of the instance. For example, if the instance is deleted, it will return removed. */
-    state?: string;
-    /** The type of the instance, e.g. `service_instance`. */
-    type?: string;
-    /** The sub-type of instance, e.g. `cfaas`. */
-    sub_type?: string;
     /** A boolean that dictates if the resource instance should be deleted (cleaned up) during the processing of a
      *  region instance delete call.
      */
     allow_cleanup?: boolean;
-    /** A boolean that dictates if the resource instance is locked or not. */
-    locked?: boolean;
-    /** The status of the last operation requested on the instance. */
-    last_operation?: JsonObject;
+    /** The full Cloud Resource Name (CRN) associated with the instance. For more information about this format, see
+     *  [Cloud Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
+     */
+    crn?: string;
+    /** The current state of the instance. For example, if the instance is deleted, it will return removed. */
+    state?: string;
+    /** The type of the instance, for example, `service_instance`. */
+    type?: string;
+    /** The sub-type of instance, for example, `cfaas`. */
+    sub_type?: string;
+    /** The unique ID of the offering. This value is provided by and stored in the global catalog. */
+    resource_id?: string;
     /** The resource-broker-provided URL to access administrative features of the instance. */
     dashboard_url?: string;
-    /** The plan history of the instance. */
-    plan_history?: PlanHistoryItem[];
-    /** Additional instance properties, contributed by the service and/or platform, are represented as key-value
-     *  pairs.
-     */
-    extensions?: JsonObject;
+    /** The status of the last operation requested on the instance. */
+    last_operation?: JsonObject;
     /** The relative path to the resource aliases for the instance. */
     resource_aliases_url?: string;
     /** The relative path to the resource bindings for the instance. */
     resource_bindings_url?: string;
     /** The relative path to the resource keys for the instance. */
     resource_keys_url?: string;
-    /** The date when the instance was created. */
-    created_at?: string;
-    /** The subject who created the instance. */
-    created_by?: string;
-    /** The date when the instance was last updated. */
-    updated_at?: string;
-    /** The subject who updated the instance. */
-    updated_by?: string;
-    /** The date when the instance was deleted. */
-    deleted_at?: string;
-    /** The subject who deleted the instance. */
-    deleted_by?: string;
-    /** The date when the instance was scheduled for reclamation. */
-    scheduled_reclaim_at?: string;
-    /** The subject who initiated the instance reclamation. */
-    scheduled_reclaim_by?: string;
-    /** The date when the instance under reclamation was restored. */
-    restored_at?: string;
-    /** The subject who restored the instance back from reclamation. */
-    restored_by?: string;
+    /** The plan history of the instance. */
+    plan_history?: PlanHistoryItem[];
+    /** A boolean that dictates if the resource instance was migrated from a previous CF instance. */
+    migrated?: boolean;
+    /** Additional instance properties, contributed by the service and/or platform, are represented as key-value
+     *  pairs.
+     */
+    extensions?: JsonObject;
+    /** The CRN of the resource that has control of the instance. */
+    controlled_by?: string;
+    /** A boolean that dictates if the resource instance is locked or not. */
+    locked?: boolean;
   }
 
   /** A list of resource instances. */
   export interface ResourceInstancesList {
+    /** The number of resource instances in `resources`. */
+    rows_count: number;
     /** The URL for requesting the next page of results. */
     next_url: string;
     /** A list of resource instances. */
     resources: ResourceInstance[];
-    /** The number of resource instances in `resources`. */
-    rows_count: number;
   }
 
   /** A resource key. */
@@ -2051,32 +2091,8 @@ namespace ResourceControllerV2 {
      *  identifier managed by the resource controller that corresponds to the key.
      */
     guid?: string;
-    /** The full Cloud Resource Name (CRN) associated with the key. For more information about this format, see
-     *  [Cloud Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-     */
-    crn?: string;
     /** When you created a new key, a relative URL path is created identifying the location of the key. */
     url?: string;
-    /** The human-readable name of the key. */
-    name?: string;
-    /** An alpha-numeric value identifying the account ID. */
-    account_id?: string;
-    /** The short ID of the resource group. */
-    resource_group_id?: string;
-    /** The CRN of resource instance or alias associated to the key. */
-    source_crn?: string;
-    /** The role CRN. */
-    role?: string;
-    /** The state of the key. */
-    state?: string;
-    /** The credentials for the key. Additional key-value pairs are passed through from the resource brokers.  Refer
-     *  to service’s documentation for additional details.
-     */
-    credentials?: Credentials;
-    /** Specifies whether the key’s credentials support IAM. */
-    iam_compatible?: boolean;
-    /** The relative path to the resource. */
-    resource_instance_url?: string;
     /** The date when the key was created. */
     created_at?: string;
     /** The date when the key was last updated. */
@@ -2089,6 +2105,34 @@ namespace ResourceControllerV2 {
     updated_by?: string;
     /** The subject who deleted the key. */
     deleted_by?: string;
+    /** The CRN of resource instance or alias associated to the key. */
+    source_crn?: string;
+    /** The human-readable name of the key. */
+    name?: string;
+    /** The full Cloud Resource Name (CRN) associated with the key. For more information about this format, see
+     *  [Cloud Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
+     */
+    crn?: string;
+    /** The state of the key. */
+    state?: string;
+    /** An alpha-numeric value identifying the account ID. */
+    account_id?: string;
+    /** The ID of the resource group. */
+    resource_group_id?: string;
+    /** The unique ID of the offering. This value is provided by and stored in the global catalog. */
+    resource_id?: string;
+    /** The credentials for the key. Additional key-value pairs are passed through from the resource brokers.  Refer
+     *  to service’s documentation for additional details.
+     */
+    credentials?: Credentials;
+    /** Specifies whether the key’s credentials support IAM. */
+    iam_compatible?: boolean;
+    /** A boolean that dictates if the alias was migrated from a previous CF instance. */
+    migrated?: boolean;
+    /** The relative path to the resource. */
+    resource_instance_url?: string;
+    /** The relative path to the resource alias that this binding is associated with. */
+    resource_alias_url?: string;
   }
 
   /** Configuration options represented as key-value pairs. Service defined options are passed through to the target resource brokers, whereas platform defined options are not. */
@@ -2101,12 +2145,12 @@ namespace ResourceControllerV2 {
 
   /** A list of resource keys. */
   export interface ResourceKeysList {
+    /** The number of resource keys in `resources`. */
+    rows_count: number;
     /** The URL for requesting the next page of results. */
     next_url: string;
     /** A list of resource keys. */
     resources: ResourceKey[];
-    /** The number of resource keys in `resources`. */
-    rows_count: number;
   }
 
 }

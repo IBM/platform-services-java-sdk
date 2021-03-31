@@ -11,7 +11,7 @@
   -->
 
   <module name="Checker">
-
+  <module name="SuppressWarningsFilter" />
   <module name="NewlineAtEndOfFile"/>
   <module name="FileLength">
     <property name="max" value="2500"/>
@@ -36,11 +36,13 @@
     <property name="message" value="Space needed around ':' character."/>
   </module>
 
+  <module name="LineLength">
+    <property name="max" value="300"/>
+  </module>
+
   <module name="TreeWalker">
 
-    <module name="LineLength">
-        <property name="max" value="300"/>
-    </module>
+    <module name="SuppressWarningsHolder" />
 
     <!-- Checks for Javadoc comments.                     -->
     <!-- See http://checkstyle.sf.net/config_javadoc.html -->

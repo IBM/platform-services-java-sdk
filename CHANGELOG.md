@@ -1,3 +1,10 @@
+## [0.18.1](https://github.com/IBM/platform-services-java-sdk/compare/0.18.0...0.18.1) (2021-03-31)
+
+
+### Bug Fixes
+
+* **resource controller:** update SDK after recent api changes ([#91](https://github.com/IBM/platform-services-java-sdk/issues/91)) ([699e9c8](https://github.com/IBM/platform-services-java-sdk/commit/699e9c8683bf032f10e37fa1a27bbbe733e61164))
+
 # [0.18.0](https://github.com/IBM/platform-services-java-sdk/compare/0.17.17...0.18.0) (2021-03-26)
 
 

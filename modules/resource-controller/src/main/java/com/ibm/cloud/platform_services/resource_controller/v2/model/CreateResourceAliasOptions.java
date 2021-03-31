@@ -146,7 +146,7 @@ public class CreateResourceAliasOptions extends GenericModel {
   /**
    * Gets the target.
    *
-   * The CRN of target name(space) in a specific environment, e.g. space in Dallas YP, CFEE instance etc.
+   * The CRN of target name(space) in a specific environment, for example, space in Dallas YP, CFEE instance etc.
    *
    * @return the target
    */

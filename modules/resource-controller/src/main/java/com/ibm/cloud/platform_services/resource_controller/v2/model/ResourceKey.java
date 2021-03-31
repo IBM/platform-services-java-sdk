@@ -24,22 +24,7 @@ public class ResourceKey extends GenericModel {
 
   protected String id;
   protected String guid;
-  protected String crn;
   protected String url;
-  protected String name;
-  @SerializedName("account_id")
-  protected String accountId;
-  @SerializedName("resource_group_id")
-  protected String resourceGroupId;
-  @SerializedName("source_crn")
-  protected String sourceCrn;
-  protected String role;
-  protected String state;
-  protected Credentials credentials;
-  @SerializedName("iam_compatible")
-  protected Boolean iamCompatible;
-  @SerializedName("resource_instance_url")
-  protected String resourceInstanceUrl;
   @SerializedName("created_at")
   protected Date createdAt;
   @SerializedName("updated_at")
@@ -52,6 +37,25 @@ public class ResourceKey extends GenericModel {
   protected String updatedBy;
   @SerializedName("deleted_by")
   protected String deletedBy;
+  @SerializedName("source_crn")
+  protected String sourceCrn;
+  protected String name;
+  protected String crn;
+  protected String state;
+  @SerializedName("account_id")
+  protected String accountId;
+  @SerializedName("resource_group_id")
+  protected String resourceGroupId;
+  @SerializedName("resource_id")
+  protected String resourceId;
+  protected Credentials credentials;
+  @SerializedName("iam_compatible")
+  protected Boolean iamCompatible;
+  protected Boolean migrated;
+  @SerializedName("resource_instance_url")
+  protected String resourceInstanceUrl;
+  @SerializedName("resource_alias_url")
+  protected String resourceAliasUrl;
 
   /**
    * Gets the id.
@@ -77,18 +81,6 @@ public class ResourceKey extends GenericModel {
   }
 
   /**
-   * Gets the crn.
-   *
-   * The full Cloud Resource Name (CRN) associated with the key. For more information about this format, see [Cloud
-   * Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
-   *
-   * @return the crn
-   */
-  public String getCrn() {
-    return crn;
-  }
-
-  /**
    * Gets the url.
    *
    * When you created a new key, a relative URL path is created identifying the location of the key.
@@ -97,106 +89,6 @@ public class ResourceKey extends GenericModel {
    */
   public String getUrl() {
     return url;
-  }
-
-  /**
-   * Gets the name.
-   *
-   * The human-readable name of the key.
-   *
-   * @return the name
-   */
-  public String getName() {
-    return name;
-  }
-
-  /**
-   * Gets the accountId.
-   *
-   * An alpha-numeric value identifying the account ID.
-   *
-   * @return the accountId
-   */
-  public String getAccountId() {
-    return accountId;
-  }
-
-  /**
-   * Gets the resourceGroupId.
-   *
-   * The short ID of the resource group.
-   *
-   * @return the resourceGroupId
-   */
-  public String getResourceGroupId() {
-    return resourceGroupId;
-  }
-
-  /**
-   * Gets the sourceCrn.
-   *
-   * The CRN of resource instance or alias associated to the key.
-   *
-   * @return the sourceCrn
-   */
-  public String getSourceCrn() {
-    return sourceCrn;
-  }
-
-  /**
-   * Gets the role.
-   *
-   * The role CRN.
-   *
-   * @return the role
-   */
-  public String getRole() {
-    return role;
-  }
-
-  /**
-   * Gets the state.
-   *
-   * The state of the key.
-   *
-   * @return the state
-   */
-  public String getState() {
-    return state;
-  }
-
-  /**
-   * Gets the credentials.
-   *
-   * The credentials for the key. Additional key-value pairs are passed through from the resource brokers.  Refer to
-   * service’s documentation for additional details.
-   *
-   * @return the credentials
-   */
-  public Credentials getCredentials() {
-    return credentials;
-  }
-
-  /**
-   * Gets the iamCompatible.
-   *
-   * Specifies whether the key’s credentials support IAM.
-   *
-   * @return the iamCompatible
-   */
-  public Boolean isIamCompatible() {
-    return iamCompatible;
-  }
-
-  /**
-   * Gets the resourceInstanceUrl.
-   *
-   * The relative path to the resource.
-   *
-   * @return the resourceInstanceUrl
-   */
-  public String getResourceInstanceUrl() {
-    return resourceInstanceUrl;
   }
 
   /**
@@ -263,6 +155,140 @@ public class ResourceKey extends GenericModel {
    */
   public String getDeletedBy() {
     return deletedBy;
+  }
+
+  /**
+   * Gets the sourceCrn.
+   *
+   * The CRN of resource instance or alias associated to the key.
+   *
+   * @return the sourceCrn
+   */
+  public String getSourceCrn() {
+    return sourceCrn;
+  }
+
+  /**
+   * Gets the name.
+   *
+   * The human-readable name of the key.
+   *
+   * @return the name
+   */
+  public String getName() {
+    return name;
+  }
+
+  /**
+   * Gets the crn.
+   *
+   * The full Cloud Resource Name (CRN) associated with the key. For more information about this format, see [Cloud
+   * Resource Names](https://cloud.ibm.com/docs/overview?topic=overview-crn).
+   *
+   * @return the crn
+   */
+  public String getCrn() {
+    return crn;
+  }
+
+  /**
+   * Gets the state.
+   *
+   * The state of the key.
+   *
+   * @return the state
+   */
+  public String getState() {
+    return state;
+  }
+
+  /**
+   * Gets the accountId.
+   *
+   * An alpha-numeric value identifying the account ID.
+   *
+   * @return the accountId
+   */
+  public String getAccountId() {
+    return accountId;
+  }
+
+  /**
+   * Gets the resourceGroupId.
+   *
+   * The ID of the resource group.
+   *
+   * @return the resourceGroupId
+   */
+  public String getResourceGroupId() {
+    return resourceGroupId;
+  }
+
+  /**
+   * Gets the resourceId.
+   *
+   * The unique ID of the offering. This value is provided by and stored in the global catalog.
+   *
+   * @return the resourceId
+   */
+  public String getResourceId() {
+    return resourceId;
+  }
+
+  /**
+   * Gets the credentials.
+   *
+   * The credentials for the key. Additional key-value pairs are passed through from the resource brokers.  Refer to
+   * service’s documentation for additional details.
+   *
+   * @return the credentials
+   */
+  public Credentials getCredentials() {
+    return credentials;
+  }
+
+  /**
+   * Gets the iamCompatible.
+   *
+   * Specifies whether the key’s credentials support IAM.
+   *
+   * @return the iamCompatible
+   */
+  public Boolean isIamCompatible() {
+    return iamCompatible;
+  }
+
+  /**
+   * Gets the migrated.
+   *
+   * A boolean that dictates if the alias was migrated from a previous CF instance.
+   *
+   * @return the migrated
+   */
+  public Boolean isMigrated() {
+    return migrated;
+  }
+
+  /**
+   * Gets the resourceInstanceUrl.
+   *
+   * The relative path to the resource.
+   *
+   * @return the resourceInstanceUrl
+   */
+  public String getResourceInstanceUrl() {
+    return resourceInstanceUrl;
+  }
+
+  /**
+   * Gets the resourceAliasUrl.
+   *
+   * The relative path to the resource alias that this binding is associated with.
+   *
+   * @return the resourceAliasUrl
+   */
+  public String getResourceAliasUrl() {
+    return resourceAliasUrl;
   }
 }
 

@@ -35,24 +35,26 @@ public class ResourceBindingTest {
     ResourceBinding resourceBindingModel = new ResourceBinding();
     assertNull(resourceBindingModel.getId());
     assertNull(resourceBindingModel.getGuid());
-    assertNull(resourceBindingModel.getCrn());
     assertNull(resourceBindingModel.getUrl());
-    assertNull(resourceBindingModel.getName());
-    assertNull(resourceBindingModel.getAccountId());
-    assertNull(resourceBindingModel.getResourceGroupId());
-    assertNull(resourceBindingModel.getSourceCrn());
-    assertNull(resourceBindingModel.getTargetCrn());
-    assertNull(resourceBindingModel.getRole());
-    assertNull(resourceBindingModel.getRegionBindingId());
-    assertNull(resourceBindingModel.getState());
-    assertNull(resourceBindingModel.getCredentials());
-    assertNull(resourceBindingModel.isIamCompatible());
-    assertNull(resourceBindingModel.getResourceAliasUrl());
     assertNull(resourceBindingModel.getCreatedAt());
     assertNull(resourceBindingModel.getUpdatedAt());
     assertNull(resourceBindingModel.getDeletedAt());
     assertNull(resourceBindingModel.getCreatedBy());
     assertNull(resourceBindingModel.getUpdatedBy());
     assertNull(resourceBindingModel.getDeletedBy());
+    assertNull(resourceBindingModel.getSourceCrn());
+    assertNull(resourceBindingModel.getTargetCrn());
+    assertNull(resourceBindingModel.getCrn());
+    assertNull(resourceBindingModel.getRegionBindingId());
+    assertNull(resourceBindingModel.getRegionBindingCrn());
+    assertNull(resourceBindingModel.getName());
+    assertNull(resourceBindingModel.getAccountId());
+    assertNull(resourceBindingModel.getResourceGroupId());
+    assertNull(resourceBindingModel.getState());
+    assertNull(resourceBindingModel.getCredentials());
+    assertNull(resourceBindingModel.isIamCompatible());
+    assertNull(resourceBindingModel.getResourceId());
+    assertNull(resourceBindingModel.isMigrated());
+    assertNull(resourceBindingModel.getResourceAliasUrl());
   }
 }

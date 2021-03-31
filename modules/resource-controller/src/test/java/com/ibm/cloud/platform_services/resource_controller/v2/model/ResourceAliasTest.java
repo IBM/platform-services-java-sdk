@@ -34,24 +34,26 @@ public class ResourceAliasTest {
     ResourceAlias resourceAliasModel = new ResourceAlias();
     assertNull(resourceAliasModel.getId());
     assertNull(resourceAliasModel.getGuid());
-    assertNull(resourceAliasModel.getCrn());
     assertNull(resourceAliasModel.getUrl());
-    assertNull(resourceAliasModel.getName());
-    assertNull(resourceAliasModel.getAccountId());
-    assertNull(resourceAliasModel.getResourceGroupId());
-    assertNull(resourceAliasModel.getResourceGroupCrn());
-    assertNull(resourceAliasModel.getTargetCrn());
-    assertNull(resourceAliasModel.getState());
-    assertNull(resourceAliasModel.getResourceInstanceId());
-    assertNull(resourceAliasModel.getRegionInstanceId());
-    assertNull(resourceAliasModel.getResourceInstanceUrl());
-    assertNull(resourceAliasModel.getResourceBindingsUrl());
-    assertNull(resourceAliasModel.getResourceKeysUrl());
     assertNull(resourceAliasModel.getCreatedAt());
     assertNull(resourceAliasModel.getUpdatedAt());
     assertNull(resourceAliasModel.getDeletedAt());
     assertNull(resourceAliasModel.getCreatedBy());
     assertNull(resourceAliasModel.getUpdatedBy());
     assertNull(resourceAliasModel.getDeletedBy());
+    assertNull(resourceAliasModel.getName());
+    assertNull(resourceAliasModel.getResourceInstanceId());
+    assertNull(resourceAliasModel.getTargetCrn());
+    assertNull(resourceAliasModel.getAccountId());
+    assertNull(resourceAliasModel.getResourceId());
+    assertNull(resourceAliasModel.getResourceGroupId());
+    assertNull(resourceAliasModel.getCrn());
+    assertNull(resourceAliasModel.getRegionInstanceId());
+    assertNull(resourceAliasModel.getRegionInstanceCrn());
+    assertNull(resourceAliasModel.getState());
+    assertNull(resourceAliasModel.isMigrated());
+    assertNull(resourceAliasModel.getResourceInstanceUrl());
+    assertNull(resourceAliasModel.getResourceBindingsUrl());
+    assertNull(resourceAliasModel.getResourceKeysUrl());
   }
 }

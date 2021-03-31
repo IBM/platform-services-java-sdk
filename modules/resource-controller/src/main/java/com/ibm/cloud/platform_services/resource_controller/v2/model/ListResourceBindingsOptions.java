@@ -223,7 +223,7 @@ public class ListResourceBindingsOptions extends GenericModel {
   /**
    * Gets the regionBindingId.
    *
-   * Short ID of the binding in the specific targeted environment, e.g. service_binding_id in a given IBM Cloud
+   * Short ID of the binding in the specific targeted environment, for example, service_binding_id in a given IBM Cloud
    * environment.
    *
    * @return the regionBindingId

@@ -35,22 +35,24 @@ public class ResourceKeyTest {
     ResourceKey resourceKeyModel = new ResourceKey();
     assertNull(resourceKeyModel.getId());
     assertNull(resourceKeyModel.getGuid());
-    assertNull(resourceKeyModel.getCrn());
     assertNull(resourceKeyModel.getUrl());
-    assertNull(resourceKeyModel.getName());
-    assertNull(resourceKeyModel.getAccountId());
-    assertNull(resourceKeyModel.getResourceGroupId());
-    assertNull(resourceKeyModel.getSourceCrn());
-    assertNull(resourceKeyModel.getRole());
-    assertNull(resourceKeyModel.getState());
-    assertNull(resourceKeyModel.getCredentials());
-    assertNull(resourceKeyModel.isIamCompatible());
-    assertNull(resourceKeyModel.getResourceInstanceUrl());
     assertNull(resourceKeyModel.getCreatedAt());
     assertNull(resourceKeyModel.getUpdatedAt());
     assertNull(resourceKeyModel.getDeletedAt());
     assertNull(resourceKeyModel.getCreatedBy());
     assertNull(resourceKeyModel.getUpdatedBy());
     assertNull(resourceKeyModel.getDeletedBy());
+    assertNull(resourceKeyModel.getSourceCrn());
+    assertNull(resourceKeyModel.getName());
+    assertNull(resourceKeyModel.getCrn());
+    assertNull(resourceKeyModel.getState());
+    assertNull(resourceKeyModel.getAccountId());
+    assertNull(resourceKeyModel.getResourceGroupId());
+    assertNull(resourceKeyModel.getResourceId());
+    assertNull(resourceKeyModel.getCredentials());
+    assertNull(resourceKeyModel.isIamCompatible());
+    assertNull(resourceKeyModel.isMigrated());
+    assertNull(resourceKeyModel.getResourceInstanceUrl());
+    assertNull(resourceKeyModel.getResourceAliasUrl());
   }
 }

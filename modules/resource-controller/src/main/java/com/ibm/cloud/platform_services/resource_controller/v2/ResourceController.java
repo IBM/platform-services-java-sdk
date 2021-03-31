@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9ae61cfc-20210302-143858
+ * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
 package com.ibm.cloud.platform_services.resource_controller.v2;
@@ -157,6 +157,12 @@ public class ResourceController extends BaseService {
     }
     if (listResourceInstancesOptions.limit() != null) {
       builder.query("limit", String.valueOf(listResourceInstancesOptions.limit()));
+    }
+    if (listResourceInstancesOptions.state() != null) {
+      builder.query("state", String.valueOf(listResourceInstancesOptions.state()));
+    }
+    if (listResourceInstancesOptions.orderDirection() != null) {
+      builder.query("order_direction", String.valueOf(listResourceInstancesOptions.orderDirection()));
     }
     if (listResourceInstancesOptions.updatedFrom() != null) {
       builder.query("updated_from", String.valueOf(listResourceInstancesOptions.updatedFrom()));

@@ -160,7 +160,7 @@ public class CreateResourceBindingOptions extends GenericModel {
   /**
    * Gets the target.
    *
-   * The CRN of application to bind to in a specific environment, e.g. Dallas YP, CFEE instance.
+   * The CRN of application to bind to in a specific environment, for example, Dallas YP, CFEE instance.
    *
    * @return the target
    */

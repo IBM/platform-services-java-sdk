@@ -35,8 +35,8 @@ public class ResourceBindingsListTest {
   @Test
   public void testResourceBindingsList() throws Throwable {
     ResourceBindingsList resourceBindingsListModel = new ResourceBindingsList();
+    assertNull(resourceBindingsListModel.getRowsCount());
     assertNull(resourceBindingsListModel.getNextUrl());
     assertNull(resourceBindingsListModel.getResources());
-    assertNull(resourceBindingsListModel.getRowsCount());
   }
 }

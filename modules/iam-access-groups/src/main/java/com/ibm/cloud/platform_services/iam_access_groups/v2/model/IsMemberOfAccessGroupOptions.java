@@ -119,7 +119,7 @@ public class IsMemberOfAccessGroupOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The Access Group identifier.
+   * The access group identifier.
    *
    * @return the accessGroupId
    */
@@ -141,7 +141,9 @@ public class IsMemberOfAccessGroupOptions extends GenericModel {
   /**
    * Gets the transactionId.
    *
-   * An optional transaction id for the request.
+   * An optional transaction ID can be passed to your request, which can be useful for tracking calls through multiple
+   * services by using one identifier. The header key must be set to Transaction-Id and the value is anything that you
+   * choose. If no transaction ID is passed in, then a random ID is generated.
    *
    * @return the transactionId
    */

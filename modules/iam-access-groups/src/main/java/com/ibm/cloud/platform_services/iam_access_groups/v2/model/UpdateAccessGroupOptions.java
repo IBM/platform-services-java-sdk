@@ -149,7 +149,7 @@ public class UpdateAccessGroupOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The Access Group identifier.
+   * The access group identifier.
    *
    * @return the accessGroupId
    */
@@ -160,8 +160,8 @@ public class UpdateAccessGroupOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * The current revision number of the group being updated. This can be found in the Create/Get Access Group response
-   * Etag header.
+   * The current revision number of the group being updated. This can be found in the Create/Get access group response
+   * ETag header.
    *
    * @return the ifMatch
    */
@@ -172,7 +172,8 @@ public class UpdateAccessGroupOptions extends GenericModel {
   /**
    * Gets the name.
    *
-   * Assign the specified name to the Access Group. This field has a limit of 100 characters.
+   * Assign the specified name to the access group. This field is case-sensitive and has a limit of 100 characters. The
+   * group name has to be unique within an account.
    *
    * @return the name
    */
@@ -183,7 +184,7 @@ public class UpdateAccessGroupOptions extends GenericModel {
   /**
    * Gets the description.
    *
-   * Assign a description for the Access Group. This field has a limit of 250 characters.
+   * Assign an optional description for the access group. This field has a limit of 250 characters.
    *
    * @return the description
    */
@@ -194,7 +195,9 @@ public class UpdateAccessGroupOptions extends GenericModel {
   /**
    * Gets the transactionId.
    *
-   * An optional transaction id for the request.
+   * An optional transaction ID can be passed to your request, which can be useful for tracking calls through multiple
+   * services by using one identifier. The header key must be set to Transaction-Id and the value is anything that you
+   * choose. If no transaction ID is passed in, then a random ID is generated.
    *
    * @return the transactionId
    */

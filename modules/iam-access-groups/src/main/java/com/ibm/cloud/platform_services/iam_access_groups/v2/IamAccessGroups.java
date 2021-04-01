@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-1eae594e-20210113-143533
+ * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
@@ -60,7 +60,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * The IAM Access Groups API allows for the management of Access Groups (Create, Read, Update, Delete) as well as the
+ * The IAM Access Groups API allows for the management of access groups (Create, Read, Update, Delete) as well as the
  * management of memberships and rules within the group container.
  *
  * @version v2
@@ -108,9 +108,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Create an Access Group.
+   * Create an access group.
    *
-   * Create a new Access Group to assign multiple users and service ids to multiple policies. The group will be created
+   * Create a new access group to assign multiple users and service ids to multiple policies. The group will be created
    * in the account specified by the `account_id` parameter. The group name is a required field, but a description is
    * optional. Because the group's name does not have to be unique, it is possible to create multiple groups with the
    * same name.
@@ -143,9 +143,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * List Access Groups.
+   * List access groups.
    *
-   * This API lists Access Groups within an account. Parameters for pagination and sorting can be used to filter the
+   * This API lists access groups within an account. Parameters for pagination and sorting can be used to filter the
    * results. The `account_id` query parameter determines which account to retrieve groups from. Only the groups you
    * have access to are returned (either because of a policy on a specific group or account level access (admin, editor,
    * or viewer)). There may be more groups in the account that aren't shown if you lack the aforementioned permissions.
@@ -190,11 +190,11 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Get an Access Group.
+   * Get an access group.
    *
-   * Retrieve an Access Group by its `access_group_id`. Only the groups data is returned (group name, description,
-   * account_id, ...), not membership or rule information. A revision number is returned in the `Etag` header, which is
-   * needed when updating the Access Group.
+   * Retrieve an access group by its `access_group_id`. Only the groups data is returned (group name, description,
+   * account_id, ...), not membership or rule information. A revision number is returned in the `ETag` header, which is
+   * needed when updating the access group.
    *
    * @param getAccessGroupOptions the {@link GetAccessGroupOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Group}
@@ -222,10 +222,10 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Update an Access Group.
+   * Update an access group.
    *
-   * Update the group name or description of an existing Access Group using this API. An `If-Match` header must be
-   * populated with the group's most recent revision number (which can be acquired in the `Get an Access Group` API).
+   * Update the group name or description of an existing access group using this API. An `If-Match` header must be
+   * populated with the group's most recent revision number (which can be acquired in the `Get an access group` API).
    *
    * @param updateAccessGroupOptions the {@link UpdateAccessGroupOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Group}
@@ -259,9 +259,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Delete an Access Group.
+   * Delete an access group.
    *
-   * This API is used for deleting an Access Group. If the Access Group has no members or rules associated with it, the
+   * This API is used for deleting an access group. If the access group has no members or rules associated with it, the
    * group and its policies will be deleted. However, if rules or members do exist, set the `force` parameter to true to
    * delete the group as well as its associated members, rules, and policies.
    *
@@ -289,7 +289,7 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Check membership in an Access Group.
+   * Check membership in an access group.
    *
    * This HEAD operation determines if a given `iam_id` is present in a group. No response body is returned with this
    * request. If the membership exists, a `204 - No Content` status code is returned. If the membership or the group
@@ -317,9 +317,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Add members to an Access Group.
+   * Add members to an access group.
    *
-   * Use this API to add users (`IBMid-...`) or service IDs (`iam-ServiceId-...`) to an Access Group. Any member added
+   * Use this API to add users (`IBMid-...`) or service IDs (`iam-ServiceId-...`) to an access group. Any member added
    * gains access to resources defined in the group's policies. To revoke a given user's access, simply remove them from
    * the group. There is no limit to the number of members one group can have, but each `iam_id` can only be added to 50
    * groups. Additionally, this API request payload can add up to 50 members per call.
@@ -352,7 +352,7 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * List Access Group members.
+   * List access group members.
    *
    * List all members of a given group using this API. Parameters for pagination and sorting can be used to filter the
    * results. The most useful query parameter may be the `verbose` flag. If `verbose=true`, user and service ID names
@@ -397,7 +397,7 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Delete member from an Access Group.
+   * Delete member from an access group.
    *
    * Remove one member from a group using this API. If the operation is successful, only a `204 - No Content` response
    * with no body is returned. However, if any error occurs, the standard error format will be returned.
@@ -424,7 +424,7 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Delete members from an Access Group.
+   * Delete members from an access group.
    *
    * Remove multiple members from a group using this API. On a successful call, this API will always return 207. It is
    * the caller's responsibility to iterate across the body to determine successful deletion of each member. This API
@@ -458,10 +458,10 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Delete member from all Access Groups.
+   * Delete member from all access groups.
    *
    * This API removes a given member from every group they are a member of within the specified account. By using one
-   * operation, you can revoke one member's access to all Access Groups in the account. If a partial failure occurs on
+   * operation, you can revoke one member's access to all access groups in the account. If a partial failure occurs on
    * deletion, the response will be shown in the body.
    *
    * @param removeMemberFromAllAccessGroupsOptions the {@link RemoveMemberFromAllAccessGroupsOptions} containing the options for the call
@@ -488,9 +488,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Add member to multiple Access Groups.
+   * Add member to multiple access groups.
    *
-   * This API will add a member to multiple Access Groups in an account. The limit of how many groups that can be in the
+   * This API will add a member to multiple access groups in an account. The limit of how many groups that can be in the
    * request is 50. The response is a list of results that show if adding the member to each group was successful or
    * not.
    *
@@ -526,9 +526,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Create rule for an Access Group.
+   * Create rule for an access group.
    *
-   * Rules can be used to dynamically add users to an Access Group. If a user's SAML assertions match the rule's
+   * Rules can be used to dynamically add users to an access group. If a user's SAML assertions match the rule's
    * conditions during login, the user will be dynamically added to the group. The duration of the user's access to the
    * group is determined by the `expiration` field. After access expires, the user will need to log in again to regain
    * access. Note that the condition's value field must be a stringified JSON value. [Consult this documentation for
@@ -565,9 +565,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * List Access Group rules.
+   * List access group rules.
    *
-   * This API lists all rules in a given Access Group. Because only a few rules are created on each group, there is no
+   * This API lists all rules in a given access group. Because only a few rules are created on each group, there is no
    * pagination or sorting support on this API.
    *
    * @param listAccessGroupRulesOptions the {@link ListAccessGroupRulesOptions} containing the options for the call
@@ -593,9 +593,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Get an Access Group rule.
+   * Get an access group rule.
    *
-   * Retrieve a rule from an Access Group. A revision number is returned in the `Etag` header, which is needed when
+   * Retrieve a rule from an access group. A revision number is returned in the `ETag` header, which is needed when
    * updating the rule.
    *
    * @param getAccessGroupRuleOptions the {@link GetAccessGroupRuleOptions} containing the options for the call
@@ -622,10 +622,10 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Replace an Access Group rule.
+   * Replace an access group rule.
    *
    * Update the body of an existing rule using this API. An `If-Match` header must be populated with the rule's most
-   * recent revision number (which can be acquired in the `Get an Access Group rule` API).
+   * recent revision number (which can be acquired in the `Get an access group rule` API).
    *
    * @param replaceAccessGroupRuleOptions the {@link ReplaceAccessGroupRuleOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Rule}
@@ -660,7 +660,7 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Delete an Access Group rule.
+   * Delete an access group rule.
    *
    * Remove one rule from a group using this API. If the operation is successful, only a `204 - No Content` response
    * with no body is returned. However, if any error occurs, the standard error format will be returned.
@@ -687,9 +687,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Get Account Settings.
+   * Get account settings.
    *
-   * Retrieve the Access Groups settings for a specific account.
+   * Retrieve the access groups settings for a specific account.
    *
    * @param getAccountSettingsOptions the {@link GetAccountSettingsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link AccountSettings}
@@ -713,9 +713,9 @@ public class IamAccessGroups extends BaseService {
   }
 
   /**
-   * Update Account Settings.
+   * Update account settings.
    *
-   * Update the Access Groups settings for a specific account. Note: When the `public_access_enabled` setting is set to
+   * Update the access groups settings for a specific account. Note: When the `public_access_enabled` setting is set to
    * false, all policies within the account attached to the Public Access group will be deleted. Only set
    * `public_access_enabled` to false if you are sure that you want those policies to be removed.
    *

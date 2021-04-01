@@ -18,7 +18,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The Access Groups settings for a specific account.
+ * The access groups settings for a specific account.
  */
 public class AccountSettings extends GenericModel {
 

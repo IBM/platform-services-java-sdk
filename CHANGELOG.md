@@ -1,3 +1,10 @@
+## [0.18.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.1...v0.18.2) (2021-04-01)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** update service after recent api changes ([#92](https://github.com/IBM/platform-services-node-sdk/issues/92)) ([efcfb24](https://github.com/IBM/platform-services-node-sdk/commit/efcfb24d72e0fa7c7a449b11e1e3e5e9cfdffcc9))
+
 ## [0.18.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.0...v0.18.1) (2021-03-31)
 
 

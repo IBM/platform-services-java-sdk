@@ -38,7 +38,7 @@
   "dependencies": {
     "@types/node": "^12.0.8",
     "extend": "^3.0.2",
-    "ibm-cloud-sdk-core": "^2.8.0"
+    "ibm-cloud-sdk-core": "^2.10.2"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^5.0.1",
@@ -62,7 +62,7 @@
     "tslint": "^5.16.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-eslint-rules": "^5.4.0",
-    "typedoc": "^0.19.2",
+    "typedoc": "^0.20.34",
     "typescript": "^3.8.3",
     "uuid": "^8.2.0"
   },

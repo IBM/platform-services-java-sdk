@@ -104,8 +104,8 @@ describe('IamAccessGroupsV2', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createAccessGroup
         const accountId = 'testString';
-        const name = 'testString';
-        const description = 'testString';
+        const name = 'Managers';
+        const description = 'Group for managers';
         const transactionId = 'testString';
         const params = {
           accountId: accountId,
@@ -137,7 +137,7 @@ describe('IamAccessGroupsV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const accountId = 'testString';
-        const name = 'testString';
+        const name = 'Managers';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -347,8 +347,8 @@ describe('IamAccessGroupsV2', () => {
         // Construct the params object for operation updateAccessGroup
         const accessGroupId = 'testString';
         const ifMatch = 'testString';
-        const name = 'testString';
-        const description = 'testString';
+        const name = 'Awesome Managers';
+        const description = 'Group for awesome managers.';
         const transactionId = 'testString';
         const params = {
           accessGroupId: accessGroupId,
@@ -579,8 +579,8 @@ describe('IamAccessGroupsV2', () => {
 
       // AddGroupMembersRequestMembersItem
       const addGroupMembersRequestMembersItemModel = {
-        iam_id: 'testString',
-        type: 'testString',
+        iam_id: 'IBMid-user1',
+        type: 'user',
       };
 
       test('should pass the right params to createRequest', () => {
@@ -822,7 +822,7 @@ describe('IamAccessGroupsV2', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation removeMembersFromAccessGroup
         const accessGroupId = 'testString';
-        const members = ['testString'];
+        const members = ['IBMId-user1', 'iam-ServiceId-123'];
         const transactionId = 'testString';
         const params = {
           accessGroupId: accessGroupId,
@@ -973,8 +973,8 @@ describe('IamAccessGroupsV2', () => {
         // Construct the params object for operation addMemberToMultipleAccessGroups
         const accountId = 'testString';
         const iamId = 'testString';
-        const type = 'testString';
-        const groups = ['testString'];
+        const type = 'user';
+        const groups = ['access-group-id-1'];
         const transactionId = 'testString';
         const params = {
           accountId: accountId,
@@ -1055,18 +1055,18 @@ describe('IamAccessGroupsV2', () => {
 
       // RuleConditions
       const ruleConditionsModel = {
-        claim: 'testString',
-        operator: 'testString',
-        value: 'testString',
+        claim: 'isManager',
+        operator: 'EQUALS',
+        value: 'true',
       };
 
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation addAccessGroupRule
         const accessGroupId = 'testString';
-        const expiration = 38;
-        const realmName = 'testString';
+        const expiration = 12;
+        const realmName = 'https://idp.example.org/SAML2';
         const conditions = [ruleConditionsModel];
-        const name = 'testString';
+        const name = 'Manager group rule';
         const transactionId = 'testString';
         const params = {
           accessGroupId: accessGroupId,
@@ -1102,8 +1102,8 @@ describe('IamAccessGroupsV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const accessGroupId = 'testString';
-        const expiration = 38;
-        const realmName = 'testString';
+        const expiration = 12;
+        const realmName = 'https://idp.example.org/SAML2';
         const conditions = [ruleConditionsModel];
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
@@ -1300,9 +1300,9 @@ describe('IamAccessGroupsV2', () => {
 
       // RuleConditions
       const ruleConditionsModel = {
-        claim: 'testString',
-        operator: 'testString',
-        value: 'testString',
+        claim: 'isManager',
+        operator: 'EQUALS',
+        value: 'true',
       };
 
       test('should pass the right params to createRequest', () => {
@@ -1310,10 +1310,10 @@ describe('IamAccessGroupsV2', () => {
         const accessGroupId = 'testString';
         const ruleId = 'testString';
         const ifMatch = 'testString';
-        const expiration = 38;
-        const realmName = 'testString';
+        const expiration = 12;
+        const realmName = 'https://idp.example.org/SAML2';
         const conditions = [ruleConditionsModel];
-        const name = 'testString';
+        const name = 'Manager group rule';
         const transactionId = 'testString';
         const params = {
           accessGroupId: accessGroupId,
@@ -1355,8 +1355,8 @@ describe('IamAccessGroupsV2', () => {
         const accessGroupId = 'testString';
         const ruleId = 'testString';
         const ifMatch = 'testString';
-        const expiration = 38;
-        const realmName = 'testString';
+        const expiration = 12;
+        const realmName = 'https://idp.example.org/SAML2';
         const conditions = [ruleConditionsModel];
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';

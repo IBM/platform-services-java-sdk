@@ -36,23 +36,23 @@ public class AddAccessGroupRuleOptionsTest {
   public void testAddAccessGroupRuleOptions() throws Throwable {
     RuleConditions ruleConditionsModel = new RuleConditions.Builder()
       .claim("testString")
-      .operator("testString")
+      .operator("EQUALS")
       .value("testString")
       .build();
     assertEquals(ruleConditionsModel.claim(), "testString");
-    assertEquals(ruleConditionsModel.operator(), "testString");
+    assertEquals(ruleConditionsModel.operator(), "EQUALS");
     assertEquals(ruleConditionsModel.value(), "testString");
 
     AddAccessGroupRuleOptions addAccessGroupRuleOptionsModel = new AddAccessGroupRuleOptions.Builder()
       .accessGroupId("testString")
-      .expiration(Long.valueOf("26"))
+      .expiration(Long.valueOf("1"))
       .realmName("testString")
       .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
       .name("testString")
       .transactionId("testString")
       .build();
     assertEquals(addAccessGroupRuleOptionsModel.accessGroupId(), "testString");
-    assertEquals(addAccessGroupRuleOptionsModel.expiration(), Long.valueOf("26"));
+    assertEquals(addAccessGroupRuleOptionsModel.expiration(), Long.valueOf("1"));
     assertEquals(addAccessGroupRuleOptionsModel.realmName(), "testString");
     assertEquals(addAccessGroupRuleOptionsModel.conditions(), new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)));
     assertEquals(addAccessGroupRuleOptionsModel.name(), "testString");

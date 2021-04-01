@@ -134,7 +134,9 @@ public class CreateAccessGroupOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * IBM Cloud account identifier.
+   * Account ID of the API keys(s) to query. If a service IAM ID is specified in iam_id then account_id must match the
+   * account of the IAM ID. If a user IAM ID is specified in iam_id then then account_id must match the account of the
+   * Authorization token.
    *
    * @return the accountId
    */
@@ -145,7 +147,8 @@ public class CreateAccessGroupOptions extends GenericModel {
   /**
    * Gets the name.
    *
-   * Assign the specified name to the Access Group. This field has a limit of 100 characters.
+   * Assign the specified name to the access group. This field is case-sensitive and has a limit of 100 characters. The
+   * group name has to be unique within an account.
    *
    * @return the name
    */
@@ -156,7 +159,7 @@ public class CreateAccessGroupOptions extends GenericModel {
   /**
    * Gets the description.
    *
-   * Assign a description for the Access Group. This field has a limit of 250 characters.
+   * Assign an optional description for the access group. This field has a limit of 250 characters.
    *
    * @return the description
    */
@@ -167,7 +170,9 @@ public class CreateAccessGroupOptions extends GenericModel {
   /**
    * Gets the transactionId.
    *
-   * An optional transaction id for the request.
+   * An optional transaction ID can be passed to your request, which can be useful for tracking calls through multiple
+   * services by using one identifier. The header key must be set to Transaction-Id and the value is anything that you
+   * choose. If no transaction ID is passed in, then a random ID is generated.
    *
    * @return the transactionId
    */

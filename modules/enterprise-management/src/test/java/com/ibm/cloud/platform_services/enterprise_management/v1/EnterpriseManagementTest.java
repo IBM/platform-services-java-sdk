@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -40,6 +40,7 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import java.io.IOException;
 import java.io.InputStream;
@@ -153,7 +154,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testListAccountGroupsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}]}";
+    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
     String listAccountGroupsPath = "/account-groups";
 
     server.enqueue(new MockResponse()
@@ -167,6 +168,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     ListAccountGroupsOptions listAccountGroupsOptionsModel = new ListAccountGroupsOptions.Builder()
     .enterpriseId("testString")
     .parentAccountGroupId("testString")
+    .nextDocid("testString")
     .parent("testString")
     .limit(Long.valueOf("26"))
     .build();
@@ -188,6 +190,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     // Get query params
     assertEquals(query.get("enterprise_id"), "testString");
     assertEquals(query.get("parent_account_group_id"), "testString");
+    assertEquals(query.get("next_docid"), "testString");
     assertEquals(query.get("parent"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
     // Check request path
@@ -198,7 +201,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testGetAccountGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}";
+    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
     String getAccountGroupPath = "/account-groups/testString";
 
     server.enqueue(new MockResponse()
@@ -405,7 +408,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testListAccountsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"owner_iam_id\": \"ownerIamId\", \"paid\": true, \"owner_email\": \"ownerEmail\", \"is_enterprise_account\": false, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}]}";
+    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"owner_iam_id\": \"ownerIamId\", \"paid\": true, \"owner_email\": \"ownerEmail\", \"is_enterprise_account\": false, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
     String listAccountsPath = "/accounts";
 
     server.enqueue(new MockResponse()
@@ -419,6 +422,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     ListAccountsOptions listAccountsOptionsModel = new ListAccountsOptions.Builder()
     .enterpriseId("testString")
     .accountGroupId("testString")
+    .nextDocid("testString")
     .parent("testString")
     .limit(Long.valueOf("26"))
     .build();
@@ -440,6 +444,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     // Get query params
     assertEquals(query.get("enterprise_id"), "testString");
     assertEquals(query.get("account_group_id"), "testString");
+    assertEquals(query.get("next_docid"), "testString");
     assertEquals(query.get("parent"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
     // Check request path
@@ -450,7 +455,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testGetAccountWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"owner_iam_id\": \"ownerIamId\", \"paid\": true, \"owner_email\": \"ownerEmail\", \"is_enterprise_account\": false, \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}";
+    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"owner_iam_id\": \"ownerIamId\", \"paid\": true, \"owner_email\": \"ownerEmail\", \"is_enterprise_account\": false, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
     String getAccountPath = "/accounts/testString";
 
     server.enqueue(new MockResponse()
@@ -604,7 +609,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testListEnterprisesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}]}";
+    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
     String listEnterprisesPath = "/enterprises";
 
     server.enqueue(new MockResponse()
@@ -619,6 +624,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .enterpriseAccountId("testString")
     .accountGroupId("testString")
     .accountId("testString")
+    .nextDocid("testString")
     .limit(Long.valueOf("26"))
     .build();
 
@@ -640,6 +646,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     assertEquals(query.get("enterprise_account_id"), "testString");
     assertEquals(query.get("account_group_id"), "testString");
     assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("next_docid"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
@@ -649,7 +656,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   @Test
   public void testGetEnterpriseWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00\", \"updated_by\": \"updatedBy\"}";
+    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
     String getEnterprisePath = "/enterprises/testString";
 
     server.enqueue(new MockResponse()

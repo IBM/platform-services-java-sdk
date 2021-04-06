@@ -1,25 +1,18 @@
+/*
+ * (C) Copyright IBM Corp. 2021.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
-import static org.testng.AssertJUnit.assertNotNull;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import com.cloudant.client.api.ClientBuilder;
-import com.cloudant.client.api.CloudantClient;
-import com.cloudant.client.api.Database;
-import com.cloudant.client.api.views.Key;
-import com.cloudant.client.api.views.ViewResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
@@ -28,406 +21,373 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAcco
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ImportAccountToEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
- * This class contains integration tests for the Enterprise Management.
- * <p>
- * Notes: 1. By providing the name of our config file
- * ("enterprise-management.env") via the getConfigFilename() method below, the
- * base class (SdkIntegrationTestBase) will be able to mock up the getenv()
- * method to cause the Java core's CredentialUtils class to "see" the config
- * file via the mocked value of the IBM_CREDENTIALS_FILE env var.
- * <p>
- * 2. The base class will automatically set the "skipTests" flag to true if it
- * can't find the config file.
- * <p>
- * 3. The base class contains a "before method" function that will automatically
- * skip each test method if the "skipTests" flag is true. This means that this
- * subclass doesn't need to concern itself with skipping tests in the event that
- * the config file is not available.
- * <p>
- * 4. This testcase uses the "dependsOnMethods" attribute of the @Test
- * annotation to ensure that the test methods are executed in the the order they
- * appear in this file. Without this, there's no guaranteed ordering imposed by
- * TestNG.
+ * Integration test class for the EnterpriseManagement service.
  */
 public class EnterpriseManagementIT extends SdkIntegrationTestBase {
+  public EnterpriseManagement service = null;
+  public static Map<String, String> config = null;
+  final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
+  final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
+  /**
+   * This method provides our config filename to the base class.
+   */
 
-    // Example service v1 integration
-    public static EnterpriseManagement service = null;
-    public static AccountManagementHelper accountManagementService = new AccountManagementHelper();
-    public static Map<String, String> config = null;
-    String accountGroupId = null;
-    String accountId = null;
-    String subsAccountId = null;
-    String token = null;
-    String parent = null;
-    String enterpriseId = null;
-    String email = "aminttest+" + new Date().getTime() + "_" + Math.floor(Math.random() * 100000)
-            + "@mail.test.ibm.com";
-    String verificationCode = null;
-    String activationToken = null;
-    String subscriptionEmail = "amIntTest+" + new Date().getTime() + "_" + Math.floor(Math.random() * 100000)
-            + "@mail.test.ibm.com";
-    String subscriptionId = null;
-    String ownerIamId = null;
-    String enterpriseAccountId = null;
-    String accountGroupId2 = null;
-    String crn = null;
-    String crn2 = null;
-    String newAccountId = null;
+  public String getConfigFilename() {
+    return "../../enterprise_management_v1.env";
+  }
 
-    @Override
-    public String getConfigFilename() {
-        return "../../enterprise-management.env";
+  @BeforeClass
+  public void constructService() {
+    // Ask super if we should skip the tests.
+    if (skipTests()) {
+      return;
     }
 
-    @Override
-    public boolean loggingEnabled() {
-        return false;
+    service = EnterpriseManagement.newInstance();
+    assertNotNull(service);
+    assertNotNull(service.getServiceUrl());
+
+    // Load up our test-specific config properties.
+    config = CredentialUtils.getServiceProperties(EnterpriseManagement.DEFAULT_SERVICE_NAME);
+    assertNotNull(config);
+    assertFalse(config.isEmpty());
+    assertEquals(service.getServiceUrl(), config.get("URL"));
+
+    System.out.println("Setup complete.");
+  }
+
+  @Test
+  public void testCreateAccountGroup() throws Exception {
+    try {
+      CreateAccountGroupOptions createAccountGroupOptions = new CreateAccountGroupOptions.Builder()
+      .parent("testString")
+      .name("testString")
+      .primaryContactIamId("testString")
+      .build();
+
+      // Invoke operation
+      Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      CreateAccountGroupResponse createAccountGroupResponseResult = response.getResult();
+
+      assertNotNull(createAccountGroupResponseResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    /**
-     * This method is invoked before any of the @Test-annotated methods, and is
-     * responsible for creating the instance of the service that will be used by the
-     * rest of the test methods, as well as any other required initialization.
-     */
-    @BeforeClass
-    public void constructService() {
-        // Ask super if we should skip the tests.
-        if (skipTests()) {
-            return;
-        }
+  @Test
+  public void testListAccountGroups() throws Exception {
+    try {
+      ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder()
+      .enterpriseId("testString")
+      .parentAccountGroupId("testString")
+      .nextDocid("testString")
+      .parent("testString")
+      .limit(Long.valueOf("26"))
+      .build();
 
-        service = EnterpriseManagement.newInstance();
-        assertNotNull(service);
-        assertNotNull(service.getServiceUrl());
+      // Invoke operation
+      Response<ListAccountGroupsResponse> response = service.listAccountGroups(listAccountGroupsOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
 
-        // Load up our test-specific config properties.
-        // We'll use a special service name so as not to interfere with the official
-        // properties used to configure
-        // the service.
-        config = CredentialUtils.getServiceProperties("EMTEST_CONFIG");
-        assertNotNull(config);
-        assertEquals(config.size(), 8);
+      ListAccountGroupsResponse listAccountGroupsResponseResult = response.getResult();
+
+      assertNotNull(listAccountGroupsResponseResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void testConfig() {
-        assertNotNull(service);
-        assertNotNull(config);
-        assertNotNull(config.get("AM_HOST"));
-        assertNotNull(config.get("DB_URL"));
-        assertNotNull(config.get("DB_USER"));
-        assertNotNull(config.get("DB_PASS"));
-        assertNotNull(config.get("ACTIVATION_DB_NAME"));
-        assertNotNull(config.get("IAM_HOST"));
-        assertNotNull(config.get("IAM_BASIC_AUTH"));
-        assertNotNull(config.get("IAM_API_KEY"));
+  @Test
+  public void testGetAccountGroup() throws Exception {
+    try {
+      GetAccountGroupOptions getAccountGroupOptions = new GetAccountGroupOptions.Builder()
+      .accountGroupId("testString")
+      .build();
+
+      // Invoke operation
+      Response<AccountGroup> response = service.getAccountGroup(getAccountGroupOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      AccountGroup accountGroupResult = response.getResult();
+
+      assertNotNull(accountGroupResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void generateIamServiceToken() throws Throwable {
-        String response = accountManagementService.generateIamServiceToken(config.get("IAM_API_KEY"),
-                config.get("IAM_HOST"));
-        JSONObject obj = new JSONObject(response);
-        token = obj.getString("token_type") + " " + obj.getString("access_token");
-        assertNotNull(response);
+  @Test
+  public void testUpdateAccountGroup() throws Exception {
+    try {
+      UpdateAccountGroupOptions updateAccountGroupOptions = new UpdateAccountGroupOptions.Builder()
+      .accountGroupId("testString")
+      .name("testString")
+      .primaryContactIamId("testString")
+      .build();
+
+      // Invoke operation
+      Response<Void> response = service.updateAccountGroup(updateAccountGroupOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test01_CreateVerificationCode() throws Throwable {
-        accountManagementService.createVerificationCode(subscriptionEmail, token, config.get("AM_HOST"));
+  @Test
+  public void testImportAccountToEnterprise() throws Exception {
+    try {
+      ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()
+      .enterpriseId("testString")
+      .accountId("testString")
+      .parent("testString")
+      .billingUnitId("testString")
+      .build();
+
+      // Invoke operation
+      Response<Void> response = service.importAccountToEnterprise(importAccountToEnterpriseOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 202);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test02_GetVerificationCode() throws Throwable {
-        String response = accountManagementService.getVerificationCode(subscriptionEmail, token, config.get("AM_HOST"));
-        JSONObject obj = new JSONObject(response);
-        JSONArray arr = obj.getJSONArray("resources");
-        verificationCode = arr.getJSONObject(0).getString("code");
+  @Test
+  public void testCreateAccount() throws Exception {
+    try {
+      CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder()
+      .parent("testString")
+      .name("testString")
+      .ownerIamId("testString")
+      .build();
+
+      // Invoke operation
+      Response<CreateAccountResponse> response = service.createAccount(createAccountOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      CreateAccountResponse createAccountResponseResult = response.getResult();
+
+      assertNotNull(createAccountResponseResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test03_PutConfirmVerificationCode() throws Throwable {
-        accountManagementService.confirmVerificationCode(subscriptionEmail, verificationCode, token,
-                config.get("AM_HOST"));
+  @Test
+  public void testListAccounts() throws Exception {
+    try {
+      ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder()
+      .enterpriseId("testString")
+      .accountGroupId("testString")
+      .nextDocid("testString")
+      .parent("testString")
+      .limit(Long.valueOf("26"))
+      .build();
+
+      // Invoke operation
+      Response<ListAccountsResponse> response = service.listAccounts(listAccountsOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ListAccountsResponse listAccountsResponseResult = response.getResult();
+
+      assertNotNull(listAccountsResponseResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test04_CreateStandardAccount() throws Throwable {
-        String response = accountManagementService.createStandardAccount(subscriptionEmail, verificationCode, token,
-                config.get("AM_HOST"));
-        JSONObject obj = new JSONObject(response);
-        subsAccountId = obj.getString("id");
+  @Test
+  public void testGetAccount() throws Exception {
+    try {
+      GetAccountOptions getAccountOptions = new GetAccountOptions.Builder()
+      .accountId("testString")
+      .build();
+
+      // Invoke operation
+      Response<Account> response = service.getAccount(getAccountOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      Account accountResult = response.getResult();
+
+      assertNotNull(accountResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test05_GetAccountByAccountIdLastOperation() throws Throwable {
-        accountManagementService.getAccountByAccountIdLastOperation(subsAccountId, token, config.get("AM_HOST"));
+  @Test
+  public void testUpdateAccount() throws Exception {
+    try {
+      UpdateAccountOptions updateAccountOptions = new UpdateAccountOptions.Builder()
+      .accountId("testString")
+      .parent("testString")
+      .build();
+
+      // Invoke operation
+      Response<Void> response = service.updateAccount(updateAccountOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test06_GetAccountActivationToken() throws Throwable {
-        URL url = null;
-        try {
-            url = new URL(config.get("DB_URL"));
-        } catch (MalformedURLException e) {
-            fail("The url is not well formed: " + url);
-        }
-        CloudantClient client = ClientBuilder.url(url)
-                .username(config.get("DB_USER"))
-                .password(config.get("DB_PASS"))
-                .build();
+  @Test
+  public void testCreateEnterprise() throws Exception {
+    try {
+      CreateEnterpriseOptions createEnterpriseOptions = new CreateEnterpriseOptions.Builder()
+      .sourceAccountId("testString")
+      .name("testString")
+      .primaryContactIamId("testString")
+      .domain("testString")
+      .build();
 
-        Database db = client.database("activation", false);
-        Thread.sleep(35000);
-        List<ViewResponse.Row<String, String>> result = db.getViewRequestBuilder("v1_green", "by_email")
-                .newRequest(Key.Type.STRING, String.class).reduce(false).keys(subscriptionEmail).includeDocs(true)
-                .build().getResponse().getRows();
-        for (ViewResponse.Row<String, String> row : result) {
-            assertNotNull(row.getDocument());
-            activationToken = row.getId();
-        }
+      // Invoke operation
+      Response<CreateEnterpriseResponse> response = service.createEnterprise(createEnterpriseOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 202);
+
+      CreateEnterpriseResponse createEnterpriseResponseResult = response.getResult();
+
+      assertNotNull(createEnterpriseResponseResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test07_VerifyAMAccount() throws Throwable {
-        accountManagementService.verifyAMAccount(subscriptionEmail, activationToken, token, config.get("AM_HOST"));
-        Thread.sleep(35000);
-        String response2 = accountManagementService.getAccountByAccountId(subsAccountId, token, config.get("AM_HOST"));
-        JSONObject obj = new JSONObject(response2);
-        JSONObject obj2 = obj.getJSONObject("entity");
-        subscriptionId = obj2.getString("subscription_id");
-        ownerIamId = obj2.getString("owner_iam_id");
+  @Test
+  public void testListEnterprises() throws Exception {
+    try {
+      ListEnterprisesOptions listEnterprisesOptions = new ListEnterprisesOptions.Builder()
+      .enterpriseAccountId("testString")
+      .accountGroupId("testString")
+      .accountId("testString")
+      .nextDocid("testString")
+      .limit(Long.valueOf("26"))
+      .build();
+
+      // Invoke operation
+      Response<ListEnterprisesResponse> response = service.listEnterprises(listEnterprisesOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ListEnterprisesResponse listEnterprisesResponseResult = response.getResult();
+
+      assertNotNull(listEnterprisesResponseResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test08_PatchAccountSubscription() throws Throwable {
-        accountManagementService.patchAccountSubscription(token, subsAccountId, subscriptionId, config.get("AM_HOST"));
+  @Test
+  public void testGetEnterprise() throws Exception {
+    try {
+      GetEnterpriseOptions getEnterpriseOptions = new GetEnterpriseOptions.Builder()
+      .enterpriseId("testString")
+      .build();
+
+      // Invoke operation
+      Response<Enterprise> response = service.getEnterprise(getEnterpriseOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      Enterprise enterpriseResult = response.getResult();
+
+      assertNotNull(enterpriseResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test09_CreateEnterpriseUsingSubscriptionAccount() throws Throwable {
-        CreateEnterpriseOptions createEnterpriseOptions = new CreateEnterpriseOptions.Builder()
-                .name("IBM-" + new Date().getTime()).sourceAccountId(subsAccountId).primaryContactIamId(ownerIamId)
-                .domain("IBM-" + new Date().getTime() + ".com").build();
-        Response<CreateEnterpriseResponse> response = service.createEnterprise(createEnterpriseOptions).execute();
-        CreateEnterpriseResponse responseObj = response.getResult();
-        assertNotNull(responseObj);
-        enterpriseId = responseObj.getEnterpriseId();
-        enterpriseAccountId = responseObj.getEnterpriseAccountId();
+  @Test
+  public void testUpdateEnterprise() throws Exception {
+    try {
+      UpdateEnterpriseOptions updateEnterpriseOptions = new UpdateEnterpriseOptions.Builder()
+      .enterpriseId("testString")
+      .name("testString")
+      .domain("testString")
+      .primaryContactIamId("testString")
+      .build();
+
+      // Invoke operation
+      Response<Void> response = service.updateEnterprise(updateEnterpriseOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void test10_GetAccountById() throws Throwable {
-        String response2 = accountManagementService.getAccountByAccountId(subsAccountId, token, config.get("AM_HOST"));
-        JSONObject obj = new JSONObject(response2);
-        JSONObject obj2 = obj.getJSONObject("entity");
-        parent = obj2.getString("parent");
-    }
-
-    @Test
-    public void test11_GetAccountByIdUsingEnterprise() throws Throwable {
-        Thread.sleep(35000);
-        GetAccountOptions getAccountByIdOptions = new GetAccountOptions.Builder().accountId(enterpriseAccountId)
-                .build();
-        Response<Account> response = service.getAccount(getAccountByIdOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
-        Account responseObj = response.getResult();
-        assertNotNull(responseObj);
-    }
-
-    @Test
-    public void test12_CreateAccountGroupWOptions() throws Throwable {
-        CreateAccountGroupOptions createAccountGroupOptionsModel = new CreateAccountGroupOptions.Builder()
-                .parent(parent).name("testString").primaryContactIamId(ownerIamId).build();
-
-        Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptionsModel)
-                .execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 201);
-        CreateAccountGroupResponse responseObj = response.getResult();
-        assertNotNull(responseObj);
-        accountGroupId = responseObj.getAccountGroupId();
-    }
-
-    @Test
-    public void test13_ListAccountGroupsWOptions() throws Throwable {
-        ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder().parent(parent)
-                .enterpriseId(enterpriseId).parentAccountGroupId(accountGroupId).limit(100).build();
-
-        Response<ListAccountGroupsResponse> response = service.listAccountGroups(listAccountGroupsOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
-        ListAccountGroupsResponse responseObj = response.getResult();
-        assertNotNull(responseObj);
-    }
-
-    @Test
-    public void test14_GetAccountGroupByIdWOptions() throws Throwable {
-        GetAccountGroupOptions getAccountGroupByIdOptions = new GetAccountGroupOptions.Builder()
-                .accountGroupId(accountGroupId).build();
-
-        Response<AccountGroup> response = service.getAccountGroup(getAccountGroupByIdOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
-        AccountGroup responseObj = response.getResult();
-        assertNotNull(responseObj);
-        crn = responseObj.getCrn();
-    }
-
-    @Test
-    public void test15_UpdateAccountGroupWOptions() throws Throwable {
-        UpdateAccountGroupOptions updateAccountGroupOptions = new UpdateAccountGroupOptions.Builder()
-                .accountGroupId(accountGroupId).name("testString").build();
-
-        Response<Void> response = service.updateAccountGroup(updateAccountGroupOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 204);
-    }
-
-    @Test
-    public void test17_CreateVerificationCode() throws Throwable {
-        accountManagementService.createVerificationCode(email, token, config.get("AM_HOST"));
-    }
-
-    @Test
-    public void test18_GetVerificationCode() throws Throwable {
-        String response = accountManagementService.getVerificationCode(email, token, config.get("AM_HOST"));
-        JSONObject obj = new JSONObject(response);
-        JSONArray arr = obj.getJSONArray("resources");
-        verificationCode = arr.getJSONObject(0).getString("code");
-    }
-
-    @Test
-    public void test19_PutConfirmVerificationCode() throws Throwable {
-        accountManagementService.confirmVerificationCode(email, verificationCode, token, config.get("AM_HOST"));
-    }
-
-    @Test
-    public void test20_CreateStandardAccount() throws Throwable {
-        String response = accountManagementService.createStandardAccount(email, verificationCode, token,
-                config.get("AM_HOST"));
-        JSONObject obj = new JSONObject(response);
-        accountId = obj.getString("id");
-    }
-
-    @Test
-    public void test21_GetAccountByAccountIdLastOperation() throws Throwable {
-        accountManagementService.getAccountByAccountIdLastOperation(accountId, token, config.get("AM_HOST"));
-    }
-
-    @Test
-    public void test22_GetAccountActivationToken() throws Throwable {
-        URL url = null;
-        try {
-            url = new URL(config.get("DB_URL"));
-        } catch (MalformedURLException e) {
-            fail("The url is not well formed: " + url);
-        }
-        CloudantClient client = ClientBuilder.url(url).username(config.get("DB_USER")).password(config.get("DB_PASS"))
-                .build();
-
-        Database db = client.database("activation", false);
-        Thread.sleep(35000);
-        List<ViewResponse.Row<String, String>> result = db.getViewRequestBuilder("v1_green", "by_email")
-                .newRequest(Key.Type.STRING, String.class).reduce(false).keys(email).includeDocs(true).build()
-                .getResponse().getRows();
-        for (ViewResponse.Row<String, String> row : result) {
-            assertNotNull(row.getDocument());
-            activationToken = row.getId();
-        }
-    }
-
-    @Test
-    public void test23_VerifyAMAccount() throws Throwable {
-        accountManagementService.verifyAMAccount(email, activationToken, token, config.get("AM_HOST"));
-        Thread.sleep(35000);
-        accountManagementService.getAccountByAccountId(accountId, token, config.get("AM_HOST"));
-    }
-
-    @Test
-    public void test24_ImportAccountToEnterprise() throws Throwable {
-        ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()
-                .enterpriseId(enterpriseId).accountId(accountId).build();
-        Response<Void> response = service.importAccountToEnterprise(importAccountToEnterpriseOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 202);
-    }
-
-    @Test
-    public void test25_GetAccountById() throws Throwable {
-        accountManagementService.getAccountByAccountId(accountId, token, config.get("AM_HOST"));
-    }
-
-    @Test
-    public void test26_CreateNewAccountInEnterprise() throws Throwable {
-        CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder().parent(parent)
-                .name("IBM-" + new Date().getTime()).ownerIamId("IBMid-550006JKXX").build();
-        Response<CreateAccountResponse> response = service.createAccount(createAccountOptions).execute();
-        CreateAccountResponse responseObj = response.getResult();
-        newAccountId = responseObj.getAccountId();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 202);
-    }
-
-    @Test
-    public void test27_GetAccountsByQueryParameter() throws Throwable {
-        ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder().enterpriseId(enterpriseId)
-                .accountGroupId(accountGroupId).parent(parent).limit(100).build();
-        Response<ListAccountsResponse> response = service.listAccounts(listAccountsOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
-    }
-
-    @Test
-    public void test28_CreateAccountGroupWOptions() throws Throwable {
-        CreateAccountGroupOptions createAccountGroupOptionsModel = new CreateAccountGroupOptions.Builder()
-                .parent(parent).name("testString").primaryContactIamId(ownerIamId).build();
-
-        Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptionsModel)
-                .execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 201);
-        CreateAccountGroupResponse responseObj = response.getResult();
-        assertNotNull(responseObj);
-        accountGroupId2 = responseObj.getAccountGroupId();
-    }
-
-    @Test
-    public void test29_GetAccountGroupByIdWOptions() throws Throwable {
-        GetAccountGroupOptions getAccountGroupByIdOptions = new GetAccountGroupOptions.Builder()
-                .accountGroupId(accountGroupId).build();
-
-        Response<AccountGroup> response = service.getAccountGroup(getAccountGroupByIdOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
-        AccountGroup responseObj = response.getResult();
-        assertNotNull(responseObj);
-        crn2 = responseObj.getCrn();
-    }
-
-    @Test
-    public void test30_MoveAccountWithEnterprise() throws Throwable {
-        UpdateAccountOptions updateAccountOptions = new UpdateAccountOptions.Builder().parent(crn)
-                .accountId(newAccountId).build();
-        Response<Void> response = service.updateAccount(updateAccountOptions).execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 202);
-
-    }
-}
+  @AfterClass
+  public void tearDown() {
+    // Add any clean up logic here
+    System.out.println("Clean up complete.");
+  }
+ }

@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-9b90c5f5-20210129-120415
+ * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -28,6 +28,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyO
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PatchPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
@@ -96,9 +97,9 @@ public class IamPolicyManagement extends BaseService {
    *
    * Get policies and filter by attributes. While managing policies, you may want to retrieve policies in the account
    * and filter by attribute values. This can be done through query parameters. Currently, only the following attributes
-   * are supported: account_id, iam_id, access_group_id, type, service_type, sort and format. account_id is a required
-   * query parameter. Only policies that have the specified attributes and that the caller has read access to are
-   * returned. If the caller does not have read access to any policies an empty array is returned.
+   * are supported: account_id, iam_id, access_group_id, type, service_type, sort, format and state. account_id is a
+   * required query parameter. Only policies that have the specified attributes and that the caller has read access to
+   * are returned. If the caller does not have read access to any policies an empty array is returned.
    *
    * @param listPoliciesOptions the {@link ListPoliciesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link PolicyList}
@@ -140,6 +141,9 @@ public class IamPolicyManagement extends BaseService {
     if (listPoliciesOptions.format() != null) {
       builder.query("format", String.valueOf(listPoliciesOptions.format()));
     }
+    if (listPoliciesOptions.state() != null) {
+      builder.query("state", String.valueOf(listPoliciesOptions.state()));
+    }
     ResponseConverter<PolicyList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -152,17 +156,23 @@ public class IamPolicyManagement extends BaseService {
    * **authorization**. A policy administrator might want to create an access policy which grants access to a user,
    * service-id, or an access group. They might also want to create an authorization policy and setup access between
    * services.
-   * ### Access To create an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
+   *
+   * ### Access
+   *
+   * To create an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
    * **`iam_id`** and **`access_group_id`**. Use the **`iam_id`** subject attribute for assigning access for a user or
    * service-id. Use the **`access_group_id`** subject attribute for assigning access for an access group. The roles
    * must be a subset of a service's or the platform's supported roles. The resource attributes must be a subset of a
    * service's or the platform's supported attributes. The policy resource must include either the **`serviceType`**,
    * **`serviceName`**,  or **`resourceGroupId`** attribute and the **`accountId`** attribute.` If the subject is a
    * locked service-id, the request will fail.
-   * ### Authorization Authorization policies are supported by services on a case by case basis. Refer to service
-   * documentation to verify their support of authorization policies. To create an authorization policy, use **`"type":
-   * "authorization"`** in the body. The subject attributes must match the supported authorization subjects of the
-   * resource. Multiple subject attributes might be provided. The following attributes are supported:
+   *
+   * ### Authorization
+   *
+   * Authorization policies are supported by services on a case by case basis. Refer to service documentation to verify
+   * their support of authorization policies. To create an authorization policy, use **`"type": "authorization"`** in
+   * the body. The subject attributes must match the supported authorization subjects of the resource. Multiple subject
+   * attributes might be provided. The following attributes are supported:
    *   serviceName, serviceInstance, region, resourceType, resource, accountId The policy roles must be a subset of the
    * supported authorization roles supported by the target service. The user must also have the same level of access or
    * greater to the target resource in order to grant the role. The resource attributes must be a subset of a service's
@@ -203,16 +213,22 @@ public class IamPolicyManagement extends BaseService {
    *
    * Update a policy to grant access between a subject and a resource. A policy administrator might want to update an
    * existing policy. The policy type cannot be changed (You cannot change an access policy to an authorization policy).
-   * ### Access To update an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
+   *
+   * ### Access
+   *
+   * To update an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
    * **`iam_id`** and **`access_group_id`**. Use the **`iam_id`** subject attribute for assigning access for a user or
    * service-id. Use the **`access_group_id`** subject attribute for assigning access for an access group. The roles
    * must be a subset of a service's or the platform's supported roles. The resource attributes must be a subset of a
    * service's or the platform's supported attributes. The policy resource must include either the **`serviceType`**,
    * **`serviceName`**,  or **`resourceGroupId`** attribute and the **`accountId`** attribute.` If the subject is a
    * locked service-id, the request will fail.
-   * ### Authorization To update an authorization policy, use **`"type": "authorization"`** in the body. The subject
-   * attributes must match the supported authorization subjects of the resource. Multiple subject attributes might be
-   * provided. The following attributes are supported:
+   *
+   * ### Authorization
+   *
+   * To update an authorization policy, use **`"type": "authorization"`** in the body. The subject attributes must match
+   * the supported authorization subjects of the resource. Multiple subject attributes might be provided. The following
+   * attributes are supported:
    *   serviceName, serviceInstance, region, resourceType, resource, accountId The policy roles must be a subset of the
    * supported authorization roles supported by the target service. The user must also have the same level of access or
    * greater to the target resource in order to grant the role. The resource attributes must be a subset of a service's
@@ -292,6 +308,37 @@ public class IamPolicyManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Restore a deleted policy by ID.
+   *
+   * Restore a policy that has recently been deleted. A policy administrator might want to restore a deleted policy. To
+   * restore a policy, use **`"state": "active"`** in the body.
+   *
+   * @param patchPolicyOptions the {@link PatchPolicyOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link Policy}
+   */
+  public ServiceCall<Policy> patchPolicy(PatchPolicyOptions patchPolicyOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(patchPolicyOptions,
+      "patchPolicyOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("policy_id", patchPolicyOptions.policyId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policies/{policy_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "patchPolicy");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", patchPolicyOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    if (patchPolicyOptions.state() != null) {
+      contentJson.addProperty("state", patchPolicyOptions.state());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<Policy> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Policy>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

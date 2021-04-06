@@ -241,9 +241,35 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(result.getSubjects(), new ArrayList<PolicySubject>(Arrays.asList(policySubjectModel)));
         assertEquals(result.getResources(), new ArrayList<PolicyResource>(Arrays.asList(policyResourceModel)));
         assertEquals(result.getRoles().get(0).roleId(), policyRoleModel.roleId());
+
+        List<String> values = response.getHeaders().values(HEADER_ETAG);
+        assertNotNull(values);
+        testPolicyEtag = values.get(0);
     }
 
     @Test(dependsOnMethods = {"testUpdateAccessPolicy"})
+    public void testPatchPolicy() {
+        assertNotNull(testPolicyId);
+        assertNotNull(testPolicyEtag);
+
+        PatchPolicyOptions patchPolicyOptions = new PatchPolicyOptions.Builder()
+                .policyId(testPolicyId)
+                .ifMatch(testPolicyEtag)
+                .state("active")
+                .build();
+
+        Response<Policy> response = service.patchPolicy(patchPolicyOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        Policy policyResult = response.getResult();
+        assertNotNull(policyResult);
+        assertEquals(policyResult.getId(), testPolicyId);
+        assertEquals(policyResult.getType(), POLICY_TYPE);
+        assertEquals(policyResult.getState(), "active");
+    }
+
+    @Test(dependsOnMethods = {"testPatchPolicy"})
     public void testListAccessPolicies() throws Exception, InterruptedException {
         assertNotNull(testPolicyId);
 

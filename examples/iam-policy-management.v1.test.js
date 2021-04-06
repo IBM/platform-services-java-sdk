@@ -230,6 +230,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.updatePolicy(params)
       .then(res => {
+        examplePolicyETag = res.headers.etag;
         console.log('updatePolicy() result:\n' + JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
@@ -237,6 +238,36 @@ describe('IamPolicyManagementV1', () => {
       });
 
     // end-update_policy
+  });
+  test('patchPolicy request example', done => {
+    expect(examplePolicyId).toBeDefined();
+    expect(examplePolicyETag).toBeDefined();
+
+    consoleLogMock.mockImplementation(output => {
+      originalLog(output);
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+
+    // begin-patch_policy
+
+    const params = {
+      policyId: examplePolicyId,
+      ifMatch: examplePolicyETag,
+      state: 'active'
+    };
+
+    iamPolicyManagementService.patchPolicy(params)
+      .then(res => {
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err)
+      });
+
+    // end-patch_policy
   });
   test('listPolicies request example', done => {
     expect(exampleAccountId).not.toBeNull();
@@ -292,7 +323,7 @@ describe('IamPolicyManagementV1', () => {
       });
 
     // end-delete_policy
-  })
+  });
   test('createRole request example', done => {
     expect(exampleAccountId).not.toBeNull();
 

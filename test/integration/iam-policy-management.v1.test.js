@@ -202,6 +202,38 @@ describe('IamPolicyManagementV1_integration', () => {
       expect(result['roles'][0]['role_id']).toEqual(updPolicyRoles[0]['role_id']);
       expect(result['resources']).toEqual(policyResources);
 
+      testPolicyETag = response.headers.etag;
+
+      done();
+    });
+
+    test('Patch an access policy', async done => {
+      expect(testPolicyId).toBeDefined();
+      expect(testPolicyETag).toBeDefined();
+
+      const params = {
+        policyId: testPolicyId,
+        ifMatch: testPolicyETag,
+        state: 'active',
+      };
+
+      let response;
+      try {
+        response = await service.patchPolicy(params);
+      } catch (err) {
+        done(err);
+      }
+
+      expect(response).toBeDefined();
+      expect(response.status).toEqual(200);
+      const { result } = response || {};
+      expect(result).toBeDefined();
+      expect(result.id).toEqual(testPolicyId);
+      expect(result['type']).toEqual(policyType);
+      expect(result['subjects']).toEqual(policySubjects);
+      expect(result['state']).toEqual('active');
+      expect(result['resources']).toEqual(policyResources);
+
       done();
     });
 

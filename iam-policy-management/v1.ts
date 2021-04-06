@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-925238c4-20210122-102634
+ * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
 
@@ -95,9 +95,9 @@ class IamPolicyManagementV1 extends BaseService {
    *
    * Get policies and filter by attributes. While managing policies, you may want to retrieve policies in the account
    * and filter by attribute values. This can be done through query parameters. Currently, only the following attributes
-   * are supported: account_id, iam_id, access_group_id, type, service_type, sort and format. account_id is a required
-   * query parameter. Only policies that have the specified attributes and that the caller has read access to are
-   * returned. If the caller does not have read access to any policies an empty array is returned.
+   * are supported: account_id, iam_id, access_group_id, type, service_type, sort, format and state. account_id is a
+   * required query parameter. Only policies that have the specified attributes and that the caller has read access to
+   * are returned. If the caller does not have read access to any policies an empty array is returned.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.accountId - The account GUID in which the policies belong to.
@@ -111,6 +111,7 @@ class IamPolicyManagementV1 extends BaseService {
    * @param {string} [params.sort] - Sort the results by any of the top level policy fields (id, created_at,
    * created_by_id, last_modified_at, etc).
    * @param {string} [params.format] - Include additional data per policy returned [include_last_permit, display].
+   * @param {string} [params.state] - The state of the policy, 'active' or 'deleted'.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.PolicyList>>}
    */
@@ -132,7 +133,8 @@ class IamPolicyManagementV1 extends BaseService {
       'tag_name': _params.tagName,
       'tag_value': _params.tagValue,
       'sort': _params.sort,
-      'format': _params.format
+      'format': _params.format,
+      'state': _params.state
     };
 
     const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listPolicies');
@@ -161,17 +163,23 @@ class IamPolicyManagementV1 extends BaseService {
    * **authorization**. A policy administrator might want to create an access policy which grants access to a user,
    * service-id, or an access group. They might also want to create an authorization policy and setup access between
    * services.
-   * ### Access To create an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
+   *
+   * ### Access
+   *
+   * To create an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
    * **`iam_id`** and **`access_group_id`**. Use the **`iam_id`** subject attribute for assigning access for a user or
    * service-id. Use the **`access_group_id`** subject attribute for assigning access for an access group. The roles
    * must be a subset of a service's or the platform's supported roles. The resource attributes must be a subset of a
    * service's or the platform's supported attributes. The policy resource must include either the **`serviceType`**,
    * **`serviceName`**,  or **`resourceGroupId`** attribute and the **`accountId`** attribute.` If the subject is a
    * locked service-id, the request will fail.
-   * ### Authorization Authorization policies are supported by services on a case by case basis. Refer to service
-   * documentation to verify their support of authorization policies. To create an authorization policy, use **`"type":
-   * "authorization"`** in the body. The subject attributes must match the supported authorization subjects of the
-   * resource. Multiple subject attributes might be provided. The following attributes are supported:
+   *
+   * ### Authorization
+   *
+   * Authorization policies are supported by services on a case by case basis. Refer to service documentation to verify
+   * their support of authorization policies. To create an authorization policy, use **`"type": "authorization"`** in
+   * the body. The subject attributes must match the supported authorization subjects of the resource. Multiple subject
+   * attributes might be provided. The following attributes are supported:
    *   serviceName, serviceInstance, region, resourceType, resource, accountId The policy roles must be a subset of the
    * supported authorization roles supported by the target service. The user must also have the same level of access or
    * greater to the target resource in order to grant the role. The resource attributes must be a subset of a service's
@@ -230,16 +238,22 @@ class IamPolicyManagementV1 extends BaseService {
    *
    * Update a policy to grant access between a subject and a resource. A policy administrator might want to update an
    * existing policy. The policy type cannot be changed (You cannot change an access policy to an authorization policy).
-   * ### Access To update an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
+   *
+   * ### Access
+   *
+   * To update an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
    * **`iam_id`** and **`access_group_id`**. Use the **`iam_id`** subject attribute for assigning access for a user or
    * service-id. Use the **`access_group_id`** subject attribute for assigning access for an access group. The roles
    * must be a subset of a service's or the platform's supported roles. The resource attributes must be a subset of a
    * service's or the platform's supported attributes. The policy resource must include either the **`serviceType`**,
    * **`serviceName`**,  or **`resourceGroupId`** attribute and the **`accountId`** attribute.` If the subject is a
    * locked service-id, the request will fail.
-   * ### Authorization To update an authorization policy, use **`"type": "authorization"`** in the body. The subject
-   * attributes must match the supported authorization subjects of the resource. Multiple subject attributes might be
-   * provided. The following attributes are supported:
+   *
+   * ### Authorization
+   *
+   * To update an authorization policy, use **`"type": "authorization"`** in the body. The subject attributes must match
+   * the supported authorization subjects of the resource. Multiple subject attributes might be provided. The following
+   * attributes are supported:
    *   serviceName, serviceInstance, region, resourceType, resource, accountId The policy roles must be a subset of the
    * supported authorization roles supported by the target service. The user must also have the same level of access or
    * greater to the target resource in order to grant the role. The resource attributes must be a subset of a service's
@@ -376,6 +390,59 @@ class IamPolicyManagementV1 extends BaseService {
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(true, sdkHeaders, {
+        }, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  };
+
+  /**
+   * Restore a deleted policy by ID.
+   *
+   * Restore a policy that has recently been deleted. A policy administrator might want to restore a deleted policy. To
+   * restore a policy, use **`"state": "active"`** in the body.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.policyId - The policy ID.
+   * @param {string} params.ifMatch - The revision number for updating a policy and must match the ETag value of the
+   * existing policy. The Etag can be retrieved using the GET /v1/policies/{policy_id} API and looking at the ETag
+   * response header.
+   * @param {string} [params.state] - The policy state; either 'active' or 'deleted'.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>>}
+   */
+  public patchPolicy(params: IamPolicyManagementV1.PatchPolicyParams): Promise<IamPolicyManagementV1.Response<IamPolicyManagementV1.Policy>> {
+    const _params = Object.assign({}, params);
+    const requiredParams = ['policyId', 'ifMatch'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'state': _params.state
+    };
+
+    const path = {
+      'policy_id': _params.policyId
+    };
+
+    const sdkHeaders = getSdkHeaders(IamPolicyManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'patchPolicy');
+
+    const parameters = {
+      options: {
+        url: '/v1/policies/{policy_id}',
+        method: 'PATCH',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'If-Match': _params.ifMatch
         }, _params.headers),
       }),
     };
@@ -680,6 +747,8 @@ namespace IamPolicyManagementV1 {
     sort?: string;
     /** Include additional data per policy returned [include_last_permit, display]. */
     format?: string;
+    /** The state of the policy, 'active' or 'deleted'. */
+    state?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -732,6 +801,19 @@ namespace IamPolicyManagementV1 {
   export interface DeletePolicyParams {
     /** The policy ID. */
     policyId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `patchPolicy` operation. */
+  export interface PatchPolicyParams {
+    /** The policy ID. */
+    policyId: string;
+    /** The revision number for updating a policy and must match the ETag value of the existing policy. The Etag can
+     *  be retrieved using the GET /v1/policies/{policy_id} API and looking at the ETag response header.
+     */
+    ifMatch: string;
+    /** The policy state; either 'active' or 'deleted'. */
+    state?: string;
     headers?: OutgoingHttpHeaders;
   }
 

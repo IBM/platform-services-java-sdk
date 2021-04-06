@@ -1,3 +1,10 @@
+## [0.18.4](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.3...v0.18.4) (2021-04-06)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** add restore policy functionality ([#88](https://github.com/IBM/platform-services-node-sdk/issues/88)) ([f79d649](https://github.com/IBM/platform-services-node-sdk/commit/f79d649c7f7caea556065209fbc55f8f6e9feee0))
+
 ## [0.18.3](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.2...v0.18.3) (2021-04-01)
 
 

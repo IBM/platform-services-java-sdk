@@ -21,6 +21,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRole
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PatchPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
@@ -218,6 +219,27 @@ public class IamPolicyManagementExamples {
       System.out.printf("updatePolicy() result:%n%s%n", policy.toString());
 
       // end-update_policy
+
+      examplePolicyEtag = response.getHeaders().values("Etag").get(0);
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-patch_policy
+
+      PatchPolicyOptions patchPolicyOptions = new PatchPolicyOptions.Builder()
+              .policyId(examplePolicyId)
+              .ifMatch(examplePolicyEtag)
+              .state("active")
+              .build();
+
+      Response<Policy> response = service.patchPolicy(patchPolicyOptions).execute();
+      Policy policy = response.getResult();
+
+      System.out.println(policy);
+      // end-patch_policy
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

@@ -45,5 +45,6 @@ public class PolicyTest {
     assertNull(policyModel.getSubjects());
     assertNull(policyModel.getRoles());
     assertNull(policyModel.getResources());
+    assertNull(policyModel.getState());
   }
 }

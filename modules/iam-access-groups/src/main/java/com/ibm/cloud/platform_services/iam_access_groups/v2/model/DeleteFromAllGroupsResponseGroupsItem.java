@@ -32,7 +32,7 @@ public class DeleteFromAllGroupsResponseGroupsItem extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The Access Group that the member is to be deleted from.
+   * The access group that the member is to be deleted from.
    *
    * @return the accessGroupId
    */

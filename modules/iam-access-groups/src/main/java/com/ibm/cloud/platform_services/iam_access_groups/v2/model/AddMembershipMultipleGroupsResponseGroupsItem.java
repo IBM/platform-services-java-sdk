@@ -32,7 +32,7 @@ public class AddMembershipMultipleGroupsResponseGroupsItem extends GenericModel 
   /**
    * Gets the accessGroupId.
    *
-   * The Access Group that the member is to be added to.
+   * The access group that the member is to be added to.
    *
    * @return the accessGroupId
    */

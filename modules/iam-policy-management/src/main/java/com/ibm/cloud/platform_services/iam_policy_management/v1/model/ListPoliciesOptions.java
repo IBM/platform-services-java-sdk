@@ -29,6 +29,7 @@ public class ListPoliciesOptions extends GenericModel {
   protected String tagValue;
   protected String sort;
   protected String format;
+  protected String state;
 
   /**
    * Builder.
@@ -44,6 +45,7 @@ public class ListPoliciesOptions extends GenericModel {
     private String tagValue;
     private String sort;
     private String format;
+    private String state;
 
     private Builder(ListPoliciesOptions listPoliciesOptions) {
       this.accountId = listPoliciesOptions.accountId;
@@ -56,6 +58,7 @@ public class ListPoliciesOptions extends GenericModel {
       this.tagValue = listPoliciesOptions.tagValue;
       this.sort = listPoliciesOptions.sort;
       this.format = listPoliciesOptions.format;
+      this.state = listPoliciesOptions.state;
     }
 
     /**
@@ -191,6 +194,17 @@ public class ListPoliciesOptions extends GenericModel {
       this.format = format;
       return this;
     }
+
+    /**
+     * Set the state.
+     *
+     * @param state the state
+     * @return the ListPoliciesOptions builder
+     */
+    public Builder state(String state) {
+      this.state = state;
+      return this;
+    }
   }
 
   protected ListPoliciesOptions(Builder builder) {
@@ -206,6 +220,7 @@ public class ListPoliciesOptions extends GenericModel {
     tagValue = builder.tagValue;
     sort = builder.sort;
     format = builder.format;
+    state = builder.state;
   }
 
   /**
@@ -325,6 +340,17 @@ public class ListPoliciesOptions extends GenericModel {
    */
   public String format() {
     return format;
+  }
+
+  /**
+   * Gets the state.
+   *
+   * The state of the policy, 'active' or 'deleted'.
+   *
+   * @return the state
+   */
+  public String state() {
+    return state;
   }
 }
 

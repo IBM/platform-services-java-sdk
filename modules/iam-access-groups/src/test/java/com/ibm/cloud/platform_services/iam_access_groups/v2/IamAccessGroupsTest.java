@@ -56,6 +56,7 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import java.io.IOException;
 import java.io.InputStream;
@@ -119,7 +120,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testCreateAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
     String createAccessGroupPath = "/groups";
 
     server.enqueue(new MockResponse()
@@ -132,8 +133,8 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     // Construct an instance of the CreateAccessGroupOptions model
     CreateAccessGroupOptions createAccessGroupOptionsModel = new CreateAccessGroupOptions.Builder()
     .accountId("testString")
-    .name("testString")
-    .description("testString")
+    .name("Managers")
+    .description("Group for managers")
     .transactionId("testString")
     .build();
 
@@ -173,7 +174,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testListAccessGroupsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"groups\": [{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}]}";
+    String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"groups\": [{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}]}";
     String listAccessGroupsPath = "/groups";
 
     server.enqueue(new MockResponse()
@@ -237,7 +238,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testGetAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
     String getAccessGroupPath = "/groups/testString";
 
     server.enqueue(new MockResponse()
@@ -290,7 +291,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testUpdateAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
     String updateAccessGroupPath = "/groups/testString";
 
     server.enqueue(new MockResponse()
@@ -304,8 +305,8 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     UpdateAccessGroupOptions updateAccessGroupOptionsModel = new UpdateAccessGroupOptions.Builder()
     .accessGroupId("testString")
     .ifMatch("testString")
-    .name("testString")
-    .description("testString")
+    .name("Awesome Managers")
+    .description("Group for awesome managers.")
     .transactionId("testString")
     .build();
 
@@ -450,7 +451,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testAddMembersToAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"members\": [{\"iam_id\": \"iamId\", \"type\": \"type\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"status_code\": 10, \"trace\": \"trace\", \"errors\": [{\"code\": \"code\", \"message\": \"message\"}]}]}";
+    String mockResponseBody = "{\"members\": [{\"iam_id\": \"iamId\", \"type\": \"type\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"status_code\": 10, \"trace\": \"trace\", \"errors\": [{\"code\": \"code\", \"message\": \"message\"}]}]}";
     String addMembersToAccessGroupPath = "/groups/testString/members";
 
     server.enqueue(new MockResponse()
@@ -462,8 +463,8 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
 
     // Construct an instance of the AddGroupMembersRequestMembersItem model
     AddGroupMembersRequestMembersItem addGroupMembersRequestMembersItemModel = new AddGroupMembersRequestMembersItem.Builder()
-    .iamId("testString")
-    .type("testString")
+    .iamId("IBMid-user1")
+    .type("user")
     .build();
 
     // Construct an instance of the AddMembersToAccessGroupOptions model
@@ -508,7 +509,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testListAccessGroupMembersWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"members\": [{\"iam_id\": \"iamId\", \"type\": \"type\", \"name\": \"name\", \"email\": \"email\", \"description\": \"description\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\"}]}";
+    String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"members\": [{\"iam_id\": \"iamId\", \"type\": \"type\", \"name\": \"name\", \"email\": \"email\", \"description\": \"description\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\"}]}";
     String listAccessGroupMembersPath = "/groups/testString/members";
 
     server.enqueue(new MockResponse()
@@ -634,7 +635,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     // Construct an instance of the RemoveMembersFromAccessGroupOptions model
     RemoveMembersFromAccessGroupOptions removeMembersFromAccessGroupOptionsModel = new RemoveMembersFromAccessGroupOptions.Builder()
     .accessGroupId("testString")
-    .members(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .members(new java.util.ArrayList<String>(java.util.Arrays.asList("IBMId-user1", "iam-ServiceId-123")))
     .transactionId("testString")
     .build();
 
@@ -740,8 +741,8 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     AddMemberToMultipleAccessGroupsOptions addMemberToMultipleAccessGroupsOptionsModel = new AddMemberToMultipleAccessGroupsOptions.Builder()
     .accountId("testString")
     .iamId("testString")
-    .type("testString")
-    .groups(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .type("user")
+    .groups(new java.util.ArrayList<String>(java.util.Arrays.asList("access-group-id-1")))
     .transactionId("testString")
     .build();
 
@@ -781,7 +782,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testAddAccessGroupRuleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"EQUALS\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String addAccessGroupRulePath = "/groups/testString/rules";
 
     server.enqueue(new MockResponse()
@@ -793,18 +794,18 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
 
     // Construct an instance of the RuleConditions model
     RuleConditions ruleConditionsModel = new RuleConditions.Builder()
-    .claim("testString")
-    .operator("testString")
-    .value("testString")
+    .claim("isManager")
+    .operator("EQUALS")
+    .value("true")
     .build();
 
     // Construct an instance of the AddAccessGroupRuleOptions model
     AddAccessGroupRuleOptions addAccessGroupRuleOptionsModel = new AddAccessGroupRuleOptions.Builder()
     .accessGroupId("testString")
-    .expiration(Long.valueOf("26"))
-    .realmName("testString")
+    .expiration(Long.valueOf("12"))
+    .realmName("https://idp.example.org/SAML2")
     .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
-    .name("testString")
+    .name("Manager group rule")
     .transactionId("testString")
     .build();
 
@@ -843,7 +844,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testListAccessGroupRulesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rules\": [{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"rules\": [{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"EQUALS\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listAccessGroupRulesPath = "/groups/testString/rules";
 
     server.enqueue(new MockResponse()
@@ -894,7 +895,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testGetAccessGroupRuleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"EQUALS\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getAccessGroupRulePath = "/groups/testString/rules/testString";
 
     server.enqueue(new MockResponse()
@@ -946,7 +947,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testReplaceAccessGroupRuleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"EQUALS\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String replaceAccessGroupRulePath = "/groups/testString/rules/testString";
 
     server.enqueue(new MockResponse()
@@ -958,9 +959,9 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
 
     // Construct an instance of the RuleConditions model
     RuleConditions ruleConditionsModel = new RuleConditions.Builder()
-    .claim("testString")
-    .operator("testString")
-    .value("testString")
+    .claim("isManager")
+    .operator("EQUALS")
+    .value("true")
     .build();
 
     // Construct an instance of the ReplaceAccessGroupRuleOptions model
@@ -968,10 +969,10 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .accessGroupId("testString")
     .ruleId("testString")
     .ifMatch("testString")
-    .expiration(Long.valueOf("26"))
-    .realmName("testString")
+    .expiration(Long.valueOf("12"))
+    .realmName("https://idp.example.org/SAML2")
     .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
-    .name("testString")
+    .name("Manager group rule")
     .transactionId("testString")
     .build();
 
@@ -1063,7 +1064,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testGetAccountSettingsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
     String getAccountSettingsPath = "/groups/settings";
 
     server.enqueue(new MockResponse()
@@ -1115,7 +1116,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testUpdateAccountSettingsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
     String updateAccountSettingsPath = "/groups/settings";
 
     server.enqueue(new MockResponse()

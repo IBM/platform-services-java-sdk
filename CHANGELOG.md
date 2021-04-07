@@ -1,3 +1,17 @@
+## [0.18.3](https://github.com/IBM/platform-services-java-sdk/compare/0.18.2...0.18.3) (2021-04-06)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** fix restore policy functionality ([#88](https://github.com/IBM/platform-services-java-sdk/issues/88)) ([be4d791](https://github.com/IBM/platform-services-java-sdk/commit/be4d7913eeb0d2b7501129493bc66a4c59d8a3d5))
+
+## [0.18.2](https://github.com/IBM/platform-services-java-sdk/compare/0.18.1...0.18.2) (2021-04-01)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** update service after recent api changes ([#92](https://github.com/IBM/platform-services-java-sdk/issues/92)) ([eceddee](https://github.com/IBM/platform-services-java-sdk/commit/eceddee926023141f20b2f9b0bf14b9042cec183))
+
 ## [0.18.1](https://github.com/IBM/platform-services-java-sdk/compare/0.18.0...0.18.1) (2021-03-31)
 
 

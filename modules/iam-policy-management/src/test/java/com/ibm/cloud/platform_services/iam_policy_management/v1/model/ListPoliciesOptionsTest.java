@@ -42,6 +42,7 @@ public class ListPoliciesOptionsTest {
       .tagValue("testString")
       .sort("testString")
       .format("testString")
+      .state("testString")
       .build();
     assertEquals(listPoliciesOptionsModel.accountId(), "testString");
     assertEquals(listPoliciesOptionsModel.acceptLanguage(), "testString");
@@ -53,6 +54,7 @@ public class ListPoliciesOptionsTest {
     assertEquals(listPoliciesOptionsModel.tagValue(), "testString");
     assertEquals(listPoliciesOptionsModel.sort(), "testString");
     assertEquals(listPoliciesOptionsModel.format(), "testString");
+    assertEquals(listPoliciesOptionsModel.state(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

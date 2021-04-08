@@ -185,10 +185,10 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
       assertNotNull(listAccountGroupsResponseResult);
       assertEquals(listAccountGroupsResponseResult.getResources().size(), 1);
       System.out.println("First page: " + listAccountGroupsResponseResult);
-      System.out.println("nextdocid: " + listAccountGroupsOptions.nextDocid());
+      System.out.println("=== nextdocid ===: " + listAccountGroupsResponseResult.getNextUrl());
 
       ListAccountGroupsOptions listAccountGroupsOptionsPage2 = new ListAccountGroupsOptions.Builder()
-              .nextDocid(listAccountGroupsOptions.nextDocid())
+              .nextDocid(listAccountGroupsResponseResult.getNextUrl())
               .limit(1)
               .build();
       Response<ListAccountGroupsResponse> responsePage2 = service.listAccountGroups(listAccountGroupsOptionsPage2)

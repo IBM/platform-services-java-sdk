@@ -109,7 +109,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  @Ignore
   public void testCreateAccountGroup() throws Exception {
     try {
       String parent = String.format(createAccountGroupCrn, accountId, enterpriseId);
@@ -138,7 +137,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  @Ignore
   public void testCreateAnotherAccountGroup() throws Exception {
     try {
       String parent = String.format(createAccountGroupCrn, accountId, enterpriseId);
@@ -184,6 +182,8 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
       ListAccountGroupsResponse listAccountGroupsResponseResult = response.getResult();
       assertNotNull(listAccountGroupsResponseResult);
 
+      // at this point we took two account group from the list
+      // due to that they needed for later operations in test cases depending on this test case
       firstExampleAccountGroupId = listAccountGroupsResponseResult
           .getResources()
           .get(rnd.nextInt(listAccountGroupsResponseResult
@@ -215,6 +215,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
             .nextDocid(nextDocId)
             .limit(limit)
             .build();
+
         // Invoke operation
         Response<ListAccountGroupsResponse> response = service
             .listAccountGroups(listAccountGroupsOptions)
@@ -232,7 +233,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         nextDocId = getNextDocId(listAccountGroupsResponseResult.getNextUrl());
       } while (nextDocId != null);
 
-      log(String.format("Received a total of %d user profiles.%n", accountGroupsList.size()));
+      log(String.format("Received a total of %d account groups.%n", accountGroupsList.size()));
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
@@ -386,7 +387,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         nextDocId = getNextDocId(listAccountsResponseResult.getNextUrl());
 
       } while (nextDocId != null);
-      log(String.format("Received a total of %d user profiles.%n", listAccounts.size()));
+      log(String.format("Received a total of %d accounts.%n", listAccounts.size()));
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
@@ -481,12 +482,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
       ListEnterprisesResponse listEnterprisesResponseResult = response.getResult();
 
       assertNotNull(listEnterprisesResponseResult);
-      exampleEnterpriseId = listEnterprisesResponseResult
-          .getResources()
-          .get(rnd.nextInt(listEnterprisesResponseResult
-              .getRowsCount()
-              .intValue()))
-          .getId();
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
@@ -521,7 +516,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         nextDocId = getNextDocId(listEnterprisesResponseResult.getNextUrl());
         enterpriseList.addAll(listEnterprisesResponseResult.getResources());
 
-        log(String.format("Received a total of %d user profiles.%n", enterpriseList.size()));
+        log(String.format("Received a total of %d enterprises.%n", enterpriseList.size()));
       } while (nextDocId != null);
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -529,11 +524,11 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
-  @Test(dependsOnMethods = {"testListEnterprises"})
+  @Test
   public void testGetEnterprise() throws Exception {
     try {
       GetEnterpriseOptions getEnterpriseOptions = new GetEnterpriseOptions.Builder()
-          .enterpriseId(exampleEnterpriseId)
+          .enterpriseId(enterpriseId)
           .build();
 
       // Invoke operation

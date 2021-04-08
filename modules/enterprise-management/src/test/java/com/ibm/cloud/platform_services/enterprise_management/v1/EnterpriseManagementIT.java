@@ -286,28 +286,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
-  // @Test
-  // public void testImportAccountToEnterprise() throws Exception {
-  //   try {
-  //     ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions
-  //     .Builder()
-  //     .enterpriseId("testString")
-  //     .accountId("testString")
-  //     .parent("testString")
-  //     .billingUnitId("testString")
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<Void> response = service.importAccountToEnterprise(importAccountToEnterpriseOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 202);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s%nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
   @Test(dependsOnMethods = {"testListAccountGroups"})
   public void testCreateAccount() throws Exception {
     try {
@@ -439,31 +417,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
-  // @Test
-  // public void testCreateEnterprise() throws Exception {
-  //   try {
-  //     CreateEnterpriseOptions createEnterpriseOptions = new CreateEnterpriseOptions.Builder()
-  //     .sourceAccountId("testString")
-  //     .name("testString")
-  //     .primaryContactIamId("testString")
-  //     .domain("testString")
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<CreateEnterpriseResponse> response = service.createEnterprise(createEnterpriseOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 202);
-  //
-  //     CreateEnterpriseResponse createEnterpriseResponseResult = response.getResult();
-  //
-  //     assertNotNull(createEnterpriseResponseResult);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s%nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
   @Test
   public void testListEnterprises() throws Exception {
     try {

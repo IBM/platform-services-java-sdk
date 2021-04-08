@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+ * IBM OpenAPI SDK Code Generator Version: 3.30.0-bd714324-20210406-200538
  */
 
 package com.ibm.cloud.platform_services.enterprise_management.v1;
@@ -62,7 +62,7 @@ public class EnterpriseManagement extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "enterprise_management";
 
-  public static final String DEFAULT_SERVICE_URL = "https://enterprise.test.cloud.ibm.com/v1";
+  public static final String DEFAULT_SERVICE_URL = "https://enterprise.cloud.ibm.com/v1";
 
  /**
    * Class method which constructs an instance of the `EnterpriseManagement` client.

@@ -13,28 +13,7 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterpriseOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ImportAccountToEnterpriseOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesResponse;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountGroupOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.*;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
@@ -43,22 +22,27 @@ import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URI;
+import java.util.*;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
+
 import static org.testng.Assert.*;
 
 /**
  * Integration test class for the EnterpriseManagement service.
  */
 public class EnterpriseManagementIT extends SdkIntegrationTestBase {
+
   public EnterpriseManagement service = null;
   public static Map<String, String> config = null;
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
+
+  private Random rnd = new Random();
 
   String authType = null;
   String authUrl = null;
@@ -66,8 +50,17 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   String enterpriseId = null;
   String accountId = null;
   String accountIamId = null;
-  String exampleAccountGroupName = "Example Account Group Name";
-  String createdAccountGroupId = null;
+  String firstExampleAccountGroupName = "First Example Account Group Name";
+  String updatedFirstExampleAccountGroupName = "Updated First Example Account Group Name";
+  String secondExampleAccountGroupName = "Second Example Account Group Name";
+  String exampleAccountName = "Example Account Name";
+  String exampleAccountId = null;
+  String exampleEnterpriseId = null;
+  String updatedExampleEnterpriseName = "Updated Example Enterprise Name";
+  String firstExampleAccountGroupId = null;
+  String secondExampleAccountGroupId = null;
+  String createAccountGroupCrn = "crn:v1:bluemix:public:enterprise::a/%s::enterprise:%s";
+  String createAccountCrn = "crn:v1:bluemix:public:enterprise::a/%s::account-group:%s";
 
   /**
    * This method provides our config filename to the base class.
@@ -116,19 +109,20 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   }
 
   @Test
+  @Ignore
   public void testCreateAccountGroup() throws Exception {
     try {
-      String parent = String.format("crn:v1:bluemix:public:enterprise::a/%s::enterprise:%s",
-              accountId,
-              enterpriseId);
+      String parent = String.format(createAccountGroupCrn, accountId, enterpriseId);
       CreateAccountGroupOptions createAccountGroupOptions = new CreateAccountGroupOptions.Builder()
-      .parent(parent)
-      .name(exampleAccountGroupName)
-      .primaryContactIamId(accountIamId)
-      .build();
+          .parent(parent)
+          .name(firstExampleAccountGroupName)
+          .primaryContactIamId(accountIamId)
+          .build();
 
       // Invoke operation
-      Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptions).execute();
+      Response<CreateAccountGroupResponse> response = service
+          .createAccountGroup(createAccountGroupOptions)
+          .execute();
       // Validate response
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
@@ -136,10 +130,39 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
       CreateAccountGroupResponse createAccountGroupResponseResult = response.getResult();
       assertNotNull(createAccountGroupResponseResult);
 
-      createdAccountGroupId = createAccountGroupResponseResult.getAccountGroupId();
+      firstExampleAccountGroupId = createAccountGroupResponseResult.getAccountGroupId();
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  @Ignore
+  public void testCreateAnotherAccountGroup() throws Exception {
+    try {
+      String parent = String.format(createAccountGroupCrn, accountId, enterpriseId);
+      CreateAccountGroupOptions createAccountGroupOptions = new CreateAccountGroupOptions.Builder()
+          .parent(parent)
+          .name(secondExampleAccountGroupName)
+          .primaryContactIamId(accountIamId)
+          .build();
+
+      // Invoke operation
+      Response<CreateAccountGroupResponse> response = service
+          .createAccountGroup(createAccountGroupOptions)
+          .execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      CreateAccountGroupResponse createAccountGroupResponseResult = response.getResult();
+      assertNotNull(createAccountGroupResponseResult);
+
+      secondExampleAccountGroupId = createAccountGroupResponseResult.getAccountGroupId();
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
     }
   }
 
@@ -147,113 +170,126 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   public void testListAccountGroups() throws Exception {
     try {
       ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder()
-      .enterpriseId(enterpriseId)
-      .build();
+          .enterpriseId(enterpriseId)
+          .build();
 
       // Invoke operation
-      Response<ListAccountGroupsResponse> response = service.listAccountGroups(listAccountGroupsOptions).execute();
+      Response<ListAccountGroupsResponse> response = service
+          .listAccountGroups(listAccountGroupsOptions)
+          .execute();
       // Validate response
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
 
       ListAccountGroupsResponse listAccountGroupsResponseResult = response.getResult();
-
       assertNotNull(listAccountGroupsResponseResult);
-      System.out.println(listAccountGroupsResponseResult);
+
+      firstExampleAccountGroupId = listAccountGroupsResponseResult
+          .getResources()
+          .get(rnd.nextInt(listAccountGroupsResponseResult
+              .getRowsCount()
+              .intValue()))
+          .getId();
+      secondExampleAccountGroupId = listAccountGroupsResponseResult
+          .getResources()
+          .get(rnd.nextInt(listAccountGroupsResponseResult
+              .getRowsCount()
+              .intValue()))
+          .getId();
+
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
     }
   }
 
   @Test
-  public void testListAccountGroupsWithPaging() throws Exception{
+  public void testListAccountGroupsWithPaging() throws Exception {
     try {
-      ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder()
-              .enterpriseId(enterpriseId)
-              .limit(1)
-              .build();
+      List<AccountGroup> accountGroupsList = new ArrayList<>();
+      String nextDocId = null;
+      Integer limit = 10;
+      do {
+        ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder()
+            .enterpriseId(enterpriseId)
+            .nextDocid(nextDocId)
+            .limit(limit)
+            .build();
+        // Invoke operation
+        Response<ListAccountGroupsResponse> response = service
+            .listAccountGroups(listAccountGroupsOptions)
+            .execute();
+        // Validate response
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        ListAccountGroupsResponse listAccountGroupsResponseResult = response.getResult();
+
+        assertNotNull(listAccountGroupsResponseResult);
+        assertNotNull(listAccountGroupsResponseResult.getResources());
+        accountGroupsList.addAll(listAccountGroupsResponseResult.getResources());
+
+        nextDocId = getNextDocId(listAccountGroupsResponseResult.getNextUrl());
+      } while (nextDocId != null);
+
+      log(String.format("Received a total of %d user profiles.%n", accountGroupsList.size()));
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = {"testListAccountGroups"})
+  public void testGetAccountGroup() throws Exception {
+    try {
+      GetAccountGroupOptions getAccountGroupOptions = new GetAccountGroupOptions.Builder()
+          .accountGroupId(firstExampleAccountGroupId)
+          .build();
 
       // Invoke operation
-      Response<ListAccountGroupsResponse> response = service.listAccountGroups(listAccountGroupsOptions).execute();
+      Response<AccountGroup> response = service
+          .getAccountGroup(getAccountGroupOptions)
+          .execute();
       // Validate response
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
 
-      ListAccountGroupsResponse listAccountGroupsResponseResult = response.getResult();
+      AccountGroup accountGroupResult = response.getResult();
 
-      assertNotNull(listAccountGroupsResponseResult);
-      assertEquals(listAccountGroupsResponseResult.getResources().size(), 1);
-      System.out.println("First page: " + listAccountGroupsResponseResult);
-      System.out.println("=== nextdocid ===: " + listAccountGroupsResponseResult.getNextUrl());
-
-      ListAccountGroupsOptions listAccountGroupsOptionsPage2 = new ListAccountGroupsOptions.Builder()
-              .nextDocid(listAccountGroupsResponseResult.getNextUrl())
-              .limit(1)
-              .build();
-      Response<ListAccountGroupsResponse> responsePage2 = service.listAccountGroups(listAccountGroupsOptionsPage2)
-              .execute();
-      assertNotNull(responsePage2);
-      assertEquals(responsePage2.getStatusCode(), 200);
-
-      ListAccountGroupsResponse listAccountGroupsResponsePage2 = responsePage2.getResult();
-      assertNotNull(listAccountGroupsResponsePage2);
-      assertEquals(listAccountGroupsResponsePage2.getResources().size(), 1);
-      System.out.println("Second page: " + listAccountGroupsResponsePage2);
-
+      assertNotNull(accountGroupResult);
     } catch (ServiceResponseException e) {
-      fail(String.format("Service returned status code %d: %s\nError details: %s",
-              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
     }
   }
 
-  // @Test(dependsOnMethods = { "testCreateAccountGroup" }, alwaysRun = true)
-  // public void testGetAccountGroup() throws Exception {
-  //   try {
-  //     GetAccountGroupOptions getAccountGroupOptions = new GetAccountGroupOptions.Builder()
-  //     .accountGroupId(createdAccountGroupId)
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<AccountGroup> response = service.getAccountGroup(getAccountGroupOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 200);
-  //
-  //     AccountGroup accountGroupResult = response.getResult();
-  //
-  //     assertNotNull(accountGroupResult);
-  //     System.out.println(accountGroupResult);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
-  // @Test
-  // public void testUpdateAccountGroup() throws Exception {
-  //   try {
-  //     UpdateAccountGroupOptions updateAccountGroupOptions = new UpdateAccountGroupOptions.Builder()
-  //     .accountGroupId("testString")
-  //     .name("testString")
-  //     .primaryContactIamId("testString")
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<Void> response = service.updateAccountGroup(updateAccountGroupOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 204);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
+  @Test(dependsOnMethods = {"testListAccountGroups"})
+  public void testUpdateAccountGroup() throws Exception {
+    try {
+      UpdateAccountGroupOptions updateAccountGroupOptions = new UpdateAccountGroupOptions.Builder()
+          .accountGroupId(firstExampleAccountGroupId)
+          .name(updatedFirstExampleAccountGroupName)
+          .primaryContactIamId(accountIamId)
+          .build();
+
+      // Invoke operation
+      Response<Void> response = service
+          .updateAccountGroup(updateAccountGroupOptions)
+          .execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
   // @Test
   // public void testImportAccountToEnterprise() throws Exception {
   //   try {
-  //     ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()
+  //     ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions
+  //     .Builder()
   //     .enterpriseId("testString")
   //     .accountId("testString")
   //     .parent("testString")
@@ -266,102 +302,142 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   //     assertNotNull(response);
   //     assertEquals(response.getStatusCode(), 202);
   //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
+  //       fail(String.format("Service returned status code %d: %s%nError details: %s",
   //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
   //   }
   // }
   //
-  // @Test
-  // public void testCreateAccount() throws Exception {
-  //   try {
-  //     CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder()
-  //     .parent("testString")
-  //     .name("testString")
-  //     .ownerIamId("testString")
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<CreateAccountResponse> response = service.createAccount(createAccountOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 201);
-  //
-  //     CreateAccountResponse createAccountResponseResult = response.getResult();
-  //
-  //     assertNotNull(createAccountResponseResult);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
-  // @Test
-  // public void testListAccounts() throws Exception {
-  //   try {
-  //     ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder()
-  //     .enterpriseId("testString")
-  //     .accountGroupId("testString")
-  //     .nextDocid("testString")
-  //     .parent("testString")
-  //     .limit(Long.valueOf("26"))
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<ListAccountsResponse> response = service.listAccounts(listAccountsOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 200);
-  //
-  //     ListAccountsResponse listAccountsResponseResult = response.getResult();
-  //
-  //     assertNotNull(listAccountsResponseResult);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
-  // @Test
-  // public void testGetAccount() throws Exception {
-  //   try {
-  //     GetAccountOptions getAccountOptions = new GetAccountOptions.Builder()
-  //     .accountId("testString")
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<Account> response = service.getAccount(getAccountOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 200);
-  //
-  //     Account accountResult = response.getResult();
-  //
-  //     assertNotNull(accountResult);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
-  // @Test
-  // public void testUpdateAccount() throws Exception {
-  //   try {
-  //     UpdateAccountOptions updateAccountOptions = new UpdateAccountOptions.Builder()
-  //     .accountId("testString")
-  //     .parent("testString")
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<Void> response = service.updateAccount(updateAccountOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 204);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
+  @Test(dependsOnMethods = {"testListAccountGroups"})
+  public void testCreateAccount() throws Exception {
+    try {
+      CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder()
+          .parent(String.format(createAccountCrn, accountId, firstExampleAccountGroupId))
+          .name(exampleAccountName)
+          .ownerIamId(accountIamId)
+          .build();
+
+      // Invoke operation
+      Response<CreateAccountResponse> response = service
+          .createAccount(createAccountOptions)
+          .execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 202);
+
+      CreateAccountResponse createAccountResponseResult = response.getResult();
+      assertNotNull(createAccountResponseResult);
+      exampleAccountId = createAccountResponseResult.getAccountId();
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void testListAccounts() throws Exception {
+    try {
+      ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder()
+          .enterpriseId(enterpriseId)
+          .build();
+
+      // Invoke operation
+      Response<ListAccountsResponse> response = service
+          .listAccounts(listAccountsOptions)
+          .execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ListAccountsResponse listAccountsResponseResult = response.getResult();
+
+      assertNotNull(listAccountsResponseResult);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void testListAccountsWithPaging() throws Exception {
+    try {
+
+      List<Account> listAccounts = new ArrayList<>();
+      Integer limit = 1;
+      String nextDocId = null;
+
+      do {
+        ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder()
+            .enterpriseId(enterpriseId)
+            .limit(limit)
+            .nextDocid(nextDocId)
+            .build();
+
+        // Invoke operation
+        Response<ListAccountsResponse> response = service
+            .listAccounts(listAccountsOptions)
+            .execute();
+        // Validate response
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        ListAccountsResponse listAccountsResponseResult = response.getResult();
+        listAccounts.addAll(listAccountsResponseResult.getResources());
+        assertNotNull(listAccountsResponseResult);
+        nextDocId = getNextDocId(listAccountsResponseResult.getNextUrl());
+
+      } while (nextDocId != null);
+      log(String.format("Received a total of %d user profiles.%n", listAccounts.size()));
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = {"testCreateAccount"})
+  public void testGetAccount() throws Exception {
+    try {
+      GetAccountOptions getAccountOptions = new GetAccountOptions.Builder()
+          .accountId(exampleAccountId)
+          .build();
+
+      // Invoke operation
+      Response<Account> response = service
+          .getAccount(getAccountOptions)
+          .execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      Account accountResult = response.getResult();
+
+      assertNotNull(accountResult);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = {"testCreateAccount", "testListAccountGroups"})
+  public void testUpdateAccount() throws Exception {
+    try {
+      UpdateAccountOptions updateAccountOptions = new UpdateAccountOptions.Builder()
+          .accountId(exampleAccountId)
+          .parent(String.format(createAccountCrn, accountId, secondExampleAccountGroupId))
+          .build();
+
+      // Invoke operation
+      Response<Void> response = service
+          .updateAccount(updateAccountOptions)
+          .execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 202);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
   // @Test
   // public void testCreateEnterprise() throws Exception {
   //   try {
@@ -382,79 +458,158 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   //
   //     assertNotNull(createEnterpriseResponseResult);
   //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
+  //       fail(String.format("Service returned status code %d: %s%nError details: %s",
   //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
   //   }
   // }
   //
-  // @Test
-  // public void testListEnterprises() throws Exception {
-  //   try {
-  //     ListEnterprisesOptions listEnterprisesOptions = new ListEnterprisesOptions.Builder()
-  //     .accountId(accountId)
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<ListEnterprisesResponse> response = service.listEnterprises(listEnterprisesOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 200);
-  //
-  //     ListEnterprisesResponse listEnterprisesResponseResult = response.getResult();
-  //
-  //     assertNotNull(listEnterprisesResponseResult);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
-  // @Test
-  // public void testGetEnterprise() throws Exception {
-  //   try {
-  //     GetEnterpriseOptions getEnterpriseOptions = new GetEnterpriseOptions.Builder()
-  //     .enterpriseId("testString")
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<Enterprise> response = service.getEnterprise(getEnterpriseOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 200);
-  //
-  //     Enterprise enterpriseResult = response.getResult();
-  //
-  //     assertNotNull(enterpriseResult);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
-  //
-  // @Test
-  // public void testUpdateEnterprise() throws Exception {
-  //   try {
-  //     UpdateEnterpriseOptions updateEnterpriseOptions = new UpdateEnterpriseOptions.Builder()
-  //     .enterpriseId("testString")
-  //     .name("testString")
-  //     .domain("testString")
-  //     .primaryContactIamId("testString")
-  //     .build();
-  //
-  //     // Invoke operation
-  //     Response<Void> response = service.updateEnterprise(updateEnterpriseOptions).execute();
-  //     // Validate response
-  //     assertNotNull(response);
-  //     assertEquals(response.getStatusCode(), 204);
-  //   } catch (ServiceResponseException e) {
-  //       fail(String.format("Service returned status code %d: %s\nError details: %s",
-  //         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-  //   }
-  // }
+  @Test
+  public void testListEnterprises() throws Exception {
+    try {
+      ListEnterprisesOptions listEnterprisesOptions = new ListEnterprisesOptions.Builder()
+          .accountId(accountId)
+          .build();
+
+      // Invoke operation
+      Response<ListEnterprisesResponse> response = service
+          .listEnterprises(listEnterprisesOptions)
+          .execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ListEnterprisesResponse listEnterprisesResponseResult = response.getResult();
+
+      assertNotNull(listEnterprisesResponseResult);
+      exampleEnterpriseId = listEnterprisesResponseResult
+          .getResources()
+          .get(rnd.nextInt(listEnterprisesResponseResult
+              .getRowsCount()
+              .intValue()))
+          .getId();
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void testListEnterprisesWithPaging() throws Exception {
+    try {
+      List<Enterprise> enterpriseList = new ArrayList<>();
+      Integer limit = 1;
+      String nextDocId = null;
+
+      do {
+        ListEnterprisesOptions listEnterprisesOptions = new ListEnterprisesOptions.Builder()
+            .accountId(accountId)
+            .limit(limit)
+            .nextDocid(nextDocId)
+            .build();
+
+        // Invoke operation
+        Response<ListEnterprisesResponse> response = service
+            .listEnterprises(listEnterprisesOptions)
+            .execute();
+        // Validate response
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        ListEnterprisesResponse listEnterprisesResponseResult = response.getResult();
+        assertNotNull(listEnterprisesResponseResult);
+
+        nextDocId = getNextDocId(listEnterprisesResponseResult.getNextUrl());
+        enterpriseList.addAll(listEnterprisesResponseResult.getResources());
+
+        log(String.format("Received a total of %d user profiles.%n", enterpriseList.size()));
+      } while (nextDocId != null);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = {"testListEnterprises"})
+  public void testGetEnterprise() throws Exception {
+    try {
+      GetEnterpriseOptions getEnterpriseOptions = new GetEnterpriseOptions.Builder()
+          .enterpriseId(exampleEnterpriseId)
+          .build();
+
+      // Invoke operation
+      Response<Enterprise> response = service
+          .getEnterprise(getEnterpriseOptions)
+          .execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      Enterprise enterpriseResult = response.getResult();
+
+      assertNotNull(enterpriseResult);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void testUpdateEnterprise() throws Exception {
+    try {
+      UpdateEnterpriseOptions updateEnterpriseOptions = new UpdateEnterpriseOptions.Builder()
+          .enterpriseId(enterpriseId)
+          .name(updatedExampleEnterpriseName)
+          .primaryContactIamId(accountIamId)
+          .build();
+
+      // Invoke operation
+      Response<Void> response = service
+          .updateEnterprise(updateEnterpriseOptions)
+          .execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
 
   @AfterClass
   public void tearDown() {
     // Add any clean up logic here
     System.out.println("Clean up complete.");
   }
- }
+
+  private String getNextDocId(String s) {
+    try {
+      if (s == null) {
+        return null;
+      }
+
+      // Parse "s" as a URI and retrieve its decoded query string.
+      URI uri = new URI(s);
+      String query = uri.getQuery();
+      if (query == null || query.isEmpty()) {
+        return null;
+      }
+
+      // Parse the query string into a map of key/value pairs.
+      Map<String, String> params = new LinkedHashMap<>();
+      for (String param : query.split("&")) {
+        String[] keyValue = param.split("=", 2);
+        String value = keyValue.length > 1 ? keyValue[1] : null;
+        if (!keyValue[0].isEmpty()) {
+          params.put(keyValue[0], value);
+        }
+      }
+
+      return params.get("next_docid");
+    } catch (Throwable t) {
+
+    }
+
+    return null;
+  }
+
+}

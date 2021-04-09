@@ -1,3 +1,10 @@
+## [0.18.4](https://github.com/IBM/platform-services-java-sdk/compare/0.18.3...0.18.4) (2021-04-09)
+
+
+### Bug Fixes
+
+* **deps:** upgrade java core version ([#94](https://github.com/IBM/platform-services-java-sdk/issues/94)) ([adcfc97](https://github.com/IBM/platform-services-java-sdk/commit/adcfc977c409980fe43a9a72a7194ccc37f37b39))
+
 ## [0.18.3](https://github.com/IBM/platform-services-java-sdk/compare/0.18.2...0.18.3) (2021-04-06)
 
 

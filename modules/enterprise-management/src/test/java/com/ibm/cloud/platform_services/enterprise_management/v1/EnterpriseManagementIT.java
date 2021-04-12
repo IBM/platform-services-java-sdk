@@ -22,6 +22,7 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 import java.net.URI;
 import java.util.*;
 
+import com.ibm.cloud.sdk.core.util.UrlHelper;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -183,7 +184,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         assertNotNull(listAccountGroupsResponseResult.getResources());
         accountGroupsList.addAll(listAccountGroupsResponseResult.getResources());
 
-        nextDocId = getNextDocId(listAccountGroupsResponseResult.getNextUrl());
+        nextDocId = UrlHelper.getQueryParam(listAccountGroupsResponseResult.getNextUrl(), "next_docid");
       } while (nextDocId != null);
 
       AccountGroup accountGroupResultFirst = accountGroupsList
@@ -305,7 +306,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         ListAccountsResponse listAccountsResponseResult = response.getResult();
         listAccounts.addAll(listAccountsResponseResult.getResources());
         assertNotNull(listAccountsResponseResult);
-        nextDocId = getNextDocId(listAccountsResponseResult.getNextUrl());
+        nextDocId = UrlHelper.getQueryParam(listAccountsResponseResult.getNextUrl(), "next_docid");
 
       } while (nextDocId != null);
 
@@ -391,7 +392,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         ListEnterprisesResponse listEnterprisesResponseResult = response.getResult();
         assertNotNull(listEnterprisesResponseResult);
 
-        nextDocId = getNextDocId(listEnterprisesResponseResult.getNextUrl());
+        nextDocId = UrlHelper.getQueryParam(listEnterprisesResponseResult.getNextUrl(), "next_docid");
         enterpriseList.addAll(listEnterprisesResponseResult.getResources());
       } while (nextDocId != null);
 
@@ -459,36 +460,4 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     // Add any clean up logic here
     System.out.println("Clean up complete.");
   }
-
-  private String getNextDocId(String s) {
-    try {
-      if (s == null) {
-        return null;
-      }
-
-      // Parse "s" as a URI and retrieve its decoded query string.
-      URI uri = new URI(s);
-      String query = uri.getQuery();
-      if (query == null || query.isEmpty()) {
-        return null;
-      }
-
-      // Parse the query string into a map of key/value pairs.
-      Map<String, String> params = new LinkedHashMap<>();
-      for (String param : query.split("&")) {
-        String[] keyValue = param.split("=", 2);
-        String value = keyValue.length > 1 ? keyValue[1] : null;
-        if (!keyValue[0].isEmpty()) {
-          params.put(keyValue[0], value);
-        }
-      }
-
-      return params.get("next_docid");
-    } catch (Throwable t) {
-
-    }
-
-    return null;
-  }
-
 }

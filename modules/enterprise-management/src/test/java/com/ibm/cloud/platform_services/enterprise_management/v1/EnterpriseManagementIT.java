@@ -14,20 +14,16 @@
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.*;
-import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
-import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
-import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -39,10 +35,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
   public EnterpriseManagement service = null;
   public static Map<String, String> config = null;
-  final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
-  final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
-
-  private Random rnd = new Random();
 
   String authType = null;
   String authUrl = null;
@@ -111,9 +103,9 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   @Test
   public void testCreateAccountGroup() throws Exception {
     try {
-      String parent = String.format(createAccountGroupCrn, accountId, enterpriseId);
+      String parentCrn = String.format(createAccountGroupCrn, accountId, enterpriseId);
       CreateAccountGroupOptions createAccountGroupOptions = new CreateAccountGroupOptions.Builder()
-          .parent(parent)
+          .parent(parentCrn)
           .name(firstExampleAccountGroupName)
           .primaryContactIamId(accountIamId)
           .build();
@@ -139,9 +131,9 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   @Test
   public void testCreateAnotherAccountGroup() throws Exception {
     try {
-      String parent = String.format(createAccountGroupCrn, accountId, enterpriseId);
+      String parentCrn = String.format(createAccountGroupCrn, accountId, enterpriseId);
       CreateAccountGroupOptions createAccountGroupOptions = new CreateAccountGroupOptions.Builder()
-          .parent(parent)
+          .parent(parentCrn)
           .name(secondExampleAccountGroupName)
           .primaryContactIamId(accountIamId)
           .build();
@@ -166,45 +158,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
   @Test
   public void testListAccountGroups() throws Exception {
-    try {
-      ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder()
-          .enterpriseId(enterpriseId)
-          .build();
-
-      // Invoke operation
-      Response<ListAccountGroupsResponse> response = service
-          .listAccountGroups(listAccountGroupsOptions)
-          .execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-
-      ListAccountGroupsResponse listAccountGroupsResponseResult = response.getResult();
-      assertNotNull(listAccountGroupsResponseResult);
-
-      // at this point we took two account group from the list
-      // due to that they needed for later operations in test cases depending on this test case
-      firstExampleAccountGroupId = listAccountGroupsResponseResult
-          .getResources()
-          .get(rnd.nextInt(listAccountGroupsResponseResult
-              .getRowsCount()
-              .intValue()))
-          .getId();
-      secondExampleAccountGroupId = listAccountGroupsResponseResult
-          .getResources()
-          .get(rnd.nextInt(listAccountGroupsResponseResult
-              .getRowsCount()
-              .intValue()))
-          .getId();
-
-    } catch (ServiceResponseException e) {
-      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
-          e.getDebuggingInfo()));
-    }
-  }
-
-  @Test
-  public void testListAccountGroupsWithPaging() throws Exception {
     try {
       List<AccountGroup> accountGroupsList = new ArrayList<>();
       String nextDocId = null;
@@ -233,6 +186,19 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         nextDocId = getNextDocId(listAccountGroupsResponseResult.getNextUrl());
       } while (nextDocId != null);
 
+      AccountGroup accountGroupResultFirst = accountGroupsList
+          .stream()
+          .filter(ac -> ac.getId() == firstExampleAccountGroupId)
+          .findAny()
+          .orElse(null);
+      assertNotNull(accountGroupResultFirst);
+      AccountGroup accountGroupResultSecond = accountGroupsList
+          .stream()
+          .filter(ac -> ac.getId() == secondExampleAccountGroupId)
+          .findAny()
+          .orElse(null);
+      assertNotNull(accountGroupResultSecond);
+
       log(String.format("Received a total of %d account groups.%n", accountGroupsList.size()));
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -240,7 +206,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
-  @Test(dependsOnMethods = {"testListAccountGroups"})
+  @Test(dependsOnMethods = {"testCreateAccountGroup"})
   public void testGetAccountGroup() throws Exception {
     try {
       GetAccountGroupOptions getAccountGroupOptions = new GetAccountGroupOptions.Builder()
@@ -256,15 +222,16 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
       assertEquals(response.getStatusCode(), 200);
 
       AccountGroup accountGroupResult = response.getResult();
-
       assertNotNull(accountGroupResult);
+      assertEquals(accountGroupResult.getId(), firstExampleAccountGroupId);
+
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
     }
   }
 
-  @Test(dependsOnMethods = {"testListAccountGroups"})
+  @Test(dependsOnMethods = {"testCreateAccountGroup"})
   public void testUpdateAccountGroup() throws Exception {
     try {
       UpdateAccountGroupOptions updateAccountGroupOptions = new UpdateAccountGroupOptions.Builder()
@@ -286,7 +253,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
-  @Test(dependsOnMethods = {"testListAccountGroups"})
+  @Test(dependsOnMethods = {"testCreateAccountGroup"})
   public void testCreateAccount() throws Exception {
     try {
       CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder()
@@ -315,30 +282,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   @Test
   public void testListAccounts() throws Exception {
     try {
-      ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder()
-          .enterpriseId(enterpriseId)
-          .build();
-
-      // Invoke operation
-      Response<ListAccountsResponse> response = service
-          .listAccounts(listAccountsOptions)
-          .execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-
-      ListAccountsResponse listAccountsResponseResult = response.getResult();
-
-      assertNotNull(listAccountsResponseResult);
-    } catch (ServiceResponseException e) {
-      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
-          e.getDebuggingInfo()));
-    }
-  }
-
-  @Test
-  public void testListAccountsWithPaging() throws Exception {
-    try {
 
       List<Account> listAccounts = new ArrayList<>();
       Integer limit = 1;
@@ -365,6 +308,12 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         nextDocId = getNextDocId(listAccountsResponseResult.getNextUrl());
 
       } while (nextDocId != null);
+
+      Account accountResult = listAccounts.stream().filter(account -> account.getId() == exampleAccountId)
+          .findAny()
+          .orElse(null);
+      assertNotNull(accountResult);
+
       log(String.format("Received a total of %d accounts.%n", listAccounts.size()));
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -388,15 +337,15 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
       assertEquals(response.getStatusCode(), 200);
 
       Account accountResult = response.getResult();
-
       assertNotNull(accountResult);
+      assertEquals(accountResult.getId(), exampleAccountId);
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
     }
   }
 
-  @Test(dependsOnMethods = {"testCreateAccount", "testListAccountGroups"})
+  @Test(dependsOnMethods = {"testCreateAccount", "testCreateAnotherAccountGroup"})
   public void testUpdateAccount() throws Exception {
     try {
       UpdateAccountOptions updateAccountOptions = new UpdateAccountOptions.Builder()
@@ -419,30 +368,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
   @Test
   public void testListEnterprises() throws Exception {
-    try {
-      ListEnterprisesOptions listEnterprisesOptions = new ListEnterprisesOptions.Builder()
-          .accountId(accountId)
-          .build();
-
-      // Invoke operation
-      Response<ListEnterprisesResponse> response = service
-          .listEnterprises(listEnterprisesOptions)
-          .execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-
-      ListEnterprisesResponse listEnterprisesResponseResult = response.getResult();
-
-      assertNotNull(listEnterprisesResponseResult);
-    } catch (ServiceResponseException e) {
-      fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
-          e.getDebuggingInfo()));
-    }
-  }
-
-  @Test
-  public void testListEnterprisesWithPaging() throws Exception {
     try {
       List<Enterprise> enterpriseList = new ArrayList<>();
       Integer limit = 1;
@@ -468,9 +393,14 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
         nextDocId = getNextDocId(listEnterprisesResponseResult.getNextUrl());
         enterpriseList.addAll(listEnterprisesResponseResult.getResources());
-
-        log(String.format("Received a total of %d enterprises.%n", enterpriseList.size()));
       } while (nextDocId != null);
+
+      Enterprise enterpriseResult = enterpriseList.stream().filter(e -> e.getId() == enterpriseId)
+          .findAny()
+          .orElse(null);
+      assertNotNull(enterpriseResult);
+
+      log(String.format("Received a total of %d enterprises.%n", enterpriseList.size()));
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
@@ -495,6 +425,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
       Enterprise enterpriseResult = response.getResult();
 
       assertNotNull(enterpriseResult);
+      assertEquals(enterpriseResult.getId(), enterpriseId);
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));

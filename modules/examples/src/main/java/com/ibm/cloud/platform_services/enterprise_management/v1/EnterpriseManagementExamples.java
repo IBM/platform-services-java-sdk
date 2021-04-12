@@ -78,28 +78,23 @@ public class EnterpriseManagementExamples {
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(EnterpriseManagement.DEFAULT_SERVICE_NAME);
 
-    String url = config.get("URL");
-    String authType = config.get("AUTHTYPE");
-    String authUrl = config.get("AUTH_URL");
-    String apiKey = config.get("APIKEY");
     String enterpriseId = config.get("ENTERPRISE_ID");
     String enterpriseAccountId = config.get("ACCOUNT_ID");
     String enterpriseAccountIamId = config.get("ACCOUNT_IAM_ID");
-    String firstAccountGroupName = "Example Account Group";
-    String firstAccountGroupId = null;
-    String secondAccountGroupName = "Second Example Account Group";
-    String secondAccountGroupId = null;
-    String firstUpdatedAccountGroupName = "Updated Example Account Group";
-    String accountName = "Example Account Name";
+    String accountGroupId = null;
+    String newParentAccountGroupId = null;
     String accountId = null;
-    String updatedEnterpriseName = "Updated Enterprise Name";
 
     try {
+      System.out.println("createAccountGroup() result:");
+
       // begin-create_account_group
-      String parent = "crn:v1:bluemix:public:enterprise::a/%s::enterprise:%s";
+
+      String parentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::enterprise:%s", enterpriseAccountId,
+          enterpriseId);
       CreateAccountGroupOptions createAccountGroupOptions = new CreateAccountGroupOptions.Builder()
-          .parent(String.format(parent, enterpriseAccountId, enterpriseId))
-          .name(firstAccountGroupName)
+          .parent(parentCRN)
+          .name("Example Account Group")
           .primaryContactIamId(enterpriseAccountIamId)
           .build();
 
@@ -109,19 +104,22 @@ public class EnterpriseManagementExamples {
       CreateAccountGroupResponse createAccountGroupResponse = response.getResult();
 
       System.out.println(createAccountGroupResponse);
+
       // end-create_account_group
-      firstAccountGroupId = createAccountGroupResponse.getAccountGroupId();
+
+      accountGroupId = createAccountGroupResponse.getAccountGroupId();
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
-      // begin-create_account_group
-      String parent = "crn:v1:bluemix:public:enterprise::a/%s::enterprise:%s";
+
+      String parentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::enterprise:%s", enterpriseAccountId,
+          enterpriseId);
       CreateAccountGroupOptions createAccountGroupOptions = new CreateAccountGroupOptions.Builder()
-          .parent(String.format(parent, enterpriseAccountId, enterpriseId))
-          .name(secondAccountGroupName)
+          .parent(parentCRN)
+          .name("New Parent Account Group")
           .primaryContactIamId(enterpriseAccountIamId)
           .build();
 
@@ -129,17 +127,20 @@ public class EnterpriseManagementExamples {
           .createAccountGroup(createAccountGroupOptions)
           .execute();
       CreateAccountGroupResponse createAccountGroupResponse = response.getResult();
-
       System.out.println(createAccountGroupResponse);
-      // end-create_account_group
-      secondAccountGroupId = createAccountGroupResponse.getAccountGroupId();
+
+      newParentAccountGroupId = createAccountGroupResponse.getAccountGroupId();
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("listAccountGroups() result:");
+
       // begin-list_account_groups
+
       ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder()
           .enterpriseId(enterpriseId)
           .build();
@@ -150,16 +151,21 @@ public class EnterpriseManagementExamples {
       ListAccountGroupsResponse listAccountGroupsResponse = response.getResult();
 
       System.out.println(listAccountGroupsResponse);
+
       // end-list_account_groups
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getAccountGroup() result:");
+
       // begin-get_account_group
+
       GetAccountGroupOptions getAccountGroupOptions = new GetAccountGroupOptions.Builder()
-          .accountGroupId(firstAccountGroupId)
+          .accountGroupId(accountGroupId)
           .build();
 
       Response<AccountGroup> response = service
@@ -168,49 +174,67 @@ public class EnterpriseManagementExamples {
       AccountGroup accountGroup = response.getResult();
 
       System.out.println(accountGroup);
+
       // end-get_account_group
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("updateAccountGroup() result:");
+
       // begin-update_account_group
+
       UpdateAccountGroupOptions updateAccountGroupOptions = new UpdateAccountGroupOptions.Builder()
-          .accountGroupId(firstAccountGroupId)
-          .name(firstUpdatedAccountGroupName)
+          .accountGroupId(accountGroupId)
+          .name("Updated Account Group")
           .build();
 
-      service.updateAccountGroup(updateAccountGroupOptions)
+      Response<Void> response = service.updateAccountGroup(updateAccountGroupOptions)
           .execute();
+
       // end-update_account_group
+
+      System.out.printf("updateAccountGroup() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("importAccountToEnterprise() result:");
+      String accountIdToBeImported = "<accountID-to-be-imported>";
+
       // begin-import_account_to_enterprise
+
       ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()
           .enterpriseId(enterpriseId)
-          .accountId("Standalone Account Id")
+          .accountId(accountIdToBeImported)
           .build();
 
-      service
-          .importAccountToEnterprise(importAccountToEnterpriseOptions)
+      Response<Void> response = service.importAccountToEnterprise(importAccountToEnterpriseOptions)
           .execute();
+
       // end-import_account_to_enterprise
+
+      System.out.printf("importAccountToEnterprise() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("createAccount() result:");
+
       // begin-create_account
-      String parent = "crn:v1:bluemix:public:enterprise::a/%s::account-group:%s";
+
+      String parentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::account-group:%s", enterpriseAccountId,
+          accountGroupId);
       CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder()
-          .parent(String.format(parent, enterpriseAccountId, firstAccountGroupId))
-          .name(accountName)
+          .parent(parentCRN)
+          .name("Example Account")
           .ownerIamId(enterpriseAccountIamId)
           .build();
 
@@ -220,7 +244,9 @@ public class EnterpriseManagementExamples {
       CreateAccountResponse createAccountResponse = response.getResult();
 
       System.out.println(createAccountResponse);
+
       // end-create_account
+
       accountId = createAccountResponse.getAccountId();
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
@@ -228,7 +254,10 @@ public class EnterpriseManagementExamples {
     }
 
     try {
+      System.out.println("listAccounts() result:");
+
       // begin-list_accounts
+
       ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder()
           .enterpriseId(enterpriseId)
           .build();
@@ -239,14 +268,19 @@ public class EnterpriseManagementExamples {
       ListAccountsResponse listAccountsResponse = response.getResult();
 
       System.out.println(listAccountsResponse);
+
       // end-list_accounts
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getAccount() result:");
+
       // begin-get_account
+
       GetAccountOptions getAccountOptions = new GetAccountOptions.Builder()
           .accountId(accountId)
           .build();
@@ -257,35 +291,48 @@ public class EnterpriseManagementExamples {
       Account account = response.getResult();
 
       System.out.println(account);
+
       // end-get_account
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("updateAccount() result:");
+
       // begin-update_account
-      String newParent = "crn:v1:bluemix:public:enterprise::a/%s::account-group:%s";
+
+      String newParentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::account-group:%s",
+          enterpriseAccountId, newParentAccountGroupId);
       UpdateAccountOptions updateAccountOptions = new UpdateAccountOptions.Builder()
           .accountId(accountId)
-          .parent(String.format(newParent, enterpriseAccountId, secondAccountGroupId))
+          .parent(newParentCRN)
           .build();
 
-      service
-          .updateAccount(updateAccountOptions)
+      Response<Void> response = service.updateAccount(updateAccountOptions)
           .execute();
+
       // end-update_account
+
+      System.out.printf("() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      String sourceAccountId = "<standalone-account-id>";
+      String enterpriseIamId = "<primary-contact-iam-id>";
+      System.out.println("createEnterprise() result:");
+
       // begin-create_enterprise
+
       CreateEnterpriseOptions createEnterpriseOptions = new CreateEnterpriseOptions.Builder()
-          .sourceAccountId("Standalone Account Id")
-          .name("Example Enterprise Name")
-          .primaryContactIamId("Standalone Account IAM Id")
+          .sourceAccountId(sourceAccountId)
+          .name("Example Enterprise")
+          .primaryContactIamId(enterpriseIamId)
           .build();
 
       Response<CreateEnterpriseResponse> response = service
@@ -294,14 +341,19 @@ public class EnterpriseManagementExamples {
       CreateEnterpriseResponse createEnterpriseResponse = response.getResult();
 
       System.out.println(createEnterpriseResponse);
+
       // end-create_enterprise
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("listEnterprises() result:");
+
       // begin-list_enterprises
+
       ListEnterprisesOptions listEnterprisesOptions = new ListEnterprisesOptions.Builder()
           .enterpriseAccountId(enterpriseAccountId)
           .build();
@@ -312,14 +364,19 @@ public class EnterpriseManagementExamples {
       ListEnterprisesResponse listEnterprisesResponse = response.getResult();
 
       System.out.println(listEnterprisesResponse);
+
       // end-list_enterprises
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getEnterprise() result:");
+
       // begin-get_enterprise
+
       GetEnterpriseOptions getEnterpriseOptions = new GetEnterpriseOptions.Builder()
           .enterpriseId(enterpriseId)
           .build();
@@ -330,23 +387,30 @@ public class EnterpriseManagementExamples {
       Enterprise enterprise = response.getResult();
 
       System.out.println(enterprise);
+
       // end-get_enterprise
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("updateEnterprise() result:");
+
       // begin-update_enterprise
+
       UpdateEnterpriseOptions updateEnterpriseOptions = new UpdateEnterpriseOptions.Builder()
           .enterpriseId(enterpriseId)
-          .name(updatedEnterpriseName)
+          .name("Updated Example Enterprise")
           .build();
 
-      service
-          .updateEnterprise(updateEnterpriseOptions)
+      Response<Void> response = service.updateEnterprise(updateEnterpriseOptions)
           .execute();
+
       // end-update_enterprise
+
+      System.out.printf("updateEnterprise() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);

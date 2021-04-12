@@ -88,19 +88,18 @@ public class EnterpriseManagementExamples {
     try {
       System.out.println("createAccountGroup() result:");
 
+      String parentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::enterprise:%s", enterpriseAccountId,
+              enterpriseId);
+
       // begin-create_account_group
 
-      String parentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::enterprise:%s", enterpriseAccountId,
-          enterpriseId);
       CreateAccountGroupOptions createAccountGroupOptions = new CreateAccountGroupOptions.Builder()
           .parent(parentCRN)
           .name("Example Account Group")
           .primaryContactIamId(enterpriseAccountIamId)
           .build();
 
-      Response<CreateAccountGroupResponse> response = service
-          .createAccountGroup(createAccountGroupOptions)
-          .execute();
+      Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptions).execute();
       CreateAccountGroupResponse createAccountGroupResponse = response.getResult();
 
       System.out.println(createAccountGroupResponse);
@@ -114,18 +113,18 @@ public class EnterpriseManagementExamples {
     }
 
     try {
+      System.out.println("createAccountGroup(new parent account group) result:");
 
       String parentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::enterprise:%s", enterpriseAccountId,
           enterpriseId);
+
       CreateAccountGroupOptions createAccountGroupOptions = new CreateAccountGroupOptions.Builder()
           .parent(parentCRN)
           .name("New Parent Account Group")
           .primaryContactIamId(enterpriseAccountIamId)
           .build();
 
-      Response<CreateAccountGroupResponse> response = service
-          .createAccountGroup(createAccountGroupOptions)
-          .execute();
+      Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptions).execute();
       CreateAccountGroupResponse createAccountGroupResponse = response.getResult();
       System.out.println(createAccountGroupResponse);
 
@@ -145,9 +144,7 @@ public class EnterpriseManagementExamples {
           .enterpriseId(enterpriseId)
           .build();
 
-      Response<ListAccountGroupsResponse> response = service
-          .listAccountGroups(listAccountGroupsOptions)
-          .execute();
+      Response<ListAccountGroupsResponse> response = service.listAccountGroups(listAccountGroupsOptions).execute();
       ListAccountGroupsResponse listAccountGroupsResponse = response.getResult();
 
       System.out.println(listAccountGroupsResponse);
@@ -168,9 +165,7 @@ public class EnterpriseManagementExamples {
           .accountGroupId(accountGroupId)
           .build();
 
-      Response<AccountGroup> response = service
-          .getAccountGroup(getAccountGroupOptions)
-          .execute();
+      Response<AccountGroup> response = service.getAccountGroup(getAccountGroupOptions).execute();
       AccountGroup accountGroup = response.getResult();
 
       System.out.println(accountGroup);
@@ -183,17 +178,14 @@ public class EnterpriseManagementExamples {
     }
 
     try {
-      System.out.println("updateAccountGroup() result:");
-
       // begin-update_account_group
 
       UpdateAccountGroupOptions updateAccountGroupOptions = new UpdateAccountGroupOptions.Builder()
           .accountGroupId(accountGroupId)
-          .name("Updated Account Group")
+          .name("Updated Example Account Group")
           .build();
 
-      Response<Void> response = service.updateAccountGroup(updateAccountGroupOptions)
-          .execute();
+      Response<Void> response = service.updateAccountGroup(updateAccountGroupOptions).execute();
 
       // end-update_account_group
 
@@ -204,18 +196,16 @@ public class EnterpriseManagementExamples {
     }
 
     try {
-      System.out.println("importAccountToEnterprise() result:");
-      String accountIdToBeImported = "<accountID-to-be-imported>";
+      String importAccountId = "<accountid_to_be_imported>";
 
       // begin-import_account_to_enterprise
 
       ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()
           .enterpriseId(enterpriseId)
-          .accountId(accountIdToBeImported)
+          .accountId(importAccountId)
           .build();
 
-      Response<Void> response = service.importAccountToEnterprise(importAccountToEnterpriseOptions)
-          .execute();
+      Response<Void> response = service.importAccountToEnterprise(importAccountToEnterpriseOptions).execute();
 
       // end-import_account_to_enterprise
 
@@ -228,19 +218,17 @@ public class EnterpriseManagementExamples {
     try {
       System.out.println("createAccount() result:");
 
+      String parentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::account-group:%s", enterpriseAccountId,
+              accountGroupId);
       // begin-create_account
 
-      String parentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::account-group:%s", enterpriseAccountId,
-          accountGroupId);
       CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder()
           .parent(parentCRN)
           .name("Example Account")
           .ownerIamId(enterpriseAccountIamId)
           .build();
 
-      Response<CreateAccountResponse> response = service
-          .createAccount(createAccountOptions)
-          .execute();
+      Response<CreateAccountResponse> response = service.createAccount(createAccountOptions).execute();
       CreateAccountResponse createAccountResponse = response.getResult();
 
       System.out.println(createAccountResponse);
@@ -262,9 +250,7 @@ public class EnterpriseManagementExamples {
           .enterpriseId(enterpriseId)
           .build();
 
-      Response<ListAccountsResponse> response = service
-          .listAccounts(listAccountsOptions)
-          .execute();
+      Response<ListAccountsResponse> response = service.listAccounts(listAccountsOptions).execute();
       ListAccountsResponse listAccountsResponse = response.getResult();
 
       System.out.println(listAccountsResponse);
@@ -285,9 +271,7 @@ public class EnterpriseManagementExamples {
           .accountId(accountId)
           .build();
 
-      Response<Account> response = service
-          .getAccount(getAccountOptions)
-          .execute();
+      Response<Account> response = service.getAccount(getAccountOptions).execute();
       Account account = response.getResult();
 
       System.out.println(account);
@@ -302,10 +286,11 @@ public class EnterpriseManagementExamples {
     try {
       System.out.println("updateAccount() result:");
 
+      String newParentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::account-group:%s",
+              enterpriseAccountId, newParentAccountGroupId);
+
       // begin-update_account
 
-      String newParentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::account-group:%s",
-          enterpriseAccountId, newParentAccountGroupId);
       UpdateAccountOptions updateAccountOptions = new UpdateAccountOptions.Builder()
           .accountId(accountId)
           .parent(newParentCRN)
@@ -323,16 +308,17 @@ public class EnterpriseManagementExamples {
     }
 
     try {
-      String sourceAccountId = "<standalone-account-id>";
-      String enterpriseIamId = "<primary-contact-iam-id>";
+      String srcAccountId = "<standalone_account_id>";
+      String contactIamId = "<standalone_account_iam_id>";
+
       System.out.println("createEnterprise() result:");
 
       // begin-create_enterprise
 
       CreateEnterpriseOptions createEnterpriseOptions = new CreateEnterpriseOptions.Builder()
-          .sourceAccountId(sourceAccountId)
+          .sourceAccountId(srcAccountId)
           .name("Example Enterprise")
-          .primaryContactIamId(enterpriseIamId)
+          .primaryContactIamId(contactIamId)
           .build();
 
       Response<CreateEnterpriseResponse> response = service
@@ -396,8 +382,6 @@ public class EnterpriseManagementExamples {
     }
 
     try {
-      System.out.println("updateEnterprise() result:");
-
       // begin-update_enterprise
 
       UpdateEnterpriseOptions updateEnterpriseOptions = new UpdateEnterpriseOptions.Builder()
@@ -415,7 +399,5 @@ public class EnterpriseManagementExamples {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
     }
-
   }
-
 }

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,6 +21,7 @@ public class ListAccountGroupsOptions extends GenericModel {
 
   protected String enterpriseId;
   protected String parentAccountGroupId;
+  protected String nextDocid;
   protected String parent;
   protected Long limit;
 
@@ -30,12 +31,14 @@ public class ListAccountGroupsOptions extends GenericModel {
   public static class Builder {
     private String enterpriseId;
     private String parentAccountGroupId;
+    private String nextDocid;
     private String parent;
     private Long limit;
 
     private Builder(ListAccountGroupsOptions listAccountGroupsOptions) {
       this.enterpriseId = listAccountGroupsOptions.enterpriseId;
       this.parentAccountGroupId = listAccountGroupsOptions.parentAccountGroupId;
+      this.nextDocid = listAccountGroupsOptions.nextDocid;
       this.parent = listAccountGroupsOptions.parent;
       this.limit = listAccountGroupsOptions.limit;
     }
@@ -78,6 +81,17 @@ public class ListAccountGroupsOptions extends GenericModel {
     }
 
     /**
+     * Set the nextDocid.
+     *
+     * @param nextDocid the nextDocid
+     * @return the ListAccountGroupsOptions builder
+     */
+    public Builder nextDocid(String nextDocid) {
+      this.nextDocid = nextDocid;
+      return this;
+    }
+
+    /**
      * Set the parent.
      *
      * @param parent the parent
@@ -103,6 +117,7 @@ public class ListAccountGroupsOptions extends GenericModel {
   protected ListAccountGroupsOptions(Builder builder) {
     enterpriseId = builder.enterpriseId;
     parentAccountGroupId = builder.parentAccountGroupId;
+    nextDocid = builder.nextDocid;
     parent = builder.parent;
     limit = builder.limit;
   }
@@ -136,6 +151,18 @@ public class ListAccountGroupsOptions extends GenericModel {
    */
   public String parentAccountGroupId() {
     return parentAccountGroupId;
+  }
+
+  /**
+   * Gets the nextDocid.
+   *
+   * The first item to be returned in the page of results. This value can be obtained from the next_url property from
+   * the previous call of the operation. If not specified, then the first page of results is returned.
+   *
+   * @return the nextDocid
+   */
+  public String nextDocid() {
+    return nextDocid;
   }
 
   /**

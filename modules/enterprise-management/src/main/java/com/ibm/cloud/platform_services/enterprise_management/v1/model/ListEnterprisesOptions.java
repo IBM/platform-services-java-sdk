@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,6 +22,7 @@ public class ListEnterprisesOptions extends GenericModel {
   protected String enterpriseAccountId;
   protected String accountGroupId;
   protected String accountId;
+  protected String nextDocid;
   protected Long limit;
 
   /**
@@ -31,12 +32,14 @@ public class ListEnterprisesOptions extends GenericModel {
     private String enterpriseAccountId;
     private String accountGroupId;
     private String accountId;
+    private String nextDocid;
     private Long limit;
 
     private Builder(ListEnterprisesOptions listEnterprisesOptions) {
       this.enterpriseAccountId = listEnterprisesOptions.enterpriseAccountId;
       this.accountGroupId = listEnterprisesOptions.accountGroupId;
       this.accountId = listEnterprisesOptions.accountId;
+      this.nextDocid = listEnterprisesOptions.nextDocid;
       this.limit = listEnterprisesOptions.limit;
     }
 
@@ -89,6 +92,17 @@ public class ListEnterprisesOptions extends GenericModel {
     }
 
     /**
+     * Set the nextDocid.
+     *
+     * @param nextDocid the nextDocid
+     * @return the ListEnterprisesOptions builder
+     */
+    public Builder nextDocid(String nextDocid) {
+      this.nextDocid = nextDocid;
+      return this;
+    }
+
+    /**
      * Set the limit.
      *
      * @param limit the limit
@@ -104,6 +118,7 @@ public class ListEnterprisesOptions extends GenericModel {
     enterpriseAccountId = builder.enterpriseAccountId;
     accountGroupId = builder.accountGroupId;
     accountId = builder.accountId;
+    nextDocid = builder.nextDocid;
     limit = builder.limit;
   }
 
@@ -147,6 +162,18 @@ public class ListEnterprisesOptions extends GenericModel {
    */
   public String accountId() {
     return accountId;
+  }
+
+  /**
+   * Gets the nextDocid.
+   *
+   * The first item to be returned in the page of results. This value can be obtained from the next_url property from
+   * the previous call of the operation. If not specified, then the first page of results is returned.
+   *
+   * @return the nextDocid
+   */
+  public String nextDocid() {
+    return nextDocid;
   }
 
   /**

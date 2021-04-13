@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,11 +34,13 @@ public class ListAccountGroupsOptionsTest {
     ListAccountGroupsOptions listAccountGroupsOptionsModel = new ListAccountGroupsOptions.Builder()
       .enterpriseId("testString")
       .parentAccountGroupId("testString")
+      .nextDocid("testString")
       .parent("testString")
       .limit(Long.valueOf("26"))
       .build();
     assertEquals(listAccountGroupsOptionsModel.enterpriseId(), "testString");
     assertEquals(listAccountGroupsOptionsModel.parentAccountGroupId(), "testString");
+    assertEquals(listAccountGroupsOptionsModel.nextDocid(), "testString");
     assertEquals(listAccountGroupsOptionsModel.parent(), "testString");
     assertEquals(listAccountGroupsOptionsModel.limit(), Long.valueOf("26"));
   }

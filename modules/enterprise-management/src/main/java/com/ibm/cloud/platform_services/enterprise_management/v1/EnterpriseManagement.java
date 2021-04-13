@@ -101,151 +101,158 @@ public class EnterpriseManagement extends BaseService {
   }
 
   /**
-   * Create an account group.
+   * Create an enterprise.
    *
-   * Create a new account group, which can be used to group together multiple accounts. To create an account group, you
-   * must have an existing enterprise. The API creates an account group entity under the parent that is specified in the
-   * payload of the request. The request also takes in the name and the primary contact of this new account group.
+   * Create a new enterprise, which you can use to centrally manage multiple accounts. To create an enterprise, you must
+   * have an active Subscription account. &lt;br/&gt;&lt;br/&gt;The API creates an enterprise entity, which is the root
+   * of the enterprise hierarchy. It also creates a new enterprise account that is used to manage the enterprise. All
+   * subscriptions, support entitlements, credits, and discounts from the source subscription account are migrated to
+   * the enterprise account, and the source account becomes a child account in the hierarchy. The user that you assign
+   * as the enterprise primary contact is also assigned as the owner of the enterprise account.
    *
-   * @param createAccountGroupOptions the {@link CreateAccountGroupOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link CreateAccountGroupResponse}
+   * @param createEnterpriseOptions the {@link CreateEnterpriseOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link CreateEnterpriseResponse}
    */
-  public ServiceCall<CreateAccountGroupResponse> createAccountGroup(CreateAccountGroupOptions createAccountGroupOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountGroupOptions,
-      "createAccountGroupOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "createAccountGroup");
+  public ServiceCall<CreateEnterpriseResponse> createEnterprise(CreateEnterpriseOptions createEnterpriseOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createEnterpriseOptions,
+      "createEnterpriseOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "createEnterprise");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     final JsonObject contentJson = new JsonObject();
-    contentJson.addProperty("parent", createAccountGroupOptions.parent());
-    contentJson.addProperty("name", createAccountGroupOptions.name());
-    contentJson.addProperty("primary_contact_iam_id", createAccountGroupOptions.primaryContactIamId());
+    contentJson.addProperty("source_account_id", createEnterpriseOptions.sourceAccountId());
+    contentJson.addProperty("name", createEnterpriseOptions.name());
+    contentJson.addProperty("primary_contact_iam_id", createEnterpriseOptions.primaryContactIamId());
+    if (createEnterpriseOptions.domain() != null) {
+      contentJson.addProperty("domain", createEnterpriseOptions.domain());
+    }
     builder.bodyJson(contentJson);
-    ResponseConverter<CreateAccountGroupResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CreateAccountGroupResponse>() { }.getType());
+    ResponseConverter<CreateEnterpriseResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CreateEnterpriseResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * List account groups.
+   * List enterprises.
    *
-   * Retrieve all account groups based on the values that are passed in the query parameters. If no query parameter is
-   * passed, all of the account groups in the enterprise for which the calling identity has access are returned.
-   * &lt;br/&gt;&lt;br/&gt;You can use pagination parameters to filter the results. The `limit` field can be used to
-   * limit the number of results that are displayed for this method.&lt;br/&gt;&lt;br/&gt;This method ensures that only
-   * the account groups that the user has access to are returned. Access can be controlled either through a policy on a
-   * specific account group, or account-level platform services access roles, such as Administrator, Editor, Operator,
-   * or Viewer. When you call the method with the `enterprise_id`, `parent_account_group_id` or `parent` query
-   * parameter, all of the account groups that are immediate children of this entity are returned. Authentication is
-   * performed on all account groups before they are returned to the user to ensure that only those account groups are
-   * returned to which the calling identity has access.
+   * Retrieve all enterprises for a given ID by passing the IDs on query parameters. If no ID is passed, the enterprises
+   * for which the calling identity is the primary contact are returned. You can use pagination parameters to filter the
+   * results. &lt;br/&gt;&lt;br/&gt;This method ensures that only the enterprises that the user has access to are
+   * returned. Access can be controlled either through a policy on a specific enterprise, or account-level platform
+   * services access roles, such as Administrator, Editor, Operator, or Viewer. When you call the method with the
+   * `enterprise_account_id` or `account_id` query parameter, the account ID in the token is compared with that in the
+   * query parameter. If these account IDs match, authentication isn't performed and the enterprise information is
+   * returned. If the account IDs don't match, authentication is performed and only then is the enterprise information
+   * returned in the response.
    *
-   * @param listAccountGroupsOptions the {@link ListAccountGroupsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ListAccountGroupsResponse}
+   * @param listEnterprisesOptions the {@link ListEnterprisesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ListEnterprisesResponse}
    */
-  public ServiceCall<ListAccountGroupsResponse> listAccountGroups(ListAccountGroupsOptions listAccountGroupsOptions) {
-    if (listAccountGroupsOptions == null) {
-      listAccountGroupsOptions = new ListAccountGroupsOptions.Builder().build();
+  public ServiceCall<ListEnterprisesResponse> listEnterprises(ListEnterprisesOptions listEnterprisesOptions) {
+    if (listEnterprisesOptions == null) {
+      listEnterprisesOptions = new ListEnterprisesOptions.Builder().build();
     }
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "listAccountGroups");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "listEnterprises");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listAccountGroupsOptions.enterpriseId() != null) {
-      builder.query("enterprise_id", String.valueOf(listAccountGroupsOptions.enterpriseId()));
+    if (listEnterprisesOptions.enterpriseAccountId() != null) {
+      builder.query("enterprise_account_id", String.valueOf(listEnterprisesOptions.enterpriseAccountId()));
     }
-    if (listAccountGroupsOptions.parentAccountGroupId() != null) {
-      builder.query("parent_account_group_id", String.valueOf(listAccountGroupsOptions.parentAccountGroupId()));
+    if (listEnterprisesOptions.accountGroupId() != null) {
+      builder.query("account_group_id", String.valueOf(listEnterprisesOptions.accountGroupId()));
     }
-    if (listAccountGroupsOptions.nextDocid() != null) {
-      builder.query("next_docid", String.valueOf(listAccountGroupsOptions.nextDocid()));
+    if (listEnterprisesOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listEnterprisesOptions.accountId()));
     }
-    if (listAccountGroupsOptions.parent() != null) {
-      builder.query("parent", String.valueOf(listAccountGroupsOptions.parent()));
+    if (listEnterprisesOptions.nextDocid() != null) {
+      builder.query("next_docid", String.valueOf(listEnterprisesOptions.nextDocid()));
     }
-    if (listAccountGroupsOptions.limit() != null) {
-      builder.query("limit", String.valueOf(listAccountGroupsOptions.limit()));
+    if (listEnterprisesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listEnterprisesOptions.limit()));
     }
-    ResponseConverter<ListAccountGroupsResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ListAccountGroupsResponse>() { }.getType());
+    ResponseConverter<ListEnterprisesResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ListEnterprisesResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * List account groups.
+   * List enterprises.
    *
-   * Retrieve all account groups based on the values that are passed in the query parameters. If no query parameter is
-   * passed, all of the account groups in the enterprise for which the calling identity has access are returned.
-   * &lt;br/&gt;&lt;br/&gt;You can use pagination parameters to filter the results. The `limit` field can be used to
-   * limit the number of results that are displayed for this method.&lt;br/&gt;&lt;br/&gt;This method ensures that only
-   * the account groups that the user has access to are returned. Access can be controlled either through a policy on a
-   * specific account group, or account-level platform services access roles, such as Administrator, Editor, Operator,
-   * or Viewer. When you call the method with the `enterprise_id`, `parent_account_group_id` or `parent` query
-   * parameter, all of the account groups that are immediate children of this entity are returned. Authentication is
-   * performed on all account groups before they are returned to the user to ensure that only those account groups are
-   * returned to which the calling identity has access.
+   * Retrieve all enterprises for a given ID by passing the IDs on query parameters. If no ID is passed, the enterprises
+   * for which the calling identity is the primary contact are returned. You can use pagination parameters to filter the
+   * results. &lt;br/&gt;&lt;br/&gt;This method ensures that only the enterprises that the user has access to are
+   * returned. Access can be controlled either through a policy on a specific enterprise, or account-level platform
+   * services access roles, such as Administrator, Editor, Operator, or Viewer. When you call the method with the
+   * `enterprise_account_id` or `account_id` query parameter, the account ID in the token is compared with that in the
+   * query parameter. If these account IDs match, authentication isn't performed and the enterprise information is
+   * returned. If the account IDs don't match, authentication is performed and only then is the enterprise information
+   * returned in the response.
    *
-   * @return a {@link ServiceCall} with a result of type {@link ListAccountGroupsResponse}
+   * @return a {@link ServiceCall} with a result of type {@link ListEnterprisesResponse}
    */
-  public ServiceCall<ListAccountGroupsResponse> listAccountGroups() {
-    return listAccountGroups(null);
+  public ServiceCall<ListEnterprisesResponse> listEnterprises() {
+    return listEnterprises(null);
   }
 
   /**
-   * Get account group by ID.
+   * Get enterprise by ID.
    *
-   * Retrieve an account by the `account_group_id` parameter. All data related to the account group is returned only if
-   * the caller has access to retrieve the account group.
+   * Retrieve an enterprise by the `enterprise_id` parameter. All data related to the enterprise is returned only if the
+   * caller has access to retrieve the enterprise.
    *
-   * @param getAccountGroupOptions the {@link GetAccountGroupOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountGroup}
+   * @param getEnterpriseOptions the {@link GetEnterpriseOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link Enterprise}
    */
-  public ServiceCall<AccountGroup> getAccountGroup(GetAccountGroupOptions getAccountGroupOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountGroupOptions,
-      "getAccountGroupOptions cannot be null");
+  public ServiceCall<Enterprise> getEnterprise(GetEnterpriseOptions getEnterpriseOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getEnterpriseOptions,
+      "getEnterpriseOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_group_id", getAccountGroupOptions.accountGroupId());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups/{account_group_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccountGroup");
+    pathParamsMap.put("enterprise_id", getEnterpriseOptions.enterpriseId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises/{enterprise_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getEnterprise");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    ResponseConverter<AccountGroup> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountGroup>() { }.getType());
+    ResponseConverter<Enterprise> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Enterprise>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Update an account group.
+   * Update an enterprise.
    *
-   * Update the name or IAM ID of the primary contact for an existing account group. The new primary contact must
+   * Update the name, domain, or IAM ID of the primary contact for an existing enterprise. The new primary contact must
    * already be a user in the enterprise account.
    *
-   * @param updateAccountGroupOptions the {@link UpdateAccountGroupOptions} containing the options for the call
+   * @param updateEnterpriseOptions the {@link UpdateEnterpriseOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<Void> updateAccountGroup(UpdateAccountGroupOptions updateAccountGroupOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountGroupOptions,
-      "updateAccountGroupOptions cannot be null");
+  public ServiceCall<Void> updateEnterprise(UpdateEnterpriseOptions updateEnterpriseOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateEnterpriseOptions,
+      "updateEnterpriseOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_group_id", updateAccountGroupOptions.accountGroupId());
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups/{account_group_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "updateAccountGroup");
+    pathParamsMap.put("enterprise_id", updateEnterpriseOptions.enterpriseId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises/{enterprise_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "updateEnterprise");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     final JsonObject contentJson = new JsonObject();
-    if (updateAccountGroupOptions.name() != null) {
-      contentJson.addProperty("name", updateAccountGroupOptions.name());
+    if (updateEnterpriseOptions.name() != null) {
+      contentJson.addProperty("name", updateEnterpriseOptions.name());
     }
-    if (updateAccountGroupOptions.primaryContactIamId() != null) {
-      contentJson.addProperty("primary_contact_iam_id", updateAccountGroupOptions.primaryContactIamId());
+    if (updateEnterpriseOptions.domain() != null) {
+      contentJson.addProperty("domain", updateEnterpriseOptions.domain());
+    }
+    if (updateEnterpriseOptions.primaryContactIamId() != null) {
+      contentJson.addProperty("primary_contact_iam_id", updateEnterpriseOptions.primaryContactIamId());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
@@ -437,158 +444,151 @@ public class EnterpriseManagement extends BaseService {
   }
 
   /**
-   * Create an enterprise.
+   * Create an account group.
    *
-   * Create a new enterprise, which you can use to centrally manage multiple accounts. To create an enterprise, you must
-   * have an active Subscription account. &lt;br/&gt;&lt;br/&gt;The API creates an enterprise entity, which is the root
-   * of the enterprise hierarchy. It also creates a new enterprise account that is used to manage the enterprise. All
-   * subscriptions, support entitlements, credits, and discounts from the source subscription account are migrated to
-   * the enterprise account, and the source account becomes a child account in the hierarchy. The user that you assign
-   * as the enterprise primary contact is also assigned as the owner of the enterprise account.
+   * Create a new account group, which can be used to group together multiple accounts. To create an account group, you
+   * must have an existing enterprise. The API creates an account group entity under the parent that is specified in the
+   * payload of the request. The request also takes in the name and the primary contact of this new account group.
    *
-   * @param createEnterpriseOptions the {@link CreateEnterpriseOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link CreateEnterpriseResponse}
+   * @param createAccountGroupOptions the {@link CreateAccountGroupOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link CreateAccountGroupResponse}
    */
-  public ServiceCall<CreateEnterpriseResponse> createEnterprise(CreateEnterpriseOptions createEnterpriseOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createEnterpriseOptions,
-      "createEnterpriseOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "createEnterprise");
+  public ServiceCall<CreateAccountGroupResponse> createAccountGroup(CreateAccountGroupOptions createAccountGroupOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountGroupOptions,
+      "createAccountGroupOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "createAccountGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     final JsonObject contentJson = new JsonObject();
-    contentJson.addProperty("source_account_id", createEnterpriseOptions.sourceAccountId());
-    contentJson.addProperty("name", createEnterpriseOptions.name());
-    contentJson.addProperty("primary_contact_iam_id", createEnterpriseOptions.primaryContactIamId());
-    if (createEnterpriseOptions.domain() != null) {
-      contentJson.addProperty("domain", createEnterpriseOptions.domain());
-    }
+    contentJson.addProperty("parent", createAccountGroupOptions.parent());
+    contentJson.addProperty("name", createAccountGroupOptions.name());
+    contentJson.addProperty("primary_contact_iam_id", createAccountGroupOptions.primaryContactIamId());
     builder.bodyJson(contentJson);
-    ResponseConverter<CreateEnterpriseResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CreateEnterpriseResponse>() { }.getType());
+    ResponseConverter<CreateAccountGroupResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CreateAccountGroupResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * List enterprises.
+   * List account groups.
    *
-   * Retrieve all enterprises for a given ID by passing the IDs on query parameters. If no ID is passed, the enterprises
-   * for which the calling identity is the primary contact are returned. You can use pagination parameters to filter the
-   * results. &lt;br/&gt;&lt;br/&gt;This method ensures that only the enterprises that the user has access to are
-   * returned. Access can be controlled either through a policy on a specific enterprise, or account-level platform
-   * services access roles, such as Administrator, Editor, Operator, or Viewer. When you call the method with the
-   * `enterprise_account_id` or `account_id` query parameter, the account ID in the token is compared with that in the
-   * query parameter. If these account IDs match, authentication isn't performed and the enterprise information is
-   * returned. If the account IDs don't match, authentication is performed and only then is the enterprise information
-   * returned in the response.
+   * Retrieve all account groups based on the values that are passed in the query parameters. If no query parameter is
+   * passed, all of the account groups in the enterprise for which the calling identity has access are returned.
+   * &lt;br/&gt;&lt;br/&gt;You can use pagination parameters to filter the results. The `limit` field can be used to
+   * limit the number of results that are displayed for this method.&lt;br/&gt;&lt;br/&gt;This method ensures that only
+   * the account groups that the user has access to are returned. Access can be controlled either through a policy on a
+   * specific account group, or account-level platform services access roles, such as Administrator, Editor, Operator,
+   * or Viewer. When you call the method with the `enterprise_id`, `parent_account_group_id` or `parent` query
+   * parameter, all of the account groups that are immediate children of this entity are returned. Authentication is
+   * performed on all account groups before they are returned to the user to ensure that only those account groups are
+   * returned to which the calling identity has access.
    *
-   * @param listEnterprisesOptions the {@link ListEnterprisesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ListEnterprisesResponse}
+   * @param listAccountGroupsOptions the {@link ListAccountGroupsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ListAccountGroupsResponse}
    */
-  public ServiceCall<ListEnterprisesResponse> listEnterprises(ListEnterprisesOptions listEnterprisesOptions) {
-    if (listEnterprisesOptions == null) {
-      listEnterprisesOptions = new ListEnterprisesOptions.Builder().build();
+  public ServiceCall<ListAccountGroupsResponse> listAccountGroups(ListAccountGroupsOptions listAccountGroupsOptions) {
+    if (listAccountGroupsOptions == null) {
+      listAccountGroupsOptions = new ListAccountGroupsOptions.Builder().build();
     }
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "listEnterprises");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "listAccountGroups");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listEnterprisesOptions.enterpriseAccountId() != null) {
-      builder.query("enterprise_account_id", String.valueOf(listEnterprisesOptions.enterpriseAccountId()));
+    if (listAccountGroupsOptions.enterpriseId() != null) {
+      builder.query("enterprise_id", String.valueOf(listAccountGroupsOptions.enterpriseId()));
     }
-    if (listEnterprisesOptions.accountGroupId() != null) {
-      builder.query("account_group_id", String.valueOf(listEnterprisesOptions.accountGroupId()));
+    if (listAccountGroupsOptions.parentAccountGroupId() != null) {
+      builder.query("parent_account_group_id", String.valueOf(listAccountGroupsOptions.parentAccountGroupId()));
     }
-    if (listEnterprisesOptions.accountId() != null) {
-      builder.query("account_id", String.valueOf(listEnterprisesOptions.accountId()));
+    if (listAccountGroupsOptions.nextDocid() != null) {
+      builder.query("next_docid", String.valueOf(listAccountGroupsOptions.nextDocid()));
     }
-    if (listEnterprisesOptions.nextDocid() != null) {
-      builder.query("next_docid", String.valueOf(listEnterprisesOptions.nextDocid()));
+    if (listAccountGroupsOptions.parent() != null) {
+      builder.query("parent", String.valueOf(listAccountGroupsOptions.parent()));
     }
-    if (listEnterprisesOptions.limit() != null) {
-      builder.query("limit", String.valueOf(listEnterprisesOptions.limit()));
+    if (listAccountGroupsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listAccountGroupsOptions.limit()));
     }
-    ResponseConverter<ListEnterprisesResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ListEnterprisesResponse>() { }.getType());
+    ResponseConverter<ListAccountGroupsResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ListAccountGroupsResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * List enterprises.
+   * List account groups.
    *
-   * Retrieve all enterprises for a given ID by passing the IDs on query parameters. If no ID is passed, the enterprises
-   * for which the calling identity is the primary contact are returned. You can use pagination parameters to filter the
-   * results. &lt;br/&gt;&lt;br/&gt;This method ensures that only the enterprises that the user has access to are
-   * returned. Access can be controlled either through a policy on a specific enterprise, or account-level platform
-   * services access roles, such as Administrator, Editor, Operator, or Viewer. When you call the method with the
-   * `enterprise_account_id` or `account_id` query parameter, the account ID in the token is compared with that in the
-   * query parameter. If these account IDs match, authentication isn't performed and the enterprise information is
-   * returned. If the account IDs don't match, authentication is performed and only then is the enterprise information
-   * returned in the response.
+   * Retrieve all account groups based on the values that are passed in the query parameters. If no query parameter is
+   * passed, all of the account groups in the enterprise for which the calling identity has access are returned.
+   * &lt;br/&gt;&lt;br/&gt;You can use pagination parameters to filter the results. The `limit` field can be used to
+   * limit the number of results that are displayed for this method.&lt;br/&gt;&lt;br/&gt;This method ensures that only
+   * the account groups that the user has access to are returned. Access can be controlled either through a policy on a
+   * specific account group, or account-level platform services access roles, such as Administrator, Editor, Operator,
+   * or Viewer. When you call the method with the `enterprise_id`, `parent_account_group_id` or `parent` query
+   * parameter, all of the account groups that are immediate children of this entity are returned. Authentication is
+   * performed on all account groups before they are returned to the user to ensure that only those account groups are
+   * returned to which the calling identity has access.
    *
-   * @return a {@link ServiceCall} with a result of type {@link ListEnterprisesResponse}
+   * @return a {@link ServiceCall} with a result of type {@link ListAccountGroupsResponse}
    */
-  public ServiceCall<ListEnterprisesResponse> listEnterprises() {
-    return listEnterprises(null);
+  public ServiceCall<ListAccountGroupsResponse> listAccountGroups() {
+    return listAccountGroups(null);
   }
 
   /**
-   * Get enterprise by ID.
+   * Get account group by ID.
    *
-   * Retrieve an enterprise by the `enterprise_id` parameter. All data related to the enterprise is returned only if the
-   * caller has access to retrieve the enterprise.
+   * Retrieve an account by the `account_group_id` parameter. All data related to the account group is returned only if
+   * the caller has access to retrieve the account group.
    *
-   * @param getEnterpriseOptions the {@link GetEnterpriseOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link Enterprise}
+   * @param getAccountGroupOptions the {@link GetAccountGroupOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountGroup}
    */
-  public ServiceCall<Enterprise> getEnterprise(GetEnterpriseOptions getEnterpriseOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getEnterpriseOptions,
-      "getEnterpriseOptions cannot be null");
+  public ServiceCall<AccountGroup> getAccountGroup(GetAccountGroupOptions getAccountGroupOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountGroupOptions,
+      "getAccountGroupOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("enterprise_id", getEnterpriseOptions.enterpriseId());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises/{enterprise_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getEnterprise");
+    pathParamsMap.put("account_group_id", getAccountGroupOptions.accountGroupId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups/{account_group_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "getAccountGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    ResponseConverter<Enterprise> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Enterprise>() { }.getType());
+    ResponseConverter<AccountGroup> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountGroup>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Update an enterprise.
+   * Update an account group.
    *
-   * Update the name, domain, or IAM ID of the primary contact for an existing enterprise. The new primary contact must
+   * Update the name or IAM ID of the primary contact for an existing account group. The new primary contact must
    * already be a user in the enterprise account.
    *
-   * @param updateEnterpriseOptions the {@link UpdateEnterpriseOptions} containing the options for the call
+   * @param updateAccountGroupOptions the {@link UpdateAccountGroupOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<Void> updateEnterprise(UpdateEnterpriseOptions updateEnterpriseOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(updateEnterpriseOptions,
-      "updateEnterpriseOptions cannot be null");
+  public ServiceCall<Void> updateAccountGroup(UpdateAccountGroupOptions updateAccountGroupOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountGroupOptions,
+      "updateAccountGroupOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("enterprise_id", updateEnterpriseOptions.enterpriseId());
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/enterprises/{enterprise_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "updateEnterprise");
+    pathParamsMap.put("account_group_id", updateAccountGroupOptions.accountGroupId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups/{account_group_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "updateAccountGroup");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     final JsonObject contentJson = new JsonObject();
-    if (updateEnterpriseOptions.name() != null) {
-      contentJson.addProperty("name", updateEnterpriseOptions.name());
+    if (updateAccountGroupOptions.name() != null) {
+      contentJson.addProperty("name", updateAccountGroupOptions.name());
     }
-    if (updateEnterpriseOptions.domain() != null) {
-      contentJson.addProperty("domain", updateEnterpriseOptions.domain());
-    }
-    if (updateEnterpriseOptions.primaryContactIamId() != null) {
-      contentJson.addProperty("primary_contact_iam_id", updateEnterpriseOptions.primaryContactIamId());
+    if (updateAccountGroupOptions.primaryContactIamId() != null) {
+      contentJson.addProperty("primary_contact_iam_id", updateAccountGroupOptions.primaryContactIamId());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();

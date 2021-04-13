@@ -36,12 +36,12 @@ public class ListAccountGroupsOptionsTest {
       .parentAccountGroupId("testString")
       .nextDocid("testString")
       .parent("testString")
-      .limit(Long.valueOf("26"))
+      .limit(Long.valueOf("100"))
       .build();
     assertEquals(listAccountGroupsOptionsModel.enterpriseId(), "testString");
     assertEquals(listAccountGroupsOptionsModel.parentAccountGroupId(), "testString");
     assertEquals(listAccountGroupsOptionsModel.nextDocid(), "testString");
     assertEquals(listAccountGroupsOptionsModel.parent(), "testString");
-    assertEquals(listAccountGroupsOptionsModel.limit(), Long.valueOf("26"));
+    assertEquals(listAccountGroupsOptionsModel.limit(), Long.valueOf("100"));
   }
 }

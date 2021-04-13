@@ -445,10 +445,4 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
-  @AfterClass
-  public void tearDown() {
-    // Add any clean up logic here
-    System.out.println("Clean up complete.");
-  }
-
 }

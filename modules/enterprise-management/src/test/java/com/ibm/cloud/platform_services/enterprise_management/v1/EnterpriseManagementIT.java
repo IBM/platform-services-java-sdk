@@ -13,20 +13,42 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterpriseOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
-
-import java.util.*;
-
 import com.ibm.cloud.sdk.core.util.UrlHelper;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
 
 /**
  * Integration test class for the EnterpriseManagement service.

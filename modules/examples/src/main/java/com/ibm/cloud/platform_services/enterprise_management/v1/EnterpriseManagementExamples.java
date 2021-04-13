@@ -198,6 +198,7 @@ public class EnterpriseManagementExamples {
     try {
       String importAccountId = "<accountid_to_be_imported>";
 
+      System.out.println("importAccountToEnterprise() result:");
       // begin-import_account_to_enterprise
 
       ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()
@@ -284,8 +285,6 @@ public class EnterpriseManagementExamples {
     }
 
     try {
-      System.out.println("updateAccount() result:");
-
       String newParentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::account-group:%s",
               enterpriseAccountId, newParentAccountGroupId);
 
@@ -296,12 +295,11 @@ public class EnterpriseManagementExamples {
           .parent(newParentCRN)
           .build();
 
-      Response<Void> response = service.updateAccount(updateAccountOptions)
-          .execute();
+      Response<Void> response = service.updateAccount(updateAccountOptions).execute();
 
       // end-update_account
 
-      System.out.printf("() response status code: %d%n", response.getStatusCode());
+      System.out.printf("updateAccount() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
@@ -321,9 +319,7 @@ public class EnterpriseManagementExamples {
           .primaryContactIamId(contactIamId)
           .build();
 
-      Response<CreateEnterpriseResponse> response = service
-          .createEnterprise(createEnterpriseOptions)
-          .execute();
+      Response<CreateEnterpriseResponse> response = service.createEnterprise(createEnterpriseOptions).execute();
       CreateEnterpriseResponse createEnterpriseResponse = response.getResult();
 
       System.out.println(createEnterpriseResponse);

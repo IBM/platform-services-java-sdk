@@ -19,7 +19,6 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
-import java.net.URI;
 import java.util.*;
 
 import com.ibm.cloud.sdk.core.util.UrlHelper;
@@ -37,9 +36,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   public EnterpriseManagement service = null;
   public static Map<String, String> config = null;
 
-  String authType = null;
-  String authUrl = null;
-  String apiKey = null;
   String enterpriseId = null;
   String accountId = null;
   String accountIamId = null;
@@ -48,7 +44,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   String secondExampleAccountGroupName = "Second Example Account Group Name";
   String exampleAccountName = "Example Account Name";
   String exampleAccountId = null;
-  String exampleEnterpriseId = null;
   String updatedExampleEnterpriseName = "Updated Example Enterprise Name";
   String firstExampleAccountGroupId = null;
   String secondExampleAccountGroupId = null;
@@ -79,15 +74,6 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     assertNotNull(config);
     assertFalse(config.isEmpty());
     assertEquals(service.getServiceUrl(), config.get("URL"));
-
-    authType = config.get("AUTHTYPE");
-    assertNotNull(authType);
-
-    authUrl = config.get("AUTH_URL");
-    assertNotNull(authUrl);
-
-    apiKey = config.get("APIKEY");
-    assertNotNull(apiKey);
 
     enterpriseId = config.get("ENTERPRISE_ID");
     assertNotNull(enterpriseId);
@@ -157,7 +143,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
-  @Test
+  @Test(dependsOnMethods = {"testCreateAccountGroup", "testCreateAnotherAccountGroup"})
   public void testListAccountGroups() throws Exception {
     try {
       List<AccountGroup> accountGroupsList = new ArrayList<>();
@@ -189,13 +175,13 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
       AccountGroup accountGroupResultFirst = accountGroupsList
           .stream()
-          .filter(ac -> ac.getId() == firstExampleAccountGroupId)
+          .filter(ac -> ac.getId().equals(firstExampleAccountGroupId))
           .findAny()
           .orElse(null);
       assertNotNull(accountGroupResultFirst);
       AccountGroup accountGroupResultSecond = accountGroupsList
           .stream()
-          .filter(ac -> ac.getId() == secondExampleAccountGroupId)
+          .filter(ac -> ac.getId().equals(secondExampleAccountGroupId))
           .findAny()
           .orElse(null);
       assertNotNull(accountGroupResultSecond);
@@ -280,7 +266,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
-  @Test
+  @Test(dependsOnMethods = {"testCreateAccount", "testCreateAccountGroup"})
   public void testListAccounts() throws Exception {
     try {
 
@@ -290,7 +276,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
       do {
         ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder()
-            .enterpriseId(enterpriseId)
+            .accountGroupId(firstExampleAccountGroupId)
             .limit(limit)
             .nextDocid(nextDocId)
             .build();
@@ -310,7 +296,9 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
 
       } while (nextDocId != null);
 
-      Account accountResult = listAccounts.stream().filter(account -> account.getId() == exampleAccountId)
+      Account accountResult = listAccounts
+          .stream()
+          .filter(account -> account.getId().equals(exampleAccountId))
           .findAny()
           .orElse(null);
       assertNotNull(accountResult);
@@ -396,7 +384,9 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
         enterpriseList.addAll(listEnterprisesResponseResult.getResources());
       } while (nextDocId != null);
 
-      Enterprise enterpriseResult = enterpriseList.stream().filter(e -> e.getId() == enterpriseId)
+      Enterprise enterpriseResult = enterpriseList
+          .stream()
+          .filter(e -> e.getId().equals(enterpriseId))
           .findAny()
           .orElse(null);
       assertNotNull(enterpriseResult);
@@ -460,4 +450,5 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     // Add any clean up logic here
     System.out.println("Clean up complete.");
   }
+
 }

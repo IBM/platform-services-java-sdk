@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+ * IBM OpenAPI SDK Code Generator Version: 3.30.0-bd714324-20210406-200538
  */
 
 
@@ -160,6 +160,9 @@ class EnterpriseManagementV1 extends BaseService {
    * hierarchy for a given enterprise ID.
    * @param {string} [params.parentAccountGroupId] - Get account groups that are either immediate children or are a part
    * of the hierarchy for a given account group ID.
+   * @param {string} [params.nextDocid] - The first item to be returned in the page of results. This value can be
+   * obtained from the next_url property from the previous call of the operation. If not specified, then the first page
+   * of results is returned.
    * @param {string} [params.parent] - Get account groups that are either immediate children or are a part of the
    * hierarchy for a given parent CRN.
    * @param {number} [params.limit] - Return results up to this limit. Valid values are between `0` and `100`.
@@ -172,6 +175,7 @@ class EnterpriseManagementV1 extends BaseService {
     const query = {
       'enterprise_id': _params.enterpriseId,
       'parent_account_group_id': _params.parentAccountGroupId,
+      'next_docid': _params.nextDocid,
       'parent': _params.parent,
       'limit': _params.limit
     };
@@ -419,6 +423,9 @@ class EnterpriseManagementV1 extends BaseService {
    * hierarchy for a given enterprise ID.
    * @param {string} [params.accountGroupId] - Get accounts that are either immediate children or are a part of the
    * hierarchy for a given account group ID.
+   * @param {string} [params.nextDocid] - The first item to be returned in the page of results. This value can be
+   * obtained from the next_url property from the previous call of the operation. If not specified, then the first page
+   * of results is returned.
    * @param {string} [params.parent] - Get accounts that are either immediate children or are a part of the hierarchy
    * for a given parent CRN.
    * @param {number} [params.limit] - Return results up to this limit. Valid values are between `0` and `100`.
@@ -431,6 +438,7 @@ class EnterpriseManagementV1 extends BaseService {
     const query = {
       'enterprise_id': _params.enterpriseId,
       'account_group_id': _params.accountGroupId,
+      'next_docid': _params.nextDocid,
       'parent': _params.parent,
       'limit': _params.limit
     };
@@ -618,6 +626,9 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {string} [params.enterpriseAccountId] - Get enterprises for a given enterprise account ID.
    * @param {string} [params.accountGroupId] - Get enterprises for a given account group ID.
    * @param {string} [params.accountId] - Get enterprises for a given account ID.
+   * @param {string} [params.nextDocid] - The first item to be returned in the page of results. This value can be
+   * obtained from the next_url property from the previous call of the operation. If not specified, then the first page
+   * of results is returned.
    * @param {number} [params.limit] - Return results up to this limit. Valid values are between `0` and `100`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListEnterprisesResponse>>}
@@ -629,6 +640,7 @@ class EnterpriseManagementV1 extends BaseService {
       'enterprise_account_id': _params.enterpriseAccountId,
       'account_group_id': _params.accountGroupId,
       'account_id': _params.accountId,
+      'next_docid': _params.nextDocid,
       'limit': _params.limit
     };
 
@@ -801,6 +813,10 @@ namespace EnterpriseManagementV1 {
      *  group ID.
      */
     parentAccountGroupId?: string;
+    /** The first item to be returned in the page of results. This value can be obtained from the next_url property
+     *  from the previous call of the operation. If not specified, then the first page of results is returned.
+     */
+    nextDocid?: string;
     /** Get account groups that are either immediate children or are a part of the hierarchy for a given parent CRN. */
     parent?: string;
     /** Return results up to this limit. Valid values are between `0` and `100`. */
@@ -862,6 +878,10 @@ namespace EnterpriseManagementV1 {
     enterpriseId?: string;
     /** Get accounts that are either immediate children or are a part of the hierarchy for a given account group ID. */
     accountGroupId?: string;
+    /** The first item to be returned in the page of results. This value can be obtained from the next_url property
+     *  from the previous call of the operation. If not specified, then the first page of results is returned.
+     */
+    nextDocid?: string;
     /** Get accounts that are either immediate children or are a part of the hierarchy for a given parent CRN. */
     parent?: string;
     /** Return results up to this limit. Valid values are between `0` and `100`. */
@@ -906,6 +926,10 @@ namespace EnterpriseManagementV1 {
     accountGroupId?: string;
     /** Get enterprises for a given account ID. */
     accountId?: string;
+    /** The first item to be returned in the page of results. This value can be obtained from the next_url property
+     *  from the previous call of the operation. If not specified, then the first page of results is returned.
+     */
+    nextDocid?: string;
     /** Return results up to this limit. Valid values are between `0` and `100`. */
     limit?: number;
     headers?: OutgoingHttpHeaders;

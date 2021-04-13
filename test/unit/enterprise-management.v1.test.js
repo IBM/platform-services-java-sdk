@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -183,11 +183,13 @@ describe('EnterpriseManagementV1', () => {
         // Construct the params object for operation listAccountGroups
         const enterpriseId = 'testString';
         const parentAccountGroupId = 'testString';
+        const nextDocid = 'testString';
         const parent = 'testString';
         const limit = 38;
         const params = {
           enterpriseId: enterpriseId,
           parentAccountGroupId: parentAccountGroupId,
+          nextDocid: nextDocid,
           parent: parent,
           limit: limit,
         };
@@ -208,6 +210,7 @@ describe('EnterpriseManagementV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['enterprise_id']).toEqual(enterpriseId);
         expect(options.qs['parent_account_group_id']).toEqual(parentAccountGroupId);
+        expect(options.qs['next_docid']).toEqual(nextDocid);
         expect(options.qs['parent']).toEqual(parent);
         expect(options.qs['limit']).toEqual(limit);
       });
@@ -539,11 +542,13 @@ describe('EnterpriseManagementV1', () => {
         // Construct the params object for operation listAccounts
         const enterpriseId = 'testString';
         const accountGroupId = 'testString';
+        const nextDocid = 'testString';
         const parent = 'testString';
         const limit = 38;
         const params = {
           enterpriseId: enterpriseId,
           accountGroupId: accountGroupId,
+          nextDocid: nextDocid,
           parent: parent,
           limit: limit,
         };
@@ -564,6 +569,7 @@ describe('EnterpriseManagementV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(options.qs['enterprise_id']).toEqual(enterpriseId);
         expect(options.qs['account_group_id']).toEqual(accountGroupId);
+        expect(options.qs['next_docid']).toEqual(nextDocid);
         expect(options.qs['parent']).toEqual(parent);
         expect(options.qs['limit']).toEqual(limit);
       });
@@ -819,11 +825,13 @@ describe('EnterpriseManagementV1', () => {
         const enterpriseAccountId = 'testString';
         const accountGroupId = 'testString';
         const accountId = 'testString';
+        const nextDocid = 'testString';
         const limit = 38;
         const params = {
           enterpriseAccountId: enterpriseAccountId,
           accountGroupId: accountGroupId,
           accountId: accountId,
+          nextDocid: nextDocid,
           limit: limit,
         };
 
@@ -844,6 +852,7 @@ describe('EnterpriseManagementV1', () => {
         expect(options.qs['enterprise_account_id']).toEqual(enterpriseAccountId);
         expect(options.qs['account_group_id']).toEqual(accountGroupId);
         expect(options.qs['account_id']).toEqual(accountId);
+        expect(options.qs['next_docid']).toEqual(nextDocid);
         expect(options.qs['limit']).toEqual(limit);
       });
 

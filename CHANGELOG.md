@@ -1,3 +1,10 @@
+## [0.18.6](https://github.com/IBM/platform-services-java-sdk/compare/0.18.5...0.18.6) (2021-04-14)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** update service after API changes ([#95](https://github.com/IBM/platform-services-java-sdk/issues/95)) ([0f14b96](https://github.com/IBM/platform-services-java-sdk/commit/0f14b962b67243fd2abf411e7f03e90cc1810d4d))
+
 ## [0.18.5](https://github.com/IBM/platform-services-java-sdk/compare/0.18.4...0.18.5) (2021-04-13)
 
 

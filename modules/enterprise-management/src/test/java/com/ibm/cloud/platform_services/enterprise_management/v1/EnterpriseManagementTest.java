@@ -100,29 +100,30 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testCreateAccountGroupWOptions() throws Throwable {
+  public void testCreateEnterpriseWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_group_id\": \"accountGroupId\"}";
-    String createAccountGroupPath = "/account-groups";
+    String mockResponseBody = "{\"enterprise_id\": \"enterpriseId\", \"enterprise_account_id\": \"enterpriseAccountId\"}";
+    String createEnterprisePath = "/enterprises";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
-    .setResponseCode(201)
+    .setResponseCode(202)
     .setBody(mockResponseBody));
 
     constructClientService();
 
-    // Construct an instance of the CreateAccountGroupOptions model
-    CreateAccountGroupOptions createAccountGroupOptionsModel = new CreateAccountGroupOptions.Builder()
-    .parent("testString")
+    // Construct an instance of the CreateEnterpriseOptions model
+    CreateEnterpriseOptions createEnterpriseOptionsModel = new CreateEnterpriseOptions.Builder()
+    .sourceAccountId("testString")
     .name("testString")
     .primaryContactIamId("testString")
+    .domain("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CreateAccountGroupResponse> response = enterpriseManagementService.createAccountGroup(createAccountGroupOptionsModel).execute();
+    Response<CreateEnterpriseResponse> response = enterpriseManagementService.createEnterprise(createEnterpriseOptionsModel).execute();
     assertNotNull(response);
-    CreateAccountGroupResponse responseObj = response.getResult();
+    CreateEnterpriseResponse responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -136,26 +137,26 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createAccountGroupPath);
+    assertEquals(parsedPath, createEnterprisePath);
   }
 
-  // Test the createAccountGroup operation with null options model parameter
+  // Test the createEnterprise operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateAccountGroupNoOptions() throws Throwable {
+  public void testCreateEnterpriseNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    enterpriseManagementService.createAccountGroup(null).execute();
+    enterpriseManagementService.createEnterprise(null).execute();
   }
 
   @Test
-  public void testListAccountGroupsWOptions() throws Throwable {
+  public void testListEnterprisesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
-    String listAccountGroupsPath = "/account-groups";
+    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
+    String listEnterprisesPath = "/enterprises";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -164,19 +165,19 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ListAccountGroupsOptions model
-    ListAccountGroupsOptions listAccountGroupsOptionsModel = new ListAccountGroupsOptions.Builder()
-    .enterpriseId("testString")
-    .parentAccountGroupId("testString")
+    // Construct an instance of the ListEnterprisesOptions model
+    ListEnterprisesOptions listEnterprisesOptionsModel = new ListEnterprisesOptions.Builder()
+    .enterpriseAccountId("testString")
+    .accountGroupId("testString")
+    .accountId("testString")
     .nextDocid("testString")
-    .parent("testString")
-    .limit(Long.valueOf("26"))
+    .limit(Long.valueOf("100"))
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ListAccountGroupsResponse> response = enterpriseManagementService.listAccountGroups(listAccountGroupsOptionsModel).execute();
+    Response<ListEnterprisesResponse> response = enterpriseManagementService.listEnterprises(listEnterprisesOptionsModel).execute();
     assertNotNull(response);
-    ListAccountGroupsResponse responseObj = response.getResult();
+    ListEnterprisesResponse responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -188,21 +189,21 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("enterprise_id"), "testString");
-    assertEquals(query.get("parent_account_group_id"), "testString");
+    assertEquals(query.get("enterprise_account_id"), "testString");
+    assertEquals(query.get("account_group_id"), "testString");
+    assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("next_docid"), "testString");
-    assertEquals(query.get("parent"), "testString");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listAccountGroupsPath);
+    assertEquals(parsedPath, listEnterprisesPath);
   }
 
   @Test
-  public void testGetAccountGroupWOptions() throws Throwable {
+  public void testGetEnterpriseWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
-    String getAccountGroupPath = "/account-groups/testString";
+    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
+    String getEnterprisePath = "/enterprises/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -211,15 +212,15 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetAccountGroupOptions model
-    GetAccountGroupOptions getAccountGroupOptionsModel = new GetAccountGroupOptions.Builder()
-    .accountGroupId("testString")
+    // Construct an instance of the GetEnterpriseOptions model
+    GetEnterpriseOptions getEnterpriseOptionsModel = new GetEnterpriseOptions.Builder()
+    .enterpriseId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AccountGroup> response = enterpriseManagementService.getAccountGroup(getAccountGroupOptionsModel).execute();
+    Response<Enterprise> response = enterpriseManagementService.getEnterprise(getEnterpriseOptionsModel).execute();
     assertNotNull(response);
-    AccountGroup responseObj = response.getResult();
+    Enterprise responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -233,26 +234,26 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getAccountGroupPath);
+    assertEquals(parsedPath, getEnterprisePath);
   }
 
-  // Test the getAccountGroup operation with null options model parameter
+  // Test the getEnterprise operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountGroupNoOptions() throws Throwable {
+  public void testGetEnterpriseNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    enterpriseManagementService.getAccountGroup(null).execute();
+    enterpriseManagementService.getEnterprise(null).execute();
   }
 
   @Test
-  public void testUpdateAccountGroupWOptions() throws Throwable {
+  public void testUpdateEnterpriseWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String updateAccountGroupPath = "/account-groups/testString";
+    String updateEnterprisePath = "/enterprises/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -260,15 +261,16 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the UpdateAccountGroupOptions model
-    UpdateAccountGroupOptions updateAccountGroupOptionsModel = new UpdateAccountGroupOptions.Builder()
-    .accountGroupId("testString")
+    // Construct an instance of the UpdateEnterpriseOptions model
+    UpdateEnterpriseOptions updateEnterpriseOptionsModel = new UpdateEnterpriseOptions.Builder()
+    .enterpriseId("testString")
     .name("testString")
+    .domain("testString")
     .primaryContactIamId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = enterpriseManagementService.updateAccountGroup(updateAccountGroupOptionsModel).execute();
+    Response<Void> response = enterpriseManagementService.updateEnterprise(updateEnterpriseOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -285,19 +287,19 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateAccountGroupPath);
+    assertEquals(parsedPath, updateEnterprisePath);
   }
 
-  // Test the updateAccountGroup operation with null options model parameter
+  // Test the updateEnterprise operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateAccountGroupNoOptions() throws Throwable {
+  public void testUpdateEnterpriseNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    enterpriseManagementService.updateAccountGroup(null).execute();
+    enterpriseManagementService.updateEnterprise(null).execute();
   }
 
   @Test
@@ -424,7 +426,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     .accountGroupId("testString")
     .nextDocid("testString")
     .parent("testString")
-    .limit(Long.valueOf("26"))
+    .limit(Long.valueOf("100"))
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -446,7 +448,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     assertEquals(query.get("account_group_id"), "testString");
     assertEquals(query.get("next_docid"), "testString");
     assertEquals(query.get("parent"), "testString");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listAccountsPath);
@@ -509,7 +511,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     String updateAccountPath = "/accounts/testString";
 
     server.enqueue(new MockResponse()
-    .setResponseCode(204)
+    .setResponseCode(202)
     .setBody(mockResponseBody));
 
     constructClientService();
@@ -554,30 +556,29 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testCreateEnterpriseWOptions() throws Throwable {
+  public void testCreateAccountGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"enterprise_id\": \"enterpriseId\", \"enterprise_account_id\": \"enterpriseAccountId\"}";
-    String createEnterprisePath = "/enterprises";
+    String mockResponseBody = "{\"account_group_id\": \"accountGroupId\"}";
+    String createAccountGroupPath = "/account-groups";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
-    .setResponseCode(202)
+    .setResponseCode(201)
     .setBody(mockResponseBody));
 
     constructClientService();
 
-    // Construct an instance of the CreateEnterpriseOptions model
-    CreateEnterpriseOptions createEnterpriseOptionsModel = new CreateEnterpriseOptions.Builder()
-    .sourceAccountId("testString")
+    // Construct an instance of the CreateAccountGroupOptions model
+    CreateAccountGroupOptions createAccountGroupOptionsModel = new CreateAccountGroupOptions.Builder()
+    .parent("testString")
     .name("testString")
     .primaryContactIamId("testString")
-    .domain("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<CreateEnterpriseResponse> response = enterpriseManagementService.createEnterprise(createEnterpriseOptionsModel).execute();
+    Response<CreateAccountGroupResponse> response = enterpriseManagementService.createAccountGroup(createAccountGroupOptionsModel).execute();
     assertNotNull(response);
-    CreateEnterpriseResponse responseObj = response.getResult();
+    CreateAccountGroupResponse responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -591,26 +592,26 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createEnterprisePath);
+    assertEquals(parsedPath, createAccountGroupPath);
   }
 
-  // Test the createEnterprise operation with null options model parameter
+  // Test the createAccountGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateEnterpriseNoOptions() throws Throwable {
+  public void testCreateAccountGroupNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    enterpriseManagementService.createEnterprise(null).execute();
+    enterpriseManagementService.createAccountGroup(null).execute();
   }
 
   @Test
-  public void testListEnterprisesWOptions() throws Throwable {
+  public void testListAccountGroupsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
-    String listEnterprisesPath = "/enterprises";
+    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
+    String listAccountGroupsPath = "/account-groups";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -619,19 +620,19 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ListEnterprisesOptions model
-    ListEnterprisesOptions listEnterprisesOptionsModel = new ListEnterprisesOptions.Builder()
-    .enterpriseAccountId("testString")
-    .accountGroupId("testString")
-    .accountId("testString")
+    // Construct an instance of the ListAccountGroupsOptions model
+    ListAccountGroupsOptions listAccountGroupsOptionsModel = new ListAccountGroupsOptions.Builder()
+    .enterpriseId("testString")
+    .parentAccountGroupId("testString")
     .nextDocid("testString")
-    .limit(Long.valueOf("26"))
+    .parent("testString")
+    .limit(Long.valueOf("100"))
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ListEnterprisesResponse> response = enterpriseManagementService.listEnterprises(listEnterprisesOptionsModel).execute();
+    Response<ListAccountGroupsResponse> response = enterpriseManagementService.listAccountGroups(listAccountGroupsOptionsModel).execute();
     assertNotNull(response);
-    ListEnterprisesResponse responseObj = response.getResult();
+    ListAccountGroupsResponse responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -643,21 +644,21 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("enterprise_account_id"), "testString");
-    assertEquals(query.get("account_group_id"), "testString");
-    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("enterprise_id"), "testString");
+    assertEquals(query.get("parent_account_group_id"), "testString");
     assertEquals(query.get("next_docid"), "testString");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
+    assertEquals(query.get("parent"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listEnterprisesPath);
+    assertEquals(parsedPath, listAccountGroupsPath);
   }
 
   @Test
-  public void testGetEnterpriseWOptions() throws Throwable {
+  public void testGetAccountGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
-    String getEnterprisePath = "/enterprises/testString";
+    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"crn\": \"crn\", \"parent\": \"parent\", \"enterprise_account_id\": \"enterpriseAccountId\", \"enterprise_id\": \"enterpriseId\", \"enterprise_path\": \"enterprisePath\", \"name\": \"name\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
+    String getAccountGroupPath = "/account-groups/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -666,15 +667,15 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetEnterpriseOptions model
-    GetEnterpriseOptions getEnterpriseOptionsModel = new GetEnterpriseOptions.Builder()
-    .enterpriseId("testString")
+    // Construct an instance of the GetAccountGroupOptions model
+    GetAccountGroupOptions getAccountGroupOptionsModel = new GetAccountGroupOptions.Builder()
+    .accountGroupId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Enterprise> response = enterpriseManagementService.getEnterprise(getEnterpriseOptionsModel).execute();
+    Response<AccountGroup> response = enterpriseManagementService.getAccountGroup(getAccountGroupOptionsModel).execute();
     assertNotNull(response);
-    Enterprise responseObj = response.getResult();
+    AccountGroup responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -688,26 +689,26 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getEnterprisePath);
+    assertEquals(parsedPath, getAccountGroupPath);
   }
 
-  // Test the getEnterprise operation with null options model parameter
+  // Test the getAccountGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetEnterpriseNoOptions() throws Throwable {
+  public void testGetAccountGroupNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    enterpriseManagementService.getEnterprise(null).execute();
+    enterpriseManagementService.getAccountGroup(null).execute();
   }
 
   @Test
-  public void testUpdateEnterpriseWOptions() throws Throwable {
+  public void testUpdateAccountGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String updateEnterprisePath = "/enterprises/testString";
+    String updateAccountGroupPath = "/account-groups/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -715,16 +716,15 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the UpdateEnterpriseOptions model
-    UpdateEnterpriseOptions updateEnterpriseOptionsModel = new UpdateEnterpriseOptions.Builder()
-    .enterpriseId("testString")
+    // Construct an instance of the UpdateAccountGroupOptions model
+    UpdateAccountGroupOptions updateAccountGroupOptionsModel = new UpdateAccountGroupOptions.Builder()
+    .accountGroupId("testString")
     .name("testString")
-    .domain("testString")
     .primaryContactIamId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = enterpriseManagementService.updateEnterprise(updateEnterpriseOptionsModel).execute();
+    Response<Void> response = enterpriseManagementService.updateAccountGroup(updateAccountGroupOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -741,19 +741,19 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateEnterprisePath);
+    assertEquals(parsedPath, updateAccountGroupPath);
   }
 
-  // Test the updateEnterprise operation with null options model parameter
+  // Test the updateAccountGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateEnterpriseNoOptions() throws Throwable {
+  public void testUpdateAccountGroupNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    enterpriseManagementService.updateEnterprise(null).execute();
+    enterpriseManagementService.updateAccountGroup(null).execute();
   }
 
   /** Initialize the server */

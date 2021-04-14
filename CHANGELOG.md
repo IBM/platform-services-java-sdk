@@ -1,3 +1,10 @@
+## [0.18.6](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.5...v0.18.6) (2021-04-14)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** update service after API changes ([#96](https://github.com/IBM/platform-services-node-sdk/issues/96)) ([ec2218f](https://github.com/IBM/platform-services-node-sdk/commit/ec2218f4c4fe9d1027abadd97b71a3844be3f62f))
+
 ## [0.18.5](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.4...v0.18.5) (2021-04-13)
 
 

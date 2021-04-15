@@ -520,7 +520,8 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 ResourceAliasesList resourceAliasesListResult = response.getResult();
 
                 assertNotNull(resourceAliasesListResult);
-                assertFalse(resourceAliasesListResult.getResources().isEmpty());
+                assertEquals(resourceAliasesListResult.getRowsCount(), new Long(1));
+                assertEquals(resourceAliasesListResult.getResources().size(), 1);
 
                 if (resourceAliasesListResult.getNextUrl() == null) {
                     start = null;
@@ -712,7 +713,8 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 ResourceBindingsList resourceBindingsListResult = response.getResult();
 
                 assertNotNull(resourceBindingsListResult);
-                assertFalse(resourceBindingsListResult.getResources().isEmpty());
+                assertEquals(resourceBindingsListResult.getRowsCount(), new Long(1));
+                assertEquals(resourceBindingsListResult.getResources().size(), 1);
 
                 if (resourceBindingsListResult.getNextUrl() == null) {
                     start = null;
@@ -898,7 +900,8 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 ResourceKeysList resourceKeysListResult = response.getResult();
 
                 assertNotNull(resourceKeysListResult);
-                assertFalse(resourceKeysListResult.getResources().isEmpty());
+                assertEquals(resourceKeysListResult.getRowsCount(), new Long(1));
+                assertEquals(resourceKeysListResult.getResources().size(), 1);
 
                 if (resourceKeysListResult.getNextUrl() == null) {
                     start = null;

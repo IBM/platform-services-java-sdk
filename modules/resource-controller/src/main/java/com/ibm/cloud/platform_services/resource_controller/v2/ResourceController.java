@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-bd714324-20210408-112704
  */
 
 package com.ibm.cloud.platform_services.resource_controller.v2;
@@ -158,6 +158,9 @@ public class ResourceController extends BaseService {
     if (listResourceInstancesOptions.limit() != null) {
       builder.query("limit", String.valueOf(listResourceInstancesOptions.limit()));
     }
+    if (listResourceInstancesOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceInstancesOptions.start()));
+    }
     if (listResourceInstancesOptions.state() != null) {
       builder.query("state", String.valueOf(listResourceInstancesOptions.state()));
     }
@@ -256,9 +259,9 @@ public class ResourceController extends BaseService {
    * Delete a resource instance by ID.
    *
    * @param deleteResourceInstanceOptions the {@link DeleteResourceInstanceOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
+   * @return a {@link ServiceCall} with a result of type {@link ResourceInstance}
    */
-  public ServiceCall<Void> deleteResourceInstance(DeleteResourceInstanceOptions deleteResourceInstanceOptions) {
+  public ServiceCall<ResourceInstance> deleteResourceInstance(DeleteResourceInstanceOptions deleteResourceInstanceOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteResourceInstanceOptions,
       "deleteResourceInstanceOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -268,10 +271,12 @@ public class ResourceController extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
+    builder.header("Accept", "application/json");
     if (deleteResourceInstanceOptions.recursive() != null) {
       builder.query("recursive", String.valueOf(deleteResourceInstanceOptions.recursive()));
     }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    ResponseConverter<ResourceInstance> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceInstance>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -332,6 +337,12 @@ public class ResourceController extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listResourceAliasesForInstanceOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceAliasesForInstanceOptions.limit()));
+    }
+    if (listResourceAliasesForInstanceOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceAliasesForInstanceOptions.start()));
+    }
     ResponseConverter<ResourceAliasesList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceAliasesList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -356,6 +367,12 @@ public class ResourceController extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listResourceKeysForInstanceOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceKeysForInstanceOptions.limit()));
+    }
+    if (listResourceKeysForInstanceOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceKeysForInstanceOptions.start()));
+    }
     ResponseConverter<ResourceKeysList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceKeysList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -442,6 +459,9 @@ public class ResourceController extends BaseService {
     }
     if (listResourceKeysOptions.limit() != null) {
       builder.query("limit", String.valueOf(listResourceKeysOptions.limit()));
+    }
+    if (listResourceKeysOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceKeysOptions.start()));
     }
     if (listResourceKeysOptions.updatedFrom() != null) {
       builder.query("updated_from", String.valueOf(listResourceKeysOptions.updatedFrom()));
@@ -605,6 +625,9 @@ public class ResourceController extends BaseService {
     }
     if (listResourceBindingsOptions.limit() != null) {
       builder.query("limit", String.valueOf(listResourceBindingsOptions.limit()));
+    }
+    if (listResourceBindingsOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceBindingsOptions.start()));
     }
     if (listResourceBindingsOptions.updatedFrom() != null) {
       builder.query("updated_from", String.valueOf(listResourceBindingsOptions.updatedFrom()));
@@ -775,6 +798,9 @@ public class ResourceController extends BaseService {
     if (listResourceAliasesOptions.limit() != null) {
       builder.query("limit", String.valueOf(listResourceAliasesOptions.limit()));
     }
+    if (listResourceAliasesOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceAliasesOptions.start()));
+    }
     if (listResourceAliasesOptions.updatedFrom() != null) {
       builder.query("updated_from", String.valueOf(listResourceAliasesOptions.updatedFrom()));
     }
@@ -916,6 +942,12 @@ public class ResourceController extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listResourceBindingsForAliasOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceBindingsForAliasOptions.limit()));
+    }
+    if (listResourceBindingsForAliasOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceBindingsForAliasOptions.start()));
+    }
     ResponseConverter<ResourceBindingsList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceBindingsList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);

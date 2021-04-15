@@ -11,6 +11,6 @@
  * specific language governing permissions and limitations under the License.
  */
 /**
- * IBM Cloud Resource Controller API v2.
+ * Resource Controller v2.
  */
 package com.ibm.cloud.platform_services.resource_controller.v2;

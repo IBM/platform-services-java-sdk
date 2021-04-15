@@ -142,7 +142,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     .resourcePlanId("testString")
     .type("testString")
     .subType("testString")
-    .limit("testString")
+    .limit(Long.valueOf("100"))
+    .start("testString")
     .state("active")
     .orderDirection("asc")
     .updatedFrom("2019-01-08T00:00:00.000Z")
@@ -171,7 +172,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertEquals(query.get("resource_plan_id"), "testString");
     assertEquals(query.get("type"), "testString");
     assertEquals(query.get("sub_type"), "testString");
-    assertEquals(query.get("limit"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
+    assertEquals(query.get("start"), "testString");
     assertEquals(query.get("state"), "active");
     assertEquals(query.get("order_direction"), "asc");
     assertEquals(query.get("updated_from"), "2019-01-08T00:00:00.000Z");
@@ -196,10 +198,10 @@ public class ResourceControllerTest extends PowerMockTestCase {
 
     // Construct an instance of the CreateResourceInstanceOptions model
     CreateResourceInstanceOptions createResourceInstanceOptionsModel = new CreateResourceInstanceOptions.Builder()
-    .name("my-instance")
-    .target("bluemix-us-south")
-    .resourceGroup("5c49eabc-f5e8-5881-a37e-2d100a33b3df")
-    .resourcePlanId("cloudant-standard")
+    .name("ExampleResourceInstance")
+    .target("global")
+    .resourceGroup("13aa3ee48c3b44ddb64c05c79f7ab8ef")
+    .resourcePlanId("a10e4960-3685-11e9-b210-d663bd873d93")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .allowCleanup(true)
     .parameters(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
@@ -291,10 +293,11 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testDeleteResourceInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "";
+    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"url\": \"url\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00.000Z\", \"restored_at\": \"2019-01-01T12:00:00.000Z\", \"restored_by\": \"restoredBy\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"name\": \"name\", \"region_id\": \"regionId\", \"account_id\": \"accountId\", \"reseller_channel_id\": \"resellerChannelId\", \"resource_plan_id\": \"resourcePlanId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"allow_cleanup\": true, \"crn\": \"crn\", \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"resource_id\": \"resourceId\", \"dashboard_url\": \"dashboardUrl\", \"last_operation\": {\"mapKey\": \"anyValue\"}, \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00.000Z\", \"requestor_id\": \"requestorId\"}], \"migrated\": true, \"extensions\": {\"mapKey\": \"anyValue\"}, \"controlled_by\": \"controlledBy\", \"locked\": true}";
     String deleteResourceInstancePath = "/v2/resource_instances/testString";
 
     server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
     .setResponseCode(202)
     .setBody(mockResponseBody));
 
@@ -307,11 +310,10 @@ public class ResourceControllerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = resourceControllerService.deleteResourceInstance(deleteResourceInstanceOptionsModel).execute();
+    Response<ResourceInstance> response = resourceControllerService.deleteResourceInstance(deleteResourceInstanceOptionsModel).execute();
     assertNotNull(response);
-    Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
-    assertNull(responseObj);
+    ResourceInstance responseObj = response.getResult();
+    assertNotNull(responseObj);
 
     // Verify the contents of the request
     RecordedRequest request = server.takeRequest();
@@ -356,9 +358,9 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the UpdateResourceInstanceOptions model
     UpdateResourceInstanceOptions updateResourceInstanceOptionsModel = new UpdateResourceInstanceOptions.Builder()
     .id("testString")
-    .name("my-new-instance-name")
+    .name("UpdatedExampleResourceInstance")
     .parameters(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
-    .resourcePlanId("a8dff6d3-d287-4668-a81d-c87c55c2656d")
+    .resourcePlanId("testString")
     .allowCleanup(true)
     .build();
 
@@ -410,6 +412,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the ListResourceAliasesForInstanceOptions model
     ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptionsModel = new ListResourceAliasesForInstanceOptions.Builder()
     .id("testString")
+    .limit(Long.valueOf("100"))
+    .start("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -425,8 +429,10 @@ public class ResourceControllerTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
+    assertNotNull(query);
+    // Get query params
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
+    assertEquals(query.get("start"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listResourceAliasesForInstancePath);
@@ -460,6 +466,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the ListResourceKeysForInstanceOptions model
     ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptionsModel = new ListResourceKeysForInstanceOptions.Builder()
     .id("testString")
+    .limit(Long.valueOf("100"))
+    .start("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -475,8 +483,10 @@ public class ResourceControllerTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
+    assertNotNull(query);
+    // Get query params
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
+    assertEquals(query.get("start"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listResourceKeysForInstancePath);
@@ -613,7 +623,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     .name("testString")
     .resourceGroupId("testString")
     .resourceId("testString")
-    .limit("testString")
+    .limit(Long.valueOf("100"))
+    .start("testString")
     .updatedFrom("2019-01-08T00:00:00.000Z")
     .updatedTo("2019-01-08T00:00:00.000Z")
     .build();
@@ -637,7 +648,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertEquals(query.get("name"), "testString");
     assertEquals(query.get("resource_group_id"), "testString");
     assertEquals(query.get("resource_id"), "testString");
-    assertEquals(query.get("limit"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
+    assertEquals(query.get("start"), "testString");
     assertEquals(query.get("updated_from"), "2019-01-08T00:00:00.000Z");
     assertEquals(query.get("updated_to"), "2019-01-08T00:00:00.000Z");
     // Check request path
@@ -666,10 +678,10 @@ public class ResourceControllerTest extends PowerMockTestCase {
 
     // Construct an instance of the CreateResourceKeyOptions model
     CreateResourceKeyOptions createResourceKeyOptionsModel = new CreateResourceKeyOptions.Builder()
-    .name("my-key")
-    .source("25eba2a9-beef-450b-82cf-f5ad5e36c6dd")
+    .name("ExampleResourceKey")
+    .source("381fd51a-f251-4f95-aff4-2b03fa8caa63")
     .parameters(resourceKeyPostParametersModel)
-    .role("Writer")
+    .role("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -820,7 +832,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the UpdateResourceKeyOptions model
     UpdateResourceKeyOptions updateResourceKeyOptionsModel = new UpdateResourceKeyOptions.Builder()
     .id("testString")
-    .name("my-new-key-name")
+    .name("UpdatedExampleResourceKey")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -875,7 +887,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     .resourceGroupId("testString")
     .resourceId("testString")
     .regionBindingId("testString")
-    .limit("testString")
+    .limit(Long.valueOf("100"))
+    .start("testString")
     .updatedFrom("2019-01-08T00:00:00.000Z")
     .updatedTo("2019-01-08T00:00:00.000Z")
     .build();
@@ -900,7 +913,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertEquals(query.get("resource_group_id"), "testString");
     assertEquals(query.get("resource_id"), "testString");
     assertEquals(query.get("region_binding_id"), "testString");
-    assertEquals(query.get("limit"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
+    assertEquals(query.get("start"), "testString");
     assertEquals(query.get("updated_from"), "2019-01-08T00:00:00.000Z");
     assertEquals(query.get("updated_to"), "2019-01-08T00:00:00.000Z");
     // Check request path
@@ -929,11 +943,11 @@ public class ResourceControllerTest extends PowerMockTestCase {
 
     // Construct an instance of the CreateResourceBindingOptions model
     CreateResourceBindingOptions createResourceBindingOptionsModel = new CreateResourceBindingOptions.Builder()
-    .source("25eba2a9-beef-450b-82cf-f5ad5e36c6dd")
-    .target("crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c")
-    .name("my-binding")
+    .source("faaec9d8-ec64-44d8-ab83-868632fac6a2")
+    .target("crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205")
+    .name("ExampleResourceBinding")
     .parameters(resourceBindingPostParametersModel)
-    .role("Writer")
+    .role("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -1084,7 +1098,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the UpdateResourceBindingOptions model
     UpdateResourceBindingOptions updateResourceBindingOptionsModel = new UpdateResourceBindingOptions.Builder()
     .id("testString")
-    .name("my-new-binding-name")
+    .name("UpdatedExampleResourceBinding")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -1140,7 +1154,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     .regionInstanceId("testString")
     .resourceId("testString")
     .resourceGroupId("testString")
-    .limit("testString")
+    .limit(Long.valueOf("100"))
+    .start("testString")
     .updatedFrom("2019-01-08T00:00:00.000Z")
     .updatedTo("2019-01-08T00:00:00.000Z")
     .build();
@@ -1166,7 +1181,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertEquals(query.get("region_instance_id"), "testString");
     assertEquals(query.get("resource_id"), "testString");
     assertEquals(query.get("resource_group_id"), "testString");
-    assertEquals(query.get("limit"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
+    assertEquals(query.get("start"), "testString");
     assertEquals(query.get("updated_from"), "2019-01-08T00:00:00.000Z");
     assertEquals(query.get("updated_to"), "2019-01-08T00:00:00.000Z");
     // Check request path
@@ -1189,9 +1205,9 @@ public class ResourceControllerTest extends PowerMockTestCase {
 
     // Construct an instance of the CreateResourceAliasOptions model
     CreateResourceAliasOptions createResourceAliasOptionsModel = new CreateResourceAliasOptions.Builder()
-    .name("my-alias")
-    .source("a8dff6d3-d287-4668-a81d-c87c55c2656d")
-    .target("crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5")
+    .name("ExampleResourceAlias")
+    .source("381fd51a-f251-4f95-aff4-2b03fa8caa63")
+    .target("crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -1342,7 +1358,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the UpdateResourceAliasOptions model
     UpdateResourceAliasOptions updateResourceAliasOptionsModel = new UpdateResourceAliasOptions.Builder()
     .id("testString")
-    .name("my-new-alias-name")
+    .name("UpdatedExampleResourceAlias")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -1393,6 +1409,8 @@ public class ResourceControllerTest extends PowerMockTestCase {
     // Construct an instance of the ListResourceBindingsForAliasOptions model
     ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptionsModel = new ListResourceBindingsForAliasOptions.Builder()
     .id("testString")
+    .limit(Long.valueOf("100"))
+    .start("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -1408,8 +1426,10 @@ public class ResourceControllerTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
+    assertNotNull(query);
+    // Get query params
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
+    assertEquals(query.get("start"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listResourceBindingsForAliasPath);

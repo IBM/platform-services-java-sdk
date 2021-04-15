@@ -48,7 +48,8 @@ public class ListResourceInstancesOptions extends GenericModel {
   protected String resourcePlanId;
   protected String type;
   protected String subType;
-  protected String limit;
+  protected Long limit;
+  protected String start;
   protected String state;
   protected String orderDirection;
   protected String updatedFrom;
@@ -65,7 +66,8 @@ public class ListResourceInstancesOptions extends GenericModel {
     private String resourcePlanId;
     private String type;
     private String subType;
-    private String limit;
+    private Long limit;
+    private String start;
     private String state;
     private String orderDirection;
     private String updatedFrom;
@@ -80,6 +82,7 @@ public class ListResourceInstancesOptions extends GenericModel {
       this.type = listResourceInstancesOptions.type;
       this.subType = listResourceInstancesOptions.subType;
       this.limit = listResourceInstancesOptions.limit;
+      this.start = listResourceInstancesOptions.start;
       this.state = listResourceInstancesOptions.state;
       this.orderDirection = listResourceInstancesOptions.orderDirection;
       this.updatedFrom = listResourceInstancesOptions.updatedFrom;
@@ -184,8 +187,19 @@ public class ListResourceInstancesOptions extends GenericModel {
      * @param limit the limit
      * @return the ListResourceInstancesOptions builder
      */
-    public Builder limit(String limit) {
+    public Builder limit(long limit) {
       this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListResourceInstancesOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
       return this;
     }
 
@@ -243,6 +257,7 @@ public class ListResourceInstancesOptions extends GenericModel {
     type = builder.type;
     subType = builder.subType;
     limit = builder.limit;
+    start = builder.start;
     state = builder.state;
     orderDirection = builder.orderDirection;
     updatedFrom = builder.updatedFrom;
@@ -344,8 +359,21 @@ public class ListResourceInstancesOptions extends GenericModel {
    *
    * @return the limit
    */
-  public String limit() {
+  public Long limit() {
     return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * An optional token that indicates the beginning of the page of results to be returned. Any additional query
+   * parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value is
+   * obtained from the 'next_url' field of the operation response.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 
   /**

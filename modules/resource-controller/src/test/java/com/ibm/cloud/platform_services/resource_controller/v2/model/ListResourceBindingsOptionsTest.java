@@ -37,7 +37,8 @@ public class ListResourceBindingsOptionsTest {
       .resourceGroupId("testString")
       .resourceId("testString")
       .regionBindingId("testString")
-      .limit("testString")
+      .limit(Long.valueOf("100"))
+      .start("testString")
       .updatedFrom("2019-01-08T00:00:00.000Z")
       .updatedTo("2019-01-08T00:00:00.000Z")
       .build();
@@ -46,7 +47,8 @@ public class ListResourceBindingsOptionsTest {
     assertEquals(listResourceBindingsOptionsModel.resourceGroupId(), "testString");
     assertEquals(listResourceBindingsOptionsModel.resourceId(), "testString");
     assertEquals(listResourceBindingsOptionsModel.regionBindingId(), "testString");
-    assertEquals(listResourceBindingsOptionsModel.limit(), "testString");
+    assertEquals(listResourceBindingsOptionsModel.limit(), Long.valueOf("100"));
+    assertEquals(listResourceBindingsOptionsModel.start(), "testString");
     assertEquals(listResourceBindingsOptionsModel.updatedFrom(), "2019-01-08T00:00:00.000Z");
     assertEquals(listResourceBindingsOptionsModel.updatedTo(), "2019-01-08T00:00:00.000Z");
   }

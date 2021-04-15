@@ -38,7 +38,8 @@ public class ListResourceAliasesOptionsTest {
       .regionInstanceId("testString")
       .resourceId("testString")
       .resourceGroupId("testString")
-      .limit("testString")
+      .limit(Long.valueOf("100"))
+      .start("testString")
       .updatedFrom("2019-01-08T00:00:00.000Z")
       .updatedTo("2019-01-08T00:00:00.000Z")
       .build();
@@ -48,7 +49,8 @@ public class ListResourceAliasesOptionsTest {
     assertEquals(listResourceAliasesOptionsModel.regionInstanceId(), "testString");
     assertEquals(listResourceAliasesOptionsModel.resourceId(), "testString");
     assertEquals(listResourceAliasesOptionsModel.resourceGroupId(), "testString");
-    assertEquals(listResourceAliasesOptionsModel.limit(), "testString");
+    assertEquals(listResourceAliasesOptionsModel.limit(), Long.valueOf("100"));
+    assertEquals(listResourceAliasesOptionsModel.start(), "testString");
     assertEquals(listResourceAliasesOptionsModel.updatedFrom(), "2019-01-08T00:00:00.000Z");
     assertEquals(listResourceAliasesOptionsModel.updatedTo(), "2019-01-08T00:00:00.000Z");
   }

@@ -75,7 +75,10 @@ public class UsageReportsExamples {
     billingMonth = config.get("BILLING_MONTH");
 
     try {
+      System.out.println("getAccountSummary() result:");
+
       // begin-get_account_summary
+
       GetAccountSummaryOptions getAccountSummaryOptions = new GetAccountSummaryOptions.Builder()
         .accountId(accountId)
         .billingmonth(billingMonth)
@@ -84,15 +87,20 @@ public class UsageReportsExamples {
       Response<AccountSummary> response = service.getAccountSummary(getAccountSummaryOptions).execute();
       AccountSummary accountSummary = response.getResult();
 
-      System.out.printf("getAccountSummary() result:%n%s%n", accountSummary.toString());
+      System.out.println(accountSummary);
+
       // end-get_account_summary
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getAccountUsage() result:");
+
       // begin-get_account_usage
+
       GetAccountUsageOptions getAccountUsageOptions = new GetAccountUsageOptions.Builder()
         .accountId(accountId)
         .billingmonth(billingMonth)
@@ -101,15 +109,20 @@ public class UsageReportsExamples {
       Response<AccountUsage> response = service.getAccountUsage(getAccountUsageOptions).execute();
       AccountUsage accountUsage = response.getResult();
 
-      System.out.printf("getAccountUsage() result:%n%s%n", accountUsage.toString());
+      System.out.println(accountUsage);
+
       // end-get_account_usage
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getResourceGroupUsage() result:");
+
       // begin-get_resource_group_usage
+
       GetResourceGroupUsageOptions getResourceGroupUsageOptions = new GetResourceGroupUsageOptions.Builder()
         .accountId(accountId)
         .resourceGroupId(resourceGroupId)
@@ -119,15 +132,20 @@ public class UsageReportsExamples {
       Response<ResourceGroupUsage> response = service.getResourceGroupUsage(getResourceGroupUsageOptions).execute();
       ResourceGroupUsage resourceGroupUsage = response.getResult();
 
-      System.out.printf("getResourceGroupUsage() result:%n%s%n", resourceGroupUsage.toString());
+      System.out.println(resourceGroupUsage);
+
       // end-get_resource_group_usage
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getOrgUsage() result:");
+
       // begin-get_org_usage
+
       GetOrgUsageOptions getOrgUsageOptions = new GetOrgUsageOptions.Builder()
         .accountId(accountId)
         .organizationId(orgId)
@@ -137,15 +155,20 @@ public class UsageReportsExamples {
       Response<OrgUsage> response = service.getOrgUsage(getOrgUsageOptions).execute();
       OrgUsage orgUsage = response.getResult();
 
-      System.out.printf("getOrgUsage() result:%n%s%n", orgUsage.toString());
+      System.out.println(orgUsage);
+
       // end-get_org_usage
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getResourceUsageAccount() result:");
+
       // begin-get_resource_usage_account
+
       GetResourceUsageAccountOptions getResourceUsageAccountOptions = new GetResourceUsageAccountOptions.Builder()
         .accountId(accountId)
         .billingmonth(billingMonth)
@@ -154,15 +177,20 @@ public class UsageReportsExamples {
       Response<InstancesUsage> response = service.getResourceUsageAccount(getResourceUsageAccountOptions).execute();
       InstancesUsage instancesUsage = response.getResult();
 
-      System.out.printf("getResourceUsageAccount() result:%n%s%n", instancesUsage.toString());
+      System.out.println(instancesUsage);
+
       // end-get_resource_usage_account
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getResourceUsageResourceGroup() result:");
+
       // begin-get_resource_usage_resource_group
+
       GetResourceUsageResourceGroupOptions getResourceUsageResourceGroupOptions = new GetResourceUsageResourceGroupOptions.Builder()
         .accountId(accountId)
         .resourceGroupId(resourceGroupId)
@@ -172,15 +200,20 @@ public class UsageReportsExamples {
       Response<InstancesUsage> response = service.getResourceUsageResourceGroup(getResourceUsageResourceGroupOptions).execute();
       InstancesUsage instancesUsage = response.getResult();
 
-      System.out.printf("getResourceUsageResourceGroup() result:%n%s%n", instancesUsage.toString());
+      System.out.println(instancesUsage);
+
       // end-get_resource_usage_resource_group
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getResourceUsageOrg() result:");
+
       // begin-get_resource_usage_org
+
       GetResourceUsageOrgOptions getResourceUsageOrgOptions = new GetResourceUsageOrgOptions.Builder()
         .accountId(accountId)
         .organizationId(orgId)
@@ -190,8 +223,10 @@ public class UsageReportsExamples {
       Response<InstancesUsage> response = service.getResourceUsageOrg(getResourceUsageOrgOptions).execute();
       InstancesUsage instancesUsage = response.getResult();
 
-      System.out.printf("getResourceUsageOrg() result:%n%s%n", instancesUsage.toString());
+      System.out.println(instancesUsage);
+
       // end-get_resource_usage_org
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

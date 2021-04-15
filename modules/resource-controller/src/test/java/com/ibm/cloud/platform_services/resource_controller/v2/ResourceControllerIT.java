@@ -1,5 +1,6 @@
 package com.ibm.cloud.platform_services.resource_controller.v2;
 
+import static org.junit.Assert.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
@@ -72,6 +73,7 @@ import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.UrlHelper;
 
 /**
  * Integration test class for the ResourceController service.
@@ -95,6 +97,8 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     private static final Map<String, String> aliasNames = new HashMap<String, String>();
     private static final Map<String, String> bindingNames = new HashMap<String, String>();
     private static final Map<String, String> keyNames = new HashMap<String, String>();
+
+    private static final Integer resultsPerPage = 200;
 
     ResourceController service = null;
     String transactionId = null;
@@ -274,17 +278,30 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
     @Test
     public void test03ListResourceInstancesWithNoFilter() {
-        ListResourceInstancesOptions options = new ListResourceInstancesOptions.Builder().build();
+        String start = null;
 
-        Response<ResourceInstancesList> response = service.listResourceInstances(options)
-            .addHeader("Transaction-Id", "rc-sdk-java-test03-" + transactionId)
-            .execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
+        do {
+            ListResourceInstancesOptions options = new ListResourceInstancesOptions.Builder()
+                .limit(resultsPerPage)
+                .start(start)
+                .build();
 
-        ResourceInstancesList result = response.getResult();
-        assertNotEquals(result.getResources().size(), 0);
-        assertNotEquals(result.getRowsCount(), 0);
+            Response<ResourceInstancesList> response = service.listResourceInstances(options)
+                .addHeader("Transaction-Id", "rc-sdk-java-test03-" + transactionId)
+                .execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ResourceInstancesList result = response.getResult();
+            assertTrue(result.getResources().size() > 0 && result.getResources().size() <= resultsPerPage);
+            assertTrue(result.getRowsCount() > 0 && result.getRowsCount() <= resultsPerPage);
+
+            if (result.getNextUrl() == null) {
+                start = null;
+            }
+
+            start = UrlHelper.getQueryParam(result.getNextUrl(), "start");
+        } while (start != null);
     }
 
     @Test
@@ -410,17 +427,30 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
     @Test
     public void test09ListResourceAliasesWithNoFilter() {
-        ListResourceAliasesOptions options = new ListResourceAliasesOptions.Builder().build();
+        String start = null;
 
-        Response<ResourceAliasesList> response = service.listResourceAliases(options)
-            .addHeader("Transaction-Id", "rc-sdk-java-test09-" + transactionId)
-            .execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
+        do {
+            ListResourceAliasesOptions options = new ListResourceAliasesOptions.Builder()
+                .limit(resultsPerPage)
+                .start(start)
+                .build();
 
-        ResourceAliasesList result = response.getResult();
-        assertNotEquals(result.getResources().size(), 0);
-        assertNotEquals(result.getRowsCount(), 0);
+            Response<ResourceAliasesList> response = service.listResourceAliases(options)
+                .addHeader("Transaction-Id", "rc-sdk-java-test09-" + transactionId)
+                .execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ResourceAliasesList result = response.getResult();
+            assertTrue(result.getResources().size() > 0 && result.getResources().size() <= resultsPerPage);
+            assertTrue(result.getRowsCount() > 0 && result.getRowsCount() <= resultsPerPage);
+
+            if (result.getNextUrl() == null) {
+                start = null;
+            }
+
+            start = UrlHelper.getQueryParam(result.getNextUrl(), "start");
+        } while (start != null);
     }
 
     @Test
@@ -469,27 +499,39 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
     @Test
     public void test11aListResourceAliasesForInstance() throws Exception {
-      try {
-        assertNotNull(testInstanceGuid);
+        try {
+            assertNotNull(testInstanceGuid);
 
-        ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptions = new ListResourceAliasesForInstanceOptions.Builder()
-        .id(testInstanceGuid)
-        .build();
+            String start = null;
 
-        // Invoke operation
-        Response<ResourceAliasesList> response = service.listResourceAliasesForInstance(listResourceAliasesForInstanceOptions).execute();
-        // Validate response
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
+            do {
+                ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptions = new ListResourceAliasesForInstanceOptions.Builder()
+                    .id(testInstanceGuid)
+                    .limit(resultsPerPage)
+                    .start(start)
+                    .build();
 
-        ResourceAliasesList resourceAliasesListResult = response.getResult();
+                // Invoke operation
+                Response<ResourceAliasesList> response = service.listResourceAliasesForInstance(listResourceAliasesForInstanceOptions).execute();
+                // Validate response
+                assertNotNull(response);
+                assertEquals(response.getStatusCode(), 200);
 
-        assertNotNull(resourceAliasesListResult);
-        assertFalse(resourceAliasesListResult.getResources().isEmpty());
-      } catch (ServiceResponseException e) {
-          fail(String.format("Service returned status code %d: %s\nError details: %s",
-            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-      }
+                ResourceAliasesList resourceAliasesListResult = response.getResult();
+
+                assertNotNull(resourceAliasesListResult);
+                assertFalse(resourceAliasesListResult.getResources().isEmpty());
+
+                if (resourceAliasesListResult.getNextUrl() == null) {
+                    start = null;
+                }
+
+                start = UrlHelper.getQueryParam(resourceAliasesListResult.getNextUrl(), "start");
+            } while (start != null);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
 
     @Test
@@ -577,17 +619,30 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
     @Test
     public void test15ListResourceBindingsWithNoFilter() {
-        ListResourceBindingsOptions options = new ListResourceBindingsOptions.Builder().build();
+        String start = null;
 
-        Response<ResourceBindingsList> response = service.listResourceBindings(options)
-            .addHeader("Transaction-Id", "rc-sdk-java-test15-" + transactionId)
-            .execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
+        do {
+            ListResourceBindingsOptions options = new ListResourceBindingsOptions.Builder()
+                .limit(resultsPerPage)
+                .start(start)
+                .build();
 
-        ResourceBindingsList result = response.getResult();
-        assertNotEquals(result.getResources().size(), 0);
-        assertNotEquals(result.getRowsCount(), 0);
+            Response<ResourceBindingsList> response = service.listResourceBindings(options)
+                .addHeader("Transaction-Id", "rc-sdk-java-test15-" + transactionId)
+                .execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ResourceBindingsList result = response.getResult();
+            assertTrue(result.getResources().size() > 0 && result.getResources().size() <= resultsPerPage);
+            assertTrue(result.getRowsCount() > 0 && result.getRowsCount() <= resultsPerPage);
+
+            if (result.getNextUrl() == null) {
+                start = null;
+            }
+
+            start = UrlHelper.getQueryParam(result.getNextUrl(), "start");
+        } while (start != null);
     }
 
     @Test
@@ -636,25 +691,39 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
     @Test
     public void test17aListResourceBindingsForAlias() throws Exception {
-      try {
-        ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptions = new ListResourceBindingsForAliasOptions.Builder()
-        .id(testAliasGuid)
-        .build();
+        try {
+            assertNotNull(testAliasGuid);
 
-        // Invoke operation
-        Response<ResourceBindingsList> response = service.listResourceBindingsForAlias(listResourceBindingsForAliasOptions).execute();
-        // Validate response
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
+            String start = null;
 
-        ResourceBindingsList resourceBindingsListResult = response.getResult();
+            do {
+                ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptions = new ListResourceBindingsForAliasOptions.Builder()
+                    .id(testAliasGuid)
+                    .limit(resultsPerPage)
+                    .start(start)
+                    .build();
 
-        assertNotNull(resourceBindingsListResult);
-        assertFalse(resourceBindingsListResult.getResources().isEmpty());
-      } catch (ServiceResponseException e) {
-          fail(String.format("Service returned status code %d: %s\nError details: %s",
-            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-      }
+                // Invoke operation
+                Response<ResourceBindingsList> response = service.listResourceBindingsForAlias(listResourceBindingsForAliasOptions).execute();
+                // Validate response
+                assertNotNull(response);
+                assertEquals(response.getStatusCode(), 200);
+
+                ResourceBindingsList resourceBindingsListResult = response.getResult();
+
+                assertNotNull(resourceBindingsListResult);
+                assertFalse(resourceBindingsListResult.getResources().isEmpty());
+
+                if (resourceBindingsListResult.getNextUrl() == null) {
+                    start = null;
+                }
+
+                start = UrlHelper.getQueryParam(resourceBindingsListResult.getNextUrl(), "start");
+            } while (start != null);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
 
     @Test
@@ -737,17 +806,30 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
     @Test
     public void test21ListResourceKeysWithNoFilter() {
-        ListResourceKeysOptions options = new ListResourceKeysOptions.Builder().build();
+          String start = null;
 
-        Response<ResourceKeysList> response = service.listResourceKeys(options)
-            .addHeader("Transaction-Id", "rc-sdk-java-test21-" + transactionId)
-            .execute();
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
+        do {
+            ListResourceKeysOptions options = new ListResourceKeysOptions.Builder()
+                .limit(resultsPerPage)
+                .start(start)
+                .build();
 
-        ResourceKeysList result = response.getResult();
-        assertNotEquals(result.getResources().size(), 0);
-        assertNotEquals(result.getRowsCount(), 0);
+            Response<ResourceKeysList> response = service.listResourceKeys(options)
+                .addHeader("Transaction-Id", "rc-sdk-java-test21-" + transactionId)
+                .execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ResourceKeysList result = response.getResult();
+            assertTrue(result.getResources().size() > 0 && result.getResources().size() <= resultsPerPage);
+            assertTrue(result.getRowsCount() > 0 && result.getRowsCount() <= resultsPerPage);
+
+            if (result.getNextUrl() == null) {
+                start = null;
+            }
+
+            start = UrlHelper.getQueryParam(result.getNextUrl(), "start");
+        } while (start != null);
     }
 
     @Test
@@ -795,25 +877,40 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
     @Test
     public void test23aListResourceKeysForInstance() throws Exception {
-      try {
-        ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptions = new ListResourceKeysForInstanceOptions.Builder()
-        .id(testInstanceGuid)
-        .build();
+        try {
+            assertNotNull(testInstanceGuid);
 
-        // Invoke operation
-        Response<ResourceKeysList> response = service.listResourceKeysForInstance(listResourceKeysForInstanceOptions).execute();
-        // Validate response
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
+            String start = null;
 
-        ResourceKeysList resourceKeysListResult = response.getResult();
+            do {
+                ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptions = new ListResourceKeysForInstanceOptions.Builder()
+                    .id(testInstanceGuid)
+                    .limit(resultsPerPage)
+                    .start(start)
+                    .build();
 
-        assertNotNull(resourceKeysListResult);
-        assertFalse(resourceKeysListResult.getResources().isEmpty());
-      } catch (ServiceResponseException e) {
-          fail(String.format("Service returned status code %d: %s\nError details: %s",
-            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-      }
+                // Invoke operation
+                Response<ResourceKeysList> response = service.listResourceKeysForInstance(listResourceKeysForInstanceOptions).execute();
+                // Validate response
+                assertNotNull(response);
+                assertEquals(response.getStatusCode(), 200);
+
+                ResourceKeysList resourceKeysListResult = response.getResult();
+
+                assertNotNull(resourceKeysListResult);
+                assertFalse(resourceKeysListResult.getResources().isEmpty());
+
+                if (resourceKeysListResult.getNextUrl() == null) {
+                    start = null;
+                }
+
+                start = UrlHelper.getQueryParam(resourceKeysListResult.getNextUrl(), "start");
+            } while (start != null);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
     }
 
     @Test
@@ -1174,7 +1271,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .recursive(false)
                 .build();
 
-        Response<Void> response = service.deleteResourceInstance(options)
+        Response<ResourceInstance> response = service.deleteResourceInstance(options)
             .addHeader("Transaction-Id", "rc-sdk-java-test42-" + transactionId)
             .execute();
         assertNotNull(response);
@@ -1242,7 +1339,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             .id(testReclaimInstanceGuid)
             .build();
 
-        Response<Void> response = service.deleteResourceInstance(options)
+        Response<ResourceInstance> response = service.deleteResourceInstance(options)
             .addHeader("Transaction-Id", "rc-sdk-java-test45-" + transactionId)
             .execute();
         assertNotNull(response);
@@ -1368,7 +1465,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             .id(testReclaimInstanceGuid)
             .build();
 
-        Response<Void> response = service.deleteResourceInstance(options)
+        Response<ResourceInstance> response = service.deleteResourceInstance(options)
             .addHeader("Transaction-Id", "rc-sdk-java-test50-" + transactionId)
             .execute();
         assertNotNull(response);

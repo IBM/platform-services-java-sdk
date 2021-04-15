@@ -64,7 +64,10 @@ public class EnterpriseBillingUnitsExamples {
     billingUnitId = config.get("BILLING_UNIT_ID");
 
     try {
+      System.out.println("getBillingUnit() result:");
+
       // begin-get_billing_unit
+
       GetBillingUnitOptions getBillingUnitOptions = new GetBillingUnitOptions.Builder()
         .billingUnitId(billingUnitId)
         .build();
@@ -72,15 +75,20 @@ public class EnterpriseBillingUnitsExamples {
       Response<BillingUnit> response = service.getBillingUnit(getBillingUnitOptions).execute();
       BillingUnit billingUnit = response.getResult();
 
-      System.out.printf("getBillingUnit() result:%n%s%n", billingUnit.toString());
+      System.out.println(billingUnit);
+
       // end-get_billing_unit
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("listBillingUnits() result:");
+
       // begin-list_billing_units
+
       ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
         .enterpriseId(enterpriseId)
         .build();
@@ -88,15 +96,20 @@ public class EnterpriseBillingUnitsExamples {
       Response<BillingUnitsList> response = service.listBillingUnits(listBillingUnitsOptions).execute();
       BillingUnitsList billingUnitsList = response.getResult();
 
-      System.out.printf("listBillingUnits() result:%n%s%n", billingUnitsList.toString());
+      System.out.println(billingUnitsList);
+
       // end-list_billing_units
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("listBillingOptions() result:");
+
       // begin-list_billing_options
+
       ListBillingOptionsOptions listBillingOptionsOptions = new ListBillingOptionsOptions.Builder()
         .billingUnitId(billingUnitId)
         .build();
@@ -104,15 +117,20 @@ public class EnterpriseBillingUnitsExamples {
       Response<BillingOptionsList> response = service.listBillingOptions(listBillingOptionsOptions).execute();
       BillingOptionsList billingOptionsList = response.getResult();
 
-      System.out.printf("listBillingOptions() result:%n%s%n", billingOptionsList.toString());
+      System.out.println(billingOptionsList);
+
       // end-list_billing_options
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getCreditPools() result:");
+
       // begin-get_credit_pools
+
       GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
         .billingUnitId(billingUnitId)
         .build();
@@ -120,8 +138,10 @@ public class EnterpriseBillingUnitsExamples {
       Response<CreditPoolsList> response = service.getCreditPools(getCreditPoolsOptions).execute();
       CreditPoolsList creditPoolsList = response.getResult();
 
-      System.out.printf("getCreditPools() result:%n%s%n", creditPoolsList.toString());
+      System.out.println(creditPoolsList);
+
       // end-get_credit_pools
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

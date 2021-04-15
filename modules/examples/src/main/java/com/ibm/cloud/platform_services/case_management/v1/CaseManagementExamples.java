@@ -85,7 +85,10 @@ public class CaseManagementExamples {
     resourceCrn = config.get("RESOURCE_CRN");
 
     try {
+      System.out.println("createCase() result:");
+
       // begin-createCase
+
       OfferingType offeringType = new OfferingType.Builder()
         .group(OfferingType.Group.CRN_SERVICE_NAME)
         .key("cloud-object-storage")
@@ -105,7 +108,8 @@ public class CaseManagementExamples {
       Response<Case> response = service.createCase(createCaseOptions).execute();
       Case xCase = response.getResult();
 
-      System.out.printf("createCase() result:%n%s%n", xCase.toString());
+      System.out.println(xCase);
+
       // end-createCase
 
       caseNumber = xCase.getNumber();
@@ -115,7 +119,10 @@ public class CaseManagementExamples {
     }
 
     try {
+      System.out.println("getCase() result:");
+
       // begin-getCase
+
       GetCaseOptions getCaseOptions = new GetCaseOptions.Builder()
         .caseNumber(caseNumber)
         .addFields(GetCaseOptions.Fields.DESCRIPTION)
@@ -127,15 +134,20 @@ public class CaseManagementExamples {
       Response<Case> response = service.getCase(getCaseOptions).execute();
       Case xCase = response.getResult();
 
-      System.out.printf("getCase() result:%n%s%n", xCase.toString());
+      System.out.println(xCase);
+
       // end-getCase
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getCases() result:");
+
       // begin-getCases
+
       GetCasesOptions getCasesOptions = new GetCasesOptions.Builder()
         .offset(0)
         .limit(100)
@@ -146,15 +158,20 @@ public class CaseManagementExamples {
       Response<CaseList> response = service.getCases(getCasesOptions).execute();
       CaseList caseList = response.getResult();
 
-      System.out.printf("getCases() result:%n%s%n", caseList.toString());
+      System.out.println(caseList);
+
       // end-getCases
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("addComment() result:");
+
       // begin-addComment
+
       AddCommentOptions addCommentOptions = new AddCommentOptions.Builder()
         .caseNumber(caseNumber)
         .comment("This is an example comment.")
@@ -163,15 +180,20 @@ public class CaseManagementExamples {
       Response<Comment> response = service.addComment(addCommentOptions).execute();
       Comment comment = response.getResult();
 
-      System.out.printf("addComment() result:%n%s%n", comment.toString());
+      System.out.println(comment);
+
       // end-addComment
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("addWatchlist() result:");
+
       // begin-addWatchlist
+
       User watchlistUser = new User.Builder().realm("IBMid").userId("abc@ibm.com").build();
       AddWatchlistOptions addWatchlistOptions = new AddWatchlistOptions.Builder()
         .caseNumber(caseNumber)
@@ -181,15 +203,20 @@ public class CaseManagementExamples {
       Response<WatchlistAddResponse> response = service.addWatchlist(addWatchlistOptions).execute();
       WatchlistAddResponse watchlistAddResponse = response.getResult();
 
-      System.out.printf("addWatchlist() result:%n%s%n", watchlistAddResponse.toString());
+      System.out.println(watchlistAddResponse);
+
       // end-addWatchlist
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("removeWatchlist() result:");
+
       // begin-removeWatchlist
+
       User watchlistUser = new User.Builder().realm("IBMid").userId("abc@ibm.com").build();
       RemoveWatchlistOptions removeWatchlistOptions = new RemoveWatchlistOptions.Builder()
         .caseNumber(caseNumber)
@@ -199,15 +226,20 @@ public class CaseManagementExamples {
       Response<Watchlist> response = service.removeWatchlist(removeWatchlistOptions).execute();
       Watchlist watchlist = response.getResult();
 
-      System.out.printf("removeWatchlist() result:%n%s%n", watchlist.toString());
+      System.out.println(watchlist);
+
       // end-removeWatchlist
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("addResource() result:");
+
       // begin-addResource
+
       AddResourceOptions addResourceOptions = new AddResourceOptions.Builder()
         .caseNumber(caseNumber)
         .crn(resourceCrn)
@@ -217,15 +249,20 @@ public class CaseManagementExamples {
       Response<Resource> response = service.addResource(addResourceOptions).execute();
       Resource resource = response.getResult();
 
-      System.out.printf("addResource() result:%n%s%n", resource.toString());
+      System.out.println(resource);
+
       // end-addResource
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("uploadFile() result:");
+
       // begin-uploadFile
+
       String fileContent = "This is the content of the file to upload.";
       FileWithMetadata fileWithMetadata = new FileWithMetadata.Builder()
           .filename("example.log")
@@ -241,7 +278,8 @@ public class CaseManagementExamples {
       Response<Attachment> response = service.uploadFile(uploadFileOptions).execute();
       Attachment attachment = response.getResult();
 
-      System.out.printf("uploadFile() result:%n%s%n", attachment.toString());
+      System.out.println(attachment);
+
       // end-uploadFile
 
       attachmentId = attachment.getId();
@@ -251,7 +289,10 @@ public class CaseManagementExamples {
     }
 
     try {
+      System.out.println("downloadFile() result:");
+
       // begin-downloadFile
+
       DownloadFileOptions downloadFileOptions = new DownloadFileOptions.Builder()
         .caseNumber(caseNumber)
         .fileId(attachmentId)
@@ -261,19 +302,21 @@ public class CaseManagementExamples {
       InputStream inputStream = response.getResult();
       if (inputStream != null) {
         String attachmentContents = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        System.out.println("downloadFile() result:");
-        System.out.printf("Attachment content-type: %s",
-                response.getHeaders().values("Content-Type"));
-        System.out.printf("Attachment contents: %s", attachmentContents);
+        System.out.println(attachmentContents);
       }
+
       // end-downloadFile
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("deleteFile() result:");
+
       // begin-deleteFile
+
       DeleteFileOptions deleteFileOptions = new DeleteFileOptions.Builder()
         .caseNumber(caseNumber)
         .fileId(attachmentId)
@@ -282,15 +325,20 @@ public class CaseManagementExamples {
       Response<AttachmentList> response = service.deleteFile(deleteFileOptions).execute();
       AttachmentList attachmentList = response.getResult();
 
-      System.out.printf("deleteFile() result:%n%s%n", attachmentList.toString());
+      System.out.println(attachmentList);
+
       // end-deleteFile
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("updateCaseStatus() result:");
+
       // begin-updateCaseStatus
+
       ResolvePayload statusPayloadModel = new ResolvePayload.Builder()
         .action("resolve")
         .comment("The problem has been resolved.")
@@ -304,8 +352,10 @@ public class CaseManagementExamples {
       Response<Case> response = service.updateCaseStatus(updateCaseStatusOptions).execute();
       Case xCase = response.getResult();
 
-      System.out.printf("updateCaseStatus() result:%n%s%n", xCase.toString());
+      System.out.println(xCase);
+
       // end-updateCaseStatus
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

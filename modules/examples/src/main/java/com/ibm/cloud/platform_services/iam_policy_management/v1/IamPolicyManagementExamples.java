@@ -85,6 +85,8 @@ public class IamPolicyManagementExamples {
     exampleAccountId = config.get("TEST_ACCOUNT_ID");
 
     try {
+      System.out.println("createPolicy() result:");
+
       // begin-create_policy
 
       SubjectAttribute subjectAttribute = new SubjectAttribute.Builder()
@@ -134,7 +136,7 @@ public class IamPolicyManagementExamples {
       Response<Policy> response = service.createPolicy(options).execute();
       Policy policy = response.getResult();
 
-      System.out.printf("createPolicy() result:%n%s%n", policy.toString());
+      System.out.println(policy);
 
       // end-create_policy
 
@@ -145,6 +147,8 @@ public class IamPolicyManagementExamples {
     }
 
     try {
+      System.out.println("getPolicy() result:");
+
       // begin-get_policy
 
       GetPolicyOptions options = new GetPolicyOptions.Builder()
@@ -154,7 +158,7 @@ public class IamPolicyManagementExamples {
       Response<Policy> response = service.getPolicy(options).execute();
       Policy policy = response.getResult();
 
-      System.out.printf("getPolicy() result:%n%s%n", policy.toString());
+      System.out.println(policy);
 
       // end-get_policy
 
@@ -165,6 +169,8 @@ public class IamPolicyManagementExamples {
     }
 
     try {
+      System.out.println("updatePolicy() result:");
+
       // begin-update_policy
 
       SubjectAttribute subjectAttribute = new SubjectAttribute.Builder()
@@ -216,7 +222,7 @@ public class IamPolicyManagementExamples {
       Response<Policy> response = service.updatePolicy(options).execute();
       Policy policy = response.getResult();
 
-      System.out.printf("updatePolicy() result:%n%s%n", policy.toString());
+      System.out.println(policy);
 
       // end-update_policy
 
@@ -227,6 +233,8 @@ public class IamPolicyManagementExamples {
     }
 
     try {
+      System.out.println("patchPolicy() result:");
+
       // begin-patch_policy
 
       PatchPolicyOptions patchPolicyOptions = new PatchPolicyOptions.Builder()
@@ -239,13 +247,17 @@ public class IamPolicyManagementExamples {
       Policy policy = response.getResult();
 
       System.out.println(policy);
+
       // end-patch_policy
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("listPolicies() result:");
+
       // begin-list_policies
 
       ListPoliciesOptions options = new ListPoliciesOptions.Builder()
@@ -257,9 +269,10 @@ public class IamPolicyManagementExamples {
       Response<PolicyList> response = service.listPolicies(options).execute();
       PolicyList policyList = response.getResult();
 
-      System.out.printf("listPolicies() result:%n%s%n", policyList.toString());
+      System.out.println(policyList);
 
       // end-list_policies
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -273,14 +286,18 @@ public class IamPolicyManagementExamples {
               .build();
 
       Response<Void> response = service.deletePolicy(options).execute();
-      System.out.printf("deletePolicy() response status code: %d%n", response.getStatusCode());
+
       // end-delete_policy
+
+      System.out.printf("deletePolicy() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("createRole() result:");
+
       // begin-create_role
 
       CreateRoleOptions options = new CreateRoleOptions.Builder()
@@ -294,7 +311,7 @@ public class IamPolicyManagementExamples {
       Response<CustomRole> response = service.createRole(options).execute();
       CustomRole customRole = response.getResult();
 
-      System.out.printf("createRole() result:%n%s%n", customRole.toString());
+      System.out.println(customRole);
 
       // end-create_role
 
@@ -305,6 +322,8 @@ public class IamPolicyManagementExamples {
     }
 
     try {
+      System.out.println("getRole() result:");
+
       // begin-get_role
 
       GetRoleOptions options = new GetRoleOptions.Builder()
@@ -314,7 +333,7 @@ public class IamPolicyManagementExamples {
       Response<CustomRole> response = service.getRole(options).execute();
       CustomRole customRole = response.getResult();
 
-      System.out.printf("getRole() result:%n%s%n", customRole.toString());
+      System.out.println(customRole);
 
       // end-get_role
 
@@ -325,6 +344,8 @@ public class IamPolicyManagementExamples {
     }
 
     try {
+      System.out.println("updateRole() result:");
+
       // begin-update_role
 
       List<String> updatedRoleActions = Arrays.asList("iam-groups.groups.read", "iam-groups.groups.list");
@@ -337,15 +358,18 @@ public class IamPolicyManagementExamples {
       Response<CustomRole> response = service.updateRole(options).execute();
       CustomRole customRole = response.getResult();
 
-      System.out.printf("updateRole() result:%n%s%n", customRole.toString());
+      System.out.println(customRole);
 
       // end-update_role
+
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("listRoles() result:");
+
       // begin-list_roles
 
       ListRolesOptions options = new ListRolesOptions.Builder()
@@ -355,9 +379,10 @@ public class IamPolicyManagementExamples {
       Response<RoleList> response = service.listRoles(options).execute();
       RoleList roleList = response.getResult();
 
-      System.out.printf("listRoles() result:%n%s%n", roleList.toString());
+      System.out.println(roleList);
 
       // end-list_roles
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -371,9 +396,10 @@ public class IamPolicyManagementExamples {
         .build();
 
       Response<Void> response = service.deleteRole(options).execute();
-      System.out.printf("deleteRole() response status code: %d%n", response.getStatusCode());
 
       // end-delete_role
+
+      System.out.printf("deleteRole() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

@@ -199,6 +199,7 @@ public class EnterpriseManagementExamples {
       String importAccountId = "<accountid_to_be_imported>";
 
       System.out.println("importAccountToEnterprise() result:");
+
       // begin-import_account_to_enterprise
 
       ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()
@@ -221,6 +222,7 @@ public class EnterpriseManagementExamples {
 
       String parentCRN = String.format("crn:v1:bluemix:public:enterprise::a/%s::account-group:%s", enterpriseAccountId,
               accountGroupId);
+
       // begin-create_account
 
       CreateAccountOptions createAccountOptions = new CreateAccountOptions.Builder()

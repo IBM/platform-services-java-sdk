@@ -96,7 +96,10 @@ public class OpenServiceBrokerExamples {
     appGuid = config.get("APPLICATION_GUID");
 
     try {
+      System.out.println("getServiceInstanceState() result:");
+
       // begin-get_service_instance_state
+
       GetServiceInstanceStateOptions getServiceInstanceStateOptions = new GetServiceInstanceStateOptions.Builder()
         .instanceId(instanceId)
         .build();
@@ -104,15 +107,20 @@ public class OpenServiceBrokerExamples {
       Response<Resp1874644Root> response = service.getServiceInstanceState(getServiceInstanceStateOptions).execute();
       Resp1874644Root result = response.getResult();
 
-      System.out.printf("getServiceInstanceState() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-get_service_instance_state
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("replaceServiceInstanceState() result:");
+
       // begin-replace_service_instance_state
+
       ReplaceServiceInstanceStateOptions replaceServiceInstanceStateOptions = new ReplaceServiceInstanceStateOptions.Builder()
         .instanceId(instanceId)
         .enabled(false)
@@ -123,15 +131,20 @@ public class OpenServiceBrokerExamples {
       Response<Resp2448145Root> response = service.replaceServiceInstanceState(replaceServiceInstanceStateOptions).execute();
       Resp2448145Root result = response.getResult();
 
-      System.out.printf("replaceServiceInstanceState() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-replace_service_instance_state
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("replaceServiceInstance() result:");
+
       // begin-replace_service_instance
+
       Context contextReq = new Context.Builder()
             .accountId(accountId)
             .crn(instanceId)
@@ -155,15 +168,20 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079872Root> response = service.replaceServiceInstance(replaceServiceInstanceOptions).execute();
       Resp2079872Root result = response.getResult();
 
-      System.out.printf("replaceServiceInstance() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-replace_service_instance
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("updateServiceInstance() result:");
+
       // begin-update_service_instance
+
       Context contextReq = new Context.Builder()
           .accountId(accountId)
           .crn(instanceId)
@@ -189,29 +207,39 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079874Root> response = service.updateServiceInstance(updateServiceInstanceOptions).execute();
       Resp2079874Root result = response.getResult();
 
-      System.out.printf("updateServiceInstance() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-update_service_instance
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("listCatalog() result:");
+
       // begin-list_catalog
+
       ListCatalogOptions listCatalogOptions = new ListCatalogOptions();
 
       Response<Resp1874650Root> response = service.listCatalog(listCatalogOptions).execute();
       Resp1874650Root result = response.getResult();
 
-      System.out.printf("listCatalog() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-list_catalog
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getLastOperation() result:");
+
       // begin-get_last_operation
+
       GetLastOperationOptions getLastOperationOptions = new GetLastOperationOptions.Builder()
         .instanceId(instanceId)
         .operation(operation)
@@ -222,16 +250,21 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079894Root> response = service.getLastOperation(getLastOperationOptions).execute();
       Resp2079894Root result = response.getResult();
 
-      System.out.printf("getLastOperation() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-get_last_operation
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("replaceServiceBinding() result:");
+
       // begin-replace_service_binding
-      Map<String, String> param = new HashMap<String, String>();
+
+      Map<String, String> param = new HashMap<>();
       param.put("example", "property");
 
       BindResource bindRes = new BindResource.Builder()
@@ -251,15 +284,20 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079876Root> response = service.replaceServiceBinding(replaceServiceBindingOptions).execute();
       Resp2079876Root result = response.getResult();
 
-      System.out.printf("replaceServiceBinding() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-replace_service_binding
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("deleteServiceInstance() result:");
+
       // begin-delete_service_instance
+
       DeleteServiceInstanceOptions deleteServiceInstanceOptions = new DeleteServiceInstanceOptions.Builder()
         .serviceId(serviceId)
         .planId(planId)
@@ -270,15 +308,19 @@ public class OpenServiceBrokerExamples {
       Response<Resp2079874Root> response = service.deleteServiceInstance(deleteServiceInstanceOptions).execute();
       Resp2079874Root result = response.getResult();
 
-      System.out.printf("deleteServiceInstance() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-delete_service_instance
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+
       // begin-delete_service_binding
+
       DeleteServiceBindingOptions deleteServiceBindingOptions = new DeleteServiceBindingOptions.Builder()
         .bindingId(bindingId)
         .instanceId(instanceId)
@@ -287,8 +329,10 @@ public class OpenServiceBrokerExamples {
         .build();
 
       Response<Void> response = service.deleteServiceBinding(deleteServiceBindingOptions).execute();
-      System.out.printf("deleteServiceBinding() response status code: %d%n", response.getStatusCode());
+
       // end-delete_service_binding
+
+      System.out.printf("deleteServiceBinding() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

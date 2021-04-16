@@ -104,7 +104,7 @@ Here are examples for maven and gradle:
 
 ### Gradle
 ```gradle
-'com.ibm.cloud:case-management:0.18.6'
+compile 'com.ibm.cloud:case-management:0.18.6'
 ```
 
 ## Using the SDK

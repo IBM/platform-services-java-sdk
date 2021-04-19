@@ -102,8 +102,7 @@ public class UsageMeteringExamples {
 
             ReportResourceUsageOptions reportResourceUsageOptions = new ReportResourceUsageOptions.Builder()
                     .resourceId(resourceId)
-                    .resourceUsage(new java.util.ArrayList<>(
-                            java.util.Arrays.asList(resourceInstanceUsageModel)))
+                    .addResourceUsage(resourceInstanceUsageModel)
                     .build();
 
             Response<ResponseAccepted> response = service.reportResourceUsage(reportResourceUsageOptions).execute();

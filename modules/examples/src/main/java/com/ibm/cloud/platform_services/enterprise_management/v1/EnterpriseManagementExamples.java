@@ -198,8 +198,6 @@ public class EnterpriseManagementExamples {
     try {
       String importAccountId = "<accountid_to_be_imported>";
 
-      System.out.println("importAccountToEnterprise() result:");
-
       // begin-import_account_to_enterprise
 
       ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()

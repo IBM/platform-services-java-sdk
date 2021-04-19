@@ -55,7 +55,7 @@ public class GlobalSearchExamples {
 
       SearchOptions searchOptions = new SearchOptions.Builder()
         .query("GST-sdk-*")
-        .fields(new java.util.ArrayList<>(java.util.Arrays.asList("*")))
+        .addFields("*")
         .searchCursor(searchCursor)
         .build();
 

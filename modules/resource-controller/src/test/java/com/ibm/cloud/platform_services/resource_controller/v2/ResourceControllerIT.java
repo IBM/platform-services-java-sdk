@@ -295,10 +295,6 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             assertTrue(result.getResources().size() > 0 && result.getResources().size() <= resultsPerPage);
             assertTrue(result.getRowsCount() > 0 && result.getRowsCount() <= resultsPerPage);
 
-            if (result.getNextUrl() == null) {
-                start = null;
-            }
-
             start = UrlHelper.getQueryParam(result.getNextUrl(), "start");
         } while (start != null);
     }
@@ -444,10 +440,6 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             assertTrue(result.getResources().size() > 0 && result.getResources().size() <= resultsPerPage);
             assertTrue(result.getRowsCount() > 0 && result.getRowsCount() <= resultsPerPage);
 
-            if (result.getNextUrl() == null) {
-                start = null;
-            }
-
             start = UrlHelper.getQueryParam(result.getNextUrl(), "start");
         } while (start != null);
     }
@@ -521,10 +513,6 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 assertNotNull(resourceAliasesListResult);
                 assertEquals(resourceAliasesListResult.getRowsCount(), new Long(1));
                 assertEquals(resourceAliasesListResult.getResources().size(), 1);
-
-                if (resourceAliasesListResult.getNextUrl() == null) {
-                    start = null;
-                }
 
                 start = UrlHelper.getQueryParam(resourceAliasesListResult.getNextUrl(), "start");
             } while (start != null);
@@ -637,10 +625,6 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             assertTrue(result.getResources().size() > 0 && result.getResources().size() <= resultsPerPage);
             assertTrue(result.getRowsCount() > 0 && result.getRowsCount() <= resultsPerPage);
 
-            if (result.getNextUrl() == null) {
-                start = null;
-            }
-
             start = UrlHelper.getQueryParam(result.getNextUrl(), "start");
         } while (start != null);
     }
@@ -714,10 +698,6 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 assertNotNull(resourceBindingsListResult);
                 assertEquals(resourceBindingsListResult.getRowsCount(), new Long(1));
                 assertEquals(resourceBindingsListResult.getResources().size(), 1);
-
-                if (resourceBindingsListResult.getNextUrl() == null) {
-                    start = null;
-                }
 
                 start = UrlHelper.getQueryParam(resourceBindingsListResult.getNextUrl(), "start");
             } while (start != null);
@@ -825,10 +805,6 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             assertTrue(result.getResources().size() > 0 && result.getResources().size() <= resultsPerPage);
             assertTrue(result.getRowsCount() > 0 && result.getRowsCount() <= resultsPerPage);
 
-            if (result.getNextUrl() == null) {
-                start = null;
-            }
-
             start = UrlHelper.getQueryParam(result.getNextUrl(), "start");
         } while (start != null);
     }
@@ -901,10 +877,6 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 assertNotNull(resourceKeysListResult);
                 assertEquals(resourceKeysListResult.getRowsCount(), new Long(1));
                 assertEquals(resourceKeysListResult.getResources().size(), 1);
-
-                if (resourceKeysListResult.getNextUrl() == null) {
-                    start = null;
-                }
 
                 start = UrlHelper.getQueryParam(resourceKeysListResult.getNextUrl(), "start");
             } while (start != null);

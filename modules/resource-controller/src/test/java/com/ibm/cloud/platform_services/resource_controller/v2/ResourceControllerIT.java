@@ -1,6 +1,5 @@
 package com.ibm.cloud.platform_services.resource_controller.v2;
 
-import static org.junit.Assert.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotEquals;
@@ -1274,7 +1273,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .recursive(false)
                 .build();
 
-        Response<ResourceInstance> response = service.deleteResourceInstance(options)
+        Response<Void> response = service.deleteResourceInstance(options)
             .addHeader("Transaction-Id", "rc-sdk-java-test42-" + transactionId)
             .execute();
         assertNotNull(response);
@@ -1342,7 +1341,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             .id(testReclaimInstanceGuid)
             .build();
 
-        Response<ResourceInstance> response = service.deleteResourceInstance(options)
+        Response<Void> response = service.deleteResourceInstance(options)
             .addHeader("Transaction-Id", "rc-sdk-java-test45-" + transactionId)
             .execute();
         assertNotNull(response);
@@ -1468,7 +1467,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             .id(testReclaimInstanceGuid)
             .build();
 
-        Response<ResourceInstance> response = service.deleteResourceInstance(options)
+        Response<Void> response = service.deleteResourceInstance(options)
             .addHeader("Transaction-Id", "rc-sdk-java-test50-" + transactionId)
             .execute();
         assertNotNull(response);

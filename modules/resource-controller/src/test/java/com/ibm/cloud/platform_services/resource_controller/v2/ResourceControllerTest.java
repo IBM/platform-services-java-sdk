@@ -293,11 +293,10 @@ public class ResourceControllerTest extends PowerMockTestCase {
   @Test
   public void testDeleteResourceInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"guid\": \"guid\", \"url\": \"url\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"deleted_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_by\": \"updatedBy\", \"deleted_by\": \"deletedBy\", \"scheduled_reclaim_at\": \"2019-01-01T12:00:00.000Z\", \"restored_at\": \"2019-01-01T12:00:00.000Z\", \"restored_by\": \"restoredBy\", \"scheduled_reclaim_by\": \"scheduledReclaimBy\", \"name\": \"name\", \"region_id\": \"regionId\", \"account_id\": \"accountId\", \"reseller_channel_id\": \"resellerChannelId\", \"resource_plan_id\": \"resourcePlanId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_crn\": \"resourceGroupCrn\", \"target_crn\": \"targetCrn\", \"parameters\": {\"mapKey\": \"anyValue\"}, \"allow_cleanup\": true, \"crn\": \"crn\", \"state\": \"state\", \"type\": \"type\", \"sub_type\": \"subType\", \"resource_id\": \"resourceId\", \"dashboard_url\": \"dashboardUrl\", \"last_operation\": {\"mapKey\": \"anyValue\"}, \"resource_aliases_url\": \"resourceAliasesUrl\", \"resource_bindings_url\": \"resourceBindingsUrl\", \"resource_keys_url\": \"resourceKeysUrl\", \"plan_history\": [{\"resource_plan_id\": \"resourcePlanId\", \"start_date\": \"2019-01-01T12:00:00.000Z\", \"requestor_id\": \"requestorId\"}], \"migrated\": true, \"extensions\": {\"mapKey\": \"anyValue\"}, \"controlled_by\": \"controlledBy\", \"locked\": true}";
+    String mockResponseBody = "";
     String deleteResourceInstancePath = "/v2/resource_instances/testString";
 
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
     .setResponseCode(202)
     .setBody(mockResponseBody));
 
@@ -310,10 +309,11 @@ public class ResourceControllerTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ResourceInstance> response = resourceControllerService.deleteResourceInstance(deleteResourceInstanceOptionsModel).execute();
+    Response<Void> response = resourceControllerService.deleteResourceInstance(deleteResourceInstanceOptionsModel).execute();
     assertNotNull(response);
-    ResourceInstance responseObj = response.getResult();
-    assertNotNull(responseObj);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
 
     // Verify the contents of the request
     RecordedRequest request = server.takeRequest();

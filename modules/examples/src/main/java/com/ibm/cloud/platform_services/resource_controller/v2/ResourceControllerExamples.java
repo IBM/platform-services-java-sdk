@@ -559,18 +559,17 @@ public class ResourceControllerExamples {
     }
 
     try {
-      System.out.println("deleteResourceInstance() result:");
       // begin-delete_resource_instance
       DeleteResourceInstanceOptions deleteResourceInstanceOptions = new DeleteResourceInstanceOptions.Builder()
         .id(instanceGuid)
         .recursive(false)
         .build();
 
-      Response<ResourceInstance> response = service.deleteResourceInstance(deleteResourceInstanceOptions).execute();
-      ResourceInstance resourceInstance = response.getResult();
+      Response<Void> response = service.deleteResourceInstance(deleteResourceInstanceOptions).execute();
 
-      System.out.println(resourceInstance);
       // end-delete_resource_instance
+      System.out.printf("deleteResourceInstance() response status code: %d%n", response.getStatusCode());
+
       try {
         TimeUnit.SECONDS.sleep(20);
       } catch (Exception e) {

@@ -66,7 +66,10 @@ public class PostureManagementExamples {
     String groupProfileId = "0";
 
     try {
+      System.out.println("listProfiles() result:");
+
       // begin-list_profiles
+
       ListProfilesOptions listProfileOptions = new ListProfilesOptions.Builder()
         .accountId(accountId)
         .name(profileName)
@@ -75,8 +78,10 @@ public class PostureManagementExamples {
       Response<ProfilesList> response = service.listProfiles(listProfileOptions).execute();
       ProfilesList profilesList = response.getResult();
 
-      System.out.printf("listProfiles() result:%n%s%n", profilesList);
+      System.out.println(profilesList);
+
       // end-list_profiles
+
       profileId = profilesList.getProfiles().get(0).getProfileId();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -84,7 +89,10 @@ public class PostureManagementExamples {
     }
 
     try {
+      System.out.println("listScopes() result:");
+
       // begin-list_scopes
+
       ListScopesOptions listScopesOptions = new ListScopesOptions.Builder()
         .accountId(accountId)
         .name(scopesName)
@@ -93,8 +101,10 @@ public class PostureManagementExamples {
       Response<ScopesList> response = service.listScopes(listScopesOptions).execute();
       ScopesList scopesList = response.getResult();
 
-      System.out.printf("listScopes() result:%n%s%n", scopesList);
+      System.out.println(scopesList);
+
       // end-list_scopes
+
       scopeId = scopesList.getScopes().get(0).getScopeId();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -102,7 +112,10 @@ public class PostureManagementExamples {
     }
 
     try {
+      System.out.println("createValidation() result:");
+
       // begin-create_validation
+
       CreateValidationOptions createValidationScanOptions = new CreateValidationOptions.Builder()
               .accountId(accountId)
               .profileId(profileId)
@@ -113,7 +126,8 @@ public class PostureManagementExamples {
       Response<Result> response = service.createValidation(createValidationScanOptions).execute();
       Result result = response.getResult();
 
-      System.out.printf("createValidation() result:%n%s%n", result);
+      System.out.println(result);
+
       // end-create_validation
 
     } catch (ServiceResponseException e) {

@@ -54,6 +54,8 @@ public class UsageMeteringExamples {
         UsageMetering service = UsageMetering.newInstance();
 
         try {
+            System.out.println("reportResourceUsage() result:");
+
             // We'll use the same start and end time since we're reporting events.
             long startTime = System.currentTimeMillis();
             long endTime = startTime;
@@ -100,15 +102,16 @@ public class UsageMeteringExamples {
 
             ReportResourceUsageOptions reportResourceUsageOptions = new ReportResourceUsageOptions.Builder()
                     .resourceId(resourceId)
-                    .resourceUsage(new java.util.ArrayList<ResourceInstanceUsage>(
-                            java.util.Arrays.asList(resourceInstanceUsageModel)))
+                    .addResourceUsage(resourceInstanceUsageModel)
                     .build();
 
             Response<ResponseAccepted> response = service.reportResourceUsage(reportResourceUsageOptions).execute();
             ResponseAccepted responseAccepted = response.getResult();
 
-            System.out.printf("reportResourceUsage() result:%n%s%n", responseAccepted.toString());
+            System.out.println(responseAccepted);
+
             // end-report_resource_usage
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);

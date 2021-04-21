@@ -82,7 +82,10 @@ public class GlobalCatalogExamples {
         String catalogEntryId = "";
 
         try {
+            System.out.println("createCatalogEntry() result:");
+
             // begin-create_catalog_entry
+
             Overview overviewModelEN = new Overview.Builder()
                     .displayName("Example Web Starter")
                     .description("Use the Example service in your applications")
@@ -129,15 +132,20 @@ public class GlobalCatalogExamples {
             Response<CatalogEntry> response = service.createCatalogEntry(createCatalogEntryOptions).execute();
             CatalogEntry catalogEntry = response.getResult();
 
-            System.out.printf("createCatalogEntry() result:%n%s%n", catalogEntry.toString());
+            System.out.println(catalogEntry);
+
             // end-create_catalog_entry
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("getCatalogEntry() result:");
+
             // begin-get_catalog_entry
+
             GetCatalogEntryOptions getCatalogEntryOptions = new GetCatalogEntryOptions.Builder()
                     .id(catalogEntryId)
                     .complete(true)
@@ -146,15 +154,20 @@ public class GlobalCatalogExamples {
             Response<CatalogEntry> response = service.getCatalogEntry(getCatalogEntryOptions).execute();
             CatalogEntry catalogEntry = response.getResult();
 
-            System.out.printf("getCatalogEntry() result:%n%s%n", catalogEntry);
+            System.out.println(catalogEntry);
+
             // end-get_catalog_entry
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("updateCatalogEntry() result:");
+
             // begin-update_catalog_entry
+
             Overview overviewModelEN = new Overview.Builder()
                     .displayName("Example Web Starter V2")
                     .description("Use the Example V2 service in your applications")
@@ -200,15 +213,20 @@ public class GlobalCatalogExamples {
             Response<CatalogEntry> response = service.updateCatalogEntry(updateCatalogEntryOptions).execute();
             CatalogEntry catalogEntry = response.getResult();
 
-            System.out.printf("updateCatalogEntry() result:%n%s%n", catalogEntry.toString());
+            System.out.println(catalogEntry);
+
             // end-update_catalog_entry
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("listCatalogEntries() result:");
+
             // begin-list_catalog_entries
+
             ListCatalogEntriesOptions listCatalogEntriesOptions = new ListCatalogEntriesOptions.Builder()
                     .offset(0)
                     .limit(10)
@@ -219,15 +237,20 @@ public class GlobalCatalogExamples {
             Response<EntrySearchResult> response = service.listCatalogEntries(listCatalogEntriesOptions).execute();
             EntrySearchResult entrySearchResult = response.getResult();
 
-            System.out.printf("listCatalogEntries() result:%n%s%n", entrySearchResult.toString());
+            System.out.println(entrySearchResult);
+
             // end-list_catalog_entries
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("getChildObjects() result:");
+
             // begin-get_child_objects
+
             GetChildObjectsOptions getChildObjectsOptions = new GetChildObjectsOptions.Builder()
                     .id(catalogEntryId)
                     .kind("*")
@@ -236,29 +259,38 @@ public class GlobalCatalogExamples {
             Response<EntrySearchResult> response = service.getChildObjects(getChildObjectsOptions).execute();
             EntrySearchResult entrySearchResult = response.getResult();
 
-            System.out.printf("getChildObjects() result:%n%s%n", entrySearchResult.toString());
+            System.out.println(entrySearchResult);
+
             // end-get_child_objects
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+
             // begin-restore_catalog_entry
+
             RestoreCatalogEntryOptions restoreCatalogEntryOptions = new RestoreCatalogEntryOptions.Builder()
                     .id(catalogEntryId)
                     .build();
 
             Response<Void> response = service.restoreCatalogEntry(restoreCatalogEntryOptions).execute();
-            System.out.printf("restoreCatalogEntry() response status code: %d%n", response.getStatusCode());
+
             // end-restore_catalog_entry
+
+            System.out.printf("restoreCatalogEntry() response status code: %d%n", response.getStatusCode());
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("getVisibility() result:");
+
             // begin-get_visibility
+
             GetVisibilityOptions getVisibilityOptions = new GetVisibilityOptions.Builder()
                     .id(catalogEntryId)
                     .build();
@@ -266,8 +298,10 @@ public class GlobalCatalogExamples {
             Response<Visibility> response = service.getVisibility(getVisibilityOptions).execute();
             Visibility visibility = response.getResult();
 
-            System.out.printf("getVisibility() result:%n%s%n", visibility.toString());
+            System.out.println(visibility);
+
             // end-get_visibility
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
@@ -275,35 +309,46 @@ public class GlobalCatalogExamples {
 
         try {
             // begin-update_visibility
+
             UpdateVisibilityOptions updateVisibilityOptions = new UpdateVisibilityOptions.Builder()
                     .id(catalogEntryId)
                     .extendable(false)
                     .build();
 
             Response<Void> response = service.updateVisibility(updateVisibilityOptions).execute();
-            System.out.printf("updateVisibility() response status code: %d%n", response.getStatusCode());
+
             // end-update_visibility
+
+            System.out.printf("updateVisibility() response status code: %d%n", response.getStatusCode());
         } catch (ServiceResponseException e) {
             System.out.println("updateVisibility returned the following error: " + e.getMessage());
         }
 
         try {
+            System.out.println("getPricing() result:");
+
             // begin-get_pricing
+
             GetPricingOptions getPricingOptions = new GetPricingOptions.Builder()
                     .id(catalogEntryId).build();
 
             Response<PricingGet> response = service.getPricing(getPricingOptions).execute();
             PricingGet pricingGet = response.getResult();
 
-            System.out.printf("getPricing() result:%n%s%n", pricingGet.toString());
+            System.out.println(pricingGet);
+
             // end-get_pricing
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("getAuditLogs() result:");
+
             // begin-get_audit_logs
+
             GetAuditLogsOptions getAuditLogsOptions = new GetAuditLogsOptions.Builder()
                     .id(catalogEntryId)
                     .offset(0)
@@ -313,8 +358,10 @@ public class GlobalCatalogExamples {
             Response<AuditSearchResult> response = service.getAuditLogs(getAuditLogsOptions).execute();
             AuditSearchResult auditSearchResult = response.getResult();
 
-            System.out.printf("getAuditLogs() result:%n%s%n", auditSearchResult.toString());
+            System.out.println(auditSearchResult);
+
             // end-get_audit_logs
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
@@ -322,6 +369,7 @@ public class GlobalCatalogExamples {
 
         try {
             // begin-upload_artifact
+
             String artifactContents = "This is an example artifact associated with a catalog entry.";
 
             UploadArtifactOptions uploadArtifactOptions = new UploadArtifactOptions.Builder()
@@ -332,15 +380,20 @@ public class GlobalCatalogExamples {
                     .build();
 
             Response<Void> response = service.uploadArtifact(uploadArtifactOptions).execute();
-            System.out.printf("uploadArtifact() response status code: %d%n", response.getStatusCode());
+
             // end-upload_artifact
+
+            System.out.printf("uploadArtifact() response status code: %d%n", response.getStatusCode());
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("getArtifact() result:");
+
             // begin-get_artifact
+
             GetArtifactOptions getArtifactOptions = new GetArtifactOptions.Builder()
                     .objectId(catalogEntryId)
                     .artifactId("artifact.txt")
@@ -351,19 +404,21 @@ public class GlobalCatalogExamples {
             if (inputStream != null) {
                 String artifactContents = IOUtils.toString(inputStream, StandardCharsets.UTF_8);
                 inputStream.close();
-                System.out.println("getArtifact() result:");
-                System.out.printf("Artifact content-type: %s%n",
-                        response.getHeaders().values("Content-Type").toString());
-                System.out.printf("Artifact contents: %s%n", artifactContents);
+                System.out.println(artifactContents);
             }
+
             // end-get_artifact
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("listArtifacts() result:");
+
             // begin-list_artifacts
+
             ListArtifactsOptions listArtifactsOptions = new ListArtifactsOptions.Builder()
                     .objectId(catalogEntryId)
                     .build();
@@ -371,37 +426,47 @@ public class GlobalCatalogExamples {
             Response<Artifacts> response = service.listArtifacts(listArtifactsOptions).execute();
             Artifacts artifacts = response.getResult();
 
-            System.out.printf("listArtifacts() result:%n%s%n", artifacts.toString());
+            System.out.println(artifacts);
+
             // end-list_artifacts
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+
             // begin-delete_artifact
+
             DeleteArtifactOptions deleteArtifactOptions = new DeleteArtifactOptions.Builder()
                     .objectId(catalogEntryId)
                     .artifactId("artifact.txt")
                     .build();
 
             Response<Void> response = service.deleteArtifact(deleteArtifactOptions).execute();
-            System.out.printf("deleteArtifact() response status code: %d%n", response.getStatusCode());
+
             // end-delete_artifact
+
+            System.out.printf("deleteArtifact() response status code: %d%n", response.getStatusCode());
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+
             // begin-delete_catalog_entry
+
             DeleteCatalogEntryOptions deleteCatalogEntryOptions = new DeleteCatalogEntryOptions.Builder()
                     .id(catalogEntryId)
                     .build();
 
             Response<Void> response = service.deleteCatalogEntry(deleteCatalogEntryOptions).execute();
-            System.out.printf("deleteCatalogEntry() response status code: %d%n", response.getStatusCode());
+
             // end-delete_catalog_entry
+
+            System.out.printf("deleteCatalogEntry() response status code: %d%n", response.getStatusCode());
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);

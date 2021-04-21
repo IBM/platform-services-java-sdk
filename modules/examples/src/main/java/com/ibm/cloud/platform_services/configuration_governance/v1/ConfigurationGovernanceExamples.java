@@ -100,7 +100,10 @@ public class ConfigurationGovernanceExamples {
     subacctScopeId = config.get("SUBACCT_SCOPE_ID");
 
     try {
+      System.out.println("createRules() result:");
+
       // begin-create_rules
+
       TargetResource targetResourceModel = new TargetResource.Builder()
         .serviceName(serviceName)
         .resourceKind("service")
@@ -144,7 +147,8 @@ public class ConfigurationGovernanceExamples {
               }
           }
       }
-      System.out.printf("createRules() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-create_rules
 
       // Retrieve the id of the new rule to use in other operations below.
@@ -155,29 +159,38 @@ public class ConfigurationGovernanceExamples {
     }
 
     try {
+      System.out.println("listRules() result:");
+
       // begin-list_rules
+
       ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
         .accountId(accountId)
         .labels("test_label")
         .build();
 
       RuleList result = service.listRules(listRulesOptions).execute().getResult();
-      System.out.printf("listRules() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-list_rules
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getRule() result:");
+
       // begin-get_rule
+
       GetRuleOptions getRuleOptions = new GetRuleOptions.Builder()
         .ruleId(ruleIdLink)
         .build();
 
       Response<Rule> response = service.getRule(getRuleOptions).execute();
       Rule result = response.getResult();
-      System.out.printf("getRule() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-get_rule
 
       // Save the rule and its Etag header value so we can update it below.
@@ -189,7 +202,10 @@ public class ConfigurationGovernanceExamples {
     }
 
     try {
+      System.out.println("updateRule() result:");
+
       // begin-update_rule
+
       // Update the existing rule's description.
       UpdateRuleOptions updateRuleOptions = new UpdateRuleOptions.Builder()
         .ruleId(ruleIdLink)
@@ -205,15 +221,20 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       Rule result = service.updateRule(updateRuleOptions).execute().getResult();
-      System.out.printf("updateRule() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-update_rule
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("createAttachments() result:");
+
       // begin-create_attachments
+
       RuleScope enterpriseScopeModel = new RuleScope.Builder()
         .note("My enterprise")
         .scopeId(enterpriseScopeId)
@@ -235,7 +256,9 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       CreateAttachmentsResponse result = service.createAttachments(createAttachmentsOptions).execute().getResult();
-      System.out.printf("createAttachments() result:%n%s%n", result.toString());
+
+      System.out.println(result);
+
       // end-create_attachments
 
       // Retrieve the id of the new attachment to use in other operations below.
@@ -246,21 +269,30 @@ public class ConfigurationGovernanceExamples {
     }
 
     try {
+      System.out.println("listAttachments() result:");
+
       // begin-list_attachments
+
       ListAttachmentsOptions listAttachmentsOptions = new ListAttachmentsOptions.Builder()
         .ruleId(ruleIdLink)
         .build();
 
       AttachmentList result = service.listAttachments(listAttachmentsOptions).execute().getResult();
-      System.out.printf("listAttachments() result:%n%s%n", result.toString());
+
+      System.out.println(result);
+
       // end-list_attachments
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getAttachment() result:");
+
       // begin-get_attachment
+
       GetAttachmentOptions getAttachmentOptions = new GetAttachmentOptions.Builder()
         .ruleId(ruleIdLink)
         .attachmentId(attachmentIdLink)
@@ -268,7 +300,8 @@ public class ConfigurationGovernanceExamples {
 
       Response<Attachment> response = service.getAttachment(getAttachmentOptions).execute();
       Attachment result = response.getResult();
-      System.out.printf("getAttachment() result:%n%s%n", result.toString());
+      System.out.println(result);
+
       // end-get_attachment
 
       // Save the attachment and its Etag header value so we can update it below.
@@ -280,7 +313,10 @@ public class ConfigurationGovernanceExamples {
     }
 
     try {
+      System.out.println("updateAttachment() result:");
+
       // begin-update_attachment
+
       RuleScope updatedIncludedScope = attachmentToUpdateLink.getIncludedScope().newBuilder()
         .note("This is a new note.")
         .build();
@@ -294,37 +330,48 @@ public class ConfigurationGovernanceExamples {
         .build();
 
       Attachment result = service.updateAttachment(updateAttachmentOptions).execute().getResult();
-      System.out.printf("updateAttachment() result:%n%s%n", result.toString());
+
+      System.out.println(result);
+
       // end-update_attachment
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+
       // begin-delete_attachment
+
       DeleteAttachmentOptions deleteAttachmentOptions = new DeleteAttachmentOptions.Builder()
         .ruleId(ruleIdLink)
         .attachmentId(attachmentIdLink)
         .build();
 
       Response<Void> response = service.deleteAttachment(deleteAttachmentOptions).execute();
-      System.out.printf("deleteAttachment() response status code: %d%n", response.getStatusCode());
+
       // end-delete_attachment
+
+      System.out.printf("deleteAttachment() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+
       // begin-delete_rule
+
       DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
         .ruleId(ruleIdLink)
         .build();
 
       Response<Void> response = service.deleteRule(deleteRuleOptions).execute();
-      System.out.printf("deleteRule() response status code: %d%n", response.getStatusCode());
+
       // end-delete_rule
+
+      System.out.printf("deleteRule() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

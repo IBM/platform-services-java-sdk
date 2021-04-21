@@ -62,7 +62,10 @@ public class EnterpriseUsageReportsExamples {
         billingMonth = config.get("BILLING_MONTH");
 
         try {
+            System.out.println("getResourceUsageReport() result:");
+
             // begin-get_resource_usage_report
+
             GetResourceUsageReportOptions getResourceUsageReportOptions = new GetResourceUsageReportOptions.Builder()
                     .enterpriseId(enterpriseId)
                     .month(billingMonth)
@@ -72,8 +75,10 @@ public class EnterpriseUsageReportsExamples {
             Response<Reports> response = service.getResourceUsageReport(getResourceUsageReportOptions).execute();
             Reports reports = response.getResult();
 
-            System.out.printf("getResourceUsageReport() result:%n%s%n", reports.toString());
+            System.out.println(reports);
+
             // end-get_resource_usage_report
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);

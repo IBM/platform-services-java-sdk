@@ -49,33 +49,42 @@ public class GlobalSearchExamples {
 
     try {
       String searchCursor = null;
+      System.out.println("search() result:");
 
       // begin-search
+
       SearchOptions searchOptions = new SearchOptions.Builder()
         .query("GST-sdk-*")
-        .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("*")))
+        .addFields("*")
         .searchCursor(searchCursor)
         .build();
 
       Response<ScanResult> response = service.search(searchOptions).execute();
       ScanResult scanResult = response.getResult();
 
-      System.out.printf("search() result:%n%s%n", scanResult.toString());
+      System.out.println(scanResult);
+
       // end-search
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
+      System.out.println("getSupportedTypes() result:");
+
       // begin-get_supported_types
+
       GetSupportedTypesOptions getSupportedTypesOptions = new GetSupportedTypesOptions();
 
       Response<SupportedTypesList> response = service.getSupportedTypes(getSupportedTypesOptions).execute();
       SupportedTypesList supportedTypesList = response.getResult();
 
-      System.out.printf("getSupportedTypes() result:%n%s%n", supportedTypesList.toString());
+      System.out.println(supportedTypesList);
+
       // end-get_supported_types
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

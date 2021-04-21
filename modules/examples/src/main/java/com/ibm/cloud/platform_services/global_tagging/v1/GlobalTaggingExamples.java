@@ -65,7 +65,10 @@ public class GlobalTaggingExamples {
         String resourceCRN = config.get("RESOURCE_CRN");
 
         try {
+            System.out.println("createTag() result:");
+
             // begin-create_tag
+
             CreateTagOptions createTagOptions = new CreateTagOptions.Builder()
                     .addTagNames("env:example-access-tag")
                     .tagType("access")
@@ -73,15 +76,20 @@ public class GlobalTaggingExamples {
 
             Response<CreateTagResults> response = service.createTag(createTagOptions).execute();
             CreateTagResults createTagResults = response.getResult();
-            System.out.printf("createTag() result:%n%s%n", createTagResults.toString());
+            System.out.println(createTagResults);
+
             // end-create_tag
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("listTags() result:");
+
             // begin-list_tags
+
             ListTagsOptions listTagsOptions = new ListTagsOptions.Builder()
                     .tagType("user")
                     .attachedOnly(true)
@@ -92,15 +100,20 @@ public class GlobalTaggingExamples {
 
             Response<TagList> response = service.listTags(listTagsOptions).execute();
             TagList tagList = response.getResult();
-            System.out.printf("listTags() result:%n%s%n", tagList.toString());
+            System.out.println(tagList);
+
             // end-list_tags
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("attachTag() result:");
+
             // begin-attach_tag
+
             Resource resourceModel = new Resource.Builder().resourceId(resourceCRN).build();
             AttachTagOptions attachTagOptions = new AttachTagOptions.Builder()
                     .addResources(resourceModel)
@@ -110,15 +123,20 @@ public class GlobalTaggingExamples {
 
             Response<TagResults> response = service.attachTag(attachTagOptions).execute();
             TagResults tagResults = response.getResult();
-            System.out.printf("attachTag() result:%n%s%n", tagResults.toString());
+            System.out.println(tagResults);
+
             // end-attach_tag
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("detachTag() result:");
+
             // begin-detach_tag
+
             Resource resourceModel = new Resource.Builder().resourceId(resourceCRN).build();
             DetachTagOptions detachTagOptions = new DetachTagOptions.Builder()
                     .addResources(resourceModel)
@@ -129,15 +147,20 @@ public class GlobalTaggingExamples {
 
             Response<TagResults> response = service.detachTag(detachTagOptions).execute();
             TagResults tagResults = response.getResult();
-            System.out.printf("detachTag() result:%n%s%n", tagResults.toString());
+            System.out.println(tagResults);
+
             // end-detach_tag
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("deleteTag() result:");
+
             // begin-delete_tag
+
             DeleteTagOptions deleteTagOptions = new DeleteTagOptions.Builder()
                     .tagName("env:example-access-tag")
                     .tagType("access")
@@ -145,15 +168,20 @@ public class GlobalTaggingExamples {
 
             Response<DeleteTagResults> response = service.deleteTag(deleteTagOptions).execute();
             DeleteTagResults deleteTagResults = response.getResult();
-            System.out.printf("deleteTag() result:%n%s%n", deleteTagResults.toString());
+            System.out.println(deleteTagResults);
+
             // end-delete_tag
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
+            System.out.println("deleteTagAll() result:");
+
             // begin-delete_tag_all
+
             DeleteTagAllOptions deleteTagAllOptions = new DeleteTagAllOptions.Builder()
                     .tagType("user")
                     .build();
@@ -161,8 +189,10 @@ public class GlobalTaggingExamples {
             Response<DeleteTagsResult> response = service.deleteTagAll(deleteTagAllOptions).execute();
             DeleteTagsResult deleteTagsResult = response.getResult();
 
-            System.out.printf("deleteTagAll() result:%n%s%n", deleteTagsResult.toString());
+            System.out.println(deleteTagsResult);
+
             // end-delete_tag_all
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);

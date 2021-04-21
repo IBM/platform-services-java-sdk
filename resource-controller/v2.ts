@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-77b4cbf2-20210420-134305
  */
 
 
@@ -95,7 +95,8 @@ class ResourceControllerV2 extends BaseService {
   /**
    * Get a list of all resource instances.
    *
-   * Get a list of all resource instances.
+   * View a list of all available resource instances. Resources is a broad term that could mean anything from a service
+   * instance to a virtual machine associated with the customer account.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.guid] - When you provision a new resource in the specified location for the selected plan,
@@ -109,7 +110,10 @@ class ResourceControllerV2 extends BaseService {
    * provided by and stored in the global catalog.
    * @param {string} [params.type] - The type of the instance, for example, `service_instance`.
    * @param {string} [params.subType] - The sub-type of instance, for example, `cfaas`.
-   * @param {string} [params.limit] - Limit on how many items should be returned.
+   * @param {number} [params.limit] - Limit on how many items should be returned.
+   * @param {string} [params.start] - An optional token that indicates the beginning of the page of results to be
+   * returned. Any additional query parameters are ignored if a page token is present. If omitted, the first page of
+   * results is returned. This value is obtained from the 'next_url' field of the operation response.
    * @param {string} [params.state] - The state of the instance. If not specified, instances in state `active` and
    * `provisioning` are returned.
    * @param {string} [params.orderDirection] - Order of results.
@@ -130,6 +134,7 @@ class ResourceControllerV2 extends BaseService {
       'type': _params.type,
       'sub_type': _params.subType,
       'limit': _params.limit,
+      'start': _params.start,
       'state': _params.state,
       'order_direction': _params.orderDirection,
       'updated_from': _params.updatedFrom,
@@ -157,7 +162,8 @@ class ResourceControllerV2 extends BaseService {
   /**
    * Create (provision) a new resource instance.
    *
-   * Provision a new resource in the specified location for the selected plan.
+   * When you provision a service you get an instance of that service. An instance represents the resource with which
+   * you create, and additionally, represents a chargeable record of which billing can occur.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the instance. Must be 180 characters or less and cannot include any
@@ -220,7 +226,8 @@ class ResourceControllerV2 extends BaseService {
   /**
    * Get a resource instance.
    *
-   * Retrieve a resource instance by ID.
+   * Retrieve a resource instance by ID. Find more details on a particular instance, like when it was provisioned and
+   * who provisioned it.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The short or long ID of the instance.
@@ -261,7 +268,8 @@ class ResourceControllerV2 extends BaseService {
   /**
    * Delete a resource instance.
    *
-   * Delete a resource instance by ID.
+   * Delete a resource instance by ID. If the resource instance has any resource keys or aliases associated with it, use
+   * the `recursive=true` parameter to delete it.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The short or long ID of the instance.
@@ -307,7 +315,7 @@ class ResourceControllerV2 extends BaseService {
   /**
    * Update a resource instance.
    *
-   * Update a resource instance by ID.
+   * You can use the ID to make updates to the resource instance, like changing the name or plan.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The short or long ID of the instance.
@@ -364,10 +372,14 @@ class ResourceControllerV2 extends BaseService {
   /**
    * Get a list of all resource aliases for the instance.
    *
-   * Get a list of all resource aliases for the instance.
+   * Retrieving a list of all resource aliases can help you find out who's using the resource instance.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The short or long ID of the instance.
+   * @param {number} [params.limit] - Limit on how many items should be returned.
+   * @param {string} [params.start] - An optional token that indicates the beginning of the page of results to be
+   * returned. Any additional query parameters are ignored if a page token is present. If omitted, the first page of
+   * results is returned. This value is obtained from the 'next_url' field of the operation response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>>}
    */
@@ -380,6 +392,11 @@ class ResourceControllerV2 extends BaseService {
       return Promise.reject(missingParams);
     }
 
+    const query = {
+      'limit': _params.limit,
+      'start': _params.start
+    };
+
     const path = {
       'id': _params.id
     };
@@ -390,6 +407,7 @@ class ResourceControllerV2 extends BaseService {
       options: {
         url: '/v2/resource_instances/{id}/resource_aliases',
         method: 'GET',
+        qs: query,
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
@@ -405,10 +423,15 @@ class ResourceControllerV2 extends BaseService {
   /**
    * Get a list of all the resource keys for the instance.
    *
-   * Get a list of all the resource keys for the instance.
+   * You may have many resource keys for one resource instance. For example, you may have a different resource key for
+   * each user or each role.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The short or long ID of the instance.
+   * @param {number} [params.limit] - Limit on how many items should be returned.
+   * @param {string} [params.start] - An optional token that indicates the beginning of the page of results to be
+   * returned. Any additional query parameters are ignored if a page token is present. If omitted, the first page of
+   * results is returned. This value is obtained from the 'next_url' field of the operation response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>>}
    */
@@ -421,6 +444,11 @@ class ResourceControllerV2 extends BaseService {
       return Promise.reject(missingParams);
     }
 
+    const query = {
+      'limit': _params.limit,
+      'start': _params.start
+    };
+
     const path = {
       'id': _params.id
     };
@@ -431,6 +459,7 @@ class ResourceControllerV2 extends BaseService {
       options: {
         url: '/v2/resource_instances/{id}/resource_keys',
         method: 'GET',
+        qs: query,
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
@@ -488,7 +517,8 @@ class ResourceControllerV2 extends BaseService {
   /**
    * Unlock a resource instance.
    *
-   * Unlocks a resource instance by ID.
+   * Unlock a resource instance to update or delete it. Unlocking a resource instance does not affect child resources
+   * like aliases, bindings or keys.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The short or long ID of the instance.
@@ -542,7 +572,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {string} [params.resourceGroupId] - The short ID of the resource group.
    * @param {string} [params.resourceId] - The unique ID of the offering. This value is provided by and stored in the
    * global catalog.
-   * @param {string} [params.limit] - Limit on how many items should be returned.
+   * @param {number} [params.limit] - Limit on how many items should be returned.
+   * @param {string} [params.start] - An optional token that indicates the beginning of the page of results to be
+   * returned. Any additional query parameters are ignored if a page token is present. If omitted, the first page of
+   * results is returned. This value is obtained from the 'next_url' field of the operation response.
    * @param {string} [params.updatedFrom] - Start date inclusive filter.
    * @param {string} [params.updatedTo] - End date inclusive filter.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -557,6 +590,7 @@ class ResourceControllerV2 extends BaseService {
       'resource_group_id': _params.resourceGroupId,
       'resource_id': _params.resourceId,
       'limit': _params.limit,
+      'start': _params.start,
       'updated_from': _params.updatedFrom,
       'updated_to': _params.updatedTo
     };
@@ -776,7 +810,10 @@ class ResourceControllerV2 extends BaseService {
    * stored in the global catalog.
    * @param {string} [params.regionBindingId] - Short ID of the binding in the specific targeted environment, for
    * example, service_binding_id in a given IBM Cloud environment.
-   * @param {string} [params.limit] - Limit on how many items should be returned.
+   * @param {number} [params.limit] - Limit on how many items should be returned.
+   * @param {string} [params.start] - An optional token that indicates the beginning of the page of results to be
+   * returned. Any additional query parameters are ignored if a page token is present. If omitted, the first page of
+   * results is returned. This value is obtained from the 'next_url' field of the operation response.
    * @param {string} [params.updatedFrom] - Start date inclusive filter.
    * @param {string} [params.updatedTo] - End date inclusive filter.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -792,6 +829,7 @@ class ResourceControllerV2 extends BaseService {
       'resource_id': _params.resourceId,
       'region_binding_id': _params.regionBindingId,
       'limit': _params.limit,
+      'start': _params.start,
       'updated_from': _params.updatedFrom,
       'updated_to': _params.updatedTo
     };
@@ -1016,7 +1054,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {string} [params.resourceId] - The unique ID of the offering (service name). This value is provided by and
    * stored in the global catalog.
    * @param {string} [params.resourceGroupId] - Short ID of Resource group.
-   * @param {string} [params.limit] - Limit on how many items should be returned.
+   * @param {number} [params.limit] - Limit on how many items should be returned.
+   * @param {string} [params.start] - An optional token that indicates the beginning of the page of results to be
+   * returned. Any additional query parameters are ignored if a page token is present. If omitted, the first page of
+   * results is returned. This value is obtained from the 'next_url' field of the operation response.
    * @param {string} [params.updatedFrom] - Start date inclusive filter.
    * @param {string} [params.updatedTo] - End date inclusive filter.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -1033,6 +1074,7 @@ class ResourceControllerV2 extends BaseService {
       'resource_id': _params.resourceId,
       'resource_group_id': _params.resourceGroupId,
       'limit': _params.limit,
+      'start': _params.start,
       'updated_from': _params.updatedFrom,
       'updated_to': _params.updatedTo
     };
@@ -1240,6 +1282,10 @@ class ResourceControllerV2 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - The short or long ID of the alias.
+   * @param {number} [params.limit] - Limit on how many items should be returned.
+   * @param {string} [params.start] - An optional token that indicates the beginning of the page of results to be
+   * returned. Any additional query parameters are ignored if a page token is present. If omitted, the first page of
+   * results is returned. This value is obtained from the 'next_url' field of the operation response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>>}
    */
@@ -1252,6 +1298,11 @@ class ResourceControllerV2 extends BaseService {
       return Promise.reject(missingParams);
     }
 
+    const query = {
+      'limit': _params.limit,
+      'start': _params.start
+    };
+
     const path = {
       'id': _params.id
     };
@@ -1262,6 +1313,7 @@ class ResourceControllerV2 extends BaseService {
       options: {
         url: '/v2/resource_aliases/{id}/resource_bindings',
         method: 'GET',
+        qs: query,
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
@@ -1422,7 +1474,12 @@ namespace ResourceControllerV2 {
     /** The sub-type of instance, for example, `cfaas`. */
     subType?: string;
     /** Limit on how many items should be returned. */
-    limit?: string;
+    limit?: number;
+    /** An optional token that indicates the beginning of the page of results to be returned. Any additional query
+     *  parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value
+     *  is obtained from the 'next_url' field of the operation response.
+     */
+    start?: string;
     /** The state of the instance. If not specified, instances in state `active` and `provisioning` are returned. */
     state?: ListResourceInstancesConstants.State | string;
     /** Order of results. */
@@ -1521,6 +1578,13 @@ namespace ResourceControllerV2 {
   export interface ListResourceAliasesForInstanceParams {
     /** The short or long ID of the instance. */
     id: string;
+    /** Limit on how many items should be returned. */
+    limit?: number;
+    /** An optional token that indicates the beginning of the page of results to be returned. Any additional query
+     *  parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value
+     *  is obtained from the 'next_url' field of the operation response.
+     */
+    start?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1528,6 +1592,13 @@ namespace ResourceControllerV2 {
   export interface ListResourceKeysForInstanceParams {
     /** The short or long ID of the instance. */
     id: string;
+    /** Limit on how many items should be returned. */
+    limit?: number;
+    /** An optional token that indicates the beginning of the page of results to be returned. Any additional query
+     *  parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value
+     *  is obtained from the 'next_url' field of the operation response.
+     */
+    start?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1558,7 +1629,12 @@ namespace ResourceControllerV2 {
     /** The unique ID of the offering. This value is provided by and stored in the global catalog. */
     resourceId?: string;
     /** Limit on how many items should be returned. */
-    limit?: string;
+    limit?: number;
+    /** An optional token that indicates the beginning of the page of results to be returned. Any additional query
+     *  parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value
+     *  is obtained from the 'next_url' field of the operation response.
+     */
+    start?: string;
     /** Start date inclusive filter. */
     updatedFrom?: string;
     /** End date inclusive filter. */
@@ -1621,7 +1697,12 @@ namespace ResourceControllerV2 {
      */
     regionBindingId?: string;
     /** Limit on how many items should be returned. */
-    limit?: string;
+    limit?: number;
+    /** An optional token that indicates the beginning of the page of results to be returned. Any additional query
+     *  parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value
+     *  is obtained from the 'next_url' field of the operation response.
+     */
+    start?: string;
     /** Start date inclusive filter. */
     updatedFrom?: string;
     /** End date inclusive filter. */
@@ -1690,7 +1771,12 @@ namespace ResourceControllerV2 {
     /** Short ID of Resource group. */
     resourceGroupId?: string;
     /** Limit on how many items should be returned. */
-    limit?: string;
+    limit?: number;
+    /** An optional token that indicates the beginning of the page of results to be returned. Any additional query
+     *  parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value
+     *  is obtained from the 'next_url' field of the operation response.
+     */
+    start?: string;
     /** Start date inclusive filter. */
     updatedFrom?: string;
     /** End date inclusive filter. */
@@ -1740,6 +1826,13 @@ namespace ResourceControllerV2 {
   export interface ListResourceBindingsForAliasParams {
     /** The short or long ID of the alias. */
     id: string;
+    /** Limit on how many items should be returned. */
+    limit?: number;
+    /** An optional token that indicates the beginning of the page of results to be returned. Any additional query
+     *  parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value
+     *  is obtained from the 'next_url' field of the operation response.
+     */
+    start?: string;
     headers?: OutgoingHttpHeaders;
   }
 

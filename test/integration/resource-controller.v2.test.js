@@ -19,7 +19,7 @@
 
 const ResourceControllerV2 = require('../../dist/resource-controller/v2');
 const authHelper = require('../resources/auth-helper.js');
-const { readExternalSources } = require('ibm-cloud-sdk-core');
+const { readExternalSources, getQueryParam } = require('ibm-cloud-sdk-core');
 const { v4: uuidv4 } = require('uuid');
 
 // testcase timeout value (40s).
@@ -41,6 +41,8 @@ const aliasNames = { 'name': 'RcSdkAlias1Node', 'update': 'RcSdkAliasUpdate1Node
 const testRegionId1 = 'global';
 const testRegionId2 = 'global';
 const transactionId = uuidv4();
+
+const resultsPerPage = 200;
 
 let service;
 let testAccountId;
@@ -212,22 +214,30 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       headers: customHeader,
+      limit: resultsPerPage,
+      start: null,
     };
 
     let response;
-    try {
-      response = await service.listResourceInstances(params);
-    } catch (err) {
-      done(err);
-    }
 
-    expect(response).toBeDefined();
-    expect(response.status).toEqual(200);
-    expect(response.result).toBeDefined();
+    do {
+      try {
+        response = await service.listResourceInstances(params);
+      } catch (err) {
+        done(err);
+      }
+      expect(response).toBeDefined();
+      expect(response.status).toEqual(200);
+      expect(response.result).toBeDefined();
 
-    const result = response.result;
-    expect(result.rows_count).toBeGreaterThanOrEqual(1);
-    expect(result.resources.length).toBeGreaterThanOrEqual(1);
+      const result = response.result;
+      expect(result.rows_count).toBeGreaterThanOrEqual(1);
+      expect(result.rows_count).toBeLessThanOrEqual(resultsPerPage);
+      expect(result.resources.length).toBeGreaterThanOrEqual(1);
+      expect(result.resources.length).toBeLessThanOrEqual(resultsPerPage);
+
+      params.start = getQueryParam(result.next_url, 'start');
+    } while (params.start != null);
 
     done();
   });
@@ -410,22 +420,30 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       headers: customHeader,
+      limit: resultsPerPage,
+      start: null,
     };
 
     let response;
-    try {
-      response = await service.listResourceAliases(params);
-    } catch (err) {
-      done(err);
-    }
 
-    expect(response).toBeDefined();
-    expect(response.status).toEqual(200);
-    expect(response.result).toBeDefined();
+    do {
+      try {
+        response = await service.listResourceAliases(params);
+      } catch (err) {
+        done(err);
+      }
+      expect(response).toBeDefined();
+      expect(response.status).toEqual(200);
+      expect(response.result).toBeDefined();
 
-    const result = response.result;
-    expect(result.rows_count).toBeGreaterThanOrEqual(1);
-    expect(result.resources.length).toBeGreaterThanOrEqual(1);
+      const result = response.result;
+      expect(result.rows_count).toBeGreaterThanOrEqual(1);
+      expect(result.rows_count).toBeLessThanOrEqual(resultsPerPage);
+      expect(result.resources.length).toBeGreaterThanOrEqual(1);
+      expect(result.resources.length).toBeLessThanOrEqual(resultsPerPage);
+
+      params.start = getQueryParam(result.next_url, 'start');
+    } while (params.start != null);
 
     done();
   });
@@ -494,20 +512,35 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('11a - List Resource Aliases For Instance', async () => {
+  test('11a - List Resource Aliases For Instance', async done => {
     expect(testInstanceGuid).toBeTruthy();
 
     const params = {
       id: testInstanceGuid,
+      limit: resultsPerPage,
+      start: null,
     };
 
-    const res = await service.listResourceAliasesForInstance(params);
-    expect(res).toBeDefined();
-    expect(res.result).toBeDefined();
+    let response;
 
-    const result = res.result;
-    expect(result.rows_count).toEqual(1);
-    expect(result.resources).toHaveLength(1);
+    do {
+      try {
+        response = await service.listResourceAliasesForInstance(params);
+      } catch (err) {
+        done(err);
+      }
+      expect(response).toBeDefined();
+      expect(response.status).toEqual(200);
+      expect(response.result).toBeDefined();
+
+      const result = response.result;
+      expect(result.rows_count).toEqual(1);
+      expect(result.resources.length).toEqual(1);
+
+      params.start = getQueryParam(result.next_url, 'start');
+    } while (params.start != null);
+
+    done();
   });
 
   test('12 - Create A Resource Binding', async done => {
@@ -631,22 +664,30 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       headers: customHeader,
+      limit: resultsPerPage,
+      start: null,
     };
 
     let response;
-    try {
-      response = await service.listResourceBindings(params);
-    } catch (err) {
-      done(err);
-    }
 
-    expect(response).toBeDefined();
-    expect(response.status).toEqual(200);
-    expect(response.result).toBeDefined();
+    do {
+      try {
+        response = await service.listResourceBindings(params);
+      } catch (err) {
+        done(err);
+      }
+      expect(response).toBeDefined();
+      expect(response.status).toEqual(200);
+      expect(response.result).toBeDefined();
 
-    const result = response.result;
-    expect(result.rows_count).toBeGreaterThanOrEqual(1);
-    expect(result.resources.length).toBeGreaterThanOrEqual(1);
+      const result = response.result;
+      expect(result.rows_count).toBeGreaterThanOrEqual(1);
+      expect(result.rows_count).toBeLessThanOrEqual(resultsPerPage);
+      expect(result.resources.length).toBeGreaterThanOrEqual(1);
+      expect(result.resources.length).toBeLessThanOrEqual(resultsPerPage);
+
+      params.start = getQueryParam(result.next_url, 'start');
+    } while (params.start != null);
 
     done();
   });
@@ -714,21 +755,35 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('17a - ListResourceBindingsForAlias()', async () => {
+  test('17a - ListResourceBindingsForAlias()', async done => {
     expect(testAliasGuid).toBeTruthy();
 
     const params = {
       id: testAliasGuid,
+      limit: resultsPerPage,
+      start: null,
     };
 
-    const res = await service.listResourceBindingsForAlias(params);
-    expect(res).toBeDefined();
-    expect(res.status).toEqual(200);
-    expect(res.result).toBeDefined();
+    let response;
 
-    const result = res.result;
-    expect(result.rows_count).toEqual(1);
-    expect(result.resources).toHaveLength(1);
+    do {
+      try {
+        response = await service.listResourceBindingsForAlias(params);
+      } catch (err) {
+        done(err);
+      }
+      expect(response).toBeDefined();
+      expect(response.status).toEqual(200);
+      expect(response.result).toBeDefined();
+
+      const result = response.result;
+      expect(result.rows_count).toEqual(1);
+      expect(result.resources.length).toEqual(1);
+
+      params.start = getQueryParam(result.next_url, 'start');
+    } while (params.start != null);
+
+    done();
   });
 
   test('18 - Create A Resource Key For Instance', async done => {
@@ -847,22 +902,30 @@ describe('ResourceControllerV2_integration', () => {
 
     const params = {
       headers: customHeader,
+      limit: resultsPerPage,
+      start: null,
     };
 
     let response;
-    try {
-      response = await service.listResourceKeys(params);
-    } catch (err) {
-      done(err);
-    }
 
-    expect(response).toBeDefined();
-    expect(response.status).toEqual(200);
-    expect(response.result).toBeDefined();
+    do {
+      try {
+        response = await service.listResourceKeys(params);
+      } catch (err) {
+        done(err);
+      }
+      expect(response).toBeDefined();
+      expect(response.status).toEqual(200);
+      expect(response.result).toBeDefined();
 
-    const result = response.result;
-    expect(result.rows_count).toBeGreaterThanOrEqual(1);
-    expect(result.resources.length).toBeGreaterThanOrEqual(1);
+      const result = response.result;
+      expect(result.rows_count).toBeGreaterThanOrEqual(1);
+      expect(result.rows_count).toBeLessThanOrEqual(resultsPerPage);
+      expect(result.resources.length).toBeGreaterThanOrEqual(1);
+      expect(result.resources.length).toBeLessThanOrEqual(resultsPerPage);
+
+      params.start = getQueryParam(result.next_url, 'start');
+    } while (params.start != null);
 
     done();
   });
@@ -929,18 +992,33 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('23a - List Resource Keys For Instance', async () => {
+  test('23a - List Resource Keys For Instance', async done => {
     const params = {
       id: testInstanceGuid,
+      limit: resultsPerPage,
+      start: null,
     };
 
-    const res = await service.listResourceKeysForInstance(params);
-    expect(res).toBeDefined();
-    expect(res.result).toBeDefined();
+    let response;
 
-    const result = res.result;
-    expect(result.rows_count).toEqual(1);
-    expect(result.resources).toHaveLength(1);
+    do {
+      try {
+        response = await service.listResourceKeysForInstance(params);
+      } catch (err) {
+        done(err);
+      }
+      expect(response).toBeDefined();
+      expect(response.status).toEqual(200);
+      expect(response.result).toBeDefined();
+
+      const result = response.result;
+      expect(result.rows_count).toEqual(1);
+      expect(result.resources.length).toEqual(1);
+
+      params.start = getQueryParam(result.next_url, 'start');
+    } while (params.start != null);
+
+    done();
   });
 
   test('24 - Create A Resource Key For Alias', async done => {

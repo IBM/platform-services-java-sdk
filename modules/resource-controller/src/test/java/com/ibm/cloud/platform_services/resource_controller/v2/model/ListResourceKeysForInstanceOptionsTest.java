@@ -33,8 +33,12 @@ public class ListResourceKeysForInstanceOptionsTest {
   public void testListResourceKeysForInstanceOptions() throws Throwable {
     ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptionsModel = new ListResourceKeysForInstanceOptions.Builder()
       .id("testString")
+      .limit(Long.valueOf("100"))
+      .start("testString")
       .build();
     assertEquals(listResourceKeysForInstanceOptionsModel.id(), "testString");
+    assertEquals(listResourceKeysForInstanceOptionsModel.limit(), Long.valueOf("100"));
+    assertEquals(listResourceKeysForInstanceOptionsModel.start(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

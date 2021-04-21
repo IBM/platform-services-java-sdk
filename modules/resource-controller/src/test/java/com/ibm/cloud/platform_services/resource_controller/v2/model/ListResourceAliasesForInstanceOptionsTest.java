@@ -33,8 +33,12 @@ public class ListResourceAliasesForInstanceOptionsTest {
   public void testListResourceAliasesForInstanceOptions() throws Throwable {
     ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptionsModel = new ListResourceAliasesForInstanceOptions.Builder()
       .id("testString")
+      .limit(Long.valueOf("100"))
+      .start("testString")
       .build();
     assertEquals(listResourceAliasesForInstanceOptionsModel.id(), "testString");
+    assertEquals(listResourceAliasesForInstanceOptionsModel.limit(), Long.valueOf("100"));
+    assertEquals(listResourceAliasesForInstanceOptionsModel.start(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

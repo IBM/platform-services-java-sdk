@@ -39,7 +39,8 @@ public class ListResourceInstancesOptionsTest {
       .resourcePlanId("testString")
       .type("testString")
       .subType("testString")
-      .limit("testString")
+      .limit(Long.valueOf("100"))
+      .start("testString")
       .state("active")
       .orderDirection("asc")
       .updatedFrom("2019-01-08T00:00:00.000Z")
@@ -52,7 +53,8 @@ public class ListResourceInstancesOptionsTest {
     assertEquals(listResourceInstancesOptionsModel.resourcePlanId(), "testString");
     assertEquals(listResourceInstancesOptionsModel.type(), "testString");
     assertEquals(listResourceInstancesOptionsModel.subType(), "testString");
-    assertEquals(listResourceInstancesOptionsModel.limit(), "testString");
+    assertEquals(listResourceInstancesOptionsModel.limit(), Long.valueOf("100"));
+    assertEquals(listResourceInstancesOptionsModel.start(), "testString");
     assertEquals(listResourceInstancesOptionsModel.state(), "active");
     assertEquals(listResourceInstancesOptionsModel.orderDirection(), "asc");
     assertEquals(listResourceInstancesOptionsModel.updatedFrom(), "2019-01-08T00:00:00.000Z");

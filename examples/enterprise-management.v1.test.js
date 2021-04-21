@@ -107,7 +107,6 @@ describe('EnterpriseManagementV1', () => {
     });
 
     originalLog('createAccountGroup() result:');
-
     // begin-create_account_group
 
     const params = {
@@ -137,7 +136,6 @@ describe('EnterpriseManagementV1', () => {
     });
 
     originalLog('listAccountGroups() result:');
-
     // begin-list_account_groups
 
     const params = {
@@ -167,7 +165,6 @@ describe('EnterpriseManagementV1', () => {
     expect(accountGroupId).not.toBeNull();
 
     originalLog('getAccountGroup() result:');
-
     // begin-get_account_group
 
     const params = {
@@ -231,7 +228,6 @@ describe('EnterpriseManagementV1', () => {
     const parentCrn = 'crn:v1:bluemix:public:enterprise::a/' + enterpriseAccountId + '::account-group:' + accountGroupId;
 
     originalLog('createAccount() result:');
-
     // begin-create_account
 
     const params = {
@@ -290,7 +286,6 @@ describe('EnterpriseManagementV1', () => {
     });
 
     originalLog('listAccounts() result:');
-
     // begin-list_accounts
 
     const params = {
@@ -320,7 +315,6 @@ describe('EnterpriseManagementV1', () => {
     expect(accountId).not.toBeNull();
 
     originalLog('getAccount() result:');
-
     // begin-get_account
 
     const params = {
@@ -413,7 +407,6 @@ describe('EnterpriseManagementV1', () => {
     });
 
     originalLog('listEnterprises() result:');
-
     // begin-list_enterprises
 
     const params = {
@@ -441,7 +434,6 @@ describe('EnterpriseManagementV1', () => {
     });
 
     originalLog('getEnterprise() result:');
-
     // begin-get_enterprise
 
     const params = {

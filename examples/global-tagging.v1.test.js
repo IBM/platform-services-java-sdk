@@ -74,7 +74,8 @@ describe('GlobalTaggingV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('createTag() result:');
     // begin-create_tag
 
     const params = {
@@ -84,7 +85,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.createTag(params)
       .then(res => {
-        console.log('createTag() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -101,7 +102,8 @@ describe('GlobalTaggingV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listTags() result:');
     // begin-list_tags
 
     const params = {
@@ -114,7 +116,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.listTags(params)
       .then(res => {
-        console.log('listTags() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -130,7 +132,8 @@ describe('GlobalTaggingV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('attachTag() result:');
     // begin-attach_tag
 
     const resourceModel = {
@@ -145,7 +148,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.attachTag(params)
       .then(res => {
-        console.log('attachTag() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -161,7 +164,8 @@ describe('GlobalTaggingV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('detachTag() result:');
     // begin-detach_tag
 
     const resourceModel = {
@@ -176,7 +180,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.detachTag(params)
       .then(res => {
-        console.log('detachTag() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -192,7 +196,8 @@ describe('GlobalTaggingV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('deleteTag() result:');
     // begin-delete_tag
 
     const params = {
@@ -202,7 +207,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.deleteTag(params)
       .then(res => {
-        console.log('deleteTag() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -218,7 +223,8 @@ describe('GlobalTaggingV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('deleteTagAll() result:');
     // begin-delete_tag_all
 
     const params = {
@@ -227,7 +233,7 @@ describe('GlobalTaggingV1', () => {
 
     globalTaggingService.deleteTagAll(params)
       .then(res => {
-        console.log('deleteTagAll() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

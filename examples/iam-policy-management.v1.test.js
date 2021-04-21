@@ -83,7 +83,8 @@ describe('IamPolicyManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('createPolicy() result:');
     // begin-create_policy
 
     const policySubjects = [
@@ -132,7 +133,7 @@ describe('IamPolicyManagementV1', () => {
     iamPolicyManagementService.createPolicy(params)
       .then(res => {
         examplePolicyId = res.result.id;
-        console.log('createPolicy() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -150,7 +151,8 @@ describe('IamPolicyManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getPolicy() result:');
     // begin-get_policy
 
     const params = {
@@ -160,7 +162,7 @@ describe('IamPolicyManagementV1', () => {
     iamPolicyManagementService.getPolicy(params)
       .then(res => {
         examplePolicyETag = res.headers.etag;
-        console.log('getPolicy() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -180,7 +182,8 @@ describe('IamPolicyManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('updatePolicy() result:');
     // begin-update_policy
 
     const policySubjects = [
@@ -231,7 +234,7 @@ describe('IamPolicyManagementV1', () => {
     iamPolicyManagementService.updatePolicy(params)
       .then(res => {
         examplePolicyETag = res.headers.etag;
-        console.log('updatePolicy() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -250,7 +253,8 @@ describe('IamPolicyManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('patchPolicy() result:');
     // begin-patch_policy
 
     const params = {
@@ -279,7 +283,8 @@ describe('IamPolicyManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listPolicies() result:');
     // begin-list_policies
 
     const params = {
@@ -290,7 +295,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.listPolicies(params)
       .then(res => {
-        console.log('listPolicies() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -316,7 +321,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.deletePolicy(params)
       .then(res => {
-        console.log('deletePolicy() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -334,7 +339,8 @@ describe('IamPolicyManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('createRole() result:');
     // begin-create_role
 
     const params = {
@@ -348,7 +354,7 @@ describe('IamPolicyManagementV1', () => {
     iamPolicyManagementService.createRole(params)
       .then(res => {
         exampleCustomRoleId = res.result.id;
-        console.log('createRole() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -366,7 +372,8 @@ describe('IamPolicyManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getRole() result:');
     // begin-get_role
 
     const params = {
@@ -376,7 +383,7 @@ describe('IamPolicyManagementV1', () => {
     iamPolicyManagementService.getRole(params)
       .then(res => {
         exampleCustomRoleEtag = res.headers.etag;
-        console.log('getRole() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -395,7 +402,8 @@ describe('IamPolicyManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('updateRole() result:');
     // begin-update_role
 
     const updatedRoleActions = ['iam-groups.groups.read', 'iam-groups.groups.list'];
@@ -407,7 +415,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.updateRole(params)
       .then(res => {
-        console.log('updateRole() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -424,7 +432,8 @@ describe('IamPolicyManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listRoles() result:');
     // begin-list_roles
 
     const params = {
@@ -433,7 +442,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.listRoles(params)
       .then(res => {
-        console.log('listRoles() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -460,7 +469,7 @@ describe('IamPolicyManagementV1', () => {
 
     iamPolicyManagementService.deleteRole(params)
       .then(res => {
-        console.log('deleteRole() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)

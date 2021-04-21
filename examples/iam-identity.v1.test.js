@@ -84,7 +84,8 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('createApiKey() result:');
     // begin-create_api_key
 
     const params = {
@@ -96,7 +97,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.createApiKey(params)
       .then(res => {
         apikeyId = res.result.id
-        console.log('createApiKey() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -112,7 +113,8 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listApiKeys() result:');
     // begin-list_api_keys
 
     const params = {
@@ -123,7 +125,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.listApiKeys(params)
       .then(res => {
-        console.log('listApiKeys() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -139,7 +141,8 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getApiKeysDetails() result:');
     // begin-get_api_keys_details
 
     const params = {
@@ -149,7 +152,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.getApiKeysDetails(params)
       .then(res => {
-        console.log('getApiKeysDetails() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -167,7 +170,8 @@ describe('IamIdentityV1', () => {
     });
 
     expect(apikeyId).not.toBeNull();
-
+  
+    originalLog('getApiKey() result:');
     // begin-get_api_key
 
     const params = {
@@ -177,7 +181,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.getApiKey(params)
       .then(res => {
         apikeyEtag = res.headers['etag'];
-        console.log('getApiKey() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -196,7 +200,8 @@ describe('IamIdentityV1', () => {
 
     expect(apikeyId).not.toBeNull();
     expect(apikeyEtag).not.toBeNull();
-
+  
+    originalLog('updateApiKey() result:');
     // begin-update_api_key
 
     const params = {
@@ -207,7 +212,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.updateApiKey(params)
       .then(res => {
-        console.log('updateApiKey() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -234,7 +239,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.lockApiKey(params)
       .then(res => {
-        console.log('lockApiKey() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err);
@@ -261,7 +266,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.unlockApiKey(params)
       .then(res => {
-        console.log('unlockApiKey() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err);
@@ -288,7 +293,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.deleteApiKey(params)
       .then(res => {
-        console.log('deleteApiKey() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err);
@@ -304,7 +309,8 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('createServiceId() result:');
     // begin-create_service_id
 
     const params = {
@@ -316,7 +322,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.createServiceId(params)
       .then(res => {
         svcId = res.result.id;
-        console.log('createServiceId() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -334,7 +340,8 @@ describe('IamIdentityV1', () => {
     });
 
     expect(svcId).not.toBeNull();
-
+  
+    originalLog('getServiceId() result:');
     // begin-get_service_id
 
     const params = {
@@ -344,7 +351,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.getServiceId(params)
       .then(res => {
         svcIdEtag = res.headers['etag'];
-        console.log('getServiceId() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -360,7 +367,8 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listServiceIds() result:');
     // begin-list_service_ids
 
     const params = {
@@ -370,7 +378,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.listServiceIds(params)
       .then(res => {
-        console.log('listServiceIds() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -389,7 +397,8 @@ describe('IamIdentityV1', () => {
 
     expect(svcId).not.toBeNull();
     expect(svcIdEtag).not.toBeNull();
-
+  
+    originalLog('updateServiceId() result:');
     // begin-update_service_id
 
     const params = {
@@ -400,7 +409,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.updateServiceId(params)
       .then(res => {
-        console.log('updateServiceId() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err);
@@ -427,7 +436,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.lockServiceId(params)
       .then(res => {
-        console.log('lockServiceId() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err);
@@ -454,7 +463,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.unlockServiceId(params)
       .then(res => {
-        console.log('unlockServiceId() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err);
@@ -482,7 +491,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.deleteServiceId(params)
       .then(res => {
-        console.log('deleteServiceId() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err);
@@ -501,7 +510,8 @@ describe('IamIdentityV1', () => {
     });
 
     expect(accountSettingsEtag).toBeNull();
-
+  
+    originalLog('getAccountSettings() result:');
     // begin-getAccountSettings
 
     const params = {
@@ -511,7 +521,7 @@ describe('IamIdentityV1', () => {
     iamIdentityService.getAccountSettings(params)
       .then(res => {
         accountSettingsEtag = res.headers['etag'];
-        console.log('getAccountSettings() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -530,7 +540,8 @@ describe('IamIdentityV1', () => {
     });
 
     expect(accountSettingsEtag).not.toBeNull();
-
+  
+    originalLog('updateAccountSettings() result:');
     // begin-updateAccountSettings
 
     const params = {
@@ -545,7 +556,7 @@ describe('IamIdentityV1', () => {
 
     iamIdentityService.updateAccountSettings(params)
       .then(res => {
-        console.log('updateAccountSettings() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

@@ -71,7 +71,8 @@ describe('GlobalSearchV2', () => {
     });
 
     const searchCursor = undefined;
-
+  
+    originalLog('search() result:');
     // begin-search
 
     const params = {
@@ -82,7 +83,7 @@ describe('GlobalSearchV2', () => {
 
     globalSearchService.search(params)
       .then(res => {
-        console.log('search() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -99,12 +100,13 @@ describe('GlobalSearchV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getSupportedTypes() result:');
     // begin-get_supported_types
 
     globalSearchService.getSupportedTypes({})
       .then(res => {
-        console.log('getSupportedTypes() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

@@ -96,7 +96,8 @@ describe('UserManagementV1', () => {
     expect(viewerRoleId).not.toBeNull();
     expect(accountId).not.toBeNull();
     expect(accessGroupId).not.toBeNull();
-
+  
+    originalLog('inviteUsers() result:');
     // begin-invite_users
 
     const inviteUserModel = {
@@ -138,7 +139,7 @@ describe('UserManagementV1', () => {
     userManagementAdminService.inviteUsers(params)
       .then(res => {
         deleteUserId = res.result.resources[0].id;
-        console.log('inviteUsers() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -157,7 +158,8 @@ describe('UserManagementV1', () => {
     });
 
     expect(accountId).not.toBeNull();
-
+  
+    originalLog('listUsers() result:');
     // begin-list_users
 
     const params = {
@@ -168,7 +170,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.listUsers(params)
       .then(res => {
-        console.log('listUsers() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -198,7 +200,7 @@ describe('UserManagementV1', () => {
 
     userManagementAdminService.removeUser(params)
       .then(res => {
-        console.log('removeUser() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -218,7 +220,8 @@ describe('UserManagementV1', () => {
 
     expect(accountId).not.toBeNull();
     expect(userId).not.toBeNull();
-
+  
+    originalLog('getUserProfile() result:');
     // begin-get_user_profile
 
     const params = {
@@ -228,7 +231,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.getUserProfile(params)
       .then(res => {
-        console.log('getUserProfile() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -259,7 +262,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.updateUserProfile(params)
       .then(res => {
-        console.log('updateUserProfile() response status code:' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -279,7 +282,8 @@ describe('UserManagementV1', () => {
 
     expect(accountId).not.toBeNull();
     expect(userId).not.toBeNull();
-
+  
+    originalLog('getUserSettings() result:');
     // begin-get_user_settings
 
     const params = {
@@ -289,7 +293,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.getUserSettings(params)
       .then(res => {
-        console.log('getUserSettings() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -321,7 +325,7 @@ describe('UserManagementV1', () => {
 
     userManagementService.updateUserSettings(params)
       .then(res => {
-        console.log('updateUserSettings() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)

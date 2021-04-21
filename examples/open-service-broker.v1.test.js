@@ -86,7 +86,8 @@ describe('OpenServiceBrokerV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getServiceInstanceState() result:');
     // begin-get_service_instance_state
 
     const params = {
@@ -95,7 +96,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.getServiceInstanceState(params)
       .then(res => {
-        console.log('getServiceInstanceState() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -111,7 +112,8 @@ describe('OpenServiceBrokerV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('replaceServiceInstanceState() result:');
     // begin-replace_service_instance_state
 
     const params = {
@@ -123,7 +125,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.replaceServiceInstanceState(params)
       .then(res => {
-        console.log('replaceServiceInstanceState() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -139,7 +141,8 @@ describe('OpenServiceBrokerV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('replaceServiceInstance() result:');
     // begin-replace_service_instance
 
     const context = {
@@ -163,7 +166,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.replaceServiceInstance(params)
       .then(res => {
-        console.log('replaceServiceInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -179,7 +182,8 @@ describe('OpenServiceBrokerV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('updateServiceInstance() result:');
     // begin-update_service_instance
 
     const context = {
@@ -203,7 +207,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.updateServiceInstance(params)
       .then(res => {
-        console.log('updateServiceInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -219,12 +223,13 @@ describe('OpenServiceBrokerV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listCatalog() result:');
     // begin-list_catalog
 
     openServiceBrokerService.listCatalog({})
       .then(res => {
-        console.log('listCatalog() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -240,7 +245,8 @@ describe('OpenServiceBrokerV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getLastOperation() result:');
     // begin-get_last_operation
 
     const params = {
@@ -252,7 +258,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.getLastOperation(params)
       .then(res => {
-        console.log('getLastOperation() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -268,7 +274,8 @@ describe('OpenServiceBrokerV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('replaceServiceBinding() result:');
     // begin-replace_service_binding
 
     const pars = { example: 'property'};
@@ -289,7 +296,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.replaceServiceBinding(params)
       .then(res => {
-        console.log('replaceServiceBinding() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -305,7 +312,8 @@ describe('OpenServiceBrokerV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('deleteServiceInstance() result:');
     // begin-delete_service_instance
 
     const params = {
@@ -316,7 +324,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.deleteServiceInstance(params)
       .then(res => {
-        console.log('deleteServiceInstance() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -344,7 +352,7 @@ describe('OpenServiceBrokerV1', () => {
 
     openServiceBrokerService.deleteServiceBinding(params)
       .then(res => {
-        console.log('deleteServiceBinding() response status: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)

@@ -75,7 +75,8 @@ describe('GlobalCatalogV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('createCatalogEntry() result:');
     // begin-create_catalog_entry
     const overviewModelEN = {
       display_name: 'Example Web Starter',
@@ -119,7 +120,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.createCatalogEntry(params)
       .then(res => {
-        console.log('createCatalogEntry() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -138,7 +139,8 @@ describe('GlobalCatalogV1', () => {
     });
 
     expect(catalogEntryId).not.toBeNull();
-
+  
+    originalLog('getCatalogEntry() result:');
     // begin-get_catalog_entry
 
     const params = {
@@ -148,7 +150,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.getCatalogEntry(params)
       .then(res => {
-        console.log('getCatalogEntry() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -167,7 +169,8 @@ describe('GlobalCatalogV1', () => {
     });
 
     expect(catalogEntryId).not.toBeNull();
-
+  
+    originalLog('updateCatalogEntry() result:');
     // begin-update_catalog_entry
     const overviewModelEN = {
       display_name: 'Example Web Starter V2',
@@ -209,7 +212,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.updateCatalogEntry(params)
       .then(res => {
-        console.log('updateCatalogEntry() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -226,7 +229,8 @@ describe('GlobalCatalogV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listCatalogEntries() result:');
     // begin-list_catalog_entries
     const params = {
       offset: 0,
@@ -236,7 +240,7 @@ describe('GlobalCatalogV1', () => {
     };
     globalCatalogService.listCatalogEntries(params)
       .then(res => {
-        console.log('listCatalogEntries() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -255,7 +259,8 @@ describe('GlobalCatalogV1', () => {
     });
 
     expect(catalogEntryId).not.toBeNull();
-
+  
+    originalLog('getChildObjects() result:');
     // begin-get_child_objects
 
     const params = {
@@ -268,7 +273,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.getChildObjects(params)
       .then(res => {
-        console.log('getChildObjects() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -296,7 +301,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.restoreCatalogEntry(params)
       .then(res => {
-        console.log('restoreCatalogEntry() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -315,7 +320,8 @@ describe('GlobalCatalogV1', () => {
     });
 
     expect(catalogEntryId).not.toBeNull();
-
+  
+    originalLog('getVisibility() result:');
     // begin-get_visibility
 
     const params = {
@@ -324,7 +330,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.getVisibility(params)
       .then(res => {
-        console.log('getVisibility() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -353,10 +359,10 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.updateVisibility(params)
       .then(res => {
-        console.log('updateVisibility() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
-        console.log('updateVisibility() returned the following error: ' + err);
+        console.warn(err);
       });
 
     // end-update_visibility
@@ -372,7 +378,8 @@ describe('GlobalCatalogV1', () => {
     });
 
     expect(catalogEntryId).not.toBeNull();
-
+  
+    originalLog('getPricing() result:');
     // begin-get_pricing
 
     const params = {
@@ -381,7 +388,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.getPricing(params)
       .then(res => {
-        console.log('getPricing() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -400,7 +407,8 @@ describe('GlobalCatalogV1', () => {
     });
 
     expect(catalogEntryId).not.toBeNull();
-
+  
+    originalLog('getAuditLogs() result:');
     // begin-get_audit_logs
 
     const params = {
@@ -411,7 +419,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.getAuditLogs(params)
       .then(res => {
-        console.log('getAuditLogs() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -441,7 +449,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.uploadArtifact(params)
       .then(res => {
-        console.log('uploadArtifact() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -462,7 +470,8 @@ describe('GlobalCatalogV1', () => {
     expect(catalogEntryId).not.toBeNull();
 
     let responseContentType = null;
-
+  
+    originalLog('getArtifact() result:');
     // begin-get_artifact
 
     const params = {
@@ -476,8 +485,7 @@ describe('GlobalCatalogV1', () => {
         return streamToPromise(res.result);
       })
       .then(contents => {
-        console.log('getArtifact() result:\n');
-        console.log(`Artifact content type: ${responseContentType}\nArtifact contents: ${contents}`);
+        console.log(contents);
       })
       .catch(err => {
         console.warn(err)
@@ -496,7 +504,8 @@ describe('GlobalCatalogV1', () => {
     });
 
     expect(catalogEntryId).not.toBeNull();
-
+  
+    originalLog('listArtifacts() result:');
     // begin-list_artifacts
 
     const params = {
@@ -505,7 +514,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.listArtifacts(params)
       .then(res => {
-        console.log('listArtifacts() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -534,7 +543,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.deleteArtifact(params)
       .then(res => {
-        console.log('deleteArtifact() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -562,7 +571,7 @@ describe('GlobalCatalogV1', () => {
 
     globalCatalogService.deleteCatalogEntry(params)
       .then(res => {
-        console.log('deleteCatalogEntry() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)

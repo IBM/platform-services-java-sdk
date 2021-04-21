@@ -73,7 +73,8 @@ describe('CaseManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('createCase() result:');
     // begin-createCase
 
     const offeringType = {
@@ -97,7 +98,7 @@ describe('CaseManagementV1', () => {
     caseManagementService.createCase(params)
       .then(res => {
         caseNumber = res.result.number
-        console.log('createCase() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -116,7 +117,8 @@ describe('CaseManagementV1', () => {
     });
 
     expect(caseNumber).not.toBeNull();
-
+  
+    originalLog('getCase() result:');
     // begin-getCase
 
     const fieldsToReturn = [
@@ -133,7 +135,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.getCase(params)
       .then(res => {
-        console.log('getCase() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -150,7 +152,8 @@ describe('CaseManagementV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getCases() result:');
     // begin-getCases
 
     const params = {
@@ -162,7 +165,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.getCases({})
       .then(res => {
-        console.log('getCases() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -182,7 +185,8 @@ describe('CaseManagementV1', () => {
     });
 
     expect(caseNumber).not.toBeNull();
-
+  
+    originalLog('addComment() result:');
     // begin-addComment
 
     const params = {
@@ -192,7 +196,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.addComment(params)
       .then(res => {
-        console.log('addComment() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -211,7 +215,8 @@ describe('CaseManagementV1', () => {
     });
 
     expect(caseNumber).not.toBeNull();
-
+  
+    originalLog('addWatchlist() result:');
     // begin-addWatchlist
 
     const watchlistUsers = [
@@ -225,7 +230,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.addWatchlist(params)
       .then(res => {
-        console.log('addWatchlist() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -244,7 +249,8 @@ describe('CaseManagementV1', () => {
     });
 
     expect(caseNumber).not.toBeNull();
-
+  
+    originalLog('removeWatchlist() result:');
     // begin-removeWatchlist
 
     const watchlistUsers = [
@@ -258,7 +264,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.removeWatchlist(params)
       .then(res => {
-        console.log('removeWatchlist() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -278,7 +284,8 @@ describe('CaseManagementV1', () => {
 
     expect(caseNumber).not.toBeNull();
     expect(resourceCrn).not.toBeNull();
-
+  
+    originalLog('addResource() result:');
     // begin-addResource
 
     const params = {
@@ -289,7 +296,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.addResource(params)
       .then(res => {
-        console.log('addResource() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -308,7 +315,8 @@ describe('CaseManagementV1', () => {
     });
 
     expect(caseNumber).not.toBeNull();
-
+  
+    originalLog('uploadFile() result:');
     // begin-uploadFile
 
     const exampleFileContent = 'This is the content of the file to upload.';
@@ -329,7 +337,7 @@ describe('CaseManagementV1', () => {
     caseManagementService.uploadFile(params)
       .then(res => {
         attachmentId = res.result.id;
-        console.log('uploadFile() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -351,7 +359,8 @@ describe('CaseManagementV1', () => {
     expect(attachmentId).not.toBeNull();
 
     let responseContentType = null;
-
+  
+    originalLog('downloadFile() result:');
     // begin-downloadFile
 
     const params = {
@@ -365,8 +374,7 @@ describe('CaseManagementV1', () => {
         return streamToPromise(res.result);
       })
       .then(contents => {
-        console.log('downloadFile() result:\n');
-        console.log(`Attachment content-type: ${responseContentType}\nAttachment contents: ${contents}`);
+        console.log(contents);
       })
       .catch(err => {
         console.warn(err)
@@ -386,7 +394,8 @@ describe('CaseManagementV1', () => {
 
     expect(caseNumber).not.toBeNull();
     expect(attachmentId).not.toBeNull();
-
+  
+    originalLog('deleteFile() result:');
     // begin-deleteFile
 
     const params = {
@@ -396,7 +405,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.deleteFile(params)
       .then(res => {
-        console.log('deleteFile() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -415,7 +424,8 @@ describe('CaseManagementV1', () => {
     });
 
     expect(caseNumber).not.toBeNull();
-
+  
+    originalLog('updateCaseStatus() result:');
     // begin-updateCaseStatus
 
     const statusPayloadModel = {
@@ -431,7 +441,7 @@ describe('CaseManagementV1', () => {
 
     caseManagementService.updateCaseStatus(params)
       .then(res => {
-        console.log('updateCaseStatus() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

@@ -73,7 +73,8 @@ describe('EnterpriseBillingUnitsV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getBillingUnit() result:');
     // begin-get_billing_unit
     true
     const params = {
@@ -82,7 +83,7 @@ describe('EnterpriseBillingUnitsV1', () => {
 
     enterpriseBillingUnitsService.getBillingUnit(params)
       .then(res => {
-        console.log('getBillingUnit() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -99,7 +100,8 @@ describe('EnterpriseBillingUnitsV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listBillingUnits() result:');
     // begin-list_billing_units
 
     const params = {
@@ -107,7 +109,7 @@ describe('EnterpriseBillingUnitsV1', () => {
     };
     enterpriseBillingUnitsService.listBillingUnits(params)
       .then(res => {
-        console.log('listBillingUnits() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -124,7 +126,8 @@ describe('EnterpriseBillingUnitsV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listBillingOptions() result:');
     // begin-list_billing_options
 
     const params = {
@@ -133,7 +136,7 @@ describe('EnterpriseBillingUnitsV1', () => {
 
     enterpriseBillingUnitsService.listBillingOptions(params)
       .then(res => {
-        console.log('listBillingOptions() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -150,7 +153,8 @@ describe('EnterpriseBillingUnitsV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getCreditPools() result:');
     // begin-get_credit_pools
 
     const params = {
@@ -159,7 +163,7 @@ describe('EnterpriseBillingUnitsV1', () => {
 
     enterpriseBillingUnitsService.getCreditPools(params)
       .then(res => {
-        console.log('getCreditPools() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

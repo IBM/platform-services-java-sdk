@@ -80,7 +80,8 @@ describe('ResourceManagerV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-    
+  
+    originalLog('createResourceGroup() result:');
     // begin-create_resource_group
     const params = {
       accountId: exampleUserAccountId,
@@ -90,7 +91,7 @@ describe('ResourceManagerV2', () => {
     resourceManagerService.createResourceGroup(params)
       .then(res => {
         resourceGroupId = res.result.id;
-        console.log('createResourceGroup() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -107,7 +108,8 @@ describe('ResourceManagerV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-    
+  
+    originalLog('getResourceGroup() result:');
     // begin-get_resource_group
     
     const params = {
@@ -116,7 +118,7 @@ describe('ResourceManagerV2', () => {
     
     resourceManagerService.getResourceGroup(params)
       .then(res => {
-        console.log('getResourceGroup() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -133,7 +135,8 @@ describe('ResourceManagerV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-    
+  
+    originalLog('updateResourceGroup() result:');
     // begin-update_resource_group
     
     const params = {
@@ -144,7 +147,7 @@ describe('ResourceManagerV2', () => {
     
     resourceManagerService.updateResourceGroup(params)
       .then(res => {
-        console.log('updateResourceGroup() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -162,7 +165,8 @@ describe('ResourceManagerV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-    
+  
+    originalLog('listResourceGroups() result:');
     // begin-list_resource_groups
     const params = {
       accountId: exampleUserAccountId,
@@ -171,7 +175,7 @@ describe('ResourceManagerV2', () => {
     
     resourceManagerService.listResourceGroups(params)
       .then(res => {
-        console.log('listResourceGroups() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -197,7 +201,7 @@ describe('ResourceManagerV2', () => {
     
     deleteResourceManagerService.deleteResourceGroup(params)
       .then(res => {
-        console.log('deleteResourceGroup() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -215,12 +219,13 @@ describe('ResourceManagerV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-    
+  
+    originalLog('listQuotaDefinitions() result:');
     // begin-list_quota_definitions
     
     resourceManagerService.listQuotaDefinitions({})
       .then(res => {
-        console.log('listQuotaDefinitions() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -237,7 +242,8 @@ describe('ResourceManagerV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-    
+  
+    originalLog('getQuotaDefinition() result:');
     // begin-get_quota_definition
     
     const params = {
@@ -246,7 +252,7 @@ describe('ResourceManagerV2', () => {
     
     resourceManagerService.getQuotaDefinition(params)
       .then(res => {
-        console.log('getQuotaDefinition() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

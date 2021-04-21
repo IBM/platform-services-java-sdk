@@ -80,6 +80,7 @@ describe('PostureManagementV1', () => {
       done(output);
     });
   
+    originalLog('listProfiles() result:');
     // begin-list_profiles
 
     const params = {
@@ -90,7 +91,7 @@ describe('PostureManagementV1', () => {
     postureManagementService.listProfiles(params)
       .then(res => {
         profileId = res.result.profiles[0].profile_id;
-        console.log('listProfiles() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -108,6 +109,7 @@ describe('PostureManagementV1', () => {
       done(output);
     });
   
+    originalLog('listScopes() result:');
     // begin-list_scopes
 
     const params = {
@@ -118,7 +120,7 @@ describe('PostureManagementV1', () => {
     postureManagementService.listScopes(params)
       .then(res => {
         scopeId = res.result.scopes[0].scope_id;
-        console.log('listScopes() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -136,6 +138,7 @@ describe('PostureManagementV1', () => {
       done(output);
     });
   
+    originalLog('createValidation() result:');
     // begin-create_validation
     
     const params = {
@@ -147,7 +150,7 @@ describe('PostureManagementV1', () => {
     
     postureManagementService.createValidation(params)
       .then(res => {
-        console.log('createValidation() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

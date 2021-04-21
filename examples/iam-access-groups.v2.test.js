@@ -74,7 +74,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('createAccessGroup() result:');
     // begin-create_access_group
 
     const params = {
@@ -86,7 +87,7 @@ describe('IamAccessGroupsV2', () => {
     iamAccessGroupsService.createAccessGroup(params)
       .then(res => {
         testGroupId = res.result.id;
-        console.log('createAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -102,7 +103,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getAccessGroup() result:');
     // begin-get_access_group
 
     const params = {
@@ -112,7 +114,7 @@ describe('IamAccessGroupsV2', () => {
     iamAccessGroupsService.getAccessGroup(params)
       .then(res => {
         testGroupETag = res.headers['etag'];
-        console.log('getAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -128,7 +130,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('updateAccessGroup() result:');
     // begin-update_access_group
 
     const params = {
@@ -140,7 +143,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.updateAccessGroup(params)
       .then(res => {
-        console.log('updateAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -156,7 +159,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listAccessGroups() result:');
     // begin-list_access_groups
 
     const params = {
@@ -165,7 +169,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.listAccessGroups(params)
       .then(res => {
-        console.log('listAccessGroups() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -181,7 +185,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('addMembersToAccessGroup() result:');
     // begin-add_members_to_access_group
 
     const groupMember1 = {
@@ -199,7 +204,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.addMembersToAccessGroup(params)
       .then(res => {
-        console.log('addMembersToAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -225,7 +230,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.isMemberOfAccessGroup(params)
       .then(res => {
-        console.log('isMemberOfAccessGroup() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -241,7 +246,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listAccessGroupMembers() result:');
     // begin-list_access_group_members
 
     const params = {
@@ -250,7 +256,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.listAccessGroupMembers(params)
       .then(res => {
-        console.log('listAccessGroupMembers() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -276,7 +282,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.removeMemberFromAccessGroup(params)
       .then(res => {
-        console.log('removeMemberFromAccessGroup() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -292,7 +298,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('removeMembersFromAccessGroup() result:');
     // begin-remove_members_from_access_group
 
     const params = {
@@ -302,7 +309,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.removeMembersFromAccessGroup(params)
       .then(res => {
-        console.log('removeMembersFromAccessGroup() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -318,7 +325,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('addMemberToMultipleAccessGroups() result:');
     // begin-add_member_to_multiple_access_groups
 
     const params = {
@@ -330,7 +338,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.addMemberToMultipleAccessGroups(params)
       .then(res => {
-        console.log('addMemberToMultipleAccessGroups() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -346,7 +354,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('removeMemberFromAllAccessGroups() result:');
     // begin-remove_member_from_all_access_groups
 
     const params = {
@@ -356,7 +365,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.removeMemberFromAllAccessGroups(params)
       .then(res => {
-        console.log('removeMemberFromAllAccessGroups() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -372,7 +381,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('addAccessGroupRule() result:');
     // begin-add_access_group_rule
 
     const params = {
@@ -392,7 +402,7 @@ describe('IamAccessGroupsV2', () => {
     iamAccessGroupsService.addAccessGroupRule(params)
       .then(res => {
         testClaimRuleId = res.result.id;
-        console.log('addAccessGroupRule() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -408,7 +418,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getAccessGroupRule() result:');
     // begin-get_access_group_rule
 
     const params = {
@@ -419,7 +430,7 @@ describe('IamAccessGroupsV2', () => {
     iamAccessGroupsService.getAccessGroupRule(params)
       .then(res => {
         testClaimRuleETag = res.headers['etag'];
-        console.log('getAccessGroupRule() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -435,7 +446,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('replaceAccessGroupRule() result:');
     // begin-replace_access_group_rule
 
     const params = {
@@ -456,7 +468,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.replaceAccessGroupRule(params)
       .then(res => {
-        console.log('replaceAccessGroupRule() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -472,7 +484,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('listAccessGroupRules() result:');
     // begin-list_access_group_rules
 
     const params = {
@@ -481,7 +494,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.listAccessGroupRules(params)
       .then(res => {
-        console.log('listAccessGroupRules() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -507,7 +520,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.removeAccessGroupRule(params)
       .then(res => {
-        console.log('removeAccessGroupRule() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)
@@ -523,7 +536,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getAccountSettings() result:');
     // begin-get_account_settings
 
     const params = {
@@ -532,7 +546,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.getAccountSettings(params)
       .then(res => {
-        console.log('getAccountSettings() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -548,7 +562,8 @@ describe('IamAccessGroupsV2', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('updateAccountSettings() result:');
     // begin-update_account_settings
 
     const params = {
@@ -558,7 +573,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.updateAccountSettings(params)
       .then(res => {
-        console.log('updateAccountSettings() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -583,7 +598,7 @@ describe('IamAccessGroupsV2', () => {
 
     iamAccessGroupsService.deleteAccessGroup(params)
       .then(res => {
-        console.log('deleteAccessGroup() response status code: ' + res.status);
+        done();
       })
       .catch(err => {
         console.warn(err)

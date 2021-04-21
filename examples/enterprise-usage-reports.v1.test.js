@@ -72,7 +72,8 @@ describe('EnterpriseUsageReportsV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getResourceUsageReport() result:');
     // begin-get_resource_usage_report
 
     const params = {
@@ -83,7 +84,7 @@ describe('EnterpriseUsageReportsV1', () => {
 
     enterpriseUsageReportsService.getResourceUsageReport(params)
       .then(res => {
-        console.log('getResourceUsageReport() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

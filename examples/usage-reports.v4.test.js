@@ -75,7 +75,8 @@ describe('UsageReportsV4', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getAccountSummary() result:');
     // begin-get_account_summary
 
     const params = {
@@ -85,7 +86,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getAccountSummary(params)
       .then(res => {
-        console.log('getAccountSummary() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -101,7 +102,8 @@ describe('UsageReportsV4', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getAccountUsage() result:');
     // begin-get_account_usage
 
     const params = {
@@ -111,7 +113,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getAccountUsage(params)
       .then(res => {
-        console.log('getAccountUsage() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -127,7 +129,8 @@ describe('UsageReportsV4', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getResourceGroupUsage() result:');
     // begin-get_resource_group_usage
 
     const params = {
@@ -138,7 +141,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getResourceGroupUsage(params)
       .then(res => {
-        console.log('getResourceGroupUsage() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -154,7 +157,8 @@ describe('UsageReportsV4', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getOrgUsage() result:');
     // begin-get_org_usage
 
     const params = {
@@ -165,7 +169,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getOrgUsage(params)
       .then(res => {
-        console.log('getOrgUsage() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -181,7 +185,8 @@ describe('UsageReportsV4', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getResourceUsageAccount() result:');
     // begin-get_resource_usage_account
 
     const params = {
@@ -191,7 +196,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getResourceUsageAccount(params)
       .then(res => {
-        console.log('getResourceUsageAccount() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -207,7 +212,8 @@ describe('UsageReportsV4', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getResourceUsageResourceGroup() result:');
     // begin-get_resource_usage_resource_group
 
     const params = {
@@ -218,7 +224,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getResourceUsageResourceGroup(params)
       .then(res => {
-        console.log('getResourceUsageResourceGroup() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)
@@ -234,7 +240,8 @@ describe('UsageReportsV4', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-
+  
+    originalLog('getResourceUsageOrg() result:');
     // begin-get_resource_usage_org
 
     const params = {
@@ -245,7 +252,7 @@ describe('UsageReportsV4', () => {
 
     usageReportsService.getResourceUsageOrg(params)
       .then(res => {
-        console.log('getResourceUsageOrg() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

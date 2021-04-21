@@ -72,7 +72,8 @@ describe('UsageMeteringV4', () => {
     const resourceInstanceId = "crn:v1:staging:public:cloudantnosqldb:us-south:a/f5086e3df886495991303628d21da513:3aafbbee-88e2-4d29-b144-9d267d97064c::";
     const planId = "cloudant-standard";
     const region = "us-south";
-
+  
+    originalLog('reportResourceUsage() result:');
     // begin-report_resource_usage
 
     // Report usage for a mythical resource.
@@ -110,7 +111,7 @@ describe('UsageMeteringV4', () => {
 
     usageMeteringService.reportResourceUsage(params)
       .then(res => {
-        console.log('reportResourceUsage() result:\n' + JSON.stringify(res.result, null, 2));
+        console.log(JSON.stringify(res.result, null, 2));
       })
       .catch(err => {
         console.warn(err)

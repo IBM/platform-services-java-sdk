@@ -36,7 +36,8 @@ public class ListResourceKeysOptionsTest {
       .name("testString")
       .resourceGroupId("testString")
       .resourceId("testString")
-      .limit("testString")
+      .limit(Long.valueOf("100"))
+      .start("testString")
       .updatedFrom("2019-01-08T00:00:00.000Z")
       .updatedTo("2019-01-08T00:00:00.000Z")
       .build();
@@ -44,7 +45,8 @@ public class ListResourceKeysOptionsTest {
     assertEquals(listResourceKeysOptionsModel.name(), "testString");
     assertEquals(listResourceKeysOptionsModel.resourceGroupId(), "testString");
     assertEquals(listResourceKeysOptionsModel.resourceId(), "testString");
-    assertEquals(listResourceKeysOptionsModel.limit(), "testString");
+    assertEquals(listResourceKeysOptionsModel.limit(), Long.valueOf("100"));
+    assertEquals(listResourceKeysOptionsModel.start(), "testString");
     assertEquals(listResourceKeysOptionsModel.updatedFrom(), "2019-01-08T00:00:00.000Z");
     assertEquals(listResourceKeysOptionsModel.updatedTo(), "2019-01-08T00:00:00.000Z");
   }

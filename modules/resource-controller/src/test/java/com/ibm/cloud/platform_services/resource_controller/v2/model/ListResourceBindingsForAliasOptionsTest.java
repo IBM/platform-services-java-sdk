@@ -33,8 +33,12 @@ public class ListResourceBindingsForAliasOptionsTest {
   public void testListResourceBindingsForAliasOptions() throws Throwable {
     ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptionsModel = new ListResourceBindingsForAliasOptions.Builder()
       .id("testString")
+      .limit(Long.valueOf("100"))
+      .start("testString")
       .build();
     assertEquals(listResourceBindingsForAliasOptionsModel.id(), "testString");
+    assertEquals(listResourceBindingsForAliasOptionsModel.limit(), Long.valueOf("100"));
+    assertEquals(listResourceBindingsForAliasOptionsModel.start(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

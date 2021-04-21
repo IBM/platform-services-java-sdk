@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-77b4cbf2-20210420-134305
  */
 
 package com.ibm.cloud.platform_services.resource_controller.v2;
@@ -119,7 +119,8 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all resource instances.
    *
-   * Get a list of all resource instances.
+   * View a list of all available resource instances. Resources is a broad term that could mean anything from a service
+   * instance to a virtual machine associated with the customer account.
    *
    * @param listResourceInstancesOptions the {@link ListResourceInstancesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstancesList}
@@ -158,6 +159,9 @@ public class ResourceController extends BaseService {
     if (listResourceInstancesOptions.limit() != null) {
       builder.query("limit", String.valueOf(listResourceInstancesOptions.limit()));
     }
+    if (listResourceInstancesOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceInstancesOptions.start()));
+    }
     if (listResourceInstancesOptions.state() != null) {
       builder.query("state", String.valueOf(listResourceInstancesOptions.state()));
     }
@@ -178,7 +182,8 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all resource instances.
    *
-   * Get a list of all resource instances.
+   * View a list of all available resource instances. Resources is a broad term that could mean anything from a service
+   * instance to a virtual machine associated with the customer account.
    *
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstancesList}
    */
@@ -189,7 +194,8 @@ public class ResourceController extends BaseService {
   /**
    * Create (provision) a new resource instance.
    *
-   * Provision a new resource in the specified location for the selected plan.
+   * When you provision a service you get an instance of that service. An instance represents the resource with which
+   * you create, and additionally, represents a chargeable record of which billing can occur.
    *
    * @param createResourceInstanceOptions the {@link CreateResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstance}
@@ -229,7 +235,8 @@ public class ResourceController extends BaseService {
   /**
    * Get a resource instance.
    *
-   * Retrieve a resource instance by ID.
+   * Retrieve a resource instance by ID. Find more details on a particular instance, like when it was provisioned and
+   * who provisioned it.
    *
    * @param getResourceInstanceOptions the {@link GetResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstance}
@@ -253,7 +260,8 @@ public class ResourceController extends BaseService {
   /**
    * Delete a resource instance.
    *
-   * Delete a resource instance by ID.
+   * Delete a resource instance by ID. If the resource instance has any resource keys or aliases associated with it, use
+   * the `recursive=true` parameter to delete it.
    *
    * @param deleteResourceInstanceOptions the {@link DeleteResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -278,7 +286,7 @@ public class ResourceController extends BaseService {
   /**
    * Update a resource instance.
    *
-   * Update a resource instance by ID.
+   * You can use the ID to make updates to the resource instance, like changing the name or plan.
    *
    * @param updateResourceInstanceOptions the {@link UpdateResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstance}
@@ -316,7 +324,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all resource aliases for the instance.
    *
-   * Get a list of all resource aliases for the instance.
+   * Retrieving a list of all resource aliases can help you find out who's using the resource instance.
    *
    * @param listResourceAliasesForInstanceOptions the {@link ListResourceAliasesForInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAliasesList}
@@ -332,6 +340,12 @@ public class ResourceController extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listResourceAliasesForInstanceOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceAliasesForInstanceOptions.limit()));
+    }
+    if (listResourceAliasesForInstanceOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceAliasesForInstanceOptions.start()));
+    }
     ResponseConverter<ResourceAliasesList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceAliasesList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -340,7 +354,8 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all the resource keys for the instance.
    *
-   * Get a list of all the resource keys for the instance.
+   * You may have many resource keys for one resource instance. For example, you may have a different resource key for
+   * each user or each role.
    *
    * @param listResourceKeysForInstanceOptions the {@link ListResourceKeysForInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceKeysList}
@@ -356,6 +371,12 @@ public class ResourceController extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listResourceKeysForInstanceOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceKeysForInstanceOptions.limit()));
+    }
+    if (listResourceKeysForInstanceOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceKeysForInstanceOptions.start()));
+    }
     ResponseConverter<ResourceKeysList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceKeysList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -389,7 +410,8 @@ public class ResourceController extends BaseService {
   /**
    * Unlock a resource instance.
    *
-   * Unlocks a resource instance by ID.
+   * Unlock a resource instance to update or delete it. Unlocking a resource instance does not affect child resources
+   * like aliases, bindings or keys.
    *
    * @param unlockResourceInstanceOptions the {@link UnlockResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstance}
@@ -442,6 +464,9 @@ public class ResourceController extends BaseService {
     }
     if (listResourceKeysOptions.limit() != null) {
       builder.query("limit", String.valueOf(listResourceKeysOptions.limit()));
+    }
+    if (listResourceKeysOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceKeysOptions.start()));
     }
     if (listResourceKeysOptions.updatedFrom() != null) {
       builder.query("updated_from", String.valueOf(listResourceKeysOptions.updatedFrom()));
@@ -605,6 +630,9 @@ public class ResourceController extends BaseService {
     }
     if (listResourceBindingsOptions.limit() != null) {
       builder.query("limit", String.valueOf(listResourceBindingsOptions.limit()));
+    }
+    if (listResourceBindingsOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceBindingsOptions.start()));
     }
     if (listResourceBindingsOptions.updatedFrom() != null) {
       builder.query("updated_from", String.valueOf(listResourceBindingsOptions.updatedFrom()));
@@ -775,6 +803,9 @@ public class ResourceController extends BaseService {
     if (listResourceAliasesOptions.limit() != null) {
       builder.query("limit", String.valueOf(listResourceAliasesOptions.limit()));
     }
+    if (listResourceAliasesOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceAliasesOptions.start()));
+    }
     if (listResourceAliasesOptions.updatedFrom() != null) {
       builder.query("updated_from", String.valueOf(listResourceAliasesOptions.updatedFrom()));
     }
@@ -916,6 +947,12 @@ public class ResourceController extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listResourceBindingsForAliasOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listResourceBindingsForAliasOptions.limit()));
+    }
+    if (listResourceBindingsForAliasOptions.start() != null) {
+      builder.query("start", String.valueOf(listResourceBindingsForAliasOptions.start()));
+    }
     ResponseConverter<ResourceBindingsList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceBindingsList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);

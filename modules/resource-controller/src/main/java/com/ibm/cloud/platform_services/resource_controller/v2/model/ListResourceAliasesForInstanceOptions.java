@@ -20,15 +20,21 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class ListResourceAliasesForInstanceOptions extends GenericModel {
 
   protected String id;
+  protected Long limit;
+  protected String start;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String id;
+    private Long limit;
+    private String start;
 
     private Builder(ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptions) {
       this.id = listResourceAliasesForInstanceOptions.id;
+      this.limit = listResourceAliasesForInstanceOptions.limit;
+      this.start = listResourceAliasesForInstanceOptions.start;
     }
 
     /**
@@ -65,12 +71,36 @@ public class ListResourceAliasesForInstanceOptions extends GenericModel {
       this.id = id;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListResourceAliasesForInstanceOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListResourceAliasesForInstanceOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
+      return this;
+    }
   }
 
   protected ListResourceAliasesForInstanceOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
     id = builder.id;
+    limit = builder.limit;
+    start = builder.start;
   }
 
   /**
@@ -91,6 +121,30 @@ public class ListResourceAliasesForInstanceOptions extends GenericModel {
    */
   public String id() {
     return id;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * Limit on how many items should be returned.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * An optional token that indicates the beginning of the page of results to be returned. Any additional query
+   * parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value is
+   * obtained from the 'next_url' field of the operation response.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 }
 

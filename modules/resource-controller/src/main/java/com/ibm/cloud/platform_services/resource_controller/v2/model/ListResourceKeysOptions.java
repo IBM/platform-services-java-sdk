@@ -23,7 +23,8 @@ public class ListResourceKeysOptions extends GenericModel {
   protected String name;
   protected String resourceGroupId;
   protected String resourceId;
-  protected String limit;
+  protected Long limit;
+  protected String start;
   protected String updatedFrom;
   protected String updatedTo;
 
@@ -35,7 +36,8 @@ public class ListResourceKeysOptions extends GenericModel {
     private String name;
     private String resourceGroupId;
     private String resourceId;
-    private String limit;
+    private Long limit;
+    private String start;
     private String updatedFrom;
     private String updatedTo;
 
@@ -45,6 +47,7 @@ public class ListResourceKeysOptions extends GenericModel {
       this.resourceGroupId = listResourceKeysOptions.resourceGroupId;
       this.resourceId = listResourceKeysOptions.resourceId;
       this.limit = listResourceKeysOptions.limit;
+      this.start = listResourceKeysOptions.start;
       this.updatedFrom = listResourceKeysOptions.updatedFrom;
       this.updatedTo = listResourceKeysOptions.updatedTo;
     }
@@ -114,8 +117,19 @@ public class ListResourceKeysOptions extends GenericModel {
      * @param limit the limit
      * @return the ListResourceKeysOptions builder
      */
-    public Builder limit(String limit) {
+    public Builder limit(long limit) {
       this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListResourceKeysOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
       return this;
     }
 
@@ -148,6 +162,7 @@ public class ListResourceKeysOptions extends GenericModel {
     resourceGroupId = builder.resourceGroupId;
     resourceId = builder.resourceId;
     limit = builder.limit;
+    start = builder.start;
     updatedFrom = builder.updatedFrom;
     updatedTo = builder.updatedTo;
   }
@@ -213,8 +228,21 @@ public class ListResourceKeysOptions extends GenericModel {
    *
    * @return the limit
    */
-  public String limit() {
+  public Long limit() {
     return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * An optional token that indicates the beginning of the page of results to be returned. Any additional query
+   * parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value is
+   * obtained from the 'next_url' field of the operation response.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 
   /**

@@ -717,6 +717,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .mfa("NONE")
                     .sessionExpirationInSeconds("86400")
                     .sessionInvalidationInSeconds("7200")
+                    .maxSessionsPerIdentity("10")
                     .build();
 
             // Invoke operation

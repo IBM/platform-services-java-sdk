@@ -40,6 +40,7 @@ public class UpdateAccountSettingsOptionsTest {
       .mfa("NONE")
       .sessionExpirationInSeconds("testString")
       .sessionInvalidationInSeconds("testString")
+      .maxSessionsPerIdentity("testString")
       .build();
     assertEquals(updateAccountSettingsOptionsModel.ifMatch(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.accountId(), "testString");
@@ -49,6 +50,7 @@ public class UpdateAccountSettingsOptionsTest {
     assertEquals(updateAccountSettingsOptionsModel.mfa(), "NONE");
     assertEquals(updateAccountSettingsOptionsModel.sessionExpirationInSeconds(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.sessionInvalidationInSeconds(), "testString");
+    assertEquals(updateAccountSettingsOptionsModel.maxSessionsPerIdentity(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

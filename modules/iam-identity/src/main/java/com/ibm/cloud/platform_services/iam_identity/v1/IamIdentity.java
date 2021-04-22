@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-e6cfc86e-20210308-084627
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-77b4cbf2-20210422-122303
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -61,7 +61,7 @@ public class IamIdentity extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "iam_identity";
 
-  public static final String DEFAULT_SERVICE_URL = "https://iam.cloud.ibm.com";
+  public static final String DEFAULT_SERVICE_URL = "https://iam.test.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `IamIdentity` client.
@@ -319,9 +319,8 @@ public class IamIdentity extends BaseService {
   /**
    * Deletes an API key.
    *
-   * Deletes an API key. Existing tokens will remain valid until expired. Refresh tokens  will not work any more for
-   * this API key. Users can manage user API keys for themself, or service ID API  keys for service IDs that are bound
-   * to an entity they have access  to.
+   * Deletes an API key. Existing tokens will remain valid until expired. Users can manage user API keys for themself,
+   * or service ID API  keys for service IDs that are bound to an entity they have access  to.
    *
    * @param deleteApiKeyOptions the {@link DeleteApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -691,6 +690,9 @@ public class IamIdentity extends BaseService {
     }
     if (updateAccountSettingsOptions.sessionInvalidationInSeconds() != null) {
       contentJson.addProperty("session_invalidation_in_seconds", updateAccountSettingsOptions.sessionInvalidationInSeconds());
+    }
+    if (updateAccountSettingsOptions.maxSessionsPerIdentity() != null) {
+      contentJson.addProperty("max_sessions_per_identity", updateAccountSettingsOptions.maxSessionsPerIdentity());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<AccountSettingsResponse> responseConverter =

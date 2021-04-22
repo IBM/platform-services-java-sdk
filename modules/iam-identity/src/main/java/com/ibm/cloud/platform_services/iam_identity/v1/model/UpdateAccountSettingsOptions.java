@@ -35,7 +35,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   }
 
   /**
-   * Defines whether or not creating a Service Id is access controlled. Valid values:
+   * Defines whether or not creating platform API keys is access controlled. Valid values:
    *   * RESTRICTED - to apply access control
    *   * NOT_RESTRICTED - to remove access control
    *   * NOT_SET - to 'unset' a previous set value.
@@ -81,6 +81,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   protected String mfa;
   protected String sessionExpirationInSeconds;
   protected String sessionInvalidationInSeconds;
+  protected String maxSessionsPerIdentity;
 
   /**
    * Builder.
@@ -94,6 +95,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     private String mfa;
     private String sessionExpirationInSeconds;
     private String sessionInvalidationInSeconds;
+    private String maxSessionsPerIdentity;
 
     private Builder(UpdateAccountSettingsOptions updateAccountSettingsOptions) {
       this.ifMatch = updateAccountSettingsOptions.ifMatch;
@@ -104,6 +106,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
       this.mfa = updateAccountSettingsOptions.mfa;
       this.sessionExpirationInSeconds = updateAccountSettingsOptions.sessionExpirationInSeconds;
       this.sessionInvalidationInSeconds = updateAccountSettingsOptions.sessionInvalidationInSeconds;
+      this.maxSessionsPerIdentity = updateAccountSettingsOptions.maxSessionsPerIdentity;
     }
 
     /**
@@ -219,6 +222,17 @@ public class UpdateAccountSettingsOptions extends GenericModel {
       this.sessionInvalidationInSeconds = sessionInvalidationInSeconds;
       return this;
     }
+
+    /**
+     * Set the maxSessionsPerIdentity.
+     *
+     * @param maxSessionsPerIdentity the maxSessionsPerIdentity
+     * @return the UpdateAccountSettingsOptions builder
+     */
+    public Builder maxSessionsPerIdentity(String maxSessionsPerIdentity) {
+      this.maxSessionsPerIdentity = maxSessionsPerIdentity;
+      return this;
+    }
   }
 
   protected UpdateAccountSettingsOptions(Builder builder) {
@@ -234,6 +248,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     mfa = builder.mfa;
     sessionExpirationInSeconds = builder.sessionExpirationInSeconds;
     sessionInvalidationInSeconds = builder.sessionInvalidationInSeconds;
+    maxSessionsPerIdentity = builder.maxSessionsPerIdentity;
   }
 
   /**
@@ -286,7 +301,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the restrictCreatePlatformApikey.
    *
-   * Defines whether or not creating a Service Id is access controlled. Valid values:
+   * Defines whether or not creating platform API keys is access controlled. Valid values:
    *   * RESTRICTED - to apply access control
    *   * NOT_RESTRICTED - to remove access control
    *   * NOT_SET - to 'unset' a previous set value.
@@ -349,6 +364,19 @@ public class UpdateAccountSettingsOptions extends GenericModel {
    */
   public String sessionInvalidationInSeconds() {
     return sessionInvalidationInSeconds;
+  }
+
+  /**
+   * Gets the maxSessionsPerIdentity.
+   *
+   * Defines the max allowed sessions per identity required by the account. Value values:
+   *   * Any whole number greater than 0
+   *   * NOT_SET - To unset account setting and use service default.
+   *
+   * @return the maxSessionsPerIdentity
+   */
+  public String maxSessionsPerIdentity() {
+    return maxSessionsPerIdentity;
   }
 }
 

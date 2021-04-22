@@ -885,7 +885,7 @@ public class IamIdentityTest extends PowerMockTestCase {
   @Test
   public void testGetAccountSettingsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"restrict_create_service_id\": \"RESTRICTED\", \"restrict_create_platform_apikey\": \"RESTRICTED\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"entity_tag\": \"entityTag\", \"mfa\": \"NONE\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"sessionExpirationInSeconds\", \"session_invalidation_in_seconds\": \"sessionInvalidationInSeconds\"}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"restrict_create_service_id\": \"RESTRICTED\", \"restrict_create_platform_apikey\": \"RESTRICTED\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"entity_tag\": \"entityTag\", \"mfa\": \"NONE\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"sessionExpirationInSeconds\", \"session_invalidation_in_seconds\": \"sessionInvalidationInSeconds\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\"}";
     String getAccountSettingsPath = "/v1/accounts/testString/settings/identity";
 
     server.enqueue(new MockResponse()
@@ -937,7 +937,7 @@ public class IamIdentityTest extends PowerMockTestCase {
   @Test
   public void testUpdateAccountSettingsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"restrict_create_service_id\": \"RESTRICTED\", \"restrict_create_platform_apikey\": \"RESTRICTED\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"entity_tag\": \"entityTag\", \"mfa\": \"NONE\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"sessionExpirationInSeconds\", \"session_invalidation_in_seconds\": \"sessionInvalidationInSeconds\"}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"restrict_create_service_id\": \"RESTRICTED\", \"restrict_create_platform_apikey\": \"RESTRICTED\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"entity_tag\": \"entityTag\", \"mfa\": \"NONE\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"sessionExpirationInSeconds\", \"session_invalidation_in_seconds\": \"sessionInvalidationInSeconds\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\"}";
     String updateAccountSettingsPath = "/v1/accounts/testString/settings/identity";
 
     server.enqueue(new MockResponse()
@@ -957,6 +957,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     .mfa("NONE")
     .sessionExpirationInSeconds("testString")
     .sessionInvalidationInSeconds("testString")
+    .maxSessionsPerIdentity("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)

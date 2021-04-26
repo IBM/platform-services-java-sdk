@@ -38,7 +38,7 @@ public class AccountSettingsResponse extends GenericModel {
   }
 
   /**
-   * Defines whether or not creating a Service Id is access controlled. Valid values:
+   * Defines whether or not creating platform API keys is access controlled. Valid values:
    *   * RESTRICTED - to apply access control
    *   * NOT_RESTRICTED - to remove access control
    *   * NOT_SET - to 'unset' a previous set value.
@@ -93,6 +93,8 @@ public class AccountSettingsResponse extends GenericModel {
   protected String sessionExpirationInSeconds;
   @SerializedName("session_invalidation_in_seconds")
   protected String sessionInvalidationInSeconds;
+  @SerializedName("max_sessions_per_identity")
+  protected String maxSessionsPerIdentity;
 
   /**
    * Gets the context.
@@ -133,7 +135,7 @@ public class AccountSettingsResponse extends GenericModel {
   /**
    * Gets the restrictCreatePlatformApikey.
    *
-   * Defines whether or not creating a Service Id is access controlled. Valid values:
+   * Defines whether or not creating platform API keys is access controlled. Valid values:
    *   * RESTRICTED - to apply access control
    *   * NOT_RESTRICTED - to remove access control
    *   * NOT_SET - to 'unset' a previous set value.
@@ -218,6 +220,19 @@ public class AccountSettingsResponse extends GenericModel {
    */
   public String getSessionInvalidationInSeconds() {
     return sessionInvalidationInSeconds;
+  }
+
+  /**
+   * Gets the maxSessionsPerIdentity.
+   *
+   * Defines the max allowed sessions per identity required by the account. Valid values:
+   *   * Any whole number greater than 0
+   *   * NOT_SET - To unset account setting and use service default.
+   *
+   * @return the maxSessionsPerIdentity
+   */
+  public String getMaxSessionsPerIdentity() {
+    return maxSessionsPerIdentity;
   }
 }
 

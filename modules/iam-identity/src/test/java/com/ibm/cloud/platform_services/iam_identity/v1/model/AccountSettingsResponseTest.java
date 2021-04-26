@@ -46,5 +46,6 @@ public class AccountSettingsResponseTest {
     assertNull(accountSettingsResponseModel.getHistory());
     assertNull(accountSettingsResponseModel.getSessionExpirationInSeconds());
     assertNull(accountSettingsResponseModel.getSessionInvalidationInSeconds());
+    assertNull(accountSettingsResponseModel.getMaxSessionsPerIdentity());
   }
 }

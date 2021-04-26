@@ -1,3 +1,10 @@
+## [0.18.8](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.7...v0.18.8) (2021-04-26)
+
+
+### Bug Fixes
+
+* **IAM Identity:** update service after recent API changes ([#102](https://github.com/IBM/platform-services-node-sdk/issues/102)) ([713775a](https://github.com/IBM/platform-services-node-sdk/commit/713775ad181bfe6d0027ae6f26c88aa7c0291edc))
+
 ## [0.18.7](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.6...v0.18.7) (2021-04-21)
 
 

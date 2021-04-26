@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-e6cfc86e-20210308-084627
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-46891d34-20210426-162952
  */
 
 
@@ -365,9 +365,8 @@ class IamIdentityV1 extends BaseService {
   /**
    * Deletes an API key.
    *
-   * Deletes an API key. Existing tokens will remain valid until expired. Refresh tokens  will not work any more for
-   * this API key. Users can manage user API keys for themself, or service ID API  keys for service IDs that are bound
-   * to an entity they have access  to.
+   * Deletes an API key. Existing tokens will remain valid until expired. Users can manage user API keys for themself,
+   * or service ID API  keys for service IDs that are bound to an entity they have access  to.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - Unique ID of the API key.
@@ -905,7 +904,7 @@ class IamIdentityV1 extends BaseService {
    *   * RESTRICTED - to apply access control
    *   * NOT_RESTRICTED - to remove access control
    *   * NOT_SET - to unset a previously set value.
-   * @param {string} [params.restrictCreatePlatformApikey] - Defines whether or not creating a Service Id is access
+   * @param {string} [params.restrictCreatePlatformApikey] - Defines whether or not creating platform API keys is access
    * controlled. Valid values:
    *   * RESTRICTED - to apply access control
    *   * NOT_RESTRICTED - to remove access control
@@ -927,6 +926,10 @@ class IamIdentityV1 extends BaseService {
    * will be invalidated due  to inactivity. Valid values:
    *   * Any whole number between '900' and '7200'
    *   * NOT_SET - To unset account setting and use service default.
+   * @param {string} [params.maxSessionsPerIdentity] - Defines the max allowed sessions per identity required by the
+   * account. Value values:
+   *   * Any whole number greater than 0
+   *   * NOT_SET - To unset account setting and use service default.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>>}
    */
@@ -945,7 +948,8 @@ class IamIdentityV1 extends BaseService {
       'allowed_ip_addresses': _params.allowedIpAddresses,
       'mfa': _params.mfa,
       'session_expiration_in_seconds': _params.sessionExpirationInSeconds,
-      'session_invalidation_in_seconds': _params.sessionInvalidationInSeconds
+      'session_invalidation_in_seconds': _params.sessionInvalidationInSeconds,
+      'max_sessions_per_identity': _params.maxSessionsPerIdentity
     };
 
     const path = {
@@ -1271,7 +1275,7 @@ namespace IamIdentityV1 {
      *    * NOT_SET - to unset a previously set value.
      */
     restrictCreateServiceId?: UpdateAccountSettingsConstants.RestrictCreateServiceId | string;
-    /** Defines whether or not creating a Service Id is access controlled. Valid values:
+    /** Defines whether or not creating platform API keys is access controlled. Valid values:
      *    * RESTRICTED - to apply access control
      *    * NOT_RESTRICTED - to remove access control
      *    * NOT_SET - to 'unset' a previous set value.
@@ -1299,6 +1303,11 @@ namespace IamIdentityV1 {
      *    * NOT_SET - To unset account setting and use service default.
      */
     sessionInvalidationInSeconds?: string;
+    /** Defines the max allowed sessions per identity required by the account. Value values:
+     *    * Any whole number greater than 0
+     *    * NOT_SET - To unset account setting and use service default.
+     */
+    maxSessionsPerIdentity?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1310,7 +1319,7 @@ namespace IamIdentityV1 {
       NOT_RESTRICTED = 'NOT_RESTRICTED',
       NOT_SET = 'NOT_SET',
     }
-    /** Defines whether or not creating a Service Id is access controlled. Valid values: * RESTRICTED - to apply access control * NOT_RESTRICTED - to remove access control * NOT_SET - to 'unset' a previous set value. */
+    /** Defines whether or not creating platform API keys is access controlled. Valid values: * RESTRICTED - to apply access control * NOT_RESTRICTED - to remove access control * NOT_SET - to 'unset' a previous set value. */
     export enum RestrictCreatePlatformApikey {
       RESTRICTED = 'RESTRICTED',
       NOT_RESTRICTED = 'NOT_RESTRICTED',
@@ -1343,7 +1352,7 @@ namespace IamIdentityV1 {
      *    * NOT_SET - to 'unset' a previous set value.
      */
     restrict_create_service_id: string;
-    /** Defines whether or not creating a Service Id is access controlled. Valid values:
+    /** Defines whether or not creating platform API keys is access controlled. Valid values:
      *    * RESTRICTED - to apply access control
      *    * NOT_RESTRICTED - to remove access control
      *    * NOT_SET - to 'unset' a previous set value.
@@ -1375,6 +1384,11 @@ namespace IamIdentityV1 {
      *    * NOT_SET - To unset account setting and use service default.
      */
     session_invalidation_in_seconds: string;
+    /** Defines the max allowed sessions per identity required by the account. Valid values:
+     *    * Any whole number greater than 0
+     *    * NOT_SET - To unset account setting and use service default.
+     */
+    max_sessions_per_identity: string;
   }
 
   /** Response body format for API key V1 REST requests. */

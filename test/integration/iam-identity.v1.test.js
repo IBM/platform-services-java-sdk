@@ -601,6 +601,7 @@ describe('IamIdentityV1_integration', () => {
       mfa: 'NONE',
       session_expiration_in_seconds: '86400',
       session_invalidation_in_seconds: '7200',
+      maxSessionPerIdentity: '10',
     };
 
     iamIdentityService

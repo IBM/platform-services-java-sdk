@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -36,6 +36,8 @@ public class GetConsumptionOfferingsOptions extends GenericModel {
   protected String catalog;
   protected String select;
   protected Boolean includeHidden;
+  protected Long limit;
+  protected Long offset;
 
   /**
    * Builder.
@@ -45,12 +47,16 @@ public class GetConsumptionOfferingsOptions extends GenericModel {
     private String catalog;
     private String select;
     private Boolean includeHidden;
+    private Long limit;
+    private Long offset;
 
     private Builder(GetConsumptionOfferingsOptions getConsumptionOfferingsOptions) {
       this.digest = getConsumptionOfferingsOptions.digest;
       this.catalog = getConsumptionOfferingsOptions.catalog;
       this.select = getConsumptionOfferingsOptions.select;
       this.includeHidden = getConsumptionOfferingsOptions.includeHidden;
+      this.limit = getConsumptionOfferingsOptions.limit;
+      this.offset = getConsumptionOfferingsOptions.offset;
     }
 
     /**
@@ -111,6 +117,28 @@ public class GetConsumptionOfferingsOptions extends GenericModel {
       this.includeHidden = includeHidden;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the GetConsumptionOfferingsOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the offset.
+     *
+     * @param offset the offset
+     * @return the GetConsumptionOfferingsOptions builder
+     */
+    public Builder offset(long offset) {
+      this.offset = offset;
+      return this;
+    }
   }
 
   protected GetConsumptionOfferingsOptions(Builder builder) {
@@ -118,6 +146,8 @@ public class GetConsumptionOfferingsOptions extends GenericModel {
     catalog = builder.catalog;
     select = builder.select;
     includeHidden = builder.includeHidden;
+    limit = builder.limit;
+    offset = builder.offset;
   }
 
   /**
@@ -175,6 +205,28 @@ public class GetConsumptionOfferingsOptions extends GenericModel {
    */
   public Boolean includeHidden() {
     return includeHidden;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * number or results to return.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the offset.
+   *
+   * number of results to skip before returning values.
+   *
+   * @return the offset
+   */
+  public Long offset() {
+    return offset;
   }
 }
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -24,13 +24,14 @@ public class ImportOfferingVersionOptions extends GenericModel {
 
   protected String catalogIdentifier;
   protected String offeringId;
-  protected String zipurl;
   protected List<String> tags;
   protected List<String> targetKinds;
+  protected byte[] content;
+  protected String zipurl;
   protected String targetVersion;
   protected Boolean includeConfig;
+  protected Boolean isVsi;
   protected String repoType;
-  protected String xAuthToken;
 
   /**
    * Builder.
@@ -38,24 +39,26 @@ public class ImportOfferingVersionOptions extends GenericModel {
   public static class Builder {
     private String catalogIdentifier;
     private String offeringId;
-    private String zipurl;
     private List<String> tags;
     private List<String> targetKinds;
+    private byte[] content;
+    private String zipurl;
     private String targetVersion;
     private Boolean includeConfig;
+    private Boolean isVsi;
     private String repoType;
-    private String xAuthToken;
 
     private Builder(ImportOfferingVersionOptions importOfferingVersionOptions) {
       this.catalogIdentifier = importOfferingVersionOptions.catalogIdentifier;
       this.offeringId = importOfferingVersionOptions.offeringId;
-      this.zipurl = importOfferingVersionOptions.zipurl;
       this.tags = importOfferingVersionOptions.tags;
       this.targetKinds = importOfferingVersionOptions.targetKinds;
+      this.content = importOfferingVersionOptions.content;
+      this.zipurl = importOfferingVersionOptions.zipurl;
       this.targetVersion = importOfferingVersionOptions.targetVersion;
       this.includeConfig = importOfferingVersionOptions.includeConfig;
+      this.isVsi = importOfferingVersionOptions.isVsi;
       this.repoType = importOfferingVersionOptions.repoType;
-      this.xAuthToken = importOfferingVersionOptions.xAuthToken;
     }
 
     /**
@@ -69,12 +72,10 @@ public class ImportOfferingVersionOptions extends GenericModel {
      *
      * @param catalogIdentifier the catalogIdentifier
      * @param offeringId the offeringId
-     * @param zipurl the zipurl
      */
-    public Builder(String catalogIdentifier, String offeringId, String zipurl) {
+    public Builder(String catalogIdentifier, String offeringId) {
       this.catalogIdentifier = catalogIdentifier;
       this.offeringId = offeringId;
-      this.zipurl = zipurl;
     }
 
     /**
@@ -141,17 +142,6 @@ public class ImportOfferingVersionOptions extends GenericModel {
     }
 
     /**
-     * Set the zipurl.
-     *
-     * @param zipurl the zipurl
-     * @return the ImportOfferingVersionOptions builder
-     */
-    public Builder zipurl(String zipurl) {
-      this.zipurl = zipurl;
-      return this;
-    }
-
-    /**
      * Set the tags.
      * Existing tags will be replaced.
      *
@@ -172,6 +162,28 @@ public class ImportOfferingVersionOptions extends GenericModel {
      */
     public Builder targetKinds(List<String> targetKinds) {
       this.targetKinds = targetKinds;
+      return this;
+    }
+
+    /**
+     * Set the content.
+     *
+     * @param content the content
+     * @return the ImportOfferingVersionOptions builder
+     */
+    public Builder content(byte[] content) {
+      this.content = content;
+      return this;
+    }
+
+    /**
+     * Set the zipurl.
+     *
+     * @param zipurl the zipurl
+     * @return the ImportOfferingVersionOptions builder
+     */
+    public Builder zipurl(String zipurl) {
+      this.zipurl = zipurl;
       return this;
     }
 
@@ -198,6 +210,17 @@ public class ImportOfferingVersionOptions extends GenericModel {
     }
 
     /**
+     * Set the isVsi.
+     *
+     * @param isVsi the isVsi
+     * @return the ImportOfferingVersionOptions builder
+     */
+    public Builder isVsi(Boolean isVsi) {
+      this.isVsi = isVsi;
+      return this;
+    }
+
+    /**
      * Set the repoType.
      *
      * @param repoType the repoType
@@ -207,17 +230,6 @@ public class ImportOfferingVersionOptions extends GenericModel {
       this.repoType = repoType;
       return this;
     }
-
-    /**
-     * Set the xAuthToken.
-     *
-     * @param xAuthToken the xAuthToken
-     * @return the ImportOfferingVersionOptions builder
-     */
-    public Builder xAuthToken(String xAuthToken) {
-      this.xAuthToken = xAuthToken;
-      return this;
-    }
   }
 
   protected ImportOfferingVersionOptions(Builder builder) {
@@ -225,17 +237,16 @@ public class ImportOfferingVersionOptions extends GenericModel {
       "catalogIdentifier cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.offeringId,
       "offeringId cannot be empty");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.zipurl,
-      "zipurl cannot be null");
     catalogIdentifier = builder.catalogIdentifier;
     offeringId = builder.offeringId;
-    zipurl = builder.zipurl;
     tags = builder.tags;
     targetKinds = builder.targetKinds;
+    content = builder.content;
+    zipurl = builder.zipurl;
     targetVersion = builder.targetVersion;
     includeConfig = builder.includeConfig;
+    isVsi = builder.isVsi;
     repoType = builder.repoType;
-    xAuthToken = builder.xAuthToken;
   }
 
   /**
@@ -270,17 +281,6 @@ public class ImportOfferingVersionOptions extends GenericModel {
   }
 
   /**
-   * Gets the zipurl.
-   *
-   * URL path to zip location.
-   *
-   * @return the zipurl
-   */
-  public String zipurl() {
-    return zipurl;
-  }
-
-  /**
    * Gets the tags.
    *
    * Tags array.
@@ -300,6 +300,28 @@ public class ImportOfferingVersionOptions extends GenericModel {
    */
   public List<String> targetKinds() {
     return targetKinds;
+  }
+
+  /**
+   * Gets the content.
+   *
+   * byte array representing the content to be imported.  Only supported for OVA images at this time.
+   *
+   * @return the content
+   */
+  public byte[] content() {
+    return content;
+  }
+
+  /**
+   * Gets the zipurl.
+   *
+   * URL path to zip location.  If not specified, must provide content in the body of this call.
+   *
+   * @return the zipurl
+   */
+  public String zipurl() {
+    return zipurl;
   }
 
   /**
@@ -325,6 +347,17 @@ public class ImportOfferingVersionOptions extends GenericModel {
   }
 
   /**
+   * Gets the isVsi.
+   *
+   * Indicates that the current terraform template is used to install a VSI Image.
+   *
+   * @return the isVsi
+   */
+  public Boolean isVsi() {
+    return isVsi;
+  }
+
+  /**
    * Gets the repoType.
    *
    * The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'.
@@ -333,17 +366,6 @@ public class ImportOfferingVersionOptions extends GenericModel {
    */
   public String repoType() {
     return repoType;
-  }
-
-  /**
-   * Gets the xAuthToken.
-   *
-   * Authentication token used to access the specified zip file.
-   *
-   * @return the xAuthToken
-   */
-  public String xAuthToken() {
-    return xAuthToken;
   }
 }
 

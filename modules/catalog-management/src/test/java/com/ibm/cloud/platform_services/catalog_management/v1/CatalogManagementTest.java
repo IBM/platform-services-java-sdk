@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,69 +13,71 @@
 package com.ibm.cloud.platform_services.catalog_management.v1;
 
 import com.ibm.cloud.platform_services.catalog_management.v1.CatalogManagement;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AccessListBulkResponse;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Account;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountGroup;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFilters;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFiltersCatalogFiltersItem;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFiltersCatalogFiltersItemCatalog;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AddObjectAccessListOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ApprovalResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CanDeploySchematicsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AuditLog;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AuditRecord;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Catalog;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogObject;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CategoryFilter;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ClusterInfo;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ClusterSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CommitVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Configuration;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CopyVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateLicenseEntitlementOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateObjectAccessOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateObjectOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingInstanceOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOperatorOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteLicenseEntitlementOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectAccessListOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectAccessOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingInstanceOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOperatorOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOperatorsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteVersionOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployOperatorsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployRequestBodySchematics;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployRequirementsCheck;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Deployment;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeprecateVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Enterprise;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.EnterpriseAccountGroups;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Feature;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.FilterTerms;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Filters;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountAuditOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountFiltersOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAuditOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetClusterOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetConsumptionOfferingsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetEnterpriseOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetLicenseEntitlementsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetLicenseProvidersOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetLicensesOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetNamespacesOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAccessListOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAccessOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAuditOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingAboutOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingAuditOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingContainerImagesOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingInstanceOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingLicenseOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingUpdatesOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingWorkingCopyOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOverrideValuesOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetPreinstallOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetRepoOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetReposOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetResourceGroupsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetSchematicsWorkspacesOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetValidationStatusOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionAboutOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionContainerImagesOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionLicenseOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionUpdatesOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionWorkingCopyOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.HelmChart;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.HelmPackage;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.HelmPackageChart;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.HelmRepoList;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.HelmRepoListChart;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.IDFilter;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Image;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ImageManifest;
@@ -88,48 +90,37 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatus
 import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Kind;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.License;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseEntitlement;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseEntitlementHistoryItem;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseEntitlements;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseObject;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseOfferingReference;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseProvider;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseProviders;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Licenses;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ListCatalogsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListClustersOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListLicenseEntitlementsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ListObjectsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOfferingsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOperatorsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListVersionsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Maintainers;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.NamespaceSearchResult;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccess;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccessListResult;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectListResult;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Offering;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstance;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.OperatorDeployResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Plan;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.PreinstallVersionOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.PublicPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.PublicPublishVersionOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.PublishObject;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.PutOfferingInstanceOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Rating;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReloadOfferingOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceEnterpriseOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingIconOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOperatorOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOperatorsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.RepoInfo;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Resource;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ResourceGroup;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ResourceGroups;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SchematicsWorkspace;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SchematicsWorkspaceCatalogRef;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SchematicsWorkspaceRuntimeData;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SchematicsWorkspaceSearchResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SchematicsWorkspaceTemplateRepo;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SchematicsWorkspaceWorkspaceStatus;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Script;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchLicenseOfferingsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchLicenseVersionsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchObjectsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.SharedPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.State;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationAuthorization;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationCluster;
@@ -137,8 +128,8 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationHi
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationResource;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateCatalogAccountOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateOfferingIbmOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ValidateInstallOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Validation;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ValidationInstallOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Version;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionEntitlement;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionUpdateDescriptor;
@@ -147,30 +138,24 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
-
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -178,14 +163,14 @@ import static org.testng.Assert.*;
  * Unit test class for the CatalogManagement service.
  */
 @PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore("javax.net.ssl.*")
+@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
 public class CatalogManagementTest extends PowerMockTestCase {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
-  protected CatalogManagement testService;
+  protected CatalogManagement catalogManagementService;
 
   // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
   private Map<String, String> getTestProcessEnvironment() {
@@ -199,9 +184,9 @@ public class CatalogManagementTest extends PowerMockTestCase {
     PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
     final String serviceName = "testService";
 
-    testService = CatalogManagement.newInstance(serviceName);
+    catalogManagementService = CatalogManagement.newInstance(serviceName);
     String url = server.url("/").toString();
-    testService.setServiceUrl(url);
+    catalogManagementService.setServiceUrl(url);
   }
 
   /**
@@ -217,7 +202,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
   @Test
   public void testGetCatalogAccountWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"account_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}}";
+    String mockResponseBody = "{\"id\": \"id\", \"hide_IBM_cloud_catalog\": false, \"account_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}}";
     String getCatalogAccountPath = "/catalogaccount";
 
     server.enqueue(new MockResponse()
@@ -231,7 +216,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     GetCatalogAccountOptions getCatalogAccountOptionsModel = new GetCatalogAccountOptions();
 
     // Invoke operation with valid options model (positive test)
-    Response<Account> response = testService.getCatalogAccount(getCatalogAccountOptionsModel).execute();
+    Response<Account> response = catalogManagementService.getCatalogAccount(getCatalogAccountOptionsModel).execute();
     assertNotNull(response);
     Account responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -282,18 +267,19 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Construct an instance of the Filters model
     Filters filtersModel = new Filters.Builder()
     .includeAll(true)
-    .categoryFilters(new java.util.HashMap<String,CategoryFilter>(){{put("foo", categoryFilterModel); }})
+    .categoryFilters(new java.util.HashMap<String, CategoryFilter>() { { put("foo", categoryFilterModel); } })
     .idFilters(idFilterModel)
     .build();
 
     // Construct an instance of the UpdateCatalogAccountOptions model
     UpdateCatalogAccountOptions updateCatalogAccountOptionsModel = new UpdateCatalogAccountOptions.Builder()
     .id("testString")
+    .hideIbmCloudCatalog(true)
     .accountFilters(filtersModel)
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.updateCatalogAccount(updateCatalogAccountOptionsModel).execute();
+    Response<Void> response = catalogManagementService.updateCatalogAccount(updateCatalogAccountOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -311,6 +297,42 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateCatalogAccountPath);
+  }
+
+  @Test
+  public void testGetCatalogAccountAuditWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"list\": [{\"id\": \"id\", \"created\": \"2019-01-01T12:00:00.000Z\", \"change_type\": \"changeType\", \"target_type\": \"targetType\", \"target_id\": \"targetId\", \"who_delegate_email\": \"whoDelegateEmail\", \"message\": \"message\"}]}";
+    String getCatalogAccountAuditPath = "/catalogaccount/audit";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetCatalogAccountAuditOptions model
+    GetCatalogAccountAuditOptions getCatalogAccountAuditOptionsModel = new GetCatalogAccountAuditOptions();
+
+    // Invoke operation with valid options model (positive test)
+    Response<AuditLog> response = catalogManagementService.getCatalogAccountAudit(getCatalogAccountAuditOptionsModel).execute();
+    assertNotNull(response);
+    AuditLog responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getCatalogAccountAuditPath);
   }
 
   @Test
@@ -332,7 +354,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<AccumulatedFilters> response = testService.getCatalogAccountFilters(getCatalogAccountFiltersOptionsModel).execute();
+    Response<AccumulatedFilters> response = catalogManagementService.getCatalogAccountFilters(getCatalogAccountFiltersOptionsModel).execute();
     assertNotNull(response);
     AccumulatedFilters responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -355,7 +377,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
   @Test
   public void testListCatalogsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"_rev\": \"rev\", \"label\": \"label\", \"short_description\": \"shortDescription\", \"catalog_icon_url\": \"catalogIconUrl\", \"tags\": [\"tags\"], \"url\": \"url\", \"crn\": \"crn\", \"offerings_url\": \"offeringsUrl\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"disabled\": true, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"resource_group_id\": \"resourceGroupId\", \"owning_account\": \"owningAccount\", \"catalog_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"syndication_settings\": {\"remove_related_components\": false, \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"history\": {\"namespaces\": [\"namespaces\"], \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"last_run\": \"2019-01-01T12:00:00\"}, \"authorization\": {\"token\": \"token\", \"last_run\": \"2019-01-01T12:00:00\"}}}]}";
+    String mockResponseBody = "{\"total_count\": 10, \"resources\": [{\"id\": \"id\", \"_rev\": \"rev\", \"label\": \"label\", \"short_description\": \"shortDescription\", \"catalog_icon_url\": \"catalogIconUrl\", \"tags\": [\"tags\"], \"url\": \"url\", \"crn\": \"crn\", \"offerings_url\": \"offeringsUrl\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"disabled\": true, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"resource_group_id\": \"resourceGroupId\", \"owning_account\": \"owningAccount\", \"catalog_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"syndication_settings\": {\"remove_related_components\": false, \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"history\": {\"namespaces\": [\"namespaces\"], \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"last_run\": \"2019-01-01T12:00:00.000Z\"}, \"authorization\": {\"token\": \"token\", \"last_run\": \"2019-01-01T12:00:00.000Z\"}}, \"kind\": \"kind\"}]}";
     String listCatalogsPath = "/catalogs";
 
     server.enqueue(new MockResponse()
@@ -369,7 +391,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     ListCatalogsOptions listCatalogsOptionsModel = new ListCatalogsOptions();
 
     // Invoke operation with valid options model (positive test)
-    Response<CatalogSearchResult> response = testService.listCatalogs(listCatalogsOptionsModel).execute();
+    Response<CatalogSearchResult> response = catalogManagementService.listCatalogs(listCatalogsOptionsModel).execute();
     assertNotNull(response);
     CatalogSearchResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -391,7 +413,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
   @Test
   public void testCreateCatalogWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"label\": \"label\", \"short_description\": \"shortDescription\", \"catalog_icon_url\": \"catalogIconUrl\", \"tags\": [\"tags\"], \"url\": \"url\", \"crn\": \"crn\", \"offerings_url\": \"offeringsUrl\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"disabled\": true, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"resource_group_id\": \"resourceGroupId\", \"owning_account\": \"owningAccount\", \"catalog_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"syndication_settings\": {\"remove_related_components\": false, \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"history\": {\"namespaces\": [\"namespaces\"], \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"last_run\": \"2019-01-01T12:00:00\"}, \"authorization\": {\"token\": \"token\", \"last_run\": \"2019-01-01T12:00:00\"}}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"label\": \"label\", \"short_description\": \"shortDescription\", \"catalog_icon_url\": \"catalogIconUrl\", \"tags\": [\"tags\"], \"url\": \"url\", \"crn\": \"crn\", \"offerings_url\": \"offeringsUrl\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"disabled\": true, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"resource_group_id\": \"resourceGroupId\", \"owning_account\": \"owningAccount\", \"catalog_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"syndication_settings\": {\"remove_related_components\": false, \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"history\": {\"namespaces\": [\"namespaces\"], \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"last_run\": \"2019-01-01T12:00:00.000Z\"}, \"authorization\": {\"token\": \"token\", \"last_run\": \"2019-01-01T12:00:00.000Z\"}}, \"kind\": \"kind\"}";
     String createCatalogPath = "/catalogs";
 
     server.enqueue(new MockResponse()
@@ -401,20 +423,15 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
+    // Construct an instance of the Feature model
+    Feature featureModel = new Feature.Builder()
+    .title("testString")
+    .description("testString")
+    .build();
+
     // Construct an instance of the FilterTerms model
     FilterTerms filterTermsModel = new FilterTerms.Builder()
     .filterTerms(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .build();
-
-    // Construct an instance of the SyndicationCluster model
-    SyndicationCluster syndicationClusterModel = new SyndicationCluster.Builder()
-    .region("testString")
-    .id("testString")
-    .name("testString")
-    .resourceGroupName("testString")
-    .type("testString")
-    .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .allNamespaces(true)
     .build();
 
     // Construct an instance of the CategoryFilter model
@@ -429,30 +446,35 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .exclude(filterTermsModel)
     .build();
 
-    // Construct an instance of the SyndicationAuthorization model
-    SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
-    .token("testString")
-    .lastRun(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    // Construct an instance of the Filters model
+    Filters filtersModel = new Filters.Builder()
+    .includeAll(true)
+    .categoryFilters(new java.util.HashMap<String, CategoryFilter>() { { put("foo", categoryFilterModel); } })
+    .idFilters(idFilterModel)
+    .build();
+
+    // Construct an instance of the SyndicationCluster model
+    SyndicationCluster syndicationClusterModel = new SyndicationCluster.Builder()
+    .region("testString")
+    .id("testString")
+    .name("testString")
+    .resourceGroupName("testString")
+    .type("testString")
+    .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .allNamespaces(true)
     .build();
 
     // Construct an instance of the SyndicationHistory model
     SyndicationHistory syndicationHistoryModel = new SyndicationHistory.Builder()
     .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .clusters(new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)))
-    .lastRun(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .build();
 
-    // Construct an instance of the Feature model
-    Feature featureModel = new Feature.Builder()
-    .title("testString")
-    .description("testString")
-    .build();
-
-    // Construct an instance of the Filters model
-    Filters filtersModel = new Filters.Builder()
-    .includeAll(true)
-    .categoryFilters(new java.util.HashMap<String,CategoryFilter>(){{put("foo", categoryFilterModel); }})
-    .idFilters(idFilterModel)
+    // Construct an instance of the SyndicationAuthorization model
+    SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
+    .token("testString")
+    .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .build();
 
     // Construct an instance of the SyndicationResource model
@@ -471,21 +493,17 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .shortDescription("testString")
     .catalogIconUrl("testString")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .url("testString")
-    .crn("testString")
-    .offeringsUrl("testString")
     .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
     .disabled(true)
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
     .resourceGroupId("testString")
     .owningAccount("testString")
     .catalogFilters(filtersModel)
     .syndicationSettings(syndicationResourceModel)
+    .kind("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Catalog> response = testService.createCatalog(createCatalogOptionsModel).execute();
+    Response<Catalog> response = catalogManagementService.createCatalog(createCatalogOptionsModel).execute();
     assertNotNull(response);
     Catalog responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -507,7 +525,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
   @Test
   public void testGetCatalogWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"label\": \"label\", \"short_description\": \"shortDescription\", \"catalog_icon_url\": \"catalogIconUrl\", \"tags\": [\"tags\"], \"url\": \"url\", \"crn\": \"crn\", \"offerings_url\": \"offeringsUrl\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"disabled\": true, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"resource_group_id\": \"resourceGroupId\", \"owning_account\": \"owningAccount\", \"catalog_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"syndication_settings\": {\"remove_related_components\": false, \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"history\": {\"namespaces\": [\"namespaces\"], \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"last_run\": \"2019-01-01T12:00:00\"}, \"authorization\": {\"token\": \"token\", \"last_run\": \"2019-01-01T12:00:00\"}}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"label\": \"label\", \"short_description\": \"shortDescription\", \"catalog_icon_url\": \"catalogIconUrl\", \"tags\": [\"tags\"], \"url\": \"url\", \"crn\": \"crn\", \"offerings_url\": \"offeringsUrl\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"disabled\": true, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"resource_group_id\": \"resourceGroupId\", \"owning_account\": \"owningAccount\", \"catalog_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"syndication_settings\": {\"remove_related_components\": false, \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"history\": {\"namespaces\": [\"namespaces\"], \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"last_run\": \"2019-01-01T12:00:00.000Z\"}, \"authorization\": {\"token\": \"token\", \"last_run\": \"2019-01-01T12:00:00.000Z\"}}, \"kind\": \"kind\"}";
     String getCatalogPath = "/catalogs/testString";
 
     server.enqueue(new MockResponse()
@@ -523,7 +541,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Catalog> response = testService.getCatalog(getCatalogOptionsModel).execute();
+    Response<Catalog> response = catalogManagementService.getCatalog(getCatalogOptionsModel).execute();
     assertNotNull(response);
     Catalog responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -551,13 +569,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getCatalog(null).execute();
+    catalogManagementService.getCatalog(null).execute();
   }
 
   @Test
   public void testReplaceCatalogWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"label\": \"label\", \"short_description\": \"shortDescription\", \"catalog_icon_url\": \"catalogIconUrl\", \"tags\": [\"tags\"], \"url\": \"url\", \"crn\": \"crn\", \"offerings_url\": \"offeringsUrl\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"disabled\": true, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"resource_group_id\": \"resourceGroupId\", \"owning_account\": \"owningAccount\", \"catalog_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"syndication_settings\": {\"remove_related_components\": false, \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"history\": {\"namespaces\": [\"namespaces\"], \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"last_run\": \"2019-01-01T12:00:00\"}, \"authorization\": {\"token\": \"token\", \"last_run\": \"2019-01-01T12:00:00\"}}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"label\": \"label\", \"short_description\": \"shortDescription\", \"catalog_icon_url\": \"catalogIconUrl\", \"tags\": [\"tags\"], \"url\": \"url\", \"crn\": \"crn\", \"offerings_url\": \"offeringsUrl\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"disabled\": true, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"resource_group_id\": \"resourceGroupId\", \"owning_account\": \"owningAccount\", \"catalog_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"syndication_settings\": {\"remove_related_components\": false, \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"history\": {\"namespaces\": [\"namespaces\"], \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"last_run\": \"2019-01-01T12:00:00.000Z\"}, \"authorization\": {\"token\": \"token\", \"last_run\": \"2019-01-01T12:00:00.000Z\"}}, \"kind\": \"kind\"}";
     String replaceCatalogPath = "/catalogs/testString";
 
     server.enqueue(new MockResponse()
@@ -567,20 +585,15 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
+    // Construct an instance of the Feature model
+    Feature featureModel = new Feature.Builder()
+    .title("testString")
+    .description("testString")
+    .build();
+
     // Construct an instance of the FilterTerms model
     FilterTerms filterTermsModel = new FilterTerms.Builder()
     .filterTerms(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .build();
-
-    // Construct an instance of the SyndicationCluster model
-    SyndicationCluster syndicationClusterModel = new SyndicationCluster.Builder()
-    .region("testString")
-    .id("testString")
-    .name("testString")
-    .resourceGroupName("testString")
-    .type("testString")
-    .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .allNamespaces(true)
     .build();
 
     // Construct an instance of the CategoryFilter model
@@ -595,30 +608,35 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .exclude(filterTermsModel)
     .build();
 
-    // Construct an instance of the SyndicationAuthorization model
-    SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
-    .token("testString")
-    .lastRun(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    // Construct an instance of the Filters model
+    Filters filtersModel = new Filters.Builder()
+    .includeAll(true)
+    .categoryFilters(new java.util.HashMap<String, CategoryFilter>() { { put("foo", categoryFilterModel); } })
+    .idFilters(idFilterModel)
+    .build();
+
+    // Construct an instance of the SyndicationCluster model
+    SyndicationCluster syndicationClusterModel = new SyndicationCluster.Builder()
+    .region("testString")
+    .id("testString")
+    .name("testString")
+    .resourceGroupName("testString")
+    .type("testString")
+    .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .allNamespaces(true)
     .build();
 
     // Construct an instance of the SyndicationHistory model
     SyndicationHistory syndicationHistoryModel = new SyndicationHistory.Builder()
     .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .clusters(new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)))
-    .lastRun(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .build();
 
-    // Construct an instance of the Feature model
-    Feature featureModel = new Feature.Builder()
-    .title("testString")
-    .description("testString")
-    .build();
-
-    // Construct an instance of the Filters model
-    Filters filtersModel = new Filters.Builder()
-    .includeAll(true)
-    .categoryFilters(new java.util.HashMap<String,CategoryFilter>(){{put("foo", categoryFilterModel); }})
-    .idFilters(idFilterModel)
+    // Construct an instance of the SyndicationAuthorization model
+    SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
+    .token("testString")
+    .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .build();
 
     // Construct an instance of the SyndicationResource model
@@ -638,21 +656,17 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .shortDescription("testString")
     .catalogIconUrl("testString")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .url("testString")
-    .crn("testString")
-    .offeringsUrl("testString")
     .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
     .disabled(true)
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
     .resourceGroupId("testString")
     .owningAccount("testString")
     .catalogFilters(filtersModel)
     .syndicationSettings(syndicationResourceModel)
+    .kind("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Catalog> response = testService.replaceCatalog(replaceCatalogOptionsModel).execute();
+    Response<Catalog> response = catalogManagementService.replaceCatalog(replaceCatalogOptionsModel).execute();
     assertNotNull(response);
     Catalog responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -680,7 +694,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.replaceCatalog(null).execute();
+    catalogManagementService.replaceCatalog(null).execute();
   }
 
   @Test
@@ -701,7 +715,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteCatalog(deleteCatalogOptionsModel).execute();
+    Response<Void> response = catalogManagementService.deleteCatalog(deleteCatalogOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -730,14 +744,14 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteCatalog(null).execute();
+    catalogManagementService.deleteCatalog(null).execute();
   }
 
   @Test
-  public void testGetEnterpriseWOptions() throws Throwable {
+  public void testGetCatalogAuditWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"account_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"account_groups\": {\"keys\": {\"id\": \"id\", \"account_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}}}}";
-    String getEnterprisePath = "/enterprises/testString";
+    String mockResponseBody = "{\"list\": [{\"id\": \"id\", \"created\": \"2019-01-01T12:00:00.000Z\", \"change_type\": \"changeType\", \"target_type\": \"targetType\", \"target_id\": \"targetId\", \"who_delegate_email\": \"whoDelegateEmail\", \"message\": \"message\"}]}";
+    String getCatalogAuditPath = "/catalogs/testString/audit";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -746,15 +760,15 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetEnterpriseOptions model
-    GetEnterpriseOptions getEnterpriseOptionsModel = new GetEnterpriseOptions.Builder()
-    .enterpriseId("testString")
+    // Construct an instance of the GetCatalogAuditOptions model
+    GetCatalogAuditOptions getCatalogAuditOptionsModel = new GetCatalogAuditOptions.Builder()
+    .catalogIdentifier("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Enterprise> response = testService.getEnterprise(getEnterpriseOptionsModel).execute();
+    Response<AuditLog> response = catalogManagementService.getCatalogAudit(getCatalogAuditOptionsModel).execute();
     assertNotNull(response);
-    Enterprise responseObj = response.getResult();
+    AuditLog responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -768,114 +782,25 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getEnterprisePath);
+    assertEquals(parsedPath, getCatalogAuditPath);
   }
 
-  // Test the getEnterprise operation with null options model parameter
+  // Test the getCatalogAudit operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetEnterpriseNoOptions() throws Throwable {
+  public void testGetCatalogAuditNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getEnterprise(null).execute();
-  }
-
-  @Test
-  public void testReplaceEnterpriseWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "";
-    String replaceEnterprisePath = "/enterprises/testString";
-
-    server.enqueue(new MockResponse()
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the FilterTerms model
-    FilterTerms filterTermsModel = new FilterTerms.Builder()
-    .filterTerms(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .build();
-
-    // Construct an instance of the CategoryFilter model
-    CategoryFilter categoryFilterModel = new CategoryFilter.Builder()
-    .include(true)
-    .filter(filterTermsModel)
-    .build();
-
-    // Construct an instance of the IDFilter model
-    IDFilter idFilterModel = new IDFilter.Builder()
-    .include(filterTermsModel)
-    .exclude(filterTermsModel)
-    .build();
-
-    // Construct an instance of the Filters model
-    Filters filtersModel = new Filters.Builder()
-    .includeAll(true)
-    .categoryFilters(new java.util.HashMap<String,CategoryFilter>(){{put("foo", categoryFilterModel); }})
-    .idFilters(idFilterModel)
-    .build();
-
-    // Construct an instance of the AccountGroup model
-    AccountGroup accountGroupModel = new AccountGroup.Builder()
-    .id("testString")
-    .accountFilters(filtersModel)
-    .build();
-
-    // Construct an instance of the EnterpriseAccountGroups model
-    EnterpriseAccountGroups enterpriseAccountGroupsModel = new EnterpriseAccountGroups.Builder()
-    .keys(accountGroupModel)
-    .build();
-
-    // Construct an instance of the ReplaceEnterpriseOptions model
-    ReplaceEnterpriseOptions replaceEnterpriseOptionsModel = new ReplaceEnterpriseOptions.Builder()
-    .enterpriseId("testString")
-    .id("testString")
-    .rev("testString")
-    .accountFilters(filtersModel)
-    .accountGroups(enterpriseAccountGroupsModel)
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.replaceEnterprise(replaceEnterpriseOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
-    assertNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "PUT");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, replaceEnterprisePath);
-  }
-
-  // Test the replaceEnterprise operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testReplaceEnterpriseNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.replaceEnterprise(null).execute();
+    catalogManagementService.getCatalogAudit(null).execute();
   }
 
   @Test
   public void testGetConsumptionOfferingsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}]}";
+    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}]}";
     String getConsumptionOfferingsPath = "/offerings";
 
     server.enqueue(new MockResponse()
@@ -891,10 +816,12 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .catalog("testString")
     .select("all")
     .includeHidden(true)
+    .limit(Long.valueOf("1000"))
+    .offset(Long.valueOf("26"))
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OfferingSearchResult> response = testService.getConsumptionOfferings(getConsumptionOfferingsOptionsModel).execute();
+    Response<OfferingSearchResult> response = catalogManagementService.getConsumptionOfferings(getConsumptionOfferingsOptionsModel).execute();
     assertNotNull(response);
     OfferingSearchResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -912,6 +839,8 @@ public class CatalogManagementTest extends PowerMockTestCase {
     assertEquals(query.get("catalog"), "testString");
     assertEquals(query.get("select"), "all");
     assertEquals(Boolean.valueOf(query.get("includeHidden")), Boolean.valueOf(true));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1000"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getConsumptionOfferingsPath);
@@ -920,7 +849,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
   @Test
   public void testListOfferingsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}]}";
+    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}]}";
     String listOfferingsPath = "/catalogs/testString/offerings";
 
     server.enqueue(new MockResponse()
@@ -934,10 +863,14 @@ public class CatalogManagementTest extends PowerMockTestCase {
     ListOfferingsOptions listOfferingsOptionsModel = new ListOfferingsOptions.Builder()
     .catalogIdentifier("testString")
     .digest(true)
+    .limit(Long.valueOf("1000"))
+    .offset(Long.valueOf("26"))
+    .name("testString")
+    .sort("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OfferingSearchResult> response = testService.listOfferings(listOfferingsOptionsModel).execute();
+    Response<OfferingSearchResult> response = catalogManagementService.listOfferings(listOfferingsOptionsModel).execute();
     assertNotNull(response);
     OfferingSearchResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -952,6 +885,10 @@ public class CatalogManagementTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(Boolean.valueOf(query.get("digest")), Boolean.valueOf(true));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1000"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
+    assertEquals(query.get("name"), "testString");
+    assertEquals(query.get("sort"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listOfferingsPath);
@@ -966,13 +903,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.listOfferings(null).execute();
+    catalogManagementService.listOfferings(null).execute();
   }
 
   @Test
   public void testCreateOfferingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
     String createOfferingPath = "/catalogs/testString/offerings";
 
     server.enqueue(new MockResponse()
@@ -981,6 +918,20 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .setBody(mockResponseBody));
 
     constructClientService();
+
+    // Construct an instance of the Rating model
+    Rating ratingModel = new Rating.Builder()
+    .oneStarCount(Long.valueOf("26"))
+    .twoStarCount(Long.valueOf("26"))
+    .threeStarCount(Long.valueOf("26"))
+    .fourStarCount(Long.valueOf("26"))
+    .build();
+
+    // Construct an instance of the Feature model
+    Feature featureModel = new Feature.Builder()
+    .title("testString")
+    .description("testString")
+    .build();
 
     // Construct an instance of the Configuration model
     Configuration configurationModel = new Configuration.Builder()
@@ -994,32 +945,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .hidden(true)
     .build();
 
-    // Construct an instance of the Deployment model
-    Deployment deploymentModel = new Deployment.Builder()
-    .id("testString")
-    .label("testString")
-    .name("testString")
-    .shortDescription("testString")
-    .longDescription("testString")
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
-    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .build();
-
-    // Construct an instance of the Feature model
-    Feature featureModel = new Feature.Builder()
-    .title("testString")
-    .description("testString")
-    .build();
-
-    // Construct an instance of the License model
-    License licenseModel = new License.Builder()
-    .id("testString")
-    .name("testString")
-    .type("testString")
-    .url("testString")
-    .description("testString")
+    // Construct an instance of the Validation model
+    Validation validationModel = new Validation.Builder()
+    .validated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .requested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .state("testString")
+    .lastOperation("testString")
+    .target(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .build();
 
     // Construct an instance of the Resource model
@@ -1037,24 +969,6 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .scope("testString")
     .build();
 
-    // Construct an instance of the State model
-    State stateModel = new State.Builder()
-    .current("testString")
-    .currentEntered(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .pending("testString")
-    .pendingRequested(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .previous("testString")
-    .build();
-
-    // Construct an instance of the Validation model
-    Validation validationModel = new Validation.Builder()
-    .validated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .requested(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .state("testString")
-    .lastOperation("testString")
-    .target(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
-    .build();
-
     // Construct an instance of the VersionEntitlement model
     VersionEntitlement versionEntitlementModel = new VersionEntitlement.Builder()
     .providerName("testString")
@@ -1064,19 +978,22 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .imageRepoName("testString")
     .build();
 
-    // Construct an instance of the Plan model
-    Plan planModel = new Plan.Builder()
+    // Construct an instance of the License model
+    License licenseModel = new License.Builder()
     .id("testString")
-    .label("testString")
     .name("testString")
-    .shortDescription("testString")
-    .longDescription("testString")
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
-    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .deployments(new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)))
+    .type("testString")
+    .url("testString")
+    .description("testString")
+    .build();
+
+    // Construct an instance of the State model
+    State stateModel = new State.Builder()
+    .current("testString")
+    .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .pending("testString")
+    .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .previous("testString")
     .build();
 
     // Construct an instance of the Version model
@@ -1086,8 +1003,8 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .crn("testString")
     .version("testString")
     .sha("testString")
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .offeringId("testString")
     .catalogId("testString")
     .kindId("testString")
@@ -1096,7 +1013,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .sourceUrl("testString")
     .tgzUrl("testString")
     .configuration(new java.util.ArrayList<Configuration>(java.util.Arrays.asList(configurationModel)))
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .validation(validationModel)
     .requiredResources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
     .singleInstance(true)
@@ -1114,27 +1031,47 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .whitelistedAccounts(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .build();
 
+    // Construct an instance of the Deployment model
+    Deployment deploymentModel = new Deployment.Builder()
+    .id("testString")
+    .label("testString")
+    .name("testString")
+    .shortDescription("testString")
+    .longDescription("testString")
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .build();
+
+    // Construct an instance of the Plan model
+    Plan planModel = new Plan.Builder()
+    .id("testString")
+    .label("testString")
+    .name("testString")
+    .shortDescription("testString")
+    .longDescription("testString")
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .deployments(new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)))
+    .build();
+
     // Construct an instance of the Kind model
     Kind kindModel = new Kind.Builder()
     .id("testString")
     .formatKind("testString")
     .targetKind("testString")
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .installDescription("testString")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .versions(new java.util.ArrayList<Version>(java.util.Arrays.asList(versionModel)))
     .plans(new java.util.ArrayList<Plan>(java.util.Arrays.asList(planModel)))
-    .build();
-
-    // Construct an instance of the Rating model
-    Rating ratingModel = new Rating.Builder()
-    .oneStarCount(Long.valueOf("26"))
-    .twoStarCount(Long.valueOf("26"))
-    .threeStarCount(Long.valueOf("26"))
-    .fourStarCount(Long.valueOf("26"))
     .build();
 
     // Construct an instance of the RepoInfo model
@@ -1156,9 +1093,10 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .offeringDocsUrl("testString")
     .offeringSupportUrl("testString")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .keywords(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .rating(ratingModel)
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .shortDescription("testString")
     .longDescription("testString")
     .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
@@ -1172,7 +1110,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .portalUiUrl("testString")
     .catalogId("testString")
     .catalogName("testString")
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .disclaimer("testString")
     .hidden(true)
     .provider("testString")
@@ -1180,7 +1118,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Offering> response = testService.createOffering(createOfferingOptionsModel).execute();
+    Response<Offering> response = catalogManagementService.createOffering(createOfferingOptionsModel).execute();
     assertNotNull(response);
     Offering responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1208,13 +1146,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createOffering(null).execute();
+    catalogManagementService.createOffering(null).execute();
   }
 
   @Test
   public void testImportOfferingVersionWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
     String importOfferingVersionPath = "/catalogs/testString/offerings/testString/version";
 
     server.enqueue(new MockResponse()
@@ -1228,17 +1166,18 @@ public class CatalogManagementTest extends PowerMockTestCase {
     ImportOfferingVersionOptions importOfferingVersionOptionsModel = new ImportOfferingVersionOptions.Builder()
     .catalogIdentifier("testString")
     .offeringId("testString")
-    .zipurl("testString")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+    .zipurl("testString")
     .targetVersion("testString")
     .includeConfig(true)
+    .isVsi(true)
     .repoType("testString")
-    .xAuthToken("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Offering> response = testService.importOfferingVersion(importOfferingVersionOptionsModel).execute();
+    Response<Offering> response = catalogManagementService.importOfferingVersion(importOfferingVersionOptionsModel).execute();
     assertNotNull(response);
     Offering responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1255,6 +1194,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     assertEquals(query.get("zipurl"), "testString");
     assertEquals(query.get("targetVersion"), "testString");
     assertEquals(Boolean.valueOf(query.get("includeConfig")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("isVSI")), Boolean.valueOf(true));
     assertEquals(query.get("repoType"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
@@ -1270,13 +1210,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.importOfferingVersion(null).execute();
+    catalogManagementService.importOfferingVersion(null).execute();
   }
 
   @Test
   public void testImportOfferingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
     String importOfferingPath = "/catalogs/testString/import/offerings";
 
     server.enqueue(new MockResponse()
@@ -1289,17 +1229,20 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Construct an instance of the ImportOfferingOptions model
     ImportOfferingOptions importOfferingOptionsModel = new ImportOfferingOptions.Builder()
     .catalogIdentifier("testString")
-    .zipurl("testString")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+    .zipurl("testString")
     .offeringId("testString")
+    .targetVersion("testString")
     .includeConfig(true)
+    .isVsi(true)
     .repoType("testString")
     .xAuthToken("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Offering> response = testService.importOffering(importOfferingOptionsModel).execute();
+    Response<Offering> response = catalogManagementService.importOffering(importOfferingOptionsModel).execute();
     assertNotNull(response);
     Offering responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1315,7 +1258,9 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Get query params
     assertEquals(query.get("zipurl"), "testString");
     assertEquals(query.get("offeringID"), "testString");
+    assertEquals(query.get("targetVersion"), "testString");
     assertEquals(Boolean.valueOf(query.get("includeConfig")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("isVSI")), Boolean.valueOf(true));
     assertEquals(query.get("repoType"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
@@ -1331,13 +1276,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.importOffering(null).execute();
+    catalogManagementService.importOffering(null).execute();
   }
 
   @Test
   public void testReloadOfferingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
     String reloadOfferingPath = "/catalogs/testString/offerings/testString/reload";
 
     server.enqueue(new MockResponse()
@@ -1351,16 +1296,16 @@ public class CatalogManagementTest extends PowerMockTestCase {
     ReloadOfferingOptions reloadOfferingOptionsModel = new ReloadOfferingOptions.Builder()
     .catalogIdentifier("testString")
     .offeringId("testString")
-    .zipurl("testString")
     .targetVersion("testString")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+    .zipurl("testString")
     .repoType("testString")
-    .xAuthToken("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Offering> response = testService.reloadOffering(reloadOfferingOptionsModel).execute();
+    Response<Offering> response = catalogManagementService.reloadOffering(reloadOfferingOptionsModel).execute();
     assertNotNull(response);
     Offering responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1374,8 +1319,8 @@ public class CatalogManagementTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("zipurl"), "testString");
     assertEquals(query.get("targetVersion"), "testString");
+    assertEquals(query.get("zipurl"), "testString");
     assertEquals(query.get("repoType"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
@@ -1391,13 +1336,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.reloadOffering(null).execute();
+    catalogManagementService.reloadOffering(null).execute();
   }
 
   @Test
   public void testGetOfferingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
     String getOfferingPath = "/catalogs/testString/offerings/testString";
 
     server.enqueue(new MockResponse()
@@ -1414,7 +1359,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Offering> response = testService.getOffering(getOfferingOptionsModel).execute();
+    Response<Offering> response = catalogManagementService.getOffering(getOfferingOptionsModel).execute();
     assertNotNull(response);
     Offering responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1442,13 +1387,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getOffering(null).execute();
+    catalogManagementService.getOffering(null).execute();
   }
 
   @Test
   public void testReplaceOfferingWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"label\": \"label\", \"short_description\": \"shortDescription\", \"catalog_icon_url\": \"catalogIconUrl\", \"tags\": [\"tags\"], \"url\": \"url\", \"crn\": \"crn\", \"offerings_url\": \"offeringsUrl\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"disabled\": true, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"resource_group_id\": \"resourceGroupId\", \"owning_account\": \"owningAccount\", \"catalog_filters\": {\"include_all\": true, \"category_filters\": {\"mapKey\": {\"include\": false, \"filter\": {\"filter_terms\": [\"filterTerms\"]}}}, \"id_filters\": {\"include\": {\"filter_terms\": [\"filterTerms\"]}, \"exclude\": {\"filter_terms\": [\"filterTerms\"]}}}, \"syndication_settings\": {\"remove_related_components\": false, \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"history\": {\"namespaces\": [\"namespaces\"], \"clusters\": [{\"region\": \"region\", \"id\": \"id\", \"name\": \"name\", \"resource_group_name\": \"resourceGroupName\", \"type\": \"type\", \"namespaces\": [\"namespaces\"], \"all_namespaces\": false}], \"last_run\": \"2019-01-01T12:00:00\"}, \"authorization\": {\"token\": \"token\", \"last_run\": \"2019-01-01T12:00:00\"}}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
     String replaceOfferingPath = "/catalogs/testString/offerings/testString";
 
     server.enqueue(new MockResponse()
@@ -1457,6 +1402,20 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .setBody(mockResponseBody));
 
     constructClientService();
+
+    // Construct an instance of the Rating model
+    Rating ratingModel = new Rating.Builder()
+    .oneStarCount(Long.valueOf("26"))
+    .twoStarCount(Long.valueOf("26"))
+    .threeStarCount(Long.valueOf("26"))
+    .fourStarCount(Long.valueOf("26"))
+    .build();
+
+    // Construct an instance of the Feature model
+    Feature featureModel = new Feature.Builder()
+    .title("testString")
+    .description("testString")
+    .build();
 
     // Construct an instance of the Configuration model
     Configuration configurationModel = new Configuration.Builder()
@@ -1470,32 +1429,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .hidden(true)
     .build();
 
-    // Construct an instance of the Deployment model
-    Deployment deploymentModel = new Deployment.Builder()
-    .id("testString")
-    .label("testString")
-    .name("testString")
-    .shortDescription("testString")
-    .longDescription("testString")
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
-    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .build();
-
-    // Construct an instance of the Feature model
-    Feature featureModel = new Feature.Builder()
-    .title("testString")
-    .description("testString")
-    .build();
-
-    // Construct an instance of the License model
-    License licenseModel = new License.Builder()
-    .id("testString")
-    .name("testString")
-    .type("testString")
-    .url("testString")
-    .description("testString")
+    // Construct an instance of the Validation model
+    Validation validationModel = new Validation.Builder()
+    .validated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .requested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .state("testString")
+    .lastOperation("testString")
+    .target(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .build();
 
     // Construct an instance of the Resource model
@@ -1513,24 +1453,6 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .scope("testString")
     .build();
 
-    // Construct an instance of the State model
-    State stateModel = new State.Builder()
-    .current("testString")
-    .currentEntered(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .pending("testString")
-    .pendingRequested(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .previous("testString")
-    .build();
-
-    // Construct an instance of the Validation model
-    Validation validationModel = new Validation.Builder()
-    .validated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .requested(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .state("testString")
-    .lastOperation("testString")
-    .target(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
-    .build();
-
     // Construct an instance of the VersionEntitlement model
     VersionEntitlement versionEntitlementModel = new VersionEntitlement.Builder()
     .providerName("testString")
@@ -1540,19 +1462,22 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .imageRepoName("testString")
     .build();
 
-    // Construct an instance of the Plan model
-    Plan planModel = new Plan.Builder()
+    // Construct an instance of the License model
+    License licenseModel = new License.Builder()
     .id("testString")
-    .label("testString")
     .name("testString")
-    .shortDescription("testString")
-    .longDescription("testString")
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
-    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .deployments(new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)))
+    .type("testString")
+    .url("testString")
+    .description("testString")
+    .build();
+
+    // Construct an instance of the State model
+    State stateModel = new State.Builder()
+    .current("testString")
+    .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .pending("testString")
+    .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .previous("testString")
     .build();
 
     // Construct an instance of the Version model
@@ -1562,8 +1487,8 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .crn("testString")
     .version("testString")
     .sha("testString")
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .offeringId("testString")
     .catalogId("testString")
     .kindId("testString")
@@ -1572,7 +1497,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .sourceUrl("testString")
     .tgzUrl("testString")
     .configuration(new java.util.ArrayList<Configuration>(java.util.Arrays.asList(configurationModel)))
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .validation(validationModel)
     .requiredResources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
     .singleInstance(true)
@@ -1590,27 +1515,47 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .whitelistedAccounts(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .build();
 
+    // Construct an instance of the Deployment model
+    Deployment deploymentModel = new Deployment.Builder()
+    .id("testString")
+    .label("testString")
+    .name("testString")
+    .shortDescription("testString")
+    .longDescription("testString")
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .build();
+
+    // Construct an instance of the Plan model
+    Plan planModel = new Plan.Builder()
+    .id("testString")
+    .label("testString")
+    .name("testString")
+    .shortDescription("testString")
+    .longDescription("testString")
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .deployments(new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)))
+    .build();
+
     // Construct an instance of the Kind model
     Kind kindModel = new Kind.Builder()
     .id("testString")
     .formatKind("testString")
     .targetKind("testString")
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .installDescription("testString")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .versions(new java.util.ArrayList<Version>(java.util.Arrays.asList(versionModel)))
     .plans(new java.util.ArrayList<Plan>(java.util.Arrays.asList(planModel)))
-    .build();
-
-    // Construct an instance of the Rating model
-    Rating ratingModel = new Rating.Builder()
-    .oneStarCount(Long.valueOf("26"))
-    .twoStarCount(Long.valueOf("26"))
-    .threeStarCount(Long.valueOf("26"))
-    .fourStarCount(Long.valueOf("26"))
     .build();
 
     // Construct an instance of the RepoInfo model
@@ -1633,9 +1578,10 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .offeringDocsUrl("testString")
     .offeringSupportUrl("testString")
     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .keywords(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .rating(ratingModel)
-    .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-    .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
     .shortDescription("testString")
     .longDescription("testString")
     .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
@@ -1649,7 +1595,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .portalUiUrl("testString")
     .catalogId("testString")
     .catalogName("testString")
-    .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .disclaimer("testString")
     .hidden(true)
     .provider("testString")
@@ -1657,9 +1603,9 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Catalog> response = testService.replaceOffering(replaceOfferingOptionsModel).execute();
+    Response<Offering> response = catalogManagementService.replaceOffering(replaceOfferingOptionsModel).execute();
     assertNotNull(response);
-    Catalog responseObj = response.getResult();
+    Offering responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -1685,7 +1631,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.replaceOffering(null).execute();
+    catalogManagementService.replaceOffering(null).execute();
   }
 
   @Test
@@ -1707,7 +1653,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteOffering(deleteOfferingOptionsModel).execute();
+    Response<Void> response = catalogManagementService.deleteOffering(deleteOfferingOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -1736,13 +1682,64 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteOffering(null).execute();
+    catalogManagementService.deleteOffering(null).execute();
+  }
+
+  @Test
+  public void testGetOfferingAuditWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"list\": [{\"id\": \"id\", \"created\": \"2019-01-01T12:00:00.000Z\", \"change_type\": \"changeType\", \"target_type\": \"targetType\", \"target_id\": \"targetId\", \"who_delegate_email\": \"whoDelegateEmail\", \"message\": \"message\"}]}";
+    String getOfferingAuditPath = "/catalogs/testString/offerings/testString/audit";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetOfferingAuditOptions model
+    GetOfferingAuditOptions getOfferingAuditOptionsModel = new GetOfferingAuditOptions.Builder()
+    .catalogIdentifier("testString")
+    .offeringId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<AuditLog> response = catalogManagementService.getOfferingAudit(getOfferingAuditOptionsModel).execute();
+    assertNotNull(response);
+    AuditLog responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getOfferingAuditPath);
+  }
+
+  // Test the getOfferingAudit operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetOfferingAuditNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.getOfferingAudit(null).execute();
   }
 
   @Test
   public void testReplaceOfferingIconWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
     String replaceOfferingIconPath = "/catalogs/testString/offerings/testString/icon/testString";
 
     server.enqueue(new MockResponse()
@@ -1760,7 +1757,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Offering> response = testService.replaceOfferingIcon(replaceOfferingIconOptionsModel).execute();
+    Response<Offering> response = catalogManagementService.replaceOfferingIcon(replaceOfferingIconOptionsModel).execute();
     assertNotNull(response);
     Offering responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1788,14 +1785,14 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.replaceOfferingIcon(null).execute();
+    catalogManagementService.replaceOfferingIcon(null).execute();
   }
 
   @Test
   public void testUpdateOfferingIbmWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"ibm\": false, \"public\": false, \"changed\": false}";
-    String updateOfferingIbmPath = "/catalogs/testString/offerings/testString/publish/ibm/true";
+    String mockResponseBody = "{\"allow_request\": true, \"ibm\": false, \"public\": false, \"changed\": false}";
+    String updateOfferingIbmPath = "/catalogs/testString/offerings/testString/publish/allow_request/true";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -1808,12 +1805,12 @@ public class CatalogManagementTest extends PowerMockTestCase {
     UpdateOfferingIbmOptions updateOfferingIbmOptionsModel = new UpdateOfferingIbmOptions.Builder()
     .catalogIdentifier("testString")
     .offeringId("testString")
-    .approvalType("ibm")
+    .approvalType("allow_request")
     .approved("true")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ApprovalResult> response = testService.updateOfferingIbm(updateOfferingIbmOptionsModel).execute();
+    Response<ApprovalResult> response = catalogManagementService.updateOfferingIbm(updateOfferingIbmOptionsModel).execute();
     assertNotNull(response);
     ApprovalResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1841,14 +1838,77 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.updateOfferingIbm(null).execute();
+    catalogManagementService.updateOfferingIbm(null).execute();
   }
 
   @Test
-  public void testGetVersionAboutWOptions() throws Throwable {
+  public void testGetOfferingUpdatesWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "[{\"version_locator\": \"versionLocator\", \"version\": \"version\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"package_version\": \"packageVersion\", \"can_update\": false, \"messages\": {\"mapKey\": \"inner\"}}]";
+    String getOfferingUpdatesPath = "/catalogs/testString/offerings/testString/updates";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetOfferingUpdatesOptions model
+    GetOfferingUpdatesOptions getOfferingUpdatesOptionsModel = new GetOfferingUpdatesOptions.Builder()
+    .catalogIdentifier("testString")
+    .offeringId("testString")
+    .kind("testString")
+    .version("testString")
+    .clusterId("testString")
+    .region("testString")
+    .resourceGroupId("testString")
+    .namespace("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<List<VersionUpdateDescriptor>> response = catalogManagementService.getOfferingUpdates(getOfferingUpdatesOptionsModel).execute();
+    assertNotNull(response);
+    List<VersionUpdateDescriptor> responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    // Get query params
+    assertEquals(query.get("kind"), "testString");
+    assertEquals(query.get("version"), "testString");
+    assertEquals(query.get("cluster_id"), "testString");
+    assertEquals(query.get("region"), "testString");
+    assertEquals(query.get("resource_group_id"), "testString");
+    assertEquals(query.get("namespace"), "testString");
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getOfferingUpdatesPath);
+  }
+
+  // Test the getOfferingUpdates operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetOfferingUpdatesNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.getOfferingUpdates(null).execute();
+  }
+
+  @Test
+  public void testGetOfferingAboutWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "\"operationResponse\"";
-    String getVersionAboutPath = "/versions/testString/about";
+    String getOfferingAboutPath = "/versions/testString/about";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "text/markdown")
@@ -1857,13 +1917,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetVersionAboutOptions model
-    GetVersionAboutOptions getVersionAboutOptionsModel = new GetVersionAboutOptions.Builder()
+    // Construct an instance of the GetOfferingAboutOptions model
+    GetOfferingAboutOptions getOfferingAboutOptionsModel = new GetOfferingAboutOptions.Builder()
     .versionLocId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<String> response = testService.getVersionAbout(getVersionAboutOptionsModel).execute();
+    Response<String> response = catalogManagementService.getOfferingAbout(getOfferingAboutOptionsModel).execute();
     assertNotNull(response);
     String responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1879,45 +1939,45 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getVersionAboutPath);
+    assertEquals(parsedPath, getOfferingAboutPath);
   }
 
-  // Test the getVersionAbout operation with null options model parameter
+  // Test the getOfferingAbout operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetVersionAboutNoOptions() throws Throwable {
+  public void testGetOfferingAboutNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getVersionAbout(null).execute();
+    catalogManagementService.getOfferingAbout(null).execute();
   }
 
   @Test
-  public void testGetVersionLicenseWOptions() throws Throwable {
+  public void testGetOfferingLicenseWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "";
-    String getVersionLicensePath = "/versions/testString/licenses/testString";
+    String mockResponseBody = "\"operationResponse\"";
+    String getOfferingLicensePath = "/versions/testString/licenses/testString";
 
     server.enqueue(new MockResponse()
+    .setHeader("Content-type", "text/plain")
     .setResponseCode(200)
     .setBody(mockResponseBody));
 
     constructClientService();
 
-    // Construct an instance of the GetVersionLicenseOptions model
-    GetVersionLicenseOptions getVersionLicenseOptionsModel = new GetVersionLicenseOptions.Builder()
+    // Construct an instance of the GetOfferingLicenseOptions model
+    GetOfferingLicenseOptions getOfferingLicenseOptionsModel = new GetOfferingLicenseOptions.Builder()
     .versionLocId("testString")
     .licenseId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.getVersionLicense(getVersionLicenseOptionsModel).execute();
+    Response<String> response = catalogManagementService.getOfferingLicense(getOfferingLicenseOptionsModel).execute();
     assertNotNull(response);
-    Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
-    assertNull(responseObj);
+    String responseObj = response.getResult();
+    assertNotNull(responseObj);
 
     // Verify the contents of the request
     RecordedRequest request = server.takeRequest();
@@ -1930,26 +1990,26 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getVersionLicensePath);
+    assertEquals(parsedPath, getOfferingLicensePath);
   }
 
-  // Test the getVersionLicense operation with null options model parameter
+  // Test the getOfferingLicense operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetVersionLicenseNoOptions() throws Throwable {
+  public void testGetOfferingLicenseNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getVersionLicense(null).execute();
+    catalogManagementService.getOfferingLicense(null).execute();
   }
 
   @Test
-  public void testGetVersionContainerImagesWOptions() throws Throwable {
+  public void testGetOfferingContainerImagesWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"description\": \"description\", \"images\": [{\"image\": \"image\"}]}";
-    String getVersionContainerImagesPath = "/versions/testString/containerImages";
+    String getOfferingContainerImagesPath = "/versions/testString/containerImages";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -1958,13 +2018,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetVersionContainerImagesOptions model
-    GetVersionContainerImagesOptions getVersionContainerImagesOptionsModel = new GetVersionContainerImagesOptions.Builder()
+    // Construct an instance of the GetOfferingContainerImagesOptions model
+    GetOfferingContainerImagesOptions getOfferingContainerImagesOptionsModel = new GetOfferingContainerImagesOptions.Builder()
     .versionLocId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ImageManifest> response = testService.getVersionContainerImages(getVersionContainerImagesOptionsModel).execute();
+    Response<ImageManifest> response = catalogManagementService.getOfferingContainerImages(getOfferingContainerImagesOptionsModel).execute();
     assertNotNull(response);
     ImageManifest responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1980,19 +2040,19 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getVersionContainerImagesPath);
+    assertEquals(parsedPath, getOfferingContainerImagesPath);
   }
 
-  // Test the getVersionContainerImages operation with null options model parameter
+  // Test the getOfferingContainerImages operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetVersionContainerImagesNoOptions() throws Throwable {
+  public void testGetOfferingContainerImagesNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getVersionContainerImages(null).execute();
+    catalogManagementService.getOfferingContainerImages(null).execute();
   }
 
   @Test
@@ -2013,7 +2073,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deprecateVersion(deprecateVersionOptionsModel).execute();
+    Response<Void> response = catalogManagementService.deprecateVersion(deprecateVersionOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -2042,7 +2102,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deprecateVersion(null).execute();
+    catalogManagementService.deprecateVersion(null).execute();
   }
 
   @Test
@@ -2063,7 +2123,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.accountPublishVersion(accountPublishVersionOptionsModel).execute();
+    Response<Void> response = catalogManagementService.accountPublishVersion(accountPublishVersionOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -2092,7 +2152,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.accountPublishVersion(null).execute();
+    catalogManagementService.accountPublishVersion(null).execute();
   }
 
   @Test
@@ -2113,7 +2173,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.ibmPublishVersion(ibmPublishVersionOptionsModel).execute();
+    Response<Void> response = catalogManagementService.ibmPublishVersion(ibmPublishVersionOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -2142,7 +2202,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.ibmPublishVersion(null).execute();
+    catalogManagementService.ibmPublishVersion(null).execute();
   }
 
   @Test
@@ -2163,7 +2223,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.publicPublishVersion(publicPublishVersionOptionsModel).execute();
+    Response<Void> response = catalogManagementService.publicPublishVersion(publicPublishVersionOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -2192,7 +2252,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.publicPublishVersion(null).execute();
+    catalogManagementService.publicPublishVersion(null).execute();
   }
 
   @Test
@@ -2213,7 +2273,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.commitVersion(commitVersionOptionsModel).execute();
+    Response<Void> response = catalogManagementService.commitVersion(commitVersionOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -2242,14 +2302,67 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.commitVersion(null).execute();
+    catalogManagementService.commitVersion(null).execute();
   }
 
   @Test
-  public void testGetVersionWorkingCopyWOptions() throws Throwable {
+  public void testCopyVersionWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}";
-    String getVersionWorkingCopyPath = "/versions/testString/workingcopy";
+    String mockResponseBody = "";
+    String copyVersionPath = "/versions/testString/copy";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the CopyVersionOptions model
+    CopyVersionOptions copyVersionOptionsModel = new CopyVersionOptions.Builder()
+    .versionLocId("testString")
+    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = catalogManagementService.copyVersion(copyVersionOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, copyVersionPath);
+  }
+
+  // Test the copyVersion operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCopyVersionNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.copyVersion(null).execute();
+  }
+
+  @Test
+  public void testGetOfferingWorkingCopyWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}";
+    String getOfferingWorkingCopyPath = "/versions/testString/workingcopy";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -2258,13 +2371,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetVersionWorkingCopyOptions model
-    GetVersionWorkingCopyOptions getVersionWorkingCopyOptionsModel = new GetVersionWorkingCopyOptions.Builder()
+    // Construct an instance of the GetOfferingWorkingCopyOptions model
+    GetOfferingWorkingCopyOptions getOfferingWorkingCopyOptionsModel = new GetOfferingWorkingCopyOptions.Builder()
     .versionLocId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Version> response = testService.getVersionWorkingCopy(getVersionWorkingCopyOptionsModel).execute();
+    Response<Version> response = catalogManagementService.getOfferingWorkingCopy(getOfferingWorkingCopyOptionsModel).execute();
     assertNotNull(response);
     Version responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2280,83 +2393,25 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getVersionWorkingCopyPath);
+    assertEquals(parsedPath, getOfferingWorkingCopyPath);
   }
 
-  // Test the getVersionWorkingCopy operation with null options model parameter
+  // Test the getOfferingWorkingCopy operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetVersionWorkingCopyNoOptions() throws Throwable {
+  public void testGetOfferingWorkingCopyNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getVersionWorkingCopy(null).execute();
-  }
-
-  @Test
-  public void testGetVersionUpdatesWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "[{\"version_locator\": \"versionLocator\", \"version\": \"version\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"package_version\": \"packageVersion\", \"can_update\": false, \"messages\": {\"mapKey\": \"anyValue\"}}]";
-    String getVersionUpdatesPath = "/versions/testString/updates";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetVersionUpdatesOptions model
-    GetVersionUpdatesOptions getVersionUpdatesOptionsModel = new GetVersionUpdatesOptions.Builder()
-    .versionLocId("testString")
-    .clusterId("testString")
-    .region("testString")
-    .resourceGroupId("testString")
-    .namespace("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<List<VersionUpdateDescriptor>> response = testService.getVersionUpdates(getVersionUpdatesOptionsModel).execute();
-    assertNotNull(response);
-    List<VersionUpdateDescriptor> responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("cluster_id"), "testString");
-    assertEquals(query.get("region"), "testString");
-    assertEquals(query.get("resource_group_id"), "testString");
-    assertEquals(query.get("namespace"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getVersionUpdatesPath);
-  }
-
-  // Test the getVersionUpdates operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetVersionUpdatesNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.getVersionUpdates(null).execute();
+    catalogManagementService.getOfferingWorkingCopy(null).execute();
   }
 
   @Test
   public void testGetVersionWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00\", \"updated\": \"2019-01-01T12:00:00\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"name\": \"name\", \"offering_icon_url\": \"offeringIconUrl\", \"offering_docs_url\": \"offeringDocsUrl\", \"offering_support_url\": \"offeringSupportUrl\", \"tags\": [\"tags\"], \"keywords\": [\"keywords\"], \"rating\": {\"one_star_count\": 12, \"two_star_count\": 12, \"three_star_count\": 14, \"four_star_count\": 13}, \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"features\": [{\"title\": \"title\", \"description\": \"description\"}], \"kinds\": [{\"id\": \"id\", \"format_kind\": \"formatKind\", \"target_kind\": \"targetKind\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"install_description\": \"installDescription\", \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"versions\": [{\"id\": \"id\", \"_rev\": \"rev\", \"crn\": \"crn\", \"version\": \"version\", \"sha\": \"sha\", \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"offering_id\": \"offeringId\", \"catalog_id\": \"catalogId\", \"kind_id\": \"kindId\", \"tags\": [\"tags\"], \"repo_url\": \"repoUrl\", \"source_url\": \"sourceUrl\", \"tgz_url\": \"tgzUrl\", \"configuration\": [{\"key\": \"key\", \"type\": \"type\", \"default_value\": \"anyValue\", \"value_constraint\": \"valueConstraint\", \"description\": \"description\", \"required\": true, \"options\": [\"anyValue\"], \"hidden\": true}], \"metadata\": {\"mapKey\": \"anyValue\"}, \"validation\": {\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}, \"required_resources\": [{\"type\": \"mem\", \"value\": \"anyValue\"}], \"single_instance\": true, \"install\": {\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}, \"pre_install\": [{\"instructions\": \"instructions\", \"script\": \"script\", \"script_permission\": \"scriptPermission\", \"delete_script\": \"deleteScript\", \"scope\": \"scope\"}], \"entitlement\": {\"provider_name\": \"providerName\", \"provider_id\": \"providerId\", \"product_id\": \"productId\", \"part_numbers\": [\"partNumbers\"], \"image_repo_name\": \"imageRepoName\"}, \"licenses\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"url\": \"url\", \"description\": \"description\"}], \"image_manifest_url\": \"imageManifestUrl\", \"deprecated\": true, \"package_version\": \"packageVersion\", \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"version_locator\": \"versionLocator\", \"console_url\": \"consoleUrl\", \"long_description\": \"longDescription\", \"whitelisted_accounts\": [\"whitelistedAccounts\"]}], \"plans\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"additional_features\": [{\"title\": \"title\", \"description\": \"description\"}], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"deployments\": [{\"id\": \"id\", \"label\": \"label\", \"name\": \"name\", \"short_description\": \"shortDescription\", \"long_description\": \"longDescription\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\"}]}]}], \"permit_request_ibm_public_publish\": false, \"ibm_publish_approved\": true, \"public_publish_approved\": false, \"public_original_crn\": \"publicOriginalCrn\", \"publish_public_crn\": \"publishPublicCrn\", \"portal_approval_record\": \"portalApprovalRecord\", \"portal_ui_url\": \"portalUiUrl\", \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"disclaimer\": \"disclaimer\", \"hidden\": true, \"provider\": \"provider\", \"repo_info\": {\"token\": \"token\", \"type\": \"type\"}}";
     String getVersionPath = "/versions/testString";
 
     server.enqueue(new MockResponse()
@@ -2372,7 +2427,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Offering> response = testService.getVersion(getVersionOptionsModel).execute();
+    Response<Offering> response = catalogManagementService.getVersion(getVersionOptionsModel).execute();
     assertNotNull(response);
     Offering responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2400,7 +2455,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getVersion(null).execute();
+    catalogManagementService.getVersion(null).execute();
   }
 
   @Test
@@ -2421,7 +2476,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteVersion(deleteVersionOptionsModel).execute();
+    Response<Void> response = catalogManagementService.deleteVersion(deleteVersionOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -2450,205 +2505,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteVersion(null).execute();
-  }
-
-  @Test
-  public void testListVersionsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "";
-    String listVersionsPath = "/versions";
-
-    server.enqueue(new MockResponse()
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the ListVersionsOptions model
-    ListVersionsOptions listVersionsOptionsModel = new ListVersionsOptions.Builder()
-    .q("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.listVersions(listVersionsOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
-    assertNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("q"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listVersionsPath);
-  }
-
-  // Test the listVersions operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListVersionsNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.listVersions(null).execute();
-  }
-
-  @Test
-  public void testGetReposWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"chart\": {\"api_version\": \"apiVersion\", \"created\": \"2019-01-01T12:00:00\", \"description\": \"description\", \"deprecated\": true, \"digest\": \"digest\", \"home\": \"home\", \"icon\": \"icon\", \"keywords\": [\"keywords\"], \"maintainers\": [{\"email\": \"email\", \"name\": \"name\"}], \"name\": \"name\", \"tiller_version\": \"tillerVersion\", \"urls\": [\"urls\"], \"sources\": [\"sources\"], \"version\": \"version\", \"appVersion\": \"appVersion\"}}";
-    String getReposPath = "/repo/testString/entries";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetReposOptions model
-    GetReposOptions getReposOptionsModel = new GetReposOptions.Builder()
-    .type("testString")
-    .repourl("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<HelmRepoList> response = testService.getRepos(getReposOptionsModel).execute();
-    assertNotNull(response);
-    HelmRepoList responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("repourl"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getReposPath);
-  }
-
-  // Test the getRepos operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetReposNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.getRepos(null).execute();
-  }
-
-  @Test
-  public void testGetRepoWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"chart\": {\"Chart.yaml\": {\"name\": \"name\", \"description\": \"description\", \"icon\": \"icon\", \"version\": \"version\", \"appVersion\": \"appVersion\"}, \"sha\": {\"mapKey\": \"anyValue\"}, \"README.md\": \"readmeMd\", \"values-metadata\": {\"mapKey\": \"anyValue\"}, \"license-metadata\": {\"mapKey\": \"anyValue\"}}}";
-    String getRepoPath = "/repo/testString";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetRepoOptions model
-    GetRepoOptions getRepoOptionsModel = new GetRepoOptions.Builder()
-    .type("testString")
-    .charturl("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<HelmPackage> response = testService.getRepo(getRepoOptionsModel).execute();
-    assertNotNull(response);
-    HelmPackage responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("charturl"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getRepoPath);
-  }
-
-  // Test the getRepo operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetRepoNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.getRepo(null).execute();
-  }
-
-  @Test
-  public void testListClustersWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"resource_group_id\": \"resourceGroupId\", \"resource_group_name\": \"resourceGroupName\", \"id\": \"id\", \"name\": \"name\", \"region\": \"region\"}]}";
-    String listClustersPath = "/deploy/kubernetes/clusters";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the ListClustersOptions model
-    ListClustersOptions listClustersOptionsModel = new ListClustersOptions.Builder()
-    .limit(Long.valueOf("26"))
-    .offset(Long.valueOf("26"))
-    .type("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<ClusterSearchResult> response = testService.listClusters(listClustersOptionsModel).execute();
-    assertNotNull(response);
-    ClusterSearchResult responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
-    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
-    assertEquals(query.get("type"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listClustersPath);
+    catalogManagementService.deleteVersion(null).execute();
   }
 
   @Test
@@ -2672,7 +2529,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ClusterInfo> response = testService.getCluster(getClusterOptionsModel).execute();
+    Response<ClusterInfo> response = catalogManagementService.getCluster(getClusterOptionsModel).execute();
     assertNotNull(response);
     ClusterInfo responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2702,7 +2559,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getCluster(null).execute();
+    catalogManagementService.getCluster(null).execute();
   }
 
   @Test
@@ -2723,12 +2580,12 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .clusterId("testString")
     .region("testString")
     .xAuthRefreshToken("testString")
-    .limit(Long.valueOf("26"))
+    .limit(Long.valueOf("1000"))
     .offset(Long.valueOf("26"))
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<NamespaceSearchResult> response = testService.getNamespaces(getNamespacesOptionsModel).execute();
+    Response<NamespaceSearchResult> response = catalogManagementService.getNamespaces(getNamespacesOptionsModel).execute();
     assertNotNull(response);
     NamespaceSearchResult responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2744,7 +2601,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(query.get("region"), "testString");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1000"));
     assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
@@ -2760,14 +2617,14 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getNamespaces(null).execute();
+    catalogManagementService.getNamespaces(null).execute();
   }
 
   @Test
-  public void testCreateOperatorWOptions() throws Throwable {
+  public void testDeployOperatorsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "[{\"phase\": \"phase\", \"message\": \"message\", \"link\": \"link\", \"name\": \"name\", \"version\": \"version\", \"namespace\": \"namespace\", \"package_name\": \"packageName\", \"catalog_id\": \"catalogId\"}]";
-    String createOperatorPath = "/deploy/kubernetes/olm/operator";
+    String deployOperatorsPath = "/deploy/kubernetes/olm/operator";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -2776,17 +2633,18 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the CreateOperatorOptions model
-    CreateOperatorOptions createOperatorOptionsModel = new CreateOperatorOptions.Builder()
+    // Construct an instance of the DeployOperatorsOptions model
+    DeployOperatorsOptions deployOperatorsOptionsModel = new DeployOperatorsOptions.Builder()
     .xAuthRefreshToken("testString")
     .clusterId("testString")
     .region("testString")
     .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .allNamespaces(true)
     .versionLocatorId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<List<OperatorDeployResult>> response = testService.createOperator(createOperatorOptionsModel).execute();
+    Response<List<OperatorDeployResult>> response = catalogManagementService.deployOperators(deployOperatorsOptionsModel).execute();
     assertNotNull(response);
     List<OperatorDeployResult> responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2803,19 +2661,19 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createOperatorPath);
+    assertEquals(parsedPath, deployOperatorsPath);
   }
 
-  // Test the createOperator operation with null options model parameter
+  // Test the deployOperators operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateOperatorNoOptions() throws Throwable {
+  public void testDeployOperatorsNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.createOperator(null).execute();
+    catalogManagementService.deployOperators(null).execute();
   }
 
   @Test
@@ -2840,7 +2698,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<List<OperatorDeployResult>> response = testService.listOperators(listOperatorsOptionsModel).execute();
+    Response<List<OperatorDeployResult>> response = catalogManagementService.listOperators(listOperatorsOptionsModel).execute();
     assertNotNull(response);
     List<OperatorDeployResult> responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2872,14 +2730,14 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.listOperators(null).execute();
+    catalogManagementService.listOperators(null).execute();
   }
 
   @Test
-  public void testReplaceOperatorWOptions() throws Throwable {
+  public void testReplaceOperatorsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "[{\"phase\": \"phase\", \"message\": \"message\", \"link\": \"link\", \"name\": \"name\", \"version\": \"version\", \"namespace\": \"namespace\", \"package_name\": \"packageName\", \"catalog_id\": \"catalogId\"}]";
-    String replaceOperatorPath = "/deploy/kubernetes/olm/operator";
+    String replaceOperatorsPath = "/deploy/kubernetes/olm/operator";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -2888,17 +2746,18 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ReplaceOperatorOptions model
-    ReplaceOperatorOptions replaceOperatorOptionsModel = new ReplaceOperatorOptions.Builder()
+    // Construct an instance of the ReplaceOperatorsOptions model
+    ReplaceOperatorsOptions replaceOperatorsOptionsModel = new ReplaceOperatorsOptions.Builder()
     .xAuthRefreshToken("testString")
     .clusterId("testString")
     .region("testString")
     .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .allNamespaces(true)
     .versionLocatorId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<List<OperatorDeployResult>> response = testService.replaceOperator(replaceOperatorOptionsModel).execute();
+    Response<List<OperatorDeployResult>> response = catalogManagementService.replaceOperators(replaceOperatorsOptionsModel).execute();
     assertNotNull(response);
     List<OperatorDeployResult> responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2915,26 +2774,26 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, replaceOperatorPath);
+    assertEquals(parsedPath, replaceOperatorsPath);
   }
 
-  // Test the replaceOperator operation with null options model parameter
+  // Test the replaceOperators operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testReplaceOperatorNoOptions() throws Throwable {
+  public void testReplaceOperatorsNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.replaceOperator(null).execute();
+    catalogManagementService.replaceOperators(null).execute();
   }
 
   @Test
-  public void testDeleteOperatorWOptions() throws Throwable {
+  public void testDeleteOperatorsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String deleteOperatorPath = "/deploy/kubernetes/olm/operator";
+    String deleteOperatorsPath = "/deploy/kubernetes/olm/operator";
 
     server.enqueue(new MockResponse()
     .setResponseCode(200)
@@ -2942,8 +2801,8 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the DeleteOperatorOptions model
-    DeleteOperatorOptions deleteOperatorOptionsModel = new DeleteOperatorOptions.Builder()
+    // Construct an instance of the DeleteOperatorsOptions model
+    DeleteOperatorsOptions deleteOperatorsOptionsModel = new DeleteOperatorsOptions.Builder()
     .xAuthRefreshToken("testString")
     .clusterId("testString")
     .region("testString")
@@ -2951,7 +2810,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteOperator(deleteOperatorOptionsModel).execute();
+    Response<Void> response = catalogManagementService.deleteOperators(deleteOperatorsOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -2972,19 +2831,19 @@ public class CatalogManagementTest extends PowerMockTestCase {
     assertEquals(query.get("version_locator_id"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, deleteOperatorPath);
+    assertEquals(parsedPath, deleteOperatorsPath);
   }
 
-  // Test the deleteOperator operation with null options model parameter
+  // Test the deleteOperators operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeleteOperatorNoOptions() throws Throwable {
+  public void testDeleteOperatorsNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteOperator(null).execute();
+    catalogManagementService.deleteOperators(null).execute();
   }
 
   @Test
@@ -3014,19 +2873,21 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .clusterId("testString")
     .region("testString")
     .namespace("testString")
-    .overrideValues(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .overrideValues(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .entitlementApikey("testString")
     .schematics(deployRequestBodySchematicsModel)
     .script("testString")
     .scriptId("testString")
     .versionLocatorId("testString")
     .vcenterId("testString")
+    .vcenterUser("testString")
     .vcenterPassword("testString")
     .vcenterLocation("testString")
+    .vcenterDatastore("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.installVersion(installVersionOptionsModel).execute();
+    Response<Void> response = catalogManagementService.installVersion(installVersionOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -3056,7 +2917,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.installVersion(null).execute();
+    catalogManagementService.installVersion(null).execute();
   }
 
   @Test
@@ -3086,19 +2947,21 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .clusterId("testString")
     .region("testString")
     .namespace("testString")
-    .overrideValues(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .overrideValues(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .entitlementApikey("testString")
     .schematics(deployRequestBodySchematicsModel)
     .script("testString")
     .scriptId("testString")
     .versionLocatorId("testString")
     .vcenterId("testString")
+    .vcenterUser("testString")
     .vcenterPassword("testString")
     .vcenterLocation("testString")
+    .vcenterDatastore("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.preinstallVersion(preinstallVersionOptionsModel).execute();
+    Response<Void> response = catalogManagementService.preinstallVersion(preinstallVersionOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -3128,13 +2991,13 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.preinstallVersion(null).execute();
+    catalogManagementService.preinstallVersion(null).execute();
   }
 
   @Test
   public void testGetPreinstallWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"metadata\": {\"cluster_id\": \"clusterId\", \"region\": \"region\", \"namespace\": \"namespace\", \"workspace_id\": \"workspaceId\", \"workspace_name\": \"workspaceName\"}, \"release\": {\"deployments\": [\"anyValue\"], \"replicasets\": [\"anyValue\"], \"statefulsets\": [\"anyValue\"], \"pods\": [\"anyValue\"], \"errors\": [\"anyValue\"]}, \"content_mgmt\": {\"pods\": [\"anyValue\"], \"errors\": [\"anyValue\"]}}";
+    String mockResponseBody = "{\"metadata\": {\"cluster_id\": \"clusterId\", \"region\": \"region\", \"namespace\": \"namespace\", \"workspace_id\": \"workspaceId\", \"workspace_name\": \"workspaceName\"}, \"release\": {\"deployments\": [{\"mapKey\": \"anyValue\"}], \"replicasets\": [{\"mapKey\": \"anyValue\"}], \"statefulsets\": [{\"mapKey\": \"anyValue\"}], \"pods\": [{\"mapKey\": \"anyValue\"}], \"errors\": [{\"mapKey\": \"inner\"}]}, \"content_mgmt\": {\"pods\": [{\"mapKey\": \"inner\"}], \"errors\": [{\"mapKey\": \"inner\"}]}}";
     String getPreinstallPath = "/versions/testString/preinstall";
 
     server.enqueue(new MockResponse()
@@ -3154,7 +3017,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<InstallStatus> response = testService.getPreinstall(getPreinstallOptionsModel).execute();
+    Response<InstallStatus> response = catalogManagementService.getPreinstall(getPreinstallOptionsModel).execute();
     assertNotNull(response);
     InstallStatus responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -3186,14 +3049,14 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getPreinstall(null).execute();
+    catalogManagementService.getPreinstall(null).execute();
   }
 
   @Test
-  public void testValidationInstallWOptions() throws Throwable {
+  public void testValidateInstallWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String validationInstallPath = "/versions/testString/validation/install";
+    String validateInstallPath = "/versions/testString/validation/install";
 
     server.enqueue(new MockResponse()
     .setResponseCode(202)
@@ -3209,26 +3072,28 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .resourceGroupId("testString")
     .build();
 
-    // Construct an instance of the ValidationInstallOptions model
-    ValidationInstallOptions validationInstallOptionsModel = new ValidationInstallOptions.Builder()
+    // Construct an instance of the ValidateInstallOptions model
+    ValidateInstallOptions validateInstallOptionsModel = new ValidateInstallOptions.Builder()
     .versionLocId("testString")
     .xAuthRefreshToken("testString")
     .clusterId("testString")
     .region("testString")
     .namespace("testString")
-    .overrideValues(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+    .overrideValues(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
     .entitlementApikey("testString")
     .schematics(deployRequestBodySchematicsModel)
     .script("testString")
     .scriptId("testString")
     .versionLocatorId("testString")
     .vcenterId("testString")
+    .vcenterUser("testString")
     .vcenterPassword("testString")
     .vcenterLocation("testString")
+    .vcenterDatastore("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.validationInstall(validationInstallOptionsModel).execute();
+    Response<Void> response = catalogManagementService.validateInstall(validateInstallOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -3246,25 +3111,25 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, validationInstallPath);
+    assertEquals(parsedPath, validateInstallPath);
   }
 
-  // Test the validationInstall operation with null options model parameter
+  // Test the validateInstall operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testValidationInstallNoOptions() throws Throwable {
+  public void testValidateInstallNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.validationInstall(null).execute();
+    catalogManagementService.validateInstall(null).execute();
   }
 
   @Test
   public void testGetValidationStatusWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"validated\": \"2019-01-01T12:00:00\", \"requested\": \"2019-01-01T12:00:00\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}";
+    String mockResponseBody = "{\"validated\": \"2019-01-01T12:00:00.000Z\", \"requested\": \"2019-01-01T12:00:00.000Z\", \"state\": \"state\", \"last_operation\": \"lastOperation\", \"target\": {\"mapKey\": \"anyValue\"}}";
     String getValidationStatusPath = "/versions/testString/validation/install";
 
     server.enqueue(new MockResponse()
@@ -3281,7 +3146,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Validation> response = testService.getValidationStatus(getValidationStatusOptionsModel).execute();
+    Response<Validation> response = catalogManagementService.getValidationStatus(getValidationStatusOptionsModel).execute();
     assertNotNull(response);
     Validation responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -3310,7 +3175,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getValidationStatus(null).execute();
+    catalogManagementService.getValidationStatus(null).execute();
   }
 
   @Test
@@ -3332,7 +3197,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Map<String, Object>> response = testService.getOverrideValues(getOverrideValuesOptionsModel).execute();
+    Response<Map<String, Object>> response = catalogManagementService.getOverrideValues(getOverrideValuesOptionsModel).execute();
     assertNotNull(response);
     Map<String, Object> responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -3360,14 +3225,14 @@ public class CatalogManagementTest extends PowerMockTestCase {
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getOverrideValues(null).execute();
+    catalogManagementService.getOverrideValues(null).execute();
   }
 
   @Test
-  public void testGetSchematicsWorkspacesWOptions() throws Throwable {
+  public void testSearchObjectsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"name\": \"name\", \"type\": [\"type\"], \"description\": \"description\", \"tags\": [\"tags\"], \"created_at\": \"2019-01-01T12:00:00\", \"created_by\": \"createdBy\", \"status\": \"status\", \"workspace_status\": {\"frozen\": true, \"locked\": true}, \"template_ref\": \"templateRef\", \"template_repo\": {\"repo_url\": \"repoUrl\", \"chart_name\": \"chartName\", \"script_name\": \"scriptName\", \"uninstall_script_name\": \"uninstallScriptName\", \"folder_name\": \"folderName\", \"repo_sha_value\": \"repoShaValue\"}, \"template_data\": [\"anyValue\"], \"runtime_data\": {\"id\": \"id\", \"engine_name\": \"engineName\", \"engine_version\": \"engineVersion\", \"state_store_url\": \"stateStoreUrl\", \"log_store_url\": \"logStoreUrl\"}, \"shared_data\": {\"mapKey\": \"anyValue\"}, \"catalog_ref\": {\"item_id\": \"itemId\", \"item_name\": \"itemName\", \"item_url\": \"itemUrl\"}}]}";
-    String getSchematicsWorkspacesPath = "/versions/testString/workspaces";
+    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"name\": \"name\", \"_rev\": \"rev\", \"crn\": \"crn\", \"url\": \"url\", \"parent_id\": \"parentId\", \"label_i18n\": \"labelI18n\", \"label\": \"label\", \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"short_description_i18n\": \"shortDescriptionI18n\", \"kind\": \"kind\", \"publish\": {\"permit_ibm_public_publish\": true, \"ibm_approved\": false, \"public_approved\": true, \"portal_approval_record\": \"portalApprovalRecord\", \"portal_url\": \"portalUrl\"}, \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"data\": {\"mapKey\": \"anyValue\"}}]}";
+    String searchObjectsPath = "/objects";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -3376,71 +3241,19 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetSchematicsWorkspacesOptions model
-    GetSchematicsWorkspacesOptions getSchematicsWorkspacesOptionsModel = new GetSchematicsWorkspacesOptions.Builder()
-    .versionLocId("testString")
-    .xAuthRefreshToken("testString")
+    // Construct an instance of the SearchObjectsOptions model
+    SearchObjectsOptions searchObjectsOptionsModel = new SearchObjectsOptions.Builder()
+    .query("testString")
+    .limit(Long.valueOf("1000"))
+    .offset(Long.valueOf("26"))
+    .collapse(true)
+    .digest(true)
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<SchematicsWorkspaceSearchResult> response = testService.getSchematicsWorkspaces(getSchematicsWorkspacesOptionsModel).execute();
+    Response<ObjectSearchResult> response = catalogManagementService.searchObjects(searchObjectsOptionsModel).execute();
     assertNotNull(response);
-    SchematicsWorkspaceSearchResult responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    assertEquals(request.getHeader("X-Auth-Refresh-Token"), "testString");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getSchematicsWorkspacesPath);
-  }
-
-  // Test the getSchematicsWorkspaces operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetSchematicsWorkspacesNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    testService.getSchematicsWorkspaces(null).execute();
-  }
-
-  @Test
-  public void testCanDeploySchematicsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"pre_install\": {\"mapKey\": \"anyValue\"}, \"install\": {\"mapKey\": \"anyValue\"}}";
-    String canDeploySchematicsPath = "/versions/testString/candeploy";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the CanDeploySchematicsOptions model
-    CanDeploySchematicsOptions canDeploySchematicsOptionsModel = new CanDeploySchematicsOptions.Builder()
-    .versionLocId("testString")
-    .clusterId("testString")
-    .region("testString")
-    .namespace("testString")
-    .resourceGroupId("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<DeployRequirementsCheck> response = testService.canDeploySchematics(canDeploySchematicsOptionsModel).execute();
-    assertNotNull(response);
-    DeployRequirementsCheck responseObj = response.getResult();
+    ObjectSearchResult responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -3452,32 +3265,33 @@ public class CatalogManagementTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("cluster_id"), "testString");
-    assertEquals(query.get("region"), "testString");
-    assertEquals(query.get("namespace"), "testString");
-    assertEquals(query.get("resource_group_id"), "testString");
+    assertEquals(query.get("query"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1000"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
+    assertEquals(Boolean.valueOf(query.get("collapse")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("digest")), Boolean.valueOf(true));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, canDeploySchematicsPath);
+    assertEquals(parsedPath, searchObjectsPath);
   }
 
-  // Test the canDeploySchematics operation with null options model parameter
+  // Test the searchObjects operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCanDeploySchematicsNoOptions() throws Throwable {
+  public void testSearchObjectsNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.canDeploySchematics(null).execute();
+    catalogManagementService.searchObjects(null).execute();
   }
 
   @Test
-  public void testGetResourceGroupsWOptions() throws Throwable {
+  public void testListObjectsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"name\": \"name\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"state\": \"state\", \"default\": true}]}";
-    String getResourceGroupsPath = "/deploy/schematics/resourcegroups";
+    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"name\": \"name\", \"_rev\": \"rev\", \"crn\": \"crn\", \"url\": \"url\", \"parent_id\": \"parentId\", \"label_i18n\": \"labelI18n\", \"label\": \"label\", \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"short_description_i18n\": \"shortDescriptionI18n\", \"kind\": \"kind\", \"publish\": {\"permit_ibm_public_publish\": true, \"ibm_approved\": false, \"public_approved\": true, \"portal_approval_record\": \"portalApprovalRecord\", \"portal_url\": \"portalUrl\"}, \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"data\": {\"mapKey\": \"anyValue\"}}]}";
+    String listObjectsPath = "/catalogs/testString/objects";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -3486,140 +3300,110 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetResourceGroupsOptions model
-    GetResourceGroupsOptions getResourceGroupsOptionsModel = new GetResourceGroupsOptions();
-
-    // Invoke operation with valid options model (positive test)
-    Response<ResourceGroups> response = testService.getResourceGroups(getResourceGroupsOptionsModel).execute();
-    assertNotNull(response);
-    ResourceGroups responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getResourceGroupsPath);
-  }
-
-  @Test
-  public void testGetLicenseProvidersWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"total_results\": 12, \"total_pages\": 10, \"prev_url\": \"prevUrl\", \"next_url\": \"nextUrl\", \"resources\": [{\"name\": \"name\", \"short_description\": \"shortDescription\", \"id\": \"id\", \"licence_type\": \"licenceType\", \"offering_type\": \"offeringType\", \"create_url\": \"createUrl\", \"info_url\": \"infoUrl\", \"url\": \"url\", \"crn\": \"crn\", \"state\": \"state\"}]}";
-    String getLicenseProvidersPath = "/license/license_providers";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetLicenseProvidersOptions model
-    GetLicenseProvidersOptions getLicenseProvidersOptionsModel = new GetLicenseProvidersOptions();
-
-    // Invoke operation with valid options model (positive test)
-    Response<LicenseProviders> response = testService.getLicenseProviders(getLicenseProvidersOptionsModel).execute();
-    assertNotNull(response);
-    LicenseProviders responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getLicenseProvidersPath);
-  }
-
-  @Test
-  public void testListLicenseEntitlementsWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"total_results\": 12, \"total_pages\": 10, \"prev_url\": \"prevUrl\", \"next_url\": \"nextUrl\", \"resources\": [{\"name\": \"name\", \"id\": \"id\", \"crn\": \"crn\", \"url\": \"url\", \"offering_type\": \"offeringType\", \"state\": \"state\", \"effective_from\": \"effectiveFrom\", \"effective_until\": \"effectiveUntil\", \"account_id\": \"accountId\", \"owner_id\": \"ownerId\", \"version_id\": \"versionId\", \"license_offering_id\": \"licenseOfferingId\", \"license_id\": \"licenseId\", \"license_owner_id\": \"licenseOwnerId\", \"license_type\": \"licenseType\", \"license_provider_id\": \"licenseProviderId\", \"license_provider_url\": \"licenseProviderUrl\", \"license_product_id\": \"licenseProductId\", \"namespace_repository\": \"namespaceRepository\", \"apikey\": \"apikey\", \"create_by\": \"createBy\", \"update_by\": \"updateBy\", \"create_at\": \"createAt\", \"updated_at\": \"updatedAt\", \"history\": [{\"action\": \"action\", \"user\": \"user\", \"date\": \"date\"}], \"offering_list\": [{\"id\": \"id\", \"name\": \"name\", \"label\": \"label\", \"offering_icon_url\": \"offeringIconUrl\", \"account_id\": \"accountId\", \"catalog_id\": \"catalogId\"}]}]}";
-    String listLicenseEntitlementsPath = "/license/entitlements";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the ListLicenseEntitlementsOptions model
-    ListLicenseEntitlementsOptions listLicenseEntitlementsOptionsModel = new ListLicenseEntitlementsOptions.Builder()
-    .accountId("testString")
-    .licenseProductId("testString")
-    .versionId("testString")
-    .state("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<LicenseEntitlements> response = testService.listLicenseEntitlements(listLicenseEntitlementsOptionsModel).execute();
-    assertNotNull(response);
-    LicenseEntitlements responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("account_id"), "testString");
-    assertEquals(query.get("license_product_id"), "testString");
-    assertEquals(query.get("version_id"), "testString");
-    assertEquals(query.get("state"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listLicenseEntitlementsPath);
-  }
-
-  @Test
-  public void testCreateLicenseEntitlementWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"name\": \"name\", \"id\": \"id\", \"crn\": \"crn\", \"url\": \"url\", \"offering_type\": \"offeringType\", \"state\": \"state\", \"effective_from\": \"effectiveFrom\", \"effective_until\": \"effectiveUntil\", \"account_id\": \"accountId\", \"owner_id\": \"ownerId\", \"version_id\": \"versionId\", \"license_offering_id\": \"licenseOfferingId\", \"license_id\": \"licenseId\", \"license_owner_id\": \"licenseOwnerId\", \"license_type\": \"licenseType\", \"license_provider_id\": \"licenseProviderId\", \"license_provider_url\": \"licenseProviderUrl\", \"license_product_id\": \"licenseProductId\", \"namespace_repository\": \"namespaceRepository\", \"apikey\": \"apikey\", \"create_by\": \"createBy\", \"update_by\": \"updateBy\", \"create_at\": \"createAt\", \"updated_at\": \"updatedAt\", \"history\": [{\"action\": \"action\", \"user\": \"user\", \"date\": \"date\"}], \"offering_list\": [{\"id\": \"id\", \"name\": \"name\", \"label\": \"label\", \"offering_icon_url\": \"offeringIconUrl\", \"account_id\": \"accountId\", \"catalog_id\": \"catalogId\"}]}";
-    String createLicenseEntitlementPath = "/license/entitlements";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the CreateLicenseEntitlementOptions model
-    CreateLicenseEntitlementOptions createLicenseEntitlementOptionsModel = new CreateLicenseEntitlementOptions.Builder()
+    // Construct an instance of the ListObjectsOptions model
+    ListObjectsOptions listObjectsOptionsModel = new ListObjectsOptions.Builder()
+    .catalogIdentifier("testString")
+    .limit(Long.valueOf("1000"))
+    .offset(Long.valueOf("26"))
     .name("testString")
-    .effectiveFrom("testString")
-    .effectiveUntil("testString")
-    .versionId("testString")
-    .licenseId("testString")
-    .licenseOwnerId("testString")
-    .licenseProviderId("testString")
-    .licenseProductId("testString")
-    .accountId("testString")
+    .sort("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<LicenseEntitlement> response = testService.createLicenseEntitlement(createLicenseEntitlementOptionsModel).execute();
+    Response<ObjectListResult> response = catalogManagementService.listObjects(listObjectsOptionsModel).execute();
     assertNotNull(response);
-    LicenseEntitlement responseObj = response.getResult();
+    ObjectListResult responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    // Get query params
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1000"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
+    assertEquals(query.get("name"), "testString");
+    assertEquals(query.get("sort"), "testString");
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listObjectsPath);
+  }
+
+  // Test the listObjects operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListObjectsNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.listObjects(null).execute();
+  }
+
+  @Test
+  public void testCreateObjectWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"_rev\": \"rev\", \"crn\": \"crn\", \"url\": \"url\", \"parent_id\": \"parentId\", \"label_i18n\": \"labelI18n\", \"label\": \"label\", \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"short_description_i18n\": \"shortDescriptionI18n\", \"kind\": \"kind\", \"publish\": {\"permit_ibm_public_publish\": true, \"ibm_approved\": false, \"public_approved\": true, \"portal_approval_record\": \"portalApprovalRecord\", \"portal_url\": \"portalUrl\"}, \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"data\": {\"mapKey\": \"anyValue\"}}";
+    String createObjectPath = "/catalogs/testString/objects";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(201)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the PublishObject model
+    PublishObject publishObjectModel = new PublishObject.Builder()
+    .permitIbmPublicPublish(true)
+    .ibmApproved(true)
+    .publicApproved(true)
+    .portalApprovalRecord("testString")
+    .portalUrl("testString")
+    .build();
+
+    // Construct an instance of the State model
+    State stateModel = new State.Builder()
+    .current("testString")
+    .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .pending("testString")
+    .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .previous("testString")
+    .build();
+
+    // Construct an instance of the CreateObjectOptions model
+    CreateObjectOptions createObjectOptionsModel = new CreateObjectOptions.Builder()
+    .catalogIdentifier("testString")
+    .id("testString")
+    .name("testString")
+    .rev("testString")
+    .crn("testString")
+    .url("testString")
+    .parentId("testString")
+    .labelI18n("testString")
+    .label("testString")
+    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .shortDescription("testString")
+    .shortDescriptionI18n("testString")
+    .kind("testString")
+    .publish(publishObjectModel)
+    .state(stateModel)
+    .catalogId("testString")
+    .catalogName("testString")
+    .data(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<CatalogObject> response = catalogManagementService.createObject(createObjectOptionsModel).execute();
+    assertNotNull(response);
+    CatalogObject responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -3629,19 +3413,30 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("account_id"), "testString");
+    assertNull(query);
+
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createLicenseEntitlementPath);
+    assertEquals(parsedPath, createObjectPath);
+  }
+
+  // Test the createObject operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateObjectNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.createObject(null).execute();
   }
 
   @Test
-  public void testGetLicenseEntitlementsWOptions() throws Throwable {
+  public void testGetObjectWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"total_results\": 12, \"total_pages\": 10, \"prev_url\": \"prevUrl\", \"next_url\": \"nextUrl\", \"resources\": [{\"name\": \"name\", \"id\": \"id\", \"crn\": \"crn\", \"url\": \"url\", \"offering_type\": \"offeringType\", \"state\": \"state\", \"effective_from\": \"effectiveFrom\", \"effective_until\": \"effectiveUntil\", \"account_id\": \"accountId\", \"owner_id\": \"ownerId\", \"version_id\": \"versionId\", \"license_offering_id\": \"licenseOfferingId\", \"license_id\": \"licenseId\", \"license_owner_id\": \"licenseOwnerId\", \"license_type\": \"licenseType\", \"license_provider_id\": \"licenseProviderId\", \"license_provider_url\": \"licenseProviderUrl\", \"license_product_id\": \"licenseProductId\", \"namespace_repository\": \"namespaceRepository\", \"apikey\": \"apikey\", \"create_by\": \"createBy\", \"update_by\": \"updateBy\", \"create_at\": \"createAt\", \"updated_at\": \"updatedAt\", \"history\": [{\"action\": \"action\", \"user\": \"user\", \"date\": \"date\"}], \"offering_list\": [{\"id\": \"id\", \"name\": \"name\", \"label\": \"label\", \"offering_icon_url\": \"offeringIconUrl\", \"account_id\": \"accountId\", \"catalog_id\": \"catalogId\"}]}]}";
-    String getLicenseEntitlementsPath = "/license/entitlements/productID/testString";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"_rev\": \"rev\", \"crn\": \"crn\", \"url\": \"url\", \"parent_id\": \"parentId\", \"label_i18n\": \"labelI18n\", \"label\": \"label\", \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"short_description_i18n\": \"shortDescriptionI18n\", \"kind\": \"kind\", \"publish\": {\"permit_ibm_public_publish\": true, \"ibm_approved\": false, \"public_approved\": true, \"portal_approval_record\": \"portalApprovalRecord\", \"portal_url\": \"portalUrl\"}, \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"data\": {\"mapKey\": \"anyValue\"}}";
+    String getObjectPath = "/catalogs/testString/objects/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -3650,17 +3445,16 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetLicenseEntitlementsOptions model
-    GetLicenseEntitlementsOptions getLicenseEntitlementsOptionsModel = new GetLicenseEntitlementsOptions.Builder()
-    .licenseProductId("testString")
-    .accountId("testString")
-    .versionId("testString")
+    // Construct an instance of the GetObjectOptions model
+    GetObjectOptions getObjectOptionsModel = new GetObjectOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<LicenseEntitlements> response = testService.getLicenseEntitlements(getLicenseEntitlementsOptionsModel).execute();
+    Response<CatalogObject> response = catalogManagementService.getObject(getObjectOptionsModel).execute();
     assertNotNull(response);
-    LicenseEntitlements responseObj = response.getResult();
+    CatalogObject responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -3670,32 +3464,118 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("account_id"), "testString");
-    assertEquals(query.get("version_id"), "testString");
+    assertNull(query);
+
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getLicenseEntitlementsPath);
+    assertEquals(parsedPath, getObjectPath);
   }
 
-  // Test the getLicenseEntitlements operation with null options model parameter
+  // Test the getObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetLicenseEntitlementsNoOptions() throws Throwable {
+  public void testGetObjectNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getLicenseEntitlements(null).execute();
+    catalogManagementService.getObject(null).execute();
   }
 
   @Test
-  public void testDeleteLicenseEntitlementWOptions() throws Throwable {
+  public void testReplaceObjectWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"_rev\": \"rev\", \"crn\": \"crn\", \"url\": \"url\", \"parent_id\": \"parentId\", \"label_i18n\": \"labelI18n\", \"label\": \"label\", \"tags\": [\"tags\"], \"created\": \"2019-01-01T12:00:00.000Z\", \"updated\": \"2019-01-01T12:00:00.000Z\", \"short_description\": \"shortDescription\", \"short_description_i18n\": \"shortDescriptionI18n\", \"kind\": \"kind\", \"publish\": {\"permit_ibm_public_publish\": true, \"ibm_approved\": false, \"public_approved\": true, \"portal_approval_record\": \"portalApprovalRecord\", \"portal_url\": \"portalUrl\"}, \"state\": {\"current\": \"current\", \"current_entered\": \"2019-01-01T12:00:00.000Z\", \"pending\": \"pending\", \"pending_requested\": \"2019-01-01T12:00:00.000Z\", \"previous\": \"previous\"}, \"catalog_id\": \"catalogId\", \"catalog_name\": \"catalogName\", \"data\": {\"mapKey\": \"anyValue\"}}";
+    String replaceObjectPath = "/catalogs/testString/objects/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the PublishObject model
+    PublishObject publishObjectModel = new PublishObject.Builder()
+    .permitIbmPublicPublish(true)
+    .ibmApproved(true)
+    .publicApproved(true)
+    .portalApprovalRecord("testString")
+    .portalUrl("testString")
+    .build();
+
+    // Construct an instance of the State model
+    State stateModel = new State.Builder()
+    .current("testString")
+    .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .pending("testString")
+    .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .previous("testString")
+    .build();
+
+    // Construct an instance of the ReplaceObjectOptions model
+    ReplaceObjectOptions replaceObjectOptionsModel = new ReplaceObjectOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .id("testString")
+    .name("testString")
+    .rev("testString")
+    .crn("testString")
+    .url("testString")
+    .parentId("testString")
+    .labelI18n("testString")
+    .label("testString")
+    .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+    .shortDescription("testString")
+    .shortDescriptionI18n("testString")
+    .kind("testString")
+    .publish(publishObjectModel)
+    .state(stateModel)
+    .catalogId("testString")
+    .catalogName("testString")
+    .data(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<CatalogObject> response = catalogManagementService.replaceObject(replaceObjectOptionsModel).execute();
+    assertNotNull(response);
+    CatalogObject responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, replaceObjectPath);
+  }
+
+  // Test the replaceObject operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testReplaceObjectNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.replaceObject(null).execute();
+  }
+
+  @Test
+  public void testDeleteObjectWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String deleteLicenseEntitlementPath = "/license/entitlements/testString";
+    String deleteObjectPath = "/catalogs/testString/objects/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(200)
@@ -3703,14 +3583,14 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the DeleteLicenseEntitlementOptions model
-    DeleteLicenseEntitlementOptions deleteLicenseEntitlementOptionsModel = new DeleteLicenseEntitlementOptions.Builder()
-    .entitlementId("testString")
-    .accountId("testString")
+    // Construct an instance of the DeleteObjectOptions model
+    DeleteObjectOptions deleteObjectOptionsModel = new DeleteObjectOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.deleteLicenseEntitlement(deleteLicenseEntitlementOptionsModel).execute();
+    Response<Void> response = catalogManagementService.deleteObject(deleteObjectOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -3723,31 +3603,30 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("account_id"), "testString");
+    assertNull(query);
+
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, deleteLicenseEntitlementPath);
+    assertEquals(parsedPath, deleteObjectPath);
   }
 
-  // Test the deleteLicenseEntitlement operation with null options model parameter
+  // Test the deleteObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeleteLicenseEntitlementNoOptions() throws Throwable {
+  public void testDeleteObjectNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.deleteLicenseEntitlement(null).execute();
+    catalogManagementService.deleteObject(null).execute();
   }
 
   @Test
-  public void testGetLicensesWOptions() throws Throwable {
+  public void testGetObjectAuditWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"total_results\": 12, \"total_pages\": 10, \"prev_url\": \"prevUrl\", \"next_url\": \"nextUrl\", \"resources\": [{\"name\": \"name\", \"offering_type\": \"offeringType\", \"seats_allowed\": \"seatsAllowed\", \"seats_used\": \"seatsUsed\", \"owner_id\": \"ownerId\", \"license_offering_id\": \"licenseOfferingId\", \"license_id\": \"licenseId\", \"license_owner_id\": \"licenseOwnerId\", \"license_type\": \"licenseType\", \"license_provider_id\": \"licenseProviderId\", \"license_product_id\": \"licenseProductId\", \"license_provider_url\": \"licenseProviderUrl\", \"effective_from\": \"effectiveFrom\", \"effective_until\": \"effectiveUntil\", \"internal\": true, \"offering_list\": [{\"id\": \"id\", \"name\": \"name\", \"label\": \"label\", \"offering_icon_url\": \"offeringIconUrl\", \"account_id\": \"accountId\", \"catalog_id\": \"catalogId\"}]}]}";
-    String getLicensesPath = "/license/licenses";
+    String mockResponseBody = "{\"list\": [{\"id\": \"id\", \"created\": \"2019-01-01T12:00:00.000Z\", \"change_type\": \"changeType\", \"target_type\": \"targetType\", \"target_id\": \"targetId\", \"who_delegate_email\": \"whoDelegateEmail\", \"message\": \"message\"}]}";
+    String getObjectAuditPath = "/catalogs/testString/objects/testString/audit";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -3756,19 +3635,429 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the GetLicensesOptions model
-    GetLicensesOptions getLicensesOptionsModel = new GetLicensesOptions.Builder()
-    .licenseProviderId("testString")
-    .accountId("testString")
-    .name("testString")
-    .licenseType("testString")
-    .licenseProductId("testString")
+    // Construct an instance of the GetObjectAuditOptions model
+    GetObjectAuditOptions getObjectAuditOptionsModel = new GetObjectAuditOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Licenses> response = testService.getLicenses(getLicensesOptionsModel).execute();
+    Response<AuditLog> response = catalogManagementService.getObjectAudit(getObjectAuditOptionsModel).execute();
     assertNotNull(response);
-    Licenses responseObj = response.getResult();
+    AuditLog responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getObjectAuditPath);
+  }
+
+  // Test the getObjectAudit operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetObjectAuditNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.getObjectAudit(null).execute();
+  }
+
+  @Test
+  public void testAccountPublishObjectWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String accountPublishObjectPath = "/catalogs/testString/objects/testString/account-publish";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(202)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the AccountPublishObjectOptions model
+    AccountPublishObjectOptions accountPublishObjectOptionsModel = new AccountPublishObjectOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = catalogManagementService.accountPublishObject(accountPublishObjectOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, accountPublishObjectPath);
+  }
+
+  // Test the accountPublishObject operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testAccountPublishObjectNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.accountPublishObject(null).execute();
+  }
+
+  @Test
+  public void testSharedPublishObjectWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String sharedPublishObjectPath = "/catalogs/testString/objects/testString/shared-publish";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(202)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the SharedPublishObjectOptions model
+    SharedPublishObjectOptions sharedPublishObjectOptionsModel = new SharedPublishObjectOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = catalogManagementService.sharedPublishObject(sharedPublishObjectOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, sharedPublishObjectPath);
+  }
+
+  // Test the sharedPublishObject operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testSharedPublishObjectNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.sharedPublishObject(null).execute();
+  }
+
+  @Test
+  public void testIbmPublishObjectWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String ibmPublishObjectPath = "/catalogs/testString/objects/testString/ibm-publish";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(202)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the IbmPublishObjectOptions model
+    IbmPublishObjectOptions ibmPublishObjectOptionsModel = new IbmPublishObjectOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = catalogManagementService.ibmPublishObject(ibmPublishObjectOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, ibmPublishObjectPath);
+  }
+
+  // Test the ibmPublishObject operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testIbmPublishObjectNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.ibmPublishObject(null).execute();
+  }
+
+  @Test
+  public void testPublicPublishObjectWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String publicPublishObjectPath = "/catalogs/testString/objects/testString/public-publish";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(202)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the PublicPublishObjectOptions model
+    PublicPublishObjectOptions publicPublishObjectOptionsModel = new PublicPublishObjectOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = catalogManagementService.publicPublishObject(publicPublishObjectOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, publicPublishObjectPath);
+  }
+
+  // Test the publicPublishObject operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testPublicPublishObjectNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.publicPublishObject(null).execute();
+  }
+
+  @Test
+  public void testCreateObjectAccessWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String createObjectAccessPath = "/catalogs/testString/objects/testString/access/testString";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(201)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the CreateObjectAccessOptions model
+    CreateObjectAccessOptions createObjectAccessOptionsModel = new CreateObjectAccessOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .accountIdentifier("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = catalogManagementService.createObjectAccess(createObjectAccessOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createObjectAccessPath);
+  }
+
+  // Test the createObjectAccess operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateObjectAccessNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.createObjectAccess(null).execute();
+  }
+
+  @Test
+  public void testGetObjectAccessWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"account\": \"account\", \"catalog_id\": \"catalogId\", \"target_id\": \"targetId\", \"create\": \"2019-01-01T12:00:00.000Z\"}";
+    String getObjectAccessPath = "/catalogs/testString/objects/testString/access/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetObjectAccessOptions model
+    GetObjectAccessOptions getObjectAccessOptionsModel = new GetObjectAccessOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .accountIdentifier("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ObjectAccess> response = catalogManagementService.getObjectAccess(getObjectAccessOptionsModel).execute();
+    assertNotNull(response);
+    ObjectAccess responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getObjectAccessPath);
+  }
+
+  // Test the getObjectAccess operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetObjectAccessNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.getObjectAccess(null).execute();
+  }
+
+  @Test
+  public void testDeleteObjectAccessWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String deleteObjectAccessPath = "/catalogs/testString/objects/testString/access/testString";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the DeleteObjectAccessOptions model
+    DeleteObjectAccessOptions deleteObjectAccessOptionsModel = new DeleteObjectAccessOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .accountIdentifier("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = catalogManagementService.deleteObjectAccess(deleteObjectAccessOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteObjectAccessPath);
+  }
+
+  // Test the deleteObjectAccess operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteObjectAccessNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.deleteObjectAccess(null).execute();
+  }
+
+  @Test
+  public void testGetObjectAccessListWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"offset\": 6, \"limit\": 5, \"total_count\": 10, \"resource_count\": 13, \"first\": \"first\", \"last\": \"last\", \"prev\": \"prev\", \"next\": \"next\", \"resources\": [{\"id\": \"id\", \"account\": \"account\", \"catalog_id\": \"catalogId\", \"target_id\": \"targetId\", \"create\": \"2019-01-01T12:00:00.000Z\"}]}";
+    String getObjectAccessListPath = "/catalogs/testString/objects/testString/access";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetObjectAccessListOptions model
+    GetObjectAccessListOptions getObjectAccessListOptionsModel = new GetObjectAccessListOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .limit(Long.valueOf("1000"))
+    .offset(Long.valueOf("26"))
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ObjectAccessListResult> response = catalogManagementService.getObjectAccessList(getObjectAccessListOptionsModel).execute();
+    assertNotNull(response);
+    ObjectAccessListResult responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -3780,51 +4069,215 @@ public class CatalogManagementTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(query.get("license_provider_id"), "testString");
-    assertEquals(query.get("account_id"), "testString");
-    assertEquals(query.get("name"), "testString");
-    assertEquals(query.get("license_type"), "testString");
-    assertEquals(query.get("license_product_id"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1000"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getLicensesPath);
+    assertEquals(parsedPath, getObjectAccessListPath);
   }
 
-  // Test the getLicenses operation with null options model parameter
+  // Test the getObjectAccessList operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetLicensesNoOptions() throws Throwable {
+  public void testGetObjectAccessListNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.getLicenses(null).execute();
+    catalogManagementService.getObjectAccessList(null).execute();
   }
 
   @Test
-  public void testSearchLicenseVersionsWOptions() throws Throwable {
+  public void testDeleteObjectAccessListWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "";
-    String searchLicenseVersionsPath = "/search/license/versions";
+    String mockResponseBody = "{\"errors\": {\"mapKey\": \"inner\"}}";
+    String deleteObjectAccessListPath = "/catalogs/testString/objects/testString/access";
 
     server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
     .setResponseCode(200)
     .setBody(mockResponseBody));
 
     constructClientService();
 
-    // Construct an instance of the SearchLicenseVersionsOptions model
-    SearchLicenseVersionsOptions searchLicenseVersionsOptionsModel = new SearchLicenseVersionsOptions.Builder()
-    .q("testString")
+    // Construct an instance of the DeleteObjectAccessListOptions model
+    DeleteObjectAccessListOptions deleteObjectAccessListOptionsModel = new DeleteObjectAccessListOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.searchLicenseVersions(searchLicenseVersionsOptionsModel).execute();
+    Response<AccessListBulkResponse> response = catalogManagementService.deleteObjectAccessList(deleteObjectAccessListOptionsModel).execute();
     assertNotNull(response);
-    Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
-    assertNull(responseObj);
+    AccessListBulkResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteObjectAccessListPath);
+  }
+
+  // Test the deleteObjectAccessList operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteObjectAccessListNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.deleteObjectAccessList(null).execute();
+  }
+
+  @Test
+  public void testAddObjectAccessListWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"errors\": {\"mapKey\": \"inner\"}}";
+    String addObjectAccessListPath = "/catalogs/testString/objects/testString/access";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the AddObjectAccessListOptions model
+    AddObjectAccessListOptions addObjectAccessListOptionsModel = new AddObjectAccessListOptions.Builder()
+    .catalogIdentifier("testString")
+    .objectIdentifier("testString")
+    .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<AccessListBulkResponse> response = catalogManagementService.addObjectAccessList(addObjectAccessListOptionsModel).execute();
+    assertNotNull(response);
+    AccessListBulkResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, addObjectAccessListPath);
+  }
+
+  // Test the addObjectAccessList operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testAddObjectAccessListNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.addObjectAccessList(null).execute();
+  }
+
+  @Test
+  public void testCreateOfferingInstanceWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"catalog_id\": \"catalogId\", \"offering_id\": \"offeringId\", \"kind_format\": \"kindFormat\", \"version\": \"version\", \"cluster_id\": \"clusterId\", \"cluster_region\": \"clusterRegion\", \"cluster_namespaces\": [\"clusterNamespaces\"], \"cluster_all_namespaces\": true}";
+    String createOfferingInstancePath = "/instances/offerings";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(201)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the CreateOfferingInstanceOptions model
+    CreateOfferingInstanceOptions createOfferingInstanceOptionsModel = new CreateOfferingInstanceOptions.Builder()
+    .xAuthRefreshToken("testString")
+    .id("testString")
+    .url("testString")
+    .crn("testString")
+    .label("testString")
+    .catalogId("testString")
+    .offeringId("testString")
+    .kindFormat("testString")
+    .version("testString")
+    .clusterId("testString")
+    .clusterRegion("testString")
+    .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .clusterAllNamespaces(true)
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<OfferingInstance> response = catalogManagementService.createOfferingInstance(createOfferingInstanceOptionsModel).execute();
+    assertNotNull(response);
+    OfferingInstance responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    assertEquals(request.getHeader("X-Auth-Refresh-Token"), "testString");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createOfferingInstancePath);
+  }
+
+  // Test the createOfferingInstance operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateOfferingInstanceNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.createOfferingInstance(null).execute();
+  }
+
+  @Test
+  public void testGetOfferingInstanceWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"catalog_id\": \"catalogId\", \"offering_id\": \"offeringId\", \"kind_format\": \"kindFormat\", \"version\": \"version\", \"cluster_id\": \"clusterId\", \"cluster_region\": \"clusterRegion\", \"cluster_namespaces\": [\"clusterNamespaces\"], \"cluster_all_namespaces\": true}";
+    String getOfferingInstancePath = "/instances/offerings/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetOfferingInstanceOptions model
+    GetOfferingInstanceOptions getOfferingInstanceOptionsModel = new GetOfferingInstanceOptions.Builder()
+    .instanceIdentifier("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<OfferingInstance> response = catalogManagementService.getOfferingInstance(getOfferingInstanceOptionsModel).execute();
+    assertNotNull(response);
+    OfferingInstance responseObj = response.getResult();
+    assertNotNull(responseObj);
 
     // Verify the contents of the request
     RecordedRequest request = server.takeRequest();
@@ -3833,31 +4286,94 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("q"), "testString");
+    assertNull(query);
+
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, searchLicenseVersionsPath);
+    assertEquals(parsedPath, getOfferingInstancePath);
   }
 
-  // Test the searchLicenseVersions operation with null options model parameter
+  // Test the getOfferingInstance operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testSearchLicenseVersionsNoOptions() throws Throwable {
+  public void testGetOfferingInstanceNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.searchLicenseVersions(null).execute();
+    catalogManagementService.getOfferingInstance(null).execute();
   }
 
   @Test
-  public void testSearchLicenseOfferingsWOptions() throws Throwable {
+  public void testPutOfferingInstanceWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"catalog_id\": \"catalogId\", \"offering_id\": \"offeringId\", \"kind_format\": \"kindFormat\", \"version\": \"version\", \"cluster_id\": \"clusterId\", \"cluster_region\": \"clusterRegion\", \"cluster_namespaces\": [\"clusterNamespaces\"], \"cluster_all_namespaces\": true}";
+    String putOfferingInstancePath = "/instances/offerings/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the PutOfferingInstanceOptions model
+    PutOfferingInstanceOptions putOfferingInstanceOptionsModel = new PutOfferingInstanceOptions.Builder()
+    .instanceIdentifier("testString")
+    .xAuthRefreshToken("testString")
+    .id("testString")
+    .url("testString")
+    .crn("testString")
+    .label("testString")
+    .catalogId("testString")
+    .offeringId("testString")
+    .kindFormat("testString")
+    .version("testString")
+    .clusterId("testString")
+    .clusterRegion("testString")
+    .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+    .clusterAllNamespaces(true)
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<OfferingInstance> response = catalogManagementService.putOfferingInstance(putOfferingInstanceOptionsModel).execute();
+    assertNotNull(response);
+    OfferingInstance responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    assertEquals(request.getHeader("X-Auth-Refresh-Token"), "testString");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, putOfferingInstancePath);
+  }
+
+  // Test the putOfferingInstance operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testPutOfferingInstanceNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    catalogManagementService.putOfferingInstance(null).execute();
+  }
+
+  @Test
+  public void testDeleteOfferingInstanceWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String searchLicenseOfferingsPath = "/search/license/offerings";
+    String deleteOfferingInstancePath = "/instances/offerings/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(200)
@@ -3865,13 +4381,14 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the SearchLicenseOfferingsOptions model
-    SearchLicenseOfferingsOptions searchLicenseOfferingsOptionsModel = new SearchLicenseOfferingsOptions.Builder()
-    .q("testString")
+    // Construct an instance of the DeleteOfferingInstanceOptions model
+    DeleteOfferingInstanceOptions deleteOfferingInstanceOptionsModel = new DeleteOfferingInstanceOptions.Builder()
+    .instanceIdentifier("testString")
+    .xAuthRefreshToken("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<Void> response = testService.searchLicenseOfferings(searchLicenseOfferingsOptionsModel).execute();
+    Response<Void> response = catalogManagementService.deleteOfferingInstance(deleteOfferingInstanceOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     // Response does not have a return type. Check that the result is null.
@@ -3880,28 +4397,28 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Verify the contents of the request
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
+    assertEquals(request.getMethod(), "DELETE");
+    assertEquals(request.getHeader("X-Auth-Refresh-Token"), "testString");
 
     // Check query
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("q"), "testString");
+    assertNull(query);
+
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, searchLicenseOfferingsPath);
+    assertEquals(parsedPath, deleteOfferingInstancePath);
   }
 
-  // Test the searchLicenseOfferings operation with null options model parameter
+  // Test the deleteOfferingInstance operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testSearchLicenseOfferingsNoOptions() throws Throwable {
+  public void testDeleteOfferingInstanceNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    testService.searchLicenseOfferings(null).execute();
+    catalogManagementService.deleteOfferingInstance(null).execute();
   }
 
   /** Initialize the server */
@@ -3920,6 +4437,6 @@ public class CatalogManagementTest extends PowerMockTestCase {
   @AfterMethod
   public void tearDownMockServer() throws IOException {
     server.shutdown();
-    testService = null;
+    catalogManagementService = null;
   }
 }

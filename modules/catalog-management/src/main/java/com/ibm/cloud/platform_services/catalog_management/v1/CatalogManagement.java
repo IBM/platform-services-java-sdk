@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,93 +10,103 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+/*
+ * IBM OpenAPI SDK Code Generator Version: 3.31.0-902c9336-20210504-161156
+ */
+
 package com.ibm.cloud.platform_services.catalog_management.v1;
 
 import com.google.gson.JsonObject;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AccessListBulkResponse;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Account;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFilters;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AddObjectAccessListOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ApprovalResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CanDeploySchematicsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.AuditLog;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Catalog;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogObject;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ClusterInfo;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ClusterSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CommitVersionOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CopyVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateLicenseEntitlementOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateObjectAccessOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateObjectOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingInstanceOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOperatorOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteLicenseEntitlementOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectAccessListOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectAccessOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingInstanceOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOperatorOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOperatorsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployRequirementsCheck;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployOperatorsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeprecateVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Enterprise;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountAuditOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountFiltersOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAuditOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetClusterOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetConsumptionOfferingsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetEnterpriseOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetLicenseEntitlementsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetLicenseProvidersOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetLicensesOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetNamespacesOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAccessListOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAccessOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAuditOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingAboutOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingAuditOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingContainerImagesOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingInstanceOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingLicenseOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingUpdatesOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingWorkingCopyOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOverrideValuesOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetPreinstallOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetRepoOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetReposOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetResourceGroupsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetSchematicsWorkspacesOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetValidationStatusOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionAboutOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionContainerImagesOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionLicenseOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionUpdatesOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionWorkingCopyOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.HelmPackage;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.HelmRepoList;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ImageManifest;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatus;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseEntitlement;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseEntitlements;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseProviders;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Licenses;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ListCatalogsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListClustersOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListLicenseEntitlementsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ListObjectsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOfferingsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOperatorsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListVersionsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.NamespaceSearchResult;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccess;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccessListResult;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectListResult;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Offering;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstance;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.OperatorDeployResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.PreinstallVersionOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.PublicPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.PublicPublishVersionOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.PutOfferingInstanceOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReloadOfferingOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceEnterpriseOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingIconOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOperatorOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ResourceGroups;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SchematicsWorkspaceSearchResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchLicenseOfferingsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchLicenseVersionsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOperatorsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchObjectsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.SharedPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateCatalogAccountOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateOfferingIbmOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ValidateInstallOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Validation;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ValidationInstallOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Version;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionUpdateDescriptor;
 import com.ibm.cloud.platform_services.common.SdkCommon;
@@ -107,6 +117,7 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -160,7 +171,7 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Get the account settings.
+   * Get catalog account settings.
    *
    * Get the account level settings for the account for private catalog.
    *
@@ -168,8 +179,7 @@ public class CatalogManagement extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link Account}
    */
   public ServiceCall<Account> getCatalogAccount(GetCatalogAccountOptions getCatalogAccountOptions) {
-    String[] pathSegments = { "catalogaccount" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogaccount"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getCatalogAccount");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -181,7 +191,7 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Get the account settings.
+   * Get catalog account settings.
    *
    * Get the account level settings for the account for private catalog.
    *
@@ -192,22 +202,31 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Set the account settings.
+   * Update account settings.
+   *
+   * Update the account level settings for the account for private catalog.
    *
    * @param updateCatalogAccountOptions the {@link UpdateCatalogAccountOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
   public ServiceCall<Void> updateCatalogAccount(UpdateCatalogAccountOptions updateCatalogAccountOptions) {
-    String[] pathSegments = { "catalogaccount" };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    boolean skipBody = false;
+    if (updateCatalogAccountOptions == null) {
+      updateCatalogAccountOptions = new UpdateCatalogAccountOptions.Builder().build();
+      skipBody = true;
+    }
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogaccount"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "updateCatalogAccount");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    if (updateCatalogAccountOptions != null) {
+    if (!skipBody) {
       final JsonObject contentJson = new JsonObject();
       if (updateCatalogAccountOptions.id() != null) {
         contentJson.addProperty("id", updateCatalogAccountOptions.id());
+      }
+      if (updateCatalogAccountOptions.hideIbmCloudCatalog() != null) {
+        contentJson.addProperty("hide_IBM_cloud_catalog", updateCatalogAccountOptions.hideIbmCloudCatalog());
       }
       if (updateCatalogAccountOptions.accountFilters() != null) {
         contentJson.add("account_filters", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateCatalogAccountOptions.accountFilters()));
@@ -219,7 +238,9 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Set the account settings.
+   * Update account settings.
+   *
+   * Update the account level settings for the account for private catalog.
    *
    * @return a {@link ServiceCall} with a void result
    */
@@ -228,7 +249,38 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Get the accumulated filters of the account and of the catalogs you have access to.
+   * Get catalog account audit log.
+   *
+   * Get the audit log associated with a catalog account.
+   *
+   * @param getCatalogAccountAuditOptions the {@link GetCatalogAccountAuditOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AuditLog}
+   */
+  public ServiceCall<AuditLog> getCatalogAccountAudit(GetCatalogAccountAuditOptions getCatalogAccountAuditOptions) {
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogaccount/audit"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getCatalogAccountAudit");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<AuditLog> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AuditLog>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get catalog account audit log.
+   *
+   * Get the audit log associated with a catalog account.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link AuditLog}
+   */
+  public ServiceCall<AuditLog> getCatalogAccountAudit() {
+    return getCatalogAccountAudit(null);
+  }
+
+  /**
+   * Get catalog account filters.
    *
    * Get the accumulated filters of the account and of the catalogs you have access to.
    *
@@ -236,17 +288,17 @@ public class CatalogManagement extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link AccumulatedFilters}
    */
   public ServiceCall<AccumulatedFilters> getCatalogAccountFilters(GetCatalogAccountFiltersOptions getCatalogAccountFiltersOptions) {
-    String[] pathSegments = { "catalogaccount/filters" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (getCatalogAccountFiltersOptions == null) {
+      getCatalogAccountFiltersOptions = new GetCatalogAccountFiltersOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogaccount/filters"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getCatalogAccountFilters");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (getCatalogAccountFiltersOptions != null) {
-      if (getCatalogAccountFiltersOptions.catalog() != null) {
-        builder.query("catalog", getCatalogAccountFiltersOptions.catalog());
-      }
+    if (getCatalogAccountFiltersOptions.catalog() != null) {
+      builder.query("catalog", String.valueOf(getCatalogAccountFiltersOptions.catalog()));
     }
     ResponseConverter<AccumulatedFilters> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccumulatedFilters>() { }.getType());
@@ -254,7 +306,7 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Get the accumulated filters of the account and of the catalogs you have access to.
+   * Get catalog account filters.
    *
    * Get the accumulated filters of the account and of the catalogs you have access to.
    *
@@ -267,14 +319,14 @@ public class CatalogManagement extends BaseService {
   /**
    * Get list of catalogs.
    *
-   * List the available catalogs for a given account.
+   * Retrieves the available catalogs for a given account. This can be used by an unauthenticated user to retrieve the
+   * public catalog.
    *
    * @param listCatalogsOptions the {@link ListCatalogsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link CatalogSearchResult}
    */
   public ServiceCall<CatalogSearchResult> listCatalogs(ListCatalogsOptions listCatalogsOptions) {
-    String[] pathSegments = { "catalogs" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "listCatalogs");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -288,7 +340,8 @@ public class CatalogManagement extends BaseService {
   /**
    * Get list of catalogs.
    *
-   * List the available catalogs for a given account.
+   * Retrieves the available catalogs for a given account. This can be used by an unauthenticated user to retrieve the
+   * public catalog.
    *
    * @return a {@link ServiceCall} with a result of type {@link CatalogSearchResult}
    */
@@ -305,14 +358,18 @@ public class CatalogManagement extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link Catalog}
    */
   public ServiceCall<Catalog> createCatalog(CreateCatalogOptions createCatalogOptions) {
-    String[] pathSegments = { "catalogs" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    boolean skipBody = false;
+    if (createCatalogOptions == null) {
+      createCatalogOptions = new CreateCatalogOptions.Builder().build();
+      skipBody = true;
+    }
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "createCatalog");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (createCatalogOptions != null) {
+    if (!skipBody) {
       final JsonObject contentJson = new JsonObject();
       if (createCatalogOptions.id() != null) {
         contentJson.addProperty("id", createCatalogOptions.id());
@@ -332,26 +389,11 @@ public class CatalogManagement extends BaseService {
       if (createCatalogOptions.tags() != null) {
         contentJson.add("tags", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createCatalogOptions.tags()));
       }
-      if (createCatalogOptions.url() != null) {
-        contentJson.addProperty("url", createCatalogOptions.url());
-      }
-      if (createCatalogOptions.crn() != null) {
-        contentJson.addProperty("crn", createCatalogOptions.crn());
-      }
-      if (createCatalogOptions.offeringsUrl() != null) {
-        contentJson.addProperty("offerings_url", createCatalogOptions.offeringsUrl());
-      }
       if (createCatalogOptions.features() != null) {
         contentJson.add("features", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createCatalogOptions.features()));
       }
       if (createCatalogOptions.disabled() != null) {
         contentJson.addProperty("disabled", createCatalogOptions.disabled());
-      }
-      if (createCatalogOptions.created() != null) {
-        contentJson.add("created", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createCatalogOptions.created()));
-      }
-      if (createCatalogOptions.updated() != null) {
-        contentJson.add("updated", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createCatalogOptions.updated()));
       }
       if (createCatalogOptions.resourceGroupId() != null) {
         contentJson.addProperty("resource_group_id", createCatalogOptions.resourceGroupId());
@@ -364,6 +406,9 @@ public class CatalogManagement extends BaseService {
       }
       if (createCatalogOptions.syndicationSettings() != null) {
         contentJson.add("syndication_settings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createCatalogOptions.syndicationSettings()));
+      }
+      if (createCatalogOptions.kind() != null) {
+        contentJson.addProperty("kind", createCatalogOptions.kind());
       }
       builder.bodyJson(contentJson);
     }
@@ -384,9 +429,9 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Get a catalog.
+   * Get catalog.
    *
-   * Get a catalog.
+   * Get a catalog. This can also be used by an unauthenticated user to get the public catalog.
    *
    * @param getCatalogOptions the {@link GetCatalogOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Catalog}
@@ -394,22 +439,21 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Catalog> getCatalog(GetCatalogOptions getCatalogOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getCatalogOptions,
       "getCatalogOptions cannot be null");
-    String[] pathSegments = { "catalogs" };
-    String[] pathParameters = { getCatalogOptions.catalogIdentifier() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", getCatalogOptions.catalogIdentifier());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getCatalog");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Catalog> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Catalog>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Update a catalog.
+   * Update catalog.
    *
    * Update a catalog.
    *
@@ -419,9 +463,9 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Catalog> replaceCatalog(ReplaceCatalogOptions replaceCatalogOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceCatalogOptions,
       "replaceCatalogOptions cannot be null");
-    String[] pathSegments = { "catalogs" };
-    String[] pathParameters = { replaceCatalogOptions.catalogIdentifier() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", replaceCatalogOptions.catalogIdentifier());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "replaceCatalog");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -446,26 +490,11 @@ public class CatalogManagement extends BaseService {
     if (replaceCatalogOptions.tags() != null) {
       contentJson.add("tags", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceCatalogOptions.tags()));
     }
-    if (replaceCatalogOptions.url() != null) {
-      contentJson.addProperty("url", replaceCatalogOptions.url());
-    }
-    if (replaceCatalogOptions.crn() != null) {
-      contentJson.addProperty("crn", replaceCatalogOptions.crn());
-    }
-    if (replaceCatalogOptions.offeringsUrl() != null) {
-      contentJson.addProperty("offerings_url", replaceCatalogOptions.offeringsUrl());
-    }
     if (replaceCatalogOptions.features() != null) {
       contentJson.add("features", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceCatalogOptions.features()));
     }
     if (replaceCatalogOptions.disabled() != null) {
       contentJson.addProperty("disabled", replaceCatalogOptions.disabled());
-    }
-    if (replaceCatalogOptions.created() != null) {
-      contentJson.add("created", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceCatalogOptions.created()));
-    }
-    if (replaceCatalogOptions.updated() != null) {
-      contentJson.add("updated", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceCatalogOptions.updated()));
     }
     if (replaceCatalogOptions.resourceGroupId() != null) {
       contentJson.addProperty("resource_group_id", replaceCatalogOptions.resourceGroupId());
@@ -479,6 +508,9 @@ public class CatalogManagement extends BaseService {
     if (replaceCatalogOptions.syndicationSettings() != null) {
       contentJson.add("syndication_settings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceCatalogOptions.syndicationSettings()));
     }
+    if (replaceCatalogOptions.kind() != null) {
+      contentJson.addProperty("kind", replaceCatalogOptions.kind());
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<Catalog> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Catalog>() { }.getType());
@@ -486,7 +518,7 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Delete a catalog.
+   * Delete catalog.
    *
    * Delete a catalog.
    *
@@ -496,107 +528,78 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> deleteCatalog(DeleteCatalogOptions deleteCatalogOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteCatalogOptions,
       "deleteCatalogOptions cannot be null");
-    String[] pathSegments = { "catalogs" };
-    String[] pathParameters = { deleteCatalogOptions.catalogIdentifier() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", deleteCatalogOptions.catalogIdentifier());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteCatalog");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Get the enterprise settings for the specified enterprise ID.
+   * Get catalog audit log.
    *
-   * Get the enterprise settings for the specified enterprise ID.
+   * Get the audit log associated with a catalog.
    *
-   * @param getEnterpriseOptions the {@link GetEnterpriseOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link Enterprise}
+   * @param getCatalogAuditOptions the {@link GetCatalogAuditOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AuditLog}
    */
-  public ServiceCall<Enterprise> getEnterprise(GetEnterpriseOptions getEnterpriseOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getEnterpriseOptions,
-      "getEnterpriseOptions cannot be null");
-    String[] pathSegments = { "enterprises" };
-    String[] pathParameters = { getEnterpriseOptions.enterpriseId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getEnterprise");
+  public ServiceCall<AuditLog> getCatalogAudit(GetCatalogAuditOptions getCatalogAuditOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getCatalogAuditOptions,
+      "getCatalogAuditOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", getCatalogAuditOptions.catalogIdentifier());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/audit", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getCatalogAudit");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
-    ResponseConverter<Enterprise> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Enterprise>() { }.getType());
+    ResponseConverter<AuditLog> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AuditLog>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Set the enterprise settings.
+   * Get consumption offerings.
    *
-   * @param replaceEnterpriseOptions the {@link ReplaceEnterpriseOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> replaceEnterprise(ReplaceEnterpriseOptions replaceEnterpriseOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceEnterpriseOptions,
-      "replaceEnterpriseOptions cannot be null");
-    String[] pathSegments = { "enterprises" };
-    String[] pathParameters = { replaceEnterpriseOptions.enterpriseId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "replaceEnterprise");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    final JsonObject contentJson = new JsonObject();
-    if (replaceEnterpriseOptions.id() != null) {
-      contentJson.addProperty("id", replaceEnterpriseOptions.id());
-    }
-    if (replaceEnterpriseOptions.rev() != null) {
-      contentJson.addProperty("_rev", replaceEnterpriseOptions.rev());
-    }
-    if (replaceEnterpriseOptions.accountFilters() != null) {
-      contentJson.add("account_filters", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceEnterpriseOptions.accountFilters()));
-    }
-    if (replaceEnterpriseOptions.accountGroups() != null) {
-      contentJson.add("account_groups", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceEnterpriseOptions.accountGroups()));
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get list of offerings for consumption.
-   *
-   * List the available offerings from both public and from the account that currently scoped for consumption. These
-   * copies cannot be used updating. They are not complete and only return what is visible to the caller.
+   * Retrieve the available offerings from both public and from the account that currently scoped for consumption. These
+   * copies cannot be used for updating. They are not complete and only return what is visible to the caller. This can
+   * be used by an unauthenticated user to retreive publicly available offerings.
    *
    * @param getConsumptionOfferingsOptions the {@link GetConsumptionOfferingsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link OfferingSearchResult}
    */
   public ServiceCall<OfferingSearchResult> getConsumptionOfferings(GetConsumptionOfferingsOptions getConsumptionOfferingsOptions) {
-    String[] pathSegments = { "offerings" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    if (getConsumptionOfferingsOptions == null) {
+      getConsumptionOfferingsOptions = new GetConsumptionOfferingsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/offerings"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getConsumptionOfferings");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (getConsumptionOfferingsOptions != null) {
-      if (getConsumptionOfferingsOptions.digest() != null) {
-        builder.query("digest", String.valueOf(getConsumptionOfferingsOptions.digest()));
-      }
-      if (getConsumptionOfferingsOptions.catalog() != null) {
-        builder.query("catalog", getConsumptionOfferingsOptions.catalog());
-      }
-      if (getConsumptionOfferingsOptions.select() != null) {
-        builder.query("select", getConsumptionOfferingsOptions.select());
-      }
-      if (getConsumptionOfferingsOptions.includeHidden() != null) {
-        builder.query("includeHidden", String.valueOf(getConsumptionOfferingsOptions.includeHidden()));
-      }
+    if (getConsumptionOfferingsOptions.digest() != null) {
+      builder.query("digest", String.valueOf(getConsumptionOfferingsOptions.digest()));
+    }
+    if (getConsumptionOfferingsOptions.catalog() != null) {
+      builder.query("catalog", String.valueOf(getConsumptionOfferingsOptions.catalog()));
+    }
+    if (getConsumptionOfferingsOptions.select() != null) {
+      builder.query("select", String.valueOf(getConsumptionOfferingsOptions.select()));
+    }
+    if (getConsumptionOfferingsOptions.includeHidden() != null) {
+      builder.query("includeHidden", String.valueOf(getConsumptionOfferingsOptions.includeHidden()));
+    }
+    if (getConsumptionOfferingsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(getConsumptionOfferingsOptions.limit()));
+    }
+    if (getConsumptionOfferingsOptions.offset() != null) {
+      builder.query("offset", String.valueOf(getConsumptionOfferingsOptions.offset()));
     }
     ResponseConverter<OfferingSearchResult> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OfferingSearchResult>() { }.getType());
@@ -604,10 +607,11 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Get list of offerings for consumption.
+   * Get consumption offerings.
    *
-   * List the available offerings from both public and from the account that currently scoped for consumption. These
-   * copies cannot be used updating. They are not complete and only return what is visible to the caller.
+   * Retrieve the available offerings from both public and from the account that currently scoped for consumption. These
+   * copies cannot be used for updating. They are not complete and only return what is visible to the caller. This can
+   * be used by an unauthenticated user to retreive publicly available offerings.
    *
    * @return a {@link ServiceCall} with a result of type {@link OfferingSearchResult}
    */
@@ -618,7 +622,8 @@ public class CatalogManagement extends BaseService {
   /**
    * Get list of offerings.
    *
-   * List the available offerings in the specified catalog.
+   * Retrieve the available offerings in the specified catalog. This can also be used by an unauthenticated user to
+   * retreive publicly available offerings.
    *
    * @param listOfferingsOptions the {@link ListOfferingsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link OfferingSearchResult}
@@ -626,9 +631,9 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<OfferingSearchResult> listOfferings(ListOfferingsOptions listOfferingsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listOfferingsOptions,
       "listOfferingsOptions cannot be null");
-    String[] pathSegments = { "catalogs", "offerings" };
-    String[] pathParameters = { listOfferingsOptions.catalogIdentifier() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", listOfferingsOptions.catalogIdentifier());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "listOfferings");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -637,13 +642,25 @@ public class CatalogManagement extends BaseService {
     if (listOfferingsOptions.digest() != null) {
       builder.query("digest", String.valueOf(listOfferingsOptions.digest()));
     }
+    if (listOfferingsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listOfferingsOptions.limit()));
+    }
+    if (listOfferingsOptions.offset() != null) {
+      builder.query("offset", String.valueOf(listOfferingsOptions.offset()));
+    }
+    if (listOfferingsOptions.name() != null) {
+      builder.query("name", String.valueOf(listOfferingsOptions.name()));
+    }
+    if (listOfferingsOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listOfferingsOptions.sort()));
+    }
     ResponseConverter<OfferingSearchResult> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OfferingSearchResult>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Create an offering.
+   * Create offering.
    *
    * Create an offering.
    *
@@ -653,9 +670,9 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Offering> createOffering(CreateOfferingOptions createOfferingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createOfferingOptions,
       "createOfferingOptions cannot be null");
-    String[] pathSegments = { "catalogs", "offerings" };
-    String[] pathParameters = { createOfferingOptions.catalogIdentifier() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", createOfferingOptions.catalogIdentifier());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "createOffering");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -691,6 +708,9 @@ public class CatalogManagement extends BaseService {
     }
     if (createOfferingOptions.tags() != null) {
       contentJson.add("tags", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingOptions.tags()));
+    }
+    if (createOfferingOptions.keywords() != null) {
+      contentJson.add("keywords", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingOptions.keywords()));
     }
     if (createOfferingOptions.rating() != null) {
       contentJson.add("rating", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingOptions.rating()));
@@ -762,7 +782,7 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Import new version to offering from a tgz.
+   * Import offering version.
    *
    * Import new version to offering from a tgz.
    *
@@ -772,26 +792,29 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Offering> importOfferingVersion(ImportOfferingVersionOptions importOfferingVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(importOfferingVersionOptions,
       "importOfferingVersionOptions cannot be null");
-    String[] pathSegments = { "catalogs", "offerings", "version" };
-    String[] pathParameters = { importOfferingVersionOptions.catalogIdentifier(), importOfferingVersionOptions.offeringId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", importOfferingVersionOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", importOfferingVersionOptions.offeringId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}/version", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "importOfferingVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (importOfferingVersionOptions.xAuthToken() != null) {
-      builder.header("X-Auth-Token", importOfferingVersionOptions.xAuthToken());
+    if (importOfferingVersionOptions.zipurl() != null) {
+      builder.query("zipurl", String.valueOf(importOfferingVersionOptions.zipurl()));
     }
-    builder.query("zipurl", importOfferingVersionOptions.zipurl());
     if (importOfferingVersionOptions.targetVersion() != null) {
-      builder.query("targetVersion", importOfferingVersionOptions.targetVersion());
+      builder.query("targetVersion", String.valueOf(importOfferingVersionOptions.targetVersion()));
     }
     if (importOfferingVersionOptions.includeConfig() != null) {
       builder.query("includeConfig", String.valueOf(importOfferingVersionOptions.includeConfig()));
     }
+    if (importOfferingVersionOptions.isVsi() != null) {
+      builder.query("isVSI", String.valueOf(importOfferingVersionOptions.isVsi()));
+    }
     if (importOfferingVersionOptions.repoType() != null) {
-      builder.query("repoType", importOfferingVersionOptions.repoType());
+      builder.query("repoType", String.valueOf(importOfferingVersionOptions.repoType()));
     }
     final JsonObject contentJson = new JsonObject();
     if (importOfferingVersionOptions.tags() != null) {
@@ -800,6 +823,9 @@ public class CatalogManagement extends BaseService {
     if (importOfferingVersionOptions.targetKinds() != null) {
       contentJson.add("target_kinds", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(importOfferingVersionOptions.targetKinds()));
     }
+    if (importOfferingVersionOptions.content() != null) {
+      contentJson.add("content", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(importOfferingVersionOptions.content()));
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<Offering> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
@@ -807,7 +833,7 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Import a new offering from a tgz.
+   * Import offering.
    *
    * Import a new offering from a tgz.
    *
@@ -817,9 +843,9 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Offering> importOffering(ImportOfferingOptions importOfferingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(importOfferingOptions,
       "importOfferingOptions cannot be null");
-    String[] pathSegments = { "catalogs", "import/offerings" };
-    String[] pathParameters = { importOfferingOptions.catalogIdentifier() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", importOfferingOptions.catalogIdentifier());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/import/offerings", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "importOffering");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -828,15 +854,23 @@ public class CatalogManagement extends BaseService {
     if (importOfferingOptions.xAuthToken() != null) {
       builder.header("X-Auth-Token", importOfferingOptions.xAuthToken());
     }
-    builder.query("zipurl", importOfferingOptions.zipurl());
+    if (importOfferingOptions.zipurl() != null) {
+      builder.query("zipurl", String.valueOf(importOfferingOptions.zipurl()));
+    }
     if (importOfferingOptions.offeringId() != null) {
-      builder.query("offeringID", importOfferingOptions.offeringId());
+      builder.query("offeringID", String.valueOf(importOfferingOptions.offeringId()));
+    }
+    if (importOfferingOptions.targetVersion() != null) {
+      builder.query("targetVersion", String.valueOf(importOfferingOptions.targetVersion()));
     }
     if (importOfferingOptions.includeConfig() != null) {
       builder.query("includeConfig", String.valueOf(importOfferingOptions.includeConfig()));
     }
+    if (importOfferingOptions.isVsi() != null) {
+      builder.query("isVSI", String.valueOf(importOfferingOptions.isVsi()));
+    }
     if (importOfferingOptions.repoType() != null) {
-      builder.query("repoType", importOfferingOptions.repoType());
+      builder.query("repoType", String.valueOf(importOfferingOptions.repoType()));
     }
     final JsonObject contentJson = new JsonObject();
     if (importOfferingOptions.tags() != null) {
@@ -845,6 +879,9 @@ public class CatalogManagement extends BaseService {
     if (importOfferingOptions.targetKinds() != null) {
       contentJson.add("target_kinds", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(importOfferingOptions.targetKinds()));
     }
+    if (importOfferingOptions.content() != null) {
+      contentJson.add("content", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(importOfferingOptions.content()));
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<Offering> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
@@ -852,9 +889,9 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Reload existing version in offering from a tgz.
+   * Reload offering.
    *
-   * Reload existing version in offering from a tgz.
+   * Reload an existing version in offering from a tgz.
    *
    * @param reloadOfferingOptions the {@link ReloadOfferingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Offering}
@@ -862,21 +899,21 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Offering> reloadOffering(ReloadOfferingOptions reloadOfferingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(reloadOfferingOptions,
       "reloadOfferingOptions cannot be null");
-    String[] pathSegments = { "catalogs", "offerings", "reload" };
-    String[] pathParameters = { reloadOfferingOptions.catalogIdentifier(), reloadOfferingOptions.offeringId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", reloadOfferingOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", reloadOfferingOptions.offeringId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}/reload", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "reloadOffering");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (reloadOfferingOptions.xAuthToken() != null) {
-      builder.header("X-Auth-Token", reloadOfferingOptions.xAuthToken());
+    builder.query("targetVersion", String.valueOf(reloadOfferingOptions.targetVersion()));
+    if (reloadOfferingOptions.zipurl() != null) {
+      builder.query("zipurl", String.valueOf(reloadOfferingOptions.zipurl()));
     }
-    builder.query("zipurl", reloadOfferingOptions.zipurl());
-    builder.query("targetVersion", reloadOfferingOptions.targetVersion());
     if (reloadOfferingOptions.repoType() != null) {
-      builder.query("repoType", reloadOfferingOptions.repoType());
+      builder.query("repoType", String.valueOf(reloadOfferingOptions.repoType()));
     }
     final JsonObject contentJson = new JsonObject();
     if (reloadOfferingOptions.tags() != null) {
@@ -885,6 +922,9 @@ public class CatalogManagement extends BaseService {
     if (reloadOfferingOptions.targetKinds() != null) {
       contentJson.add("target_kinds", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(reloadOfferingOptions.targetKinds()));
     }
+    if (reloadOfferingOptions.content() != null) {
+      contentJson.add("content", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(reloadOfferingOptions.content()));
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<Offering> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
@@ -892,9 +932,9 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Get an offering.
+   * Get offering.
    *
-   * Get an offering.
+   * Get an offering. This can be used by an unauthenticated user for publicly available offerings.
    *
    * @param getOfferingOptions the {@link GetOfferingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Offering}
@@ -902,34 +942,35 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Offering> getOffering(GetOfferingOptions getOfferingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getOfferingOptions,
       "getOfferingOptions cannot be null");
-    String[] pathSegments = { "catalogs", "offerings" };
-    String[] pathParameters = { getOfferingOptions.catalogIdentifier(), getOfferingOptions.offeringId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", getOfferingOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", getOfferingOptions.offeringId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOffering");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Offering> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Update an offering.
+   * Update offering.
    *
    * Update an offering.
    *
    * @param replaceOfferingOptions the {@link ReplaceOfferingOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link Catalog}
+   * @return a {@link ServiceCall} with a result of type {@link Offering}
    */
-  public ServiceCall<Catalog> replaceOffering(ReplaceOfferingOptions replaceOfferingOptions) {
+  public ServiceCall<Offering> replaceOffering(ReplaceOfferingOptions replaceOfferingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceOfferingOptions,
       "replaceOfferingOptions cannot be null");
-    String[] pathSegments = { "catalogs", "offerings" };
-    String[] pathParameters = { replaceOfferingOptions.catalogIdentifier(), replaceOfferingOptions.offeringId() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", replaceOfferingOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", replaceOfferingOptions.offeringId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "replaceOffering");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -965,6 +1006,9 @@ public class CatalogManagement extends BaseService {
     }
     if (replaceOfferingOptions.tags() != null) {
       contentJson.add("tags", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOfferingOptions.tags()));
+    }
+    if (replaceOfferingOptions.keywords() != null) {
+      contentJson.add("keywords", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOfferingOptions.keywords()));
     }
     if (replaceOfferingOptions.rating() != null) {
       contentJson.add("rating", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOfferingOptions.rating()));
@@ -1030,13 +1074,13 @@ public class CatalogManagement extends BaseService {
       contentJson.add("repo_info", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOfferingOptions.repoInfo()));
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<Catalog> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Catalog>() { }.getType());
+    ResponseConverter<Offering> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Delete an offering.
+   * Delete offering.
    *
    * Delete an offering.
    *
@@ -1046,22 +1090,47 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> deleteOffering(DeleteOfferingOptions deleteOfferingOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteOfferingOptions,
       "deleteOfferingOptions cannot be null");
-    String[] pathSegments = { "catalogs", "offerings" };
-    String[] pathParameters = { deleteOfferingOptions.catalogIdentifier(), deleteOfferingOptions.offeringId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", deleteOfferingOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", deleteOfferingOptions.offeringId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteOffering");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * upload an icon for the offering.
+   * Get offering audit log.
    *
-   * upload an icon file to be stored in GC. File is uploaded as a binary payload - not as a form.
+   * Get the audit log associated with an offering.
+   *
+   * @param getOfferingAuditOptions the {@link GetOfferingAuditOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AuditLog}
+   */
+  public ServiceCall<AuditLog> getOfferingAudit(GetOfferingAuditOptions getOfferingAuditOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getOfferingAuditOptions,
+      "getOfferingAuditOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", getOfferingAuditOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", getOfferingAuditOptions.offeringId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}/audit", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOfferingAudit");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<AuditLog> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AuditLog>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Upload icon for offering.
+   *
+   * Upload an icon file to be stored in GC. File is uploaded as a binary payload - not as a form.
    *
    * @param replaceOfferingIconOptions the {@link ReplaceOfferingIconOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Offering}
@@ -1069,29 +1138,34 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Offering> replaceOfferingIcon(ReplaceOfferingIconOptions replaceOfferingIconOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceOfferingIconOptions,
       "replaceOfferingIconOptions cannot be null");
-    String[] pathSegments = { "catalogs", "offerings", "icon" };
-    String[] pathParameters = { replaceOfferingIconOptions.catalogIdentifier(), replaceOfferingIconOptions.offeringId(), replaceOfferingIconOptions.fileName() };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", replaceOfferingIconOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", replaceOfferingIconOptions.offeringId());
+    pathParamsMap.put("file_name", replaceOfferingIconOptions.fileName());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}/icon/{file_name}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "replaceOfferingIcon");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Offering> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Approve offering to be permitted to publish to IBM Public Catalog (IBMers only or Everyone).
+   * Allow offering to be published.
    *
-   * Approve or disapprove the offering to be allowed to publish to the IBM Public Catalog in `ibm` (visible to IBM
-   * only) or `public` (visible to everyone). Can approve to only `ibm`, or it can be extended to `public`. If extended
-   * to `public` then `ibm` is automatically approved too. If disapprove `public`, then `ibm` approval will not  be
-   * changed. If disapprove `ibm` then `public` will automatically be disapproved. This is because the process steps
-   * always go first through `ibm` and then to `public`. `ibm` cannot be skipped. Only users with Approval IAM authority
-   * can use this.
+   * Approve or disapprove the offering to be allowed to publish to the IBM Public Catalog. Options:
+   * * `allow_request` - (Allow requesting to publish to IBM)
+   * * `ibm` - (Allow publishing to be visible to IBM only)
+   * * `public` - (Allow publishing to be visible to everyone, including IBM)
+   *
+   * If disapprove `public`, then `ibm` approval will not  be changed. If disapprove `ibm` then `public` will
+   * automatically be disapproved. if disapprove `allow_request` then all rights to publish will be removed. This is
+   * because the process steps always go first through `allow` to `ibm` and then to `public`. `ibm` cannot be skipped.
+   * Only users with Approval IAM authority can use this. Approvers should use the catalog and offering id from the
+   * public catalog since they wouldn't have access to the private offering.'.
    *
    * @param updateOfferingIbmOptions the {@link UpdateOfferingIbmOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApprovalResult}
@@ -1099,96 +1173,137 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<ApprovalResult> updateOfferingIbm(UpdateOfferingIbmOptions updateOfferingIbmOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateOfferingIbmOptions,
       "updateOfferingIbmOptions cannot be null");
-    String[] pathSegments = { "catalogs", "offerings", "publish", "" };
-    String[] pathParameters = { updateOfferingIbmOptions.catalogIdentifier(), updateOfferingIbmOptions.offeringId(), updateOfferingIbmOptions.approvalType(), updateOfferingIbmOptions.approved() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", updateOfferingIbmOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", updateOfferingIbmOptions.offeringId());
+    pathParamsMap.put("approval_type", updateOfferingIbmOptions.approvalType());
+    pathParamsMap.put("approved", updateOfferingIbmOptions.approved());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}/publish/{approval_type}/{approved}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "updateOfferingIbm");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<ApprovalResult> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ApprovalResult>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Get the about information, in markdown, for the current version.
+   * Get version updates.
    *
-   * Get the about information, in markdown, for the current version.
+   * Get available updates for the specified version.
    *
-   * @param getVersionAboutOptions the {@link GetVersionAboutOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link String}
+   * @param getOfferingUpdatesOptions the {@link GetOfferingUpdatesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link List}
    */
-  public ServiceCall<String> getVersionAbout(GetVersionAboutOptions getVersionAboutOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getVersionAboutOptions,
-      "getVersionAboutOptions cannot be null");
-    String[] pathSegments = { "versions", "about" };
-    String[] pathParameters = { getVersionAboutOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getVersionAbout");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "text/markdown");
-
-    ResponseConverter<String> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<String>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get the license content for the specified license ID in the specified version.
-   *
-   * Get the license content for the specified license ID in the specified version.
-   *
-   * @param getVersionLicenseOptions the {@link GetVersionLicenseOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> getVersionLicense(GetVersionLicenseOptions getVersionLicenseOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getVersionLicenseOptions,
-      "getVersionLicenseOptions cannot be null");
-    String[] pathSegments = { "versions", "licenses" };
-    String[] pathParameters = { getVersionLicenseOptions.versionLocId(), getVersionLicenseOptions.licenseId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getVersionLicense");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get get the list of container images associated with this version.
-   *
-   * The "image_manifest_url" property of the version should be pointing the a URL for the image manifest, this api
-   * reflects that content.
-   *
-   * @param getVersionContainerImagesOptions the {@link GetVersionContainerImagesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ImageManifest}
-   */
-  public ServiceCall<ImageManifest> getVersionContainerImages(GetVersionContainerImagesOptions getVersionContainerImagesOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getVersionContainerImagesOptions,
-      "getVersionContainerImagesOptions cannot be null");
-    String[] pathSegments = { "versions", "containerImages" };
-    String[] pathParameters = { getVersionContainerImagesOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getVersionContainerImages");
+  public ServiceCall<List<VersionUpdateDescriptor>> getOfferingUpdates(GetOfferingUpdatesOptions getOfferingUpdatesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getOfferingUpdatesOptions,
+      "getOfferingUpdatesOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", getOfferingUpdatesOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", getOfferingUpdatesOptions.offeringId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}/updates", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOfferingUpdates");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    builder.query("kind", String.valueOf(getOfferingUpdatesOptions.kind()));
+    if (getOfferingUpdatesOptions.version() != null) {
+      builder.query("version", String.valueOf(getOfferingUpdatesOptions.version()));
+    }
+    if (getOfferingUpdatesOptions.clusterId() != null) {
+      builder.query("cluster_id", String.valueOf(getOfferingUpdatesOptions.clusterId()));
+    }
+    if (getOfferingUpdatesOptions.region() != null) {
+      builder.query("region", String.valueOf(getOfferingUpdatesOptions.region()));
+    }
+    if (getOfferingUpdatesOptions.resourceGroupId() != null) {
+      builder.query("resource_group_id", String.valueOf(getOfferingUpdatesOptions.resourceGroupId()));
+    }
+    if (getOfferingUpdatesOptions.namespace() != null) {
+      builder.query("namespace", String.valueOf(getOfferingUpdatesOptions.namespace()));
+    }
+    ResponseConverter<List<VersionUpdateDescriptor>> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<List<VersionUpdateDescriptor>>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
 
+  /**
+   * Get version about information.
+   *
+   * Get the about information, in markdown, for the current version.
+   *
+   * @param getOfferingAboutOptions the {@link GetOfferingAboutOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link String}
+   */
+  public ServiceCall<String> getOfferingAbout(GetOfferingAboutOptions getOfferingAboutOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getOfferingAboutOptions,
+      "getOfferingAboutOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", getOfferingAboutOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/about", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOfferingAbout");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "text/markdown");
+    ResponseConverter<String> responseConverter = ResponseConverterUtils.getString();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get version license content.
+   *
+   * Get the license content for the specified license ID in the specified version.
+   *
+   * @param getOfferingLicenseOptions the {@link GetOfferingLicenseOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link String}
+   */
+  public ServiceCall<String> getOfferingLicense(GetOfferingLicenseOptions getOfferingLicenseOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getOfferingLicenseOptions,
+      "getOfferingLicenseOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", getOfferingLicenseOptions.versionLocId());
+    pathParamsMap.put("license_id", getOfferingLicenseOptions.licenseId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/licenses/{license_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOfferingLicense");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "text/plain");
+    ResponseConverter<String> responseConverter = ResponseConverterUtils.getString();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get version's container images.
+   *
+   * Get the list of container images associated with the specified version. The "image_manifest_url" property of the
+   * version should be the URL for the image manifest, and the operation will return that content.
+   *
+   * @param getOfferingContainerImagesOptions the {@link GetOfferingContainerImagesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ImageManifest}
+   */
+  public ServiceCall<ImageManifest> getOfferingContainerImages(GetOfferingContainerImagesOptions getOfferingContainerImagesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getOfferingContainerImagesOptions,
+      "getOfferingContainerImagesOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", getOfferingContainerImagesOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/containerImages", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOfferingContainerImages");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
     ResponseConverter<ImageManifest> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ImageManifest>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Deprecate the specified version.
+   * Deprecate version.
    *
    * Deprecate the specified version.
    *
@@ -1198,20 +1313,19 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> deprecateVersion(DeprecateVersionOptions deprecateVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deprecateVersionOptions,
       "deprecateVersionOptions cannot be null");
-    String[] pathSegments = { "versions", "deprecate" };
-    String[] pathParameters = { deprecateVersionOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", deprecateVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/deprecate", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deprecateVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Publish the specified version so it is viewable by account members.
+   * Publish version to account members.
    *
    * Publish the specified version so it is viewable by account members.
    *
@@ -1221,20 +1335,19 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> accountPublishVersion(AccountPublishVersionOptions accountPublishVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(accountPublishVersionOptions,
       "accountPublishVersionOptions cannot be null");
-    String[] pathSegments = { "versions", "account-publish" };
-    String[] pathParameters = { accountPublishVersionOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", accountPublishVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/account-publish", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "accountPublishVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Publish the specified version so that it is visible to IBMers in the public catalog.
+   * Publish version to IBMers in public catalog.
    *
    * Publish the specified version so that it is visible to IBMers in the public catalog.
    *
@@ -1244,20 +1357,19 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> ibmPublishVersion(IbmPublishVersionOptions ibmPublishVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(ibmPublishVersionOptions,
       "ibmPublishVersionOptions cannot be null");
-    String[] pathSegments = { "versions", "ibm-publish" };
-    String[] pathParameters = { ibmPublishVersionOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", ibmPublishVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/ibm-publish", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "ibmPublishVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Publish the specified version so it is visible to all users in the public catalog.
+   * Publish version to all users in public catalog.
    *
    * Publish the specified version so it is visible to all users in the public catalog.
    *
@@ -1267,20 +1379,19 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> publicPublishVersion(PublicPublishVersionOptions publicPublishVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(publicPublishVersionOptions,
       "publicPublishVersionOptions cannot be null");
-    String[] pathSegments = { "versions", "public-publish" };
-    String[] pathParameters = { publicPublishVersionOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", publicPublishVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/public-publish", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "publicPublishVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Commit a working copy of the specified version.
+   * Commit version.
    *
    * Commit a working copy of the specified version.
    *
@@ -1290,81 +1401,76 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> commitVersion(CommitVersionOptions commitVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(commitVersionOptions,
       "commitVersionOptions cannot be null");
-    String[] pathSegments = { "versions", "commit" };
-    String[] pathParameters = { commitVersionOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", commitVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/commit", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "commitVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Create a working copy of the specified version.
+   * Copy version to new target kind.
+   *
+   * Copy the specified version to a new target kind within the same offering.
+   *
+   * @param copyVersionOptions the {@link CopyVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> copyVersion(CopyVersionOptions copyVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(copyVersionOptions,
+      "copyVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", copyVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/copy", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "copyVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    final JsonObject contentJson = new JsonObject();
+    if (copyVersionOptions.tags() != null) {
+      contentJson.add("tags", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(copyVersionOptions.tags()));
+    }
+    if (copyVersionOptions.targetKinds() != null) {
+      contentJson.add("target_kinds", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(copyVersionOptions.targetKinds()));
+    }
+    if (copyVersionOptions.content() != null) {
+      contentJson.add("content", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(copyVersionOptions.content()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create working copy of version.
    *
    * Create a working copy of the specified version.
    *
-   * @param getVersionWorkingCopyOptions the {@link GetVersionWorkingCopyOptions} containing the options for the call
+   * @param getOfferingWorkingCopyOptions the {@link GetOfferingWorkingCopyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Version}
    */
-  public ServiceCall<Version> getVersionWorkingCopy(GetVersionWorkingCopyOptions getVersionWorkingCopyOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getVersionWorkingCopyOptions,
-      "getVersionWorkingCopyOptions cannot be null");
-    String[] pathSegments = { "versions", "workingcopy" };
-    String[] pathParameters = { getVersionWorkingCopyOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getVersionWorkingCopy");
+  public ServiceCall<Version> getOfferingWorkingCopy(GetOfferingWorkingCopyOptions getOfferingWorkingCopyOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getOfferingWorkingCopyOptions,
+      "getOfferingWorkingCopyOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", getOfferingWorkingCopyOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/workingcopy", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOfferingWorkingCopy");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Version> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Version>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Get available updates for the specified version.
-   *
-   * Get available updates for the specified version.
-   *
-   * @param getVersionUpdatesOptions the {@link GetVersionUpdatesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link List}
-   */
-  public ServiceCall<List<VersionUpdateDescriptor>> getVersionUpdates(GetVersionUpdatesOptions getVersionUpdatesOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getVersionUpdatesOptions,
-      "getVersionUpdatesOptions cannot be null");
-    String[] pathSegments = { "versions", "updates" };
-    String[] pathParameters = { getVersionUpdatesOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getVersionUpdates");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getVersionUpdatesOptions.clusterId() != null) {
-      builder.query("cluster_id", getVersionUpdatesOptions.clusterId());
-    }
-    if (getVersionUpdatesOptions.region() != null) {
-      builder.query("region", getVersionUpdatesOptions.region());
-    }
-    if (getVersionUpdatesOptions.resourceGroupId() != null) {
-      builder.query("resource_group_id", getVersionUpdatesOptions.resourceGroupId());
-    }
-    if (getVersionUpdatesOptions.namespace() != null) {
-      builder.query("namespace", getVersionUpdatesOptions.namespace());
-    }
-    ResponseConverter<List<VersionUpdateDescriptor>> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<List<VersionUpdateDescriptor>>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get the Offering/Kind/Version 'branch' for the specified locator ID.
+   * Get offering/kind/version 'branch'.
    *
    * Get the Offering/Kind/Version 'branch' for the specified locator ID.
    *
@@ -1374,24 +1480,23 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Offering> getVersion(GetVersionOptions getVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getVersionOptions,
       "getVersionOptions cannot be null");
-    String[] pathSegments = { "versions" };
-    String[] pathParameters = { getVersionOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", getVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Offering> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Delete a version.
+   * Delete version.
    *
-   * Delete a the specified version.  If the version is an active version with a working copy, the working copy will be
+   * Delete the specified version.  If the version is an active version with a working copy, the working copy will be
    * deleted as well.
    *
    * @param deleteVersionOptions the {@link DeleteVersionOptions} containing the options for the call
@@ -1400,138 +1505,21 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> deleteVersion(DeleteVersionOptions deleteVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteVersionOptions,
       "deleteVersionOptions cannot be null");
-    String[] pathSegments = { "versions" };
-    String[] pathParameters = { deleteVersionOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", deleteVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Search for versions.
+   * Get kubernetes cluster.
    *
-   * [deprecated] use /search/license/versions api instead.   Search across all accounts for versions, requires global
-   * admin permission.
-   *
-   * @param listVersionsOptions the {@link ListVersionsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> listVersions(ListVersionsOptions listVersionsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(listVersionsOptions,
-      "listVersionsOptions cannot be null");
-    String[] pathSegments = { "versions" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "listVersions");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.query("q", listVersionsOptions.q());
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List a repo's entries.
-   *
-   * List the available entries from a given repo.
-   *
-   * @param getReposOptions the {@link GetReposOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link HelmRepoList}
-   */
-  public ServiceCall<HelmRepoList> getRepos(GetReposOptions getReposOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getReposOptions,
-      "getReposOptions cannot be null");
-    String[] pathSegments = { "repo", "entries" };
-    String[] pathParameters = { getReposOptions.type() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getRepos");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    builder.query("repourl", getReposOptions.repourl());
-    ResponseConverter<HelmRepoList> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<HelmRepoList>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get contents of a repo.
-   *
-   * Get the contents of a given repo.
-   *
-   * @param getRepoOptions the {@link GetRepoOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link HelmPackage}
-   */
-  public ServiceCall<HelmPackage> getRepo(GetRepoOptions getRepoOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getRepoOptions,
-      "getRepoOptions cannot be null");
-    String[] pathSegments = { "repo" };
-    String[] pathParameters = { getRepoOptions.type() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getRepo");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    builder.query("charturl", getRepoOptions.charturl());
-    ResponseConverter<HelmPackage> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<HelmPackage>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List Kube clusters.
-   *
-   * List Kube clusters.
-   *
-   * @param listClustersOptions the {@link ListClustersOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ClusterSearchResult}
-   */
-  public ServiceCall<ClusterSearchResult> listClusters(ListClustersOptions listClustersOptions) {
-    String[] pathSegments = { "deploy/kubernetes/clusters" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "listClusters");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (listClustersOptions != null) {
-      if (listClustersOptions.limit() != null) {
-        builder.query("limit", String.valueOf(listClustersOptions.limit()));
-      }
-      if (listClustersOptions.offset() != null) {
-        builder.query("offset", String.valueOf(listClustersOptions.offset()));
-      }
-      if (listClustersOptions.type() != null) {
-        builder.query("type", listClustersOptions.type());
-      }
-    }
-    ResponseConverter<ClusterSearchResult> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ClusterSearchResult>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List Kube clusters.
-   *
-   * List Kube clusters.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link ClusterSearchResult}
-   */
-  public ServiceCall<ClusterSearchResult> listClusters() {
-    return listClusters(null);
-  }
-
-  /**
-   * Get Kube cluster.
-   *
-   * Get Kube cluster.
+   * Get the contents of the specified kubernetes cluster.
    *
    * @param getClusterOptions the {@link GetClusterOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ClusterInfo}
@@ -1539,16 +1527,16 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<ClusterInfo> getCluster(GetClusterOptions getClusterOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getClusterOptions,
       "getClusterOptions cannot be null");
-    String[] pathSegments = { "deploy/kubernetes/clusters" };
-    String[] pathParameters = { getClusterOptions.clusterId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("cluster_id", getClusterOptions.clusterId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/deploy/kubernetes/clusters/{cluster_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getCluster");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     builder.header("X-Auth-Refresh-Token", getClusterOptions.xAuthRefreshToken());
-    builder.query("region", getClusterOptions.region());
+    builder.query("region", String.valueOf(getClusterOptions.region()));
     ResponseConverter<ClusterInfo> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ClusterInfo>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1557,7 +1545,7 @@ public class CatalogManagement extends BaseService {
   /**
    * Get cluster namespaces.
    *
-   * Get cluster namespaces.
+   * Get the namespaces associated with the specified kubernetes cluster.
    *
    * @param getNamespacesOptions the {@link GetNamespacesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link NamespaceSearchResult}
@@ -1565,16 +1553,16 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<NamespaceSearchResult> getNamespaces(GetNamespacesOptions getNamespacesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getNamespacesOptions,
       "getNamespacesOptions cannot be null");
-    String[] pathSegments = { "deploy/kubernetes/clusters", "namespaces" };
-    String[] pathParameters = { getNamespacesOptions.clusterId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("cluster_id", getNamespacesOptions.clusterId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/deploy/kubernetes/clusters/{cluster_id}/namespaces", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getNamespaces");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     builder.header("X-Auth-Refresh-Token", getNamespacesOptions.xAuthRefreshToken());
-    builder.query("region", getNamespacesOptions.region());
+    builder.query("region", String.valueOf(getNamespacesOptions.region()));
     if (getNamespacesOptions.limit() != null) {
       builder.query("limit", String.valueOf(getNamespacesOptions.limit()));
     }
@@ -1587,36 +1575,38 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Deploy Operator(s) on a Kube cluster.
+   * Deploy operators.
    *
-   * Deploy Operator(s) on a Kube cluster.
+   * Deploy operators on a kubernetes cluster.
    *
-   * @param createOperatorOptions the {@link CreateOperatorOptions} containing the options for the call
+   * @param deployOperatorsOptions the {@link DeployOperatorsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link List}
    */
-  public ServiceCall<List<OperatorDeployResult>> createOperator(CreateOperatorOptions createOperatorOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createOperatorOptions,
-      "createOperatorOptions cannot be null");
-    String[] pathSegments = { "deploy/kubernetes/olm/operator" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "createOperator");
+  public ServiceCall<List<OperatorDeployResult>> deployOperators(DeployOperatorsOptions deployOperatorsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deployOperatorsOptions,
+      "deployOperatorsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/deploy/kubernetes/olm/operator"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deployOperators");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.header("X-Auth-Refresh-Token", createOperatorOptions.xAuthRefreshToken());
+    builder.header("X-Auth-Refresh-Token", deployOperatorsOptions.xAuthRefreshToken());
     final JsonObject contentJson = new JsonObject();
-    if (createOperatorOptions.clusterId() != null) {
-      contentJson.addProperty("cluster_id", createOperatorOptions.clusterId());
+    if (deployOperatorsOptions.clusterId() != null) {
+      contentJson.addProperty("cluster_id", deployOperatorsOptions.clusterId());
     }
-    if (createOperatorOptions.region() != null) {
-      contentJson.addProperty("region", createOperatorOptions.region());
+    if (deployOperatorsOptions.region() != null) {
+      contentJson.addProperty("region", deployOperatorsOptions.region());
     }
-    if (createOperatorOptions.namespaces() != null) {
-      contentJson.add("namespaces", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOperatorOptions.namespaces()));
+    if (deployOperatorsOptions.namespaces() != null) {
+      contentJson.add("namespaces", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(deployOperatorsOptions.namespaces()));
     }
-    if (createOperatorOptions.versionLocatorId() != null) {
-      contentJson.addProperty("version_locator_id", createOperatorOptions.versionLocatorId());
+    if (deployOperatorsOptions.allNamespaces() != null) {
+      contentJson.addProperty("all_namespaces", deployOperatorsOptions.allNamespaces());
+    }
+    if (deployOperatorsOptions.versionLocatorId() != null) {
+      contentJson.addProperty("version_locator_id", deployOperatorsOptions.versionLocatorId());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<List<OperatorDeployResult>> responseConverter =
@@ -1625,9 +1615,9 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Get Operator(s) from a Kube cluster.
+   * List operators.
    *
-   * Get Operator(s) from a Kube cluster.
+   * List the operators from a kubernetes cluster.
    *
    * @param listOperatorsOptions the {@link ListOperatorsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link List}
@@ -1635,53 +1625,54 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<List<OperatorDeployResult>> listOperators(ListOperatorsOptions listOperatorsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listOperatorsOptions,
       "listOperatorsOptions cannot be null");
-    String[] pathSegments = { "deploy/kubernetes/olm/operator" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/deploy/kubernetes/olm/operator"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "listOperators");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
     builder.header("X-Auth-Refresh-Token", listOperatorsOptions.xAuthRefreshToken());
-    builder.query("cluster_id", listOperatorsOptions.clusterId());
-    builder.query("region", listOperatorsOptions.region());
-    builder.query("version_locator_id", listOperatorsOptions.versionLocatorId());
+    builder.query("cluster_id", String.valueOf(listOperatorsOptions.clusterId()));
+    builder.query("region", String.valueOf(listOperatorsOptions.region()));
+    builder.query("version_locator_id", String.valueOf(listOperatorsOptions.versionLocatorId()));
     ResponseConverter<List<OperatorDeployResult>> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<List<OperatorDeployResult>>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Update Operator(s) on a Kube cluster.
+   * Update operators.
    *
-   * Update Operator(s) on a Kube cluster.
+   * Update the operators on a kubernetes cluster.
    *
-   * @param replaceOperatorOptions the {@link ReplaceOperatorOptions} containing the options for the call
+   * @param replaceOperatorsOptions the {@link ReplaceOperatorsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link List}
    */
-  public ServiceCall<List<OperatorDeployResult>> replaceOperator(ReplaceOperatorOptions replaceOperatorOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceOperatorOptions,
-      "replaceOperatorOptions cannot be null");
-    String[] pathSegments = { "deploy/kubernetes/olm/operator" };
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "replaceOperator");
+  public ServiceCall<List<OperatorDeployResult>> replaceOperators(ReplaceOperatorsOptions replaceOperatorsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceOperatorsOptions,
+      "replaceOperatorsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/deploy/kubernetes/olm/operator"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "replaceOperators");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.header("X-Auth-Refresh-Token", replaceOperatorOptions.xAuthRefreshToken());
+    builder.header("X-Auth-Refresh-Token", replaceOperatorsOptions.xAuthRefreshToken());
     final JsonObject contentJson = new JsonObject();
-    if (replaceOperatorOptions.clusterId() != null) {
-      contentJson.addProperty("cluster_id", replaceOperatorOptions.clusterId());
+    if (replaceOperatorsOptions.clusterId() != null) {
+      contentJson.addProperty("cluster_id", replaceOperatorsOptions.clusterId());
     }
-    if (replaceOperatorOptions.region() != null) {
-      contentJson.addProperty("region", replaceOperatorOptions.region());
+    if (replaceOperatorsOptions.region() != null) {
+      contentJson.addProperty("region", replaceOperatorsOptions.region());
     }
-    if (replaceOperatorOptions.namespaces() != null) {
-      contentJson.add("namespaces", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOperatorOptions.namespaces()));
+    if (replaceOperatorsOptions.namespaces() != null) {
+      contentJson.add("namespaces", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOperatorsOptions.namespaces()));
     }
-    if (replaceOperatorOptions.versionLocatorId() != null) {
-      contentJson.addProperty("version_locator_id", replaceOperatorOptions.versionLocatorId());
+    if (replaceOperatorsOptions.allNamespaces() != null) {
+      contentJson.addProperty("all_namespaces", replaceOperatorsOptions.allNamespaces());
+    }
+    if (replaceOperatorsOptions.versionLocatorId() != null) {
+      contentJson.addProperty("version_locator_id", replaceOperatorsOptions.versionLocatorId());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<List<OperatorDeployResult>> responseConverter =
@@ -1690,34 +1681,33 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Delete Operator(s) from a Kube cluster.
+   * Delete operators.
    *
-   * Delete Operator(s) from a Kube cluster.
+   * Delete operators from a kubernetes cluster.
    *
-   * @param deleteOperatorOptions the {@link DeleteOperatorOptions} containing the options for the call
+   * @param deleteOperatorsOptions the {@link DeleteOperatorsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<Void> deleteOperator(DeleteOperatorOptions deleteOperatorOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteOperatorOptions,
-      "deleteOperatorOptions cannot be null");
-    String[] pathSegments = { "deploy/kubernetes/olm/operator" };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteOperator");
+  public ServiceCall<Void> deleteOperators(DeleteOperatorsOptions deleteOperatorsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteOperatorsOptions,
+      "deleteOperatorsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/deploy/kubernetes/olm/operator"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteOperators");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    builder.header("X-Auth-Refresh-Token", deleteOperatorOptions.xAuthRefreshToken());
-    builder.query("cluster_id", deleteOperatorOptions.clusterId());
-    builder.query("region", deleteOperatorOptions.region());
-    builder.query("version_locator_id", deleteOperatorOptions.versionLocatorId());
+    builder.header("X-Auth-Refresh-Token", deleteOperatorsOptions.xAuthRefreshToken());
+    builder.query("cluster_id", String.valueOf(deleteOperatorsOptions.clusterId()));
+    builder.query("region", String.valueOf(deleteOperatorsOptions.region()));
+    builder.query("version_locator_id", String.valueOf(deleteOperatorsOptions.versionLocatorId()));
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Create an install.
+   * Install version.
    *
-   * Create an install.
+   * Create an install for the specified version.
    *
    * @param installVersionOptions the {@link InstallVersionOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -1725,9 +1715,9 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> installVersion(InstallVersionOptions installVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(installVersionOptions,
       "installVersionOptions cannot be null");
-    String[] pathSegments = { "versions", "install" };
-    String[] pathParameters = { installVersionOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", installVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/install", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "installVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -1764,11 +1754,17 @@ public class CatalogManagement extends BaseService {
     if (installVersionOptions.vcenterId() != null) {
       contentJson.addProperty("vcenter_id", installVersionOptions.vcenterId());
     }
+    if (installVersionOptions.vcenterUser() != null) {
+      contentJson.addProperty("vcenter_user", installVersionOptions.vcenterUser());
+    }
     if (installVersionOptions.vcenterPassword() != null) {
       contentJson.addProperty("vcenter_password", installVersionOptions.vcenterPassword());
     }
     if (installVersionOptions.vcenterLocation() != null) {
       contentJson.addProperty("vcenter_location", installVersionOptions.vcenterLocation());
+    }
+    if (installVersionOptions.vcenterDatastore() != null) {
+      contentJson.addProperty("vcenter_datastore", installVersionOptions.vcenterDatastore());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
@@ -1776,9 +1772,9 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Create a preinstall.
+   * Pre-install version.
    *
-   * Create a preinstall.
+   * Create a pre-install for the specified version.
    *
    * @param preinstallVersionOptions the {@link PreinstallVersionOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -1786,9 +1782,9 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Void> preinstallVersion(PreinstallVersionOptions preinstallVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(preinstallVersionOptions,
       "preinstallVersionOptions cannot be null");
-    String[] pathSegments = { "versions", "preinstall" };
-    String[] pathParameters = { preinstallVersionOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", preinstallVersionOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/preinstall", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "preinstallVersion");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -1825,11 +1821,17 @@ public class CatalogManagement extends BaseService {
     if (preinstallVersionOptions.vcenterId() != null) {
       contentJson.addProperty("vcenter_id", preinstallVersionOptions.vcenterId());
     }
+    if (preinstallVersionOptions.vcenterUser() != null) {
+      contentJson.addProperty("vcenter_user", preinstallVersionOptions.vcenterUser());
+    }
     if (preinstallVersionOptions.vcenterPassword() != null) {
       contentJson.addProperty("vcenter_password", preinstallVersionOptions.vcenterPassword());
     }
     if (preinstallVersionOptions.vcenterLocation() != null) {
       contentJson.addProperty("vcenter_location", preinstallVersionOptions.vcenterLocation());
+    }
+    if (preinstallVersionOptions.vcenterDatastore() != null) {
+      contentJson.addProperty("vcenter_datastore", preinstallVersionOptions.vcenterDatastore());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
@@ -1837,9 +1839,9 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Get a preinstall.
+   * Get version pre-install status.
    *
-   * Get a preinstall.
+   * Get the pre-install status for the specified version.
    *
    * @param getPreinstallOptions the {@link GetPreinstallOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link InstallStatus}
@@ -1847,9 +1849,9 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<InstallStatus> getPreinstall(GetPreinstallOptions getPreinstallOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getPreinstallOptions,
       "getPreinstallOptions cannot be null");
-    String[] pathSegments = { "versions", "preinstall" };
-    String[] pathParameters = { getPreinstallOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", getPreinstallOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/preinstall", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getPreinstall");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -1857,13 +1859,13 @@ public class CatalogManagement extends BaseService {
     builder.header("Accept", "application/json");
     builder.header("X-Auth-Refresh-Token", getPreinstallOptions.xAuthRefreshToken());
     if (getPreinstallOptions.clusterId() != null) {
-      builder.query("cluster_id", getPreinstallOptions.clusterId());
+      builder.query("cluster_id", String.valueOf(getPreinstallOptions.clusterId()));
     }
     if (getPreinstallOptions.region() != null) {
-      builder.query("region", getPreinstallOptions.region());
+      builder.query("region", String.valueOf(getPreinstallOptions.region()));
     }
     if (getPreinstallOptions.namespace() != null) {
-      builder.query("namespace", getPreinstallOptions.namespace());
+      builder.query("namespace", String.valueOf(getPreinstallOptions.namespace()));
     }
     ResponseConverter<InstallStatus> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<InstallStatus>() { }.getType());
@@ -1871,60 +1873,66 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Validate a offering.
+   * Validate offering.
    *
-   * Validate a offering.
+   * Validate the offering associated with the specified version.
    *
-   * @param validationInstallOptions the {@link ValidationInstallOptions} containing the options for the call
+   * @param validateInstallOptions the {@link ValidateInstallOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<Void> validationInstall(ValidationInstallOptions validationInstallOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(validationInstallOptions,
-      "validationInstallOptions cannot be null");
-    String[] pathSegments = { "versions", "validation/install" };
-    String[] pathParameters = { validationInstallOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "validationInstall");
+  public ServiceCall<Void> validateInstall(ValidateInstallOptions validateInstallOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(validateInstallOptions,
+      "validateInstallOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", validateInstallOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/validation/install", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "validateInstall");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    builder.header("X-Auth-Refresh-Token", validationInstallOptions.xAuthRefreshToken());
+    builder.header("X-Auth-Refresh-Token", validateInstallOptions.xAuthRefreshToken());
     final JsonObject contentJson = new JsonObject();
-    if (validationInstallOptions.clusterId() != null) {
-      contentJson.addProperty("cluster_id", validationInstallOptions.clusterId());
+    if (validateInstallOptions.clusterId() != null) {
+      contentJson.addProperty("cluster_id", validateInstallOptions.clusterId());
     }
-    if (validationInstallOptions.region() != null) {
-      contentJson.addProperty("region", validationInstallOptions.region());
+    if (validateInstallOptions.region() != null) {
+      contentJson.addProperty("region", validateInstallOptions.region());
     }
-    if (validationInstallOptions.namespace() != null) {
-      contentJson.addProperty("namespace", validationInstallOptions.namespace());
+    if (validateInstallOptions.namespace() != null) {
+      contentJson.addProperty("namespace", validateInstallOptions.namespace());
     }
-    if (validationInstallOptions.overrideValues() != null) {
-      contentJson.add("override_values", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(validationInstallOptions.overrideValues()));
+    if (validateInstallOptions.overrideValues() != null) {
+      contentJson.add("override_values", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(validateInstallOptions.overrideValues()));
     }
-    if (validationInstallOptions.entitlementApikey() != null) {
-      contentJson.addProperty("entitlement_apikey", validationInstallOptions.entitlementApikey());
+    if (validateInstallOptions.entitlementApikey() != null) {
+      contentJson.addProperty("entitlement_apikey", validateInstallOptions.entitlementApikey());
     }
-    if (validationInstallOptions.schematics() != null) {
-      contentJson.add("schematics", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(validationInstallOptions.schematics()));
+    if (validateInstallOptions.schematics() != null) {
+      contentJson.add("schematics", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(validateInstallOptions.schematics()));
     }
-    if (validationInstallOptions.script() != null) {
-      contentJson.addProperty("script", validationInstallOptions.script());
+    if (validateInstallOptions.script() != null) {
+      contentJson.addProperty("script", validateInstallOptions.script());
     }
-    if (validationInstallOptions.scriptId() != null) {
-      contentJson.addProperty("script_id", validationInstallOptions.scriptId());
+    if (validateInstallOptions.scriptId() != null) {
+      contentJson.addProperty("script_id", validateInstallOptions.scriptId());
     }
-    if (validationInstallOptions.versionLocatorId() != null) {
-      contentJson.addProperty("version_locator_id", validationInstallOptions.versionLocatorId());
+    if (validateInstallOptions.versionLocatorId() != null) {
+      contentJson.addProperty("version_locator_id", validateInstallOptions.versionLocatorId());
     }
-    if (validationInstallOptions.vcenterId() != null) {
-      contentJson.addProperty("vcenter_id", validationInstallOptions.vcenterId());
+    if (validateInstallOptions.vcenterId() != null) {
+      contentJson.addProperty("vcenter_id", validateInstallOptions.vcenterId());
     }
-    if (validationInstallOptions.vcenterPassword() != null) {
-      contentJson.addProperty("vcenter_password", validationInstallOptions.vcenterPassword());
+    if (validateInstallOptions.vcenterUser() != null) {
+      contentJson.addProperty("vcenter_user", validateInstallOptions.vcenterUser());
     }
-    if (validationInstallOptions.vcenterLocation() != null) {
-      contentJson.addProperty("vcenter_location", validationInstallOptions.vcenterLocation());
+    if (validateInstallOptions.vcenterPassword() != null) {
+      contentJson.addProperty("vcenter_password", validateInstallOptions.vcenterPassword());
+    }
+    if (validateInstallOptions.vcenterLocation() != null) {
+      contentJson.addProperty("vcenter_location", validateInstallOptions.vcenterLocation());
+    }
+    if (validateInstallOptions.vcenterDatastore() != null) {
+      contentJson.addProperty("vcenter_datastore", validateInstallOptions.vcenterDatastore());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
@@ -1932,7 +1940,7 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Returns the install status for the specified offering version.
+   * Get offering install status.
    *
    * Returns the install status for the specified offering version.
    *
@@ -1942,9 +1950,9 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Validation> getValidationStatus(GetValidationStatusOptions getValidationStatusOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getValidationStatusOptions,
       "getValidationStatusOptions cannot be null");
-    String[] pathSegments = { "versions", "validation/install" };
-    String[] pathParameters = { getValidationStatusOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", getValidationStatusOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/validation/install", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getValidationStatus");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -1957,7 +1965,7 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Returns the override values that were used to validate the specified offering version.
+   * Get override values.
    *
    * Returns the override values that were used to validate the specified offering version.
    *
@@ -1967,385 +1975,747 @@ public class CatalogManagement extends BaseService {
   public ServiceCall<Map<String, Object>> getOverrideValues(GetOverrideValuesOptions getOverrideValuesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getOverrideValuesOptions,
       "getOverrideValuesOptions cannot be null");
-    String[] pathSegments = { "versions", "validation/overridevalues" };
-    String[] pathParameters = { getOverrideValuesOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", getOverrideValuesOptions.versionLocId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/validation/overridevalues", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOverrideValues");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-
     ResponseConverter<Map<String, Object>> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Map<String, Object>>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Returns the schematics workspaces for the specified offering version.
+   * List objects across catalogs.
    *
-   * Returns the schematics workspaces for the specified offering version.
+   * List the available objects from both public and private catalogs. These copies cannot be used for updating. They
+   * are not complete and only return what is visible to the caller.
    *
-   * @param getSchematicsWorkspacesOptions the {@link GetSchematicsWorkspacesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link SchematicsWorkspaceSearchResult}
+   * @param searchObjectsOptions the {@link SearchObjectsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ObjectSearchResult}
    */
-  public ServiceCall<SchematicsWorkspaceSearchResult> getSchematicsWorkspaces(GetSchematicsWorkspacesOptions getSchematicsWorkspacesOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getSchematicsWorkspacesOptions,
-      "getSchematicsWorkspacesOptions cannot be null");
-    String[] pathSegments = { "versions", "workspaces" };
-    String[] pathParameters = { getSchematicsWorkspacesOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getSchematicsWorkspaces");
+  public ServiceCall<ObjectSearchResult> searchObjects(SearchObjectsOptions searchObjectsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(searchObjectsOptions,
+      "searchObjectsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/objects"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "searchObjects");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.header("X-Auth-Refresh-Token", getSchematicsWorkspacesOptions.xAuthRefreshToken());
-    ResponseConverter<SchematicsWorkspaceSearchResult> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<SchematicsWorkspaceSearchResult>() { }.getType());
+    builder.query("query", String.valueOf(searchObjectsOptions.query()));
+    if (searchObjectsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(searchObjectsOptions.limit()));
+    }
+    if (searchObjectsOptions.offset() != null) {
+      builder.query("offset", String.valueOf(searchObjectsOptions.offset()));
+    }
+    if (searchObjectsOptions.collapse() != null) {
+      builder.query("collapse", String.valueOf(searchObjectsOptions.collapse()));
+    }
+    if (searchObjectsOptions.digest() != null) {
+      builder.query("digest", String.valueOf(searchObjectsOptions.digest()));
+    }
+    ResponseConverter<ObjectSearchResult> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ObjectSearchResult>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Returns the schematics permissions for the specified user.
+   * List objects within a catalog.
    *
-   * Returns the schematics permissions for the specified user.
+   * List the available objects within the specified catalog.
    *
-   * @param canDeploySchematicsOptions the {@link CanDeploySchematicsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link DeployRequirementsCheck}
+   * @param listObjectsOptions the {@link ListObjectsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ObjectListResult}
    */
-  public ServiceCall<DeployRequirementsCheck> canDeploySchematics(CanDeploySchematicsOptions canDeploySchematicsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(canDeploySchematicsOptions,
-      "canDeploySchematicsOptions cannot be null");
-    String[] pathSegments = { "versions", "candeploy" };
-    String[] pathParameters = { canDeploySchematicsOptions.versionLocId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "canDeploySchematics");
+  public ServiceCall<ObjectListResult> listObjects(ListObjectsOptions listObjectsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listObjectsOptions,
+      "listObjectsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", listObjectsOptions.catalogIdentifier());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "listObjects");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.query("cluster_id", canDeploySchematicsOptions.clusterId());
-    builder.query("region", canDeploySchematicsOptions.region());
-    if (canDeploySchematicsOptions.namespace() != null) {
-      builder.query("namespace", canDeploySchematicsOptions.namespace());
+    if (listObjectsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listObjectsOptions.limit()));
     }
-    if (canDeploySchematicsOptions.resourceGroupId() != null) {
-      builder.query("resource_group_id", canDeploySchematicsOptions.resourceGroupId());
+    if (listObjectsOptions.offset() != null) {
+      builder.query("offset", String.valueOf(listObjectsOptions.offset()));
     }
-    ResponseConverter<DeployRequirementsCheck> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<DeployRequirementsCheck>() { }.getType());
+    if (listObjectsOptions.name() != null) {
+      builder.query("name", String.valueOf(listObjectsOptions.name()));
+    }
+    if (listObjectsOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listObjectsOptions.sort()));
+    }
+    ResponseConverter<ObjectListResult> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ObjectListResult>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Returns all active resource groups in the current account, where the current user has permission to create schematics workspaces.
+   * Create catalog object.
    *
-   * Returns all active resource groups in the current account, where the current user has permission to create
-   * schematics workspaces.
+   * Create an object with a specific catalog.
    *
-   * @param getResourceGroupsOptions the {@link GetResourceGroupsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ResourceGroups}
+   * @param createObjectOptions the {@link CreateObjectOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link CatalogObject}
    */
-  public ServiceCall<ResourceGroups> getResourceGroups(GetResourceGroupsOptions getResourceGroupsOptions) {
-    String[] pathSegments = { "deploy/schematics/resourcegroups" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getResourceGroups");
+  public ServiceCall<CatalogObject> createObject(CreateObjectOptions createObjectOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createObjectOptions,
+      "createObjectOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", createObjectOptions.catalogIdentifier());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "createObject");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    ResponseConverter<ResourceGroups> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceGroups>() { }.getType());
+    final JsonObject contentJson = new JsonObject();
+    if (createObjectOptions.id() != null) {
+      contentJson.addProperty("id", createObjectOptions.id());
+    }
+    if (createObjectOptions.name() != null) {
+      contentJson.addProperty("name", createObjectOptions.name());
+    }
+    if (createObjectOptions.rev() != null) {
+      contentJson.addProperty("_rev", createObjectOptions.rev());
+    }
+    if (createObjectOptions.crn() != null) {
+      contentJson.addProperty("crn", createObjectOptions.crn());
+    }
+    if (createObjectOptions.url() != null) {
+      contentJson.addProperty("url", createObjectOptions.url());
+    }
+    if (createObjectOptions.parentId() != null) {
+      contentJson.addProperty("parent_id", createObjectOptions.parentId());
+    }
+    if (createObjectOptions.labelI18n() != null) {
+      contentJson.addProperty("label_i18n", createObjectOptions.labelI18n());
+    }
+    if (createObjectOptions.label() != null) {
+      contentJson.addProperty("label", createObjectOptions.label());
+    }
+    if (createObjectOptions.tags() != null) {
+      contentJson.add("tags", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createObjectOptions.tags()));
+    }
+    if (createObjectOptions.created() != null) {
+      contentJson.add("created", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createObjectOptions.created()));
+    }
+    if (createObjectOptions.updated() != null) {
+      contentJson.add("updated", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createObjectOptions.updated()));
+    }
+    if (createObjectOptions.shortDescription() != null) {
+      contentJson.addProperty("short_description", createObjectOptions.shortDescription());
+    }
+    if (createObjectOptions.shortDescriptionI18n() != null) {
+      contentJson.addProperty("short_description_i18n", createObjectOptions.shortDescriptionI18n());
+    }
+    if (createObjectOptions.kind() != null) {
+      contentJson.addProperty("kind", createObjectOptions.kind());
+    }
+    if (createObjectOptions.publish() != null) {
+      contentJson.add("publish", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createObjectOptions.publish()));
+    }
+    if (createObjectOptions.state() != null) {
+      contentJson.add("state", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createObjectOptions.state()));
+    }
+    if (createObjectOptions.catalogId() != null) {
+      contentJson.addProperty("catalog_id", createObjectOptions.catalogId());
+    }
+    if (createObjectOptions.catalogName() != null) {
+      contentJson.addProperty("catalog_name", createObjectOptions.catalogName());
+    }
+    if (createObjectOptions.data() != null) {
+      contentJson.add("data", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createObjectOptions.data()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<CatalogObject> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CatalogObject>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Returns all active resource groups in the current account, where the current user has permission to create schematics workspaces.
+   * Get catalog object.
    *
-   * Returns all active resource groups in the current account, where the current user has permission to create
-   * schematics workspaces.
+   * Get the specified object from within the specified catalog.
    *
-   * @return a {@link ServiceCall} with a result of type {@link ResourceGroups}
+   * @param getObjectOptions the {@link GetObjectOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link CatalogObject}
    */
-  public ServiceCall<ResourceGroups> getResourceGroups() {
-    return getResourceGroups(null);
-  }
-
-  /**
-   * Get license providers.
-   *
-   * Get license providers.
-   *
-   * @param getLicenseProvidersOptions the {@link GetLicenseProvidersOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link LicenseProviders}
-   */
-  public ServiceCall<LicenseProviders> getLicenseProviders(GetLicenseProvidersOptions getLicenseProvidersOptions) {
-    String[] pathSegments = { "license/license_providers" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getLicenseProviders");
+  public ServiceCall<CatalogObject> getObject(GetObjectOptions getObjectOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getObjectOptions,
+      "getObjectOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", getObjectOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", getObjectOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getObject");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    ResponseConverter<LicenseProviders> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<LicenseProviders>() { }.getType());
+    ResponseConverter<CatalogObject> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CatalogObject>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Get license providers.
+   * Update catalog object.
    *
-   * Get license providers.
+   * Update an object within a specific catalog.
    *
-   * @return a {@link ServiceCall} with a result of type {@link LicenseProviders}
+   * @param replaceObjectOptions the {@link ReplaceObjectOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link CatalogObject}
    */
-  public ServiceCall<LicenseProviders> getLicenseProviders() {
-    return getLicenseProviders(null);
-  }
-
-  /**
-   * Get license entitlements.
-   *
-   * Get license entitlements bound to an account.
-   *
-   * @param listLicenseEntitlementsOptions the {@link ListLicenseEntitlementsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link LicenseEntitlements}
-   */
-  public ServiceCall<LicenseEntitlements> listLicenseEntitlements(ListLicenseEntitlementsOptions listLicenseEntitlementsOptions) {
-    String[] pathSegments = { "license/entitlements" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "listLicenseEntitlements");
+  public ServiceCall<CatalogObject> replaceObject(ReplaceObjectOptions replaceObjectOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceObjectOptions,
+      "replaceObjectOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", replaceObjectOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", replaceObjectOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "replaceObject");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listLicenseEntitlementsOptions != null) {
-      if (listLicenseEntitlementsOptions.accountId() != null) {
-        builder.query("account_id", listLicenseEntitlementsOptions.accountId());
-      }
-      if (listLicenseEntitlementsOptions.licenseProductId() != null) {
-        builder.query("license_product_id", listLicenseEntitlementsOptions.licenseProductId());
-      }
-      if (listLicenseEntitlementsOptions.versionId() != null) {
-        builder.query("version_id", listLicenseEntitlementsOptions.versionId());
-      }
-      if (listLicenseEntitlementsOptions.state() != null) {
-        builder.query("state", listLicenseEntitlementsOptions.state());
-      }
+    final JsonObject contentJson = new JsonObject();
+    if (replaceObjectOptions.id() != null) {
+      contentJson.addProperty("id", replaceObjectOptions.id());
     }
-    ResponseConverter<LicenseEntitlements> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<LicenseEntitlements>() { }.getType());
+    if (replaceObjectOptions.name() != null) {
+      contentJson.addProperty("name", replaceObjectOptions.name());
+    }
+    if (replaceObjectOptions.rev() != null) {
+      contentJson.addProperty("_rev", replaceObjectOptions.rev());
+    }
+    if (replaceObjectOptions.crn() != null) {
+      contentJson.addProperty("crn", replaceObjectOptions.crn());
+    }
+    if (replaceObjectOptions.url() != null) {
+      contentJson.addProperty("url", replaceObjectOptions.url());
+    }
+    if (replaceObjectOptions.parentId() != null) {
+      contentJson.addProperty("parent_id", replaceObjectOptions.parentId());
+    }
+    if (replaceObjectOptions.labelI18n() != null) {
+      contentJson.addProperty("label_i18n", replaceObjectOptions.labelI18n());
+    }
+    if (replaceObjectOptions.label() != null) {
+      contentJson.addProperty("label", replaceObjectOptions.label());
+    }
+    if (replaceObjectOptions.tags() != null) {
+      contentJson.add("tags", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceObjectOptions.tags()));
+    }
+    if (replaceObjectOptions.created() != null) {
+      contentJson.add("created", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceObjectOptions.created()));
+    }
+    if (replaceObjectOptions.updated() != null) {
+      contentJson.add("updated", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceObjectOptions.updated()));
+    }
+    if (replaceObjectOptions.shortDescription() != null) {
+      contentJson.addProperty("short_description", replaceObjectOptions.shortDescription());
+    }
+    if (replaceObjectOptions.shortDescriptionI18n() != null) {
+      contentJson.addProperty("short_description_i18n", replaceObjectOptions.shortDescriptionI18n());
+    }
+    if (replaceObjectOptions.kind() != null) {
+      contentJson.addProperty("kind", replaceObjectOptions.kind());
+    }
+    if (replaceObjectOptions.publish() != null) {
+      contentJson.add("publish", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceObjectOptions.publish()));
+    }
+    if (replaceObjectOptions.state() != null) {
+      contentJson.add("state", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceObjectOptions.state()));
+    }
+    if (replaceObjectOptions.catalogId() != null) {
+      contentJson.addProperty("catalog_id", replaceObjectOptions.catalogId());
+    }
+    if (replaceObjectOptions.catalogName() != null) {
+      contentJson.addProperty("catalog_name", replaceObjectOptions.catalogName());
+    }
+    if (replaceObjectOptions.data() != null) {
+      contentJson.add("data", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceObjectOptions.data()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<CatalogObject> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CatalogObject>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Get license entitlements.
+   * Delete catalog object.
    *
-   * Get license entitlements bound to an account.
+   * Delete a specific object within a specific catalog.
    *
-   * @return a {@link ServiceCall} with a result of type {@link LicenseEntitlements}
-   */
-  public ServiceCall<LicenseEntitlements> listLicenseEntitlements() {
-    return listLicenseEntitlements(null);
-  }
-
-  /**
-   * Create a license entitlement.
-   *
-   * Create an entitlement for a Cloud account.  This is used to give an account an entitlement to a license.
-   *
-   * @param createLicenseEntitlementOptions the {@link CreateLicenseEntitlementOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link LicenseEntitlement}
-   */
-  public ServiceCall<LicenseEntitlement> createLicenseEntitlement(CreateLicenseEntitlementOptions createLicenseEntitlementOptions) {
-    String[] pathSegments = { "license/entitlements" };
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "createLicenseEntitlement");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (createLicenseEntitlementOptions != null) {
-      if (createLicenseEntitlementOptions.accountId() != null) {
-        builder.query("account_id", createLicenseEntitlementOptions.accountId());
-      }
-      final JsonObject contentJson = new JsonObject();
-      if (createLicenseEntitlementOptions.name() != null) {
-        contentJson.addProperty("name", createLicenseEntitlementOptions.name());
-      }
-      if (createLicenseEntitlementOptions.effectiveFrom() != null) {
-        contentJson.addProperty("effective_from", createLicenseEntitlementOptions.effectiveFrom());
-      }
-      if (createLicenseEntitlementOptions.effectiveUntil() != null) {
-        contentJson.addProperty("effective_until", createLicenseEntitlementOptions.effectiveUntil());
-      }
-      if (createLicenseEntitlementOptions.versionId() != null) {
-        contentJson.addProperty("version_id", createLicenseEntitlementOptions.versionId());
-      }
-      if (createLicenseEntitlementOptions.licenseId() != null) {
-        contentJson.addProperty("license_id", createLicenseEntitlementOptions.licenseId());
-      }
-      if (createLicenseEntitlementOptions.licenseOwnerId() != null) {
-        contentJson.addProperty("license_owner_id", createLicenseEntitlementOptions.licenseOwnerId());
-      }
-      if (createLicenseEntitlementOptions.licenseProviderId() != null) {
-        contentJson.addProperty("license_provider_id", createLicenseEntitlementOptions.licenseProviderId());
-      }
-      if (createLicenseEntitlementOptions.licenseProductId() != null) {
-        contentJson.addProperty("license_product_id", createLicenseEntitlementOptions.licenseProductId());
-      }
-      builder.bodyJson(contentJson);
-    }
-    ResponseConverter<LicenseEntitlement> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<LicenseEntitlement>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Create a license entitlement.
-   *
-   * Create an entitlement for a Cloud account.  This is used to give an account an entitlement to a license.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link LicenseEntitlement}
-   */
-  public ServiceCall<LicenseEntitlement> createLicenseEntitlement() {
-    return createLicenseEntitlement(null);
-  }
-
-  /**
-   * Get entitlements for a specific license product ID.
-   *
-   * Get an entitlements for a specific license product ID bound to an account.
-   *
-   * @param getLicenseEntitlementsOptions the {@link GetLicenseEntitlementsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link LicenseEntitlements}
-   */
-  public ServiceCall<LicenseEntitlements> getLicenseEntitlements(GetLicenseEntitlementsOptions getLicenseEntitlementsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getLicenseEntitlementsOptions,
-      "getLicenseEntitlementsOptions cannot be null");
-    String[] pathSegments = { "license/entitlements/productID" };
-    String[] pathParameters = { getLicenseEntitlementsOptions.licenseProductId() };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getLicenseEntitlements");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getLicenseEntitlementsOptions.accountId() != null) {
-      builder.query("account_id", getLicenseEntitlementsOptions.accountId());
-    }
-    if (getLicenseEntitlementsOptions.versionId() != null) {
-      builder.query("version_id", getLicenseEntitlementsOptions.versionId());
-    }
-    ResponseConverter<LicenseEntitlements> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<LicenseEntitlements>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Delete license entitlement.
-   *
-   * Delete a license entitlement that is bound to an account. Note that BSS will mark the entitlement field "state":
-   * "removed".
-   *
-   * @param deleteLicenseEntitlementOptions the {@link DeleteLicenseEntitlementOptions} containing the options for the call
+   * @param deleteObjectOptions the {@link DeleteObjectOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<Void> deleteLicenseEntitlement(DeleteLicenseEntitlementOptions deleteLicenseEntitlementOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteLicenseEntitlementOptions,
-      "deleteLicenseEntitlementOptions cannot be null");
-    String[] pathSegments = { "license/entitlements" };
-    String[] pathParameters = { deleteLicenseEntitlementOptions.entitlementId() };
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments, pathParameters));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteLicenseEntitlement");
+  public ServiceCall<Void> deleteObject(DeleteObjectOptions deleteObjectOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteObjectOptions,
+      "deleteObjectOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", deleteObjectOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", deleteObjectOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteObject");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
-    }
-    if (deleteLicenseEntitlementOptions.accountId() != null) {
-      builder.query("account_id", deleteLicenseEntitlementOptions.accountId());
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Get licenses.
+   * Get catalog object audit log.
    *
-   * Retrieve available licenses from supported license subsystems.  This is used to get the list of available licenses
-   * that the user has.
+   * Get the audit log associated with a specific catalog object.
    *
-   * @param getLicensesOptions the {@link GetLicensesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link Licenses}
+   * @param getObjectAuditOptions the {@link GetObjectAuditOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AuditLog}
    */
-  public ServiceCall<Licenses> getLicenses(GetLicensesOptions getLicensesOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getLicensesOptions,
-      "getLicensesOptions cannot be null");
-    String[] pathSegments = { "license/licenses" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getLicenses");
+  public ServiceCall<AuditLog> getObjectAudit(GetObjectAuditOptions getObjectAuditOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getObjectAuditOptions,
+      "getObjectAuditOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", getObjectAuditOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", getObjectAuditOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/audit", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getObjectAudit");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.query("license_provider_id", getLicensesOptions.licenseProviderId());
-    if (getLicensesOptions.accountId() != null) {
-      builder.query("account_id", getLicensesOptions.accountId());
-    }
-    if (getLicensesOptions.name() != null) {
-      builder.query("name", getLicensesOptions.name());
-    }
-    if (getLicensesOptions.licenseType() != null) {
-      builder.query("license_type", getLicensesOptions.licenseType());
-    }
-    if (getLicensesOptions.licenseProductId() != null) {
-      builder.query("license_product_id", getLicensesOptions.licenseProductId());
-    }
-    ResponseConverter<Licenses> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Licenses>() { }.getType());
+    ResponseConverter<AuditLog> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AuditLog>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Search for versions.
+   * Publish object to account.
    *
-   * Search across accounts for all versions usig a particular license, requires global admin permission.
+   * Publish a catalog object to account.
    *
-   * @param searchLicenseVersionsOptions the {@link SearchLicenseVersionsOptions} containing the options for the call
+   * @param accountPublishObjectOptions the {@link AccountPublishObjectOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<Void> searchLicenseVersions(SearchLicenseVersionsOptions searchLicenseVersionsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(searchLicenseVersionsOptions,
-      "searchLicenseVersionsOptions cannot be null");
-    String[] pathSegments = { "search/license/versions" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "searchLicenseVersions");
+  public ServiceCall<Void> accountPublishObject(AccountPublishObjectOptions accountPublishObjectOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(accountPublishObjectOptions,
+      "accountPublishObjectOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", accountPublishObjectOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", accountPublishObjectOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/account-publish", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "accountPublishObject");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    builder.query("q", searchLicenseVersionsOptions.q());
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Search for Offerings.
+   * Publish object to share with allow list.
    *
-   * Search across accounts for all offerings using a particular license, requires global admin permission.
+   * Publish the specified object so that it is visible to those in the allow list.
    *
-   * @param searchLicenseOfferingsOptions the {@link SearchLicenseOfferingsOptions} containing the options for the call
+   * @param sharedPublishObjectOptions the {@link SharedPublishObjectOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
    */
-  public ServiceCall<Void> searchLicenseOfferings(SearchLicenseOfferingsOptions searchLicenseOfferingsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(searchLicenseOfferingsOptions,
-      "searchLicenseOfferingsOptions cannot be null");
-    String[] pathSegments = { "search/license/offerings" };
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.constructHttpUrl(getServiceUrl(), pathSegments));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "searchLicenseOfferings");
+  public ServiceCall<Void> sharedPublishObject(SharedPublishObjectOptions sharedPublishObjectOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(sharedPublishObjectOptions,
+      "sharedPublishObjectOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", sharedPublishObjectOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", sharedPublishObjectOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/shared-publish", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "sharedPublishObject");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    builder.query("q", searchLicenseOfferingsOptions.q());
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Publish object to share with IBMers.
+   *
+   * Publish the specified object so that it is visible to IBMers in the public catalog.
+   *
+   * @param ibmPublishObjectOptions the {@link IbmPublishObjectOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> ibmPublishObject(IbmPublishObjectOptions ibmPublishObjectOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(ibmPublishObjectOptions,
+      "ibmPublishObjectOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", ibmPublishObjectOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", ibmPublishObjectOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/ibm-publish", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "ibmPublishObject");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Publish object to share with all users.
+   *
+   * Publish the specified object so it is visible to all users in the public catalog.
+   *
+   * @param publicPublishObjectOptions the {@link PublicPublishObjectOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> publicPublishObject(PublicPublishObjectOptions publicPublishObjectOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(publicPublishObjectOptions,
+      "publicPublishObjectOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", publicPublishObjectOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", publicPublishObjectOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/public-publish", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "publicPublishObject");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Add account ID to object access list.
+   *
+   * Add an account ID to an object's access list.
+   *
+   * @param createObjectAccessOptions the {@link CreateObjectAccessOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> createObjectAccess(CreateObjectAccessOptions createObjectAccessOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createObjectAccessOptions,
+      "createObjectAccessOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", createObjectAccessOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", createObjectAccessOptions.objectIdentifier());
+    pathParamsMap.put("account_identifier", createObjectAccessOptions.accountIdentifier());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "createObjectAccess");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Check for account ID in object access list.
+   *
+   * Determine if an account ID is in an object's access list.
+   *
+   * @param getObjectAccessOptions the {@link GetObjectAccessOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ObjectAccess}
+   */
+  public ServiceCall<ObjectAccess> getObjectAccess(GetObjectAccessOptions getObjectAccessOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getObjectAccessOptions,
+      "getObjectAccessOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", getObjectAccessOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", getObjectAccessOptions.objectIdentifier());
+    pathParamsMap.put("account_identifier", getObjectAccessOptions.accountIdentifier());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getObjectAccess");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ObjectAccess> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ObjectAccess>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Remove account ID from object access list.
+   *
+   * Delete the specified account ID from the specified object's access list.
+   *
+   * @param deleteObjectAccessOptions the {@link DeleteObjectAccessOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteObjectAccess(DeleteObjectAccessOptions deleteObjectAccessOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteObjectAccessOptions,
+      "deleteObjectAccessOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", deleteObjectAccessOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", deleteObjectAccessOptions.objectIdentifier());
+    pathParamsMap.put("account_identifier", deleteObjectAccessOptions.accountIdentifier());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteObjectAccess");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get object access list.
+   *
+   * Get the access list associated with the specified object.
+   *
+   * @param getObjectAccessListOptions the {@link GetObjectAccessListOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ObjectAccessListResult}
+   */
+  public ServiceCall<ObjectAccessListResult> getObjectAccessList(GetObjectAccessListOptions getObjectAccessListOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getObjectAccessListOptions,
+      "getObjectAccessListOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", getObjectAccessListOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", getObjectAccessListOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/access", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getObjectAccessList");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getObjectAccessListOptions.limit() != null) {
+      builder.query("limit", String.valueOf(getObjectAccessListOptions.limit()));
+    }
+    if (getObjectAccessListOptions.offset() != null) {
+      builder.query("offset", String.valueOf(getObjectAccessListOptions.offset()));
+    }
+    ResponseConverter<ObjectAccessListResult> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ObjectAccessListResult>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete accounts from object access list.
+   *
+   * Delete all or a set of accounts from an object's access list.
+   *
+   * @param deleteObjectAccessListOptions the {@link DeleteObjectAccessListOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccessListBulkResponse}
+   */
+  public ServiceCall<AccessListBulkResponse> deleteObjectAccessList(DeleteObjectAccessListOptions deleteObjectAccessListOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteObjectAccessListOptions,
+      "deleteObjectAccessListOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", deleteObjectAccessListOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", deleteObjectAccessListOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/access", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteObjectAccessList");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.bodyContent(com.ibm.cloud.sdk.core.util.GsonSingleton.getGsonWithoutPrettyPrinting().toJson(deleteObjectAccessListOptions.accounts()), "application/json");
+    ResponseConverter<AccessListBulkResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccessListBulkResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Add accounts to object access list.
+   *
+   * Add one or more accounts to the specified object's access list.
+   *
+   * @param addObjectAccessListOptions the {@link AddObjectAccessListOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccessListBulkResponse}
+   */
+  public ServiceCall<AccessListBulkResponse> addObjectAccessList(AddObjectAccessListOptions addObjectAccessListOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(addObjectAccessListOptions,
+      "addObjectAccessListOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", addObjectAccessListOptions.catalogIdentifier());
+    pathParamsMap.put("object_identifier", addObjectAccessListOptions.objectIdentifier());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/objects/{object_identifier}/access", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "addObjectAccessList");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.bodyContent(com.ibm.cloud.sdk.core.util.GsonSingleton.getGsonWithoutPrettyPrinting().toJson(addObjectAccessListOptions.accounts()), "application/json");
+    ResponseConverter<AccessListBulkResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccessListBulkResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create an offering resource instance.
+   *
+   * Provision a new offering in a given account, and return its resource instance.
+   *
+   * @param createOfferingInstanceOptions the {@link CreateOfferingInstanceOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link OfferingInstance}
+   */
+  public ServiceCall<OfferingInstance> createOfferingInstance(CreateOfferingInstanceOptions createOfferingInstanceOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createOfferingInstanceOptions,
+      "createOfferingInstanceOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/instances/offerings"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "createOfferingInstance");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("X-Auth-Refresh-Token", createOfferingInstanceOptions.xAuthRefreshToken());
+    final JsonObject contentJson = new JsonObject();
+    if (createOfferingInstanceOptions.id() != null) {
+      contentJson.addProperty("id", createOfferingInstanceOptions.id());
+    }
+    if (createOfferingInstanceOptions.url() != null) {
+      contentJson.addProperty("url", createOfferingInstanceOptions.url());
+    }
+    if (createOfferingInstanceOptions.crn() != null) {
+      contentJson.addProperty("crn", createOfferingInstanceOptions.crn());
+    }
+    if (createOfferingInstanceOptions.label() != null) {
+      contentJson.addProperty("label", createOfferingInstanceOptions.label());
+    }
+    if (createOfferingInstanceOptions.catalogId() != null) {
+      contentJson.addProperty("catalog_id", createOfferingInstanceOptions.catalogId());
+    }
+    if (createOfferingInstanceOptions.offeringId() != null) {
+      contentJson.addProperty("offering_id", createOfferingInstanceOptions.offeringId());
+    }
+    if (createOfferingInstanceOptions.kindFormat() != null) {
+      contentJson.addProperty("kind_format", createOfferingInstanceOptions.kindFormat());
+    }
+    if (createOfferingInstanceOptions.version() != null) {
+      contentJson.addProperty("version", createOfferingInstanceOptions.version());
+    }
+    if (createOfferingInstanceOptions.clusterId() != null) {
+      contentJson.addProperty("cluster_id", createOfferingInstanceOptions.clusterId());
+    }
+    if (createOfferingInstanceOptions.clusterRegion() != null) {
+      contentJson.addProperty("cluster_region", createOfferingInstanceOptions.clusterRegion());
+    }
+    if (createOfferingInstanceOptions.clusterNamespaces() != null) {
+      contentJson.add("cluster_namespaces", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingInstanceOptions.clusterNamespaces()));
+    }
+    if (createOfferingInstanceOptions.clusterAllNamespaces() != null) {
+      contentJson.addProperty("cluster_all_namespaces", createOfferingInstanceOptions.clusterAllNamespaces());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<OfferingInstance> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OfferingInstance>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get Offering Instance.
+   *
+   * Get the resource associated with an installed offering instance.
+   *
+   * @param getOfferingInstanceOptions the {@link GetOfferingInstanceOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link OfferingInstance}
+   */
+  public ServiceCall<OfferingInstance> getOfferingInstance(GetOfferingInstanceOptions getOfferingInstanceOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getOfferingInstanceOptions,
+      "getOfferingInstanceOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("instance_identifier", getOfferingInstanceOptions.instanceIdentifier());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/instances/offerings/{instance_identifier}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOfferingInstance");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<OfferingInstance> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OfferingInstance>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update Offering Instance.
+   *
+   * Update an installed offering instance.
+   *
+   * @param putOfferingInstanceOptions the {@link PutOfferingInstanceOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link OfferingInstance}
+   */
+  public ServiceCall<OfferingInstance> putOfferingInstance(PutOfferingInstanceOptions putOfferingInstanceOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(putOfferingInstanceOptions,
+      "putOfferingInstanceOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("instance_identifier", putOfferingInstanceOptions.instanceIdentifier());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/instances/offerings/{instance_identifier}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "putOfferingInstance");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("X-Auth-Refresh-Token", putOfferingInstanceOptions.xAuthRefreshToken());
+    final JsonObject contentJson = new JsonObject();
+    if (putOfferingInstanceOptions.id() != null) {
+      contentJson.addProperty("id", putOfferingInstanceOptions.id());
+    }
+    if (putOfferingInstanceOptions.url() != null) {
+      contentJson.addProperty("url", putOfferingInstanceOptions.url());
+    }
+    if (putOfferingInstanceOptions.crn() != null) {
+      contentJson.addProperty("crn", putOfferingInstanceOptions.crn());
+    }
+    if (putOfferingInstanceOptions.label() != null) {
+      contentJson.addProperty("label", putOfferingInstanceOptions.label());
+    }
+    if (putOfferingInstanceOptions.catalogId() != null) {
+      contentJson.addProperty("catalog_id", putOfferingInstanceOptions.catalogId());
+    }
+    if (putOfferingInstanceOptions.offeringId() != null) {
+      contentJson.addProperty("offering_id", putOfferingInstanceOptions.offeringId());
+    }
+    if (putOfferingInstanceOptions.kindFormat() != null) {
+      contentJson.addProperty("kind_format", putOfferingInstanceOptions.kindFormat());
+    }
+    if (putOfferingInstanceOptions.version() != null) {
+      contentJson.addProperty("version", putOfferingInstanceOptions.version());
+    }
+    if (putOfferingInstanceOptions.clusterId() != null) {
+      contentJson.addProperty("cluster_id", putOfferingInstanceOptions.clusterId());
+    }
+    if (putOfferingInstanceOptions.clusterRegion() != null) {
+      contentJson.addProperty("cluster_region", putOfferingInstanceOptions.clusterRegion());
+    }
+    if (putOfferingInstanceOptions.clusterNamespaces() != null) {
+      contentJson.add("cluster_namespaces", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(putOfferingInstanceOptions.clusterNamespaces()));
+    }
+    if (putOfferingInstanceOptions.clusterAllNamespaces() != null) {
+      contentJson.addProperty("cluster_all_namespaces", putOfferingInstanceOptions.clusterAllNamespaces());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<OfferingInstance> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OfferingInstance>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete a version instance.
+   *
+   * Delete and instance deployed out of a product version.
+   *
+   * @param deleteOfferingInstanceOptions the {@link DeleteOfferingInstanceOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteOfferingInstance(DeleteOfferingInstanceOptions deleteOfferingInstanceOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteOfferingInstanceOptions,
+      "deleteOfferingInstanceOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("instance_identifier", deleteOfferingInstanceOptions.instanceIdentifier());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/instances/offerings/{instance_identifier}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deleteOfferingInstance");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("X-Auth-Refresh-Token", deleteOfferingInstanceOptions.xAuthRefreshToken());
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }

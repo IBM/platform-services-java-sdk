@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -25,15 +25,13 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationCl
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationHistory;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationResource;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -47,14 +45,7 @@ public class CatalogSearchResultTest {
   @Test
   public void testCatalogSearchResult() throws Throwable {
     CatalogSearchResult catalogSearchResultModel = new CatalogSearchResult();
-    assertNull(catalogSearchResultModel.getOffset());
-    assertNull(catalogSearchResultModel.getLimit());
     assertNull(catalogSearchResultModel.getTotalCount());
-    assertNull(catalogSearchResultModel.getResourceCount());
-    assertNull(catalogSearchResultModel.getFirst());
-    assertNull(catalogSearchResultModel.getLast());
-    assertNull(catalogSearchResultModel.getPrev());
-    assertNull(catalogSearchResultModel.getNext());
     assertNull(catalogSearchResultModel.getResources());
   }
 }

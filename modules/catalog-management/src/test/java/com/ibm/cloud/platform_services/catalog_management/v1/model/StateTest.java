@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -15,13 +15,11 @@ package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
 import com.ibm.cloud.platform_services.catalog_management.v1.model.State;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -36,15 +34,15 @@ public class StateTest {
   public void testState() throws Throwable {
     State stateModel = new State.Builder()
       .current("testString")
-      .currentEntered(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .pending("testString")
-      .pendingRequested(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .previous("testString")
       .build();
     assertEquals(stateModel.current(), "testString");
-    assertEquals(stateModel.currentEntered(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(stateModel.currentEntered(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(stateModel.pending(), "testString");
-    assertEquals(stateModel.pendingRequested(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(stateModel.pendingRequested(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(stateModel.previous(), "testString");
 
     String json = TestUtilities.serialize(stateModel);
@@ -52,9 +50,9 @@ public class StateTest {
     State stateModelNew = TestUtilities.deserialize(json, State.class);
     assertTrue(stateModelNew instanceof State);
     assertEquals(stateModelNew.current(), "testString");
-    assertEquals(stateModelNew.currentEntered().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
+    assertEquals(stateModelNew.currentEntered(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(stateModelNew.pending(), "testString");
-    assertEquals(stateModelNew.pendingRequested().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
+    assertEquals(stateModelNew.pendingRequested(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(stateModelNew.previous(), "testString");
   }
 }

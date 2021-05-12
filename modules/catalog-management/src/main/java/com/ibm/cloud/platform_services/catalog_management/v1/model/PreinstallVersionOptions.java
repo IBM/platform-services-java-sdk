@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,8 +33,10 @@ public class PreinstallVersionOptions extends GenericModel {
   protected String scriptId;
   protected String versionLocatorId;
   protected String vcenterId;
+  protected String vcenterUser;
   protected String vcenterPassword;
   protected String vcenterLocation;
+  protected String vcenterDatastore;
 
   /**
    * Builder.
@@ -52,8 +54,10 @@ public class PreinstallVersionOptions extends GenericModel {
     private String scriptId;
     private String versionLocatorId;
     private String vcenterId;
+    private String vcenterUser;
     private String vcenterPassword;
     private String vcenterLocation;
+    private String vcenterDatastore;
 
     private Builder(PreinstallVersionOptions preinstallVersionOptions) {
       this.versionLocId = preinstallVersionOptions.versionLocId;
@@ -68,8 +72,10 @@ public class PreinstallVersionOptions extends GenericModel {
       this.scriptId = preinstallVersionOptions.scriptId;
       this.versionLocatorId = preinstallVersionOptions.versionLocatorId;
       this.vcenterId = preinstallVersionOptions.vcenterId;
+      this.vcenterUser = preinstallVersionOptions.vcenterUser;
       this.vcenterPassword = preinstallVersionOptions.vcenterPassword;
       this.vcenterLocation = preinstallVersionOptions.vcenterLocation;
+      this.vcenterDatastore = preinstallVersionOptions.vcenterDatastore;
     }
 
     /**
@@ -231,6 +237,17 @@ public class PreinstallVersionOptions extends GenericModel {
     }
 
     /**
+     * Set the vcenterUser.
+     *
+     * @param vcenterUser the vcenterUser
+     * @return the PreinstallVersionOptions builder
+     */
+    public Builder vcenterUser(String vcenterUser) {
+      this.vcenterUser = vcenterUser;
+      return this;
+    }
+
+    /**
      * Set the vcenterPassword.
      *
      * @param vcenterPassword the vcenterPassword
@@ -249,6 +266,17 @@ public class PreinstallVersionOptions extends GenericModel {
      */
     public Builder vcenterLocation(String vcenterLocation) {
       this.vcenterLocation = vcenterLocation;
+      return this;
+    }
+
+    /**
+     * Set the vcenterDatastore.
+     *
+     * @param vcenterDatastore the vcenterDatastore
+     * @return the PreinstallVersionOptions builder
+     */
+    public Builder vcenterDatastore(String vcenterDatastore) {
+      this.vcenterDatastore = vcenterDatastore;
       return this;
     }
   }
@@ -270,8 +298,10 @@ public class PreinstallVersionOptions extends GenericModel {
     scriptId = builder.scriptId;
     versionLocatorId = builder.versionLocatorId;
     vcenterId = builder.vcenterId;
+    vcenterUser = builder.vcenterUser;
     vcenterPassword = builder.vcenterPassword;
     vcenterLocation = builder.vcenterLocation;
+    vcenterDatastore = builder.vcenterDatastore;
   }
 
   /**
@@ -341,7 +371,8 @@ public class PreinstallVersionOptions extends GenericModel {
   /**
    * Gets the overrideValues.
    *
-   * Object containing Helm chart override values.
+   * Object containing Helm chart override values.  To use a secret for items of type password, specify a JSON encoded
+   * value of $ref:#/components/schemas/SecretInstance, prefixed with `cmsm_v1:`.
    *
    * @return the overrideValues
    */
@@ -416,6 +447,17 @@ public class PreinstallVersionOptions extends GenericModel {
   }
 
   /**
+   * Gets the vcenterUser.
+   *
+   * VCenter User.
+   *
+   * @return the vcenterUser
+   */
+  public String vcenterUser() {
+    return vcenterUser;
+  }
+
+  /**
    * Gets the vcenterPassword.
    *
    * VCenter Password.
@@ -435,6 +477,17 @@ public class PreinstallVersionOptions extends GenericModel {
    */
   public String vcenterLocation() {
     return vcenterLocation;
+  }
+
+  /**
+   * Gets the vcenterDatastore.
+   *
+   * VCenter Datastore.
+   *
+   * @return the vcenterDatastore
+   */
+  public String vcenterDatastore() {
+    return vcenterDatastore;
   }
 }
 

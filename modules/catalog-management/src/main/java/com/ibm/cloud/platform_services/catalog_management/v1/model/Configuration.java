@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -224,7 +224,8 @@ public class Configuration extends GenericModel {
   /**
    * Gets the defaultValue.
    *
-   * The default value.
+   * The default value.  To use a secret when the type is password, specify a JSON encoded value of
+   * $ref:#/components/schemas/SecretInstance, prefixed with `cmsm_v1:`.
    *
    * @return the defaultValue
    */

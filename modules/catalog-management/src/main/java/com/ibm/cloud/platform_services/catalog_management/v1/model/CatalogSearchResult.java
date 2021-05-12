@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,39 +22,9 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class CatalogSearchResult extends GenericModel {
 
-  protected Long offset;
-  protected Long limit;
   @SerializedName("total_count")
   protected Long totalCount;
-  @SerializedName("resource_count")
-  protected Long resourceCount;
-  protected String first;
-  protected String last;
-  protected String prev;
-  protected String next;
   protected List<Catalog> resources;
-
-  /**
-   * Gets the offset.
-   *
-   * The offset (origin 0) of the first resource in this page of search results.
-   *
-   * @return the offset
-   */
-  public Long getOffset() {
-    return offset;
-  }
-
-  /**
-   * Gets the limit.
-   *
-   * The maximum number of resources returned in each page of search results.
-   *
-   * @return the limit
-   */
-  public Long getLimit() {
-    return limit;
-  }
 
   /**
    * Gets the totalCount.
@@ -65,61 +35,6 @@ public class CatalogSearchResult extends GenericModel {
    */
   public Long getTotalCount() {
     return totalCount;
-  }
-
-  /**
-   * Gets the resourceCount.
-   *
-   * The number of resources returned in this page of search results.
-   *
-   * @return the resourceCount
-   */
-  public Long getResourceCount() {
-    return resourceCount;
-  }
-
-  /**
-   * Gets the first.
-   *
-   * A URL for retrieving the first page of search results.
-   *
-   * @return the first
-   */
-  public String getFirst() {
-    return first;
-  }
-
-  /**
-   * Gets the last.
-   *
-   * A URL for retrieving the last page of search results.
-   *
-   * @return the last
-   */
-  public String getLast() {
-    return last;
-  }
-
-  /**
-   * Gets the prev.
-   *
-   * A URL for retrieving the previous page of search results.
-   *
-   * @return the prev
-   */
-  public String getPrev() {
-    return prev;
-  }
-
-  /**
-   * Gets the next.
-   *
-   * A URL for retrieving the next page of search results.
-   *
-   * @return the next
-   */
-  public String getNext() {
-    return next;
   }
 
   /**

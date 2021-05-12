@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,11 +23,14 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class ImportOfferingOptions extends GenericModel {
 
   protected String catalogIdentifier;
-  protected String zipurl;
   protected List<String> tags;
   protected List<String> targetKinds;
+  protected byte[] content;
+  protected String zipurl;
   protected String offeringId;
+  protected String targetVersion;
   protected Boolean includeConfig;
+  protected Boolean isVsi;
   protected String repoType;
   protected String xAuthToken;
 
@@ -36,21 +39,27 @@ public class ImportOfferingOptions extends GenericModel {
    */
   public static class Builder {
     private String catalogIdentifier;
-    private String zipurl;
     private List<String> tags;
     private List<String> targetKinds;
+    private byte[] content;
+    private String zipurl;
     private String offeringId;
+    private String targetVersion;
     private Boolean includeConfig;
+    private Boolean isVsi;
     private String repoType;
     private String xAuthToken;
 
     private Builder(ImportOfferingOptions importOfferingOptions) {
       this.catalogIdentifier = importOfferingOptions.catalogIdentifier;
-      this.zipurl = importOfferingOptions.zipurl;
       this.tags = importOfferingOptions.tags;
       this.targetKinds = importOfferingOptions.targetKinds;
+      this.content = importOfferingOptions.content;
+      this.zipurl = importOfferingOptions.zipurl;
       this.offeringId = importOfferingOptions.offeringId;
+      this.targetVersion = importOfferingOptions.targetVersion;
       this.includeConfig = importOfferingOptions.includeConfig;
+      this.isVsi = importOfferingOptions.isVsi;
       this.repoType = importOfferingOptions.repoType;
       this.xAuthToken = importOfferingOptions.xAuthToken;
     }
@@ -65,11 +74,9 @@ public class ImportOfferingOptions extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param catalogIdentifier the catalogIdentifier
-     * @param zipurl the zipurl
      */
-    public Builder(String catalogIdentifier, String zipurl) {
+    public Builder(String catalogIdentifier) {
       this.catalogIdentifier = catalogIdentifier;
-      this.zipurl = zipurl;
     }
 
     /**
@@ -125,17 +132,6 @@ public class ImportOfferingOptions extends GenericModel {
     }
 
     /**
-     * Set the zipurl.
-     *
-     * @param zipurl the zipurl
-     * @return the ImportOfferingOptions builder
-     */
-    public Builder zipurl(String zipurl) {
-      this.zipurl = zipurl;
-      return this;
-    }
-
-    /**
      * Set the tags.
      * Existing tags will be replaced.
      *
@@ -160,6 +156,28 @@ public class ImportOfferingOptions extends GenericModel {
     }
 
     /**
+     * Set the content.
+     *
+     * @param content the content
+     * @return the ImportOfferingOptions builder
+     */
+    public Builder content(byte[] content) {
+      this.content = content;
+      return this;
+    }
+
+    /**
+     * Set the zipurl.
+     *
+     * @param zipurl the zipurl
+     * @return the ImportOfferingOptions builder
+     */
+    public Builder zipurl(String zipurl) {
+      this.zipurl = zipurl;
+      return this;
+    }
+
+    /**
      * Set the offeringId.
      *
      * @param offeringId the offeringId
@@ -171,6 +189,17 @@ public class ImportOfferingOptions extends GenericModel {
     }
 
     /**
+     * Set the targetVersion.
+     *
+     * @param targetVersion the targetVersion
+     * @return the ImportOfferingOptions builder
+     */
+    public Builder targetVersion(String targetVersion) {
+      this.targetVersion = targetVersion;
+      return this;
+    }
+
+    /**
      * Set the includeConfig.
      *
      * @param includeConfig the includeConfig
@@ -178,6 +207,17 @@ public class ImportOfferingOptions extends GenericModel {
      */
     public Builder includeConfig(Boolean includeConfig) {
       this.includeConfig = includeConfig;
+      return this;
+    }
+
+    /**
+     * Set the isVsi.
+     *
+     * @param isVsi the isVsi
+     * @return the ImportOfferingOptions builder
+     */
+    public Builder isVsi(Boolean isVsi) {
+      this.isVsi = isVsi;
       return this;
     }
 
@@ -207,14 +247,15 @@ public class ImportOfferingOptions extends GenericModel {
   protected ImportOfferingOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.catalogIdentifier,
       "catalogIdentifier cannot be empty");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.zipurl,
-      "zipurl cannot be null");
     catalogIdentifier = builder.catalogIdentifier;
-    zipurl = builder.zipurl;
     tags = builder.tags;
     targetKinds = builder.targetKinds;
+    content = builder.content;
+    zipurl = builder.zipurl;
     offeringId = builder.offeringId;
+    targetVersion = builder.targetVersion;
     includeConfig = builder.includeConfig;
+    isVsi = builder.isVsi;
     repoType = builder.repoType;
     xAuthToken = builder.xAuthToken;
   }
@@ -240,17 +281,6 @@ public class ImportOfferingOptions extends GenericModel {
   }
 
   /**
-   * Gets the zipurl.
-   *
-   * URL path to zip location.
-   *
-   * @return the zipurl
-   */
-  public String zipurl() {
-    return zipurl;
-  }
-
-  /**
    * Gets the tags.
    *
    * Tags array.
@@ -273,6 +303,28 @@ public class ImportOfferingOptions extends GenericModel {
   }
 
   /**
+   * Gets the content.
+   *
+   * byte array representing the content to be imported.  Only supported for OVA images at this time.
+   *
+   * @return the content
+   */
+  public byte[] content() {
+    return content;
+  }
+
+  /**
+   * Gets the zipurl.
+   *
+   * URL path to zip location.  If not specified, must provide content in this post body.
+   *
+   * @return the zipurl
+   */
+  public String zipurl() {
+    return zipurl;
+  }
+
+  /**
    * Gets the offeringId.
    *
    * Re-use the specified offeringID during import.
@@ -284,6 +336,17 @@ public class ImportOfferingOptions extends GenericModel {
   }
 
   /**
+   * Gets the targetVersion.
+   *
+   * The semver value for this new version.
+   *
+   * @return the targetVersion
+   */
+  public String targetVersion() {
+    return targetVersion;
+  }
+
+  /**
    * Gets the includeConfig.
    *
    * Add all possible configuration items when creating this version.
@@ -292,6 +355,17 @@ public class ImportOfferingOptions extends GenericModel {
    */
   public Boolean includeConfig() {
     return includeConfig;
+  }
+
+  /**
+   * Gets the isVsi.
+   *
+   * Indicates that the current terraform template is used to install a VSI Image.
+   *
+   * @return the isVsi
+   */
+  public Boolean isVsi() {
+    return isVsi;
   }
 
   /**

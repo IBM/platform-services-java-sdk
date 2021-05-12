@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -36,6 +36,7 @@ public class ReplaceOfferingOptions extends GenericModel {
   protected String offeringDocsUrl;
   protected String offeringSupportUrl;
   protected List<String> tags;
+  protected List<String> keywords;
   protected Rating rating;
   protected Date created;
   protected Date updated;
@@ -74,6 +75,7 @@ public class ReplaceOfferingOptions extends GenericModel {
     private String offeringDocsUrl;
     private String offeringSupportUrl;
     private List<String> tags;
+    private List<String> keywords;
     private Rating rating;
     private Date created;
     private Date updated;
@@ -109,6 +111,7 @@ public class ReplaceOfferingOptions extends GenericModel {
       this.offeringDocsUrl = replaceOfferingOptions.offeringDocsUrl;
       this.offeringSupportUrl = replaceOfferingOptions.offeringSupportUrl;
       this.tags = replaceOfferingOptions.tags;
+      this.keywords = replaceOfferingOptions.keywords;
       this.rating = replaceOfferingOptions.rating;
       this.created = replaceOfferingOptions.created;
       this.updated = replaceOfferingOptions.updated;
@@ -171,6 +174,22 @@ public class ReplaceOfferingOptions extends GenericModel {
         this.tags = new ArrayList<String>();
       }
       this.tags.add(tags);
+      return this;
+    }
+
+    /**
+     * Adds an keywords to keywords.
+     *
+     * @param keywords the new keywords
+     * @return the ReplaceOfferingOptions builder
+     */
+    public Builder addKeywords(String keywords) {
+      com.ibm.cloud.sdk.core.util.Validator.notNull(keywords,
+        "keywords cannot be null");
+      if (this.keywords == null) {
+        this.keywords = new ArrayList<String>();
+      }
+      this.keywords.add(keywords);
       return this;
     }
 
@@ -336,6 +355,18 @@ public class ReplaceOfferingOptions extends GenericModel {
      */
     public Builder tags(List<String> tags) {
       this.tags = tags;
+      return this;
+    }
+
+    /**
+     * Set the keywords.
+     * Existing keywords will be replaced.
+     *
+     * @param keywords the keywords
+     * @return the ReplaceOfferingOptions builder
+     */
+    public Builder keywords(List<String> keywords) {
+      this.keywords = keywords;
       return this;
     }
 
@@ -589,6 +620,7 @@ public class ReplaceOfferingOptions extends GenericModel {
       this.offeringDocsUrl = offering.offeringDocsUrl();
       this.offeringSupportUrl = offering.offeringSupportUrl();
       this.tags = offering.tags();
+      this.keywords = offering.keywords();
       this.rating = offering.rating();
       this.created = offering.created();
       this.updated = offering.updated();
@@ -631,6 +663,7 @@ public class ReplaceOfferingOptions extends GenericModel {
     offeringDocsUrl = builder.offeringDocsUrl;
     offeringSupportUrl = builder.offeringSupportUrl;
     tags = builder.tags;
+    keywords = builder.keywords;
     rating = builder.rating;
     created = builder.created;
     updated = builder.updated;
@@ -793,6 +826,17 @@ public class ReplaceOfferingOptions extends GenericModel {
    */
   public List<String> tags() {
     return tags;
+  }
+
+  /**
+   * Gets the keywords.
+   *
+   * List of keywords associated with offering, typically used to search for it.
+   *
+   * @return the keywords
+   */
+  public List<String> keywords() {
+    return keywords;
   }
 
   /**

@@ -1,942 +1,2818 @@
-/*
- * (C) Copyright IBM Corp. 2020.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
- */
-
-package com.ibm.cloud.platform_services.catalog_management.v1;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
-import static org.testng.AssertJUnit.assertNotNull;
-
-import java.util.List;
-import java.util.Map;
-
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Ignore;
-import org.testng.annotations.Test;
-
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Account;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFilters;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Catalog;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogSearchResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionAboutOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionUpdatesOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseEntitlements;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.LicenseProviders;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListLicenseEntitlementsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOfferingsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Offering;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingSearchResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReloadOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchLicenseOfferingsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchLicenseVersionsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionUpdateDescriptor;
-import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
-import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.service.exception.ForbiddenException;
-import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
-import com.ibm.cloud.sdk.core.util.CredentialUtils;
-
-/**
- * Integration test class for the CatalogManagement service.
- */
-public class CatalogManagementIT extends SdkIntegrationTestBase {
-    CatalogManagement service = null;
-
-    private static final long timestamp = System.currentTimeMillis() / 1000L;
-    private static final String expectedLabel = String.format("integration-test-%d", timestamp);
-    private static final String expectedAccount = "67d27f28d43948b2b3bda9138f251a13";
-    private static final String expectedShortDesc = "test";
-    private static final String expectedURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s";
-    private static final String expectedOfferingsURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings";
-    private static final String fakeName = "bogus";
-    private static final String fakeVersionLocator = "bogus.bogus";
-    private static final String expectedOfferingName = "test-offering";
-    private static final String expectedOfferingURL  = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
-
-    private String gitToken;
-
-    @Override
-    public String getConfigFilename() {
-        return "../../catalog_mgmt.env";
-    }
-
-    @Override
-    public boolean loggingEnabled() {
-        return false;
-    }
-
-    @BeforeClass
-    public void constructService() {
-        if (skipTests()) {
-            return;
-        }
-
-        service = CatalogManagement.newInstance();
-        assertNotNull(service);
-        assertNotNull(service.getServiceUrl());
-
-        Map<String, String> config = CredentialUtils.getServiceProperties(CatalogManagement.DEFAULT_SERVICE_NAME);
-
-        gitToken = config.get("GIT_TOKEN");
-        assertNotNull(gitToken);
-    }
-
-    @BeforeMethod
-    public void beforeTest() {
-        Response<CatalogSearchResult> response = service.listCatalogs().execute();
-
-        if (response.getResult().getResources() != null) {
-            for (int i = 0; i < response.getResult().getResources().size(); i++) {
-                if (response.getResult().getResources().get(i).label().equals(expectedLabel)) {
-                    String id = response.getResult().getResources().get(i).id();
-                    DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
-                    service.deleteCatalog(deleteOptions).execute();
-                }
-            }
-        }
-    }
-
-    @AfterMethod
-    public void afterTest() {
-        Response<CatalogSearchResult> response = service.listCatalogs().execute();
-
-        if (response.getResult().getResources() != null) {
-            for (int i = 0; i < response.getResult().getResources().size(); i++) {
-                if (response.getResult().getResources().get(i).label().equals(expectedLabel)) {
-                    String id = response.getResult().getResources().get(i).id();
-                    DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(id).build();
-                    service.deleteCatalog(deleteOptions).execute();
-                }
-            }
-        }
-    }
-
-    @Test
-    public void testGetCatalogAccount() {
-        Response<Account> response = service.getCatalogAccount().execute();
-        Account result = response.getResult();
-
-        assertNotNull(result);
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(result.id(), expectedAccount);
-        assertTrue(result.accountFilters().includeAll());
-        assertEquals(result.accountFilters().categoryFilters(), null);
-        assertEquals(result.accountFilters().idFilters().include(), null);
-        assertEquals(result.accountFilters().idFilters().exclude(), null);
-    }
-
-    @Test
-    public void testGetCatalogAccountFilters() {
-        Response<AccumulatedFilters> response = service.getCatalogAccountFilters().execute();
-        AccumulatedFilters result = response.getResult();
-
-        assertNotNull(result);
-        assertEquals(response.getStatusCode(), 200);
-        assertTrue(result.getAccountFilters().get(0).includeAll());
-        assertEquals(result.getAccountFilters().get(0).categoryFilters(), null);
-        assertEquals(result.getAccountFilters().get(0).idFilters().include(), null);
-        assertEquals(result.getAccountFilters().get(0).idFilters().exclude(), null);
-    }
-
-    @Test
-    public void testListCatalogs() {
-        int catalogCount = 0;
-        int catalogIndex = -1;
-
-        CreateCatalogOptions createOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> createResponse = service.createCatalog(createOptions).execute();
-        Catalog createResult = createResponse.getResult();
-
-        Response<CatalogSearchResult> listResponse = service.listCatalogs().execute();
-        CatalogSearchResult result = listResponse.getResult();
-
-        if (result != null) {
-            for (int i = 0; i < result.getResources().size(); i++) {
-                if (result.getResources().get(i).label().equals(expectedLabel)) {
-                    catalogCount++;
-                    catalogIndex = i;
-                }
-            }
-        }
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(createResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(result);
-        assertEquals(listResponse.getStatusCode(), 200);
-        assertEquals(result.getOffset(), Long.valueOf(0));
-        assertEquals(result.getLimit(), Long.valueOf(0));
-        assertEquals(catalogCount, 1);
-        assertEquals(result.getLast(), null);
-        assertEquals(result.getPrev(), null);
-        assertEquals(result.getNext(), null);
-
-        assertEquals(result.getResources().get(catalogIndex).label(), expectedLabel);
-        assertEquals(result.getResources().get(catalogIndex).shortDescription(), expectedShortDesc);
-        assertEquals(result.getResources().get(catalogIndex).url(), String.format(expectedURL, createResult.id()));
-        assertEquals(result.getResources().get(catalogIndex).offeringsUrl(), String.format(expectedOfferingsURL, createResult.id()));
-        assertEquals(result.getResources().get(catalogIndex).owningAccount(), expectedAccount);
-        assertFalse(result.getResources().get(catalogIndex).catalogFilters().includeAll());
-        assertEquals(result.getResources().get(catalogIndex).catalogFilters().categoryFilters(), null);
-        assertEquals(result.getResources().get(catalogIndex).catalogFilters().idFilters().include(), null);
-        assertEquals(result.getResources().get(catalogIndex).catalogFilters().idFilters().exclude(), null);
-    }
-
-    @Test
-    public void testCreateCatalog() {
-        CreateCatalogOptions createOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> response = service.createCatalog(createOptions).execute();
-        Catalog result = response.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(result.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(result);
-        assertEquals(response.getStatusCode(), 201);
-        assertEquals(result.label(), expectedLabel);
-        assertEquals(result.shortDescription(), expectedShortDesc);
-        assertEquals(result.url(), String.format(expectedURL, result.id()));
-        assertEquals(result.offeringsUrl(), String.format(expectedOfferingsURL, result.id()));
-        assertEquals(result.owningAccount(), expectedAccount);
-        assertFalse(result.catalogFilters().includeAll());
-        assertEquals(result.catalogFilters().categoryFilters(), null);
-        assertEquals(result.catalogFilters().idFilters().include(), null);
-        assertEquals(result.catalogFilters().idFilters().exclude(), null);
-
-        log("createCatalog() result:\n" + result.toString());
-    }
-
-    @Test
-    public void testGetCatalog() {
-        CreateCatalogOptions createOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> createResponse = service.createCatalog(createOptions).execute();
-        Catalog createResult = createResponse.getResult();
-
-        GetCatalogOptions getOptions = new GetCatalogOptions.Builder().catalogIdentifier(createResult.id()).build();
-        Response<Catalog> getResponse = service.getCatalog(getOptions).execute();
-        Catalog getResult = getResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(createResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(getResult);
-        assertEquals(getResponse.getStatusCode(), 200);
-        assertEquals(getResult.label(), expectedLabel);
-        assertEquals(getResult.shortDescription(), expectedShortDesc);
-        assertEquals(getResult.url(), String.format(expectedURL, getResult.id()));
-        assertEquals(getResult.offeringsUrl(), String.format(expectedOfferingsURL, getResult.id()));
-        assertEquals(getResult.owningAccount(), expectedAccount);
-        assertFalse(getResult.catalogFilters().includeAll());
-        assertEquals(getResult.catalogFilters().categoryFilters(), null);
-        assertEquals(getResult.catalogFilters().idFilters().include(), null);
-        assertEquals(getResult.catalogFilters().idFilters().exclude(), null);
-    }
-
-    @Test(expectedExceptions = {NotFoundException.class})
-    public void testGetCatalogFailure() {
-        GetCatalogOptions getOptions = new GetCatalogOptions.Builder().catalogIdentifier(fakeName).build();
-        service.getCatalog(getOptions).execute();
-    }
-
-    @Test
-    public void testUpdateCatalog() {
-        final String expectedLabelUpdated = "test2";
-        final String expectedShortDescUpdated = "integration-test-update";
-
-        CreateCatalogOptions createOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> createResponse = service.createCatalog(createOptions).execute();
-        Catalog createResult = createResponse.getResult();
-
-        ReplaceCatalogOptions replaceOptions = new ReplaceCatalogOptions.Builder().catalogIdentifier(createResult.id()).id(createResult.id()).label(expectedLabelUpdated).shortDescription(expectedShortDescUpdated).build();
-        Response<Catalog> replaceResponse = service.replaceCatalog(replaceOptions).execute();
-        Catalog replaceResult = replaceResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(createResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(replaceResult);
-        assertEquals(replaceResponse.getStatusCode(), 200);
-        assertEquals(replaceResult.label(), expectedLabelUpdated);
-        assertEquals(replaceResult.shortDescription(), expectedShortDescUpdated);
-        // assertEquals(replaceResult.url(), String.format(expectedURL, replaceResult.id()));
-        // assertEquals(replaceResult.offeringsUrl(), String.format(expectedOfferingsURL, replaceResult.id()));
-        // assertEquals(replaceResult.owningAccount(), expectedAccount);
-        assertTrue(replaceResult.catalogFilters().includeAll());
-        assertEquals(replaceResult.catalogFilters().categoryFilters(), null);
-        assertEquals(replaceResult.catalogFilters().idFilters().include(), null);
-        assertEquals(replaceResult.catalogFilters().idFilters().exclude(), null);
-    }
-
-    @Test(expectedExceptions = {NotFoundException.class})
-    public void testUpdateCatalogFailure() {
-        ReplaceCatalogOptions replaceOptions = new ReplaceCatalogOptions.Builder().catalogIdentifier(fakeName).id(fakeName).build();
-        service.replaceCatalog(replaceOptions).execute();
-    }
-
-    @Test
-    public void testDeleteCatalog() {
-        CreateCatalogOptions createOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> createResponse = service.createCatalog(createOptions).execute();
-        Catalog createResult = createResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(createResult.id()).build();
-        Response<Void> deleteResponse = service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(deleteResponse);
-        assertEquals(deleteResponse.getStatusCode(), 200);
-    }
-
-    @Test
-    public void testDeleteCatalogFailure() {
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(fakeName).build();
-        Response<Void> response = service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(response);
-        assertEquals(response.getStatusCode(), 200);
-    }
-
-    @Test
-    public void testCreateOffering() {
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
-        Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(offeringResponse);
-        assertEquals(offeringResponse.getStatusCode(), 201);
-        assertEquals(offeringResult.name(), expectedOfferingName);
-        assertEquals(offeringResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
-        assertEquals(offeringResult.label(), expectedLabel);
-    }
-
-
-    @Test
-    public void testGetOffering() {
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
-        Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        GetOfferingOptions getOptions = new GetOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).build();
-        Response<Offering> getResponse = service.getOffering(getOptions).execute();
-        Offering getResult = getResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(getResponse);
-        assertEquals(getResponse.getStatusCode(), 200);
-        assertEquals(getResult.name(), expectedOfferingName);
-        assertEquals(getResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
-        assertEquals(getResult.label(), expectedLabel);
-    }
-
-    @Test
-    public void testGetOfferingFailure() {
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        try {
-            GetOfferingOptions getOptions = new GetOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).build();
-            service.getOffering(getOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        try {
-            GetOfferingOptions getOptions = new GetOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).build();
-            service.getOffering(getOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (ForbiddenException e) {
-            assertEquals(e.getStatusCode(), 403);
-        }
-    }
-
-    @Test
-    public void testListOfferings() {
-        final Long expectedLimit = 100L;
-        final Long expectedOffset = 0L;
-        final Long expectedTotalCount = 1L;
-        final Long expectedResourceCount = 1L;
-        final int expectedResourceLen = 1;
-        final String expectedFirst = "/api/v1-beta/catalogs/%s/offerings?limit=100&sort=label";
-        final String expectedLast = "/api/v1-beta/catalogs/%s/offerings?limit=100&sort=label";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
-        Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        ListOfferingsOptions listOptions = new ListOfferingsOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        Response<OfferingSearchResult> listResponse = service.listOfferings(listOptions).execute();
-        OfferingSearchResult listResult = listResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(listResponse);
-        assertEquals(listResponse.getStatusCode(), 200);
-        assertEquals(listResult.getOffset(), expectedOffset);
-        assertEquals(listResult.getLimit(), expectedLimit);
-        assertEquals(listResult.getTotalCount(), expectedTotalCount);
-        assertEquals(listResult.getResourceCount(), expectedResourceCount);
-        assertEquals(listResult.getFirst(), String.format(expectedFirst, catalogResult.id()));
-        assertEquals(listResult.getLast(), String.format(expectedLast, catalogResult.id()));
-        assertEquals(listResult.getResources().size(), expectedResourceLen);
-        assertEquals(listResult.getResources().get(0).id(), offeringResult.id());
-        assertEquals(listResult.getResources().get(0).url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
-        assertEquals(listResult.getResources().get(0).label(), expectedLabel);
-        assertEquals(listResult.getResources().get(0).name(), expectedOfferingName);
-        assertEquals(listResult.getResources().get(0).catalogId(), catalogResult.id());
-        assertEquals(listResult.getResources().get(0).catalogName(), expectedLabel);
-    }
-
-    @Test
-    public void testDeleteOffering() {
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
-        Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        DeleteOfferingOptions deleteOfferingOptions = new DeleteOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).build();
-        Response<Void> deleteOfferingResponse = service.deleteOffering(deleteOfferingOptions).execute();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(deleteOfferingResponse);
-        assertEquals(deleteOfferingResponse.getStatusCode(), 200);
-    }
-
-    @Test(expectedExceptions = {ForbiddenException.class})
-    public void testDeleteOfferingFailure() {
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        DeleteOfferingOptions deleteOfferingOptions = new DeleteOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).build();
-        Response<Void> deleteOfferingResponse = service.deleteOffering(deleteOfferingOptions).execute();
-
-        assertNotNull(deleteOfferingResponse);
-        assertEquals(deleteOfferingResponse.getStatusCode(), 200);
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        DeleteOfferingOptions deleteOfferingNoCatalogOptions = new DeleteOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).build();
-        service.deleteOffering(deleteOfferingNoCatalogOptions).execute();
-    }
-
-    @Test
-    public void testUpdateOffering() {
-        final String expectedLabelUpdate = "test-update";
-        final String expectedShortDesc = "test-desc";
-        final String expectedShortDescUpdate = "test-desc-update";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        CreateOfferingOptions offeringOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).name(expectedOfferingName).label(expectedLabel).build();
-        Response<Offering> offeringResponse = service.createOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        ReplaceOfferingOptions replaceOptions = new ReplaceOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).id(offeringResult.id()).offeringId(offeringResult.id()).label(expectedLabelUpdate).shortDescription(expectedShortDescUpdate).rev(offeringResult.rev()).build();
-        Response<Catalog> replaceResponse = service.replaceOffering(replaceOptions).execute();
-        Catalog replaceResult = replaceResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(replaceResponse);
-        assertEquals(replaceResponse.getStatusCode(), 200);
-        assertEquals(replaceResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
-        assertEquals(replaceResult.label(), expectedLabelUpdate);
-        assertEquals(replaceResult.shortDescription(), expectedShortDescUpdate);
-    }
-
-    @Test
-    public void testUpdateOfferingFailure() {
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        try {
-            ReplaceOfferingOptions replaceOptions = new ReplaceOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).id(fakeName).offeringId(fakeName).rev(fakeName).build();
-            service.replaceOffering(replaceOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        try {
-            ReplaceOfferingOptions replaceOptions = new ReplaceOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).id(fakeName).offeringId(fakeName).rev(fakeName).build();
-            service.replaceOffering(replaceOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (ForbiddenException e) {
-            assertEquals(e.getStatusCode(), 403);
-        }
-    }
-
-    @Test
-    public void testGetConsumptionOfferings() {
-        Response<OfferingSearchResult> listResponse = service.getConsumptionOfferings().execute();
-        OfferingSearchResult result = listResponse.getResult();
-
-        assertNotNull(result);
-        assertEquals(listResponse.getStatusCode(), 200);
-        assertEquals(result.getOffset(), Long.valueOf(0));
-        assertNotEquals(result.getLimit(), Long.valueOf(0));
-        assertNotEquals(result.getTotalCount(), 0);
-        assertNotNull(result.getLast());
-        assertNull(result.getPrev());
-        assertNotNull(result.getNext());
-        assertNotEquals(result.getResources().size(), 0);
-    }
-
-    @Ignore
-    @Test
-    public void testImportOffering() {
-        final String expectedOfferingName = "jenkins-operator";
-        final String expectedOfferingLabel = "Jenkins Operator";
-        final String expectedOfferingTargetKind = "roks";
-        final String expectedOfferingVersion = "0.4.0";
-        final int expectedOfferingVersions = 1;
-        final int expectedOfferingKinds = 1;
-        final String expectedOfferingShortDesc = "Kubernetes native operator which fully manages Jenkins on Openshift.";
-        final String expectedOfferingURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
-        final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
-        Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(offeringResponse);
-        assertEquals(offeringResponse.getStatusCode(), 201);
-        assertEquals(offeringResult.name(), expectedOfferingName);
-        assertEquals(offeringResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
-        assertEquals(offeringResult.label(), expectedOfferingLabel);
-        assertEquals(offeringResult.shortDescription(), expectedOfferingShortDesc);
-        assertEquals(offeringResult.catalogName(), expectedLabel);
-        assertEquals(offeringResult.catalogId(), catalogResult.id());
-        assertEquals(offeringResult.kinds().size(), expectedOfferingKinds);
-        assertEquals(offeringResult.kinds().get(0).targetKind(), expectedOfferingTargetKind);
-        assertEquals(offeringResult.kinds().get(0).versions().size(), expectedOfferingVersions);
-        assertEquals(offeringResult.kinds().get(0).versions().get(0).version(), expectedOfferingVersion);
-        assertEquals(offeringResult.kinds().get(0).versions().get(0).tgzUrl(), expectedOfferingZipURL);
-    }
-
-    @Ignore
-    @Test
-    public void testImportOfferingVersion() {
-        final String expectedOfferingName = "jenkins-operator";
-        final String expectedOfferingLabel = "Jenkins Operator";
-        final String expectedOfferingTargetKind = "roks";
-        final int expectedOfferingKinds = 1;
-        final int expectedOfferingVersions = 2;
-        final String expectedOfferingVersion1 = "0.3.31";
-        final String expectedOfferingVersion2 = "0.4.0";
-        final String expectedOfferingShortDesc = "Kubernetes native operator which fully manages Jenkins on Openshift.";
-        final String expectedOfferingURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
-        final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml";
-        final String expectedOfferingZipURLUpdate = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
-        Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        ImportOfferingVersionOptions newOfferingOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).zipurl(expectedOfferingZipURLUpdate).xAuthToken(gitToken).build();
-        Response<Offering> newOfferingResponse = service.importOfferingVersion(newOfferingOptions).execute();
-        Offering newOfferingResult = newOfferingResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(newOfferingResponse);
-        assertEquals(newOfferingResponse.getStatusCode(), 201);
-        assertEquals(newOfferingResult.name(), expectedOfferingName);
-        assertEquals(newOfferingResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
-        assertEquals(newOfferingResult.label(), expectedOfferingLabel);
-        assertEquals(newOfferingResult.shortDescription(), expectedOfferingShortDesc);
-        assertEquals(newOfferingResult.catalogName(), expectedLabel);
-        assertEquals(newOfferingResult.catalogId(), catalogResult.id());
-        assertEquals(newOfferingResult.kinds().size(), expectedOfferingKinds);
-        assertEquals(newOfferingResult.kinds().get(0).targetKind(), expectedOfferingTargetKind);
-        assertEquals(newOfferingResult.kinds().get(0).versions().size(), expectedOfferingVersions);
-        assertEquals(newOfferingResult.kinds().get(0).versions().get(0).version(), expectedOfferingVersion1);
-        assertEquals(newOfferingResult.kinds().get(0).versions().get(0).tgzUrl(), expectedOfferingZipURL);
-        assertEquals(newOfferingResult.kinds().get(0).versions().get(1).version(), expectedOfferingVersion2);
-        assertEquals(newOfferingResult.kinds().get(0).versions().get(1).tgzUrl(), expectedOfferingZipURLUpdate);
-    }
-
-    @Test
-    public void testImportOfferinVersionFailure() {
-        final String expectedOfferingZipURLUpdate = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        try {
-            ImportOfferingVersionOptions offeringOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).zipurl(expectedOfferingZipURLUpdate).xAuthToken(gitToken).build();
-            service.importOfferingVersion(offeringOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        try {
-            ImportOfferingVersionOptions offeringOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).zipurl(expectedOfferingZipURLUpdate).xAuthToken(gitToken).build();
-            service.importOfferingVersion(offeringOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (ForbiddenException e) {
-            assertEquals(e.getStatusCode(), 403);
-        }
-    }
-
-    @Ignore
-    @Test
-    public void testReloadOfferingVersion() {
-        final String expectedOfferingName = "jenkins-operator";
-        final String expectedOfferingLabel = "Jenkins Operator";
-        final String expectedOfferingTargetKind = "roks";
-        final String expectedOfferingVersion = "0.4.0";
-        final int expectedOfferingKinds = 1;
-        final int expectedOfferingVersions = 1;
-        final String expectedOfferingShortDesc = "Kubernetes native operator which fully manages Jenkins on Openshift.";
-        final String expectedOfferingURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
-        final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
-        Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        ReloadOfferingOptions reloadOfferingOptions = new ReloadOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).zipurl(expectedOfferingZipURL).targetVersion(expectedOfferingVersion).xAuthToken(gitToken).build();
-        Response<Offering> reloadOfferingResponse = service.reloadOffering(reloadOfferingOptions).execute();
-        Offering reloadOfferingResult = reloadOfferingResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(reloadOfferingResponse);
-        assertEquals(reloadOfferingResponse.getStatusCode(), 200);
-        assertEquals(reloadOfferingResult.name(), expectedOfferingName);
-        assertEquals(reloadOfferingResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
-        assertEquals(reloadOfferingResult.label(), expectedOfferingLabel);
-        assertEquals(reloadOfferingResult.shortDescription(), expectedOfferingShortDesc);
-        assertEquals(reloadOfferingResult.catalogName(), expectedLabel);
-        assertEquals(reloadOfferingResult.catalogId(), catalogResult.id());
-        assertEquals(reloadOfferingResult.kinds().size(), expectedOfferingKinds);
-        assertEquals(reloadOfferingResult.kinds().get(0).targetKind(), expectedOfferingTargetKind);
-        assertEquals(reloadOfferingResult.kinds().get(0).versions().size(), expectedOfferingVersions);
-        assertEquals(reloadOfferingResult.kinds().get(0).versions().get(0).version(), expectedOfferingVersion);
-        assertEquals(reloadOfferingResult.kinds().get(0).versions().get(0).tgzUrl(), expectedOfferingZipURL);
-    }
-
-    @Test
-    public void testReloadOfferingVersionFailure() {
-        final String expectedOfferingVersion = "0.4.0";
-        final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        try {
-            ReloadOfferingOptions reloadOfferingOptions = new ReloadOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).zipurl(expectedOfferingZipURL).targetVersion(expectedOfferingVersion).build();
-            service.reloadOffering(reloadOfferingOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (NotFoundException e) {
-            assertEquals(e.getStatusCode(), 404);
-        }
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        try {
-            ReloadOfferingOptions reloadOfferingOptions = new ReloadOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(fakeName).zipurl(expectedOfferingZipURL).targetVersion(expectedOfferingVersion).build();
-            service.reloadOffering(reloadOfferingOptions).execute();
-            fail("Expected NotFoundException.");
-        } catch (ForbiddenException e) {
-            assertEquals(e.getStatusCode(), 403);
-        }
-    }
-
-    @Ignore
-    @Test
-    public void testGetVersion() {
-        final String expectedOfferingName = "jenkins-operator";
-        final String expectedOfferingLabel = "Jenkins Operator";
-        final String expectedOfferingTargetKind = "roks";
-        final String expectedOfferingVersion = "0.4.0";
-        final int expectedOfferingKinds = 1;
-        final int expectedOfferingVersions = 1;
-        final String expectedOfferingShortDesc = "Kubernetes native operator which fully manages Jenkins on Openshift.";
-        final String expectedOfferingURL = "https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s";
-        final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
-        Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        GetVersionOptions getOptions = new GetVersionOptions.Builder().versionLocId(offeringResult.kinds().get(0).versions().get(0).versionLocator()).build();
-        Response<Offering> getResponse = service.getVersion(getOptions).execute();
-        Offering getResult = getResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(getResponse);
-        assertEquals(getResponse.getStatusCode(), 200);
-        assertEquals(getResult.name(), expectedOfferingName);
-        assertEquals(getResult.url(), String.format(expectedOfferingURL, catalogResult.id(), offeringResult.id()));
-        assertEquals(getResult.label(), expectedOfferingLabel);
-        assertEquals(getResult.shortDescription(), expectedOfferingShortDesc);
-        assertEquals(getResult.catalogName(), expectedLabel);
-        assertEquals(getResult.catalogId(), catalogResult.id());
-        assertEquals(getResult.kinds().size(), expectedOfferingKinds);
-        assertEquals(getResult.kinds().get(0).targetKind(), expectedOfferingTargetKind);
-        assertEquals(getResult.kinds().get(0).versions().size(), expectedOfferingVersions);
-        assertEquals(getResult.kinds().get(0).versions().get(0).version(), expectedOfferingVersion);
-        assertEquals(getResult.kinds().get(0).versions().get(0).tgzUrl(), expectedOfferingZipURL);
-    }
-
-    @Test(expectedExceptions = {NotFoundException.class})
-    public void testGetVersionFailure() {
-        GetVersionOptions getOptions = new GetVersionOptions.Builder().versionLocId(fakeVersionLocator).build();
-        service.getVersion(getOptions).execute();
-    }
-
-    @Ignore
-    @Test
-    public void testDeleteVersion() {
-        final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
-        Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        DeleteVersionOptions deleteOption = new DeleteVersionOptions.Builder().versionLocId(offeringResult.kinds().get(0).versions().get(0).versionLocator()).build();
-        Response<Void> deleteResponse = service.deleteVersion(deleteOption).execute();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(deleteResponse);
-        assertEquals(deleteResponse.getStatusCode(), 200);
-    }
-
-    @Test(expectedExceptions = {NotFoundException.class})
-    public void testDeleteVersionFailure() {
-        DeleteVersionOptions deleteOption = new DeleteVersionOptions.Builder().versionLocId(fakeVersionLocator).build();
-        service.deleteVersion(deleteOption).execute();
-    }
-
-    @Ignore
-    @Test
-    public void testGetVersionAbout() {
-        final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
-        Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        GetVersionAboutOptions getOptions = new GetVersionAboutOptions.Builder().versionLocId(offeringResult.kinds().get(0).versions().get(0).versionLocator()).build();
-        Response<String> getResponse = service.getVersionAbout(getOptions).execute();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(getResponse);
-        assertEquals(getResponse.getStatusCode(), 200);
-        assertNotEquals(getResponse.getResult().length(), 0);
-    }
-
-    @Test(expectedExceptions = {NotFoundException.class})
-    public void testGetVersionAboutFailure() {
-        GetVersionAboutOptions getOptions = new GetVersionAboutOptions.Builder().versionLocId(fakeVersionLocator).build();
-        service.getVersionAbout(getOptions).execute();
-    }
-
-    @Ignore
-    @Test
-    public void testGetVersionUpdates() {
-        final int expectedOfferingUpdates = 1;
-        final String expectedOfferingVersion2 = "0.4.0";
-        final String expectedOfferingZipURL = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml";
-        final String expectedOfferingZipURLUpdate = "https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml";
-
-        CreateCatalogOptions catalogOptions = new CreateCatalogOptions.Builder().label(expectedLabel).shortDescription(expectedShortDesc).build();
-        Response<Catalog> catalogResponse = service.createCatalog(catalogOptions).execute();
-        Catalog catalogResult = catalogResponse.getResult();
-
-        ImportOfferingOptions offeringOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogResult.id()).zipurl(expectedOfferingZipURL).xAuthToken(gitToken).build();
-        Response<Offering> offeringResponse = service.importOffering(offeringOptions).execute();
-        Offering offeringResult = offeringResponse.getResult();
-
-        ImportOfferingVersionOptions newOfferingOptions = new ImportOfferingVersionOptions.Builder().catalogIdentifier(catalogResult.id()).offeringId(offeringResult.id()).zipurl(expectedOfferingZipURLUpdate).xAuthToken(gitToken).build();
-        Response<Offering> newOfferingResponse = service.importOfferingVersion(newOfferingOptions).execute();
-        Offering newOfferingResult = newOfferingResponse.getResult();
-
-
-        GetVersionUpdatesOptions getOptions = new GetVersionUpdatesOptions.Builder().versionLocId(offeringResult.kinds().get(0).versions().get(0).versionLocator()).build();
-        Response<List<VersionUpdateDescriptor>> getResponse = service.getVersionUpdates(getOptions).execute();
-        List<VersionUpdateDescriptor> getResult = getResponse.getResult();
-
-        DeleteCatalogOptions deleteOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogResult.id()).build();
-        service.deleteCatalog(deleteOptions).execute();
-
-        assertNotNull(getResponse);
-        assertEquals(getResponse.getStatusCode(), 200);
-        assertEquals(getResult.size(), expectedOfferingUpdates);
-        assertEquals(getResult.get(0).getVersionLocator(), newOfferingResult.kinds().get(0).versions().get(1).versionLocator());
-        assertEquals(getResult.get(0).getVersion(), expectedOfferingVersion2);
-        assertEquals(getResult.get(0).getPackageVersion(), expectedOfferingVersion2);
-        assertTrue(getResult.get(0).isCanUpdate());
-    }
-
-    @Test(expectedExceptions = {NotFoundException.class})
-    public void testGetVersionUpdatesFailure() {
-        GetVersionUpdatesOptions getOptions = new GetVersionUpdatesOptions.Builder().versionLocId(fakeVersionLocator).build();
-        service.getVersionUpdates(getOptions).execute();
-    }
-
-    @Test
-    public void testGetLicenseProviders() {
-        final int expectedResourceCount = 1;
-        final Long expectedTotalResults = 1L;
-        final Long expectedTotalPages = 1L;
-        final String expectedName = "IBM Passport Advantage";
-        final String expectedOfferingType = "content";
-        final String expectedCreateURL = "https://www.ibm.com/software/passportadvantage/aboutpassport.html";
-        final String expectedInfoURL = "https://www.ibm.com/software/passportadvantage/";
-        final String expectedURL = "/v1/licensing/license_providers/11cabc37-c4a7-410b-894d-8cb3586423f1";
-        final String expectedState = "active";
-
-
-        Response<LicenseProviders> response = service.getLicenseProviders().execute();
-        LicenseProviders result = response.getResult();
-
-        assertNotNull(result);
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(result.getResources().size(), expectedResourceCount);
-        assertEquals(result.getTotalResults(), expectedTotalResults);
-        assertEquals(result.getTotalPages(), expectedTotalPages);
-        assertEquals(result.getResources().get(0).getName(), expectedName);
-        assertEquals(result.getResources().get(0).getOfferingType(), expectedOfferingType);
-        assertEquals(result.getResources().get(0).getInfoUrl(), expectedInfoURL);
-        assertEquals(result.getResources().get(0).getCreateUrl(), expectedCreateURL);
-        assertEquals(result.getResources().get(0).getUrl(), expectedURL);
-        assertEquals(result.getResources().get(0).getState(), expectedState);
-    }
-
-    @Test
-    public void testListLicenseEntitlements() {
-        final int expectedResourceCount = 0;
-        final Long expectedTotalResults = 0L;
-        final Long expectedTotalPages = 1L;
-
-        ListLicenseEntitlementsOptions getOptions = new ListLicenseEntitlementsOptions.Builder().licenseProductId(fakeName).build();
-        Response<LicenseEntitlements> response = service.listLicenseEntitlements(getOptions).execute();
-        LicenseEntitlements result = response.getResult();
-
-        assertNotNull(result);
-        assertEquals(response.getStatusCode(), 200);
-        assertEquals(result.getResources().size(), expectedResourceCount);
-        assertEquals(result.getTotalResults(), expectedTotalResults);
-        assertEquals(result.getTotalPages(), expectedTotalPages);
-    }
-
-    @Test(expectedExceptions = {ForbiddenException.class})
-    public void testSearchLicenseVersionFailure() {
-        SearchLicenseVersionsOptions getOptions = new SearchLicenseVersionsOptions.Builder().q(fakeName).build();
-        service.searchLicenseVersions(getOptions).execute();
-    }
-
-    @Test(expectedExceptions = {ForbiddenException.class})
-    public void testSearchLicenseOfferingsFailure() {
-        SearchLicenseOfferingsOptions getOptions = new SearchLicenseOfferingsOptions.Builder().q(fakeName).build();
-        service.searchLicenseOfferings(getOptions).execute();
-    }
-}
+// /*
+//  * (C) Copyright IBM Corp. 2021.
+//  *
+//  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+//  * the License. You may obtain a copy of the License at
+//  *
+//  * http://www.apache.org/licenses/LICENSE-2.0
+//  *
+//  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+//  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+//  * specific language governing permissions and limitations under the License.
+//  */
+//
+// package com.ibm.cloud.platform_services.catalog_management.v1;
+//
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.AccessListBulkResponse;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Account;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishObjectOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFilters;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.AddObjectAccessListOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ApprovalResult;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.AuditLog;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Catalog;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogObject;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogSearchResult;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CategoryFilter;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ClusterInfo;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CommitVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Configuration;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CopyVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateCatalogOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateObjectAccessOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateObjectOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingInstanceOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteCatalogOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectAccessListOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectAccessOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingInstanceOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOperatorsOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployOperatorsOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployRequestBodySchematics;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Deployment;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.DeprecateVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Feature;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.FilterTerms;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Filters;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountAuditOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountFiltersOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAuditOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetClusterOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetConsumptionOfferingsOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetNamespacesOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAccessListOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAccessOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAuditOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingAboutOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingAuditOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingContainerImagesOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingInstanceOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingLicenseOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingUpdatesOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingWorkingCopyOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOverrideValuesOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetPreinstallOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetValidationStatusOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.IDFilter;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishObjectOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ImageManifest;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatus;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Kind;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.License;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ListCatalogsOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ListObjectsOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOfferingsOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOperatorsOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.NamespaceSearchResult;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccess;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccessListResult;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectListResult;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectSearchResult;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Offering;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstance;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingSearchResult;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.OperatorDeployResult;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Plan;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.PreinstallVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.PublicPublishObjectOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.PublicPublishVersionOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.PublishObject;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.PutOfferingInstanceOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Rating;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ReloadOfferingOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceCatalogOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceObjectOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingIconOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOperatorsOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.RepoInfo;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Resource;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Script;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchObjectsOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.SharedPublishObjectOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.State;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationAuthorization;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationCluster;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationHistory;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationResource;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateCatalogAccountOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateOfferingIbmOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.ValidateInstallOptions;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Validation;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.Version;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionEntitlement;
+// import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionUpdateDescriptor;
+// import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
+// import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
+// import com.ibm.cloud.sdk.core.http.Response;
+// import com.ibm.cloud.sdk.core.security.Authenticator;
+// import com.ibm.cloud.sdk.core.security.IamAuthenticator;
+// import com.ibm.cloud.sdk.core.security.IamToken;
+// import com.ibm.cloud.sdk.core.service.exception.BadRequestException;
+// import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
+// import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
+// import com.ibm.cloud.sdk.core.util.CredentialUtils;
+// import com.ibm.cloud.sdk.core.util.DateUtils;
+//
+// import java.util.*;
+//
+// import org.testng.ITestContext;
+// import org.testng.annotations.AfterClass;
+// import org.testng.annotations.BeforeClass;
+// import org.testng.annotations.Ignore;
+// import org.testng.annotations.Test;
+//
+// import static org.testng.Assert.*;
+//
+// /**
+//  * Integration test class for the CatalogManagement service.
+//  */
+// public class CatalogManagementIT extends SdkIntegrationTestBase {
+//
+//   public CatalogManagement service = null;
+//   public static Map<String, String> config = null;
+//   // final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
+//   // final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
+//
+//   /**
+//    * This method provides our config filename to the base class.
+//    */
+//
+//   public String getConfigFilename() {
+//     return "../../catalog_mgmt.env";
+//   }
+//
+//   private String accountId = null;
+//   private String clusterId = null;
+//
+//   private String refreshToken = null;
+//
+//   private String catalogId = null;
+//   private String offeringId = null;
+//   private String offeringInstance = null;
+//
+//   @BeforeClass
+//   public void constructService() {
+//     // Ask super if we should skip the tests.
+//     if (skipTests()) {
+//       return;
+//     }
+//
+//     service = CatalogManagement.newInstance(CatalogManagement.DEFAULT_SERVICE_NAME);
+//     assertNotNull(service);
+//     assertNotNull(service.getServiceUrl());
+//
+//     IamAuthenticator iamAuthenticator = (IamAuthenticator) service.getAuthenticator();
+//     IamToken iamToken = iamAuthenticator.requestToken();
+//     refreshToken = iamToken.getRefreshToken();
+//
+//     // Load up our test-specific config properties.
+//     config = CredentialUtils.getServiceProperties(CatalogManagement.DEFAULT_SERVICE_NAME);
+//     assertNotNull(config);
+//     assertFalse(config.isEmpty());
+//     assertEquals(service.getServiceUrl(), config.get("URL"));
+//
+//     accountId = config.get("ACCOUNT_ID");
+//     assertNotNull(accountId);
+//
+//     clusterId = config.get("CLUSTER_ID");
+//     assertNotNull(clusterId);
+//
+//     System.out.println("Setup complete.");
+//   }
+//
+//   @Test
+//   // @Ignore
+//   public void testGetCatalogAccount() throws Exception {
+//     try {
+//       GetCatalogAccountOptions getCatalogAccountOptions = new GetCatalogAccountOptions();
+//
+//       // Invoke operation
+//       Response<Account> response = service.getCatalogAccount(getCatalogAccountOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Account accountResult = response.getResult();
+//
+//       assertNotNull(accountResult);
+//       assertEquals(accountResult.id(), accountId);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testUpdateCatalogAccount() throws Exception {
+//     try {
+//       FilterTerms includedFilterTermsModel =
+//  new FilterTerms.Builder().filterTerms(new java.util.ArrayList<String>(java.util.Arrays.asList("included " +
+//            "filter" + " term - 1", "included " + "filter term - 2")))
+//           .build();
+//
+//       CategoryFilter includedCategoryFilterModel = new CategoryFilter.Builder().include(true)
+//           .filter(includedFilterTermsModel)
+//           .build();
+//
+//       FilterTerms excludedFilterTermsModel =
+//           new FilterTerms.Builder().filterTerms(new ArrayList<String>(Arrays.asList("excluded filter term - 1",
+//        "excluded filter term - 2")))
+//           .build();
+//
+//       CategoryFilter excludedCategoryFilterModel = new CategoryFilter.Builder().include(true)
+//           .filter(excludedFilterTermsModel)
+//           .build();
+//
+//       Filters filtersModel = new Filters.Builder().includeAll(true)
+//           .categoryFilters(new java.util.HashMap<String, CategoryFilter>() {
+//             {
+//               put("included-category-filter", includedCategoryFilterModel);
+//               put("excluded-category-filter", excludedCategoryFilterModel);
+//             }
+//           })
+//           .build();
+//
+//       UpdateCatalogAccountOptions updateCatalogAccountOptions = new UpdateCatalogAccountOptions.Builder().id(accountId)
+//           .hideIbmCloudCatalog(false)
+//           .accountFilters(filtersModel)
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.updateCatalogAccount(updateCatalogAccountOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testUpdateCatalogAccount"})
+//   @Ignore
+//   public void testGetUpdatedCatalogAccount() throws Exception {
+//     try {
+//       GetCatalogAccountOptions getCatalogAccountOptions = new GetCatalogAccountOptions();
+//
+//       // Invoke operation
+//       Response<Account> response = service.getCatalogAccount(getCatalogAccountOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Account accountResult = response.getResult();
+//
+//       assertNotNull(accountResult);
+//       assertEquals(accountResult.id(), accountId);
+//
+//       assertTrue(accountResult.accountFilters()
+//           .categoryFilters()
+//           .containsKey("included-category-filter"));
+//       assertTrue(accountResult.accountFilters()
+//           .categoryFilters()
+//           .containsKey("excluded-category-filter"));
+//
+//       accountResult.accountFilters()
+//           .categoryFilters()
+//           .get("included-category-filter")
+//           .filter()
+//           .filterTerms()
+//           .stream()
+//           .filter(p -> p.equals("included filter term - 1"))
+//           .findAny()
+//           .orElseThrow(() -> new RuntimeException(String.format("No filter with name: %s",
+//               "included filter term - 1")));
+//
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   // @Ignore
+//   public void testGetCatalogAccountFilters() throws Exception {
+//     try {
+//       GetCatalogAccountFiltersOptions getCatalogAccountFiltersOptions = new GetCatalogAccountFiltersOptions.Builder()
+//           // .catalog("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<AccumulatedFilters> response = service.getCatalogAccountFilters(getCatalogAccountFiltersOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       AccumulatedFilters accumulatedFiltersResult = response.getResult();
+//
+//       assertNotNull(accumulatedFiltersResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   //=== Catalog
+//
+//   @Test
+//   public void testCreateCatalog() throws Exception {
+//     try {
+//       Feature featureModel = new Feature.Builder().title("feature model")
+//           .description("feature model description")
+//           .build();
+//
+//       FilterTerms filterTermsModel =
+//           new FilterTerms.Builder().filterTerms(new java.util.ArrayList<String>(java.util.Arrays.asList("filter terms")))
+//           .build();
+//
+//       CategoryFilter categoryFilterModel = new CategoryFilter.Builder().include(true)
+//           .filter(filterTermsModel)
+//           .build();
+//
+//       IDFilter idFilterModel = new IDFilter.Builder().include(filterTermsModel)
+//           .exclude(filterTermsModel)
+//           .build();
+//
+//       Filters filtersModel = new Filters.Builder().includeAll(true)
+//           .categoryFilters(new java.util.HashMap<String, CategoryFilter>() {
+//             {
+//               put("foo", categoryFilterModel);
+//             }
+//           })
+//           .idFilters(idFilterModel)
+//           .build();
+//
+//       SyndicationCluster syndicationClusterModel = new SyndicationCluster.Builder().region("testString")
+//           .id("testString")
+//           .name("testString")
+//           .resourceGroupName("testString")
+//           .type("testString")
+//           .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .allNamespaces(true)
+//           .build();
+//
+//       SyndicationHistory syndicationHistoryModel =
+//           new SyndicationHistory.Builder().namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList(
+//            "testString")))
+//           .clusters(new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)))
+//           .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .build();
+//
+//       SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder().token(
+//           "testString")
+//           .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .build();
+//
+//       SyndicationResource syndicationResourceModel = new SyndicationResource.Builder().removeRelatedComponents(true)
+//           .clusters(new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)))
+//           .history(syndicationHistoryModel)
+//           .authorization(syndicationAuthorizationModel)
+//           .build();
+//
+//       ArrayList<String> catalogTags = new java.util.ArrayList<String>(java.util.Arrays.asList("java", "sdk", "tag-1",
+//           "tag-2"));
+//       ArrayList<Feature> catalogFeatures = new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel));
+//
+//       CreateCatalogOptions createCatalogOptions = new CreateCatalogOptions.Builder()
+//           // .id("testString")
+//           // .rev("testString")
+//           .label("catalog created by java sdk")
+//           .shortDescription("catalog created by java sdk description")
+//           // .catalogIconUrl("testString")
+//           .tags(catalogTags)
+//           .features(catalogFeatures)
+//           // .disabled(true)
+//           // .resourceGroupId("testString")
+//           .owningAccount(accountId)
+//           .catalogFilters(filtersModel)
+//           // .syndicationSettings(syndicationResourceModel)
+//           .kind("offering")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Catalog> response = service.createCatalog(createCatalogOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 201);
+//
+//       Catalog catalogResult = response.getResult();
+//
+//       assertNotNull(catalogResult);
+//       catalogId = catalogResult.id();
+//       System.out.println(String.format("catalog id: %s", catalogId));
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(expectedExceptions = BadRequestException.class)
+//   public void testCreateCatalogFailsWhenValidationFails() throws Exception {
+//     CreateCatalogOptions createCatalogOptions = new CreateCatalogOptions.Builder().build();
+//
+//     // Invoke operation
+//     Response<Catalog> response = service.createCatalog(createCatalogOptions)
+//         .execute();
+//     // Validate response
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog"})
+//   // @Ignore
+//   public void testListCatalogs() throws Exception {
+//     try {
+//       ListCatalogsOptions listCatalogsOptions = new ListCatalogsOptions();
+//
+//       // Invoke operation
+//       Response<CatalogSearchResult> response = service.listCatalogs(listCatalogsOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       CatalogSearchResult catalogSearchResultResult = response.getResult();
+//
+//       assertNotNull(catalogSearchResultResult);
+//       System.out.println(String.format("Result size: %d", response.getResult()
+//           .getTotalCount()));
+//       catalogSearchResultResult.getResources()
+//           .stream()
+//           .filter(p -> p.id().equals(catalogId))
+//           .findAny()
+//           .orElseThrow(() -> new RuntimeException(String.format("No catalog with id: %s", catalogId)));
+//
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = "testCreateCatalog")
+//   public void testReplaceCatalog() throws Exception {
+//     try {
+//       // Feature featureModel = new Feature.Builder()
+//       //     .title("testString")
+//       //     .description("testString")
+//       //     .build();
+//       //
+//       // FilterTerms filterTermsModel = new FilterTerms.Builder()
+//       //     .filterTerms(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .build();
+//       //
+//       // CategoryFilter categoryFilterModel = new CategoryFilter.Builder()
+//       //     .include(true)
+//       //     .filter(filterTermsModel)
+//       //     .build();
+//       //
+//       // IDFilter idFilterModel = new IDFilter.Builder()
+//       //     .include(filterTermsModel)
+//       //     .exclude(filterTermsModel)
+//       //     .build();
+//       //
+//       // Filters filtersModel = new Filters.Builder()
+//       //     .includeAll(true)
+//       //     .categoryFilters(new java.util.HashMap<String, CategoryFilter>() {
+//       //       {
+//       //         put("foo", categoryFilterModel);
+//       //       }
+//       //     })
+//       //     .idFilters(idFilterModel)
+//       //     .build();
+//       //
+//       // SyndicationCluster syndicationClusterModel = new SyndicationCluster.Builder()
+//       //     .region("testString")
+//       //     .id("testString")
+//       //     .name("testString")
+//       //     .resourceGroupName("testString")
+//       //     .type("testString")
+//       //     .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .allNamespaces(true)
+//       //     .build();
+//       //
+//       // SyndicationHistory syndicationHistoryModel = new SyndicationHistory.Builder()
+//       //     .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .clusters(new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)))
+//       //     .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .build();
+//       //
+//       // SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
+//       //     .token("testString")
+//       //     .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .build();
+//       //
+//       // SyndicationResource syndicationResourceModel = new SyndicationResource.Builder()
+//       //     .removeRelatedComponents(true)
+//       //     .clusters(new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)))
+//       //     .history(syndicationHistoryModel)
+//       //     .authorization(syndicationAuthorizationModel)
+//       //     .build();
+//
+//       ReplaceCatalogOptions replaceCatalogOptions = new ReplaceCatalogOptions.Builder().catalogIdentifier(catalogId)
+//           .id(catalogId)
+//           // .rev("testString")
+//           .label("catalog updated by java sdk")
+//           .shortDescription("catalog updated by java sdk")
+//           // .catalogIconUrl("testString")
+//           // .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           // .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+//           // .disabled(true)
+//           // .resourceGroupId("testString")
+//           .owningAccount(accountId)
+//           // .catalogFilters(filtersModel)
+//           // .syndicationSettings(syndicationResourceModel)
+//           // .kind("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Catalog> response = service.replaceCatalog(replaceCatalogOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Catalog catalogResult = response.getResult();
+//
+//       assertNotNull(catalogResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = "testCreateCatalog", expectedExceptions = NotFoundException.class)
+//   public void testReplaceCatalogFailsWhenThereIsNoSuchCatalog() throws Exception {
+//     ReplaceCatalogOptions replaceCatalogOptions = new ReplaceCatalogOptions.Builder().catalogIdentifier(catalogId +
+//         "fake")
+//         .id(catalogId + "fake")
+//         .build();
+//
+//     // Invoke operation
+//     Response<Catalog> response = service.replaceCatalog(replaceCatalogOptions)
+//         .execute();
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog"})
+//   // @Ignore
+//   public void testGetCatalog() throws Exception {
+//     try {
+//       // What is catalog identifier and why I get 403 when I created the catalog?
+//       GetCatalogOptions getCatalogOptions = new GetCatalogOptions.Builder().catalogIdentifier(catalogId)
+//           .build();
+//
+//       // Invoke operation
+//       Response<Catalog> response = service.getCatalog(getCatalogOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Catalog catalogResult = response.getResult();
+//
+//       assertNotNull(catalogResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog"}, expectedExceptions = NotFoundException.class)
+//   // @Ignore
+//   public void testGetCatalogFailsWhenNoSuchCatalog() throws Exception {
+//     GetCatalogOptions getCatalogOptions = new GetCatalogOptions.Builder().catalogIdentifier(catalogId + "extrastring")
+//         .build();
+//
+//     // Invoke operation
+//     Response<Catalog> response = service.getCatalog(getCatalogOptions)
+//         .execute();
+//   }
+//
+//   @Test(priority = 1000)
+//   // @Ignore
+//   public void testDeleteCatalog() throws Exception {
+//     try {
+//       DeleteCatalogOptions deleteCatalogOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogId)
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deleteCatalog(deleteCatalogOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog"})
+//   public void testDeleteCatalogFailsWhenThereIsNoSuchCatalog() throws Exception {
+//     try {
+//       DeleteCatalogOptions deleteCatalogOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogId +
+//           "fake")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deleteCatalog(deleteCatalogOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   // @Ignore
+//   public void testGetCatalogAccountAudit() throws Exception {
+//     try {
+//       GetCatalogAccountAuditOptions getCatalogAccountAuditOptions = new GetCatalogAccountAuditOptions();
+//
+//       // Invoke operation
+//       Response<AuditLog> response = service.getCatalogAccountAudit(getCatalogAccountAuditOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       AuditLog auditLogResult = response.getResult();
+//
+//       assertNotNull(auditLogResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog", "testReplaceCatalog"})
+//   // @Ignore
+//   public void testGetCatalogAudit() throws Exception {
+//     try {
+//       GetCatalogAuditOptions getCatalogAuditOptions = new GetCatalogAuditOptions.Builder().catalogIdentifier(catalogId)
+//           .build();
+//
+//       // Invoke operation
+//       Response<AuditLog> response = service.getCatalogAudit(getCatalogAuditOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       AuditLog auditLogResult = response.getResult();
+//
+//       assertNotNull(auditLogResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(expectedExceptions = NotFoundException.class)
+//   public void testGetCatalogAuditFailsWhenNoSuchCatalog() throws Exception {
+//     GetCatalogAuditOptions getCatalogAuditOptions =
+//      new GetCatalogAuditOptions.Builder().catalogIdentifier(catalogId + "fake")
+//         .build();
+//
+//     // Invoke operation
+//     Response<AuditLog> catalogAuditResponse = service.getCatalogAudit(getCatalogAuditOptions)
+//         .execute();
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog", "testReplaceCatalog"})
+//   // @Ignore
+//   public void testGetConsumptionOfferings() throws Exception {
+//     try {
+//       GetConsumptionOfferingsOptions getConsumptionOfferingsOptions =
+//           new GetConsumptionOfferingsOptions.Builder().digest(true)
+//           .catalog(catalogId)
+//           .select("all")
+//           .includeHidden(true)
+//           // .limit(Long.valueOf("1000"))
+//           // .offset(Long.valueOf("26"))
+//           .build();
+//
+//       // Invoke operation
+//       Response<OfferingSearchResult> response = service.getConsumptionOfferings(getConsumptionOfferingsOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       OfferingSearchResult offeringSearchResultResult = response.getResult();
+//
+//       assertNotNull(offeringSearchResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog"})
+//   @Ignore
+//   public void testCreateOffering() throws Exception {
+//     try {
+//       // Rating ratingModel = new Rating.Builder()
+//       //     .oneStarCount(Long.valueOf("26"))
+//       //     .twoStarCount(Long.valueOf("26"))
+//       //     .threeStarCount(Long.valueOf("26"))
+//       //     .fourStarCount(Long.valueOf("26"))
+//       //     .build();
+//       //
+//       // Feature featureModel = new Feature.Builder()
+//       //     .title("testString")
+//       //     .description("testString")
+//       //     .build();
+//       //
+//       // Configuration configurationModel = new Configuration.Builder()
+//       //     .key("testString")
+//       //     .type("testString")
+//       //     .defaultValue("testString")
+//       //     .valueConstraint("testString")
+//       //     .description("testString")
+//       //     .required(true)
+//       //     .options(new java.util.ArrayList<Object>(java.util.Arrays.asList("testString")))
+//       //     .hidden(true)
+//       //     .build();
+//       //
+//       // Validation validationModel = new Validation.Builder()
+//       //     .validated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .requested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .state("testString")
+//       //     .lastOperation("testString")
+//       //     .target(new java.util.HashMap<String, Object>() {
+//       //       {
+//       //         put("foo", "testString");
+//       //       }
+//       //     })
+//       //     .build();
+//       //
+//       // Resource resourceModel = new Resource.Builder()
+//       //     .type("mem")
+//       //     .value("testString")
+//       //     .build();
+//       //
+//       // Script scriptModel = new Script.Builder()
+//       //     .instructions("testString")
+//       //     .script("testString")
+//       //     .scriptPermission("testString")
+//       //     .deleteScript("testString")
+//       //     .scope("testString")
+//       //     .build();
+//       //
+//       // VersionEntitlement versionEntitlementModel = new VersionEntitlement.Builder()
+//       //     .providerName("testString")
+//       //     .providerId("testString")
+//       //     .productId("testString")
+//       //     .partNumbers(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .imageRepoName("testString")
+//       //     .build();
+//       //
+//       // License licenseModel = new License.Builder()
+//       //     .id("testString")
+//       //     .name("testString")
+//       //     .type("testString")
+//       //     .url("testString")
+//       //     .description("testString")
+//       //     .build();
+//       //
+//       // State stateModel = new State.Builder()
+//       //     .current("testString")
+//       //     .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .pending("testString")
+//       //     .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .previous("testString")
+//       //     .build();
+//       //
+//       // Version versionModel = new Version.Builder()
+//       //     .id("testString")
+//       //     .rev("testString")
+//       //     .crn("testString")
+//       //     .version("testString")
+//       //     .sha("testString")
+//       //     .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .offeringId("testString")
+//       //     .catalogId("testString")
+//       //     .kindId("testString")
+//       //     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .repoUrl("testString")
+//       //     .sourceUrl("testString")
+//       //     .tgzUrl("testString")
+//       //     .configuration(new java.util.ArrayList<Configuration>(java.util.Arrays.asList(configurationModel)))
+//       //     .metadata(new java.util.HashMap<String, Object>() {
+//       //       {
+//       //         put("foo", "testString");
+//       //       }
+//       //     })
+//       //     .validation(validationModel)
+//       //     .requiredResources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+//       //     .singleInstance(true)
+//       //     .install(scriptModel)
+//       //     .preInstall(new java.util.ArrayList<Script>(java.util.Arrays.asList(scriptModel)))
+//       //     .entitlement(versionEntitlementModel)
+//       //     .licenses(new java.util.ArrayList<License>(java.util.Arrays.asList(licenseModel)))
+//       //     .imageManifestUrl("testString")
+//       //     .deprecated(true)
+//       //     .packageVersion("testString")
+//       //     .state(stateModel)
+//       //     .versionLocator("testString")
+//       //     .consoleUrl("testString")
+//       //     .longDescription("testString")
+//       //     .whitelistedAccounts(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .build();
+//       //
+//       // Deployment deploymentModel = new Deployment.Builder()
+//       //     .id("testString")
+//       //     .label("testString")
+//       //     .name("testString")
+//       //     .shortDescription("testString")
+//       //     .longDescription("testString")
+//       //     .metadata(new java.util.HashMap<String, Object>() {
+//       //       {
+//       //         put("foo", "testString");
+//       //       }
+//       //     })
+//       //     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .build();
+//       //
+//       // Plan planModel = new Plan.Builder()
+//       //     .id("testString")
+//       //     .label("testString")
+//       //     .name("testString")
+//       //     .shortDescription("testString")
+//       //     .longDescription("testString")
+//       //     .metadata(new java.util.HashMap<String, Object>() {
+//       //       {
+//       //         put("foo", "testString");
+//       //       }
+//       //     })
+//       //     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+//       //     .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .deployments(new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)))
+//       //     .build();
+//       //
+//       Kind kindModel = new Kind.Builder().id("create-offering-java-sdk")
+//           .formatKind("operator")
+//           .targetKind("operator")
+//           // .metadata(new java.util.HashMap<String, Object>() {
+//           //   {
+//           //     put("foo", "testString");
+//           //   }
+//           // })
+//           // .installDescription("testString")
+//           // .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           // .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+//           // .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           // .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           // .versions(new java.util.ArrayList<Version>(java.util.Arrays.asList(versionModel)))
+//           // .plans(new java.util.ArrayList<Plan>(java.util.Arrays.asList(planModel)))
+//           .build();
+//       //
+//       // RepoInfo repoInfoModel = new RepoInfo.Builder()
+//       //     .token("testString")
+//       //     .type("testString")
+//       //     .build();
+//
+//       CreateOfferingOptions createOfferingOptions = new CreateOfferingOptions.Builder().catalogIdentifier(catalogId)
+//           // .id("testString")
+//           // .rev("testString")
+//           // .url("testString")
+//           // .crn("testString")
+//           // .label("testString")
+//           .name("offering-created-by-java-sdk")
+//           // .offeringIconUrl("testString")
+//           // .offeringDocsUrl("testString")
+//           // .offeringSupportUrl("testString")
+//           // .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           // .keywords(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           // .rating(ratingModel)
+//           // .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           // .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           // .shortDescription("testString")
+//           // .longDescription("testString")
+//           // .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+//           .kinds(new java.util.ArrayList<Kind>(java.util.Arrays.asList(kindModel)))
+//           // .permitRequestIbmPublicPublish(true)
+//           // .ibmPublishApproved(true)
+//           // .publicPublishApproved(true)
+//           // .publicOriginalCrn("testString")
+//           // .publishPublicCrn("testString")
+//           // .portalApprovalRecord("testString")
+//           // .portalUiUrl("testString")
+//           // .catalogId("testString")
+//           // .catalogName("testString")
+//           // .metadata(new java.util.HashMap<String, Object>() {
+//           //   {
+//           //     put("foo", "testString");
+//           //   }
+//           // })
+//           // .disclaimer("testString")
+//           // .hidden(true)
+//           // .provider("testString")
+//           // .repoInfo(repoInfoModel)
+//           .build();
+//
+//       // Invoke operation
+//       Response<Offering> response = service.createOffering(createOfferingOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 201);
+//
+//       Offering offeringResult = response.getResult();
+//
+//       assertNotNull(offeringResult);
+//       offeringId = offeringResult.id();
+//       System.out.println("Offering: " + offeringId);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateOffering", "testCreateCatalog"})
+//   // @Ignore
+//   public void testGetOffering() throws Exception {
+//     try {
+//       GetOfferingOptions getOfferingOptions = new GetOfferingOptions.Builder().catalogIdentifier(catalogId)
+//           .offeringId(offeringId)
+//           .build();
+//
+//       // Invoke operation
+//       Response<Offering> response = service.getOffering(getOfferingOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Offering offeringResult = response.getResult();
+//
+//       assertNotNull(offeringResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog", "testCreateOffering", "testGetOffering"})
+//   public void testGetOfferingFailsWhenNoSuchOffering() throws Exception {
+//     GetOfferingOptions getOfferingOptions = new GetOfferingOptions.Builder().catalogIdentifier(catalogId)
+//         .offeringId("bogusid")
+//         .build();
+//
+//     // Invoke operation
+//     Response<Offering> response = service.getOffering(getOfferingOptions)
+//         .execute();
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateOffering", "testGetOffering"})
+//   @Ignore
+//   public void testReplaceOffering() throws Exception {
+//     try {
+//       // Rating ratingModel = new Rating.Builder()
+//       //     .oneStarCount(Long.valueOf("26"))
+//       //     .twoStarCount(Long.valueOf("26"))
+//       //     .threeStarCount(Long.valueOf("26"))
+//       //     .fourStarCount(Long.valueOf("26"))
+//       //     .build();
+//       //
+//       // Feature featureModel = new Feature.Builder()
+//       //     .title("testString")
+//       //     .description("testString")
+//       //     .build();
+//       //
+//       // Configuration configurationModel = new Configuration.Builder()
+//       //     .key("testString")
+//       //     .type("testString")
+//       //     .defaultValue("testString")
+//       //     .valueConstraint("testString")
+//       //     .description("testString")
+//       //     .required(true)
+//       //     .options(new java.util.ArrayList<Object>(java.util.Arrays.asList("testString")))
+//       //     .hidden(true)
+//       //     .build();
+//       //
+//       // Validation validationModel = new Validation.Builder()
+//       //     .validated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .requested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .state("testString")
+//       //     .lastOperation("testString")
+//       //     .target(new java.util.HashMap<String, Object>() {
+//       //       {
+//       //         put("foo", "testString");
+//       //       }
+//       //     })
+//       //     .build();
+//       //
+//       // Resource resourceModel = new Resource.Builder()
+//       //     .type("mem")
+//       //     .value("testString")
+//       //     .build();
+//       //
+//       // Script scriptModel = new Script.Builder()
+//       //     .instructions("testString")
+//       //     .script("testString")
+//       //     .scriptPermission("testString")
+//       //     .deleteScript("testString")
+//       //     .scope("testString")
+//       //     .build();
+//       //
+//       // VersionEntitlement versionEntitlementModel = new VersionEntitlement.Builder()
+//       //     .providerName("testString")
+//       //     .providerId("testString")
+//       //     .productId("testString")
+//       //     .partNumbers(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .imageRepoName("testString")
+//       //     .build();
+//       //
+//       // License licenseModel = new License.Builder()
+//       //     .id("testString")
+//       //     .name("testString")
+//       //     .type("testString")
+//       //     .url("testString")
+//       //     .description("testString")
+//       //     .build();
+//       //
+//       // State stateModel = new State.Builder()
+//       //     .current("testString")
+//       //     .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .pending("testString")
+//       //     .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .previous("testString")
+//       //     .build();
+//       //
+//       // Version versionModel = new Version.Builder()
+//       //     .id("testString")
+//       //     .rev("testString")
+//       //     .crn("testString")
+//       //     .version("testString")
+//       //     .sha("testString")
+//       //     .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .offeringId("testString")
+//       //     .catalogId("testString")
+//       //     .kindId("testString")
+//       //     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .repoUrl("testString")
+//       //     .sourceUrl("testString")
+//       //     .tgzUrl("testString")
+//       //     .configuration(new java.util.ArrayList<Configuration>(java.util.Arrays.asList(configurationModel)))
+//       //     .metadata(new java.util.HashMap<String, Object>() {
+//       //       {
+//       //         put("foo", "testString");
+//       //       }
+//       //     })
+//       //     .validation(validationModel)
+//       //     .requiredResources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+//       //     .singleInstance(true)
+//       //     .install(scriptModel)
+//       //     .preInstall(new java.util.ArrayList<Script>(java.util.Arrays.asList(scriptModel)))
+//       //     .entitlement(versionEntitlementModel)
+//       //     .licenses(new java.util.ArrayList<License>(java.util.Arrays.asList(licenseModel)))
+//       //     .imageManifestUrl("testString")
+//       //     .deprecated(true)
+//       //     .packageVersion("testString")
+//       //     .state(stateModel)
+//       //     .versionLocator("testString")
+//       //     .consoleUrl("testString")
+//       //     .longDescription("testString")
+//       //     .whitelistedAccounts(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .build();
+//       //
+//       // Deployment deploymentModel = new Deployment.Builder()
+//       //     .id("testString")
+//       //     .label("testString")
+//       //     .name("testString")
+//       //     .shortDescription("testString")
+//       //     .longDescription("testString")
+//       //     .metadata(new java.util.HashMap<String, Object>() {
+//       //       {
+//       //         put("foo", "testString");
+//       //       }
+//       //     })
+//       //     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .build();
+//       //
+//       // Plan planModel = new Plan.Builder()
+//       //     .id("testString")
+//       //     .label("testString")
+//       //     .name("testString")
+//       //     .shortDescription("testString")
+//       //     .longDescription("testString")
+//       //     .metadata(new java.util.HashMap<String, Object>() {
+//       //       {
+//       //         put("foo", "testString");
+//       //       }
+//       //     })
+//       //     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+//       //     .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .deployments(new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)))
+//       //     .build();
+//       //
+//       // Kind kindModel = new Kind.Builder()
+//       //     .id("testString")
+//       //     .formatKind("testString")
+//       //     .targetKind("testString")
+//       //     .metadata(new java.util.HashMap<String, Object>() {
+//       //       {
+//       //         put("foo", "testString");
+//       //       }
+//       //     })
+//       //     .installDescription("testString")
+//       //     .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//       //     .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+//       //     .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//       //     .versions(new java.util.ArrayList<Version>(java.util.Arrays.asList(versionModel)))
+//       //     .plans(new java.util.ArrayList<Plan>(java.util.Arrays.asList(planModel)))
+//       //     .build();
+//       //
+//       // RepoInfo repoInfoModel = new RepoInfo.Builder()
+//       //     .token("testString")
+//       //     .type("testString")
+//       //     .build();
+//
+//       ReplaceOfferingOptions replaceOfferingOptions = new ReplaceOfferingOptions.Builder().catalogIdentifier(catalogId)
+//           .offeringId(offeringId)
+//           .id(offeringId)
+//           // .rev("")
+//           // .url("testString")
+//           // .crn("testString")
+//           // .label("testString")
+//           .name("updated-offering")
+//           // .offeringIconUrl("testString")
+//           // .offeringDocsUrl("testString")
+//           // .offeringSupportUrl("testString")
+//           // .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           // .keywords(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           // .rating(ratingModel)
+//           // .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           // .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .shortDescription("updated short description")
+//           .longDescription("updated long description")
+//           // .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+//           // .kinds(new java.util.ArrayList<Kind>(java.util.Arrays.asList(kindModel)))
+//           // .permitRequestIbmPublicPublish(true)
+//           // .ibmPublishApproved(true)
+//           // .publicPublishApproved(true)
+//           // .publicOriginalCrn("testString")
+//           // .publishPublicCrn("testString")
+//           // .portalApprovalRecord("testString")
+//           // .portalUiUrl("testString")
+//           // .catalogId("testString")
+//           // .catalogName("testString")
+//           // .metadata(new java.util.HashMap<String, Object>() {
+//           //   {
+//           //     put("foo", "testString");
+//           //   }
+//           // })
+//           // .disclaimer("testString")
+//           // .hidden(true)
+//           // .provider("testString")
+//           // .repoInfo(repoInfoModel)
+//           .build();
+//
+//       // Invoke operation
+//       Response<Offering> response = service.replaceOffering(replaceOfferingOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Offering offeringResult = response.getResult();
+//
+//       assertNotNull(offeringResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateOffering", "testGetOffering"}, expectedExceptions = NotFoundException.class)
+//   // @Ignore
+//   public void testReplaceOfferingFailsWhenNoSuchOfferings() throws Exception {
+//     ReplaceOfferingOptions replaceOfferingOptions = new ReplaceOfferingOptions.Builder().catalogIdentifier("bogus" +
+//         "-catalog-id")
+//         .offeringId("bogus-offering-id")
+//         .id("bogus-offering-id")
+//         .build();
+//
+//     // Invoke operation
+//     Response<Offering> response = service.replaceOffering(replaceOfferingOptions)
+//         .execute();
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateOffering", "testGetOffering"})
+//   @Ignore
+//   public void testListOfferings() throws Exception {
+//     try {
+//       ListOfferingsOptions listOfferingsOptions = new ListOfferingsOptions.Builder().catalogIdentifier(catalogId)
+//           // .digest(true)
+//           // .limit(Long.valueOf("1000"))
+//           // .offset(Long.valueOf("26"))
+//           // .name("testString")
+//           // .sort("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<OfferingSearchResult> response = service.listOfferings(listOfferingsOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       OfferingSearchResult offeringSearchResultResult = response.getResult();
+//
+//       assertNotNull(offeringSearchResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateOffering", "testGetOffering", "testListOfferings"})
+//   // @Ignore
+//   public void testDeleteOffering() throws Exception {
+//     try {
+//       DeleteOfferingOptions deleteOfferingOptions = new DeleteOfferingOptions.Builder().catalogIdentifier(catalogId)
+//           .offeringId(offeringId)
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deleteOffering(deleteOfferingOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   // @Ignore
+//   public void testDeleteOfferingFailsWhenNoSuchOfferings() throws Exception {
+//     try {
+//       DeleteOfferingOptions deleteOfferingOptions = new DeleteOfferingOptions.Builder().catalogIdentifier(catalogId)
+//           .offeringId("bogus-offeringid")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deleteOffering(deleteOfferingOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testImportOfferingVersion() throws Exception {
+//     try {
+//       ImportOfferingVersionOptions importOfferingVersionOptions =
+//        new ImportOfferingVersionOptions.Builder().catalogIdentifier("testString")
+//           .offeringId("testString")
+//           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+//           .zipurl("testString")
+//           .targetVersion("testString")
+//           .includeConfig(true)
+//           .isVsi(true)
+//           .repoType("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Offering> response = service.importOfferingVersion(importOfferingVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 201);
+//
+//       Offering offeringResult = response.getResult();
+//
+//       assertNotNull(offeringResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testImportOffering() throws Exception {
+//     try {
+//       ImportOfferingOptions importOfferingOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogId)
+//           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("java", "sdk", "example-tag-1",
+//               "example-tag" + "-2")))
+//           .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("roks")))
+//           // .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+//           .zipurl("https://github.com/rhm-samples/node-red-operator/blob/nodered-1.2.8/node-red-operator/bundle/0.0" + ".2/manifests/node-red-operator.v0.0.2.clusterserviceversion.yaml")
+//           // .offeringId("java-sdk-created-id-1")
+//           .targetVersion("1")
+//           .includeConfig(true)
+//           .isVsi(true)
+//           .repoType("helm")
+//           // .xAuthToken("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Offering> response = service.importOffering(importOfferingOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 201);
+//
+//       Offering offeringResult = response.getResult();
+//
+//       assertNotNull(offeringResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(expectedExceptions = NotFoundException.class)
+//   // @Ignore
+//   public void testImportOfferingFailsWhenNoSuchOffering() throws Exception {
+//     ImportOfferingOptions importOfferingOptions = new ImportOfferingOptions.Builder().catalogIdentifier(catalogId)
+//         // .tags(new java.util.ArrayList<String>(java.util.Arrays.asList(
+//         //     "java",
+//         //     "sdk",
+//         //     "example-tag-1",
+//         //     "example-tag-2")))
+//         // .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList(
+//         //     "roks")))
+//         // // .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+//         .zipurl("https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins" + "-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml")
+//         // .offeringId("java-sdk-created-id-1")
+//         // .targetVersion("1")
+//         // .includeConfig(true)
+//         // .isVsi(true)
+//         // .repoType("helm")
+//         // .xAuthToken("testString")
+//         .build();
+//
+//     // Invoke operation
+//     Response<Offering> response = service.importOffering(importOfferingOptions)
+//         .execute();
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testReloadOffering() throws Exception {
+//     try {
+//       ReloadOfferingOptions reloadOfferingOptions = new ReloadOfferingOptions.Builder().catalogIdentifier("testString")
+//           .offeringId("testString")
+//           .targetVersion("testString")
+//           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+//           .zipurl("testString")
+//           .repoType("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Offering> response = service.reloadOffering(reloadOfferingOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 201);
+//
+//       Offering offeringResult = response.getResult();
+//
+//       assertNotNull(offeringResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = "testCreateCatalog", expectedExceptions = NotFoundException.class)
+//   public void testReloadOfferingFailsWhenNoSuchOffering() throws Exception {
+//     ReloadOfferingOptions reloadOfferingOptions = new ReloadOfferingOptions.Builder().catalogIdentifier(catalogId)
+//         .offeringId("fakeofferingid")
+//         .targetVersion("targetversion")
+//         // .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//         // .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//         // .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+//         .zipurl("testString")
+//         // .repoType("testString")
+//         .build();
+//
+//     // Invoke operation
+//     Response<Offering> response = service.reloadOffering(reloadOfferingOptions)
+//         .execute();
+//     // Validate response
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog"})
+//   // @Ignore
+//   public void testGetOfferingAuditReturns200WhenNoSuchOfferings() throws Exception {
+//     try {
+//       GetOfferingAuditOptions getOfferingAuditOptions =
+//           new GetOfferingAuditOptions.Builder().catalogIdentifier(catalogId)
+//           .offeringId("random offering name")
+//           .build();
+//
+//       // Invoke operation
+//       Response<AuditLog> response = service.getOfferingAudit(getOfferingAuditOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       AuditLog auditLogResult = response.getResult();
+//
+//       assertNotNull(auditLogResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog"})
+//   // @Ignore
+//   public void testGetOfferingAudit() throws Exception {
+//     try {
+//       GetOfferingAuditOptions getOfferingAuditOptions =
+//           new GetOfferingAuditOptions.Builder().catalogIdentifier(catalogId)
+//           .offeringId("random offering name")
+//           .build();
+//
+//       // Invoke operation
+//       Response<AuditLog> response = service.getOfferingAudit(getOfferingAuditOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       AuditLog auditLogResult = response.getResult();
+//
+//       assertNotNull(auditLogResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testReplaceOfferingIcon() throws Exception {
+//     try {
+//       ReplaceOfferingIconOptions replaceOfferingIconOptions =
+//        new ReplaceOfferingIconOptions.Builder().catalogIdentifier("testString")
+//           .offeringId("testString")
+//           .fileName("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Offering> response = service.replaceOfferingIcon(replaceOfferingIconOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Offering offeringResult = response.getResult();
+//
+//       assertNotNull(offeringResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testUpdateOfferingIbm() throws Exception {
+//     try {
+//       UpdateOfferingIbmOptions updateOfferingIbmOptions = new UpdateOfferingIbmOptions.Builder().catalogIdentifier(
+//           "testString")
+//           .offeringId("testString")
+//           .approvalType("allow_request")
+//           .approved("true")
+//           .build();
+//
+//       // Invoke operation
+//       Response<ApprovalResult> response = service.updateOfferingIbm(updateOfferingIbmOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       ApprovalResult approvalResultResult = response.getResult();
+//
+//       assertNotNull(approvalResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetOfferingUpdates() throws Exception {
+//     try {
+//       GetOfferingUpdatesOptions getOfferingUpdatesOptions =
+//           new GetOfferingUpdatesOptions.Builder().catalogIdentifier("testString")
+//           .offeringId("testString")
+//           .kind("testString")
+//           .version("testString")
+//           .clusterId("testString")
+//           .region("testString")
+//           .resourceGroupId("testString")
+//           .namespace("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<List<VersionUpdateDescriptor>> response = service.getOfferingUpdates(getOfferingUpdatesOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       List<VersionUpdateDescriptor> listVersionUpdateDescriptorResult = response.getResult();
+//
+//       assertNotNull(listVersionUpdateDescriptorResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetOfferingAbout() throws Exception {
+//     try {
+//       GetOfferingAboutOptions getOfferingAboutOptions = new GetOfferingAboutOptions.Builder().versionLocId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<String> response = service.getOfferingAbout(getOfferingAboutOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       String resultResult = response.getResult();
+//
+//       assertNotNull(resultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetOfferingLicense() throws Exception {
+//     try {
+//       GetOfferingLicenseOptions getOfferingLicenseOptions = new GetOfferingLicenseOptions.Builder().versionLocId(
+//           "testString")
+//           .licenseId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<String> response = service.getOfferingLicense(getOfferingLicenseOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       String resultResult = response.getResult();
+//
+//       assertNotNull(resultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetOfferingContainerImages() throws Exception {
+//     try {
+//       GetOfferingContainerImagesOptions getOfferingContainerImagesOptions =
+//           new GetOfferingContainerImagesOptions.Builder().versionLocId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<ImageManifest> response = service.getOfferingContainerImages(getOfferingContainerImagesOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       ImageManifest imageManifestResult = response.getResult();
+//
+//       assertNotNull(imageManifestResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testDeprecateVersion() throws Exception {
+//     try {
+//       DeprecateVersionOptions deprecateVersionOptions = new DeprecateVersionOptions.Builder().versionLocId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deprecateVersion(deprecateVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testAccountPublishVersion() throws Exception {
+//     try {
+//       AccountPublishVersionOptions accountPublishVersionOptions =
+//           new AccountPublishVersionOptions.Builder().versionLocId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.accountPublishVersion(accountPublishVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testIbmPublishVersion() throws Exception {
+//     try {
+//       IbmPublishVersionOptions ibmPublishVersionOptions = new IbmPublishVersionOptions.Builder().versionLocId(
+//           "testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.ibmPublishVersion(ibmPublishVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testPublicPublishVersion() throws Exception {
+//     try {
+//       PublicPublishVersionOptions publicPublishVersionOptions =
+//        new PublicPublishVersionOptions.Builder().versionLocId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.publicPublishVersion(publicPublishVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testCommitVersion() throws Exception {
+//     try {
+//       CommitVersionOptions commitVersionOptions = new CommitVersionOptions.Builder().versionLocId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.commitVersion(commitVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testCopyVersion() throws Exception {
+//     try {
+//       CopyVersionOptions copyVersionOptions = new CopyVersionOptions.Builder().versionLocId("testString")
+//           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.copyVersion(copyVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetOfferingWorkingCopy() throws Exception {
+//     try {
+//       GetOfferingWorkingCopyOptions getOfferingWorkingCopyOptions =
+//           new GetOfferingWorkingCopyOptions.Builder().versionLocId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Version> response = service.getOfferingWorkingCopy(getOfferingWorkingCopyOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Version versionResult = response.getResult();
+//
+//       assertNotNull(versionResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetVersion() throws Exception {
+//     try {
+//       GetVersionOptions getVersionOptions = new GetVersionOptions.Builder().versionLocId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Offering> response = service.getVersion(getVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Offering offeringResult = response.getResult();
+//
+//       assertNotNull(offeringResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   public void testGetCluster() throws Exception {
+//     try {
+//       GetClusterOptions getClusterOptions = new GetClusterOptions.Builder().clusterId(clusterId)
+//           .region("us-south")
+//           .xAuthRefreshToken(refreshToken)
+//           .build();
+//
+//       // Invoke operation
+//       Response<ClusterInfo> response = service.getCluster(getClusterOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       ClusterInfo clusterInfoResult = response.getResult();
+//
+//       assertNotNull(clusterInfoResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetNamespaces() throws Exception {
+//     try {
+//       GetNamespacesOptions getNamespacesOptions = new GetNamespacesOptions.Builder().clusterId(clusterId)
+//           .region("us-south")
+//           .xAuthRefreshToken(refreshToken)
+//           // .limit(Long.valueOf("1000"))
+//           // .offset(Long.valueOf("26"))
+//           .build();
+//
+//       // Invoke operation
+//       Response<NamespaceSearchResult> response = service.getNamespaces(getNamespacesOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       NamespaceSearchResult namespaceSearchResultResult = response.getResult();
+//
+//       assertNotNull(namespaceSearchResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testDeployOperators() throws Exception {
+//     try {
+//       DeployOperatorsOptions deployOperatorsOptions = new DeployOperatorsOptions.Builder().xAuthRefreshToken(
+//           "testString")
+//           .clusterId("testString")
+//           .region("testString")
+//           .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .allNamespaces(true)
+//           .versionLocatorId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<List<OperatorDeployResult>> response = service.deployOperators(deployOperatorsOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       List<OperatorDeployResult> listOperatorDeployResultResult = response.getResult();
+//
+//       assertNotNull(listOperatorDeployResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testListOperators() throws Exception {
+//     try {
+//       ListOperatorsOptions listOperatorsOptions = new ListOperatorsOptions.Builder().xAuthRefreshToken(refreshToken)
+//           .clusterId(clusterId)
+//           .region("us-south")
+//           .versionLocatorId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<List<OperatorDeployResult>> response = service.listOperators(listOperatorsOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       List<OperatorDeployResult> listOperatorDeployResultResult = response.getResult();
+//
+//       assertNotNull(listOperatorDeployResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testReplaceOperators() throws Exception {
+//     try {
+//       ReplaceOperatorsOptions replaceOperatorsOptions = new ReplaceOperatorsOptions.Builder().xAuthRefreshToken(
+//           "testString")
+//           .clusterId("testString")
+//           .region("testString")
+//           .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .allNamespaces(true)
+//           .versionLocatorId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<List<OperatorDeployResult>> response = service.replaceOperators(replaceOperatorsOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       List<OperatorDeployResult> listOperatorDeployResultResult = response.getResult();
+//
+//       assertNotNull(listOperatorDeployResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testInstallVersion() throws Exception {
+//     try {
+//       DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder().name(
+//           "testString")
+//           .description("testString")
+//           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .resourceGroupId("testString")
+//           .build();
+//
+//       InstallVersionOptions installVersionOptions = new InstallVersionOptions.Builder().versionLocId("testString")
+//           .xAuthRefreshToken("testString")
+//           .clusterId("testString")
+//           .region("testString")
+//           .namespace("testString")
+//           .overrideValues(new java.util.HashMap<String, Object>() {
+//             {
+//               put("foo", "testString");
+//             }
+//           })
+//           .entitlementApikey("testString")
+//           .schematics(deployRequestBodySchematicsModel)
+//           .script("testString")
+//           .scriptId("testString")
+//           .versionLocatorId("testString")
+//           .vcenterId("testString")
+//           .vcenterUser("testString")
+//           .vcenterPassword("testString")
+//           .vcenterLocation("testString")
+//           .vcenterDatastore("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.installVersion(installVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testPreinstallVersion() throws Exception {
+//     try {
+//       DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder().name(
+//           "testString")
+//           .description("testString")
+//           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .resourceGroupId("testString")
+//           .build();
+//
+//       PreinstallVersionOptions preinstallVersionOptions = new PreinstallVersionOptions.Builder().versionLocId(
+//           "testString")
+//           .xAuthRefreshToken("testString")
+//           .clusterId("testString")
+//           .region("testString")
+//           .namespace("testString")
+//           .overrideValues(new java.util.HashMap<String, Object>() {
+//             {
+//               put("foo", "testString");
+//             }
+//           })
+//           .entitlementApikey("testString")
+//           .schematics(deployRequestBodySchematicsModel)
+//           .script("testString")
+//           .scriptId("testString")
+//           .versionLocatorId("testString")
+//           .vcenterId("testString")
+//           .vcenterUser("testString")
+//           .vcenterPassword("testString")
+//           .vcenterLocation("testString")
+//           .vcenterDatastore("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.preinstallVersion(preinstallVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetPreinstall() throws Exception {
+//     try {
+//       GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder().versionLocId("testString")
+//           .xAuthRefreshToken("testString")
+//           .clusterId("testString")
+//           .region("testString")
+//           .namespace("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<InstallStatus> response = service.getPreinstall(getPreinstallOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       InstallStatus installStatusResult = response.getResult();
+//
+//       assertNotNull(installStatusResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testValidateInstall() throws Exception {
+//     try {
+//       DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder().name(
+//           "testString")
+//           .description("testString")
+//           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .resourceGroupId("testString")
+//           .build();
+//
+//       ValidateInstallOptions validateInstallOptions = new ValidateInstallOptions.Builder().versionLocId("testString")
+//           .xAuthRefreshToken("testString")
+//           .clusterId("testString")
+//           .region("testString")
+//           .namespace("testString")
+//           .overrideValues(new java.util.HashMap<String, Object>() {
+//             {
+//               put("foo", "testString");
+//             }
+//           })
+//           .entitlementApikey("testString")
+//           .schematics(deployRequestBodySchematicsModel)
+//           .script("testString")
+//           .scriptId("testString")
+//           .versionLocatorId("testString")
+//           .vcenterId("testString")
+//           .vcenterUser("testString")
+//           .vcenterPassword("testString")
+//           .vcenterLocation("testString")
+//           .vcenterDatastore("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.validateInstall(validateInstallOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetValidationStatus() throws Exception {
+//     try {
+//       GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder().versionLocId(
+//           "testString")
+//           .xAuthRefreshToken("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Validation> response = service.getValidationStatus(getValidationStatusOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Validation validationResult = response.getResult();
+//
+//       assertNotNull(validationResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetOverrideValues() throws Exception {
+//     try {
+//       GetOverrideValuesOptions getOverrideValuesOptions = new GetOverrideValuesOptions.Builder().versionLocId(
+//           "testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Map<String, Object>> response = service.getOverrideValues(getOverrideValuesOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       Map<String, Object> resultResult = response.getResult();
+//
+//       assertNotNull(resultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testSearchObjects() throws Exception {
+//     try {
+//       SearchObjectsOptions searchObjectsOptions = new SearchObjectsOptions.Builder().query("testString")
+//           .limit(Long.valueOf("1000"))
+//           .offset(Long.valueOf("26"))
+//           .collapse(true)
+//           .digest(true)
+//           .build();
+//
+//       // Invoke operation
+//       Response<ObjectSearchResult> response = service.searchObjects(searchObjectsOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       ObjectSearchResult objectSearchResultResult = response.getResult();
+//
+//       assertNotNull(objectSearchResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog", "testReplaceCatalog"})
+//   // @Ignore
+//   public void testListObjects() throws Exception {
+//     try {
+//       ListObjectsOptions listObjectsOptions = new ListObjectsOptions.Builder().catalogIdentifier(catalogId)
+//           // .limit(Long.valueOf("1000"))
+//           // .offset(Long.valueOf("26"))
+//           // .name("testString")
+//           // .sort("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<ObjectListResult> response = service.listObjects(listObjectsOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       ObjectListResult objectListResultResult = response.getResult();
+//
+//       assertNotNull(objectListResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testCreateObject() throws Exception {
+//     try {
+//       PublishObject publishObjectModel = new PublishObject.Builder().permitIbmPublicPublish(true)
+//           .ibmApproved(true)
+//           .publicApproved(true)
+//           .portalApprovalRecord("testString")
+//           .portalUrl("testString")
+//           .build();
+//
+//       State stateModel = new State.Builder().current("testString")
+//           .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .pending("testString")
+//           .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .previous("testString")
+//           .build();
+//
+//       CreateObjectOptions createObjectOptions = new CreateObjectOptions.Builder().catalogIdentifier("testString")
+//           .id("testString")
+//           .name("testString")
+//           .rev("testString")
+//           .crn("testString")
+//           .url("testString")
+//           .parentId("testString")
+//           .labelI18n("testString")
+//           .label("testString")
+//           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .shortDescription("testString")
+//           .shortDescriptionI18n("testString")
+//           .kind("testString")
+//           .publish(publishObjectModel)
+//           .state(stateModel)
+//           .catalogId("testString")
+//           .catalogName("testString")
+//           .data(new java.util.HashMap<String, Object>() {
+//             {
+//               put("foo", "testString");
+//             }
+//           })
+//           .build();
+//
+//       // Invoke operation
+//       Response<CatalogObject> response = service.createObject(createObjectOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 201);
+//
+//       CatalogObject catalogObjectResult = response.getResult();
+//
+//       assertNotNull(catalogObjectResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetObject() throws Exception {
+//     try {
+//       GetObjectOptions getObjectOptions = new GetObjectOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<CatalogObject> response = service.getObject(getObjectOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       CatalogObject catalogObjectResult = response.getResult();
+//
+//       assertNotNull(catalogObjectResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testReplaceObject() throws Exception {
+//     try {
+//       PublishObject publishObjectModel = new PublishObject.Builder().permitIbmPublicPublish(true)
+//           .ibmApproved(true)
+//           .publicApproved(true)
+//           .portalApprovalRecord("testString")
+//           .portalUrl("testString")
+//           .build();
+//
+//       State stateModel = new State.Builder().current("testString")
+//           .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .pending("testString")
+//           .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .previous("testString")
+//           .build();
+//
+//       ReplaceObjectOptions replaceObjectOptions = new ReplaceObjectOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .id("testString")
+//           .name("testString")
+//           .rev("testString")
+//           .crn("testString")
+//           .url("testString")
+//           .parentId("testString")
+//           .labelI18n("testString")
+//           .label("testString")
+//           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+//           .shortDescription("testString")
+//           .shortDescriptionI18n("testString")
+//           .kind("testString")
+//           .publish(publishObjectModel)
+//           .state(stateModel)
+//           .catalogId("testString")
+//           .catalogName("testString")
+//           .data(new java.util.HashMap<String, Object>() {
+//             {
+//               put("foo", "testString");
+//             }
+//           })
+//           .build();
+//
+//       // Invoke operation
+//       Response<CatalogObject> response = service.replaceObject(replaceObjectOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       CatalogObject catalogObjectResult = response.getResult();
+//
+//       assertNotNull(catalogObjectResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetObjectAudit() throws Exception {
+//     try {
+//       GetObjectAuditOptions getObjectAuditOptions = new GetObjectAuditOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<AuditLog> response = service.getObjectAudit(getObjectAuditOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       AuditLog auditLogResult = response.getResult();
+//
+//       assertNotNull(auditLogResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testAccountPublishObject() throws Exception {
+//     try {
+//       AccountPublishObjectOptions accountPublishObjectOptions =
+//  new AccountPublishObjectOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.accountPublishObject(accountPublishObjectOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testSharedPublishObject() throws Exception {
+//     try {
+//       SharedPublishObjectOptions sharedPublishObjectOptions =
+//           new SharedPublishObjectOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.sharedPublishObject(sharedPublishObjectOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testIbmPublishObject() throws Exception {
+//     try {
+//       IbmPublishObjectOptions ibmPublishObjectOptions = new IbmPublishObjectOptions.Builder().catalogIdentifier(
+//           "testString")
+//           .objectIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.ibmPublishObject(ibmPublishObjectOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testPublicPublishObject() throws Exception {
+//     try {
+//       PublicPublishObjectOptions publicPublishObjectOptions =
+//           new PublicPublishObjectOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.publicPublishObject(publicPublishObjectOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 202);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testCreateObjectAccess() throws Exception {
+//     try {
+//       CreateObjectAccessOptions createObjectAccessOptions =
+//  new CreateObjectAccessOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .accountIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.createObjectAccess(createObjectAccessOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 201);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetObjectAccess() throws Exception {
+//     try {
+//       GetObjectAccessOptions getObjectAccessOptions = new GetObjectAccessOptions.Builder().catalogIdentifier(
+//           "testString")
+//           .objectIdentifier("testString")
+//           .accountIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<ObjectAccess> response = service.getObjectAccess(getObjectAccessOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       ObjectAccess objectAccessResult = response.getResult();
+//
+//       assertNotNull(objectAccessResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetObjectAccessList() throws Exception {
+//     try {
+//       GetObjectAccessListOptions getObjectAccessListOptions =
+//        new GetObjectAccessListOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .limit(Long.valueOf("1000"))
+//           .offset(Long.valueOf("26"))
+//           .build();
+//
+//       // Invoke operation
+//       Response<ObjectAccessListResult> response = service.getObjectAccessList(getObjectAccessListOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       ObjectAccessListResult objectAccessListResultResult = response.getResult();
+//
+//       assertNotNull(objectAccessListResultResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testAddObjectAccessList() throws Exception {
+//     try {
+//       AddObjectAccessListOptions addObjectAccessListOptions =
+//        new AddObjectAccessListOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .build();
+//
+//       // Invoke operation
+//       Response<AccessListBulkResponse> response = service.addObjectAccessList(addObjectAccessListOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       AccessListBulkResponse accessListBulkResponseResult = response.getResult();
+//
+//       assertNotNull(accessListBulkResponseResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test(dependsOnMethods = {"testCreateCatalog", "testCreateOffering"})
+//   @Ignore
+//   public void testCreateOfferingInstance() throws Exception {
+//     try {
+//       CreateOfferingInstanceOptions createOfferingInstanceOptions =
+//           new CreateOfferingInstanceOptions.Builder().xAuthRefreshToken(refreshToken)
+//           .id("offering-instance-created-by-java-sdk")
+//           // .url("testString")
+//           // .crn("testString")
+//           .label("offering-instance-created-by-java-sdk-label")
+//           .catalogId(catalogId)
+//           .offeringId(offeringId)
+//           .kindFormat("operator")
+//           .version("0.0.3")
+//           .clusterId(clusterId)
+//           .clusterRegion("us-south")
+//           .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("java-sdk-test")))
+//           // .clusterAllNamespaces(true)
+//           .build();
+//
+//       // Invoke operation
+//       Response<OfferingInstance> response = service.createOfferingInstance(createOfferingInstanceOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 201);
+//
+//       OfferingInstance offeringInstanceResult = response.getResult();
+//
+//       assertNotNull(offeringInstanceResult);
+//       offeringInstance = offeringInstanceResult.id();
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testGetOfferingInstance() throws Exception {
+//     try {
+//       GetOfferingInstanceOptions getOfferingInstanceOptions =
+//        new GetOfferingInstanceOptions.Builder().instanceIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<OfferingInstance> response = service.getOfferingInstance(getOfferingInstanceOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       OfferingInstance offeringInstanceResult = response.getResult();
+//
+//       assertNotNull(offeringInstanceResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testPutOfferingInstance() throws Exception {
+//     try {
+//       PutOfferingInstanceOptions putOfferingInstanceOptions =
+//           new PutOfferingInstanceOptions.Builder().instanceIdentifier("testString")
+//           .xAuthRefreshToken("testString")
+//           .id("testString")
+//           .url("testString")
+//           .crn("testString")
+//           .label("testString")
+//           .catalogId("testString")
+//           .offeringId("testString")
+//           .kindFormat("testString")
+//           .version("testString")
+//           .clusterId("testString")
+//           .clusterRegion("testString")
+//           .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .clusterAllNamespaces(true)
+//           .build();
+//
+//       // Invoke operation
+//       Response<OfferingInstance> response = service.putOfferingInstance(putOfferingInstanceOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       OfferingInstance offeringInstanceResult = response.getResult();
+//
+//       assertNotNull(offeringInstanceResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testDeleteVersion() throws Exception {
+//     try {
+//       DeleteVersionOptions deleteVersionOptions = new DeleteVersionOptions.Builder().versionLocId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deleteVersion(deleteVersionOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testDeleteOperators() throws Exception {
+//     try {
+//       DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder().xAuthRefreshToken(
+//           "testString")
+//           .clusterId("testString")
+//           .region("testString")
+//           .versionLocatorId("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deleteOperators(deleteOperatorsOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testDeleteOfferingInstance() throws Exception {
+//     try {
+//       DeleteOfferingInstanceOptions deleteOfferingInstanceOptions =
+//        new DeleteOfferingInstanceOptions.Builder().instanceIdentifier("testString")
+//           .xAuthRefreshToken("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deleteOfferingInstance(deleteOfferingInstanceOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//           e.getDebuggingInfo()));
+//     }
+//   }
+//
+//
+//   @Test
+//   @Ignore
+//   public void testDeleteObjectAccessList() throws Exception {
+//     try {
+//       DeleteObjectAccessListOptions deleteObjectAccessListOptions =
+//           new DeleteObjectAccessListOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+//           .build();
+//
+//       // Invoke operation
+//       Response<AccessListBulkResponse> response = service.deleteObjectAccessList(deleteObjectAccessListOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//
+//       AccessListBulkResponse accessListBulkResponseResult = response.getResult();
+//
+//       assertNotNull(accessListBulkResponseResult);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testDeleteObjectAccess() throws Exception {
+//     try {
+//       DeleteObjectAccessOptions deleteObjectAccessOptions =
+//        new DeleteObjectAccessOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .accountIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deleteObjectAccess(deleteObjectAccessOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+//        e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @Test
+//   @Ignore
+//   public void testDeleteObject() throws Exception {
+//     try {
+//       DeleteObjectOptions deleteObjectOptions = new DeleteObjectOptions.Builder().catalogIdentifier("testString")
+//           .objectIdentifier("testString")
+//           .build();
+//
+//       // Invoke operation
+//       Response<Void> response = service.deleteObject(deleteObjectOptions)
+//           .execute();
+//       // Validate response
+//       assertNotNull(response);
+//       assertEquals(response.getStatusCode(), 200);
+//     } catch (ServiceResponseException e) {
+//       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+// e.getDebuggingInfo()));
+//     }
+//   }
+//
+//   @AfterClass
+//   public void tearDown() {
+//     // Add any clean up logic here
+//     System.out.println("Clean up complete.");
+//   }
+//
+// }

@@ -356,7 +356,7 @@ public class CatalogMgmtTempIT extends SdkIntegrationTestBase {
         // .publishPublicCrn("testString")
         // .portalApprovalRecord("testString")
         // .portalUiUrl("testString")
-        // .catalogId("testString")
+        .catalogId(catalogId)
         // .catalogName("testString")
         // .metadata(new java.util.HashMap<String, Object>() {
         //   {
@@ -375,9 +375,9 @@ public class CatalogMgmtTempIT extends SdkIntegrationTestBase {
     // Validate response
     assertNotNull(offeringResponse);
     assertEquals(offeringResponse.getStatusCode(), 201);
-  
+
     Offering offeringResult = offeringResponse.getResult();
-  
+
     assertNotNull(offeringResult);
     offeringId = offeringResult.id();
     System.out.println("Offering: " + offeringId);

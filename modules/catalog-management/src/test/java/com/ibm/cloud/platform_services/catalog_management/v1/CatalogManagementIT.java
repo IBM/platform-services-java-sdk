@@ -72,7 +72,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     assertNotNull(serviceNotAuthorizedShouldReturn403.getServiceUrl());
     
     IamAuthenticator notAuthorizedIamAuthenticator = (IamAuthenticator) serviceNotAuthorizedShouldReturn403
-    .getAuthenticator();
+        .getAuthenticator();
     IamToken iamTokenNotAuthorized = notAuthorizedIamAuthenticator.requestToken();
     notAuthorizedRefreshToken = iamTokenNotAuthorized.getRefreshToken();
     
@@ -2973,7 +2973,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Ignore
   public void testGetNamespaces() throws Exception {
     try {
-      GetNamespacesOptions getNamespacesOptions = new GetNamespacesOptions.Builder().clusterId(clusterId)
+      GetNamespacesOptions getNamespacesOptions = new GetNamespacesOptions.Builder()
+          .clusterId(clusterId)
           .region("us-south")
           .xAuthRefreshToken(authorizedRefreshToken)
           // .limit(Long.valueOf("1000"))
@@ -2997,9 +2998,9 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   
   @Test(expectedExceptions = NotFoundException.class)
   // @Ignore
-  public void testGetNamespacesFailsWhenNoSuchCluster() throws Exception {
+  public void testGetNamespacesReturns404WhenNoSuchCluster() throws Exception {
     GetNamespacesOptions getNamespacesOptions = new GetNamespacesOptions.Builder()
-        .clusterId("clusterId")
+        .clusterId("bogus-cluster-id")
         .region("us-south")
         .xAuthRefreshToken(authorizedRefreshToken)
         // .limit(Long.valueOf("1000"))
@@ -3010,14 +3011,29 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     service.getNamespaces(getNamespacesOptions).execute();
   }
   
-  @Test
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testGetNamespacesReturns403WhenUserIsNotAuthorized() throws Exception {
+    GetNamespacesOptions getNamespacesOptions = new GetNamespacesOptions.Builder()
+        .clusterId("bogus-cluster-id")
+        .region("us-south")
+        .xAuthRefreshToken(notAuthorizedRefreshToken)
+        // .limit(Long.valueOf("1000"))
+        // .offset(Long.valueOf("26"))
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.getNamespaces(getNamespacesOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testCreateCluster"})
   @Ignore
   public void testDeployOperators() throws Exception {
     try {
-      DeployOperatorsOptions deployOperatorsOptions = new DeployOperatorsOptions.Builder().xAuthRefreshToken(
-          "testString")
-          .clusterId("testString")
-          .region("testString")
+      DeployOperatorsOptions deployOperatorsOptions = new DeployOperatorsOptions.Builder()
+          .xAuthRefreshToken(authorizedRefreshToken)
+          .clusterId(clusterId)
+          .region("us-south")
           .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
           .allNamespaces(true)
           .versionLocatorId("testString")
@@ -3040,10 +3056,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   
   @Test(expectedExceptions = BadRequestException.class)
   // @Ignore
-  public void testDeployOperatorsFailsWhenNoSuchCluster() throws Exception {
+  public void testDeployOperatorsReturns400WhenNoSuchStuffNeededForDeploy() throws Exception {
     DeployOperatorsOptions deployOperatorsOptions = new DeployOperatorsOptions.Builder()
         .xAuthRefreshToken(authorizedRefreshToken)
-        .clusterId("testString")
+        .clusterId(clusterId)
         .region("testString")
         .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
         .allNamespaces(true)
@@ -3052,6 +3068,22 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     
     // Invoke operation
     service.deployOperators(deployOperatorsOptions).execute();
+  }
+  
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testDeployOperatorsReturns403WhenUserIsNotAuthorized() throws Exception {
+    DeployOperatorsOptions deployOperatorsOptions = new DeployOperatorsOptions.Builder()
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("testString")
+        // .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+        .allNamespaces(true)
+        .versionLocatorId("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.deployOperators(deployOperatorsOptions).execute();
   }
   
   @Test
@@ -3092,6 +3124,20 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     
     // Invoke operation
     service.listOperators(listOperatorsOptions).execute();
+  }
+  
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testListOperatorsReturns403WhenUSerIsNotAuthorized() throws Exception {
+    ListOperatorsOptions listOperatorsOptions = new ListOperatorsOptions.Builder()
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .versionLocatorId("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.listOperators(listOperatorsOptions).execute();
   }
   
   @Test
@@ -3136,6 +3182,22 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     
     // Invoke operation
     service.replaceOperators(replaceOperatorsOptions).execute();
+  }
+  
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testReplaceOperatorsReturns403WhenUserIsNotAuthorized() throws Exception {
+    ReplaceOperatorsOptions replaceOperatorsOptions = new ReplaceOperatorsOptions.Builder()
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        // .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+        .allNamespaces(true)
+        .versionLocatorId("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.replaceOperators(replaceOperatorsOptions).execute();
   }
   
   @Test
@@ -3220,6 +3282,43 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     service.installVersion(installVersionOptions).execute();
   }
   
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testInstallVersionReturns403WhenUserIsNotAuthorized() throws Exception {
+    DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder()
+        .name("testString")
+        .description("testString")
+        .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+        .resourceGroupId("testString")
+        .build();
+    
+    InstallVersionOptions installVersionOptions = new InstallVersionOptions.Builder()
+        .versionLocId("testString")
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .namespace("testString")
+        .overrideValues(new java.util.HashMap<String, Object>() {
+          {
+            put("foo", "testString");
+          }
+        })
+        .entitlementApikey("testString")
+        .schematics(deployRequestBodySchematicsModel)
+        .script("testString")
+        .scriptId("testString")
+        .versionLocatorId("testString")
+        .vcenterId("testString")
+        .vcenterUser("testString")
+        .vcenterPassword("testString")
+        .vcenterLocation("testString")
+        .vcenterDatastore("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.installVersion(installVersionOptions).execute();
+  }
+  
   @Test
   @Ignore
   public void testPreinstallVersion() throws Exception {
@@ -3302,15 +3401,53 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     service.preinstallVersion(preinstallVersionOptions).execute();
   }
   
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testPreinstallVersionReturns403WhenUserIsNotAuthorized() throws Exception {
+    DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder()
+        .name("testString")
+        .description("testString")
+        .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+        .resourceGroupId("testString")
+        .build();
+    
+    PreinstallVersionOptions preinstallVersionOptions = new PreinstallVersionOptions.Builder()
+        .versionLocId("testString")
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .namespace("testString")
+        .overrideValues(new java.util.HashMap<String, Object>() {
+          {
+            put("foo", "testString");
+          }
+        })
+        .entitlementApikey("testString")
+        .schematics(deployRequestBodySchematicsModel)
+        .script("testString")
+        .scriptId("testString")
+        .versionLocatorId("testString")
+        .vcenterId("testString")
+        .vcenterUser("testString")
+        .vcenterPassword("testString")
+        .vcenterLocation("testString")
+        .vcenterDatastore("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.preinstallVersion(preinstallVersionOptions).execute();
+  }
+  
   @Test
   @Ignore
   public void testGetPreinstall() throws Exception {
     try {
-      GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder().versionLocId("testString")
-          .xAuthRefreshToken("testString")
-          .clusterId("testString")
-          .region("testString")
-          .namespace("testString")
+      GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder()
+          .versionLocId("testString")
+          .xAuthRefreshToken(authorizedRefreshToken)
+          .clusterId(clusterId)
+          .region("us-south")
+          // .namespace("testString")
           .build();
       
       // Invoke operation
@@ -3343,21 +3480,51 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     service.getPreinstall(getPreinstallOptions).execute();
   }
   
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testGetPreinstallReturns403WhenUserIsNotAuthorized() throws Exception {
+    GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder()
+        .versionLocId("testString")
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .namespace("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.getPreinstall(getPreinstallOptions).execute();
+  }
+  
+  @Test(expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testGetPreinstallReturns404WhenNoSuchThingWhichIsNeededForExecutio() throws Exception {
+    GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder()
+        .versionLocId("testString")
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .namespace("testString")
+        .build();
+    
+    // Invoke operation
+    service.getPreinstall(getPreinstallOptions).execute();
+  }
+  
   @Test
   @Ignore
   public void testValidateInstall() throws Exception {
     try {
-      DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder().name(
-          "testString")
+      DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder()
+          .name("testString")
           .description("testString")
           .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
           .resourceGroupId("testString")
           .build();
       
       ValidateInstallOptions validateInstallOptions = new ValidateInstallOptions.Builder().versionLocId("testString")
-          .xAuthRefreshToken("testString")
-          .clusterId("testString")
-          .region("testString")
+          .xAuthRefreshToken(authorizedRefreshToken)
+          .clusterId(clusterId)
+          .region("us-south")
           .namespace("testString")
           .overrideValues(new java.util.HashMap<String, Object>() {
             {
@@ -3424,13 +3591,87 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     service.validateInstall(validateInstallOptions).execute();
   }
   
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testValidateInstallReturns403WhenUserIsNotAuthorized() throws Exception {
+    DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder()
+        .name("testString")
+        .description("testString")
+        .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+        .resourceGroupId("testString")
+        .build();
+    
+    ValidateInstallOptions validateInstallOptions = new ValidateInstallOptions.Builder()
+        .versionLocId("testString")
+        .xAuthRefreshToken(notAuthorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .namespace("testString")
+        .overrideValues(new java.util.HashMap<String, Object>() {
+          {
+            put("foo", "testString");
+          }
+        })
+        .entitlementApikey("testString")
+        .schematics(deployRequestBodySchematicsModel)
+        .script("testString")
+        .scriptId("testString")
+        .versionLocatorId("testString")
+        .vcenterId("testString")
+        .vcenterUser("testString")
+        .vcenterPassword("testString")
+        .vcenterLocation("testString")
+        .vcenterDatastore("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.validateInstall(validateInstallOptions).execute();
+  }
+  
+  @Test(expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testValidateInstallReturns404WhenNoSuchResource() throws Exception {
+    DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder()
+        .name("testString")
+        .description("testString")
+        .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+        .resourceGroupId("testString")
+        .build();
+    
+    ValidateInstallOptions validateInstallOptions = new ValidateInstallOptions.Builder()
+        .versionLocId("testString")
+        .xAuthRefreshToken(notAuthorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .namespace("testString")
+        .overrideValues(new java.util.HashMap<String, Object>() {
+          {
+            put("foo", "testString");
+          }
+        })
+        .entitlementApikey("testString")
+        .schematics(deployRequestBodySchematicsModel)
+        .script("testString")
+        .scriptId("testString")
+        .versionLocatorId("testString")
+        .vcenterId("testString")
+        .vcenterUser("testString")
+        .vcenterPassword("testString")
+        .vcenterLocation("testString")
+        .vcenterDatastore("testString")
+        .build();
+    
+    // Invoke operation
+    service.validateInstall(validateInstallOptions).execute();
+  }
+  
   @Test
   @Ignore
   public void testGetValidationStatus() throws Exception {
     try {
-      GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder().versionLocId(
-          "testString")
-          .xAuthRefreshToken("testString")
+      GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder()
+          .versionLocId("testString")
+          .xAuthRefreshToken(authorizedRefreshToken)
           .build();
       
       // Invoke operation
@@ -3451,6 +3692,30 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Test(expectedExceptions = BadRequestException.class)
   // @Ignore
   public void testGetValidationStatusReturns400WhenValidationFails() throws Exception {
+    GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder()
+        .versionLocId("testString")
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .build();
+    
+    // Invoke operation
+    service.getValidationStatus(getValidationStatusOptions).execute();
+  }
+  
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testGetValidationStatusReturns403WhenUserIsNotAuthorized() throws Exception {
+    GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder()
+        .versionLocId("testString")
+        .xAuthRefreshToken(notAuthorizedRefreshToken)
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.getValidationStatus(getValidationStatusOptions).execute();
+  }
+  
+  @Test(expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testGetValidationStatusReturns404WhenNoSuchResource() throws Exception {
     GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder()
         .versionLocId("testString")
         .xAuthRefreshToken(authorizedRefreshToken)
@@ -3486,6 +3751,28 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Test(expectedExceptions = BadRequestException.class)
   // @Ignore
   public void testGetOverrideValuesReturns400WhenValidationFails() throws Exception {
+    GetOverrideValuesOptions getOverrideValuesOptions = new GetOverrideValuesOptions.Builder()
+        .versionLocId("testString")
+        .build();
+    
+    // Invoke operation
+    service.getOverrideValues(getOverrideValuesOptions).execute();
+  }
+  
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testGetOverrideValuesReturns403WhenUserIsNotAuthorized() throws Exception {
+    GetOverrideValuesOptions getOverrideValuesOptions = new GetOverrideValuesOptions.Builder()
+        .versionLocId("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.getOverrideValues(getOverrideValuesOptions).execute();
+  }
+  
+  @Test(expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testGetOverrideValuesReturns404WhenNoSuchResource() throws Exception {
     GetOverrideValuesOptions getOverrideValuesOptions = new GetOverrideValuesOptions.Builder()
         .versionLocId("testString")
         .build();
@@ -4498,13 +4785,85 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     }
   }
   
+  @Test(dependsOnMethods = {"testCreateCatalog"},
+      expectedExceptions = BadRequestException.class)
+  // @Ignore
+  public void testCreateOfferingInstanceReturns400WhenValidationFails() throws Exception {
+    CreateOfferingInstanceOptions createOfferingInstanceOptions = new CreateOfferingInstanceOptions.Builder()
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .id("offering-instance-created-by-java-sdk")
+        // .url("testString")
+        // .crn("testString")
+        .label("offering-instance-created-by-java-sdk-label")
+        .catalogId(catalogId)
+        .offeringId(offeringId)
+        .kindFormat("operator")
+        .version("0.0.3")
+        .clusterId(clusterId)
+        .clusterRegion("us-south")
+        .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("java-sdk-test")))
+        // .clusterAllNamespaces(true)
+        .build();
+    
+    // Invoke operation
+    service.createOfferingInstance(createOfferingInstanceOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testCreateCatalog"},
+      expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testCreateOfferingInstanceReturns403WhenUserIsNotAuthorized() throws Exception {
+    CreateOfferingInstanceOptions createOfferingInstanceOptions = new CreateOfferingInstanceOptions.Builder()
+        .xAuthRefreshToken(notAuthorizedRefreshToken)
+        .id("offering-instance-created-by-java-sdk")
+        // .url("testString")
+        // .crn("testString")
+        .label("offering-instance-created-by-java-sdk-label")
+        .catalogId(catalogId)
+        .offeringId(offeringId)
+        .kindFormat("operator")
+        .version("0.0.3")
+        .clusterId(clusterId)
+        .clusterRegion("us-south")
+        .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("java-sdk-test")))
+        // .clusterAllNamespaces(true)
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.createOfferingInstance(createOfferingInstanceOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testCreateCatalog"},
+      expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testCreateOfferingInstanceReturns404WhenNoSuchResource() throws Exception {
+    CreateOfferingInstanceOptions createOfferingInstanceOptions = new CreateOfferingInstanceOptions.Builder()
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .id("offering-instance-created-by-java-sdk")
+        // .url("testString")
+        // .crn("testString")
+        .label("offering-instance-created-by-java-sdk-label")
+        .catalogId(catalogId)
+        .offeringId(offeringId)
+        .kindFormat("operator")
+        .version("0.0.3")
+        .clusterId(clusterId)
+        .clusterRegion("us-south")
+        .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("java-sdk-test")))
+        // .clusterAllNamespaces(true)
+        .build();
+    
+    // Invoke operation
+    service.createOfferingInstance(createOfferingInstanceOptions).execute();
+  }
+  
   @Test
   @Ignore
   public void testGetOfferingInstance() throws Exception {
     try {
-      GetOfferingInstanceOptions getOfferingInstanceOptions =
-          new GetOfferingInstanceOptions.Builder().instanceIdentifier("testString")
-              .build();
+      GetOfferingInstanceOptions getOfferingInstanceOptions = new GetOfferingInstanceOptions.Builder()
+          .instanceIdentifier("testString")
+          .build();
       
       // Invoke operation
       Response<OfferingInstance> response = service.getOfferingInstance(getOfferingInstanceOptions).execute();
@@ -4521,26 +4880,48 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     }
   }
   
-  @Test
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testGetOfferingInstanceReturns403WhenUserIsNotAuthorized() throws Exception {
+    GetOfferingInstanceOptions getOfferingInstanceOptions = new GetOfferingInstanceOptions.Builder()
+        .instanceIdentifier("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.getOfferingInstance(getOfferingInstanceOptions).execute();
+  }
+  
+  @Test(expectedExceptions = NotFoundException.class)
+  // @Ignore
+  public void testGetOfferingInstanceReturns404WhenSuchResource() throws Exception {
+    GetOfferingInstanceOptions getOfferingInstanceOptions = new GetOfferingInstanceOptions.Builder()
+        .instanceIdentifier("testString")
+        .build();
+    
+    // Invoke operation
+    service.getOfferingInstance(getOfferingInstanceOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testCreateCatalog"})
   @Ignore
   public void testPutOfferingInstance() throws Exception {
     try {
-      PutOfferingInstanceOptions putOfferingInstanceOptions =
-          new PutOfferingInstanceOptions.Builder().instanceIdentifier("testString")
-              .xAuthRefreshToken("testString")
-              .id("testString")
-              .url("testString")
-              .crn("testString")
-              .label("testString")
-              .catalogId("testString")
-              .offeringId("testString")
-              .kindFormat("testString")
-              .version("testString")
-              .clusterId("testString")
-              .clusterRegion("testString")
-              .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-              .clusterAllNamespaces(true)
-              .build();
+      PutOfferingInstanceOptions putOfferingInstanceOptions = new PutOfferingInstanceOptions.Builder()
+          .instanceIdentifier("testString")
+          .xAuthRefreshToken("testString")
+          .id("testString")
+          .url("testString")
+          .crn("testString")
+          .label("testString")
+          .catalogId("testString")
+          .offeringId("testString")
+          .kindFormat("testString")
+          .version("testString")
+          .clusterId("testString")
+          .clusterRegion("testString")
+          .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+          .clusterAllNamespaces(true)
+          .build();
       
       // Invoke operation
       Response<OfferingInstance> response = service.putOfferingInstance(putOfferingInstanceOptions).execute();
@@ -4555,6 +4936,81 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
     }
+  }
+  
+  @Test(dependsOnMethods = {"testCreateCatalog"},
+      expectedExceptions = BadRequestException.class)
+  // @Ignore
+  public void testPutOfferingInstanceReturns400WhenValidationFails() throws Exception {
+    PutOfferingInstanceOptions putOfferingInstanceOptions = new PutOfferingInstanceOptions.Builder()
+        .instanceIdentifier("testString")
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .id("testString")
+        .url("testString")
+        .crn("testString")
+        .label("testString")
+        .catalogId(catalogId)
+        .offeringId("testString")
+        .kindFormat("testString")
+        .version("testString")
+        .clusterId(clusterId)
+        .clusterRegion("us-south")
+        // .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+        .clusterAllNamespaces(true)
+        .build();
+    
+    // Invoke operation
+    service.putOfferingInstance(putOfferingInstanceOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testCreateCatalog"},
+      expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testPutOfferingInstanceReturns403WhenUserIsNotAuthorized() throws Exception {
+    PutOfferingInstanceOptions putOfferingInstanceOptions = new PutOfferingInstanceOptions.Builder()
+        .instanceIdentifier("testString")
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .id("testString")
+        .url("testString")
+        .crn("testString")
+        .label("testString")
+        .catalogId(catalogId)
+        .offeringId("testString")
+        .kindFormat("testString")
+        .version("testString")
+        .clusterId(clusterId)
+        .clusterRegion("us-south")
+        // .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+        .clusterAllNamespaces(true)
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.putOfferingInstance(putOfferingInstanceOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testCreateCatalog"},
+      expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testPutOfferingInstanceReturns404WhenNoSuchResource() throws Exception {
+    PutOfferingInstanceOptions putOfferingInstanceOptions = new PutOfferingInstanceOptions.Builder()
+        .instanceIdentifier("testString")
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .id("testString")
+        .url("testString")
+        .crn("testString")
+        .label("testString")
+        .catalogId(catalogId)
+        .offeringId("testString")
+        .kindFormat("testString")
+        .version("testString")
+        .clusterId(clusterId)
+        .clusterRegion("us-south")
+        // .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+        .clusterAllNamespaces(true)
+        .build();
+    
+    // Invoke operation
+    service.putOfferingInstance(putOfferingInstanceOptions).execute();
   }
   
   @Test
@@ -4613,10 +5069,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Ignore
   public void testDeleteOperators() throws Exception {
     try {
-      DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder().xAuthRefreshToken(
-          "testString")
-          .clusterId("testString")
-          .region("testString")
+      DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder()
+          .xAuthRefreshToken(authorizedRefreshToken)
+          .clusterId(clusterId)
+          .region("us-south")
           .versionLocatorId("testString")
           .build();
       
@@ -4629,6 +5085,48 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
     }
+  }
+  
+  @Test(expectedExceptions = BadRequestException.class)
+  // @Ignore
+  public void testDeleteOperatorsReturns400WhenValidationFails() throws Exception {
+    DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder()
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .versionLocatorId("testString")
+        .build();
+    
+    // Invoke operation
+    service.deleteOperators(deleteOperatorsOptions).execute();
+  }
+  
+  @Test(expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testDeleteOperatorsReturns404WhenNoSuchThingNeededForDeleteOperation() throws Exception {
+    DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder()
+        .xAuthRefreshToken(authorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .versionLocatorId("testString")
+        .build();
+    
+    // Invoke operation
+    service.deleteOperators(deleteOperatorsOptions).execute();
+  }
+  
+  @Test(expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testDeleteOperatorsReturns403WhenUserIsNotAuthorized() throws Exception {
+    DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder()
+        .xAuthRefreshToken(notAuthorizedRefreshToken)
+        .clusterId(clusterId)
+        .region("us-south")
+        .versionLocatorId("testString")
+        .build();
+    
+    // Invoke operation
+    serviceNotAuthorizedShouldReturn403.deleteOperators(deleteOperatorsOptions).execute();
   }
   
   @Test

@@ -15,12 +15,10 @@
  * limitations under the License.
  */
 
-'use strict';
-
-const CatalogManagementV1 = require('../../dist/catalog-management/v1');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
-const authHelper = require('../resources/auth-helper.js');
 const util = require('util');
+const CatalogManagementV1 = require('../../dist/catalog-management/v1');
+const authHelper = require('../resources/auth-helper.js');
 
 const timeout = 60000;
 const configFile = 'catalog_mgmt.env';
@@ -37,11 +35,13 @@ describe('CatalogManagementV1_integration', () => {
   const expectedLabel = `integration-test${timestamp}`;
   const expectedShortDesc = 'test';
   const expectedURL = 'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s';
-  const expectedOfferingsURL = 'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings';
+  const expectedOfferingsURL =
+    'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings';
   const fakeName = 'bogus';
   const fakeVersionLocator = 'bogus.bogus';
   const expectedOfferingName = 'test-offering';
-  const expectedOfferingURL = 'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s';
+  const expectedOfferingURL =
+    'https://cm.globalcatalog.test.cloud.ibm.com/api/v1-beta/catalogs/%s/offerings/%s';
 
   beforeAll(() => {
     service = CatalogManagementV1.newInstance();
@@ -53,14 +53,14 @@ describe('CatalogManagementV1_integration', () => {
     gitToken = config.gitToken;
   });
 
-  beforeEach(async done => {
+  beforeEach(async (done) => {
     const response = await service.listCatalogs();
     const { result } = response || {};
     const { resources } = result || {};
 
     try {
       for (let i = 0; i < resources.length; i++) {
-        if (resources[i].label == expectedLabel) {
+        if (resources[i].label === expectedLabel) {
           await service.deleteCatalog({ 'catalogIdentifier': resources[i].id });
         }
       }
@@ -71,14 +71,14 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  afterEach(async done => {
+  afterEach(async (done) => {
     const response = await service.listCatalogs();
     const { result } = response || {};
     const { resources } = result || {};
 
     try {
       for (let i = 0; i < resources.length; i++) {
-        if (resources[i].label == expectedLabel) {
+        if (resources[i].label === expectedLabel) {
           await service.deleteCatalog({ 'catalogIdentifier': resources[i].id });
         }
       }
@@ -89,7 +89,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Get catalog account', async done => {
+  test('Get catalog account', async (done) => {
     let response;
 
     try {
@@ -105,14 +105,14 @@ describe('CatalogManagementV1_integration', () => {
     expect(result).toBeDefined();
     expect(result.id).toEqual(expectedAccount);
     expect(result.account_filters.include_all).toEqual(true);
-    expect(result.account_filters.category_filters).toEqual(undefined);
-    expect(result.account_filters.id_filters.include).toEqual(undefined);
-    expect(result.account_filters.id_filters.exclude).toEqual(undefined);
+    expect(result.account_filters.category_filters).toBeUndefined();
+    expect(result.account_filters.id_filters.include).toBeUndefined();
+    expect(result.account_filters.id_filters.exclude).toBeUndefined();
 
     done();
   });
 
-  test('Get catalog account filters', async done => {
+  test('Get catalog account filters', async (done) => {
     let response;
 
     try {
@@ -127,14 +127,14 @@ describe('CatalogManagementV1_integration', () => {
     const { result } = response || {};
     expect(result).toBeDefined();
     expect(result.account_filters[0].include_all).toEqual(true);
-    expect(result.account_filters[0].category_filters).toEqual(undefined);
-    expect(result.account_filters[0].id_filters.include).toEqual(undefined);
-    expect(result.account_filters[0].id_filters.exclude).toEqual(undefined);
+    expect(result.account_filters[0].category_filters).toBeUndefined();
+    expect(result.account_filters[0].id_filters.include).toBeUndefined();
+    expect(result.account_filters[0].id_filters.exclude).toBeUndefined();
 
     done();
   });
 
-  test('List catalogs', async done => {
+  test('List catalogs', async (done) => {
     let createResponse;
     let listResponse;
     let createResult;
@@ -142,7 +142,10 @@ describe('CatalogManagementV1_integration', () => {
     let catalogIndex = -1;
 
     try {
-      createResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      createResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       createResult = createResponse.result || {};
       listResponse = await service.listCatalogs();
       await service.deleteCatalog({ 'catalogIdentifier': createResult.id });
@@ -150,9 +153,9 @@ describe('CatalogManagementV1_integration', () => {
       done(err);
     }
 
-    if (listResponse.result.resources != undefined) {
+    if (listResponse.result.resources !== undefined) {
       for (let i = 0; i < listResponse.result.resources.length; i++) {
-        if (listResponse.result.resources[i].label == expectedLabel) {
+        if (listResponse.result.resources[i].label === expectedLabel) {
           catalogCount++;
           catalogIndex = i;
         }
@@ -167,31 +170,36 @@ describe('CatalogManagementV1_integration', () => {
     expect(listResult.offset).toEqual(0);
     expect(listResult.limit).toEqual(0);
     expect(catalogCount).toEqual(1);
-    expect(listResult.last).toEqual(undefined);
-    expect(listResult.prev).toEqual(undefined);
-    expect(listResult.next).toEqual(undefined);
+    expect(listResult.last).toBeUndefined();
+    expect(listResult.prev).toBeUndefined();
+    expect(listResult.next).toBeUndefined();
 
-    const resources = listResult.resources;
+    const { resources } = listResult;
     expect(resources).toBeDefined();
     expect(resources[catalogIndex].label).toEqual(expectedLabel);
     expect(resources[catalogIndex].short_description).toEqual(expectedShortDesc);
     expect(resources[catalogIndex].url).toEqual(util.format(expectedURL, createResult.id));
-    expect(resources[catalogIndex].offerings_url).toEqual(util.format(expectedOfferingsURL, createResult.id));
+    expect(resources[catalogIndex].offerings_url).toEqual(
+      util.format(expectedOfferingsURL, createResult.id)
+    );
     expect(resources[catalogIndex].owning_account).toEqual(expectedAccount);
     expect(resources[catalogIndex].catalog_filters.include_all).toEqual(false);
-    expect(resources[catalogIndex].catalog_filters.category_filters).toEqual(undefined);
-    expect(resources[catalogIndex].catalog_filters.id_filters.include).toEqual(undefined);
-    expect(resources[catalogIndex].catalog_filters.id_filters.exclude).toEqual(undefined);
+    expect(resources[catalogIndex].catalog_filters.category_filters).toBeUndefined();
+    expect(resources[catalogIndex].catalog_filters.id_filters.include).toBeUndefined();
+    expect(resources[catalogIndex].catalog_filters.id_filters.exclude).toBeUndefined();
 
     done();
   });
 
-  test('Create catalog', async done => {
+  test('Create catalog', async (done) => {
     let response;
     let result;
 
     try {
-      response = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      response = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
 
       expect(response).toBeDefined();
       expect(response.status).toEqual(201);
@@ -210,20 +218,23 @@ describe('CatalogManagementV1_integration', () => {
     expect(result.offerings_url).toEqual(util.format(expectedOfferingsURL, result.id));
     expect(result.owning_account).toEqual(expectedAccount);
     expect(result.catalog_filters.include_all).toEqual(false);
-    expect(result.catalog_filters.category_filters).toEqual(undefined);
-    expect(result.catalog_filters.id_filters.include).toEqual(undefined);
-    expect(result.catalog_filters.id_filters.exclude).toEqual(undefined);
+    expect(result.catalog_filters.category_filters).toBeUndefined();
+    expect(result.catalog_filters.id_filters.include).toBeUndefined();
+    expect(result.catalog_filters.id_filters.exclude).toBeUndefined();
 
     done();
   });
 
-  test('Get catalog', async done => {
+  test('Get catalog', async (done) => {
     let createResponse;
     let getResponse;
     let createResult;
 
     try {
-      createResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      createResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       createResult = createResponse.result || {};
       getResponse = await service.getCatalog({ 'catalogIdentifier': createResult.id });
       await service.deleteCatalog({ 'catalogIdentifier': createResult.id });
@@ -242,14 +253,14 @@ describe('CatalogManagementV1_integration', () => {
     expect(getResult.offerings_url).toEqual(util.format(expectedOfferingsURL, createResult.id));
     expect(getResult.owning_account).toEqual(expectedAccount);
     expect(getResult.catalog_filters.include_all).toEqual(false);
-    expect(getResult.catalog_filters.category_filters).toEqual(undefined);
-    expect(getResult.catalog_filters.id_filters.include).toEqual(undefined);
-    expect(getResult.catalog_filters.id_filters.exclude).toEqual(undefined);
+    expect(getResult.catalog_filters.category_filters).toBeUndefined();
+    expect(getResult.catalog_filters.id_filters.include).toBeUndefined();
+    expect(getResult.catalog_filters.id_filters.exclude).toBeUndefined();
 
     done();
   });
 
-  test('Get catalog failure', async done => {
+  test('Get catalog failure', async (done) => {
     expect.assertions(1);
 
     try {
@@ -260,7 +271,7 @@ describe('CatalogManagementV1_integration', () => {
     }
   });
 
-  test('Update catalog', async done => {
+  test('Update catalog', async (done) => {
     const expectedLabelUpdated = 'test2';
     const expectedShortDescUpdated = 'integration-test-update';
 
@@ -269,9 +280,17 @@ describe('CatalogManagementV1_integration', () => {
     let createResult;
 
     try {
-      createResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      createResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       createResult = createResponse.result || {};
-      updateResponse = await service.replaceCatalog({ 'catalogIdentifier': createResult.id, 'id': createResult.id, 'label': expectedLabelUpdated, 'shortDescription': expectedShortDescUpdated });
+      updateResponse = await service.replaceCatalog({
+        'catalogIdentifier': createResult.id,
+        'id': createResult.id,
+        'label': expectedLabelUpdated,
+        'shortDescription': expectedShortDescUpdated,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': createResult.id });
     } catch (err) {
       done(err);
@@ -296,7 +315,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Update catalog failure', async done => {
+  test('Update catalog failure', async (done) => {
     expect.assertions(1);
 
     try {
@@ -307,15 +326,21 @@ describe('CatalogManagementV1_integration', () => {
     }
   });
 
-  test('Delete catalog', async done => {
+  test('Delete catalog', async (done) => {
     let createResponse;
     let deleteResponse;
     let createResult;
 
     try {
-      createResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      createResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       createResult = createResponse.result || {};
-      deleteResponse = await service.deleteCatalog({ 'catalogIdentifier': createResult.id, 'id': createResult.id });
+      deleteResponse = await service.deleteCatalog({
+        'catalogIdentifier': createResult.id,
+        'id': createResult.id,
+      });
     } catch (err) {
       done(err);
     }
@@ -326,7 +351,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Delete catalog failure', async done => {
+  test('Delete catalog failure', async (done) => {
     let response;
 
     try {
@@ -341,15 +366,23 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Create offering', async done => {
+  test('Create offering', async (done) => {
     let catalogResponse;
     let offeringResponse;
     let catalogResult;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.createOffering({ 'catalogIdentifier': catalogResult.id, 'id': catalogResult.id, 'name': expectedOfferingName, 'label': expectedLabel });
+      offeringResponse = await service.createOffering({
+        'catalogIdentifier': catalogResult.id,
+        'id': catalogResult.id,
+        'name': expectedOfferingName,
+        'label': expectedLabel,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -361,13 +394,15 @@ describe('CatalogManagementV1_integration', () => {
     const offeringResult = offeringResponse.result || {};
     expect(offeringResult).toBeDefined();
     expect(offeringResult.name).toEqual(expectedOfferingName);
-    expect(offeringResult.url).toEqual(util.format(expectedOfferingURL, catalogResult.id, offeringResult.id));
+    expect(offeringResult.url).toEqual(
+      util.format(expectedOfferingURL, catalogResult.id, offeringResult.id)
+    );
     expect(offeringResult.label).toEqual(expectedLabel);
 
     done();
   });
 
-  test('Get offering', async done => {
+  test('Get offering', async (done) => {
     let catalogResponse;
     let offeringResponse;
     let getResponse;
@@ -375,11 +410,22 @@ describe('CatalogManagementV1_integration', () => {
     let offeringResult;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.createOffering({ 'catalogIdentifier': catalogResult.id, 'id': catalogResult.id, 'name': expectedOfferingName, 'label': expectedLabel });
+      offeringResponse = await service.createOffering({
+        'catalogIdentifier': catalogResult.id,
+        'id': catalogResult.id,
+        'name': expectedOfferingName,
+        'label': expectedLabel,
+      });
       offeringResult = offeringResponse.result || {};
-      getResponse = await service.getOffering({ 'catalogIdentifier': catalogResult.id, 'offeringId': offeringResult.id });
+      getResponse = await service.getOffering({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': offeringResult.id,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -391,19 +437,24 @@ describe('CatalogManagementV1_integration', () => {
     const getResult = offeringResponse.result || {};
     expect(getResult).toBeDefined();
     expect(getResult.name).toEqual(expectedOfferingName);
-    expect(getResult.url).toEqual(util.format(expectedOfferingURL, catalogResult.id, offeringResult.id));
+    expect(getResult.url).toEqual(
+      util.format(expectedOfferingURL, catalogResult.id, offeringResult.id)
+    );
     expect(getResult.label).toEqual(expectedLabel);
 
     done();
   });
 
-  test('Get offering failure', async done => {
+  test('Get offering failure', async (done) => {
     expect.assertions(2);
 
     let catalogResponse;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
     } catch (err) {
       done(err);
     }
@@ -425,7 +476,7 @@ describe('CatalogManagementV1_integration', () => {
     }
   });
 
-  test('List offering', async done => {
+  test('List offering', async (done) => {
     const expectedFirst = '/api/v1-beta/catalogs/%s/offerings?limit=100&sort=label';
     const expectedLast = '/api/v1-beta/catalogs/%s/offerings?limit=100&sort=label';
 
@@ -436,11 +487,24 @@ describe('CatalogManagementV1_integration', () => {
     let listResponse;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.createOffering({ 'catalogIdentifier': catalogResult.id, 'id': catalogResult.id, 'name': expectedOfferingName, 'label': expectedLabel });
+      offeringResponse = await service.createOffering({
+        'catalogIdentifier': catalogResult.id,
+        'id': catalogResult.id,
+        'name': expectedOfferingName,
+        'label': expectedLabel,
+      });
       offeringResult = offeringResponse.result || {};
-      listResponse = await service.listOfferings({ 'catalogIdentifier': catalogResult.id, 'id': catalogResult.id, 'name': expectedOfferingName, 'label': expectedLabel });
+      listResponse = await service.listOfferings({
+        'catalogIdentifier': catalogResult.id,
+        'id': catalogResult.id,
+        'name': expectedOfferingName,
+        'label': expectedLabel,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -458,10 +522,12 @@ describe('CatalogManagementV1_integration', () => {
     expect(listResult.first).toEqual(util.format(expectedFirst, catalogResult.id));
     expect(listResult.last).toEqual(util.format(expectedLast, catalogResult.id));
 
-    const resources = listResult.resources;
+    const { resources } = listResult;
     expect(resources).toBeDefined();
     expect(resources[0].id).toEqual(offeringResult.id);
-    expect(resources[0].url).toEqual(util.format(expectedOfferingURL, catalogResult.id, offeringResult.id));
+    expect(resources[0].url).toEqual(
+      util.format(expectedOfferingURL, catalogResult.id, offeringResult.id)
+    );
     expect(resources[0].label).toEqual(expectedLabel);
     expect(resources[0].name).toEqual(expectedOfferingName);
     expect(resources[0].catalog_id).toEqual(catalogResult.id);
@@ -469,7 +535,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Delete offering', async done => {
+  test('Delete offering', async (done) => {
     let catalogResponse;
     let offeringResponse;
     let catalogResult;
@@ -477,11 +543,22 @@ describe('CatalogManagementV1_integration', () => {
     let deleteResponse;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.createOffering({ 'catalogIdentifier': catalogResult.id, 'id': catalogResult.id, 'name': expectedOfferingName, 'label': expectedLabel });
+      offeringResponse = await service.createOffering({
+        'catalogIdentifier': catalogResult.id,
+        'id': catalogResult.id,
+        'name': expectedOfferingName,
+        'label': expectedLabel,
+      });
       offeringResult = offeringResponse.result || {};
-      deleteResponse = await service.deleteOffering({ 'catalogIdentifier': catalogResult.id, 'offeringId': offeringResult.id });
+      deleteResponse = await service.deleteOffering({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': offeringResult.id,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -493,14 +570,17 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Delete offering failure', async done => {
+  test('Delete offering failure', async (done) => {
     expect.assertions(3);
 
     let catalogResponse;
     let deleteResponse;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
     } catch (err) {
       done(err);
     }
@@ -508,7 +588,10 @@ describe('CatalogManagementV1_integration', () => {
     const catalogResult = catalogResponse.result || {};
 
     try {
-      deleteResponse = await service.deleteOffering({ 'catalogIdentifier': catalogResult.id, 'offeringId': fakeName });
+      deleteResponse = await service.deleteOffering({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': fakeName,
+      });
     } catch (err) {
       expect(err.status).toEqual(404);
     }
@@ -518,14 +601,17 @@ describe('CatalogManagementV1_integration', () => {
 
     try {
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
-      await service.deleteOffering({ 'catalogIdentifier': catalogResult.id, 'offeringId': fakeName });
+      await service.deleteOffering({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': fakeName,
+      });
     } catch (err) {
       expect(err.status).toEqual(403);
       done();
     }
   });
 
-  test('Update offering', async done => {
+  test('Update offering', async (done) => {
     const expectedLabelUpdate = 'test-update';
     const expectedShortDescUpdate = 'test-desc-update';
 
@@ -536,9 +622,17 @@ describe('CatalogManagementV1_integration', () => {
     let offeringResult;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.createOffering({ 'catalogIdentifier': catalogResult.id, 'id': catalogResult.id, 'name': expectedOfferingName, 'label': expectedLabel });
+      offeringResponse = await service.createOffering({
+        'catalogIdentifier': catalogResult.id,
+        'id': catalogResult.id,
+        'name': expectedOfferingName,
+        'label': expectedLabel,
+      });
       offeringResult = offeringResponse.result || {};
       updateResponse = await service.replaceOffering({
         'catalogIdentifier': catalogResult.id,
@@ -559,19 +653,24 @@ describe('CatalogManagementV1_integration', () => {
     const updateResult = updateResponse.result || {};
     expect(updateResult).toBeDefined();
     expect(updateResult.short_description).toEqual(expectedShortDescUpdate);
-    expect(updateResult.url).toEqual(util.format(expectedOfferingURL, catalogResult.id, offeringResult.id));
+    expect(updateResult.url).toEqual(
+      util.format(expectedOfferingURL, catalogResult.id, offeringResult.id)
+    );
     expect(updateResult.label).toEqual(expectedLabelUpdate);
 
     done();
   });
 
-  test('Update offering failure', async done => {
+  test('Update offering failure', async (done) => {
     expect.assertions(2);
 
     let catalogResponse;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
     } catch (err) {
       done(err);
     }
@@ -579,21 +678,31 @@ describe('CatalogManagementV1_integration', () => {
     const catalogResult = catalogResponse.result || {};
 
     try {
-      await service.replaceOffering({ 'catalogIdentifier': catalogResult.id, 'offeringId': fakeName, 'id': fakeName, 'rev': fakeName });
+      await service.replaceOffering({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': fakeName,
+        'id': fakeName,
+        'rev': fakeName,
+      });
     } catch (err) {
       expect(err.status).toEqual(404);
     }
 
     try {
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
-      await service.replaceOffering({ 'catalogIdentifier': catalogResult.id, 'offeringId': fakeName, 'id': fakeName, 'rev': fakeName });
+      await service.replaceOffering({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': fakeName,
+        'id': fakeName,
+        'rev': fakeName,
+      });
     } catch (err) {
       expect(err.status).toEqual(403);
       done();
     }
   });
 
-  test('Get consumption offerings', async done => {
+  test('Get consumption offerings', async (done) => {
     let response;
 
     try {
@@ -610,31 +719,39 @@ describe('CatalogManagementV1_integration', () => {
     expect(result.offset).toEqual(0);
     expect(result.limit).toBeGreaterThan(0);
     expect(result.total_count).toBeGreaterThan(0);
-    expect(result.last).toBeDefined;
-    expect(result.prev).toBeUndefined;
-    expect(result.next).toBeDefined;
-    expect(result.resources).toBeDefined;
+    expect(result.last).toBeDefined();
+    expect(result.prev).toBeUndefined();
+    expect(result.next).toBeDefined();
+    expect(result.resources).toBeDefined();
 
     done();
   });
 
-  test('Import offering', async done => {
+  test('Import offering', async (done) => {
     const expectedOfferingZipURL =
       'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml';
     const expectedOfferingTargetKind = 'roks';
     const expectedOfferingVersion = '0.4.0';
     const expectedJenkinsOfferingName = 'jenkins-operator';
     const expectedJenkinsOfferingLabel = 'Jenkins Operator';
-    const expectedJenkinsOfferingShortDesc = 'Kubernetes native operator which fully manages Jenkins on Openshift.';
+    const expectedJenkinsOfferingShortDesc =
+      'Kubernetes native operator which fully manages Jenkins on Openshift.';
 
     let catalogResponse;
     let offeringResponse;
     let catalogResult;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
+      offeringResponse = await service.importOffering({
+        'catalogIdentifier': catalogResult.id,
+        'zipurl': expectedOfferingZipURL,
+        'xAuthToken': gitToken,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -646,7 +763,9 @@ describe('CatalogManagementV1_integration', () => {
     const offeringResult = offeringResponse.result || {};
     expect(offeringResult).toBeDefined();
     expect(offeringResult.name).toEqual(expectedJenkinsOfferingName);
-    expect(offeringResult.url).toEqual(util.format(expectedOfferingURL, catalogResult.id, offeringResult.id));
+    expect(offeringResult.url).toEqual(
+      util.format(expectedOfferingURL, catalogResult.id, offeringResult.id)
+    );
     expect(offeringResult.label).toEqual(expectedJenkinsOfferingLabel);
     expect(offeringResult.short_description).toEqual(expectedJenkinsOfferingShortDesc);
     expect(offeringResult.catalog_name).toEqual(expectedLabel);
@@ -660,7 +779,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Import offering version', async done => {
+  test('Import offering version', async (done) => {
     const expectedOfferingZipURL =
       'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml';
     const expectedOfferingZipURLUpdate =
@@ -670,7 +789,8 @@ describe('CatalogManagementV1_integration', () => {
     const expectedOfferingVersionUpdate = '0.4.0';
     const expectedJenkinsOfferingName = 'jenkins-operator';
     const expectedJenkinsOfferingLabel = 'Jenkins Operator';
-    const expectedJenkinsOfferingShortDesc = 'Kubernetes native operator which fully manages Jenkins on Openshift.';
+    const expectedJenkinsOfferingShortDesc =
+      'Kubernetes native operator which fully manages Jenkins on Openshift.';
 
     let catalogResponse;
     let offeringResponse;
@@ -679,11 +799,23 @@ describe('CatalogManagementV1_integration', () => {
     let offeringResult;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
+      offeringResponse = await service.importOffering({
+        'catalogIdentifier': catalogResult.id,
+        'zipurl': expectedOfferingZipURL,
+        'xAuthToken': gitToken,
+      });
       offeringResult = offeringResponse.result || {};
-      versionResponse = await service.importOfferingVersion({ 'catalogIdentifier': catalogResult.id, 'offeringId': offeringResult.id, 'zipurl': expectedOfferingZipURLUpdate, 'xAuthToken': gitToken });
+      versionResponse = await service.importOfferingVersion({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': offeringResult.id,
+        'zipurl': expectedOfferingZipURLUpdate,
+        'xAuthToken': gitToken,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -695,7 +827,9 @@ describe('CatalogManagementV1_integration', () => {
     const versionResult = versionResponse.result || {};
     expect(versionResult).toBeDefined();
     expect(versionResult.name).toEqual(expectedJenkinsOfferingName);
-    expect(versionResult.url).toEqual(util.format(expectedOfferingURL, catalogResult.id, offeringResult.id));
+    expect(versionResult.url).toEqual(
+      util.format(expectedOfferingURL, catalogResult.id, offeringResult.id)
+    );
     expect(versionResult.label).toEqual(expectedJenkinsOfferingLabel);
     expect(versionResult.short_description).toEqual(expectedJenkinsOfferingShortDesc);
     expect(versionResult.catalog_name).toEqual(expectedLabel);
@@ -711,7 +845,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Import offering version failure', async done => {
+  test('Import offering version failure', async (done) => {
     const expectedOfferingZipURL =
       'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml';
 
@@ -720,7 +854,10 @@ describe('CatalogManagementV1_integration', () => {
     let catalogResponse;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
     } catch (err) {
       done(err);
     }
@@ -728,28 +865,37 @@ describe('CatalogManagementV1_integration', () => {
     const catalogResult = catalogResponse.result || {};
 
     try {
-      await service.importOfferingVersion({ 'catalogIdentifier': catalogResult.id, 'offeringId': fakeName, 'zipurl': expectedOfferingZipURL });
+      await service.importOfferingVersion({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': fakeName,
+        'zipurl': expectedOfferingZipURL,
+      });
     } catch (err) {
       expect(err.status).toEqual(404);
     }
 
     try {
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
-      await service.importOfferingVersion({ 'catalogIdentifier': catalogResult.id, 'offeringId': fakeName, 'zipurl': expectedOfferingZipURL });
+      await service.importOfferingVersion({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': fakeName,
+        'zipurl': expectedOfferingZipURL,
+      });
     } catch (err) {
       expect(err.status).toEqual(403);
       done();
     }
   });
 
-  test('Reload offering', async done => {
+  test('Reload offering', async (done) => {
     const expectedOfferingZipURL =
       'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml';
     const expectedOfferingTargetKind = 'roks';
     const expectedOfferingVersion = '0.4.0';
     const expectedJenkinsOfferingName = 'jenkins-operator';
     const expectedJenkinsOfferingLabel = 'Jenkins Operator';
-    const expectedJenkinsOfferingShortDesc = 'Kubernetes native operator which fully manages Jenkins on Openshift.';
+    const expectedJenkinsOfferingShortDesc =
+      'Kubernetes native operator which fully manages Jenkins on Openshift.';
 
     let catalogResponse;
     let offeringResponse;
@@ -758,9 +904,16 @@ describe('CatalogManagementV1_integration', () => {
     let offeringResult;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
+      offeringResponse = await service.importOffering({
+        'catalogIdentifier': catalogResult.id,
+        'zipurl': expectedOfferingZipURL,
+        'xAuthToken': gitToken,
+      });
       offeringResult = offeringResponse.result || {};
       reloadResponse = await service.reloadOffering({
         'catalogIdentifier': catalogResult.id,
@@ -780,7 +933,9 @@ describe('CatalogManagementV1_integration', () => {
     const reloadResult = reloadResponse.result || {};
     expect(reloadResult).toBeDefined();
     expect(reloadResult.name).toEqual(expectedJenkinsOfferingName);
-    expect(reloadResult.url).toEqual(util.format(expectedOfferingURL, catalogResult.id, offeringResult.id));
+    expect(reloadResult.url).toEqual(
+      util.format(expectedOfferingURL, catalogResult.id, offeringResult.id)
+    );
     expect(reloadResult.label).toEqual(expectedJenkinsOfferingLabel);
     expect(reloadResult.short_description).toEqual(expectedJenkinsOfferingShortDesc);
     expect(reloadResult.catalog_name).toEqual(expectedLabel);
@@ -794,7 +949,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Reload offering failure', async done => {
+  test('Reload offering failure', async (done) => {
     const expectedOfferingZipURL =
       'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml';
     const expectedOfferingVersion = '0.4.0';
@@ -804,7 +959,10 @@ describe('CatalogManagementV1_integration', () => {
     let catalogResponse;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
     } catch (err) {
       done(err);
     }
@@ -838,14 +996,15 @@ describe('CatalogManagementV1_integration', () => {
     }
   });
 
-  test('Get version', async done => {
+  test('Get version', async (done) => {
     const expectedOfferingZipURL =
       'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml';
     const expectedOfferingTargetKind = 'roks';
     const expectedOfferingVersion = '0.4.0';
     const expectedJenkinsOfferingName = 'jenkins-operator';
     const expectedJenkinsOfferingLabel = 'Jenkins Operator';
-    const expectedJenkinsOfferingShortDesc = 'Kubernetes native operator which fully manages Jenkins on Openshift.';
+    const expectedJenkinsOfferingShortDesc =
+      'Kubernetes native operator which fully manages Jenkins on Openshift.';
 
     let catalogResponse;
     let offeringResponse;
@@ -854,11 +1013,20 @@ describe('CatalogManagementV1_integration', () => {
     let offeringResult;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
+      offeringResponse = await service.importOffering({
+        'catalogIdentifier': catalogResult.id,
+        'zipurl': expectedOfferingZipURL,
+        'xAuthToken': gitToken,
+      });
       offeringResult = offeringResponse.result || {};
-      getResponse = await service.getVersion({ 'versionLocId': offeringResult.kinds[0].versions[0].version_locator });
+      getResponse = await service.getVersion({
+        'versionLocId': offeringResult.kinds[0].versions[0].version_locator,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -870,7 +1038,9 @@ describe('CatalogManagementV1_integration', () => {
     const getResult = getResponse.result || {};
     expect(getResult).toBeDefined();
     expect(getResult.name).toEqual(expectedJenkinsOfferingName);
-    expect(getResult.url).toEqual(util.format(expectedOfferingURL, catalogResult.id, offeringResult.id));
+    expect(getResult.url).toEqual(
+      util.format(expectedOfferingURL, catalogResult.id, offeringResult.id)
+    );
     expect(getResult.label).toEqual(expectedJenkinsOfferingLabel);
     expect(getResult.short_description).toEqual(expectedJenkinsOfferingShortDesc);
     expect(getResult.catalog_name).toEqual(expectedLabel);
@@ -884,7 +1054,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Get version failure', async done => {
+  test('Get version failure', async (done) => {
     expect.assertions(1);
 
     try {
@@ -895,7 +1065,7 @@ describe('CatalogManagementV1_integration', () => {
     }
   });
 
-  test('Delete version', async done => {
+  test('Delete version', async (done) => {
     const expectedOfferingZipURL =
       'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml';
 
@@ -906,11 +1076,20 @@ describe('CatalogManagementV1_integration', () => {
     let offeringResult;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
+      offeringResponse = await service.importOffering({
+        'catalogIdentifier': catalogResult.id,
+        'zipurl': expectedOfferingZipURL,
+        'xAuthToken': gitToken,
+      });
       offeringResult = offeringResponse.result || {};
-      getResponse = await service.deleteVersion({ 'versionLocId': offeringResult.kinds[0].versions[0].version_locator });
+      getResponse = await service.deleteVersion({
+        'versionLocId': offeringResult.kinds[0].versions[0].version_locator,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -922,7 +1101,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Delete version failure', async done => {
+  test('Delete version failure', async (done) => {
     expect.assertions(1);
 
     try {
@@ -933,7 +1112,7 @@ describe('CatalogManagementV1_integration', () => {
     }
   });
 
-  test('Get version about', async done => {
+  test('Get version about', async (done) => {
     const expectedOfferingZipURL =
       'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.4.0/jenkins-operator.v0.4.0.clusterserviceversion.yaml';
 
@@ -944,11 +1123,20 @@ describe('CatalogManagementV1_integration', () => {
     let offeringResult;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
+      offeringResponse = await service.importOffering({
+        'catalogIdentifier': catalogResult.id,
+        'zipurl': expectedOfferingZipURL,
+        'xAuthToken': gitToken,
+      });
       offeringResult = offeringResponse.result || {};
-      getResponse = await service.getVersionAbout({ 'versionLocId': offeringResult.kinds[0].versions[0].version_locator });
+      getResponse = await service.getVersionAbout({
+        'versionLocId': offeringResult.kinds[0].versions[0].version_locator,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -963,7 +1151,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Get version about failure', async done => {
+  test('Get version about failure', async (done) => {
     expect.assertions(1);
 
     try {
@@ -974,7 +1162,7 @@ describe('CatalogManagementV1_integration', () => {
     }
   });
 
-  test('Get version updates', async done => {
+  test('Get version updates', async (done) => {
     const expectedOfferingZipURL =
       'https://github.com/operator-framework/community-operators/blob/master/community-operators/jenkins-operator/0.3.31/jenkins-operator.v0.3.31.clusterserviceversion.yaml';
     const expectedOfferingZipURLUpdate =
@@ -990,13 +1178,27 @@ describe('CatalogManagementV1_integration', () => {
     let updateResponse;
 
     try {
-      catalogResponse = await service.createCatalog({ 'label': expectedLabel, 'shortDescription': expectedShortDesc });
+      catalogResponse = await service.createCatalog({
+        'label': expectedLabel,
+        'shortDescription': expectedShortDesc,
+      });
       catalogResult = catalogResponse.result || {};
-      offeringResponse = await service.importOffering({ 'catalogIdentifier': catalogResult.id, 'zipurl': expectedOfferingZipURL, 'xAuthToken': gitToken });
+      offeringResponse = await service.importOffering({
+        'catalogIdentifier': catalogResult.id,
+        'zipurl': expectedOfferingZipURL,
+        'xAuthToken': gitToken,
+      });
       offeringResult = offeringResponse.result || {};
-      versionResponse = await service.importOfferingVersion({ 'catalogIdentifier': catalogResult.id, 'offeringId': offeringResult.id, 'zipurl': expectedOfferingZipURLUpdate, 'xAuthToken': gitToken });
+      versionResponse = await service.importOfferingVersion({
+        'catalogIdentifier': catalogResult.id,
+        'offeringId': offeringResult.id,
+        'zipurl': expectedOfferingZipURLUpdate,
+        'xAuthToken': gitToken,
+      });
       versionResult = versionResponse.result || {};
-      updateResponse = await service.getVersionUpdates({ 'versionLocId': offeringResult.kinds[0].versions[0].version_locator });
+      updateResponse = await service.getVersionUpdates({
+        'versionLocId': offeringResult.kinds[0].versions[0].version_locator,
+      });
       await service.deleteCatalog({ 'catalogIdentifier': catalogResult.id });
     } catch (err) {
       done(err);
@@ -1007,7 +1209,9 @@ describe('CatalogManagementV1_integration', () => {
 
     const updateResult = updateResponse.result || {};
     expect(updateResult).toBeDefined();
-    expect(updateResult[0].version_locator).toEqual(versionResult.kinds[0].versions[1].version_locator);
+    expect(updateResult[0].version_locator).toEqual(
+      versionResult.kinds[0].versions[1].version_locator
+    );
     expect(updateResult[0].version).toEqual(expectedOfferingVersionUpdate);
     expect(updateResult[0].package_version).toEqual(expectedOfferingVersionUpdate);
     expect(updateResult[0].can_update).toEqual(true);
@@ -1015,7 +1219,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Get version updates failure', async done => {
+  test('Get version updates failure', async (done) => {
     expect.assertions(1);
 
     try {
@@ -1026,7 +1230,7 @@ describe('CatalogManagementV1_integration', () => {
     }
   });
 
-  test('Get license providers', async done => {
+  test('Get license providers', async (done) => {
     const expectedTotalResults = 1;
     const expectedTotalPages = 1;
     const expectedName = 'IBM Passport Advantage';
@@ -1052,9 +1256,9 @@ describe('CatalogManagementV1_integration', () => {
     expect(result.total_results).toEqual(expectedTotalResults);
     expect(result.total_pages).toEqual(expectedTotalPages);
 
-    const resources = result.resources;
+    const { resources } = result;
     expect(resources).toBeDefined();
-    expect(resources.length).toEqual(1);
+    expect(resources).toHaveLength(1);
     expect(resources[0].name).toEqual(expectedName);
     expect(resources[0].offering_type).toEqual(expectedOfferingType);
     expect(resources[0].create_url).toEqual(expectedCreateURL);
@@ -1065,7 +1269,7 @@ describe('CatalogManagementV1_integration', () => {
     done();
   });
 
-  test('Get list license entitlements', async done => {
+  test('Get list license entitlements', async (done) => {
     const expectedResourceCount = 0;
     const expectedTotalResults = 0;
     const expectedTotalPages = 1;
@@ -1086,14 +1290,14 @@ describe('CatalogManagementV1_integration', () => {
     expect(result.total_results).toEqual(expectedTotalResults);
     expect(result.total_pages).toEqual(expectedTotalPages);
 
-    const resources = result.resources;
+    const { resources } = result;
     expect(resources).toBeDefined();
-    expect(resources.length).toEqual(expectedResourceCount);
+    expect(resources).toHaveLength(expectedResourceCount);
 
     done();
   });
 
-  test('Search license versions', async done => {
+  test('Search license versions', async (done) => {
     expect.assertions(1);
 
     try {
@@ -1104,7 +1308,7 @@ describe('CatalogManagementV1_integration', () => {
     }
   });
 
-  test('Search license offerings', async done => {
+  test('Search license offerings', async (done) => {
     expect.assertions(1);
 
     try {

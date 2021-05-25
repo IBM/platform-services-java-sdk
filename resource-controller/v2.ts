@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-77b4cbf2-20210420-134305
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -31,8 +36,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class ResourceControllerV2 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://resource-controller.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'resource_controller';
 
   /*************************
@@ -65,7 +70,6 @@ class ResourceControllerV2 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a ResourceControllerV2 object.
@@ -122,8 +126,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstancesList>>}
    */
-  public listResourceInstances(params?: ResourceControllerV2.ListResourceInstancesParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstancesList>> {
-    const _params = Object.assign({}, params);
+  public listResourceInstances(
+    params?: ResourceControllerV2.ListResourceInstancesParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstancesList>> {
+    const _params = { ...params };
 
     const query = {
       'guid': _params.guid,
@@ -138,10 +144,14 @@ class ResourceControllerV2 extends BaseService {
       'state': _params.state,
       'order_direction': _params.orderDirection,
       'updated_from': _params.updatedFrom,
-      'updated_to': _params.updatedTo
+      'updated_to': _params.updatedTo,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceInstances');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listResourceInstances'
+    );
 
     const parameters = {
       options: {
@@ -150,14 +160,19 @@ class ResourceControllerV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create (provision) a new resource instance.
@@ -184,8 +199,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
-  public createResourceInstance(params: ResourceControllerV2.CreateResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = Object.assign({}, params);
+  public createResourceInstance(
+    params: ResourceControllerV2.CreateResourceInstanceParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
+    const _params = { ...params };
     const requiredParams = ['name', 'target', 'resourceGroup', 'resourcePlanId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -200,10 +217,14 @@ class ResourceControllerV2 extends BaseService {
       'resource_plan_id': _params.resourcePlanId,
       'tags': _params.tags,
       'allow_cleanup': _params.allowCleanup,
-      'parameters': _params.parameters
+      'parameters': _params.parameters,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceInstance');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createResourceInstance'
+    );
 
     const parameters = {
       options: {
@@ -212,16 +233,21 @@ class ResourceControllerV2 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Entity-Lock': _params.entityLock
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Entity-Lock': _params.entityLock,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a resource instance.
@@ -234,8 +260,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
-  public getResourceInstance(params: ResourceControllerV2.GetResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = Object.assign({}, params);
+  public getResourceInstance(
+    params: ResourceControllerV2.GetResourceInstanceParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -244,10 +272,14 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceInstance');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getResourceInstance'
+    );
 
     const parameters = {
       options: {
@@ -256,14 +288,19 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a resource instance.
@@ -277,8 +314,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>>}
    */
-  public deleteResourceInstance(params: ResourceControllerV2.DeleteResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteResourceInstance(
+    params: ResourceControllerV2.DeleteResourceInstanceParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -287,14 +326,18 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const query = {
-      'recursive': _params.recursive
+      'recursive': _params.recursive,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceInstance');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteResourceInstance'
+    );
 
     const parameters = {
       options: {
@@ -304,13 +347,12 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a resource instance.
@@ -329,8 +371,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
-  public updateResourceInstance(params: ResourceControllerV2.UpdateResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = Object.assign({}, params);
+  public updateResourceInstance(
+    params: ResourceControllerV2.UpdateResourceInstanceParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -342,14 +386,18 @@ class ResourceControllerV2 extends BaseService {
       'name': _params.name,
       'parameters': _params.parameters,
       'resource_plan_id': _params.resourcePlanId,
-      'allow_cleanup': _params.allowCleanup
+      'allow_cleanup': _params.allowCleanup,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceInstance');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateResourceInstance'
+    );
 
     const parameters = {
       options: {
@@ -359,15 +407,20 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a list of all resource aliases for the instance.
@@ -383,8 +436,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>>}
    */
-  public listResourceAliasesForInstance(params: ResourceControllerV2.ListResourceAliasesForInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>> {
-    const _params = Object.assign({}, params);
+  public listResourceAliasesForInstance(
+    params: ResourceControllerV2.ListResourceAliasesForInstanceParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -394,14 +449,18 @@ class ResourceControllerV2 extends BaseService {
 
     const query = {
       'limit': _params.limit,
-      'start': _params.start
+      'start': _params.start,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceAliasesForInstance');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listResourceAliasesForInstance'
+    );
 
     const parameters = {
       options: {
@@ -411,14 +470,19 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a list of all the resource keys for the instance.
@@ -435,8 +499,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>>}
    */
-  public listResourceKeysForInstance(params: ResourceControllerV2.ListResourceKeysForInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>> {
-    const _params = Object.assign({}, params);
+  public listResourceKeysForInstance(
+    params: ResourceControllerV2.ListResourceKeysForInstanceParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -446,14 +512,18 @@ class ResourceControllerV2 extends BaseService {
 
     const query = {
       'limit': _params.limit,
-      'start': _params.start
+      'start': _params.start,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceKeysForInstance');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listResourceKeysForInstance'
+    );
 
     const parameters = {
       options: {
@@ -463,14 +533,19 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Lock a resource instance.
@@ -483,8 +558,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
-  public lockResourceInstance(params: ResourceControllerV2.LockResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = Object.assign({}, params);
+  public lockResourceInstance(
+    params: ResourceControllerV2.LockResourceInstanceParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -493,10 +570,14 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'lockResourceInstance');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'lockResourceInstance'
+    );
 
     const parameters = {
       options: {
@@ -505,14 +586,19 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Unlock a resource instance.
@@ -525,8 +611,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>>}
    */
-  public unlockResourceInstance(params: ResourceControllerV2.UnlockResourceInstanceParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
-    const _params = Object.assign({}, params);
+  public unlockResourceInstance(
+    params: ResourceControllerV2.UnlockResourceInstanceParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceInstance>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -535,10 +623,14 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'unlockResourceInstance');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'unlockResourceInstance'
+    );
 
     const parameters = {
       options: {
@@ -547,14 +639,19 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * resourceKeys
@@ -581,8 +678,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>>}
    */
-  public listResourceKeys(params?: ResourceControllerV2.ListResourceKeysParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>> {
-    const _params = Object.assign({}, params);
+  public listResourceKeys(
+    params?: ResourceControllerV2.ListResourceKeysParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKeysList>> {
+    const _params = { ...params };
 
     const query = {
       'guid': _params.guid,
@@ -592,10 +691,14 @@ class ResourceControllerV2 extends BaseService {
       'limit': _params.limit,
       'start': _params.start,
       'updated_from': _params.updatedFrom,
-      'updated_to': _params.updatedTo
+      'updated_to': _params.updatedTo,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceKeys');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listResourceKeys'
+    );
 
     const parameters = {
       options: {
@@ -604,14 +707,19 @@ class ResourceControllerV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a new resource key.
@@ -628,8 +736,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>>}
    */
-  public createResourceKey(params: ResourceControllerV2.CreateResourceKeyParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>> {
-    const _params = Object.assign({}, params);
+  public createResourceKey(
+    params: ResourceControllerV2.CreateResourceKeyParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>> {
+    const _params = { ...params };
     const requiredParams = ['name', 'source'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -641,10 +751,14 @@ class ResourceControllerV2 extends BaseService {
       'name': _params.name,
       'source': _params.source,
       'parameters': _params.parameters,
-      'role': _params.role
+      'role': _params.role,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceKey');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createResourceKey'
+    );
 
     const parameters = {
       options: {
@@ -653,15 +767,20 @@ class ResourceControllerV2 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get resource key by ID.
@@ -673,8 +792,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>>}
    */
-  public getResourceKey(params: ResourceControllerV2.GetResourceKeyParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>> {
-    const _params = Object.assign({}, params);
+  public getResourceKey(
+    params: ResourceControllerV2.GetResourceKeyParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -683,10 +804,14 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceKey');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getResourceKey'
+    );
 
     const parameters = {
       options: {
@@ -695,14 +820,19 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a resource key by ID.
@@ -714,8 +844,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>>}
    */
-  public deleteResourceKey(params: ResourceControllerV2.DeleteResourceKeyParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteResourceKey(
+    params: ResourceControllerV2.DeleteResourceKeyParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -724,10 +856,14 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceKey');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteResourceKey'
+    );
 
     const parameters = {
       options: {
@@ -736,13 +872,12 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a resource key.
@@ -756,8 +891,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>>}
    */
-  public updateResourceKey(params: ResourceControllerV2.UpdateResourceKeyParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>> {
-    const _params = Object.assign({}, params);
+  public updateResourceKey(
+    params: ResourceControllerV2.UpdateResourceKeyParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceKey>> {
+    const _params = { ...params };
     const requiredParams = ['id', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -766,14 +903,18 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const body = {
-      'name': _params.name
+      'name': _params.name,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceKey');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateResourceKey'
+    );
 
     const parameters = {
       options: {
@@ -783,15 +924,20 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * resourceBindings
@@ -819,8 +965,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>>}
    */
-  public listResourceBindings(params?: ResourceControllerV2.ListResourceBindingsParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>> {
-    const _params = Object.assign({}, params);
+  public listResourceBindings(
+    params?: ResourceControllerV2.ListResourceBindingsParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>> {
+    const _params = { ...params };
 
     const query = {
       'guid': _params.guid,
@@ -831,10 +979,14 @@ class ResourceControllerV2 extends BaseService {
       'limit': _params.limit,
       'start': _params.start,
       'updated_from': _params.updatedFrom,
-      'updated_to': _params.updatedTo
+      'updated_to': _params.updatedTo,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceBindings');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listResourceBindings'
+    );
 
     const parameters = {
       options: {
@@ -843,14 +995,19 @@ class ResourceControllerV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a new resource binding.
@@ -870,8 +1027,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>>}
    */
-  public createResourceBinding(params: ResourceControllerV2.CreateResourceBindingParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>> {
-    const _params = Object.assign({}, params);
+  public createResourceBinding(
+    params: ResourceControllerV2.CreateResourceBindingParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>> {
+    const _params = { ...params };
     const requiredParams = ['source', 'target'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -884,10 +1043,14 @@ class ResourceControllerV2 extends BaseService {
       'target': _params.target,
       'name': _params.name,
       'parameters': _params.parameters,
-      'role': _params.role
+      'role': _params.role,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceBinding');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createResourceBinding'
+    );
 
     const parameters = {
       options: {
@@ -896,15 +1059,20 @@ class ResourceControllerV2 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a resource binding.
@@ -916,8 +1084,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>>}
    */
-  public getResourceBinding(params: ResourceControllerV2.GetResourceBindingParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>> {
-    const _params = Object.assign({}, params);
+  public getResourceBinding(
+    params: ResourceControllerV2.GetResourceBindingParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -926,10 +1096,14 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceBinding');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getResourceBinding'
+    );
 
     const parameters = {
       options: {
@@ -938,14 +1112,19 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a resource binding.
@@ -957,8 +1136,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>>}
    */
-  public deleteResourceBinding(params: ResourceControllerV2.DeleteResourceBindingParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteResourceBinding(
+    params: ResourceControllerV2.DeleteResourceBindingParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -967,10 +1148,14 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceBinding');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteResourceBinding'
+    );
 
     const parameters = {
       options: {
@@ -979,13 +1164,12 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a resource binding.
@@ -999,8 +1183,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>>}
    */
-  public updateResourceBinding(params: ResourceControllerV2.UpdateResourceBindingParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>> {
-    const _params = Object.assign({}, params);
+  public updateResourceBinding(
+    params: ResourceControllerV2.UpdateResourceBindingParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBinding>> {
+    const _params = { ...params };
     const requiredParams = ['id', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1009,14 +1195,18 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const body = {
-      'name': _params.name
+      'name': _params.name,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceBinding');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateResourceBinding'
+    );
 
     const parameters = {
       options: {
@@ -1026,15 +1216,20 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * resourceAliases
@@ -1063,8 +1258,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>>}
    */
-  public listResourceAliases(params?: ResourceControllerV2.ListResourceAliasesParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>> {
-    const _params = Object.assign({}, params);
+  public listResourceAliases(
+    params?: ResourceControllerV2.ListResourceAliasesParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAliasesList>> {
+    const _params = { ...params };
 
     const query = {
       'guid': _params.guid,
@@ -1076,10 +1273,14 @@ class ResourceControllerV2 extends BaseService {
       'limit': _params.limit,
       'start': _params.start,
       'updated_from': _params.updatedFrom,
-      'updated_to': _params.updatedTo
+      'updated_to': _params.updatedTo,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceAliases');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listResourceAliases'
+    );
 
     const parameters = {
       options: {
@@ -1088,14 +1289,19 @@ class ResourceControllerV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a new resource alias.
@@ -1111,8 +1317,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>>}
    */
-  public createResourceAlias(params: ResourceControllerV2.CreateResourceAliasParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>> {
-    const _params = Object.assign({}, params);
+  public createResourceAlias(
+    params: ResourceControllerV2.CreateResourceAliasParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>> {
+    const _params = { ...params };
     const requiredParams = ['name', 'source', 'target'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1123,10 +1331,14 @@ class ResourceControllerV2 extends BaseService {
     const body = {
       'name': _params.name,
       'source': _params.source,
-      'target': _params.target
+      'target': _params.target,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'createResourceAlias');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createResourceAlias'
+    );
 
     const parameters = {
       options: {
@@ -1135,15 +1347,20 @@ class ResourceControllerV2 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a resource alias.
@@ -1155,8 +1372,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>>}
    */
-  public getResourceAlias(params: ResourceControllerV2.GetResourceAliasParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>> {
-    const _params = Object.assign({}, params);
+  public getResourceAlias(
+    params: ResourceControllerV2.GetResourceAliasParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1165,10 +1384,14 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'getResourceAlias');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getResourceAlias'
+    );
 
     const parameters = {
       options: {
@@ -1177,14 +1400,19 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a resource alias.
@@ -1196,8 +1424,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>>}
    */
-  public deleteResourceAlias(params: ResourceControllerV2.DeleteResourceAliasParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteResourceAlias(
+    params: ResourceControllerV2.DeleteResourceAliasParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1206,10 +1436,14 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteResourceAlias');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteResourceAlias'
+    );
 
     const parameters = {
       options: {
@@ -1218,13 +1452,12 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a resource alias.
@@ -1238,8 +1471,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>>}
    */
-  public updateResourceAlias(params: ResourceControllerV2.UpdateResourceAliasParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>> {
-    const _params = Object.assign({}, params);
+  public updateResourceAlias(
+    params: ResourceControllerV2.UpdateResourceAliasParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceAlias>> {
+    const _params = { ...params };
     const requiredParams = ['id', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1248,14 +1483,18 @@ class ResourceControllerV2 extends BaseService {
     }
 
     const body = {
-      'name': _params.name
+      'name': _params.name,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'updateResourceAlias');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateResourceAlias'
+    );
 
     const parameters = {
       options: {
@@ -1265,15 +1504,20 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a list of all resource bindings for the alias.
@@ -1289,8 +1533,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>>}
    */
-  public listResourceBindingsForAlias(params: ResourceControllerV2.ListResourceBindingsForAliasParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>> {
-    const _params = Object.assign({}, params);
+  public listResourceBindingsForAlias(
+    params: ResourceControllerV2.ListResourceBindingsForAliasParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ResourceBindingsList>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1300,14 +1546,18 @@ class ResourceControllerV2 extends BaseService {
 
     const query = {
       'limit': _params.limit,
-      'start': _params.start
+      'start': _params.start,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listResourceBindingsForAlias');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listResourceBindingsForAlias'
+    );
 
     const parameters = {
       options: {
@@ -1317,14 +1567,19 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * resourceReclamations
@@ -1341,15 +1596,21 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.ReclamationsList>>}
    */
-  public listReclamations(params?: ResourceControllerV2.ListReclamationsParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.ReclamationsList>> {
-    const _params = Object.assign({}, params);
+  public listReclamations(
+    params?: ResourceControllerV2.ListReclamationsParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.ReclamationsList>> {
+    const _params = { ...params };
 
     const query = {
       'account_id': _params.accountId,
-      'resource_instance_id': _params.resourceInstanceId
+      'resource_instance_id': _params.resourceInstanceId,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'listReclamations');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listReclamations'
+    );
 
     const parameters = {
       options: {
@@ -1358,14 +1619,19 @@ class ResourceControllerV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Perform a reclamation action.
@@ -1382,8 +1648,10 @@ class ResourceControllerV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ResourceControllerV2.Response<ResourceControllerV2.Reclamation>>}
    */
-  public runReclamationAction(params: ResourceControllerV2.RunReclamationActionParams): Promise<ResourceControllerV2.Response<ResourceControllerV2.Reclamation>> {
-    const _params = Object.assign({}, params);
+  public runReclamationAction(
+    params: ResourceControllerV2.RunReclamationActionParams
+  ): Promise<ResourceControllerV2.Response<ResourceControllerV2.Reclamation>> {
+    const _params = { ...params };
     const requiredParams = ['id', 'actionName'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -1393,15 +1661,19 @@ class ResourceControllerV2 extends BaseService {
 
     const body = {
       'request_by': _params.requestBy,
-      'comment': _params.comment
+      'comment': _params.comment,
     };
 
     const path = {
       'id': _params.id,
-      'action_name': _params.actionName
+      'action_name': _params.actionName,
     };
 
-    const sdkHeaders = getSdkHeaders(ResourceControllerV2.DEFAULT_SERVICE_NAME, 'v2', 'runReclamationAction');
+    const sdkHeaders = getSdkHeaders(
+      ResourceControllerV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'runReclamationAction'
+    );
 
     const parameters = {
       options: {
@@ -1411,16 +1683,20 @@ class ResourceControllerV2 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -1428,9 +1704,8 @@ class ResourceControllerV2 extends BaseService {
  ************************/
 
 namespace ResourceControllerV2 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -1441,7 +1716,7 @@ namespace ResourceControllerV2 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -2245,7 +2520,6 @@ namespace ResourceControllerV2 {
     /** A list of resource keys. */
     resources: ResourceKey[];
   }
-
 }
 
 export = ResourceControllerV2;

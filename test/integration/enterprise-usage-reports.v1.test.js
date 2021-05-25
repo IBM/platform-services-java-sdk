@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-'use strict';
-const EnterpriseUsageReportsV1 = require('../../dist/enterprise-usage-reports/v1');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
+const EnterpriseUsageReportsV1 = require('../../dist/enterprise-usage-reports/v1');
 const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (200s).
@@ -53,23 +52,23 @@ describe('EnterpriseUsageReportsV1_integration', () => {
 
   jest.setTimeout(timeout);
 
-  test('getResourceUsageReportEnterprise()', async done => {
+  test('getResourceUsageReportEnterprise()', async (done) => {
     const results = [];
     let offset = null;
     try {
       do {
         // Retrieve the reports one at a time to test pagination.
         const params = {
-          enterpriseId: enterpriseId,
+          enterpriseId,
           month: billingMonth,
           limit: 1,
-          offset: offset,
+          offset,
         };
 
         const res = await service.getResourceUsageReport(params);
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
 
         // Add the just-retrieved page to "results".
@@ -95,23 +94,23 @@ describe('EnterpriseUsageReportsV1_integration', () => {
     done();
   });
 
-  test('getResourceUsageReportAccount()', async done => {
+  test('getResourceUsageReportAccount()', async (done) => {
     const results = [];
     let offset = null;
     try {
       do {
         // Retrieve the reports one at a time to test pagination.
         const params = {
-          accountId: accountId,
+          accountId,
           month: billingMonth,
           limit: 1,
-          offset: offset,
+          offset,
         };
 
         const res = await service.getResourceUsageReport(params);
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
 
         // Add the just-retrieved page to "results".
@@ -137,23 +136,23 @@ describe('EnterpriseUsageReportsV1_integration', () => {
     done();
   });
 
-  test('getResourceUsageReportAccountGroup()', async done => {
+  test('getResourceUsageReportAccountGroup()', async (done) => {
     const results = [];
     let offset = null;
     try {
       do {
         // Retrieve the reports one at a time to test pagination.
         const params = {
-          accountGroupId: accountGroupId,
+          accountGroupId,
           month: billingMonth,
           limit: 1,
-          offset: offset,
+          offset,
         };
 
         const res = await service.getResourceUsageReport(params);
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
 
         // Add the just-retrieved page to "results".

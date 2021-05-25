@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 
-'use strict';
+const { readExternalSources } = require('ibm-cloud-sdk-core');
 const ResourceManagerV2 = require('../../dist/resource-manager/v2');
 const authHelper = require('../resources/auth-helper.js');
-const { readExternalSources } = require('ibm-cloud-sdk-core');
 
 // testcase timeout value (200s).
 const timeout = 200000;
@@ -41,10 +40,14 @@ describe('ResourceManagerV2_integration', () => {
   let quotaId = null;
   let userAccountId = null;
 
-  beforeAll(done => {
-    resourceManagerService = ResourceManagerV2.newInstance({ serviceName: ResourceManagerV2.DEFAULT_SERVICE_NAME });
+  beforeAll((done) => {
+    resourceManagerService = ResourceManagerV2.newInstance({
+      serviceName: ResourceManagerV2.DEFAULT_SERVICE_NAME,
+    });
     expect(resourceManagerService).not.toBeNull();
-    deleteResourceManagerService = ResourceManagerV2.newInstance({ serviceName: 'ALT_RESOURCE_MANAGER' });
+    deleteResourceManagerService = ResourceManagerV2.newInstance({
+      serviceName: 'ALT_RESOURCE_MANAGER',
+    });
     expect(deleteResourceManagerService).not.toBeNull();
 
     const config = readExternalSources(ResourceManagerV2.DEFAULT_SERVICE_NAME);
@@ -66,41 +69,41 @@ describe('ResourceManagerV2_integration', () => {
     done();
   });
 
-  it('should create a new resource group in an account', done => {
+  it('should create a new resource group in an account', (done) => {
     const params = {
       accountId: userAccountId,
       name: 'TestGroup',
     };
     resourceManagerService
       .createResourceGroup(params)
-      .then(response => {
+      .then((response) => {
         expect(response.hasOwnProperty('status')).toBe(true);
         expect(response.status).toBe(201);
         newResourceGroupId = response.result.id;
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         done(err);
       });
   });
 
-  it('should get a list of all resource groups in an account', done => {
+  it('should get a list of all resource groups in an account', (done) => {
     const params = {
       accountId: userAccountId,
     };
     resourceManagerService
       .listResourceGroups(params)
-      .then(response => {
+      .then((response) => {
         expect(response.hasOwnProperty('status')).toBe(true);
         expect(response.status).toBe(200);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         done(err);
       });
   });
 
-  it('should update a resource group by id', done => {
+  it('should update a resource group by id', (done) => {
     const params = {
       id: newResourceGroupId,
       name: 'TestGroup2',
@@ -108,73 +111,73 @@ describe('ResourceManagerV2_integration', () => {
     };
     resourceManagerService
       .updateResourceGroup(params)
-      .then(response => {
+      .then((response) => {
         expect(response.hasOwnProperty('status')).toBe(true);
         expect(response.status).toBe(200);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         done(err);
       });
   });
 
-  it('should retrieve a resource group by id', done => {
+  it('should retrieve a resource group by id', (done) => {
     const params = {
       id: newResourceGroupId,
     };
     resourceManagerService
       .getResourceGroup(params)
-      .then(response => {
+      .then((response) => {
         expect(response.hasOwnProperty('status')).toBe(true);
         expect(response.status).toBe(200);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         done(err);
       });
   });
 
-  it('should delete a resource group by id', done => {
+  it('should delete a resource group by id', (done) => {
     const params = {
       id: newResourceGroupId,
     };
     deleteResourceManagerService
       .deleteResourceGroup(params)
-      .then(response => {
+      .then((response) => {
         expect(response.hasOwnProperty('status')).toBe(true);
         expect(response.status).toBe(204);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         done(err);
       });
   });
 
-  it('should get a list of all quota definitions', done => {
+  it('should get a list of all quota definitions', (done) => {
     resourceManagerService
       .listQuotaDefinitions()
-      .then(response => {
+      .then((response) => {
         expect(response.hasOwnProperty('status')).toBe(true);
         expect(response.status).toBe(200);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         done(err);
       });
   });
 
-  it('should get a quota definition by quota id', done => {
+  it('should get a quota definition by quota id', (done) => {
     const params = {
       id: quotaId,
     };
     resourceManagerService
       .getQuotaDefinition(params)
-      .then(response => {
+      .then((response) => {
         expect(response.hasOwnProperty('status')).toBe(true);
         expect(response.status).toBe(200);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         done(err);
       });
   });

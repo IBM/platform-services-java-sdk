@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 
-'use strict';
-
 const GlobalCatalogV1 = require('../../dist/global-catalog/v1');
 const authHelper = require('../resources/auth-helper.js');
 
@@ -129,17 +127,17 @@ describe('GlobalCatalogV1_integration', () => {
     service = GlobalCatalogV1.newInstance();
   });
 
-  beforeEach(async done => {
+  beforeEach(async (done) => {
     await service.deleteCatalogEntry(forceDelete);
     done();
   });
 
-  afterEach(async done => {
+  afterEach(async (done) => {
     await service.deleteCatalogEntry(forceDelete);
     done();
   });
 
-  test('Create catalog entry', async done => {
+  test('Create catalog entry', async (done) => {
     let response;
 
     try {
@@ -164,7 +162,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Get catalog entry', async done => {
+  test('Get catalog entry', async (done) => {
     let response;
 
     try {
@@ -191,7 +189,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Update catalog entry', async done => {
+  test('Update catalog entry', async (done) => {
     let response;
 
     try {
@@ -218,7 +216,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Delete catalog entry', async done => {
+  test('Delete catalog entry', async (done) => {
     let response;
 
     try {
@@ -237,7 +235,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Fail to get catalog entry after deletion', async done => {
+  test('Fail to get catalog entry after deletion', async (done) => {
     expect.assertions(1);
 
     try {
@@ -255,7 +253,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Fail to get catalog entry that does not exist', async done => {
+  test('Fail to get catalog entry that does not exist', async (done) => {
     expect.assertions(1);
 
     try {
@@ -267,7 +265,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Fail to delete catalog entry that does not exist', async done => {
+  test('Fail to delete catalog entry that does not exist', async (done) => {
     let response;
 
     try {
@@ -286,7 +284,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Fail to update catalog entry that does not exist', async done => {
+  test('Fail to update catalog entry that does not exist', async (done) => {
     expect.assertions(1);
 
     try {
@@ -297,7 +295,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Fail to create catalog entry that already exists', async done => {
+  test('Fail to create catalog entry that already exists', async (done) => {
     expect.assertions(1);
 
     try {
@@ -314,7 +312,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('List catalog entry', async done => {
+  test('List catalog entry', async (done) => {
     let response;
 
     try {
@@ -336,7 +334,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Get child catalog entry', async done => {
+  test('Get child catalog entry', async (done) => {
     let response;
 
     try {
@@ -358,7 +356,7 @@ describe('GlobalCatalogV1_integration', () => {
 
     const { resources } = result || {};
     expect(resources).toBeDefined();
-    expect(resources.length).toEqual(1);
+    expect(resources).toHaveLength(1);
     expect(resources[0].id).toEqual(defaultChildEntry.id);
     expect(resources[0].name).toEqual(defaultChildEntry.name);
     expect(resources[0].active).toEqual(defaultChildEntry.active);
@@ -372,7 +370,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Fail to get child catalog entry that does not exist', async done => {
+  test('Fail to get child catalog entry that does not exist', async (done) => {
     expect.assertions(1);
     try {
       const args = { 'id': 'bogus', 'kind': 'bogus' };
@@ -383,7 +381,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Restore catalog entry', async done => {
+  test('Restore catalog entry', async (done) => {
     let response;
 
     try {
@@ -420,7 +418,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Fail to restore catalog entry that does not exist', async done => {
+  test('Fail to restore catalog entry that does not exist', async (done) => {
     expect.assertions(1);
 
     try {
@@ -432,7 +430,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Get catalog entry visibility', async done => {
+  test('Get catalog entry visibility', async (done) => {
     let response;
 
     try {
@@ -452,7 +450,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Fail to get visibility for catalog entry that does not exist', async done => {
+  test('Fail to get visibility for catalog entry that does not exist', async (done) => {
     expect.assertions(1);
     try {
       const args = { 'id': 'bogus' };
@@ -463,7 +461,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Update catalog entry visibility', async done => {
+  test('Update catalog entry visibility', async (done) => {
     expect.assertions(1);
 
     try {
@@ -480,7 +478,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Fail to update visibility for catalog entry that does not exist', async done => {
+  test('Fail to update visibility for catalog entry that does not exist', async (done) => {
     expect.assertions(1);
 
     try {
@@ -492,7 +490,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Fail to get catalog entry pricing', async done => {
+  test('Fail to get catalog entry pricing', async (done) => {
     expect.assertions(1);
 
     try {
@@ -517,7 +515,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('List catalog entry artifacts', async done => {
+  test('List catalog entry artifacts', async (done) => {
     let response;
 
     const args = {
@@ -545,15 +543,17 @@ describe('GlobalCatalogV1_integration', () => {
 
     const { resources } = result || {};
     expect(resources).toBeDefined();
-    expect(resources.length).toEqual(1);
+    expect(resources).toHaveLength(1);
     expect(resources[0].name).toEqual(defaultEntry.artifactId);
-    expect(resources[0].url).toEqual(`${service.baseOptions.serviceUrl}/${defaultEntry.id}/artifacts/${defaultEntry.artifactId}`);
+    expect(resources[0].url).toEqual(
+      `${service.baseOptions.serviceUrl}/${defaultEntry.id}/artifacts/${defaultEntry.artifactId}`
+    );
     expect(resources[0].size).toEqual(23);
 
     done();
   });
 
-  test('Fail to list catalog entry artifacts', async done => {
+  test('Fail to list catalog entry artifacts', async (done) => {
     let response;
 
     try {
@@ -573,7 +573,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Get catalog entry artifact', async done => {
+  test('Get catalog entry artifact', async (done) => {
     let response;
 
     const args = {
@@ -602,7 +602,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Fail to get catalog entry artifact', async done => {
+  test('Fail to get catalog entry artifact', async (done) => {
     expect.assertions(2);
 
     try {
@@ -628,7 +628,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Create catalog entry artifact', async done => {
+  test('Create catalog entry artifact', async (done) => {
     let response;
 
     const args = {
@@ -655,7 +655,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Fail to create catalog entry artifact', async done => {
+  test('Fail to create catalog entry artifact', async (done) => {
     expect.assertions(1);
 
     const args = {
@@ -674,7 +674,7 @@ describe('GlobalCatalogV1_integration', () => {
     }
   });
 
-  test('Delete catalog entry artifact', async done => {
+  test('Delete catalog entry artifact', async (done) => {
     let response;
 
     const args = {
@@ -702,7 +702,7 @@ describe('GlobalCatalogV1_integration', () => {
     done();
   });
 
-  test('Fail to delete catalog entry artifact', async done => {
+  test('Fail to delete catalog entry artifact', async (done) => {
     expect.assertions(1);
 
     try {

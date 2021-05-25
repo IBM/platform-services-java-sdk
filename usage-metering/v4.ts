@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -33,8 +38,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class UsageMeteringV4 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://billing.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'usage_metering';
 
   /*************************
@@ -67,7 +72,6 @@ class UsageMeteringV4 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a UsageMeteringV4 object.
@@ -105,8 +109,10 @@ class UsageMeteringV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UsageMeteringV4.Response<UsageMeteringV4.ResponseAccepted>>}
    */
-  public reportResourceUsage(params: UsageMeteringV4.ReportResourceUsageParams): Promise<UsageMeteringV4.Response<UsageMeteringV4.ResponseAccepted>> {
-    const _params = Object.assign({}, params);
+  public reportResourceUsage(
+    params: UsageMeteringV4.ReportResourceUsageParams
+  ): Promise<UsageMeteringV4.Response<UsageMeteringV4.ResponseAccepted>> {
+    const _params = { ...params };
     const requiredParams = ['resourceId', 'resourceUsage'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -116,10 +122,14 @@ class UsageMeteringV4 extends BaseService {
 
     const body = _params.resourceUsage;
     const path = {
-      'resource_id': _params.resourceId
+      'resource_id': _params.resourceId,
     };
 
-    const sdkHeaders = getSdkHeaders(UsageMeteringV4.DEFAULT_SERVICE_NAME, 'v4', 'reportResourceUsage');
+    const sdkHeaders = getSdkHeaders(
+      UsageMeteringV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'reportResourceUsage'
+    );
 
     const parameters = {
       options: {
@@ -129,16 +139,20 @@ class UsageMeteringV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -146,9 +160,8 @@ class UsageMeteringV4 extends BaseService {
  ************************/
 
 namespace UsageMeteringV4 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -159,7 +172,7 @@ namespace UsageMeteringV4 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -236,7 +249,6 @@ namespace UsageMeteringV4 {
     /** Response body that contains the status of each submitted usage record. */
     resources: ResourceUsageDetails[];
   }
-
 }
 
 export = UsageMeteringV4;

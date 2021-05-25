@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 
-'use strict';
-const GlobalSearchV2 = require('../../dist/global-search/v2');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
-const authHelper = require('../resources/auth-helper.js');
 const { v4: uuidv4 } = require('uuid');
+const GlobalSearchV2 = require('../../dist/global-search/v2');
+const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (120s).
 const timeout = 120000;
@@ -43,15 +42,15 @@ describe('GlobalSearchV2_integration', () => {
 
   test('search()', async () => {
     const searchResults = [];
-    let searchCursor = undefined;
+    let searchCursor;
     let moreResults = true;
 
     while (moreResults) {
       const params = {
         query: 'GST-sdk-*',
         fields: ['*'],
-        transactionId: transactionId,
-        searchCursor: searchCursor,
+        transactionId,
+        searchCursor,
         limit: 1,
       };
 
@@ -59,9 +58,9 @@ describe('GlobalSearchV2_integration', () => {
       expect(res).toBeDefined();
       expect(res.result).toBeDefined();
       expect(res.status).toEqual(200);
-      console.log('search() result: \n' + JSON.stringify(res.result, null, 2));
+      console.log(`search() result: \n${JSON.stringify(res.result, null, 2)}`);
 
-      const result = res.result;
+      const { result } = res;
       if (result.items && result.items.length > 0) {
         searchResults.push(...result.items);
         searchCursor = result.search_cursor;
@@ -78,6 +77,6 @@ describe('GlobalSearchV2_integration', () => {
     expect(res.result).toBeDefined();
     expect(res.status).toEqual(200);
 
-    console.log('getSupportedTypes() result: \n' + JSON.stringify(res.result, null, 2));
+    console.log(`getSupportedTypes() result: \n${JSON.stringify(res.result, null, 2)}`);
   });
 });

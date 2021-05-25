@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-'use strict';
-const IamIdentityV1 = require('../../dist/iam-identity/v1');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
+const IamIdentityV1 = require('../../dist/iam-identity/v1');
 const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (200s).
@@ -78,46 +77,46 @@ describe('IamIdentityV1_integration', () => {
     console.log('Finished teardown!');
   });
 
-  test('createApiKey1()', done => {
+  test('createApiKey1()', (done) => {
     const params = {
       name: apikeyName,
-      iamId: iamId,
+      iamId,
       description: 'NodeSDK test apikey #1',
     };
 
     iamIdentityService
       .createApiKey(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(201);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).not.toBeNull();
         // console.log('createApiKey() #1 result: ', result);
         apikeyId1 = result.id;
         expect(apikeyId1).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('createApiKey2()', done => {
+  test('createApiKey2()', (done) => {
     const params = {
       name: apikeyName,
-      iamId: iamId,
+      iamId,
       description: 'NodeSDK test apikey #2',
     };
 
     iamIdentityService
       .createApiKey(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(201);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).not.toBeNull();
         // console.log('createApiKey() #2 result: ', result);
 
@@ -125,13 +124,13 @@ describe('IamIdentityV1_integration', () => {
         expect(apikeyId2).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('getApiKey()', done => {
+  test('getApiKey()', (done) => {
     expect(apikeyId1).toBeDefined();
     expect(apikeyId1).not.toBeNull();
     const params = {
@@ -141,11 +140,11 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .getApiKey(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
 
         // console.log('getApiKey() result: ', result);
@@ -162,13 +161,13 @@ describe('IamIdentityV1_integration', () => {
         expect(apikeyEtag1).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('getApiKeysDetails()', done => {
+  test('getApiKeysDetails()', (done) => {
     const params = {
       iamApiKey: iamApikey,
       includeHistory: true,
@@ -176,11 +175,11 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .getApiKeysDetails(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         // console.log('getApikeysDetails() result: ', result);
 
         expect(result.iam_id).toEqual(iamId);
@@ -191,13 +190,13 @@ describe('IamIdentityV1_integration', () => {
 
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('listApiKeys()', async done => {
+  test('listApiKeys()', async (done) => {
     const pageSize = 1;
     let pageToken = null;
     const apikeys = [];
@@ -206,8 +205,8 @@ describe('IamIdentityV1_integration', () => {
       // Retrieve 1 apikey at a time to test the pagination.
       do {
         const params = {
-          accountId: accountId,
-          iamId: iamId,
+          accountId,
+          iamId,
           pagesize: pageSize,
           pagetoken: pageToken,
           includeHistory: true,
@@ -216,12 +215,12 @@ describe('IamIdentityV1_integration', () => {
         const res = await iamIdentityService.listApiKeys(params);
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         // console.log('listApiKeys() result: ', result);
         expect(result.limit).toEqual(pageSize);
         expect(result.apikeys).toBeDefined();
         for (const elem of result.apikeys) {
-          if (elem.name == apikeyName) {
+          if (elem.name === apikeyName) {
             apikeys.push(elem);
           }
         }
@@ -233,11 +232,11 @@ describe('IamIdentityV1_integration', () => {
     }
 
     // Make sure we found the two apikeys that we created previously.
-    expect(apikeys.length).toEqual(2);
+    expect(apikeys).toHaveLength(2);
     done();
   });
 
-  test('updateApiKey()', done => {
+  test('updateApiKey()', (done) => {
     expect(apikeyId1).toBeDefined();
     expect(apikeyId1).not.toBeNull();
     expect(apikeyEtag1).toBeDefined();
@@ -251,24 +250,24 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .updateApiKey(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         // console.log('updateApiKey() result: ', result);
         expect(result).not.toBeNull();
         expect(result.description).toEqual(newDescription);
 
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('lockApiKey()', async done => {
+  test('lockApiKey()', async (done) => {
     expect(apikeyId2).toBeDefined();
     expect(apikeyId2).not.toBeNull();
     const params = {
@@ -277,22 +276,22 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .lockApiKey(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(204);
 
-        getApiKeyById(apikeyId2).then(apikey => {
+        getApiKeyById(apikeyId2).then((apikey) => {
           expect(apikey.locked).toBe(true);
           done();
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('unlockApiKey()', async done => {
+  test('unlockApiKey()', async (done) => {
     expect(apikeyId2).toBeDefined();
     expect(apikeyId2).not.toBeNull();
     const params = {
@@ -301,22 +300,22 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .unlockApiKey(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(204);
 
-        getApiKeyById(apikeyId2).then(apikey => {
+        getApiKeyById(apikeyId2).then((apikey) => {
           expect(apikey.locked).toBe(false);
           done();
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('deleteApiKey1()', async done => {
+  test('deleteApiKey1()', async (done) => {
     expect(apikeyId1).toBeDefined();
     expect(apikeyId1).not.toBeNull();
     const params = {
@@ -325,23 +324,23 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .deleteApiKey(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         // console.log('deleteApiKey() #1 response: ', res);
         expect(res.status).toEqual(204);
 
-        getApiKeyById(apikeyId1).then(apikey => {
+        getApiKeyById(apikeyId1).then((apikey) => {
           expect(apikey).toBeNull();
           done();
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('deleteApiKey2()', async done => {
+  test('deleteApiKey2()', async (done) => {
     expect(apikeyId2).toBeDefined();
     expect(apikeyId2).not.toBeNull();
     const params = {
@@ -350,36 +349,36 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .deleteApiKey(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         // console.log('deleteApiKey() #2 response: ', res);
         expect(res.status).toEqual(204);
 
-        getApiKeyById(apikeyId1).then(apikey => {
+        getApiKeyById(apikeyId1).then((apikey) => {
           expect(apikey).toBeNull();
           done();
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('createServiceId()', done => {
+  test('createServiceId()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       name: serviceIdName,
       description: 'NodeSDK ServiceId desc',
     };
 
     iamIdentityService
       .createServiceId(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(201);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).not.toBeNull();
         // console.log('createServiceId() result: ', result);
         expect(result.id).not.toBeNull();
@@ -387,13 +386,13 @@ describe('IamIdentityV1_integration', () => {
         expect(serviceId1).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('getServiceId()', done => {
+  test('getServiceId()', (done) => {
     expect(serviceId1).toBeDefined();
     expect(serviceId1).not.toBeNull();
     const params = {
@@ -403,11 +402,11 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .getServiceId(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         // console.log('getServiceId() result: ', result);
         expect(result).not.toBeNull();
         expect(result.id).toEqual(serviceId1);
@@ -418,43 +417,43 @@ describe('IamIdentityV1_integration', () => {
         expect(serviceIdEtag1).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('listServiceIds()', done => {
+  test('listServiceIds()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       name: serviceIdName,
       pagesize: 100,
     };
 
     iamIdentityService
       .listServiceIds(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).not.toBeNull();
         // console.log('listServiceIds() result: ', result);
 
-        expect(result.serviceids.length).toEqual(1);
+        expect(result.serviceids).toHaveLength(1);
         expect(result.offset).not.toBeNull();
         expect(result.offset).toEqual(0);
         expect(result.next).toBeUndefined();
 
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('updateServiceId()', done => {
+  test('updateServiceId()', (done) => {
     expect(serviceId1).toBeDefined();
     expect(serviceId1).not.toBeNull();
     const params = {
@@ -465,24 +464,24 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .updateServiceId(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).not.toBeNull();
         // console.log('updateServiceId() result: ', result);
 
         expect(result.description).toEqual(newDescription);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('lockServiceId()', done => {
+  test('lockServiceId()', (done) => {
     expect(serviceId1).toBeDefined();
     expect(serviceId1).not.toBeNull();
     const params = {
@@ -491,22 +490,22 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .lockServiceId(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(204);
 
-        getServiceId(serviceId1).then(serviceId => {
+        getServiceId(serviceId1).then((serviceId) => {
           expect(serviceId.locked).toBe(true);
           done();
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('unlockServiceId()', done => {
+  test('unlockServiceId()', (done) => {
     expect(serviceId1).toBeDefined();
     expect(serviceId1).not.toBeNull();
     const params = {
@@ -515,22 +514,22 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .unlockServiceId(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(204);
 
-        getServiceId(serviceId1).then(serviceId => {
+        getServiceId(serviceId1).then((serviceId) => {
           expect(serviceId.locked).toBe(false);
           done();
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
 
-  test('deleteServiceId()', async done => {
+  test('deleteServiceId()', async (done) => {
     expect(serviceId1).toBeDefined();
     expect(serviceId1).not.toBeNull();
     const params = {
@@ -539,36 +538,36 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .deleteServiceId(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         // console.log('deleteServiceId() response: ', res);
         expect(res.status).toEqual(204);
 
-        getServiceId(serviceId1).then(serviceId => {
+        getServiceId(serviceId1).then((serviceId) => {
           expect(serviceId).toBeNull();
           done();
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('getAccountSettings()', done => {
+  test('getAccountSettings()', (done) => {
     expect(accountSettingsEtag).toBeUndefined();
     const params = {
-      accountId: accountId,
+      accountId,
       includeHistory: false,
     };
 
     iamIdentityService
       .getAccountSettings(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
         expect(res).toBeDefined();
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
 
         // console.log('getAccountSettings() result: ', result);
@@ -585,16 +584,16 @@ describe('IamIdentityV1_integration', () => {
         expect(accountSettingsEtag).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('updateAccountSettings()', done => {
+  test('updateAccountSettings()', (done) => {
     expect(accountSettingsEtag).toBeDefined();
     const params = {
       ifMatch: accountSettingsEtag,
-      accountId: accountId,
+      accountId,
       restrict_create_service_id: 'NOT_RESTRICTED',
       restrict_create_platform_apikey: 'NOT_RESTRICTED',
       // allowedIpAddresses: 'testString',
@@ -606,25 +605,29 @@ describe('IamIdentityV1_integration', () => {
 
     iamIdentityService
       .updateAccountSettings(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(res).toBeDefined();
         expect(res.result).toBeDefined();
 
         // console.log('updateAccountSettings() result: ', result);
         expect(result.account_id).toEqual(accountId);
-        expect(result.entity_tag).toEqual(res.headers['etag']);
+        expect(result.entity_tag).toEqual(res.headers.etag);
         expect(result.restrict_create_service_id).toEqual(params.restrict_create_service_id);
-        expect(result.restrict_create_platform_apikey).toEqual(params.restrict_create_platform_apikey);
+        expect(result.restrict_create_platform_apikey).toEqual(
+          params.restrict_create_platform_apikey
+        );
         expect(result.mfa).toEqual(params.mfa);
         expect(result.session_expiration_in_seconds).toEqual(params.session_expiration_in_seconds);
-        expect(result.session_invalidation_in_seconds).toEqual(params.session_invalidation_in_seconds);
+        expect(result.session_invalidation_in_seconds).toEqual(
+          params.session_invalidation_in_seconds
+        );
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
@@ -681,8 +684,8 @@ describe('IamIdentityV1_integration', () => {
     try {
       // list apikeys
       const apikeyParams = {
-        accountId: accountId,
-        iamId: iamId,
+        accountId,
+        iamId,
         pagesize: 100,
       };
 
@@ -690,7 +693,7 @@ describe('IamIdentityV1_integration', () => {
       const apikeyResult = apikeyResponse.result;
       if (apikeyResult.apikeys) {
         for (const elem of apikeyResult.apikeys) {
-          if (elem.name == apikeyName) {
+          if (elem.name === apikeyName) {
             console.log('>>> Cleaning apikey: ', elem.id);
             const params = {
               id: elem.id,
@@ -704,7 +707,7 @@ describe('IamIdentityV1_integration', () => {
 
       // list serviceIds
       const serviceidParams = {
-        accountId: accountId,
+        accountId,
         name: serviceIdName,
         pagesize: 100,
       };

@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 3.30.0-bd714324-20210406-200538
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -30,8 +35,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class EnterpriseManagementV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://enterprise.cloud.ibm.com/v1';
+
   static DEFAULT_SERVICE_NAME: string = 'enterprise_management';
 
   /*************************
@@ -64,7 +69,6 @@ class EnterpriseManagementV1 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a EnterpriseManagementV1 object.
@@ -111,8 +115,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateEnterpriseResponse>>}
    */
-  public createEnterprise(params: EnterpriseManagementV1.CreateEnterpriseParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateEnterpriseResponse>> {
-    const _params = Object.assign({}, params);
+  public createEnterprise(
+    params: EnterpriseManagementV1.CreateEnterpriseParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateEnterpriseResponse>> {
+    const _params = { ...params };
     const requiredParams = ['sourceAccountId', 'name', 'primaryContactIamId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -124,10 +130,14 @@ class EnterpriseManagementV1 extends BaseService {
       'source_account_id': _params.sourceAccountId,
       'name': _params.name,
       'primary_contact_iam_id': _params.primaryContactIamId,
-      'domain': _params.domain
+      'domain': _params.domain,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createEnterprise');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createEnterprise'
+    );
 
     const parameters = {
       options: {
@@ -136,15 +146,20 @@ class EnterpriseManagementV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List enterprises.
@@ -170,18 +185,24 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListEnterprisesResponse>>}
    */
-  public listEnterprises(params?: EnterpriseManagementV1.ListEnterprisesParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListEnterprisesResponse>> {
-    const _params = Object.assign({}, params);
+  public listEnterprises(
+    params?: EnterpriseManagementV1.ListEnterprisesParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListEnterprisesResponse>> {
+    const _params = { ...params };
 
     const query = {
       'enterprise_account_id': _params.enterpriseAccountId,
       'account_group_id': _params.accountGroupId,
       'account_id': _params.accountId,
       'next_docid': _params.nextDocid,
-      'limit': _params.limit
+      'limit': _params.limit,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listEnterprises');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listEnterprises'
+    );
 
     const parameters = {
       options: {
@@ -190,14 +211,19 @@ class EnterpriseManagementV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get enterprise by ID.
@@ -210,8 +236,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Enterprise>>}
    */
-  public getEnterprise(params: EnterpriseManagementV1.GetEnterpriseParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Enterprise>> {
-    const _params = Object.assign({}, params);
+  public getEnterprise(
+    params: EnterpriseManagementV1.GetEnterpriseParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Enterprise>> {
+    const _params = { ...params };
     const requiredParams = ['enterpriseId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -220,10 +248,14 @@ class EnterpriseManagementV1 extends BaseService {
     }
 
     const path = {
-      'enterprise_id': _params.enterpriseId
+      'enterprise_id': _params.enterpriseId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getEnterprise');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getEnterprise'
+    );
 
     const parameters = {
       options: {
@@ -232,14 +264,19 @@ class EnterpriseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update an enterprise.
@@ -256,8 +293,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>>}
    */
-  public updateEnterprise(params: EnterpriseManagementV1.UpdateEnterpriseParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public updateEnterprise(
+    params: EnterpriseManagementV1.UpdateEnterpriseParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['enterpriseId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -268,14 +307,18 @@ class EnterpriseManagementV1 extends BaseService {
     const body = {
       'name': _params.name,
       'domain': _params.domain,
-      'primary_contact_iam_id': _params.primaryContactIamId
+      'primary_contact_iam_id': _params.primaryContactIamId,
     };
 
     const path = {
-      'enterprise_id': _params.enterpriseId
+      'enterprise_id': _params.enterpriseId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateEnterprise');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateEnterprise'
+    );
 
     const parameters = {
       options: {
@@ -285,14 +328,19 @@ class EnterpriseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * accountOperations
@@ -319,8 +367,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>>}
    */
-  public importAccountToEnterprise(params: EnterpriseManagementV1.ImportAccountToEnterpriseParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public importAccountToEnterprise(
+    params: EnterpriseManagementV1.ImportAccountToEnterpriseParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['enterpriseId', 'accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -330,15 +380,19 @@ class EnterpriseManagementV1 extends BaseService {
 
     const body = {
       'parent': _params.parent,
-      'billing_unit_id': _params.billingUnitId
+      'billing_unit_id': _params.billingUnitId,
     };
 
     const path = {
       'enterprise_id': _params.enterpriseId,
-      'account_id': _params.accountId
+      'account_id': _params.accountId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'importAccountToEnterprise');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'importAccountToEnterprise'
+    );
 
     const parameters = {
       options: {
@@ -348,14 +402,19 @@ class EnterpriseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a new account in an enterprise.
@@ -374,8 +433,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountResponse>>}
    */
-  public createAccount(params: EnterpriseManagementV1.CreateAccountParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountResponse>> {
-    const _params = Object.assign({}, params);
+  public createAccount(
+    params: EnterpriseManagementV1.CreateAccountParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountResponse>> {
+    const _params = { ...params };
     const requiredParams = ['parent', 'name', 'ownerIamId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -386,10 +447,14 @@ class EnterpriseManagementV1 extends BaseService {
     const body = {
       'parent': _params.parent,
       'name': _params.name,
-      'owner_iam_id': _params.ownerIamId
+      'owner_iam_id': _params.ownerIamId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createAccount');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createAccount'
+    );
 
     const parameters = {
       options: {
@@ -398,15 +463,20 @@ class EnterpriseManagementV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List accounts.
@@ -435,18 +505,24 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountsResponse>>}
    */
-  public listAccounts(params?: EnterpriseManagementV1.ListAccountsParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountsResponse>> {
-    const _params = Object.assign({}, params);
+  public listAccounts(
+    params?: EnterpriseManagementV1.ListAccountsParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountsResponse>> {
+    const _params = { ...params };
 
     const query = {
       'enterprise_id': _params.enterpriseId,
       'account_group_id': _params.accountGroupId,
       'next_docid': _params.nextDocid,
       'parent': _params.parent,
-      'limit': _params.limit
+      'limit': _params.limit,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listAccounts');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listAccounts'
+    );
 
     const parameters = {
       options: {
@@ -455,14 +531,19 @@ class EnterpriseManagementV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get account by ID.
@@ -475,8 +556,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Account>>}
    */
-  public getAccount(params: EnterpriseManagementV1.GetAccountParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Account>> {
-    const _params = Object.assign({}, params);
+  public getAccount(
+    params: EnterpriseManagementV1.GetAccountParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Account>> {
+    const _params = { ...params };
     const requiredParams = ['accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -485,10 +568,14 @@ class EnterpriseManagementV1 extends BaseService {
     }
 
     const path = {
-      'account_id': _params.accountId
+      'account_id': _params.accountId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getAccount');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getAccount'
+    );
 
     const parameters = {
       options: {
@@ -497,14 +584,19 @@ class EnterpriseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Move an account within the enterprise.
@@ -517,8 +609,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>>}
    */
-  public updateAccount(params: EnterpriseManagementV1.UpdateAccountParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public updateAccount(
+    params: EnterpriseManagementV1.UpdateAccountParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'parent'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -527,14 +621,18 @@ class EnterpriseManagementV1 extends BaseService {
     }
 
     const body = {
-      'parent': _params.parent
+      'parent': _params.parent,
     };
 
     const path = {
-      'account_id': _params.accountId
+      'account_id': _params.accountId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateAccount');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateAccount'
+    );
 
     const parameters = {
       options: {
@@ -544,14 +642,19 @@ class EnterpriseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * accountGroupOperations
@@ -573,8 +676,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountGroupResponse>>}
    */
-  public createAccountGroup(params: EnterpriseManagementV1.CreateAccountGroupParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountGroupResponse>> {
-    const _params = Object.assign({}, params);
+  public createAccountGroup(
+    params: EnterpriseManagementV1.CreateAccountGroupParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.CreateAccountGroupResponse>> {
+    const _params = { ...params };
     const requiredParams = ['parent', 'name', 'primaryContactIamId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -585,10 +690,14 @@ class EnterpriseManagementV1 extends BaseService {
     const body = {
       'parent': _params.parent,
       'name': _params.name,
-      'primary_contact_iam_id': _params.primaryContactIamId
+      'primary_contact_iam_id': _params.primaryContactIamId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createAccountGroup');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createAccountGroup'
+    );
 
     const parameters = {
       options: {
@@ -597,15 +706,20 @@ class EnterpriseManagementV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List account groups.
@@ -635,18 +749,24 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountGroupsResponse>>}
    */
-  public listAccountGroups(params?: EnterpriseManagementV1.ListAccountGroupsParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountGroupsResponse>> {
-    const _params = Object.assign({}, params);
+  public listAccountGroups(
+    params?: EnterpriseManagementV1.ListAccountGroupsParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.ListAccountGroupsResponse>> {
+    const _params = { ...params };
 
     const query = {
       'enterprise_id': _params.enterpriseId,
       'parent_account_group_id': _params.parentAccountGroupId,
       'next_docid': _params.nextDocid,
       'parent': _params.parent,
-      'limit': _params.limit
+      'limit': _params.limit,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listAccountGroups');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listAccountGroups'
+    );
 
     const parameters = {
       options: {
@@ -655,14 +775,19 @@ class EnterpriseManagementV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get account group by ID.
@@ -675,8 +800,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.AccountGroup>>}
    */
-  public getAccountGroup(params: EnterpriseManagementV1.GetAccountGroupParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.AccountGroup>> {
-    const _params = Object.assign({}, params);
+  public getAccountGroup(
+    params: EnterpriseManagementV1.GetAccountGroupParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.AccountGroup>> {
+    const _params = { ...params };
     const requiredParams = ['accountGroupId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -685,10 +812,14 @@ class EnterpriseManagementV1 extends BaseService {
     }
 
     const path = {
-      'account_group_id': _params.accountGroupId
+      'account_group_id': _params.accountGroupId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getAccountGroup');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getAccountGroup'
+    );
 
     const parameters = {
       options: {
@@ -697,14 +828,19 @@ class EnterpriseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update an account group.
@@ -720,8 +856,10 @@ class EnterpriseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>>}
    */
-  public updateAccountGroup(params: EnterpriseManagementV1.UpdateAccountGroupParams): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public updateAccountGroup(
+    params: EnterpriseManagementV1.UpdateAccountGroupParams
+  ): Promise<EnterpriseManagementV1.Response<EnterpriseManagementV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['accountGroupId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -731,14 +869,18 @@ class EnterpriseManagementV1 extends BaseService {
 
     const body = {
       'name': _params.name,
-      'primary_contact_iam_id': _params.primaryContactIamId
+      'primary_contact_iam_id': _params.primaryContactIamId,
     };
 
     const path = {
-      'account_group_id': _params.accountGroupId
+      'account_group_id': _params.accountGroupId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateAccountGroup');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateAccountGroup'
+    );
 
     const parameters = {
       options: {
@@ -748,15 +890,19 @@ class EnterpriseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -764,9 +910,8 @@ class EnterpriseManagementV1 extends BaseService {
  ************************/
 
 namespace EnterpriseManagementV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -777,7 +922,7 @@ namespace EnterpriseManagementV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1112,7 +1257,6 @@ namespace EnterpriseManagementV1 {
     /** A list of enterprise objects. */
     resources?: Enterprise[];
   }
-
 }
 
 export = EnterpriseManagementV1;

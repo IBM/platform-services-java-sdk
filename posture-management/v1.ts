@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -31,7 +36,6 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class PostureManagementV1 extends BaseService {
-
   static DEFAULT_SERVICE_NAME: string = 'posture_management';
 
   /*************************
@@ -64,7 +68,6 @@ class PostureManagementV1 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a PostureManagementV1 object.
@@ -105,8 +108,10 @@ class PostureManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<PostureManagementV1.Response<PostureManagementV1.Result>>}
    */
-  public createValidation(params: PostureManagementV1.CreateValidationParams): Promise<PostureManagementV1.Response<PostureManagementV1.Result>> {
-    const _params = Object.assign({}, params);
+  public createValidation(
+    params: PostureManagementV1.CreateValidationParams
+  ): Promise<PostureManagementV1.Response<PostureManagementV1.Result>> {
+    const _params = { ...params };
     const requiredParams = ['accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -117,14 +122,18 @@ class PostureManagementV1 extends BaseService {
     const body = {
       'scope_id': _params.scopeId,
       'profile_id': _params.profileId,
-      'group_profile_id': _params.groupProfileId
+      'group_profile_id': _params.groupProfileId,
     };
 
     const query = {
-      'account_id': _params.accountId
+      'account_id': _params.accountId,
     };
 
-    const sdkHeaders = getSdkHeaders(PostureManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createValidation');
+    const sdkHeaders = getSdkHeaders(
+      PostureManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createValidation'
+    );
 
     const parameters = {
       options: {
@@ -134,15 +143,20 @@ class PostureManagementV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * profiles
@@ -159,8 +173,10 @@ class PostureManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<PostureManagementV1.Response<PostureManagementV1.ProfilesList>>}
    */
-  public listProfiles(params: PostureManagementV1.ListProfilesParams): Promise<PostureManagementV1.Response<PostureManagementV1.ProfilesList>> {
-    const _params = Object.assign({}, params);
+  public listProfiles(
+    params: PostureManagementV1.ListProfilesParams
+  ): Promise<PostureManagementV1.Response<PostureManagementV1.ProfilesList>> {
+    const _params = { ...params };
     const requiredParams = ['accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -170,10 +186,14 @@ class PostureManagementV1 extends BaseService {
 
     const query = {
       'account_id': _params.accountId,
-      'name': _params.name
+      'name': _params.name,
     };
 
-    const sdkHeaders = getSdkHeaders(PostureManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listProfiles');
+    const sdkHeaders = getSdkHeaders(
+      PostureManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listProfiles'
+    );
 
     const parameters = {
       options: {
@@ -182,14 +202,19 @@ class PostureManagementV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * scopes
@@ -206,8 +231,10 @@ class PostureManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<PostureManagementV1.Response<PostureManagementV1.ScopesList>>}
    */
-  public listScopes(params: PostureManagementV1.ListScopesParams): Promise<PostureManagementV1.Response<PostureManagementV1.ScopesList>> {
-    const _params = Object.assign({}, params);
+  public listScopes(
+    params: PostureManagementV1.ListScopesParams
+  ): Promise<PostureManagementV1.Response<PostureManagementV1.ScopesList>> {
+    const _params = { ...params };
     const requiredParams = ['accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -217,7 +244,7 @@ class PostureManagementV1 extends BaseService {
 
     const query = {
       'account_id': _params.accountId,
-      'name': _params.name
+      'name': _params.name,
     };
 
     const sdkHeaders = getSdkHeaders(PostureManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listScopes');
@@ -229,15 +256,19 @@ class PostureManagementV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -245,9 +276,8 @@ class PostureManagementV1 extends BaseService {
  ************************/
 
 namespace PostureManagementV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -258,7 +288,7 @@ namespace PostureManagementV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -429,7 +459,6 @@ namespace PostureManagementV1 {
     /** Scopes. */
     scopes?: Scope[];
   }
-
 }
 
 export = PostureManagementV1;

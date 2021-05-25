@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,8 +34,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class EnterpriseUsageReportsV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://enterprise.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'enterprise_usage_reports';
 
   /*************************
@@ -63,7 +68,6 @@ class EnterpriseUsageReportsV1 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a EnterpriseUsageReportsV1 object.
@@ -116,8 +120,10 @@ class EnterpriseUsageReportsV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseUsageReportsV1.Response<EnterpriseUsageReportsV1.Reports>>}
    */
-  public getResourceUsageReport(params?: EnterpriseUsageReportsV1.GetResourceUsageReportParams): Promise<EnterpriseUsageReportsV1.Response<EnterpriseUsageReportsV1.Reports>> {
-    const _params = Object.assign({}, params);
+  public getResourceUsageReport(
+    params?: EnterpriseUsageReportsV1.GetResourceUsageReportParams
+  ): Promise<EnterpriseUsageReportsV1.Response<EnterpriseUsageReportsV1.Reports>> {
+    const _params = { ...params };
 
     const query = {
       'enterprise_id': _params.enterpriseId,
@@ -127,10 +133,14 @@ class EnterpriseUsageReportsV1 extends BaseService {
       'month': _params.month,
       'billing_unit_id': _params.billingUnitId,
       'limit': _params.limit,
-      'offset': _params.offset
+      'offset': _params.offset,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseUsageReportsV1.DEFAULT_SERVICE_NAME, 'v1', 'getResourceUsageReport');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseUsageReportsV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getResourceUsageReport'
+    );
 
     const parameters = {
       options: {
@@ -139,15 +149,19 @@ class EnterpriseUsageReportsV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -155,9 +169,8 @@ class EnterpriseUsageReportsV1 extends BaseService {
  ************************/
 
 namespace EnterpriseUsageReportsV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -168,7 +181,7 @@ namespace EnterpriseUsageReportsV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -320,7 +333,6 @@ namespace EnterpriseUsageReportsV1 {
     /** Details about all the resources that are included in the aggregated charges. */
     resources: ResourceUsage[];
   }
-
 }
 
 export = EnterpriseUsageReportsV1;

@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-'use strict';
 const UsageMeteringV4 = require('../../dist/usage-metering/v4');
 const authHelper = require('../resources/auth-helper.js');
 
@@ -43,7 +42,8 @@ describe('UsageMeteringV4_integration', () => {
     const endTime = startTime;
 
     const resourceId = 'cloudant';
-    const resourceInstanceId = 'crn:v1:staging:public:cloudantnosqldb:us-south:a/f5086e3df886495991303628d21da513:3aafbbee-88e2-4d29-b144-9d267d97064c::';
+    const resourceInstanceId =
+      'crn:v1:staging:public:cloudantnosqldb:us-south:a/f5086e3df886495991303628d21da513:3aafbbee-88e2-4d29-b144-9d267d97064c::';
     const planId = 'cloudant-standard';
     const region = 'us-south';
 
@@ -71,21 +71,21 @@ describe('UsageMeteringV4_integration', () => {
     const resourceInstanceUsageModel = {
       resource_instance_id: resourceInstanceId,
       plan_id: planId,
-      region: region,
+      region,
       start: startTime,
       end: endTime,
       measured_usage: measures,
     };
 
     const params = {
-      resourceId: resourceId,
+      resourceId,
       resourceUsage: [resourceInstanceUsageModel],
     };
 
     const res = await usageMeteringService.reportResourceUsage(params);
     expect(res).toBeDefined();
     expect(res.result).toBeDefined();
-    log('reportResourceUsage() result: ' + JSON.stringify(res.result, null, 2));
+    log(`reportResourceUsage() result: ${JSON.stringify(res.result, null, 2)}`);
   });
 });
 

@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -35,8 +40,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class GlobalSearchV2 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://api.global-search-tagging.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'global_search';
 
   /*************************
@@ -69,7 +74,6 @@ class GlobalSearchV2 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a GlobalSearchV2 object.
@@ -128,20 +132,22 @@ class GlobalSearchV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalSearchV2.Response<GlobalSearchV2.ScanResult>>}
    */
-  public search(params?: GlobalSearchV2.SearchParams): Promise<GlobalSearchV2.Response<GlobalSearchV2.ScanResult>> {
-    const _params = Object.assign({}, params);
+  public search(
+    params?: GlobalSearchV2.SearchParams
+  ): Promise<GlobalSearchV2.Response<GlobalSearchV2.ScanResult>> {
+    const _params = { ...params };
 
     const body = {
       'query': _params.query,
       'fields': _params.fields,
-      'search_cursor': _params.searchCursor
+      'search_cursor': _params.searchCursor,
     };
 
     const query = {
       'account_id': _params.accountId,
       'limit': _params.limit,
       'timeout': _params.timeout,
-      'sort': _params.sort
+      'sort': _params.sort,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalSearchV2.DEFAULT_SERVICE_NAME, 'v2', 'search');
@@ -154,16 +160,21 @@ class GlobalSearchV2 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'transaction-id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'transaction-id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * resourceTypes
@@ -178,10 +189,16 @@ class GlobalSearchV2 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalSearchV2.Response<GlobalSearchV2.SupportedTypesList>>}
    */
-  public getSupportedTypes(params?: GlobalSearchV2.GetSupportedTypesParams): Promise<GlobalSearchV2.Response<GlobalSearchV2.SupportedTypesList>> {
-    const _params = Object.assign({}, params);
+  public getSupportedTypes(
+    params?: GlobalSearchV2.GetSupportedTypesParams
+  ): Promise<GlobalSearchV2.Response<GlobalSearchV2.SupportedTypesList>> {
+    const _params = { ...params };
 
-    const sdkHeaders = getSdkHeaders(GlobalSearchV2.DEFAULT_SERVICE_NAME, 'v2', 'getSupportedTypes');
+    const sdkHeaders = getSdkHeaders(
+      GlobalSearchV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getSupportedTypes'
+    );
 
     const parameters = {
       options: {
@@ -189,15 +206,19 @@ class GlobalSearchV2 extends BaseService {
         method: 'GET',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -205,9 +226,8 @@ class GlobalSearchV2 extends BaseService {
  ************************/
 
 namespace GlobalSearchV2 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -218,7 +238,7 @@ namespace GlobalSearchV2 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -288,7 +308,6 @@ namespace GlobalSearchV2 {
     /** A list of all GhoST indices. */
     supported_types?: string[];
   }
-
 }
 
 export = GlobalSearchV2;

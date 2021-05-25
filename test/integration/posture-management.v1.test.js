@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-'use strict';
-const PostureManagementV1 = require('../../dist/posture-management/v1');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
+const PostureManagementV1 = require('../../dist/posture-management/v1');
 const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (200s).
@@ -37,11 +36,11 @@ describe('PostureManagementV1_integration', () => {
   expect(config).not.toBeNull();
   const apiKey = config.apikey;
   expect(apiKey).toBeDefined();
-  const accountId = config.accountId;
+  const { accountId } = config;
   expect(accountId).toBeDefined();
-  const profileName = config.profileName;
+  const { profileName } = config;
   expect(profileName).toBeDefined();
-  const scopesName = config.scopesName;
+  const { scopesName } = config;
   expect(scopesName).toBeDefined();
 
   let scopesId;
@@ -52,7 +51,7 @@ describe('PostureManagementV1_integration', () => {
 
   test('listProfiles()', async () => {
     const params = {
-      accountId: accountId,
+      accountId,
       name: profileName,
     };
 
@@ -66,7 +65,7 @@ describe('PostureManagementV1_integration', () => {
   });
   test('listScopes()', async () => {
     const params = {
-      accountId: accountId,
+      accountId,
       name: scopesName,
     };
 
@@ -80,10 +79,10 @@ describe('PostureManagementV1_integration', () => {
   });
   test('createValidation()', async () => {
     const params = {
-      accountId: accountId,
+      accountId,
       scopeId: scopesId,
-      profileId: profileId,
-      groupProfileId: groupProfileId,
+      profileId,
+      groupProfileId,
     };
 
     const res = await postureManagementService.createValidation(params);

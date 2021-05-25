@@ -18,11 +18,17 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-7b3ab37f-20210215-130941
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
-import { FileWithMetadata } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+  FileWithMetadata,
+} from 'ibm-cloud-sdk-core';
+
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -31,8 +37,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class CaseManagementV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://support-center.cloud.ibm.com/case-management/v1';
+
   static DEFAULT_SERVICE_NAME: string = 'case_management';
 
   /*************************
@@ -65,7 +71,6 @@ class CaseManagementV1 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a CaseManagementV1 object.
@@ -108,8 +113,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.CaseList>>}
    */
-  public getCases(params?: CaseManagementV1.GetCasesParams): Promise<CaseManagementV1.Response<CaseManagementV1.CaseList>> {
-    const _params = Object.assign({}, params);
+  public getCases(
+    params?: CaseManagementV1.GetCasesParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.CaseList>> {
+    const _params = { ...params };
 
     const query = {
       'offset': _params.offset,
@@ -117,7 +124,7 @@ class CaseManagementV1 extends BaseService {
       'search': _params.search,
       'sort': _params.sort,
       'status': _params.status,
-      'fields': _params.fields
+      'fields': _params.fields,
     };
 
     const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCases');
@@ -129,14 +136,19 @@ class CaseManagementV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a case.
@@ -162,8 +174,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Case>>}
    */
-  public createCase(params: CaseManagementV1.CreateCaseParams): Promise<CaseManagementV1.Response<CaseManagementV1.Case>> {
-    const _params = Object.assign({}, params);
+  public createCase(
+    params: CaseManagementV1.CreateCaseParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.Case>> {
+    const _params = { ...params };
     const requiredParams = ['type', 'subject', 'description'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -181,7 +195,7 @@ class CaseManagementV1 extends BaseService {
       'resources': _params.resources,
       'watchlist': _params.watchlist,
       'invoice_number': _params.invoiceNumber,
-      'sla_credit_request': _params.slaCreditRequest
+      'sla_credit_request': _params.slaCreditRequest,
     };
 
     const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'createCase');
@@ -193,15 +207,20 @@ class CaseManagementV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a case in account.
@@ -214,8 +233,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Case>>}
    */
-  public getCase(params: CaseManagementV1.GetCaseParams): Promise<CaseManagementV1.Response<CaseManagementV1.Case>> {
-    const _params = Object.assign({}, params);
+  public getCase(
+    params: CaseManagementV1.GetCaseParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.Case>> {
+    const _params = { ...params };
     const requiredParams = ['caseNumber'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -224,11 +245,11 @@ class CaseManagementV1 extends BaseService {
     }
 
     const query = {
-      'fields': _params.fields
+      'fields': _params.fields,
     };
 
     const path = {
-      'case_number': _params.caseNumber
+      'case_number': _params.caseNumber,
     };
 
     const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getCase');
@@ -241,14 +262,19 @@ class CaseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update case status.
@@ -261,8 +287,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Case>>}
    */
-  public updateCaseStatus(params: CaseManagementV1.UpdateCaseStatusParams): Promise<CaseManagementV1.Response<CaseManagementV1.Case>> {
-    const _params = Object.assign({}, params);
+  public updateCaseStatus(
+    params: CaseManagementV1.UpdateCaseStatusParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.Case>> {
+    const _params = { ...params };
     const requiredParams = ['caseNumber', 'statusPayload'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -272,10 +300,14 @@ class CaseManagementV1 extends BaseService {
 
     const body = _params.statusPayload;
     const path = {
-      'case_number': _params.caseNumber
+      'case_number': _params.caseNumber,
     };
 
-    const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCaseStatus');
+    const sdkHeaders = getSdkHeaders(
+      CaseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateCaseStatus'
+    );
 
     const parameters = {
       options: {
@@ -285,15 +317,20 @@ class CaseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add comment to case.
@@ -306,8 +343,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Comment>>}
    */
-  public addComment(params: CaseManagementV1.AddCommentParams): Promise<CaseManagementV1.Response<CaseManagementV1.Comment>> {
-    const _params = Object.assign({}, params);
+  public addComment(
+    params: CaseManagementV1.AddCommentParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.Comment>> {
+    const _params = { ...params };
     const requiredParams = ['caseNumber', 'comment'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -316,11 +355,11 @@ class CaseManagementV1 extends BaseService {
     }
 
     const body = {
-      'comment': _params.comment
+      'comment': _params.comment,
     };
 
     const path = {
-      'case_number': _params.caseNumber
+      'case_number': _params.caseNumber,
     };
 
     const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'addComment');
@@ -333,15 +372,20 @@ class CaseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add users to watchlist of case.
@@ -356,8 +400,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.WatchlistAddResponse>>}
    */
-  public addWatchlist(params: CaseManagementV1.AddWatchlistParams): Promise<CaseManagementV1.Response<CaseManagementV1.WatchlistAddResponse>> {
-    const _params = Object.assign({}, params);
+  public addWatchlist(
+    params: CaseManagementV1.AddWatchlistParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.WatchlistAddResponse>> {
+    const _params = { ...params };
     const requiredParams = ['caseNumber'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -366,11 +412,11 @@ class CaseManagementV1 extends BaseService {
     }
 
     const body = {
-      'watchlist': _params.watchlist
+      'watchlist': _params.watchlist,
     };
 
     const path = {
-      'case_number': _params.caseNumber
+      'case_number': _params.caseNumber,
     };
 
     const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'addWatchlist');
@@ -383,15 +429,20 @@ class CaseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Remove users from watchlist of case.
@@ -404,8 +455,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Watchlist>>}
    */
-  public removeWatchlist(params: CaseManagementV1.RemoveWatchlistParams): Promise<CaseManagementV1.Response<CaseManagementV1.Watchlist>> {
-    const _params = Object.assign({}, params);
+  public removeWatchlist(
+    params: CaseManagementV1.RemoveWatchlistParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.Watchlist>> {
+    const _params = { ...params };
     const requiredParams = ['caseNumber'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -414,14 +467,18 @@ class CaseManagementV1 extends BaseService {
     }
 
     const body = {
-      'watchlist': _params.watchlist
+      'watchlist': _params.watchlist,
     };
 
     const path = {
-      'case_number': _params.caseNumber
+      'case_number': _params.caseNumber,
     };
 
-    const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'removeWatchlist');
+    const sdkHeaders = getSdkHeaders(
+      CaseManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'removeWatchlist'
+    );
 
     const parameters = {
       options: {
@@ -431,15 +488,20 @@ class CaseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add a resource to case.
@@ -457,8 +519,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Resource>>}
    */
-  public addResource(params: CaseManagementV1.AddResourceParams): Promise<CaseManagementV1.Response<CaseManagementV1.Resource>> {
-    const _params = Object.assign({}, params);
+  public addResource(
+    params: CaseManagementV1.AddResourceParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.Resource>> {
+    const _params = { ...params };
     const requiredParams = ['caseNumber'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -470,11 +534,11 @@ class CaseManagementV1 extends BaseService {
       'crn': _params.crn,
       'type': _params.type,
       'id': _params.id,
-      'note': _params.note
+      'note': _params.note,
     };
 
     const path = {
-      'case_number': _params.caseNumber
+      'case_number': _params.caseNumber,
     };
 
     const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'addResource');
@@ -487,15 +551,20 @@ class CaseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Add attachment(s) to case.
@@ -509,8 +578,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.Attachment>>}
    */
-  public uploadFile(params: CaseManagementV1.UploadFileParams): Promise<CaseManagementV1.Response<CaseManagementV1.Attachment>> {
-    const _params = Object.assign({}, params);
+  public uploadFile(
+    params: CaseManagementV1.UploadFileParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.Attachment>> {
+    const _params = { ...params };
     const requiredParams = ['caseNumber', 'file'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -519,11 +590,11 @@ class CaseManagementV1 extends BaseService {
     }
 
     const formData = {
-      'file': _params.file
+      'file': _params.file,
     };
 
     const path = {
-      'case_number': _params.caseNumber
+      'case_number': _params.caseNumber,
     };
 
     const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'uploadFile');
@@ -533,18 +604,23 @@ class CaseManagementV1 extends BaseService {
         url: '/cases/{case_number}/attachments',
         method: 'PUT',
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Download an attachment.
@@ -557,8 +633,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<NodeJS.ReadableStream|Buffer>>}
    */
-  public downloadFile(params: CaseManagementV1.DownloadFileParams): Promise<CaseManagementV1.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = Object.assign({}, params);
+  public downloadFile(
+    params: CaseManagementV1.DownloadFileParams
+  ): Promise<CaseManagementV1.Response<NodeJS.ReadableStream | Buffer>> {
+    const _params = { ...params };
     const requiredParams = ['caseNumber', 'fileId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -568,7 +646,7 @@ class CaseManagementV1 extends BaseService {
 
     const path = {
       'case_number': _params.caseNumber,
-      'file_id': _params.fileId
+      'file_id': _params.fileId,
     };
 
     const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'downloadFile');
@@ -581,14 +659,19 @@ class CaseManagementV1 extends BaseService {
         responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/octet-stream',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/octet-stream',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Remove attachment from case.
@@ -601,8 +684,10 @@ class CaseManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CaseManagementV1.Response<CaseManagementV1.AttachmentList>>}
    */
-  public deleteFile(params: CaseManagementV1.DeleteFileParams): Promise<CaseManagementV1.Response<CaseManagementV1.AttachmentList>> {
-    const _params = Object.assign({}, params);
+  public deleteFile(
+    params: CaseManagementV1.DeleteFileParams
+  ): Promise<CaseManagementV1.Response<CaseManagementV1.AttachmentList>> {
+    const _params = { ...params };
     const requiredParams = ['caseNumber', 'fileId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -612,7 +697,7 @@ class CaseManagementV1 extends BaseService {
 
     const path = {
       'case_number': _params.caseNumber,
-      'file_id': _params.fileId
+      'file_id': _params.fileId,
     };
 
     const sdkHeaders = getSdkHeaders(CaseManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteFile');
@@ -624,15 +709,19 @@ class CaseManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -640,9 +729,8 @@ class CaseManagementV1 extends BaseService {
  ************************/
 
 namespace CaseManagementV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -653,7 +741,7 @@ namespace CaseManagementV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1104,7 +1192,6 @@ namespace CaseManagementV1 {
     /** Comment why the case should be unresolved. */
     comment: string;
   }
-
 }
 
 export = CaseManagementV1;

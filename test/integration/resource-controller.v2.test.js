@@ -15,12 +15,10 @@
  * the License.
  */
 
-'use strict';
-
-const ResourceControllerV2 = require('../../dist/resource-controller/v2');
-const authHelper = require('../resources/auth-helper.js');
 const { readExternalSources, getQueryParam } = require('ibm-cloud-sdk-core');
 const { v4: uuidv4 } = require('uuid');
+const ResourceControllerV2 = require('../../dist/resource-controller/v2');
+const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (40s).
 const timeout = 60000;
@@ -34,7 +32,12 @@ const describe = authHelper.prepareTests(configFile);
 const reclaimInstanceName = 'RcSdkReclaimInstance1';
 const lockedInstanceNameUpdate = 'RcSdkLockedInstanceUpdate1';
 const instanceNames = { 'name': 'RcSdkInstance1Node', 'update': 'RcSdkInstanceUpdate1Node' };
-const keyNames = { 'name': 'RcSdkKey1Node', 'update': 'RcSdkKeyUpdate1Node', 'name2': 'RcSdkKey2Node', 'update2': 'RcSdkKeyUpdate2Node' };
+const keyNames = {
+  'name': 'RcSdkKey1Node',
+  'update': 'RcSdkKeyUpdate1Node',
+  'name2': 'RcSdkKey2Node',
+  'update2': 'RcSdkKeyUpdate2Node',
+};
 const bindingNames = { 'name': 'RcSdkBinding1Node', 'update': 'RcSdkBindingUpdate1Node' };
 const aliasNames = { 'name': 'RcSdkAlias1Node', 'update': 'RcSdkAliasUpdate1Node' };
 
@@ -76,7 +79,7 @@ describe('ResourceControllerV2_integration', () => {
   const testPlanId1 = config.planId;
   const testPlanId2 = config.reclamationPlanId;
 
-  test('should successfully complete initialization', done => {
+  test('should successfully complete initialization', (done) => {
     // Initialize the service client.
     service = ResourceControllerV2.newInstance();
     expect(service).not.toBeNull();
@@ -85,9 +88,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('00 - Create A Resource Instance', async done => {
+  test('00 - Create A Resource Instance', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test00-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test00-${transactionId}`,
     };
 
     const params = {
@@ -109,7 +112,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(201);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toBeDefined();
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
@@ -130,9 +133,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('01 - Get A Resource Instance', async done => {
+  test('01 - Get A Resource Instance', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test01-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test01-${transactionId}`,
     };
 
     const params = {
@@ -151,7 +154,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testInstanceCrn);
     expect(result.guid).toEqual(testInstanceGuid);
     expect(result.crn).toEqual(testInstanceCrn);
@@ -168,9 +171,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('02 - Update A Resource Instance', async done => {
+  test('02 - Update A Resource Instance', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test02-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test02-${transactionId}`,
     };
 
     const instanceParams = {
@@ -195,7 +198,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testInstanceCrn);
     expect(result.name).toEqual(instanceNames.update);
     expect(result.state).toEqual('active');
@@ -207,9 +210,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('03 - List Resource Instances With No Filter', async done => {
+  test('03 - List Resource Instances With No Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test03-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test03-${transactionId}`,
     };
 
     const params = {
@@ -230,7 +233,7 @@ describe('ResourceControllerV2_integration', () => {
       expect(response.status).toEqual(200);
       expect(response.result).toBeDefined();
 
-      const result = response.result;
+      const { result } = response;
       expect(result.rows_count).toBeGreaterThanOrEqual(1);
       expect(result.rows_count).toBeLessThanOrEqual(resultsPerPage);
       expect(result.resources.length).toBeGreaterThanOrEqual(1);
@@ -242,9 +245,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('04 - List Resource Instances With Guid Filter', async done => {
+  test('04 - List Resource Instances With Guid Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test04-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test04-${transactionId}`,
     };
 
     const params = {
@@ -263,7 +266,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testInstanceCrn);
@@ -277,9 +280,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('05 - List Resource Instances With Name Filter', async done => {
+  test('05 - List Resource Instances With Name Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test05-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test05-${transactionId}`,
     };
 
     const params = {
@@ -298,20 +301,20 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
 
     done();
   });
 
-  test('06 - Create A Resource Alias', async done => {
+  test('06 - Create A Resource Alias', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test06-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test06-${transactionId}`,
     };
 
-    const targetCrn = 'crn:v1:bluemix:public:bluemix:us-south:o/' + testOrgGuid + '::cf-space:' + testSpaceGuid;
-    aliasTargetCrn = 'crn:v1:bluemix:public:cf:us-south:o/' + testOrgGuid + '::cf-space:' + testSpaceGuid;
+    const targetCrn = `crn:v1:bluemix:public:bluemix:us-south:o/${testOrgGuid}::cf-space:${testSpaceGuid}`;
+    aliasTargetCrn = `crn:v1:bluemix:public:cf:us-south:o/${testOrgGuid}::cf-space:${testSpaceGuid}`;
     const params = {
       name: aliasNames.name,
       source: testInstanceGuid,
@@ -330,7 +333,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(201);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toBeDefined();
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
@@ -348,9 +351,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('07 - Get A Resource Alias', async done => {
+  test('07 - Get A Resource Alias', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test07-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test07-${transactionId}`,
     };
 
     const params = {
@@ -369,7 +372,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testAliasCrn);
     expect(result.guid).toEqual(testAliasGuid);
     expect(result.crn).toEqual(testAliasCrn);
@@ -383,9 +386,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('08 - Update A Resource Alias', async done => {
+  test('08 - Update A Resource Alias', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test08-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test08-${transactionId}`,
     };
 
     const params = {
@@ -405,7 +408,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testAliasCrn);
     expect(result.name).toEqual(aliasNames.update);
     expect(result.state).toEqual('active');
@@ -413,9 +416,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('09 - List Resource Aliases With No Filter', async done => {
+  test('09 - List Resource Aliases With No Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test09-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test09-${transactionId}`,
     };
 
     const params = {
@@ -436,7 +439,7 @@ describe('ResourceControllerV2_integration', () => {
       expect(response.status).toEqual(200);
       expect(response.result).toBeDefined();
 
-      const result = response.result;
+      const { result } = response;
       expect(result.rows_count).toBeGreaterThanOrEqual(1);
       expect(result.rows_count).toBeLessThanOrEqual(resultsPerPage);
       expect(result.resources.length).toBeGreaterThanOrEqual(1);
@@ -448,9 +451,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('10 - List Resource Aliases With Guid Filter', async done => {
+  test('10 - List Resource Aliases With Guid Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test10-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test10-${transactionId}`,
     };
 
     const params = {
@@ -469,7 +472,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testAliasCrn);
@@ -484,9 +487,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('11 - List Resource Aliases With Name Filter', async done => {
+  test('11 - List Resource Aliases With Name Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test11-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test11-${transactionId}`,
     };
 
     const params = {
@@ -505,14 +508,14 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
 
     done();
   });
 
-  test('11a - List Resource Aliases For Instance', async done => {
+  test('11a - List Resource Aliases For Instance', async (done) => {
     expect(testInstanceGuid).toBeTruthy();
 
     const params = {
@@ -533,9 +536,9 @@ describe('ResourceControllerV2_integration', () => {
       expect(response.status).toEqual(200);
       expect(response.result).toBeDefined();
 
-      const result = response.result;
+      const { result } = response;
       expect(result.rows_count).toEqual(1);
-      expect(result.resources.length).toEqual(1);
+      expect(result.resources).toHaveLength(1);
 
       params.start = getQueryParam(result.next_url, 'start');
     } while (params.start != null);
@@ -543,9 +546,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('12 - Create A Resource Binding', async done => {
+  test('12 - Create A Resource Binding', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test12-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test12-${transactionId}`,
     };
 
     const parameters = {
@@ -553,13 +556,13 @@ describe('ResourceControllerV2_integration', () => {
       'parameter2': 'value2',
     };
 
-    const targetCrn = 'crn:v1:staging:public:bluemix:us-south:s/' + testSpaceGuid + '::cf-application:' + testAppGuid;
-    bindTargetCrn = 'crn:v1:staging:public:cf:us-south:s/' + testSpaceGuid + '::cf-application:' + testAppGuid;
+    const targetCrn = `crn:v1:staging:public:bluemix:us-south:s/${testSpaceGuid}::cf-application:${testAppGuid}`;
+    bindTargetCrn = `crn:v1:staging:public:cf:us-south:s/${testSpaceGuid}::cf-application:${testAppGuid}`;
     const params = {
       name: bindingNames.name,
       source: testAliasGuid,
       target: targetCrn,
-      parameters: parameters,
+      parameters,
       headers: customHeader,
     };
 
@@ -574,7 +577,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(201);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toBeDefined();
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
@@ -592,9 +595,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('13 - Get A Resource Binding', async done => {
+  test('13 - Get A Resource Binding', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test13-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test13-${transactionId}`,
     };
 
     const params = {
@@ -613,7 +616,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testBindingCrn);
     expect(result.guid).toEqual(testBindingGuid);
     expect(result.crn).toEqual(testBindingCrn);
@@ -627,9 +630,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('14 - Update A Resource Binding', async done => {
+  test('14 - Update A Resource Binding', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test14-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test14-${transactionId}`,
     };
 
     const params = {
@@ -649,7 +652,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testBindingCrn);
     expect(result.name).toEqual(bindingNames.update);
     expect(result.state).toEqual('active');
@@ -657,9 +660,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('15 - List Resource Bindings With No Filter', async done => {
+  test('15 - List Resource Bindings With No Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test15-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test15-${transactionId}`,
     };
 
     const params = {
@@ -680,7 +683,7 @@ describe('ResourceControllerV2_integration', () => {
       expect(response.status).toEqual(200);
       expect(response.result).toBeDefined();
 
-      const result = response.result;
+      const { result } = response;
       expect(result.rows_count).toBeGreaterThanOrEqual(1);
       expect(result.rows_count).toBeLessThanOrEqual(resultsPerPage);
       expect(result.resources.length).toBeGreaterThanOrEqual(1);
@@ -692,9 +695,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('16 - List Resource Bindings With Guid Filter', async done => {
+  test('16 - List Resource Bindings With Guid Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test16-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test16-${transactionId}`,
     };
 
     const params = {
@@ -713,7 +716,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testBindingCrn);
@@ -727,9 +730,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('17 - List Resource Bindings With Name Filter', async done => {
+  test('17 - List Resource Bindings With Name Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test17-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test17-${transactionId}`,
     };
 
     const params = {
@@ -748,14 +751,14 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
 
     done();
   });
 
-  test('17a - ListResourceBindingsForAlias()', async done => {
+  test('17a - ListResourceBindingsForAlias()', async (done) => {
     expect(testAliasGuid).toBeTruthy();
 
     const params = {
@@ -776,9 +779,9 @@ describe('ResourceControllerV2_integration', () => {
       expect(response.status).toEqual(200);
       expect(response.result).toBeDefined();
 
-      const result = response.result;
+      const { result } = response;
       expect(result.rows_count).toEqual(1);
-      expect(result.resources.length).toEqual(1);
+      expect(result.resources).toHaveLength(1);
 
       params.start = getQueryParam(result.next_url, 'start');
     } while (params.start != null);
@@ -786,9 +789,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('18 - Create A Resource Key For Instance', async done => {
+  test('18 - Create A Resource Key For Instance', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test18-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test18-${transactionId}`,
     };
 
     const parameters = {
@@ -799,7 +802,7 @@ describe('ResourceControllerV2_integration', () => {
     const params = {
       name: keyNames.name,
       source: testInstanceGuid,
-      parameters: parameters,
+      parameters,
       headers: customHeader,
     };
 
@@ -814,7 +817,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(201);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toBeDefined();
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
@@ -831,9 +834,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('19 - Get A Resource Key', async done => {
+  test('19 - Get A Resource Key', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test19-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test19-${transactionId}`,
     };
 
     const params = {
@@ -852,7 +855,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testInstanceKeyCrn);
     expect(result.guid).toEqual(testInstanceKeyGuid);
     expect(result.crn).toEqual(testInstanceKeyCrn);
@@ -865,9 +868,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('20 - Update A Resource Key', async done => {
+  test('20 - Update A Resource Key', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test20-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test20-${transactionId}`,
     };
 
     const params = {
@@ -887,7 +890,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testInstanceKeyCrn);
     expect(result.name).toEqual(keyNames.update);
     expect(result.state).toEqual('active');
@@ -895,9 +898,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('21 - List Resource Keys With No Filter', async done => {
+  test('21 - List Resource Keys With No Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test21-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test21-${transactionId}`,
     };
 
     const params = {
@@ -918,7 +921,7 @@ describe('ResourceControllerV2_integration', () => {
       expect(response.status).toEqual(200);
       expect(response.result).toBeDefined();
 
-      const result = response.result;
+      const { result } = response;
       expect(result.rows_count).toBeGreaterThanOrEqual(1);
       expect(result.rows_count).toBeLessThanOrEqual(resultsPerPage);
       expect(result.resources.length).toBeGreaterThanOrEqual(1);
@@ -930,9 +933,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('22 - List Resource Keys With Guid Filter', async done => {
+  test('22 - List Resource Keys With Guid Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test22-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test22-${transactionId}`,
     };
 
     const params = {
@@ -951,7 +954,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testInstanceKeyCrn);
@@ -964,9 +967,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('23 - List Resource Keys With Name Filter', async done => {
+  test('23 - List Resource Keys With Name Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test23-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test23-${transactionId}`,
     };
 
     const params = {
@@ -985,14 +988,14 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
 
     done();
   });
 
-  test('23a - List Resource Keys For Instance', async done => {
+  test('23a - List Resource Keys For Instance', async (done) => {
     const params = {
       id: testInstanceGuid,
       limit: resultsPerPage,
@@ -1011,9 +1014,9 @@ describe('ResourceControllerV2_integration', () => {
       expect(response.status).toEqual(200);
       expect(response.result).toBeDefined();
 
-      const result = response.result;
+      const { result } = response;
       expect(result.rows_count).toEqual(1);
-      expect(result.resources.length).toEqual(1);
+      expect(result.resources).toHaveLength(1);
 
       params.start = getQueryParam(result.next_url, 'start');
     } while (params.start != null);
@@ -1021,9 +1024,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('24 - Create A Resource Key For Alias', async done => {
+  test('24 - Create A Resource Key For Alias', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test24-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test24-${transactionId}`,
     };
 
     const params = {
@@ -1043,7 +1046,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(201);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toBeDefined();
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
@@ -1060,9 +1063,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('25 - Get A Resource Key', async done => {
+  test('25 - Get A Resource Key', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test25-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test25-${transactionId}`,
     };
 
     const params = {
@@ -1081,7 +1084,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testAliasKeyCrn);
     expect(result.guid).toEqual(testAliasKeyGuid);
     expect(result.crn).toEqual(testAliasKeyCrn);
@@ -1094,9 +1097,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('26 - Update A Resource Key', async done => {
+  test('26 - Update A Resource Key', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test26-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test26-${transactionId}`,
     };
 
     const params = {
@@ -1116,7 +1119,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testAliasKeyCrn);
     expect(result.name).toEqual(keyNames.update2);
     expect(result.state).toEqual('active');
@@ -1124,9 +1127,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('27 - List Resource Keys With No Filter', async done => {
+  test('27 - List Resource Keys With No Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test27-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test27-${transactionId}`,
     };
 
     const params = {
@@ -1144,16 +1147,16 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toBeGreaterThanOrEqual(1);
     expect(result.resources.length).toBeGreaterThanOrEqual(1);
 
     done();
   });
 
-  test('28 - List Resource Keys With Guid Filter', async done => {
+  test('28 - List Resource Keys With Guid Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test28-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test28-${transactionId}`,
     };
 
     const params = {
@@ -1172,7 +1175,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].id).toEqual(testAliasKeyCrn);
@@ -1185,9 +1188,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('29 - List Resource Keys With Name Filter', async done => {
+  test('29 - List Resource Keys With Name Filter', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test29-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test29-${transactionId}`,
     };
 
     const params = {
@@ -1206,16 +1209,16 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.rows_count).toEqual(1);
     expect(result.resources).toHaveLength(1);
 
     done();
   });
 
-  test('30 - Delete A Resource Alias With Dependencies - Fail', async done => {
+  test('30 - Delete A Resource Alias With Dependencies - Fail', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test30-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test30-${transactionId}`,
     };
 
     const params = {
@@ -1237,9 +1240,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('31 - Delete A Resource Instance With Dependencies - Fail', async done => {
+  test('31 - Delete A Resource Instance With Dependencies - Fail', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test31-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test31-${transactionId}`,
     };
 
     const params = {
@@ -1260,9 +1263,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('32 - Delete A Resource Binding', async done => {
+  test('32 - Delete A Resource Binding', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test32-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test32-${transactionId}`,
     };
 
     const params = {
@@ -1283,9 +1286,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('33 - Verify Resource Binding Was Deleted', async done => {
+  test('33 - Verify Resource Binding Was Deleted', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test33-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test33-${transactionId}`,
     };
 
     const params = {
@@ -1304,16 +1307,16 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testBindingCrn);
     expect(result.state).toEqual('removed');
 
     done();
   });
 
-  test('34 - Delete Resource Keys', async done => {
+  test('34 - Delete Resource Keys', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test34-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test34-${transactionId}`,
     };
 
     const params = {
@@ -1332,7 +1335,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(204);
 
     const customHeader2 = {
-      'Transaction-Id': 'rc-sdk-node-test34-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test34-${transactionId}`,
     };
 
     const params2 = {
@@ -1353,9 +1356,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('35 - Verify Resource Keys Were Deleted', async done => {
+  test('35 - Verify Resource Keys Were Deleted', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test35-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test35-${transactionId}`,
     };
 
     const params = {
@@ -1374,12 +1377,12 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testInstanceKeyCrn);
     expect(result.state).toEqual('removed');
 
     const customHeader2 = {
-      'Transaction-Id': 'rc-sdk-node-test35-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test35-${transactionId}`,
     };
 
     const params2 = {
@@ -1405,9 +1408,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('36 - Delete A Resource Alias', async done => {
+  test('36 - Delete A Resource Alias', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test36-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test36-${transactionId}`,
     };
 
     const params = {
@@ -1428,9 +1431,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('37 - Verify Resource Alias Was Deleted', async done => {
+  test('37 - Verify Resource Alias Was Deleted', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test37-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test37-${transactionId}`,
     };
 
     const params = {
@@ -1449,16 +1452,16 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testAliasCrn);
     expect(result.state).toEqual('removed');
 
     done();
   });
 
-  test('38 - Lock A Resource Instance', async done => {
+  test('38 - Lock A Resource Instance', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test38-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test38-${transactionId}`,
     };
 
     const params = {
@@ -1477,7 +1480,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testInstanceCrn);
     expect(result.locked).toBeTruthy();
     expect(result.last_operation.type).toEqual('lock');
@@ -1487,9 +1490,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('39 - Update A Locked Resource Instance - Fail', async done => {
+  test('39 - Update A Locked Resource Instance - Fail', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test39-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test39-${transactionId}`,
     };
 
     const params = {
@@ -1511,9 +1514,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('40 - Delete A Locked Resource Instance - Fail', async done => {
+  test('40 - Delete A Locked Resource Instance - Fail', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test40-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test40-${transactionId}`,
     };
 
     const params = {
@@ -1534,9 +1537,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('41 - Unlock A Resource Instance', async done => {
+  test('41 - Unlock A Resource Instance', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test41-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test41-${transactionId}`,
     };
 
     const params = {
@@ -1555,7 +1558,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testInstanceCrn);
     expect(result.locked).toBeFalsy();
     expect(result.last_operation.type).toEqual('unlock');
@@ -1565,9 +1568,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('42 - Delete A Resource Instance', async done => {
+  test('42 - Delete A Resource Instance', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test42-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test42-${transactionId}`,
     };
 
     const params = {
@@ -1589,9 +1592,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('43 - Verify Resource Instance Was Deleted', async done => {
+  test('43 - Verify Resource Instance Was Deleted', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test43-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test43-${transactionId}`,
     };
 
     const params = {
@@ -1610,7 +1613,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testInstanceCrn);
     expect(result.state).toEqual('removed');
     expect(result.last_operation.type).toEqual('delete');
@@ -1620,9 +1623,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('44 - Create Resource Instance For Reclamation Enabled Plan', async done => {
+  test('44 - Create Resource Instance For Reclamation Enabled Plan', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test44-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test44-${transactionId}`,
     };
 
     const params = {
@@ -1644,7 +1647,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(201);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toBeDefined();
     expect(result.guid).toBeDefined();
     expect(result.crn).toBeDefined();
@@ -1665,9 +1668,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('45 - Schedule A Resource Instance For Reclamation', async done => {
+  test('45 - Schedule A Resource Instance For Reclamation', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test45-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test45-${transactionId}`,
     };
 
     const params = {
@@ -1722,9 +1725,9 @@ describe('ResourceControllerV2_integration', () => {
   //   done();
   // });
 
-  test('47 - List Reclamations For Account Id', async done => {
+  test('47 - List Reclamations For Account Id', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test47-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test47-${transactionId}`,
     };
 
     const params = {
@@ -1744,12 +1747,12 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.resources.length).toBeGreaterThanOrEqual(1);
 
     let foundReclaim = false;
     let i = 0;
-    result.resources.forEach(reclaim => {
+    result.resources.forEach((reclaim) => {
       if (reclaim.resource_instance_id.toString() === testReclaimInstanceGuid) {
         expect(reclaim.resource_instance_id).toEqual(testReclaimInstanceGuid);
         expect(reclaim.account_id).toEqual(testAccountId);
@@ -1769,9 +1772,9 @@ describe('ResourceControllerV2_integration', () => {
     });
   });
 
-  test('48 - Restore A Resource Instance', async done => {
+  test('48 - Restore A Resource Instance', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test48-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test48-${transactionId}`,
     };
 
     const params = {
@@ -1791,7 +1794,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testReclamationId1);
     expect(result.resource_instance_id).toEqual(testReclaimInstanceGuid);
     expect(result.account_id).toEqual(testAccountId);
@@ -1835,9 +1838,9 @@ describe('ResourceControllerV2_integration', () => {
   //   done();
   // });
 
-  test('50 - Schedule A Resource Instance For Reclamation 2', async done => {
+  test('50 - Schedule A Resource Instance For Reclamation 2', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test50-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test50-${transactionId}`,
     };
 
     const params = {
@@ -1858,9 +1861,9 @@ describe('ResourceControllerV2_integration', () => {
     setTimeout(done, 20000);
   });
 
-  test('51 - List Reclamations For Account Id And Resource Instance Id', async done => {
+  test('51 - List Reclamations For Account Id And Resource Instance Id', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test51-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test51-${transactionId}`,
     };
 
     const params = {
@@ -1880,7 +1883,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.resources).toHaveLength(1);
     expect(result.resources[0].resource_instance_id).toEqual(testReclaimInstanceGuid);
     expect(result.resources[0].account_id).toEqual(testAccountId);
@@ -1891,9 +1894,9 @@ describe('ResourceControllerV2_integration', () => {
     done();
   });
 
-  test('52 - Reclaim A Resource Instance', async done => {
+  test('52 - Reclaim A Resource Instance', async (done) => {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-node-test52-' + transactionId,
+      'Transaction-Id': `rc-sdk-node-test52-${transactionId}`,
     };
 
     const params = {
@@ -1913,7 +1916,7 @@ describe('ResourceControllerV2_integration', () => {
     expect(response.status).toEqual(200);
     expect(response.result).toBeDefined();
 
-    const result = response.result;
+    const { result } = response;
     expect(result.id).toEqual(testReclamationId2);
     expect(result.resource_instance_id).toEqual(testReclaimInstanceGuid);
     expect(result.account_id).toEqual(testAccountId);
@@ -1957,7 +1960,7 @@ describe('ResourceControllerV2_integration', () => {
   //   done();
   // });
 
-  afterAll(done => {
+  afterAll((done) => {
     cleanUp(done);
   }, 120000);
 
@@ -1966,7 +1969,7 @@ describe('ResourceControllerV2_integration', () => {
     if (testAliasKeyGuid) {
       try {
         const customHeader = {
-          'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+          'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
         };
 
         const params = {
@@ -1974,12 +1977,12 @@ describe('ResourceControllerV2_integration', () => {
           headers: customHeader,
         };
         await service.deleteResourceKey(params);
-        console.log('Successful cleanup of key ' + testAliasKeyGuid);
+        console.log(`Successful cleanup of key ${testAliasKeyGuid}`);
       } catch (err) {
         if (err && err.status === 410) {
-          console.log('Key ' + testAliasKeyGuid + ' was already deleted by the tests.');
+          console.log(`Key ${testAliasKeyGuid} was already deleted by the tests.`);
         } else {
-          console.log('Error cleaning up key ' + testAliasKeyGuid + ': ', JSON.stringify(err));
+          console.log(`Error cleaning up key ${testAliasKeyGuid}: `, JSON.stringify(err));
         }
       }
     } else {
@@ -1989,7 +1992,7 @@ describe('ResourceControllerV2_integration', () => {
     if (testInstanceKeyGuid) {
       try {
         const customHeader = {
-          'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+          'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
         };
 
         const params = {
@@ -1997,12 +2000,12 @@ describe('ResourceControllerV2_integration', () => {
           headers: customHeader,
         };
         await service.deleteResourceKey(params);
-        console.log('Successful cleanup of key ' + testInstanceKeyGuid);
+        console.log(`Successful cleanup of key ${testInstanceKeyGuid}`);
       } catch (err) {
         if (err && err.status === 410) {
-          console.log('Key ' + testInstanceKeyGuid + ' was already deleted by the tests.');
+          console.log(`Key ${testInstanceKeyGuid} was already deleted by the tests.`);
         } else {
-          console.log('Error cleaning up key ' + testInstanceKeyGuid + ': ', JSON.stringify(err));
+          console.log(`Error cleaning up key ${testInstanceKeyGuid}: `, JSON.stringify(err));
         }
       }
     } else {
@@ -2013,7 +2016,7 @@ describe('ResourceControllerV2_integration', () => {
     if (testBindingGuid) {
       try {
         const customHeader = {
-          'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+          'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
         };
 
         const params = {
@@ -2022,12 +2025,12 @@ describe('ResourceControllerV2_integration', () => {
         };
 
         await service.deleteResourceBinding(params);
-        console.log('Successful cleanup of binding ' + testBindingGuid);
+        console.log(`Successful cleanup of binding ${testBindingGuid}`);
       } catch (err) {
         if (err && err.status === 410) {
-          console.log('Binding ' + testBindingGuid + ' was already deleted by the tests.');
+          console.log(`Binding ${testBindingGuid} was already deleted by the tests.`);
         } else {
-          console.log('Error cleaning up binding ' + testBindingGuid + ': ', JSON.stringify(err));
+          console.log(`Error cleaning up binding ${testBindingGuid}: `, JSON.stringify(err));
         }
       }
     } else {
@@ -2038,7 +2041,7 @@ describe('ResourceControllerV2_integration', () => {
     if (testAliasGuid) {
       try {
         const customHeader = {
-          'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+          'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
         };
 
         const params = {
@@ -2047,12 +2050,12 @@ describe('ResourceControllerV2_integration', () => {
         };
 
         await service.deleteResourceAlias(params);
-        console.log('Successful cleanup of alias ' + testAliasGuid);
+        console.log(`Successful cleanup of alias ${testAliasGuid}`);
       } catch (err) {
         if (err && err.status === 410) {
-          console.log('Alias ' + testAliasGuid + ' was already deleted by the tests.');
+          console.log(`Alias ${testAliasGuid} was already deleted by the tests.`);
         } else {
-          console.log('Error cleaning up alias ' + testAliasGuid + ': ', JSON.stringify(err));
+          console.log(`Error cleaning up alias ${testAliasGuid}: `, JSON.stringify(err));
         }
       }
     } else {
@@ -2066,14 +2069,22 @@ describe('ResourceControllerV2_integration', () => {
       try {
         response = await getResourceInstanceForCleanup(testInstanceGuid);
       } catch (err) {
-        console.log('Error retrieving instance ' + testInstanceGuid + ' for cleanup: ', JSON.stringify(err));
+        console.log(
+          `Error retrieving instance ${testInstanceGuid} for cleanup: `,
+          JSON.stringify(err)
+        );
       }
 
       // if active and locked, unlock instance to cleanup
-      if (response && response.result && response.result.state === 'active' && response.result.locked) {
+      if (
+        response &&
+        response.result &&
+        response.result.state === 'active' &&
+        response.result.locked
+      ) {
         try {
           const customHeader = {
-            'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+            'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
           };
 
           const params = {
@@ -2082,19 +2093,22 @@ describe('ResourceControllerV2_integration', () => {
           };
           await service.unlockResourceInstance(params);
         } catch (err) {
-          console.log('Error unlocking instance ' + testInstanceGuid + ' for cleanup: ', JSON.stringify(err));
+          console.log(
+            `Error unlocking instance ${testInstanceGuid} for cleanup: `,
+            JSON.stringify(err)
+          );
         }
       }
 
       // delete instance to cleanup
       try {
         await deleteResourceInstanceForCleanup(testInstanceGuid);
-        console.log('Successful cleanup of instance ' + testInstanceGuid);
+        console.log(`Successful cleanup of instance ${testInstanceGuid}`);
       } catch (err) {
         if (err && err.status === 410) {
-          console.log('Instance ' + testInstanceGuid + ' was already deleted by the tests.');
+          console.log(`Instance ${testInstanceGuid} was already deleted by the tests.`);
         } else {
-          console.log('Error cleaning up instance ' + testInstanceGuid + ': ', JSON.stringify(err));
+          console.log(`Error cleaning up instance ${testInstanceGuid}: `, JSON.stringify(err));
         }
       }
     } else {
@@ -2102,7 +2116,7 @@ describe('ResourceControllerV2_integration', () => {
     }
 
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+      'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
     };
 
     // Clean up keys by name
@@ -2118,10 +2132,13 @@ describe('ResourceControllerV2_integration', () => {
       try {
         listKeyResponse = await service.listResourceKeys(listKeyParams);
       } catch (err) {
-        console.log('Error retrieving key with name ' + names[nameCounter] + ' for cleanup: ', JSON.stringify(err));
+        console.log(
+          `Error retrieving key with name ${names[nameCounter]} for cleanup: `,
+          JSON.stringify(err)
+        );
       }
       if (listKeyResponse.result.resources.length > 0) {
-        const resources = listKeyResponse.result.resources;
+        const { resources } = listKeyResponse.result;
         const resLength = resources.length;
         let resCounter = 0;
         while (resCounter < resLength) {
@@ -2132,18 +2149,21 @@ describe('ResourceControllerV2_integration', () => {
           };
           try {
             await service.deleteResourceKey(deleteKeyParams);
-            console.log('Successful cleanup of key with name ' + names[nameCounter]);
+            console.log(`Successful cleanup of key with name ${names[nameCounter]}`);
           } catch (err) {
             if (err && err.status === 410) {
-              console.log('Key with name ' + names[nameCounter] + ' was already deleted by the tests.');
+              console.log(`Key with name ${names[nameCounter]} was already deleted by the tests.`);
             } else {
-              console.log('Error cleaning up key with name' + names[nameCounter] + ' and key guid ' + keyGuid + ': ', JSON.stringify(err));
+              console.log(
+                `Error cleaning up key with name${names[nameCounter]} and key guid ${keyGuid}: `,
+                JSON.stringify(err)
+              );
             }
           }
           resCounter++;
         }
       } else {
-        console.log('No keys found for name ' + names[nameCounter]);
+        console.log(`No keys found for name ${names[nameCounter]}`);
       }
       nameCounter++;
     }
@@ -2161,10 +2181,13 @@ describe('ResourceControllerV2_integration', () => {
       try {
         listInstanceResponse = await service.listResourceInstances(listInstanceParams);
       } catch (err) {
-        console.log('Error retrieving instance with name ' + names[nameCounter] + ' for cleanup: ', JSON.stringify(err));
+        console.log(
+          `Error retrieving instance with name ${names[nameCounter]} for cleanup: `,
+          JSON.stringify(err)
+        );
       }
       if (listInstanceResponse.result.resources.length > 0) {
-        const resources = listInstanceResponse.result.resources;
+        const { resources } = listInstanceResponse.result;
         const resLength = resources.length;
         let resCounter = 0;
         while (resCounter < resLength) {
@@ -2179,7 +2202,10 @@ describe('ResourceControllerV2_integration', () => {
               };
               await service.unlockResourceInstance(unlockParams);
             } catch (err) {
-              console.log('Error unlocking instance ' + instanceGuid + ' for cleanup: ', JSON.stringify(err));
+              console.log(
+                `Error unlocking instance ${instanceGuid} for cleanup: `,
+                JSON.stringify(err)
+              );
             }
           }
 
@@ -2189,18 +2215,23 @@ describe('ResourceControllerV2_integration', () => {
           };
           try {
             await service.deleteResourceInstance(deleteInstanceParams);
-            console.log('Successful cleanup of instance with name ' + names[nameCounter]);
+            console.log(`Successful cleanup of instance with name ${names[nameCounter]}`);
           } catch (err) {
             if (err && err.status === 410) {
-              console.log('Instance with name ' + names[nameCounter] + ' was already deleted by the tests.');
+              console.log(
+                `Instance with name ${names[nameCounter]} was already deleted by the tests.`
+              );
             } else {
-              console.log('Error cleaning up instance with name' + names[nameCounter] + ' and instance guid ' + instanceGuid + ': ', JSON.stringify(err));
+              console.log(
+                `Error cleaning up instance with name${names[nameCounter]} and instance guid ${instanceGuid}: `,
+                JSON.stringify(err)
+              );
             }
           }
           resCounter++;
         }
       } else {
-        console.log('No instances found for name ' + names[nameCounter]);
+        console.log(`No instances found for name ${names[nameCounter]}`);
       }
       nameCounter++;
     }
@@ -2218,10 +2249,13 @@ describe('ResourceControllerV2_integration', () => {
       try {
         listBindingResponse = await service.listResourceBindings(listBindingParams);
       } catch (err) {
-        console.log('Error retrieving binding with name ' + names[nameCounter] + ' for cleanup: ', JSON.stringify(err));
+        console.log(
+          `Error retrieving binding with name ${names[nameCounter]} for cleanup: `,
+          JSON.stringify(err)
+        );
       }
       if (listBindingResponse.result.resources.length > 0) {
-        const resources = listBindingResponse.result.resources;
+        const { resources } = listBindingResponse.result;
         const resLength = resources.length;
         let resCounter = 0;
         while (resCounter < resLength) {
@@ -2232,18 +2266,23 @@ describe('ResourceControllerV2_integration', () => {
           };
           try {
             await service.deleteResourceBinding(deleteBindingParams);
-            console.log('Successful cleanup of binding with name ' + names[nameCounter]);
+            console.log(`Successful cleanup of binding with name ${names[nameCounter]}`);
           } catch (err) {
             if (err && err.status === 410) {
-              console.log('Binding with name ' + names[nameCounter] + ' was already deleted by the tests.');
+              console.log(
+                `Binding with name ${names[nameCounter]} was already deleted by the tests.`
+              );
             } else {
-              console.log('Error cleaning up binding with name' + names[nameCounter] + ' and binding guid ' + bindingGuid + ': ', JSON.stringify(err));
+              console.log(
+                `Error cleaning up binding with name${names[nameCounter]} and binding guid ${bindingGuid}: `,
+                JSON.stringify(err)
+              );
             }
           }
           resCounter++;
         }
       } else {
-        console.log('No bindings found for name ' + names[nameCounter]);
+        console.log(`No bindings found for name ${names[nameCounter]}`);
       }
       nameCounter++;
     }
@@ -2261,10 +2300,13 @@ describe('ResourceControllerV2_integration', () => {
       try {
         listAliasResponse = await service.listResourceAliases(listAliasParams);
       } catch (err) {
-        console.log('Error retrieving alias with name ' + names[nameCounter] + ' for cleanup: ', JSON.stringify(err));
+        console.log(
+          `Error retrieving alias with name ${names[nameCounter]} for cleanup: `,
+          JSON.stringify(err)
+        );
       }
       if (listAliasResponse.result.resources.length > 0) {
-        const resources = listAliasResponse.result.resources;
+        const { resources } = listAliasResponse.result;
         const resLength = resources.length;
         let resCounter = 0;
         while (resCounter < resLength) {
@@ -2275,18 +2317,23 @@ describe('ResourceControllerV2_integration', () => {
           };
           try {
             await service.deleteResourceAlias(deleteAliasParams);
-            console.log('Successful cleanup of alias with name ' + names[nameCounter]);
+            console.log(`Successful cleanup of alias with name ${names[nameCounter]}`);
           } catch (err) {
             if (err && err.status === 410) {
-              console.log('Alias with name ' + names[nameCounter] + ' was already deleted by the tests.');
+              console.log(
+                `Alias with name ${names[nameCounter]} was already deleted by the tests.`
+              );
             } else {
-              console.log('Error cleaning up alias with name' + names[nameCounter] + ' and alias guid ' + aliasGuid + ': ', JSON.stringify(err));
+              console.log(
+                `Error cleaning up alias with name${names[nameCounter]} and alias guid ${aliasGuid}: `,
+                JSON.stringify(err)
+              );
             }
           }
           resCounter++;
         }
       } else {
-        console.log('No aliases found for name ' + names[nameCounter]);
+        console.log(`No aliases found for name ${names[nameCounter]}`);
       }
       nameCounter++;
     }
@@ -2299,7 +2346,7 @@ describe('ResourceControllerV2_integration', () => {
 
 function getResourceInstanceForCleanup(instanceId) {
   const customHeader = {
-    'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+    'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
   };
 
   const params = {
@@ -2311,7 +2358,7 @@ function getResourceInstanceForCleanup(instanceId) {
 
 function deleteResourceInstanceForCleanup(instanceId) {
   const customHeader = {
-    'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+    'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
   };
 
   const params = {
@@ -2327,7 +2374,7 @@ async function cleanupInstancePendingReclamation(done) {
   let reclamationId;
   try {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+      'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
     };
 
     const params = {
@@ -2339,17 +2386,21 @@ async function cleanupInstancePendingReclamation(done) {
     if (resp && resp.result && resp.result.resources && resp.result.resources.length === 1) {
       reclamationId = resp.result.resources[0].id;
     } else {
-      console.log('Failed to retrieve reclamation to process to reclaim instance ' + testReclaimInstanceGuid);
+      console.log(
+        `Failed to retrieve reclamation to process to reclaim instance ${testReclaimInstanceGuid}`
+      );
       done();
     }
   } catch (err) {
-    console.log('Error retrieving reclamation for instance ' + testReclaimInstanceGuid + ': ' + JSON.stringify(err));
+    console.log(
+      `Error retrieving reclamation for instance ${testReclaimInstanceGuid}: ${JSON.stringify(err)}`
+    );
     done(err);
   }
 
   try {
     const customHeader = {
-      'Transaction-Id': 'rc-sdk-cleanup-' + transactionId,
+      'Transaction-Id': `rc-sdk-cleanup-${transactionId}`,
     };
 
     const params = {
@@ -2358,10 +2409,12 @@ async function cleanupInstancePendingReclamation(done) {
       headers: customHeader,
     };
     await service.runReclamationAction(params);
-    console.log('Successfully reclaimed instance ' + testReclaimInstanceGuid);
+    console.log(`Successfully reclaimed instance ${testReclaimInstanceGuid}`);
     done();
   } catch (err) {
-    console.log('Error processing reclaim action for reclamation ' + reclamationId + ': ' + JSON.stringify(err));
+    console.log(
+      `Error processing reclaim action for reclamation ${reclamationId}: ${JSON.stringify(err)}`
+    );
     done(err);
   }
 }
@@ -2375,11 +2428,14 @@ async function cleanupReclamationInstance(done) {
         instanceState = response.result.state;
       }
     } catch (err) {
-      console.log('Error retrieving instance ' + testReclaimInstanceGuid + ' for cleanup: ', JSON.stringify(err));
+      console.log(
+        `Error retrieving instance ${testReclaimInstanceGuid} for cleanup: `,
+        JSON.stringify(err)
+      );
     }
 
     if (instanceState && instanceState === 'removed') {
-      console.log('Instance ' + testReclaimInstanceGuid + ' was already reclaimed by the tests.');
+      console.log(`Instance ${testReclaimInstanceGuid} was already reclaimed by the tests.`);
       done();
     } else if (instanceState && instanceState === 'pending_reclamation') {
       await cleanupInstancePendingReclamation(done);
@@ -2388,11 +2444,14 @@ async function cleanupReclamationInstance(done) {
       try {
         await deleteResourceInstanceForCleanup(testReclaimInstanceGuid);
       } catch (err) {
-        console.log('Error scheduling instance ' + testReclaimInstanceGuid + ' for reclamation: ', JSON.stringify(err));
+        console.log(
+          `Error scheduling instance ${testReclaimInstanceGuid} for reclamation: `,
+          JSON.stringify(err)
+        );
         done(err);
       }
 
-      await new Promise(resolve => setTimeout(resolve, 20000));
+      await new Promise((resolve) => setTimeout(resolve, 20000));
       await cleanupInstancePendingReclamation(done);
       done();
     }

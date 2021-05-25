@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-'use strict';
-const EnterpriseBillingUnitsV1 = require('../../dist/enterprise-billing-units/v1');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
+const EnterpriseBillingUnitsV1 = require('../../dist/enterprise-billing-units/v1');
 const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (25s).
@@ -39,7 +38,7 @@ describe('EnterpriseBillingUnitsV1_integration', () => {
   jest.setTimeout(timeout);
   let enterpriseBillingUnitsService;
 
-  beforeAll(async done => {
+  beforeAll(async (done) => {
     enterpriseBillingUnitsService = EnterpriseBillingUnitsV1.newInstance({});
 
     const config = readExternalSources(EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME);
@@ -71,7 +70,7 @@ describe('EnterpriseBillingUnitsV1_integration', () => {
     const res = await enterpriseBillingUnitsService.getBillingUnit(params);
     expect(res).toBeDefined();
     expect(res.result).toBeDefined();
-    log('getBillingUnit() result: ' + JSON.stringify(res.result, null, 2));
+    log(`getBillingUnit() result: ${JSON.stringify(res.result, null, 2)}`);
   });
 
   test('listBillingUnits(enterprise id)', async () => {
@@ -82,7 +81,7 @@ describe('EnterpriseBillingUnitsV1_integration', () => {
     const res = await enterpriseBillingUnitsService.listBillingUnits(params);
     expect(res).toBeDefined();
     expect(res.result).toBeDefined();
-    log('listBillingUnits(enterprise id) result: ' + JSON.stringify(res.result, null, 2));
+    log(`listBillingUnits(enterprise id) result: ${JSON.stringify(res.result, null, 2)}`);
   });
 
   test('listBillingUnits(account id)', async () => {
@@ -93,7 +92,7 @@ describe('EnterpriseBillingUnitsV1_integration', () => {
     const res = await enterpriseBillingUnitsService.listBillingUnits(params);
     expect(res).toBeDefined();
     expect(res.result).toBeDefined();
-    log('listBillingUnits(account id) result: ' + JSON.stringify(res.result, null, 2));
+    log(`listBillingUnits(account id) result: ${JSON.stringify(res.result, null, 2)}`);
   });
 
   test('listBillingUnits(account group id)', async () => {
@@ -104,7 +103,7 @@ describe('EnterpriseBillingUnitsV1_integration', () => {
     const res = await enterpriseBillingUnitsService.listBillingUnits(params);
     expect(res).toBeDefined();
     expect(res.result).toBeDefined();
-    log('listBillingUnits(account group id) result: ' + JSON.stringify(res.result, null, 2));
+    log(`listBillingUnits(account group id) result: ${JSON.stringify(res.result, null, 2)}`);
   });
 
   test('listBillingOptions()', async () => {
@@ -115,7 +114,7 @@ describe('EnterpriseBillingUnitsV1_integration', () => {
     const res = await enterpriseBillingUnitsService.listBillingOptions(params);
     expect(res).toBeDefined();
     expect(res.result).toBeDefined();
-    log('listBillingOptions() result: ' + JSON.stringify(res.result, null, 2));
+    log(`listBillingOptions() result: ${JSON.stringify(res.result, null, 2)}`);
   });
 
   test('getCreditPools()', async () => {
@@ -127,7 +126,7 @@ describe('EnterpriseBillingUnitsV1_integration', () => {
     const res = await enterpriseBillingUnitsService.getCreditPools(params);
     expect(res).toBeDefined();
     expect(res.result).toBeDefined();
-    log('getCreditPools() result: ' + JSON.stringify(res.result, null, 2));
+    log(`getCreditPools() result: ${JSON.stringify(res.result, null, 2)}`);
   });
 });
 

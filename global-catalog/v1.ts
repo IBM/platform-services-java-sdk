@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-4c92c221-20210211-060810
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -34,8 +39,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class GlobalCatalogV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://globalcatalog.cloud.ibm.com/api/v1';
+
   static DEFAULT_SERVICE_NAME: string = 'global_catalog';
 
   /*************************
@@ -68,7 +73,6 @@ class GlobalCatalogV1 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a GlobalCatalogV1 object.
@@ -133,8 +137,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>>}
    */
-  public listCatalogEntries(params?: GlobalCatalogV1.ListCatalogEntriesParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>> {
-    const _params = Object.assign({}, params);
+  public listCatalogEntries(
+    params?: GlobalCatalogV1.ListCatalogEntriesParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>> {
+    const _params = { ...params };
 
     const query = {
       'account': _params.account,
@@ -146,10 +152,14 @@ class GlobalCatalogV1 extends BaseService {
       'catalog': _params.catalog,
       'complete': _params.complete,
       '_offset': _params.offset,
-      '_limit': _params.limit
+      '_limit': _params.limit,
     };
 
-    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'listCatalogEntries');
+    const sdkHeaders = getSdkHeaders(
+      GlobalCatalogV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listCatalogEntries'
+    );
 
     const parameters = {
       options: {
@@ -158,14 +168,19 @@ class GlobalCatalogV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a catalog entry.
@@ -197,9 +212,20 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>>}
    */
-  public createCatalogEntry(params: GlobalCatalogV1.CreateCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
-    const _params = Object.assign({}, params);
-    const requiredParams = ['name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider', 'id'];
+  public createCatalogEntry(
+    params: GlobalCatalogV1.CreateCatalogEntryParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
+    const _params = { ...params };
+    const requiredParams = [
+      'name',
+      'kind',
+      'overviewUi',
+      'images',
+      'disabled',
+      'tags',
+      'provider',
+      'id',
+    ];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -218,14 +244,18 @@ class GlobalCatalogV1 extends BaseService {
       'parent_id': _params.parentId,
       'group': _params.group,
       'active': _params.active,
-      'metadata': _params.metadata
+      'metadata': _params.metadata,
     };
 
     const query = {
-      'account': _params.account
+      'account': _params.account,
     };
 
-    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'createCatalogEntry');
+    const sdkHeaders = getSdkHeaders(
+      GlobalCatalogV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createCatalogEntry'
+    );
 
     const parameters = {
       options: {
@@ -235,15 +265,20 @@ class GlobalCatalogV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a specific catalog object.
@@ -273,8 +308,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>>}
    */
-  public getCatalogEntry(params: GlobalCatalogV1.GetCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
-    const _params = Object.assign({}, params);
+  public getCatalogEntry(
+    params: GlobalCatalogV1.GetCatalogEntryParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -287,11 +324,11 @@ class GlobalCatalogV1 extends BaseService {
       'include': _params.include,
       'languages': _params.languages,
       'complete': _params.complete,
-      'depth': _params.depth
+      'depth': _params.depth,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getCatalogEntry');
@@ -304,14 +341,19 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a catalog entry.
@@ -346,9 +388,20 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>>}
    */
-  public updateCatalogEntry(params: GlobalCatalogV1.UpdateCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
-    const _params = Object.assign({}, params);
-    const requiredParams = ['id', 'name', 'kind', 'overviewUi', 'images', 'disabled', 'tags', 'provider'];
+  public updateCatalogEntry(
+    params: GlobalCatalogV1.UpdateCatalogEntryParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.CatalogEntry>> {
+    const _params = { ...params };
+    const requiredParams = [
+      'id',
+      'name',
+      'kind',
+      'overviewUi',
+      'images',
+      'disabled',
+      'tags',
+      'provider',
+    ];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -366,19 +419,23 @@ class GlobalCatalogV1 extends BaseService {
       'parent_id': _params.parentId,
       'group': _params.group,
       'active': _params.active,
-      'metadata': _params.metadata
+      'metadata': _params.metadata,
     };
 
     const query = {
       'account': _params.account,
-      'move': _params.move
+      'move': _params.move,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCatalogEntry');
+    const sdkHeaders = getSdkHeaders(
+      GlobalCatalogV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateCatalogEntry'
+    );
 
     const parameters = {
       options: {
@@ -389,15 +446,20 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a catalog entry.
@@ -416,8 +478,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
-  public deleteCatalogEntry(params: GlobalCatalogV1.DeleteCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteCatalogEntry(
+    params: GlobalCatalogV1.DeleteCatalogEntryParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -427,14 +491,18 @@ class GlobalCatalogV1 extends BaseService {
 
     const query = {
       'account': _params.account,
-      'force': _params.force
+      'force': _params.force,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCatalogEntry');
+    const sdkHeaders = getSdkHeaders(
+      GlobalCatalogV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteCatalogEntry'
+    );
 
     const parameters = {
       options: {
@@ -444,13 +512,12 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get child catalog entries of a specific kind.
@@ -485,8 +552,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>>}
    */
-  public getChildObjects(params: GlobalCatalogV1.GetChildObjectsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>> {
-    const _params = Object.assign({}, params);
+  public getChildObjects(
+    params: GlobalCatalogV1.GetChildObjectsParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.EntrySearchResult>> {
+    const _params = { ...params };
     const requiredParams = ['id', 'kind'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -503,12 +572,12 @@ class GlobalCatalogV1 extends BaseService {
       'languages': _params.languages,
       'complete': _params.complete,
       '_offset': _params.offset,
-      '_limit': _params.limit
+      '_limit': _params.limit,
     };
 
     const path = {
       'id': _params.id,
-      'kind': _params.kind
+      'kind': _params.kind,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getChildObjects');
@@ -521,14 +590,19 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Restore archived catalog entry.
@@ -543,8 +617,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
-  public restoreCatalogEntry(params: GlobalCatalogV1.RestoreCatalogEntryParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public restoreCatalogEntry(
+    params: GlobalCatalogV1.RestoreCatalogEntryParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -553,14 +629,18 @@ class GlobalCatalogV1 extends BaseService {
     }
 
     const query = {
-      'account': _params.account
+      'account': _params.account,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'restoreCatalogEntry');
+    const sdkHeaders = getSdkHeaders(
+      GlobalCatalogV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'restoreCatalogEntry'
+    );
 
     const parameters = {
       options: {
@@ -570,13 +650,12 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * visibility
@@ -597,8 +676,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Visibility>>}
    */
-  public getVisibility(params: GlobalCatalogV1.GetVisibilityParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Visibility>> {
-    const _params = Object.assign({}, params);
+  public getVisibility(
+    params: GlobalCatalogV1.GetVisibilityParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Visibility>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -607,11 +688,11 @@ class GlobalCatalogV1 extends BaseService {
     }
 
     const query = {
-      'account': _params.account
+      'account': _params.account,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getVisibility');
@@ -624,14 +705,19 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update visibility.
@@ -650,8 +736,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
-  public updateVisibility(params: GlobalCatalogV1.UpdateVisibilityParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public updateVisibility(
+    params: GlobalCatalogV1.UpdateVisibilityParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -662,18 +750,22 @@ class GlobalCatalogV1 extends BaseService {
     const body = {
       'extendable': _params.extendable,
       'include': _params.include,
-      'exclude': _params.exclude
+      'exclude': _params.exclude,
     };
 
     const query = {
-      'account': _params.account
+      'account': _params.account,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'updateVisibility');
+    const sdkHeaders = getSdkHeaders(
+      GlobalCatalogV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateVisibility'
+    );
 
     const parameters = {
       options: {
@@ -684,14 +776,19 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * pricing
@@ -711,8 +808,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.PricingGet>>}
    */
-  public getPricing(params: GlobalCatalogV1.GetPricingParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.PricingGet>> {
-    const _params = Object.assign({}, params);
+  public getPricing(
+    params: GlobalCatalogV1.GetPricingParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.PricingGet>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -721,11 +820,11 @@ class GlobalCatalogV1 extends BaseService {
     }
 
     const query = {
-      'account': _params.account
+      'account': _params.account,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getPricing');
@@ -738,14 +837,19 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * audit
@@ -774,8 +878,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.AuditSearchResult>>}
    */
-  public getAuditLogs(params: GlobalCatalogV1.GetAuditLogsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.AuditSearchResult>> {
-    const _params = Object.assign({}, params);
+  public getAuditLogs(
+    params: GlobalCatalogV1.GetAuditLogsParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.AuditSearchResult>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -788,11 +894,11 @@ class GlobalCatalogV1 extends BaseService {
       'ascending': _params.ascending,
       'startat': _params.startat,
       '_offset': _params.offset,
-      '_limit': _params.limit
+      '_limit': _params.limit,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getAuditLogs');
@@ -805,14 +911,19 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * artifact
@@ -831,8 +942,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Artifacts>>}
    */
-  public listArtifacts(params: GlobalCatalogV1.ListArtifactsParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Artifacts>> {
-    const _params = Object.assign({}, params);
+  public listArtifacts(
+    params: GlobalCatalogV1.ListArtifactsParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Artifacts>> {
+    const _params = { ...params };
     const requiredParams = ['objectId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -841,11 +954,11 @@ class GlobalCatalogV1 extends BaseService {
     }
 
     const query = {
-      'account': _params.account
+      'account': _params.account,
     };
 
     const path = {
-      'object_id': _params.objectId
+      'object_id': _params.objectId,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'listArtifacts');
@@ -858,14 +971,19 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get artifact.
@@ -882,8 +1000,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<NodeJS.ReadableStream|Buffer>>}
    */
-  public getArtifact(params: GlobalCatalogV1.GetArtifactParams): Promise<GlobalCatalogV1.Response<NodeJS.ReadableStream|Buffer>> {
-    const _params = Object.assign({}, params);
+  public getArtifact(
+    params: GlobalCatalogV1.GetArtifactParams
+  ): Promise<GlobalCatalogV1.Response<NodeJS.ReadableStream | Buffer>> {
+    const _params = { ...params };
     const requiredParams = ['objectId', 'artifactId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -892,12 +1012,12 @@ class GlobalCatalogV1 extends BaseService {
     }
 
     const query = {
-      'account': _params.account
+      'account': _params.account,
     };
 
     const path = {
       'object_id': _params.objectId,
-      'artifact_id': _params.artifactId
+      'artifact_id': _params.artifactId,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'getArtifact');
@@ -911,14 +1031,19 @@ class GlobalCatalogV1 extends BaseService {
         responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': _params.accept
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': _params.accept,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Upload artifact.
@@ -936,8 +1061,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
-  public uploadArtifact(params: GlobalCatalogV1.UploadArtifactParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public uploadArtifact(
+    params: GlobalCatalogV1.UploadArtifactParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['objectId', 'artifactId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -947,12 +1074,12 @@ class GlobalCatalogV1 extends BaseService {
 
     const body = _params.artifact;
     const query = {
-      'account': _params.account
+      'account': _params.account,
     };
 
     const path = {
       'object_id': _params.objectId,
-      'artifact_id': _params.artifactId
+      'artifact_id': _params.artifactId,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'uploadArtifact');
@@ -966,14 +1093,19 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': _params.contentType
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': _params.contentType,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete artifact.
@@ -989,8 +1121,10 @@ class GlobalCatalogV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>>}
    */
-  public deleteArtifact(params: GlobalCatalogV1.DeleteArtifactParams): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteArtifact(
+    params: GlobalCatalogV1.DeleteArtifactParams
+  ): Promise<GlobalCatalogV1.Response<GlobalCatalogV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['objectId', 'artifactId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -999,12 +1133,12 @@ class GlobalCatalogV1 extends BaseService {
     }
 
     const query = {
-      'account': _params.account
+      'account': _params.account,
     };
 
     const path = {
       'object_id': _params.objectId,
-      'artifact_id': _params.artifactId
+      'artifact_id': _params.artifactId,
     };
 
     const sdkHeaders = getSdkHeaders(GlobalCatalogV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteArtifact');
@@ -1017,14 +1151,12 @@ class GlobalCatalogV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -1032,9 +1164,8 @@ class GlobalCatalogV1 extends BaseService {
  ************************/
 
 namespace GlobalCatalogV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -1045,7 +1176,7 @@ namespace GlobalCatalogV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1413,7 +1544,7 @@ namespace GlobalCatalogV1 {
     objectId: string;
     /** The artifact's ID. */
     artifactId: string;
-    artifact?: NodeJS.ReadableStream|Buffer;
+    artifact?: NodeJS.ReadableStream | Buffer;
     /** The type of the input. */
     contentType?: string;
     /** This changes the scope of the request regardless of the authorization header. Example scopes are `account`
@@ -2116,7 +2247,6 @@ namespace GlobalCatalogV1 {
      */
     _accountid_?: string;
   }
-
 }
 
 export = GlobalCatalogV1;

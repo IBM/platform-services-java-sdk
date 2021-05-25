@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-'use strict';
-const EnterpriseManagementV1 = require('../../dist/enterprise-management/v1');
 const { readExternalSources, getQueryParam } = require('ibm-cloud-sdk-core');
+const EnterpriseManagementV1 = require('../../dist/enterprise-management/v1');
 const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (200s).
@@ -42,7 +41,7 @@ describe('EnterpriseManagementV1_integration', () => {
   const config = readExternalSources(EnterpriseManagementV1.DEFAULT_SERVICE_NAME);
   expect(config).not.toBeNull();
 
-  const enterpriseId = config.enterpriseId;
+  const { enterpriseId } = config;
   expect(enterpriseId).not.toBeNull();
   const enterpriseAccountId = config.accountId;
   expect(enterpriseAccountId).not.toBeNull();
@@ -83,7 +82,7 @@ describe('EnterpriseManagementV1_integration', () => {
     let nextDocid = null;
 
     const params = {
-      enterpriseId: enterpriseId,
+      enterpriseId,
       limit: resultPerPage,
     };
 
@@ -103,14 +102,14 @@ describe('EnterpriseManagementV1_integration', () => {
       }
     } while (nextDocid != null);
 
-    expect(results.some(result => result.id == accountGroupId)).toBe(true);
-    expect(results.some(result => result.id == newParentAccountGroupId)).toBe(true);
+    expect(results.some((result) => result.id === accountGroupId)).toBe(true);
+    expect(results.some((result) => result.id === newParentAccountGroupId)).toBe(true);
 
     console.log(`Received a total of ${results.length} account groups.`);
   });
   test('getAccountGroup()', async () => {
     const params = {
-      accountGroupId: accountGroupId,
+      accountGroupId,
     };
 
     const res = await enterpriseManagementService.getAccountGroup(params);
@@ -119,7 +118,7 @@ describe('EnterpriseManagementV1_integration', () => {
   });
   test('updateAccountGroup()', async () => {
     const params = {
-      accountGroupId: accountGroupId,
+      accountGroupId,
       name: 'Updated Example Account Group',
       primaryContactIamId: enterpriseAccountIamId,
     };
@@ -148,7 +147,7 @@ describe('EnterpriseManagementV1_integration', () => {
     let nextDocid = null;
 
     const params = {
-      accountGroupId: accountGroupId,
+      accountGroupId,
       limit: resultPerPage,
     };
 
@@ -168,13 +167,13 @@ describe('EnterpriseManagementV1_integration', () => {
       }
     } while (nextDocid != null);
 
-    expect(results.some(result => result.id == accountId)).toBe(true);
+    expect(results.some((result) => result.id === accountId)).toBe(true);
 
     console.log(`Received a total of ${results.length} accounts.`);
   });
   test('getAccount()', async () => {
     const params = {
-      accountId: accountId,
+      accountId,
     };
 
     const res = await enterpriseManagementService.getAccount(params);
@@ -185,7 +184,7 @@ describe('EnterpriseManagementV1_integration', () => {
     const newParentCrn = `crn:v1:bluemix:public:enterprise::a/${enterpriseAccountId}::account-group:${newParentAccountGroupId}`;
     const params = {
       parent: newParentCrn,
-      accountId: accountId,
+      accountId,
     };
 
     const res = await enterpriseManagementService.updateAccount(params);
@@ -217,13 +216,13 @@ describe('EnterpriseManagementV1_integration', () => {
       }
     } while (nextDocid != null);
 
-    expect(results.some(result => result.id == enterpriseId)).toBe(true);
+    expect(results.some((result) => result.id === enterpriseId)).toBe(true);
 
     console.log(`Received a total of ${results.length} enterprises.`);
   });
   test('getEnterprise()', async () => {
     const params = {
-      enterpriseId: enterpriseId,
+      enterpriseId,
     };
 
     const res = await enterpriseManagementService.getEnterprise(params);
@@ -232,7 +231,7 @@ describe('EnterpriseManagementV1_integration', () => {
   });
   test('updateEnterprise()', async () => {
     const params = {
-      enterpriseId: enterpriseId,
+      enterpriseId,
       name: 'Updated Example Enterprise',
       primaryContactIamId: enterpriseAccountIamId,
     };

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-'use strict';
-const GlobalTaggingV1 = require('../../dist/global-tagging/v1');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
+const GlobalTaggingV1 = require('../../dist/global-tagging/v1');
 const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (30s).
@@ -29,10 +28,10 @@ const configFile = 'global_tagging.env';
 const describe = authHelper.prepareTests(configFile);
 
 const sdkLabel = 'node-sdk';
-const userTag1 = sdkLabel + '-user-test1';
-const userTag2 = sdkLabel + '-user-test2';
-const accessTag1 = 'env:' + sdkLabel + '-public';
-const accessTag2 = 'region:' + sdkLabel + '-us-south';
+const userTag1 = `${sdkLabel}-user-test1`;
+const userTag2 = `${sdkLabel}-user-test2`;
+const accessTag1 = `env:${sdkLabel}-public`;
+const accessTag2 = `region:${sdkLabel}-us-south`;
 
 let globalTaggingService;
 let resourceCrn;
@@ -78,11 +77,11 @@ describe('GlobalTaggingV1_integration', () => {
     expect(res).toBeDefined();
     expect(res.result).toBeDefined();
 
-    const result = res.result;
+    const { result } = res;
     console.log('createTag() result: ', result);
 
     expect(result.results).toBeDefined();
-    result.results.forEach(elem => {
+    result.results.forEach((elem) => {
       expect(elem.is_error).toBe(false);
     });
   });
@@ -103,19 +102,19 @@ describe('GlobalTaggingV1_integration', () => {
     expect(res).not.toBeNull();
     expect(res.status).toBe(200);
 
-    const result = res.result;
+    const { result } = res;
     expect(result).toBeDefined();
     console.log('attachTag(user) result: ', result);
 
     expect(result.results).toBeDefined();
-    result.results.forEach(elem => {
+    result.results.forEach((elem) => {
       expect(elem.is_error).toBe(false);
     });
 
     // Make sure the tags were in fact attached to the resource.
     const tagNames = await getTagNamesForResource(globalTaggingService, resourceCrn, 'user');
-    expect(tagNames.includes(userTag1)).toBe(true);
-    expect(tagNames.includes(userTag2)).toBe(true);
+    expect(tagNames).toContain(userTag1);
+    expect(tagNames).toContain(userTag2);
   });
 
   test('attachTag(access)', async () => {
@@ -134,19 +133,19 @@ describe('GlobalTaggingV1_integration', () => {
     expect(res).not.toBeNull();
     expect(res.status).toBe(200);
 
-    const result = res.result;
+    const { result } = res;
     expect(result).toBeDefined();
     console.log('attachTag(access) result: ', result);
 
     expect(result.results).toBeDefined();
-    result.results.forEach(elem => {
+    result.results.forEach((elem) => {
       expect(elem.is_error).toBe(false);
     });
 
     // Make sure the tags were in fact attached to the resource.
     const tagNames = await getTagNamesForResource(globalTaggingService, resourceCrn, 'access');
-    expect(tagNames.includes(accessTag1)).toBe(true);
-    expect(tagNames.includes(accessTag2)).toBe(true);
+    expect(tagNames).toContain(accessTag1);
+    expect(tagNames).toContain(accessTag2);
   });
 
   test('listTags(user)', async () => {
@@ -155,7 +154,7 @@ describe('GlobalTaggingV1_integration', () => {
     let moreResults = true;
     while (moreResults) {
       const params = {
-        offset: offset,
+        offset,
         limit: 500,
         tagType: 'user',
       };
@@ -164,7 +163,7 @@ describe('GlobalTaggingV1_integration', () => {
       expect(res).not.toBeNull();
       expect(res.status).toBe(200);
 
-      const result = res.result;
+      const { result } = res;
       expect(result).toBeDefined();
       expect(result.items).toBeDefined();
 
@@ -178,7 +177,7 @@ describe('GlobalTaggingV1_integration', () => {
     console.log(`\nRetrieved a total of ${results.length} user tags.\n`);
 
     const matches = [];
-    results.forEach(tag => {
+    results.forEach((tag) => {
       if (tag.name.includes(sdkLabel)) {
         matches.push(tag.name);
       }
@@ -192,7 +191,7 @@ describe('GlobalTaggingV1_integration', () => {
     let moreResults = true;
     while (moreResults) {
       const params = {
-        offset: offset,
+        offset,
         limit: 500,
         tagType: 'access',
       };
@@ -201,7 +200,7 @@ describe('GlobalTaggingV1_integration', () => {
       expect(res).not.toBeNull();
       expect(res.status).toBe(200);
 
-      const result = res.result;
+      const { result } = res;
       expect(result).toBeDefined();
       expect(result.items).toBeDefined();
 
@@ -216,7 +215,7 @@ describe('GlobalTaggingV1_integration', () => {
     console.log(`\nRetrieved a total of ${results.length} access tags.\n`);
 
     const matches = [];
-    results.forEach(tag => {
+    results.forEach((tag) => {
       if (tag.name.includes(sdkLabel)) {
         matches.push(tag.name);
       }
@@ -237,19 +236,19 @@ describe('GlobalTaggingV1_integration', () => {
     };
 
     const res = await globalTaggingService.detachTag(params);
-    const result = res.result;
+    const { result } = res;
     expect(result).toBeDefined();
     console.log('detachTag(user) result: ', result);
 
     expect(result.results).toBeDefined();
-    result.results.forEach(elem => {
+    result.results.forEach((elem) => {
       expect(elem.is_error).toBe(false);
     });
 
     // Make sure the tags were in fact detached from the resource.
     const tagNames = await getTagNamesForResource(globalTaggingService, resourceCrn, 'user');
-    expect(tagNames.includes(userTag1)).toBe(false);
-    expect(tagNames.includes(userTag2)).toBe(false);
+    expect(tagNames).not.toContain(userTag1);
+    expect(tagNames).not.toContain(userTag2);
   });
 
   test('detachTag(access)', async () => {
@@ -265,19 +264,19 @@ describe('GlobalTaggingV1_integration', () => {
     };
 
     const res = await globalTaggingService.detachTag(params);
-    const result = res.result;
+    const { result } = res;
     expect(result).toBeDefined();
     console.log('detachTag(access) result: ', result);
 
     expect(result.results).toBeDefined();
-    result.results.forEach(elem => {
+    result.results.forEach((elem) => {
       expect(elem.is_error).toBe(false);
     });
 
     // Make sure the tags were in fact detached from the resource.
     const tagNames = await getTagNamesForResource(globalTaggingService, resourceCrn, 'access');
-    expect(tagNames.includes(accessTag1)).toBe(false);
-    expect(tagNames.includes(accessTag2)).toBe(false);
+    expect(tagNames).not.toContain(accessTag1);
+    expect(tagNames).not.toContain(accessTag2);
   });
 
   test('deleteTag(user)', async () => {
@@ -287,12 +286,12 @@ describe('GlobalTaggingV1_integration', () => {
     };
 
     const res = await globalTaggingService.deleteTag(params);
-    const result = res.result;
+    const { result } = res;
     expect(result).toBeDefined();
     console.log('deleteTag(user) result: ', result);
 
     expect(result.results).toBeDefined();
-    result.results.forEach(elem => {
+    result.results.forEach((elem) => {
       expect(elem.is_error).toBe(false);
     });
   });
@@ -304,12 +303,12 @@ describe('GlobalTaggingV1_integration', () => {
     };
 
     const res = await globalTaggingService.deleteTag(params);
-    const result = res.result;
+    const { result } = res;
     expect(result).toBeDefined();
     console.log('deleteTag(access) result: ', result);
 
     expect(result.results).toBeDefined();
-    result.results.forEach(elem => {
+    result.results.forEach((elem) => {
       expect(elem.is_error).toBe(false);
     });
   });
@@ -320,12 +319,12 @@ describe('GlobalTaggingV1_integration', () => {
     };
 
     const res = await globalTaggingService.deleteTagAll(params);
-    const result = res.result;
+    const { result } = res;
     expect(result).toBeDefined();
     console.log('deleteTagAll(user) result: ', result);
 
     expect(result.items).toBeDefined();
-    result.items.forEach(elem => {
+    result.items.forEach((elem) => {
       expect(elem.is_error).toBe(false);
     });
   });
@@ -336,12 +335,12 @@ describe('GlobalTaggingV1_integration', () => {
     };
 
     const res = await globalTaggingService.deleteTagAll(params);
-    const result = res.result;
+    const { result } = res;
     expect(result).toBeDefined();
     console.log('deleteTagAll(access) result: ', result);
 
     expect(result.items).toBeDefined();
-    result.items.forEach(elem => {
+    result.items.forEach((elem) => {
       expect(elem.is_error).toBe(false);
     });
   });
@@ -354,14 +353,14 @@ async function getTagNamesForResource(service, resourceId, tagType) {
     offset: 0,
     limit: 1000,
     attachedTo: resourceId,
-    tagType: tagType,
+    tagType,
   };
   const res = await service.listTags(params);
   expect(res).toBeDefined();
   expect(res.status).toBe(200);
-  const result = res.result;
+  const { result } = res;
   if (result.items) {
-    result.items.forEach(tag => {
+    result.items.forEach((tag) => {
       tagNames.push(tag.name);
     });
   }
@@ -377,28 +376,28 @@ async function detachTag(service, resourceId, tag, tagType) {
   const params = {
     resources: [resourceModel],
     tagNames: [tag],
-    tagType: tagType,
+    tagType,
   };
 
   const res = await globalTaggingService.detachTag(params);
   expect(res.status).toBe(200);
-  const result = res.result;
+  const { result } = res;
   expect(result).toBeDefined();
 }
 
 async function deleteTag(service, tag, tagType) {
   const params = {
     tagName: tag,
-    tagType: tagType,
+    tagType,
   };
 
   const res = await service.deleteTag(params);
   expect(res).toBeDefined();
-  const result = res.result;
+  const { result } = res;
   expect(result).toBeDefined();
 
   expect(result.results).toBeDefined();
-  result.results.forEach(elem => {
+  result.results.forEach((elem) => {
     expect(elem.is_error).toBe(false);
   });
 }
@@ -411,16 +410,16 @@ async function listTagsWithLabel(service, tagType, label) {
 
   while (moreResults) {
     const params = {
-      offset: offset,
+      offset,
       limit: 500,
-      tagType: tagType,
+      tagType,
     };
 
     const res = await globalTaggingService.listTags(params);
     expect(res).not.toBeNull();
     expect(res.status).toBe(200);
 
-    const result = res.result;
+    const { result } = res;
     expect(result).toBeDefined();
     expect(result.items).toBeDefined();
 

@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,8 +34,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class UserManagementV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://user-management.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'user_management';
 
   /*************************
@@ -63,7 +68,6 @@ class UserManagementV1 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a UserManagementV1 object.
@@ -111,8 +115,10 @@ class UserManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.UserList>>}
    */
-  public listUsers(params: UserManagementV1.ListUsersParams): Promise<UserManagementV1.Response<UserManagementV1.UserList>> {
-    const _params = Object.assign({}, params);
+  public listUsers(
+    params: UserManagementV1.ListUsersParams
+  ): Promise<UserManagementV1.Response<UserManagementV1.UserList>> {
+    const _params = { ...params };
     const requiredParams = ['accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -123,11 +129,11 @@ class UserManagementV1 extends BaseService {
     const query = {
       'state': _params.state,
       'limit': _params.limit,
-      '_start': _params.start
+      '_start': _params.start,
     };
 
     const path = {
-      'account_id': _params.accountId
+      'account_id': _params.accountId,
     };
 
     const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'listUsers');
@@ -140,14 +146,19 @@ class UserManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Invite users to an account.
@@ -170,8 +181,10 @@ class UserManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.InvitedUserList>>}
    */
-  public inviteUsers(params: UserManagementV1.InviteUsersParams): Promise<UserManagementV1.Response<UserManagementV1.InvitedUserList>> {
-    const _params = Object.assign({}, params);
+  public inviteUsers(
+    params: UserManagementV1.InviteUsersParams
+  ): Promise<UserManagementV1.Response<UserManagementV1.InvitedUserList>> {
+    const _params = { ...params };
     const requiredParams = ['accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -182,11 +195,11 @@ class UserManagementV1 extends BaseService {
     const body = {
       'users': _params.users,
       'iam_policy': _params.iamPolicy,
-      'access_groups': _params.accessGroups
+      'access_groups': _params.accessGroups,
     };
 
     const path = {
-      'account_id': _params.accountId
+      'account_id': _params.accountId,
     };
 
     const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'inviteUsers');
@@ -199,15 +212,20 @@ class UserManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get user profile.
@@ -222,8 +240,10 @@ class UserManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.UserProfile>>}
    */
-  public getUserProfile(params: UserManagementV1.GetUserProfileParams): Promise<UserManagementV1.Response<UserManagementV1.UserProfile>> {
-    const _params = Object.assign({}, params);
+  public getUserProfile(
+    params: UserManagementV1.GetUserProfileParams
+  ): Promise<UserManagementV1.Response<UserManagementV1.UserProfile>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'iamId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -233,7 +253,7 @@ class UserManagementV1 extends BaseService {
 
     const path = {
       'account_id': _params.accountId,
-      'iam_id': _params.iamId
+      'iam_id': _params.iamId,
     };
 
     const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getUserProfile');
@@ -245,14 +265,19 @@ class UserManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Partially update user profile.
@@ -278,8 +303,10 @@ class UserManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.Empty>>}
    */
-  public updateUserProfile(params: UserManagementV1.UpdateUserProfileParams): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public updateUserProfile(
+    params: UserManagementV1.UpdateUserProfileParams
+  ): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'iamId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -294,15 +321,19 @@ class UserManagementV1 extends BaseService {
       'email': _params.email,
       'phonenumber': _params.phonenumber,
       'altphonenumber': _params.altphonenumber,
-      'photo': _params.photo
+      'photo': _params.photo,
     };
 
     const path = {
       'account_id': _params.accountId,
-      'iam_id': _params.iamId
+      'iam_id': _params.iamId,
     };
 
-    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserProfile');
+    const sdkHeaders = getSdkHeaders(
+      UserManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateUserProfile'
+    );
 
     const parameters = {
       options: {
@@ -312,14 +343,19 @@ class UserManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Remove user from account.
@@ -335,8 +371,10 @@ class UserManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.Empty>>}
    */
-  public removeUser(params: UserManagementV1.RemoveUserParams): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public removeUser(
+    params: UserManagementV1.RemoveUserParams
+  ): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'iamId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -346,7 +384,7 @@ class UserManagementV1 extends BaseService {
 
     const path = {
       'account_id': _params.accountId,
-      'iam_id': _params.iamId
+      'iam_id': _params.iamId,
     };
 
     const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'removeUser');
@@ -358,13 +396,12 @@ class UserManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * userSettings
@@ -388,8 +425,10 @@ class UserManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.UserSettings>>}
    */
-  public getUserSettings(params: UserManagementV1.GetUserSettingsParams): Promise<UserManagementV1.Response<UserManagementV1.UserSettings>> {
-    const _params = Object.assign({}, params);
+  public getUserSettings(
+    params: UserManagementV1.GetUserSettingsParams
+  ): Promise<UserManagementV1.Response<UserManagementV1.UserSettings>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'iamId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -399,10 +438,14 @@ class UserManagementV1 extends BaseService {
 
     const path = {
       'account_id': _params.accountId,
-      'iam_id': _params.iamId
+      'iam_id': _params.iamId,
     };
 
-    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getUserSettings');
+    const sdkHeaders = getSdkHeaders(
+      UserManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getUserSettings'
+    );
 
     const parameters = {
       options: {
@@ -411,14 +454,19 @@ class UserManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Partially update user settings.
@@ -439,8 +487,10 @@ class UserManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UserManagementV1.Response<UserManagementV1.Empty>>}
    */
-  public updateUserSettings(params: UserManagementV1.UpdateUserSettingsParams): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public updateUserSettings(
+    params: UserManagementV1.UpdateUserSettingsParams
+  ): Promise<UserManagementV1.Response<UserManagementV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'iamId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -452,15 +502,19 @@ class UserManagementV1 extends BaseService {
       'language': _params.language,
       'notification_language': _params.notificationLanguage,
       'allowed_ip_addresses': _params.allowedIpAddresses,
-      'self_manage': _params.selfManage
+      'self_manage': _params.selfManage,
     };
 
     const path = {
       'account_id': _params.accountId,
-      'iam_id': _params.iamId
+      'iam_id': _params.iamId,
     };
 
-    const sdkHeaders = getSdkHeaders(UserManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'updateUserSettings');
+    const sdkHeaders = getSdkHeaders(
+      UserManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateUserSettings'
+    );
 
     const parameters = {
       options: {
@@ -470,15 +524,19 @@ class UserManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Content-Type': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -486,9 +544,8 @@ class UserManagementV1 extends BaseService {
  ************************/
 
 namespace UserManagementV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -499,7 +556,7 @@ namespace UserManagementV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -720,7 +777,6 @@ namespace UserManagementV1 {
     /** An alphanumeric value identifying the origin. */
     role_id?: string;
   }
-
 }
 
 export = UserManagementV1;

@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,8 +34,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class EnterpriseBillingUnitsV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://billing.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'enterprise_billing_units';
 
   /*************************
@@ -63,7 +68,6 @@ class EnterpriseBillingUnitsV1 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a EnterpriseBillingUnitsV1 object.
@@ -100,8 +104,10 @@ class EnterpriseBillingUnitsV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.BillingUnit>>}
    */
-  public getBillingUnit(params: EnterpriseBillingUnitsV1.GetBillingUnitParams): Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.BillingUnit>> {
-    const _params = Object.assign({}, params);
+  public getBillingUnit(
+    params: EnterpriseBillingUnitsV1.GetBillingUnitParams
+  ): Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.BillingUnit>> {
+    const _params = { ...params };
     const requiredParams = ['billingUnitId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -110,10 +116,14 @@ class EnterpriseBillingUnitsV1 extends BaseService {
     }
 
     const path = {
-      'billing_unit_id': _params.billingUnitId
+      'billing_unit_id': _params.billingUnitId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME, 'v1', 'getBillingUnit');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getBillingUnit'
+    );
 
     const parameters = {
       options: {
@@ -122,14 +132,19 @@ class EnterpriseBillingUnitsV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List billing units.
@@ -144,16 +159,22 @@ class EnterpriseBillingUnitsV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.BillingUnitsList>>}
    */
-  public listBillingUnits(params?: EnterpriseBillingUnitsV1.ListBillingUnitsParams): Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.BillingUnitsList>> {
-    const _params = Object.assign({}, params);
+  public listBillingUnits(
+    params?: EnterpriseBillingUnitsV1.ListBillingUnitsParams
+  ): Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.BillingUnitsList>> {
+    const _params = { ...params };
 
     const query = {
       'account_id': _params.accountId,
       'enterprise_id': _params.enterpriseId,
-      'account_group_id': _params.accountGroupId
+      'account_group_id': _params.accountGroupId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME, 'v1', 'listBillingUnits');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listBillingUnits'
+    );
 
     const parameters = {
       options: {
@@ -162,14 +183,19 @@ class EnterpriseBillingUnitsV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * billingOptions
@@ -186,8 +212,10 @@ class EnterpriseBillingUnitsV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.BillingOptionsList>>}
    */
-  public listBillingOptions(params: EnterpriseBillingUnitsV1.ListBillingOptionsParams): Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.BillingOptionsList>> {
-    const _params = Object.assign({}, params);
+  public listBillingOptions(
+    params: EnterpriseBillingUnitsV1.ListBillingOptionsParams
+  ): Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.BillingOptionsList>> {
+    const _params = { ...params };
     const requiredParams = ['billingUnitId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -196,10 +224,14 @@ class EnterpriseBillingUnitsV1 extends BaseService {
     }
 
     const query = {
-      'billing_unit_id': _params.billingUnitId
+      'billing_unit_id': _params.billingUnitId,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME, 'v1', 'listBillingOptions');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listBillingOptions'
+    );
 
     const parameters = {
       options: {
@@ -208,14 +240,19 @@ class EnterpriseBillingUnitsV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * creditPools
@@ -235,8 +272,10 @@ class EnterpriseBillingUnitsV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.CreditPoolsList>>}
    */
-  public getCreditPools(params: EnterpriseBillingUnitsV1.GetCreditPoolsParams): Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.CreditPoolsList>> {
-    const _params = Object.assign({}, params);
+  public getCreditPools(
+    params: EnterpriseBillingUnitsV1.GetCreditPoolsParams
+  ): Promise<EnterpriseBillingUnitsV1.Response<EnterpriseBillingUnitsV1.CreditPoolsList>> {
+    const _params = { ...params };
     const requiredParams = ['billingUnitId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -247,10 +286,14 @@ class EnterpriseBillingUnitsV1 extends BaseService {
     const query = {
       'billing_unit_id': _params.billingUnitId,
       'date': _params.date,
-      'type': _params.type
+      'type': _params.type,
     };
 
-    const sdkHeaders = getSdkHeaders(EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME, 'v1', 'getCreditPools');
+    const sdkHeaders = getSdkHeaders(
+      EnterpriseBillingUnitsV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getCreditPools'
+    );
 
     const parameters = {
       options: {
@@ -259,15 +302,19 @@ class EnterpriseBillingUnitsV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -275,9 +322,8 @@ class EnterpriseBillingUnitsV1 extends BaseService {
  ************************/
 
 namespace EnterpriseBillingUnitsV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -288,7 +334,7 @@ namespace EnterpriseBillingUnitsV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -474,7 +520,6 @@ namespace EnterpriseBillingUnitsV1 {
     /** A list of resources that used credit during the month. */
     resources?: JsonObject[];
   }
-
 }
 
 export = EnterpriseBillingUnitsV1;

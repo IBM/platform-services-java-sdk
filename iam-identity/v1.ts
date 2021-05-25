@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-46891d34-20210426-162952
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,8 +34,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class IamIdentityV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://iam.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'iam_identity';
 
   /*************************
@@ -63,7 +68,6 @@ class IamIdentityV1 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a IamIdentityV1 object.
@@ -119,8 +123,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ApiKeyList>>}
    */
-  public listApiKeys(params?: IamIdentityV1.ListApiKeysParams): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKeyList>> {
-    const _params = Object.assign({}, params);
+  public listApiKeys(
+    params?: IamIdentityV1.ListApiKeysParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKeyList>> {
+    const _params = { ...params };
 
     const query = {
       'account_id': _params.accountId,
@@ -131,7 +137,7 @@ class IamIdentityV1 extends BaseService {
       'type': _params.type,
       'sort': _params.sort,
       'order': _params.order,
-      'include_history': _params.includeHistory
+      'include_history': _params.includeHistory,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'listApiKeys');
@@ -143,14 +149,19 @@ class IamIdentityV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create an API key.
@@ -177,8 +188,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>>}
    */
-  public createApiKey(params: IamIdentityV1.CreateApiKeyParams): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>> {
-    const _params = Object.assign({}, params);
+  public createApiKey(
+    params: IamIdentityV1.CreateApiKeyParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>> {
+    const _params = { ...params };
     const requiredParams = ['name', 'iamId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -192,7 +205,7 @@ class IamIdentityV1 extends BaseService {
       'description': _params.description,
       'account_id': _params.accountId,
       'apikey': _params.apikey,
-      'store_value': _params.storeValue
+      'store_value': _params.storeValue,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'createApiKey');
@@ -204,16 +217,21 @@ class IamIdentityV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Entity-Lock': _params.entityLock
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Entity-Lock': _params.entityLock,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get details of an API key by its value.
@@ -227,11 +245,13 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>>}
    */
-  public getApiKeysDetails(params?: IamIdentityV1.GetApiKeysDetailsParams): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>> {
-    const _params = Object.assign({}, params);
+  public getApiKeysDetails(
+    params?: IamIdentityV1.GetApiKeysDetailsParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>> {
+    const _params = { ...params };
 
     const query = {
-      'include_history': _params.includeHistory
+      'include_history': _params.includeHistory,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'getApiKeysDetails');
@@ -243,15 +263,20 @@ class IamIdentityV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'IAM-ApiKey': _params.iamApiKey
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'IAM-ApiKey': _params.iamApiKey,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get details of an API key.
@@ -267,8 +292,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>>}
    */
-  public getApiKey(params: IamIdentityV1.GetApiKeyParams): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>> {
-    const _params = Object.assign({}, params);
+  public getApiKey(
+    params: IamIdentityV1.GetApiKeyParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -277,11 +304,11 @@ class IamIdentityV1 extends BaseService {
     }
 
     const query = {
-      'include_history': _params.includeHistory
+      'include_history': _params.includeHistory,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'getApiKey');
@@ -294,14 +321,19 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Updates an API key.
@@ -323,8 +355,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>>}
    */
-  public updateApiKey(params: IamIdentityV1.UpdateApiKeyParams): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>> {
-    const _params = Object.assign({}, params);
+  public updateApiKey(
+    params: IamIdentityV1.UpdateApiKeyParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ApiKey>> {
+    const _params = { ...params };
     const requiredParams = ['id', 'ifMatch'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -334,11 +368,11 @@ class IamIdentityV1 extends BaseService {
 
     const body = {
       'name': _params.name,
-      'description': _params.description
+      'description': _params.description,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'updateApiKey');
@@ -351,16 +385,21 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'If-Match': _params.ifMatch
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'If-Match': _params.ifMatch,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Deletes an API key.
@@ -373,8 +412,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.Empty>>}
    */
-  public deleteApiKey(params: IamIdentityV1.DeleteApiKeyParams): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteApiKey(
+    params: IamIdentityV1.DeleteApiKeyParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -383,7 +424,7 @@ class IamIdentityV1 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteApiKey');
@@ -395,13 +436,12 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Lock the API key.
@@ -415,8 +455,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.Empty>>}
    */
-  public lockApiKey(params: IamIdentityV1.LockApiKeyParams): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public lockApiKey(
+    params: IamIdentityV1.LockApiKeyParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -425,7 +467,7 @@ class IamIdentityV1 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'lockApiKey');
@@ -437,13 +479,12 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Unlock the API key.
@@ -457,8 +498,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.Empty>>}
    */
-  public unlockApiKey(params: IamIdentityV1.UnlockApiKeyParams): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public unlockApiKey(
+    params: IamIdentityV1.UnlockApiKeyParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -467,7 +510,7 @@ class IamIdentityV1 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'unlockApiKey');
@@ -479,13 +522,12 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List service IDs.
@@ -509,8 +551,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ServiceIdList>>}
    */
-  public listServiceIds(params?: IamIdentityV1.ListServiceIdsParams): Promise<IamIdentityV1.Response<IamIdentityV1.ServiceIdList>> {
-    const _params = Object.assign({}, params);
+  public listServiceIds(
+    params?: IamIdentityV1.ListServiceIdsParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ServiceIdList>> {
+    const _params = { ...params };
 
     const query = {
       'account_id': _params.accountId,
@@ -519,7 +563,7 @@ class IamIdentityV1 extends BaseService {
       'pagetoken': _params.pagetoken,
       'sort': _params.sort,
       'order': _params.order,
-      'include_history': _params.includeHistory
+      'include_history': _params.includeHistory,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'listServiceIds');
@@ -531,14 +575,19 @@ class IamIdentityV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create a service ID.
@@ -561,8 +610,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ServiceId>>}
    */
-  public createServiceId(params: IamIdentityV1.CreateServiceIdParams): Promise<IamIdentityV1.Response<IamIdentityV1.ServiceId>> {
-    const _params = Object.assign({}, params);
+  public createServiceId(
+    params: IamIdentityV1.CreateServiceIdParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ServiceId>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'name'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -575,7 +626,7 @@ class IamIdentityV1 extends BaseService {
       'name': _params.name,
       'description': _params.description,
       'unique_instance_crns': _params.uniqueInstanceCrns,
-      'apikey': _params.apikey
+      'apikey': _params.apikey,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'createServiceId');
@@ -587,16 +638,21 @@ class IamIdentityV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Entity-Lock': _params.entityLock
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Entity-Lock': _params.entityLock,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get details of a service ID.
@@ -610,8 +666,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ServiceId>>}
    */
-  public getServiceId(params: IamIdentityV1.GetServiceIdParams): Promise<IamIdentityV1.Response<IamIdentityV1.ServiceId>> {
-    const _params = Object.assign({}, params);
+  public getServiceId(
+    params: IamIdentityV1.GetServiceIdParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ServiceId>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -620,11 +678,11 @@ class IamIdentityV1 extends BaseService {
     }
 
     const query = {
-      'include_history': _params.includeHistory
+      'include_history': _params.includeHistory,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'getServiceId');
@@ -637,14 +695,19 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update service ID.
@@ -669,8 +732,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ServiceId>>}
    */
-  public updateServiceId(params: IamIdentityV1.UpdateServiceIdParams): Promise<IamIdentityV1.Response<IamIdentityV1.ServiceId>> {
-    const _params = Object.assign({}, params);
+  public updateServiceId(
+    params: IamIdentityV1.UpdateServiceIdParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ServiceId>> {
+    const _params = { ...params };
     const requiredParams = ['id', 'ifMatch'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -681,11 +746,11 @@ class IamIdentityV1 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
-      'unique_instance_crns': _params.uniqueInstanceCrns
+      'unique_instance_crns': _params.uniqueInstanceCrns,
     };
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'updateServiceId');
@@ -698,16 +763,21 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'If-Match': _params.ifMatch
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'If-Match': _params.ifMatch,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Deletes a service ID and associated API keys.
@@ -722,8 +792,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.Empty>>}
    */
-  public deleteServiceId(params: IamIdentityV1.DeleteServiceIdParams): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteServiceId(
+    params: IamIdentityV1.DeleteServiceIdParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -732,7 +804,7 @@ class IamIdentityV1 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteServiceId');
@@ -744,13 +816,12 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Lock the service ID.
@@ -764,8 +835,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.Empty>>}
    */
-  public lockServiceId(params: IamIdentityV1.LockServiceIdParams): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public lockServiceId(
+    params: IamIdentityV1.LockServiceIdParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -774,7 +847,7 @@ class IamIdentityV1 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'lockServiceId');
@@ -786,13 +859,12 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Unlock the service ID.
@@ -807,8 +879,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.Empty>>}
    */
-  public unlockServiceId(params: IamIdentityV1.UnlockServiceIdParams): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public unlockServiceId(
+    params: IamIdentityV1.UnlockServiceIdParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['id'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -817,7 +891,7 @@ class IamIdentityV1 extends BaseService {
     }
 
     const path = {
-      'id': _params.id
+      'id': _params.id,
     };
 
     const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'unlockServiceId');
@@ -829,13 +903,12 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-        }, _params.headers),
+        headers: extend(true, sdkHeaders, {}, _params.headers),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /*************************
    * accountSettings
@@ -852,8 +925,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>>}
    */
-  public getAccountSettings(params: IamIdentityV1.GetAccountSettingsParams): Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>> {
-    const _params = Object.assign({}, params);
+  public getAccountSettings(
+    params: IamIdentityV1.GetAccountSettingsParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>> {
+    const _params = { ...params };
     const requiredParams = ['accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -862,14 +937,18 @@ class IamIdentityV1 extends BaseService {
     }
 
     const query = {
-      'include_history': _params.includeHistory
+      'include_history': _params.includeHistory,
     };
 
     const path = {
-      'account_id': _params.accountId
+      'account_id': _params.accountId,
     };
 
-    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'getAccountSettings');
+    const sdkHeaders = getSdkHeaders(
+      IamIdentityV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getAccountSettings'
+    );
 
     const parameters = {
       options: {
@@ -879,14 +958,19 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update account configurations.
@@ -933,8 +1017,10 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>>}
    */
-  public updateAccountSettings(params: IamIdentityV1.UpdateAccountSettingsParams): Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>> {
-    const _params = Object.assign({}, params);
+  public updateAccountSettings(
+    params: IamIdentityV1.UpdateAccountSettingsParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.AccountSettingsResponse>> {
+    const _params = { ...params };
     const requiredParams = ['ifMatch', 'accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -949,14 +1035,18 @@ class IamIdentityV1 extends BaseService {
       'mfa': _params.mfa,
       'session_expiration_in_seconds': _params.sessionExpirationInSeconds,
       'session_invalidation_in_seconds': _params.sessionInvalidationInSeconds,
-      'max_sessions_per_identity': _params.maxSessionsPerIdentity
+      'max_sessions_per_identity': _params.maxSessionsPerIdentity,
     };
 
     const path = {
-      'account_id': _params.accountId
+      'account_id': _params.accountId,
     };
 
-    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'updateAccountSettings');
+    const sdkHeaders = getSdkHeaders(
+      IamIdentityV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateAccountSettings'
+    );
 
     const parameters = {
       options: {
@@ -966,17 +1056,21 @@ class IamIdentityV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'If-Match': _params.ifMatch
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'If-Match': _params.ifMatch,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -984,9 +1078,8 @@ class IamIdentityV1 extends BaseService {
  ************************/
 
 namespace IamIdentityV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -997,7 +1090,7 @@ namespace IamIdentityV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1280,7 +1373,9 @@ namespace IamIdentityV1 {
      *    * NOT_RESTRICTED - to remove access control
      *    * NOT_SET - to 'unset' a previous set value.
      */
-    restrictCreatePlatformApikey?: UpdateAccountSettingsConstants.RestrictCreatePlatformApikey | string;
+    restrictCreatePlatformApikey?:
+      | UpdateAccountSettingsConstants.RestrictCreatePlatformApikey
+      | string;
     /** Defines the IP addresses and subnets from which IAM tokens can be created for the account. */
     allowedIpAddresses?: string;
     /** Defines the MFA trait for the account. Valid values:
@@ -1583,7 +1678,6 @@ namespace IamIdentityV1 {
      */
     serviceids: ServiceId[];
   }
-
 }
 
 export = IamIdentityV1;

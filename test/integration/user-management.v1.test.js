@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-'use strict';
-const UserManagementV1 = require('../../dist/user-management/v1');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
+const UserManagementV1 = require('../../dist/user-management/v1');
 const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (200s).
@@ -44,11 +43,15 @@ describe('UserManagementV1_integration', () => {
   let viewerRoleId;
   let accessGroupId;
 
-  beforeAll(async done => {
+  beforeAll(async (done) => {
     log('Starting setup...');
 
-    userManagementService = UserManagementV1.newInstance({ serviceName: UserManagementV1.DEFAULT_SERVICE_NAME });
-    userManagementAdminService = UserManagementV1.newInstance({ serviceName: 'USER_MANAGEMENT_ADMIN' });
+    userManagementService = UserManagementV1.newInstance({
+      serviceName: UserManagementV1.DEFAULT_SERVICE_NAME,
+    });
+    userManagementAdminService = UserManagementV1.newInstance({
+      serviceName: 'USER_MANAGEMENT_ADMIN',
+    });
     expect(userManagementService).not.toBeNull();
     expect(userManagementAdminService).not.toBeNull();
 
@@ -71,29 +74,29 @@ describe('UserManagementV1_integration', () => {
     done();
   });
 
-  test('getUserSettings()', done => {
+  test('getUserSettings()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       iamId: iamUserId,
     };
 
     userManagementService
       .getUserSettings(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
         expect(res.result).toBeDefined();
         console.log('getUserSettings() result: ', res.result);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('updateUserSettings()', done => {
+  test('updateUserSettings()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       iamId: iamUserId,
       language: 'French',
       notificationLanguage: 'English',
@@ -103,17 +106,17 @@ describe('UserManagementV1_integration', () => {
 
     userManagementService
       .updateUserSettings(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(204);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('listUsers()', async done => {
+  test('listUsers()', async (done) => {
     const results = [];
     let start = null;
 
@@ -121,16 +124,16 @@ describe('UserManagementV1_integration', () => {
       do {
         // Retrieve the users, 10 per page to test out pagination.
         const params = {
-          accountId: accountId,
+          accountId,
           limit: 10,
-          start: start,
+          start,
         };
 
         const res = await userManagementService.listUsers(params);
         expect(res).toBeDefined();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
 
         // Add the just-retrieved page to "results".
@@ -155,7 +158,7 @@ describe('UserManagementV1_integration', () => {
     expect(numUsers).toBeGreaterThan(0);
     done();
   });
-  test('inviteUsers()', done => {
+  test('inviteUsers()', (done) => {
     // Request models needed by this operation.
 
     // InviteUser
@@ -194,7 +197,7 @@ describe('UserManagementV1_integration', () => {
     };
 
     const params = {
-      accountId: accountId,
+      accountId,
       users: [inviteUserModel],
       iamPolicy: [inviteUserIamPolicyModel],
       accessGroups: [accessGroupId],
@@ -202,7 +205,7 @@ describe('UserManagementV1_integration', () => {
 
     userManagementAdminService
       .inviteUsers(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(202);
         expect(res.result).toBeDefined();
@@ -213,34 +216,34 @@ describe('UserManagementV1_integration', () => {
         expect(userId).toBeDefined();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('getUserProfile()', done => {
+  test('getUserProfile()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       iamId: iamUserId,
     };
 
     userManagementService
       .getUserProfile(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
         expect(res.result).toBeDefined();
         console.log('getUserProfile() result: ', res.result);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('updateUserProfile()', done => {
+  test('updateUserProfile()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       iamId: iamUserId,
       firstname: 'John',
       lastname: 'Doe',
@@ -250,30 +253,30 @@ describe('UserManagementV1_integration', () => {
 
     userManagementService
       .updateUserProfile(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(204);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('removeUser()', done => {
+  test('removeUser()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       iamId: userId,
     };
 
     userManagementService
       .removeUser(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(204);
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });

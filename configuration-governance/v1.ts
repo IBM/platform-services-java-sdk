@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-c6db7f4a-20210114-141015
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,8 +34,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class ConfigurationGovernanceV1 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://compliance.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'configuration_governance';
 
   /*************************
@@ -63,7 +68,6 @@ class ConfigurationGovernanceV1 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a ConfigurationGovernanceV1 object.
@@ -110,8 +114,10 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateRulesResponse>>}
    */
-  public createRules(params: ConfigurationGovernanceV1.CreateRulesParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateRulesResponse>> {
-    const _params = Object.assign({}, params);
+  public createRules(
+    params: ConfigurationGovernanceV1.CreateRulesParams
+  ): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateRulesResponse>> {
+    const _params = { ...params };
     const requiredParams = ['rules'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -120,10 +126,14 @@ class ConfigurationGovernanceV1 extends BaseService {
     }
 
     const body = {
-      'rules': _params.rules
+      'rules': _params.rules,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'createRules');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createRules'
+    );
 
     const parameters = {
       options: {
@@ -132,16 +142,21 @@ class ConfigurationGovernanceV1 extends BaseService {
         body,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List rules.
@@ -173,8 +188,10 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.RuleList>>}
    */
-  public listRules(params: ConfigurationGovernanceV1.ListRulesParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.RuleList>> {
-    const _params = Object.assign({}, params);
+  public listRules(
+    params: ConfigurationGovernanceV1.ListRulesParams
+  ): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.RuleList>> {
+    const _params = { ...params };
     const requiredParams = ['accountId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -188,10 +205,14 @@ class ConfigurationGovernanceV1 extends BaseService {
       'labels': _params.labels,
       'scopes': _params.scopes,
       'limit': _params.limit,
-      'offset': _params.offset
+      'offset': _params.offset,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'listRules');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listRules'
+    );
 
     const parameters = {
       options: {
@@ -200,15 +221,20 @@ class ConfigurationGovernanceV1 extends BaseService {
         qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get a rule.
@@ -226,8 +252,10 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Rule>>}
    */
-  public getRule(params: ConfigurationGovernanceV1.GetRuleParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Rule>> {
-    const _params = Object.assign({}, params);
+  public getRule(
+    params: ConfigurationGovernanceV1.GetRuleParams
+  ): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Rule>> {
+    const _params = { ...params };
     const requiredParams = ['ruleId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -236,10 +264,14 @@ class ConfigurationGovernanceV1 extends BaseService {
     }
 
     const path = {
-      'rule_id': _params.ruleId
+      'rule_id': _params.ruleId,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'getRule');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getRule'
+    );
 
     const parameters = {
       options: {
@@ -248,15 +280,20 @@ class ConfigurationGovernanceV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update a rule.
@@ -290,9 +327,19 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Rule>>}
    */
-  public updateRule(params: ConfigurationGovernanceV1.UpdateRuleParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Rule>> {
-    const _params = Object.assign({}, params);
-    const requiredParams = ['ruleId', 'ifMatch', 'name', 'description', 'target', 'requiredConfig', 'enforcementActions'];
+  public updateRule(
+    params: ConfigurationGovernanceV1.UpdateRuleParams
+  ): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Rule>> {
+    const _params = { ...params };
+    const requiredParams = [
+      'ruleId',
+      'ifMatch',
+      'name',
+      'description',
+      'target',
+      'requiredConfig',
+      'enforcementActions',
+    ];
 
     const missingParams = getMissingParams(_params, requiredParams);
     if (missingParams) {
@@ -307,14 +354,18 @@ class ConfigurationGovernanceV1 extends BaseService {
       'enforcement_actions': _params.enforcementActions,
       'account_id': _params.accountId,
       'rule_type': _params.ruleType,
-      'labels': _params.labels
+      'labels': _params.labels,
     };
 
     const path = {
-      'rule_id': _params.ruleId
+      'rule_id': _params.ruleId,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'updateRule');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateRule'
+    );
 
     const parameters = {
       options: {
@@ -324,17 +375,22 @@ class ConfigurationGovernanceV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'If-Match': _params.ifMatch,
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'If-Match': _params.ifMatch,
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete a rule.
@@ -352,8 +408,10 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Empty>>}
    */
-  public deleteRule(params: ConfigurationGovernanceV1.DeleteRuleParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteRule(
+    params: ConfigurationGovernanceV1.DeleteRuleParams
+  ): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['ruleId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -362,10 +420,14 @@ class ConfigurationGovernanceV1 extends BaseService {
     }
 
     const path = {
-      'rule_id': _params.ruleId
+      'rule_id': _params.ruleId,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteRule');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteRule'
+    );
 
     const parameters = {
       options: {
@@ -374,14 +436,19 @@ class ConfigurationGovernanceV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Create attachments.
@@ -404,8 +471,12 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateAttachmentsResponse>>}
    */
-  public createAttachments(params: ConfigurationGovernanceV1.CreateAttachmentsParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateAttachmentsResponse>> {
-    const _params = Object.assign({}, params);
+  public createAttachments(
+    params: ConfigurationGovernanceV1.CreateAttachmentsParams
+  ): Promise<
+    ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.CreateAttachmentsResponse>
+  > {
+    const _params = { ...params };
     const requiredParams = ['ruleId', 'attachments'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -414,14 +485,18 @@ class ConfigurationGovernanceV1 extends BaseService {
     }
 
     const body = {
-      'attachments': _params.attachments
+      'attachments': _params.attachments,
     };
 
     const path = {
-      'rule_id': _params.ruleId
+      'rule_id': _params.ruleId,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'createAttachments');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createAttachments'
+    );
 
     const parameters = {
       options: {
@@ -431,16 +506,21 @@ class ConfigurationGovernanceV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * List attachments.
@@ -469,8 +549,10 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.AttachmentList>>}
    */
-  public listAttachments(params: ConfigurationGovernanceV1.ListAttachmentsParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.AttachmentList>> {
-    const _params = Object.assign({}, params);
+  public listAttachments(
+    params: ConfigurationGovernanceV1.ListAttachmentsParams
+  ): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.AttachmentList>> {
+    const _params = { ...params };
     const requiredParams = ['ruleId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -480,14 +562,18 @@ class ConfigurationGovernanceV1 extends BaseService {
 
     const query = {
       'limit': _params.limit,
-      'offset': _params.offset
+      'offset': _params.offset,
     };
 
     const path = {
-      'rule_id': _params.ruleId
+      'rule_id': _params.ruleId,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'listAttachments');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'listAttachments'
+    );
 
     const parameters = {
       options: {
@@ -497,15 +583,20 @@ class ConfigurationGovernanceV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get an attachment.
@@ -524,8 +615,10 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Attachment>>}
    */
-  public getAttachment(params: ConfigurationGovernanceV1.GetAttachmentParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Attachment>> {
-    const _params = Object.assign({}, params);
+  public getAttachment(
+    params: ConfigurationGovernanceV1.GetAttachmentParams
+  ): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Attachment>> {
+    const _params = { ...params };
     const requiredParams = ['ruleId', 'attachmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -535,10 +628,14 @@ class ConfigurationGovernanceV1 extends BaseService {
 
     const path = {
       'rule_id': _params.ruleId,
-      'attachment_id': _params.attachmentId
+      'attachment_id': _params.attachmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'getAttachment');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getAttachment'
+    );
 
     const parameters = {
       options: {
@@ -547,15 +644,20 @@ class ConfigurationGovernanceV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Update an attachment.
@@ -583,8 +685,10 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Attachment>>}
    */
-  public updateAttachment(params: ConfigurationGovernanceV1.UpdateAttachmentParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Attachment>> {
-    const _params = Object.assign({}, params);
+  public updateAttachment(
+    params: ConfigurationGovernanceV1.UpdateAttachmentParams
+  ): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Attachment>> {
+    const _params = { ...params };
     const requiredParams = ['ruleId', 'attachmentId', 'ifMatch', 'accountId', 'includedScope'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -595,15 +699,19 @@ class ConfigurationGovernanceV1 extends BaseService {
     const body = {
       'account_id': _params.accountId,
       'included_scope': _params.includedScope,
-      'excluded_scopes': _params.excludedScopes
+      'excluded_scopes': _params.excludedScopes,
     };
 
     const path = {
       'rule_id': _params.ruleId,
-      'attachment_id': _params.attachmentId
+      'attachment_id': _params.attachmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'updateAttachment');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'updateAttachment'
+    );
 
     const parameters = {
       options: {
@@ -613,17 +721,22 @@ class ConfigurationGovernanceV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'If-Match': _params.ifMatch,
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'If-Match': _params.ifMatch,
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Delete an attachment.
@@ -642,8 +755,10 @@ class ConfigurationGovernanceV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Empty>>}
    */
-  public deleteAttachment(params: ConfigurationGovernanceV1.DeleteAttachmentParams): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Empty>> {
-    const _params = Object.assign({}, params);
+  public deleteAttachment(
+    params: ConfigurationGovernanceV1.DeleteAttachmentParams
+  ): Promise<ConfigurationGovernanceV1.Response<ConfigurationGovernanceV1.Empty>> {
+    const _params = { ...params };
     const requiredParams = ['ruleId', 'attachmentId'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -653,10 +768,14 @@ class ConfigurationGovernanceV1 extends BaseService {
 
     const path = {
       'rule_id': _params.ruleId,
-      'attachment_id': _params.attachmentId
+      'attachment_id': _params.attachmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAttachment');
+    const sdkHeaders = getSdkHeaders(
+      ConfigurationGovernanceV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteAttachment'
+    );
 
     const parameters = {
       options: {
@@ -665,15 +784,19 @@ class ConfigurationGovernanceV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Transaction-Id': _params.transactionId
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Transaction-Id': _params.transactionId,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -681,9 +804,8 @@ class ConfigurationGovernanceV1 extends BaseService {
  ************************/
 
 namespace ConfigurationGovernanceV1 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -694,7 +816,7 @@ namespace ConfigurationGovernanceV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1089,8 +1211,7 @@ namespace ConfigurationGovernanceV1 {
   }
 
   /** RuleCondition. */
-  export interface RuleCondition {
-  }
+  export interface RuleCondition {}
 
   /** A list of rules. */
   export interface RuleList {
@@ -1132,8 +1253,7 @@ namespace ConfigurationGovernanceV1 {
   }
 
   /** RuleRequiredConfig. */
-  export interface RuleRequiredConfig {
-  }
+  export interface RuleRequiredConfig {}
 
   /** RuleResponseError. */
   export interface RuleResponseError {
@@ -1236,8 +1356,7 @@ namespace ConfigurationGovernanceV1 {
   }
 
   /** The requirements that must be met to determine the resource's level of compliance in accordance with the rule. Use logical operators (`and`/`or`) to define multiple property checks and conditions. To define requirements for a rule, list one or more property check objects in the `and` array. To add conditions to a property check, use `or`. */
-  export interface RuleRequiredConfigMultipleProperties extends RuleRequiredConfig {
-  }
+  export interface RuleRequiredConfigMultipleProperties extends RuleRequiredConfig {}
 
   /** The requirement that must be met to determine the resource's level of compliance in accordance with the rule. To apply a single property check, define a configuration property and the desired value that you want to check against. */
   export interface RuleRequiredConfigSingleProperty extends RuleRequiredConfig {
@@ -1261,17 +1380,18 @@ namespace ConfigurationGovernanceV1 {
   }
 
   /** A condition with the `and` logical operator. */
-  export interface RuleRequiredConfigMultiplePropertiesConditionAnd extends RuleRequiredConfigMultipleProperties {
+  export interface RuleRequiredConfigMultiplePropertiesConditionAnd
+    extends RuleRequiredConfigMultipleProperties {
     description?: string;
     and: RuleCondition[];
   }
 
   /** A condition with the `or` logical operator. */
-  export interface RuleRequiredConfigMultiplePropertiesConditionOr extends RuleRequiredConfigMultipleProperties {
+  export interface RuleRequiredConfigMultiplePropertiesConditionOr
+    extends RuleRequiredConfigMultipleProperties {
     description?: string;
     or: RuleCondition[];
   }
-
 }
 
 export = ConfigurationGovernanceV1;

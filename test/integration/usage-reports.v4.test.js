@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 
-'use strict';
-const UsageReportsV4 = require('../../dist/usage-reports/v4');
 const { readExternalSources } = require('ibm-cloud-sdk-core');
+const UsageReportsV4 = require('../../dist/usage-reports/v4');
 const authHelper = require('../resources/auth-helper.js');
 
 // testcase timeout value (60s).
@@ -58,19 +57,19 @@ describe('UsageReportsV4_integration', () => {
     // console.log('Finished setup.');
   });
 
-  test('getAccountSummary()', done => {
+  test('getAccountSummary()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       billingmonth: billingMonth,
     };
 
     usageReportsService
       .getAccountSummary(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
         // console.log('getAccountSummary() result: ', result);
 
@@ -80,14 +79,14 @@ describe('UsageReportsV4_integration', () => {
         expect(result.subscription).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('getAccountUsage()', done => {
+  test('getAccountUsage()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       billingmonth: billingMonth,
       names: true,
       acceptLanguage: 'English',
@@ -95,11 +94,11 @@ describe('UsageReportsV4_integration', () => {
 
     usageReportsService
       .getAccountUsage(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
         // console.log('getAccountUsage() result: ', result);
 
@@ -108,26 +107,26 @@ describe('UsageReportsV4_integration', () => {
         expect(result.resources).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('getResourceGroupUsage()', done => {
+  test('getResourceGroupUsage()', (done) => {
     const params = {
-      accountId: accountId,
-      resourceGroupId: resourceGroupId,
+      accountId,
+      resourceGroupId,
       billingmonth: billingMonth,
       names: true,
     };
 
     usageReportsService
       .getResourceGroupUsage(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
         // console.log('getResourceGroupUsage() result: ', result);
 
@@ -136,14 +135,14 @@ describe('UsageReportsV4_integration', () => {
         expect(result.resources).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('getOrgUsage()', done => {
+  test('getOrgUsage()', (done) => {
     const params = {
-      accountId: accountId,
+      accountId,
       organizationId: orgId,
       billingmonth: billingMonth,
       names: true,
@@ -151,11 +150,11 @@ describe('UsageReportsV4_integration', () => {
 
     usageReportsService
       .getOrgUsage(params)
-      .then(res => {
+      .then((res) => {
         expect(res).not.toBeNull();
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
         // console.log('getOrgUsage() result: ', result);
 
@@ -164,19 +163,19 @@ describe('UsageReportsV4_integration', () => {
         expect(result.resources).not.toBeNull();
         done();
       })
-      .catch(err => {
+      .catch((err) => {
         console.warn(err);
         done(err);
       });
   });
-  test('getResourceUsageAccount()', async done => {
+  test('getResourceUsageAccount()', async (done) => {
     const resources = [];
     let offset = null;
 
     try {
       do {
         const params = {
-          accountId: accountId,
+          accountId,
           billingmonth: billingMonth,
           names: true,
           limit: 50,
@@ -187,7 +186,7 @@ describe('UsageReportsV4_integration', () => {
         const res = await usageReportsService.getResourceUsageAccount(params);
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
 
         // console.log('getResourceUsageAccount() result: ', result);
@@ -212,15 +211,15 @@ describe('UsageReportsV4_integration', () => {
     expect(numResources).toBeGreaterThan(0);
     done();
   });
-  test('getResourceUsageResourceGroup()', async done => {
+  test('getResourceUsageResourceGroup()', async (done) => {
     const resources = [];
     let offset = null;
 
     try {
       do {
         const params = {
-          accountId: accountId,
-          resourceGroupId: resourceGroupId,
+          accountId,
+          resourceGroupId,
           billingmonth: billingMonth,
           names: true,
           limit: 50,
@@ -231,7 +230,7 @@ describe('UsageReportsV4_integration', () => {
         const res = await usageReportsService.getResourceUsageResourceGroup(params);
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
 
         // console.log('getResourceUsageResourceGroup() result: ', result);
@@ -256,14 +255,14 @@ describe('UsageReportsV4_integration', () => {
     expect(numResources).toBeGreaterThan(0);
     done();
   });
-  test('getResourceUsageOrg()', async done => {
+  test('getResourceUsageOrg()', async (done) => {
     const resources = [];
     let offset = null;
 
     try {
       do {
         const params = {
-          accountId: accountId,
+          accountId,
           organizationId: orgId,
           billingmonth: billingMonth,
           names: true,
@@ -275,7 +274,7 @@ describe('UsageReportsV4_integration', () => {
         const res = await usageReportsService.getResourceUsageOrg(params);
         expect(res.status).toEqual(200);
 
-        const result = res.result;
+        const { result } = res;
         expect(result).toBeDefined();
 
         // console.log('getResourceUsageOrg() result: ', result);

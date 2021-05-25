@@ -18,10 +18,15 @@
  * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
  */
 
-
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
-import { Authenticator, BaseService, getAuthenticatorFromEnvironment, getMissingParams, UserOptions } from 'ibm-cloud-sdk-core';
+import {
+  Authenticator,
+  BaseService,
+  getAuthenticatorFromEnvironment,
+  getMissingParams,
+  UserOptions,
+} from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
 /**
@@ -29,8 +34,8 @@ import { getSdkHeaders } from '../lib/common';
  */
 
 class UsageReportsV4 extends BaseService {
-
   static DEFAULT_SERVICE_URL: string = 'https://billing.cloud.ibm.com';
+
   static DEFAULT_SERVICE_NAME: string = 'usage_reports';
 
   /*************************
@@ -63,7 +68,6 @@ class UsageReportsV4 extends BaseService {
     }
     return service;
   }
-
 
   /**
    * Construct a UsageReportsV4 object.
@@ -103,8 +107,10 @@ class UsageReportsV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UsageReportsV4.Response<UsageReportsV4.AccountSummary>>}
    */
-  public getAccountSummary(params: UsageReportsV4.GetAccountSummaryParams): Promise<UsageReportsV4.Response<UsageReportsV4.AccountSummary>> {
-    const _params = Object.assign({}, params);
+  public getAccountSummary(
+    params: UsageReportsV4.GetAccountSummaryParams
+  ): Promise<UsageReportsV4.Response<UsageReportsV4.AccountSummary>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'billingmonth'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -114,10 +120,14 @@ class UsageReportsV4 extends BaseService {
 
     const path = {
       'account_id': _params.accountId,
-      'billingmonth': _params.billingmonth
+      'billingmonth': _params.billingmonth,
     };
 
-    const sdkHeaders = getSdkHeaders(UsageReportsV4.DEFAULT_SERVICE_NAME, 'v4', 'getAccountSummary');
+    const sdkHeaders = getSdkHeaders(
+      UsageReportsV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getAccountSummary'
+    );
 
     const parameters = {
       options: {
@@ -126,14 +136,19 @@ class UsageReportsV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get account usage.
@@ -152,8 +167,10 @@ class UsageReportsV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UsageReportsV4.Response<UsageReportsV4.AccountUsage>>}
    */
-  public getAccountUsage(params: UsageReportsV4.GetAccountUsageParams): Promise<UsageReportsV4.Response<UsageReportsV4.AccountUsage>> {
-    const _params = Object.assign({}, params);
+  public getAccountUsage(
+    params: UsageReportsV4.GetAccountUsageParams
+  ): Promise<UsageReportsV4.Response<UsageReportsV4.AccountUsage>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'billingmonth'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -162,12 +179,12 @@ class UsageReportsV4 extends BaseService {
     }
 
     const query = {
-      '_names': _params.names
+      '_names': _params.names,
     };
 
     const path = {
       'account_id': _params.accountId,
-      'billingmonth': _params.billingmonth
+      'billingmonth': _params.billingmonth,
     };
 
     const sdkHeaders = getSdkHeaders(UsageReportsV4.DEFAULT_SERVICE_NAME, 'v4', 'getAccountUsage');
@@ -180,15 +197,20 @@ class UsageReportsV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get resource group usage.
@@ -208,8 +230,10 @@ class UsageReportsV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UsageReportsV4.Response<UsageReportsV4.ResourceGroupUsage>>}
    */
-  public getResourceGroupUsage(params: UsageReportsV4.GetResourceGroupUsageParams): Promise<UsageReportsV4.Response<UsageReportsV4.ResourceGroupUsage>> {
-    const _params = Object.assign({}, params);
+  public getResourceGroupUsage(
+    params: UsageReportsV4.GetResourceGroupUsageParams
+  ): Promise<UsageReportsV4.Response<UsageReportsV4.ResourceGroupUsage>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'resourceGroupId', 'billingmonth'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -218,16 +242,20 @@ class UsageReportsV4 extends BaseService {
     }
 
     const query = {
-      '_names': _params.names
+      '_names': _params.names,
     };
 
     const path = {
       'account_id': _params.accountId,
       'resource_group_id': _params.resourceGroupId,
-      'billingmonth': _params.billingmonth
+      'billingmonth': _params.billingmonth,
     };
 
-    const sdkHeaders = getSdkHeaders(UsageReportsV4.DEFAULT_SERVICE_NAME, 'v4', 'getResourceGroupUsage');
+    const sdkHeaders = getSdkHeaders(
+      UsageReportsV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getResourceGroupUsage'
+    );
 
     const parameters = {
       options: {
@@ -237,15 +265,20 @@ class UsageReportsV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get organization usage.
@@ -265,8 +298,10 @@ class UsageReportsV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UsageReportsV4.Response<UsageReportsV4.OrgUsage>>}
    */
-  public getOrgUsage(params: UsageReportsV4.GetOrgUsageParams): Promise<UsageReportsV4.Response<UsageReportsV4.OrgUsage>> {
-    const _params = Object.assign({}, params);
+  public getOrgUsage(
+    params: UsageReportsV4.GetOrgUsageParams
+  ): Promise<UsageReportsV4.Response<UsageReportsV4.OrgUsage>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'organizationId', 'billingmonth'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -275,13 +310,13 @@ class UsageReportsV4 extends BaseService {
     }
 
     const query = {
-      '_names': _params.names
+      '_names': _params.names,
     };
 
     const path = {
       'account_id': _params.accountId,
       'organization_id': _params.organizationId,
-      'billingmonth': _params.billingmonth
+      'billingmonth': _params.billingmonth,
     };
 
     const sdkHeaders = getSdkHeaders(UsageReportsV4.DEFAULT_SERVICE_NAME, 'v4', 'getOrgUsage');
@@ -294,15 +329,20 @@ class UsageReportsV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get resource instance usage in an account.
@@ -330,8 +370,10 @@ class UsageReportsV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UsageReportsV4.Response<UsageReportsV4.InstancesUsage>>}
    */
-  public getResourceUsageAccount(params: UsageReportsV4.GetResourceUsageAccountParams): Promise<UsageReportsV4.Response<UsageReportsV4.InstancesUsage>> {
-    const _params = Object.assign({}, params);
+  public getResourceUsageAccount(
+    params: UsageReportsV4.GetResourceUsageAccountParams
+  ): Promise<UsageReportsV4.Response<UsageReportsV4.InstancesUsage>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'billingmonth'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -348,15 +390,19 @@ class UsageReportsV4 extends BaseService {
       'resource_instance_id': _params.resourceInstanceId,
       'resource_id': _params.resourceId,
       'plan_id': _params.planId,
-      'region': _params.region
+      'region': _params.region,
     };
 
     const path = {
       'account_id': _params.accountId,
-      'billingmonth': _params.billingmonth
+      'billingmonth': _params.billingmonth,
     };
 
-    const sdkHeaders = getSdkHeaders(UsageReportsV4.DEFAULT_SERVICE_NAME, 'v4', 'getResourceUsageAccount');
+    const sdkHeaders = getSdkHeaders(
+      UsageReportsV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getResourceUsageAccount'
+    );
 
     const parameters = {
       options: {
@@ -366,15 +412,20 @@ class UsageReportsV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get resource instance usage in a resource group.
@@ -401,8 +452,10 @@ class UsageReportsV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UsageReportsV4.Response<UsageReportsV4.InstancesUsage>>}
    */
-  public getResourceUsageResourceGroup(params: UsageReportsV4.GetResourceUsageResourceGroupParams): Promise<UsageReportsV4.Response<UsageReportsV4.InstancesUsage>> {
-    const _params = Object.assign({}, params);
+  public getResourceUsageResourceGroup(
+    params: UsageReportsV4.GetResourceUsageResourceGroupParams
+  ): Promise<UsageReportsV4.Response<UsageReportsV4.InstancesUsage>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'resourceGroupId', 'billingmonth'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -417,16 +470,20 @@ class UsageReportsV4 extends BaseService {
       'resource_instance_id': _params.resourceInstanceId,
       'resource_id': _params.resourceId,
       'plan_id': _params.planId,
-      'region': _params.region
+      'region': _params.region,
     };
 
     const path = {
       'account_id': _params.accountId,
       'resource_group_id': _params.resourceGroupId,
-      'billingmonth': _params.billingmonth
+      'billingmonth': _params.billingmonth,
     };
 
-    const sdkHeaders = getSdkHeaders(UsageReportsV4.DEFAULT_SERVICE_NAME, 'v4', 'getResourceUsageResourceGroup');
+    const sdkHeaders = getSdkHeaders(
+      UsageReportsV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getResourceUsageResourceGroup'
+    );
 
     const parameters = {
       options: {
@@ -436,15 +493,20 @@ class UsageReportsV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
+  }
 
   /**
    * Get resource instance usage in an organization.
@@ -471,8 +533,10 @@ class UsageReportsV4 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<UsageReportsV4.Response<UsageReportsV4.InstancesUsage>>}
    */
-  public getResourceUsageOrg(params: UsageReportsV4.GetResourceUsageOrgParams): Promise<UsageReportsV4.Response<UsageReportsV4.InstancesUsage>> {
-    const _params = Object.assign({}, params);
+  public getResourceUsageOrg(
+    params: UsageReportsV4.GetResourceUsageOrgParams
+  ): Promise<UsageReportsV4.Response<UsageReportsV4.InstancesUsage>> {
+    const _params = { ...params };
     const requiredParams = ['accountId', 'organizationId', 'billingmonth'];
 
     const missingParams = getMissingParams(_params, requiredParams);
@@ -487,16 +551,20 @@ class UsageReportsV4 extends BaseService {
       'resource_instance_id': _params.resourceInstanceId,
       'resource_id': _params.resourceId,
       'plan_id': _params.planId,
-      'region': _params.region
+      'region': _params.region,
     };
 
     const path = {
       'account_id': _params.accountId,
       'organization_id': _params.organizationId,
-      'billingmonth': _params.billingmonth
+      'billingmonth': _params.billingmonth,
     };
 
-    const sdkHeaders = getSdkHeaders(UsageReportsV4.DEFAULT_SERVICE_NAME, 'v4', 'getResourceUsageOrg');
+    const sdkHeaders = getSdkHeaders(
+      UsageReportsV4.DEFAULT_SERVICE_NAME,
+      'v4',
+      'getResourceUsageOrg'
+    );
 
     const parameters = {
       options: {
@@ -506,16 +574,20 @@ class UsageReportsV4 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {
-          'Accept': 'application/json',
-          'Accept-Language': _params.acceptLanguage
-        }, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
       }),
     };
 
     return this.createRequest(parameters);
-  };
-
+  }
 }
 
 /*************************
@@ -523,9 +595,8 @@ class UsageReportsV4 extends BaseService {
  ************************/
 
 namespace UsageReportsV4 {
-
   /** An operation response. */
-  export interface Response<T = any>  {
+  export interface Response<T = any> {
     result: T;
     status: number;
     statusText: string;
@@ -536,7 +607,7 @@ namespace UsageReportsV4 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty { }
+  export interface Empty {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -979,7 +1050,6 @@ namespace UsageReportsV4 {
     /** Additional support cost for the month. */
     overage: number;
   }
-
 }
 
 export = UsageReportsV4;

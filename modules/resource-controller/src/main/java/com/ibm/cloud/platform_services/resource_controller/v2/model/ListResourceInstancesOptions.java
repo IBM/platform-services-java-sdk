@@ -31,16 +31,6 @@ public class ListResourceInstancesOptions extends GenericModel {
     String REMOVED = "removed";
   }
 
-  /**
-   * Order of results.
-   */
-  public interface OrderDirection {
-    /** asc. */
-    String ASC = "asc";
-    /** desc. */
-    String DESC = "desc";
-  }
-
   protected String guid;
   protected String name;
   protected String resourceGroupId;
@@ -51,7 +41,6 @@ public class ListResourceInstancesOptions extends GenericModel {
   protected Long limit;
   protected String start;
   protected String state;
-  protected String orderDirection;
   protected String updatedFrom;
   protected String updatedTo;
 
@@ -69,7 +58,6 @@ public class ListResourceInstancesOptions extends GenericModel {
     private Long limit;
     private String start;
     private String state;
-    private String orderDirection;
     private String updatedFrom;
     private String updatedTo;
 
@@ -84,7 +72,6 @@ public class ListResourceInstancesOptions extends GenericModel {
       this.limit = listResourceInstancesOptions.limit;
       this.start = listResourceInstancesOptions.start;
       this.state = listResourceInstancesOptions.state;
-      this.orderDirection = listResourceInstancesOptions.orderDirection;
       this.updatedFrom = listResourceInstancesOptions.updatedFrom;
       this.updatedTo = listResourceInstancesOptions.updatedTo;
     }
@@ -215,17 +202,6 @@ public class ListResourceInstancesOptions extends GenericModel {
     }
 
     /**
-     * Set the orderDirection.
-     *
-     * @param orderDirection the orderDirection
-     * @return the ListResourceInstancesOptions builder
-     */
-    public Builder orderDirection(String orderDirection) {
-      this.orderDirection = orderDirection;
-      return this;
-    }
-
-    /**
      * Set the updatedFrom.
      *
      * @param updatedFrom the updatedFrom
@@ -259,7 +235,6 @@ public class ListResourceInstancesOptions extends GenericModel {
     limit = builder.limit;
     start = builder.start;
     state = builder.state;
-    orderDirection = builder.orderDirection;
     updatedFrom = builder.updatedFrom;
     updatedTo = builder.updatedTo;
   }
@@ -385,17 +360,6 @@ public class ListResourceInstancesOptions extends GenericModel {
    */
   public String state() {
     return state;
-  }
-
-  /**
-   * Gets the orderDirection.
-   *
-   * Order of results.
-   *
-   * @return the orderDirection
-   */
-  public String orderDirection() {
-    return orderDirection;
   }
 
   /**

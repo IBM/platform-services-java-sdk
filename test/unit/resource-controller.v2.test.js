@@ -114,7 +114,6 @@ describe('ResourceControllerV2', () => {
         const limit = 100;
         const start = 'testString';
         const state = 'active';
-        const orderDirection = 'asc';
         const updatedFrom = '2019-01-08T00:00:00.000Z';
         const updatedTo = '2019-01-08T00:00:00.000Z';
         const params = {
@@ -128,7 +127,6 @@ describe('ResourceControllerV2', () => {
           limit: limit,
           start: start,
           state: state,
-          orderDirection: orderDirection,
           updatedFrom: updatedFrom,
           updatedTo: updatedTo,
         };
@@ -157,7 +155,6 @@ describe('ResourceControllerV2', () => {
         expect(options.qs['limit']).toEqual(limit);
         expect(options.qs['start']).toEqual(start);
         expect(options.qs['state']).toEqual(state);
-        expect(options.qs['order_direction']).toEqual(orderDirection);
         expect(options.qs['updated_from']).toEqual(updatedFrom);
         expect(options.qs['updated_to']).toEqual(updatedTo);
       });
@@ -188,10 +185,10 @@ describe('ResourceControllerV2', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createResourceInstance
-        const name = 'ExampleResourceInstance';
-        const target = 'global';
-        const resourceGroup = '13aa3ee48c3b44ddb64c05c79f7ab8ef';
-        const resourcePlanId = 'a10e4960-3685-11e9-b210-d663bd873d93';
+        const name = 'my-instance';
+        const target = 'bluemix-us-south';
+        const resourceGroup = '5c49eabc-f5e8-5881-a37e-2d100a33b3df';
+        const resourcePlanId = 'cloudant-standard';
         const tags = ['testString'];
         const allowCleanup = true;
         const parameters = { 'key1': 'testString' };
@@ -233,10 +230,10 @@ describe('ResourceControllerV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const name = 'ExampleResourceInstance';
-        const target = 'global';
-        const resourceGroup = '13aa3ee48c3b44ddb64c05c79f7ab8ef';
-        const resourcePlanId = 'a10e4960-3685-11e9-b210-d663bd873d93';
+        const name = 'my-instance';
+        const target = 'bluemix-us-south';
+        const resourceGroup = '5c49eabc-f5e8-5881-a37e-2d100a33b3df';
+        const resourcePlanId = 'cloudant-standard';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -423,9 +420,9 @@ describe('ResourceControllerV2', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateResourceInstance
         const id = 'testString';
-        const name = 'UpdatedExampleResourceInstance';
+        const name = 'my-new-instance-name';
         const parameters = { 'key1': 'testString' };
-        const resourcePlanId = 'testString';
+        const resourcePlanId = 'a8dff6d3-d287-4668-a81d-c87c55c2656d';
         const allowCleanup = true;
         const params = {
           id: id,
@@ -863,10 +860,10 @@ describe('ResourceControllerV2', () => {
 
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createResourceKey
-        const name = 'ExampleResourceKey';
-        const source = '381fd51a-f251-4f95-aff4-2b03fa8caa63';
+        const name = 'my-key';
+        const source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd';
         const parameters = resourceKeyPostParametersModel;
-        const role = 'testString';
+        const role = 'Writer';
         const params = {
           name: name,
           source: source,
@@ -896,8 +893,8 @@ describe('ResourceControllerV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const name = 'ExampleResourceKey';
-        const source = '381fd51a-f251-4f95-aff4-2b03fa8caa63';
+        const name = 'my-key';
+        const source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -1079,7 +1076,7 @@ describe('ResourceControllerV2', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateResourceKey
         const id = 'testString';
-        const name = 'UpdatedExampleResourceKey';
+        const name = 'my-new-key-name';
         const params = {
           id: id,
           name: name,
@@ -1106,7 +1103,7 @@ describe('ResourceControllerV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const id = 'testString';
-        const name = 'UpdatedExampleResourceKey';
+        const name = 'my-new-key-name';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -1231,11 +1228,11 @@ describe('ResourceControllerV2', () => {
 
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createResourceBinding
-        const source = 'faaec9d8-ec64-44d8-ab83-868632fac6a2';
-        const target = 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205';
-        const name = 'ExampleResourceBinding';
+        const source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd';
+        const target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c';
+        const name = 'my-binding';
         const parameters = resourceBindingPostParametersModel;
-        const role = 'testString';
+        const role = 'Writer';
         const params = {
           source: source,
           target: target,
@@ -1267,8 +1264,8 @@ describe('ResourceControllerV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const source = 'faaec9d8-ec64-44d8-ab83-868632fac6a2';
-        const target = 'crn:v1:staging:public:bluemix:us-south:s/e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7::cf-application:8d9457e0-1303-4f32-b4b3-5525575f6205';
+        const source = '25eba2a9-beef-450b-82cf-f5ad5e36c6dd';
+        const target = 'crn:v1:bluemix:public:cf:us-south:s/0ba4dba0-a120-4a1e-a124-5a249a904b76::cf-application:a1caa40b-2c24-4da8-8267-ac2c1a42ad0c';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -1450,7 +1447,7 @@ describe('ResourceControllerV2', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateResourceBinding
         const id = 'testString';
-        const name = 'UpdatedExampleResourceBinding';
+        const name = 'my-new-binding-name';
         const params = {
           id: id,
           name: name,
@@ -1477,7 +1474,7 @@ describe('ResourceControllerV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const id = 'testString';
-        const name = 'UpdatedExampleResourceBinding';
+        const name = 'my-new-binding-name';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -1597,9 +1594,9 @@ describe('ResourceControllerV2', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation createResourceAlias
-        const name = 'ExampleResourceAlias';
-        const source = '381fd51a-f251-4f95-aff4-2b03fa8caa63';
-        const target = 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7';
+        const name = 'my-alias';
+        const source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d';
+        const target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5';
         const params = {
           name: name,
           source: source,
@@ -1627,9 +1624,9 @@ describe('ResourceControllerV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const name = 'ExampleResourceAlias';
-        const source = '381fd51a-f251-4f95-aff4-2b03fa8caa63';
-        const target = 'crn:v1:bluemix:public:bluemix:us-south:o/d35d4f0e-5076-4c89-9361-2522894b6548::cf-space:e1773b6e-17b4-40c8-b5ed-d2a1c4b620d7';
+        const name = 'my-alias';
+        const source = 'a8dff6d3-d287-4668-a81d-c87c55c2656d';
+        const target = 'crn:v1:bluemix:public:cf:us-south:o/5e939cd5-6377-4383-b9e0-9db22cd11753::cf-space:66c8b915-101a-406c-a784-e6636676e4f5';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {
@@ -1812,7 +1809,7 @@ describe('ResourceControllerV2', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation updateResourceAlias
         const id = 'testString';
-        const name = 'UpdatedExampleResourceAlias';
+        const name = 'my-new-alias-name';
         const params = {
           id: id,
           name: name,
@@ -1839,7 +1836,7 @@ describe('ResourceControllerV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const id = 'testString';
-        const name = 'UpdatedExampleResourceAlias';
+        const name = 'my-new-alias-name';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const params = {

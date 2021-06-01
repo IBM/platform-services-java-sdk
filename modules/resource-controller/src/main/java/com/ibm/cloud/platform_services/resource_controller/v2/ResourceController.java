@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-77b4cbf2-20210420-134305
+ * IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
  */
 
 package com.ibm.cloud.platform_services.resource_controller.v2;
@@ -165,9 +165,6 @@ public class ResourceController extends BaseService {
     if (listResourceInstancesOptions.state() != null) {
       builder.query("state", String.valueOf(listResourceInstancesOptions.state()));
     }
-    if (listResourceInstancesOptions.orderDirection() != null) {
-      builder.query("order_direction", String.valueOf(listResourceInstancesOptions.orderDirection()));
-    }
     if (listResourceInstancesOptions.updatedFrom() != null) {
       builder.query("updated_from", String.valueOf(listResourceInstancesOptions.updatedFrom()));
     }
@@ -261,7 +258,7 @@ public class ResourceController extends BaseService {
    * Delete a resource instance.
    *
    * Delete a resource instance by ID. If the resource instance has any resource keys or aliases associated with it, use
-   * the `recursive=true` parameter to delete it.
+   * the `recursive=true parameter` to delete it.
    *
    * @param deleteResourceInstanceOptions the {@link DeleteResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -435,7 +432,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all of the resource keys.
    *
-   * List all resource keys.
+   * View all of the resource keys that exist for all of your resource instances.
    *
    * @param listResourceKeysOptions the {@link ListResourceKeysOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceKeysList}
@@ -482,7 +479,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all of the resource keys.
    *
-   * List all resource keys.
+   * View all of the resource keys that exist for all of your resource instances.
    *
    * @return a {@link ServiceCall} with a result of type {@link ResourceKeysList}
    */
@@ -493,7 +490,7 @@ public class ResourceController extends BaseService {
   /**
    * Create a new resource key.
    *
-   * Create a new resource key.
+   * A resource key is a saved credential you can use to authenticate with a resource instance.
    *
    * @param createResourceKeyOptions the {@link CreateResourceKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceKey}
@@ -525,7 +522,7 @@ public class ResourceController extends BaseService {
   /**
    * Get resource key by ID.
    *
-   * Get resource key by ID.
+   * View a resource key and all of its details, like the credentials for the key and who created it.
    *
    * @param getResourceKeyOptions the {@link GetResourceKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceKey}
@@ -549,7 +546,7 @@ public class ResourceController extends BaseService {
   /**
    * Delete a resource key by ID.
    *
-   * Delete a resource key by ID.
+   * Deleting a resource key does not affect any resource instance or resource alias associated with the key.
    *
    * @param deleteResourceKeyOptions the {@link DeleteResourceKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -571,7 +568,7 @@ public class ResourceController extends BaseService {
   /**
    * Update a resource key.
    *
-   * Update a resource key by ID.
+   * Use the resource key ID to update the name of the resource key.
    *
    * @param updateResourceKeyOptions the {@link UpdateResourceKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceKey}
@@ -598,7 +595,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all resource bindings.
    *
-   * Get a list of all resource bindings.
+   * View all of the resource bindings that exist for all of your resource aliases.
    *
    * @param listResourceBindingsOptions the {@link ListResourceBindingsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBindingsList}
@@ -648,7 +645,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all resource bindings.
    *
-   * Get a list of all resource bindings.
+   * View all of the resource bindings that exist for all of your resource aliases.
    *
    * @return a {@link ServiceCall} with a result of type {@link ResourceBindingsList}
    */
@@ -659,7 +656,7 @@ public class ResourceController extends BaseService {
   /**
    * Create a new resource binding.
    *
-   * Create a new resource binding.
+   * A resource binding connects credentials to a resource alias. The credentials are in the form of a resource key.
    *
    * @param createResourceBindingOptions the {@link CreateResourceBindingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBinding}
@@ -694,7 +691,8 @@ public class ResourceController extends BaseService {
   /**
    * Get a resource binding.
    *
-   * Retrieve a resource binding by ID.
+   * View a resource binding and all of its details, like who created it, the credential, and the resource alias that
+   * the binding is associated with.
    *
    * @param getResourceBindingOptions the {@link GetResourceBindingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBinding}
@@ -718,7 +716,7 @@ public class ResourceController extends BaseService {
   /**
    * Delete a resource binding.
    *
-   * Delete a resource binding by ID.
+   * Deleting a resource binding does not affect the resource alias that the binding is associated with.
    *
    * @param deleteResourceBindingOptions the {@link DeleteResourceBindingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -740,7 +738,7 @@ public class ResourceController extends BaseService {
   /**
    * Update a resource binding.
    *
-   * Update a resource binding by ID.
+   * Use the resource binding ID to update the name of the resource binding.
    *
    * @param updateResourceBindingOptions the {@link UpdateResourceBindingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBinding}
@@ -767,7 +765,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all resource aliases.
    *
-   * Get a list of all resource aliases.
+   * View all of the resource aliases that exist for every resource instance.
    *
    * @param listResourceAliasesOptions the {@link ListResourceAliasesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAliasesList}
@@ -820,7 +818,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all resource aliases.
    *
-   * Get a list of all resource aliases.
+   * View all of the resource aliases that exist for every resource instance.
    *
    * @return a {@link ServiceCall} with a result of type {@link ResourceAliasesList}
    */
@@ -858,7 +856,8 @@ public class ResourceController extends BaseService {
   /**
    * Get a resource alias.
    *
-   * Retrieve a resource alias by ID.
+   * View a resource alias and all of its details, like who created it and the resource instance that it's associated
+   * with.
    *
    * @param getResourceAliasOptions the {@link GetResourceAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAlias}
@@ -882,7 +881,8 @@ public class ResourceController extends BaseService {
   /**
    * Delete a resource alias.
    *
-   * Delete a resource alias by ID.
+   * If the resource alias has any resource keys or bindings associated with it, you must delete those child resources
+   * before deleting the resource alias.
    *
    * @param deleteResourceAliasOptions the {@link DeleteResourceAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -904,7 +904,7 @@ public class ResourceController extends BaseService {
   /**
    * Update a resource alias.
    *
-   * Update a resource alias by ID.
+   * Use the resource alias ID to update the name of the resource alias.
    *
    * @param updateResourceAliasOptions the {@link UpdateResourceAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAlias}
@@ -931,7 +931,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all resource bindings for the alias.
    *
-   * Get a list of all resource bindings for the alias.
+   * View all of the resource bindings associated with a specific resource alias.
    *
    * @param listResourceBindingsForAliasOptions the {@link ListResourceBindingsForAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBindingsList}
@@ -961,7 +961,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all reclamations.
    *
-   * Get a list of all reclamations.
+   * View all of the resource reclamations that exist for every resource instance.
    *
    * @param listReclamationsOptions the {@link ListReclamationsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ReclamationsList}
@@ -990,7 +990,7 @@ public class ResourceController extends BaseService {
   /**
    * Get a list of all reclamations.
    *
-   * Get a list of all reclamations.
+   * View all of the resource reclamations that exist for every resource instance.
    *
    * @return a {@link ServiceCall} with a result of type {@link ReclamationsList}
    */
@@ -1001,8 +1001,8 @@ public class ResourceController extends BaseService {
   /**
    * Perform a reclamation action.
    *
-   * Reclaim (provisionally delete) a resource so that it can no longer be used, or restore a resource so that it's
-   * usable again.
+   * Reclaim a resource instance so that it can no longer be used, or restore the resource instance so that it's usable
+   * again.
    *
    * @param runReclamationActionOptions the {@link RunReclamationActionOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Reclamation}

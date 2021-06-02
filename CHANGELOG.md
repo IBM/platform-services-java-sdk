@@ -1,3 +1,10 @@
+## [0.18.10](https://github.com/IBM/platform-services-java-sdk/compare/0.18.9...0.18.10) (2021-06-02)
+
+
+### Bug Fixes
+
+* **build:** correct deployment errors ([#105](https://github.com/IBM/platform-services-java-sdk/issues/105)) ([0aca124](https://github.com/IBM/platform-services-java-sdk/commit/0aca12434510670b5a83cfb7a607ec3304ddf1a2))
+
 ## [0.18.9](https://github.com/IBM/platform-services-java-sdk/compare/0.18.8...0.18.9) (2021-06-01)
 
 

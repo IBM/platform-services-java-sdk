@@ -42,7 +42,6 @@ public class ListResourceInstancesOptionsTest {
       .limit(Long.valueOf("100"))
       .start("testString")
       .state("active")
-      .orderDirection("asc")
       .updatedFrom("2019-01-08T00:00:00.000Z")
       .updatedTo("2019-01-08T00:00:00.000Z")
       .build();
@@ -56,7 +55,6 @@ public class ListResourceInstancesOptionsTest {
     assertEquals(listResourceInstancesOptionsModel.limit(), Long.valueOf("100"));
     assertEquals(listResourceInstancesOptionsModel.start(), "testString");
     assertEquals(listResourceInstancesOptionsModel.state(), "active");
-    assertEquals(listResourceInstancesOptionsModel.orderDirection(), "asc");
     assertEquals(listResourceInstancesOptionsModel.updatedFrom(), "2019-01-08T00:00:00.000Z");
     assertEquals(listResourceInstancesOptionsModel.updatedTo(), "2019-01-08T00:00:00.000Z");
   }

@@ -4,8 +4,8 @@ sudo: false
 
 matrix:
   include:
-    - node_js: 10
     - node_js: 12
+    - node_js: 14
 
 before_install:
   - npm install -g npm@7

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,12 +30,12 @@ const {
   checkForSuccessfulExecution,
 } = unitTestUtils;
 
-const service = {
+const globalSearchServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://api.global-search-tagging.cloud.ibm.com',
 };
 
-const globalSearchService = new GlobalSearchV2(service);
+const globalSearchService = new GlobalSearchV2(globalSearchServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(globalSearchService, 'createRequest');

@@ -29,12 +29,12 @@ const {
   checkForSuccessfulExecution,
 } = unitTestUtils;
 
-const service = {
+const globalTaggingServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://tags.global-search-tagging.cloud.ibm.com',
 };
 
-const globalTaggingService = new GlobalTaggingV1(service);
+const globalTaggingService = new GlobalTaggingV1(globalTaggingServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(globalTaggingService, 'createRequest');

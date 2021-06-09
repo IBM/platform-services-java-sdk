@@ -1,3 +1,10 @@
+## [0.18.10](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.9...v0.18.10) (2021-06-09)
+
+
+### Bug Fixes
+
+* **Global Search/Tagging:** regenerated services with latest API definition ([#111](https://github.com/IBM/platform-services-node-sdk/issues/111)) ([aa44356](https://github.com/IBM/platform-services-node-sdk/commit/aa4435684b86fb2aa1c3dc0f10aee9202ba8afed))
+
 ## [0.18.9](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.8...v0.18.9) (2021-06-01)
 
 

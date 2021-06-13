@@ -1,3 +1,10 @@
+## [0.18.11](https://github.com/IBM/platform-services-java-sdk/compare/0.18.10...0.18.11) (2021-06-13)
+
+
+### Bug Fixes
+
+* **Global Search/Tagging:** regenerate services with latest API definitions ([#106](https://github.com/IBM/platform-services-java-sdk/issues/106)) ([6620458](https://github.com/IBM/platform-services-java-sdk/commit/66204587d27b075acc2432422d1cfb9e4f945c4b))
+
 ## [0.18.10](https://github.com/IBM/platform-services-java-sdk/compare/0.18.9...0.18.10) (2021-06-02)
 
 

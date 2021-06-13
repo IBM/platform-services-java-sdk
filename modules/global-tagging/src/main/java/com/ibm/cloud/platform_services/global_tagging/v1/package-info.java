@@ -11,6 +11,6 @@
  * specific language governing permissions and limitations under the License.
  */
 /**
- * Global Search and Tagging - Tagging API v1.
+ * Global Tagging v1.
  */
 package com.ibm.cloud.platform_services.global_tagging.v1;

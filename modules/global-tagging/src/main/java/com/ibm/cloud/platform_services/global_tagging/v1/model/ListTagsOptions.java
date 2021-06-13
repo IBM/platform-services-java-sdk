@@ -319,9 +319,9 @@ public class ListTagsOptions extends GenericModel {
   /**
    * Gets the providers.
    *
-   * Select a provider. Supported values are `ghost` and `ims`. To list GhoST tags and infrastructure tags use
-   * `ghost,ims`. `service` and `access` tags can only be attached to GhoST onboarded resources, so you should not set
-   * this parameter when listing them.
+   * Select a provider. Supported values are `ghost` and `ims`. To list both Global Search and Tagging tags and
+   * infrastructure tags, use `ghost,ims`. `service` and `access` tags can only be attached to resources that are
+   * onboarded to Global Search and Tagging, so you should not set this parameter when listing them.
    *
    * @return the providers
    */
@@ -333,8 +333,9 @@ public class ListTagsOptions extends GenericModel {
    * Gets the attachedTo.
    *
    * If you want to return only the list of tags attached to a specified resource, pass the ID of the resource on this
-   * parameter. For GhoST onboarded resources, the resource ID is the CRN; for IMS resources, it is the IMS ID. When
-   * using this parameter, you must specify the appropriate provider (`ims` or `ghost`).
+   * parameter. For resources that are onboarded to Global Search and Tagging, the resource ID is the CRN; for IMS
+   * resources, it is the IMS ID. When using this parameter, you must specify the appropriate provider (`ims` or
+   * `ghost`).
    *
    * @return the attachedTo
    */

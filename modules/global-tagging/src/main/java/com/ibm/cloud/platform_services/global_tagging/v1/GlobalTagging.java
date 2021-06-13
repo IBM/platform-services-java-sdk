@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-a8493a65-20210115-083246
+ * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  */
 
 package com.ibm.cloud.platform_services.global_tagging.v1;
@@ -284,12 +284,7 @@ public class GlobalTagging extends BaseService {
   /**
    * Attach tags.
    *
-   * Attaches one or more tags to one or more resources. To attach a `user` tag on a resource, you must have the access
-   * listed in the [Granting users access to tag resources](https://cloud.ibm.com/docs/account?topic=account-access)
-   * documentation. To attach a `service` tag, you must be an authorized service. If that is the case, then you can
-   * attach a `service` tag with your registered `prefix` to any resource in any account. The account ID must be set
-   * through the `account_id` query parameter. To attach an `access` tag, you must be the resource administrator within
-   * the account. You can attach only `access` tags already existing.
+   * Attaches one or more tags to one or more resources.
    *
    * @param attachTagOptions the {@link AttachTagOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TagResults}
@@ -329,12 +324,7 @@ public class GlobalTagging extends BaseService {
   /**
    * Detach tags.
    *
-   * Detaches one or more tags from one or more resources. To detach a `user` tag on a resource you must have the
-   * permissions listed in the [Granting users access to tag
-   * resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation. To detach a `service` tag you
-   * must be an authorized Service. If that is the case, then you can detach a `service` tag with your registered
-   * `prefix` from any resource in any account. The account ID must be set through the `account_id` query parameter. To
-   * detach an `access` tag, you must be the resource administrator within the account.
+   * Detaches one or more tags from one or more resources.
    *
    * @param detachTagOptions the {@link DetachTagOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TagResults}

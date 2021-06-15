@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-46891d34-20210426-162952
+ * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  */
 
 import * as extend from 'extend';
@@ -1653,8 +1653,10 @@ namespace IamIdentityV1 {
     unique_instance_crns?: string[];
     /** History of the Service ID. */
     history?: EnityHistoryRecord[];
-    /** Response body format for API key V1 REST requests. */
-    apikey: ApiKey;
+    /** Api key details for the Service ID. The apikey is only included in the response when creating a Service ID
+     *  with an apikey.
+     */
+    apikey?: ApiKey;
   }
 
   /** Response body format for the list service ID V1 REST request. */

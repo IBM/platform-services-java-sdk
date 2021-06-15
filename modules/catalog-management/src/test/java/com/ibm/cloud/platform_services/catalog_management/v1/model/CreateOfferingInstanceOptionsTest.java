@@ -14,6 +14,7 @@
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingInstanceOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstanceLastOperation;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -33,9 +34,23 @@ public class CreateOfferingInstanceOptionsTest {
 
   @Test
   public void testCreateOfferingInstanceOptions() throws Throwable {
+    OfferingInstanceLastOperation offeringInstanceLastOperationModel = new OfferingInstanceLastOperation.Builder()
+      .operation("testString")
+      .state("testString")
+      .message("testString")
+      .transactionId("testString")
+      .updated("testString")
+      .build();
+    assertEquals(offeringInstanceLastOperationModel.operation(), "testString");
+    assertEquals(offeringInstanceLastOperationModel.state(), "testString");
+    assertEquals(offeringInstanceLastOperationModel.message(), "testString");
+    assertEquals(offeringInstanceLastOperationModel.transactionId(), "testString");
+    assertEquals(offeringInstanceLastOperationModel.updated(), "testString");
+
     CreateOfferingInstanceOptions createOfferingInstanceOptionsModel = new CreateOfferingInstanceOptions.Builder()
       .xAuthRefreshToken("testString")
       .id("testString")
+      .rev("testString")
       .url("testString")
       .crn("testString")
       .label("testString")
@@ -47,9 +62,16 @@ public class CreateOfferingInstanceOptionsTest {
       .clusterRegion("testString")
       .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .clusterAllNamespaces(true)
+      .schematicsWorkspaceId("testString")
+      .resourceGroupId("testString")
+      .installPlan("testString")
+      .channel("testString")
+      .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+      .lastOperation(offeringInstanceLastOperationModel)
       .build();
     assertEquals(createOfferingInstanceOptionsModel.xAuthRefreshToken(), "testString");
     assertEquals(createOfferingInstanceOptionsModel.id(), "testString");
+    assertEquals(createOfferingInstanceOptionsModel.rev(), "testString");
     assertEquals(createOfferingInstanceOptionsModel.url(), "testString");
     assertEquals(createOfferingInstanceOptionsModel.crn(), "testString");
     assertEquals(createOfferingInstanceOptionsModel.label(), "testString");
@@ -61,6 +83,12 @@ public class CreateOfferingInstanceOptionsTest {
     assertEquals(createOfferingInstanceOptionsModel.clusterRegion(), "testString");
     assertEquals(createOfferingInstanceOptionsModel.clusterNamespaces(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(createOfferingInstanceOptionsModel.clusterAllNamespaces(), Boolean.valueOf(true));
+    assertEquals(createOfferingInstanceOptionsModel.schematicsWorkspaceId(), "testString");
+    assertEquals(createOfferingInstanceOptionsModel.resourceGroupId(), "testString");
+    assertEquals(createOfferingInstanceOptionsModel.installPlan(), "testString");
+    assertEquals(createOfferingInstanceOptionsModel.channel(), "testString");
+    assertEquals(createOfferingInstanceOptionsModel.metadata(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
+    assertEquals(createOfferingInstanceOptionsModel.lastOperation(), offeringInstanceLastOperationModel);
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

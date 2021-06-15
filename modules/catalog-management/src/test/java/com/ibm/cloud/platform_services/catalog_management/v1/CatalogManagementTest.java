@@ -101,6 +101,7 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectListRes
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Offering;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstance;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstanceLastOperation;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingSearchResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.OperatorDeployResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Plan;
@@ -4195,7 +4196,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
   @Test
   public void testCreateOfferingInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"catalog_id\": \"catalogId\", \"offering_id\": \"offeringId\", \"kind_format\": \"kindFormat\", \"version\": \"version\", \"cluster_id\": \"clusterId\", \"cluster_region\": \"clusterRegion\", \"cluster_namespaces\": [\"clusterNamespaces\"], \"cluster_all_namespaces\": true}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"catalog_id\": \"catalogId\", \"offering_id\": \"offeringId\", \"kind_format\": \"kindFormat\", \"version\": \"version\", \"cluster_id\": \"clusterId\", \"cluster_region\": \"clusterRegion\", \"cluster_namespaces\": [\"clusterNamespaces\"], \"cluster_all_namespaces\": true, \"schematics_workspace_id\": \"schematicsWorkspaceId\", \"resource_group_id\": \"resourceGroupId\", \"install_plan\": \"installPlan\", \"channel\": \"channel\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"last_operation\": {\"operation\": \"operation\", \"state\": \"state\", \"message\": \"message\", \"transaction_id\": \"transactionId\", \"updated\": \"updated\"}}";
     String createOfferingInstancePath = "/instances/offerings";
 
     server.enqueue(new MockResponse()
@@ -4205,10 +4206,20 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
+    // Construct an instance of the OfferingInstanceLastOperation model
+    OfferingInstanceLastOperation offeringInstanceLastOperationModel = new OfferingInstanceLastOperation.Builder()
+    .operation("testString")
+    .state("testString")
+    .message("testString")
+    .transactionId("testString")
+    .updated("testString")
+    .build();
+
     // Construct an instance of the CreateOfferingInstanceOptions model
     CreateOfferingInstanceOptions createOfferingInstanceOptionsModel = new CreateOfferingInstanceOptions.Builder()
     .xAuthRefreshToken("testString")
     .id("testString")
+    .rev("testString")
     .url("testString")
     .crn("testString")
     .label("testString")
@@ -4220,6 +4231,12 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .clusterRegion("testString")
     .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .clusterAllNamespaces(true)
+    .schematicsWorkspaceId("testString")
+    .resourceGroupId("testString")
+    .installPlan("testString")
+    .channel("testString")
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+    .lastOperation(offeringInstanceLastOperationModel)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -4258,7 +4275,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
   @Test
   public void testGetOfferingInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"catalog_id\": \"catalogId\", \"offering_id\": \"offeringId\", \"kind_format\": \"kindFormat\", \"version\": \"version\", \"cluster_id\": \"clusterId\", \"cluster_region\": \"clusterRegion\", \"cluster_namespaces\": [\"clusterNamespaces\"], \"cluster_all_namespaces\": true}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"catalog_id\": \"catalogId\", \"offering_id\": \"offeringId\", \"kind_format\": \"kindFormat\", \"version\": \"version\", \"cluster_id\": \"clusterId\", \"cluster_region\": \"clusterRegion\", \"cluster_namespaces\": [\"clusterNamespaces\"], \"cluster_all_namespaces\": true, \"schematics_workspace_id\": \"schematicsWorkspaceId\", \"resource_group_id\": \"resourceGroupId\", \"install_plan\": \"installPlan\", \"channel\": \"channel\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"last_operation\": {\"operation\": \"operation\", \"state\": \"state\", \"message\": \"message\", \"transaction_id\": \"transactionId\", \"updated\": \"updated\"}}";
     String getOfferingInstancePath = "/instances/offerings/testString";
 
     server.enqueue(new MockResponse()
@@ -4308,7 +4325,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
   @Test
   public void testPutOfferingInstanceWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"catalog_id\": \"catalogId\", \"offering_id\": \"offeringId\", \"kind_format\": \"kindFormat\", \"version\": \"version\", \"cluster_id\": \"clusterId\", \"cluster_region\": \"clusterRegion\", \"cluster_namespaces\": [\"clusterNamespaces\"], \"cluster_all_namespaces\": true}";
+    String mockResponseBody = "{\"id\": \"id\", \"_rev\": \"rev\", \"url\": \"url\", \"crn\": \"crn\", \"label\": \"label\", \"catalog_id\": \"catalogId\", \"offering_id\": \"offeringId\", \"kind_format\": \"kindFormat\", \"version\": \"version\", \"cluster_id\": \"clusterId\", \"cluster_region\": \"clusterRegion\", \"cluster_namespaces\": [\"clusterNamespaces\"], \"cluster_all_namespaces\": true, \"schematics_workspace_id\": \"schematicsWorkspaceId\", \"resource_group_id\": \"resourceGroupId\", \"install_plan\": \"installPlan\", \"channel\": \"channel\", \"metadata\": {\"mapKey\": \"anyValue\"}, \"last_operation\": {\"operation\": \"operation\", \"state\": \"state\", \"message\": \"message\", \"transaction_id\": \"transactionId\", \"updated\": \"updated\"}}";
     String putOfferingInstancePath = "/instances/offerings/testString";
 
     server.enqueue(new MockResponse()
@@ -4318,11 +4335,21 @@ public class CatalogManagementTest extends PowerMockTestCase {
 
     constructClientService();
 
+    // Construct an instance of the OfferingInstanceLastOperation model
+    OfferingInstanceLastOperation offeringInstanceLastOperationModel = new OfferingInstanceLastOperation.Builder()
+    .operation("testString")
+    .state("testString")
+    .message("testString")
+    .transactionId("testString")
+    .updated("testString")
+    .build();
+
     // Construct an instance of the PutOfferingInstanceOptions model
     PutOfferingInstanceOptions putOfferingInstanceOptionsModel = new PutOfferingInstanceOptions.Builder()
     .instanceIdentifier("testString")
     .xAuthRefreshToken("testString")
     .id("testString")
+    .rev("testString")
     .url("testString")
     .crn("testString")
     .label("testString")
@@ -4334,6 +4361,12 @@ public class CatalogManagementTest extends PowerMockTestCase {
     .clusterRegion("testString")
     .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .clusterAllNamespaces(true)
+    .schematicsWorkspaceId("testString")
+    .resourceGroupId("testString")
+    .installPlan("testString")
+    .channel("testString")
+    .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+    .lastOperation(offeringInstanceLastOperationModel)
     .build();
 
     // Invoke operation with valid options model (positive test)

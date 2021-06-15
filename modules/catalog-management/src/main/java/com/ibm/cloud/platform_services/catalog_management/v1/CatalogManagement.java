@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.31.0-902c9336-20210504-161156
+ * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  */
 
 package com.ibm.cloud.platform_services.catalog_management.v1;
@@ -2571,6 +2571,9 @@ public class CatalogManagement extends BaseService {
     if (createOfferingInstanceOptions.id() != null) {
       contentJson.addProperty("id", createOfferingInstanceOptions.id());
     }
+    if (createOfferingInstanceOptions.rev() != null) {
+      contentJson.addProperty("_rev", createOfferingInstanceOptions.rev());
+    }
     if (createOfferingInstanceOptions.url() != null) {
       contentJson.addProperty("url", createOfferingInstanceOptions.url());
     }
@@ -2603,6 +2606,24 @@ public class CatalogManagement extends BaseService {
     }
     if (createOfferingInstanceOptions.clusterAllNamespaces() != null) {
       contentJson.addProperty("cluster_all_namespaces", createOfferingInstanceOptions.clusterAllNamespaces());
+    }
+    if (createOfferingInstanceOptions.schematicsWorkspaceId() != null) {
+      contentJson.addProperty("schematics_workspace_id", createOfferingInstanceOptions.schematicsWorkspaceId());
+    }
+    if (createOfferingInstanceOptions.resourceGroupId() != null) {
+      contentJson.addProperty("resource_group_id", createOfferingInstanceOptions.resourceGroupId());
+    }
+    if (createOfferingInstanceOptions.installPlan() != null) {
+      contentJson.addProperty("install_plan", createOfferingInstanceOptions.installPlan());
+    }
+    if (createOfferingInstanceOptions.channel() != null) {
+      contentJson.addProperty("channel", createOfferingInstanceOptions.channel());
+    }
+    if (createOfferingInstanceOptions.metadata() != null) {
+      contentJson.add("metadata", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingInstanceOptions.metadata()));
+    }
+    if (createOfferingInstanceOptions.lastOperation() != null) {
+      contentJson.add("last_operation", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingInstanceOptions.lastOperation()));
     }
     builder.bodyJson(contentJson);
     ResponseConverter<OfferingInstance> responseConverter =
@@ -2658,6 +2679,9 @@ public class CatalogManagement extends BaseService {
     if (putOfferingInstanceOptions.id() != null) {
       contentJson.addProperty("id", putOfferingInstanceOptions.id());
     }
+    if (putOfferingInstanceOptions.rev() != null) {
+      contentJson.addProperty("_rev", putOfferingInstanceOptions.rev());
+    }
     if (putOfferingInstanceOptions.url() != null) {
       contentJson.addProperty("url", putOfferingInstanceOptions.url());
     }
@@ -2690,6 +2714,24 @@ public class CatalogManagement extends BaseService {
     }
     if (putOfferingInstanceOptions.clusterAllNamespaces() != null) {
       contentJson.addProperty("cluster_all_namespaces", putOfferingInstanceOptions.clusterAllNamespaces());
+    }
+    if (putOfferingInstanceOptions.schematicsWorkspaceId() != null) {
+      contentJson.addProperty("schematics_workspace_id", putOfferingInstanceOptions.schematicsWorkspaceId());
+    }
+    if (putOfferingInstanceOptions.resourceGroupId() != null) {
+      contentJson.addProperty("resource_group_id", putOfferingInstanceOptions.resourceGroupId());
+    }
+    if (putOfferingInstanceOptions.installPlan() != null) {
+      contentJson.addProperty("install_plan", putOfferingInstanceOptions.installPlan());
+    }
+    if (putOfferingInstanceOptions.channel() != null) {
+      contentJson.addProperty("channel", putOfferingInstanceOptions.channel());
+    }
+    if (putOfferingInstanceOptions.metadata() != null) {
+      contentJson.add("metadata", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(putOfferingInstanceOptions.metadata()));
+    }
+    if (putOfferingInstanceOptions.lastOperation() != null) {
+      contentJson.add("last_operation", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(putOfferingInstanceOptions.lastOperation()));
     }
     builder.bodyJson(contentJson);
     ResponseConverter<OfferingInstance> responseConverter =

@@ -14,6 +14,7 @@
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
 import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstance;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstanceLastOperation;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -33,8 +34,22 @@ public class OfferingInstanceTest {
 
   @Test
   public void testOfferingInstance() throws Throwable {
+    OfferingInstanceLastOperation offeringInstanceLastOperationModel = new OfferingInstanceLastOperation.Builder()
+      .operation("testString")
+      .state("testString")
+      .message("testString")
+      .transactionId("testString")
+      .updated("testString")
+      .build();
+    assertEquals(offeringInstanceLastOperationModel.operation(), "testString");
+    assertEquals(offeringInstanceLastOperationModel.state(), "testString");
+    assertEquals(offeringInstanceLastOperationModel.message(), "testString");
+    assertEquals(offeringInstanceLastOperationModel.transactionId(), "testString");
+    assertEquals(offeringInstanceLastOperationModel.updated(), "testString");
+
     OfferingInstance offeringInstanceModel = new OfferingInstance.Builder()
       .id("testString")
+      .rev("testString")
       .url("testString")
       .crn("testString")
       .label("testString")
@@ -46,8 +61,15 @@ public class OfferingInstanceTest {
       .clusterRegion("testString")
       .clusterNamespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .clusterAllNamespaces(true)
+      .schematicsWorkspaceId("testString")
+      .resourceGroupId("testString")
+      .installPlan("testString")
+      .channel("testString")
+      .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+      .lastOperation(offeringInstanceLastOperationModel)
       .build();
     assertEquals(offeringInstanceModel.id(), "testString");
+    assertEquals(offeringInstanceModel.rev(), "testString");
     assertEquals(offeringInstanceModel.url(), "testString");
     assertEquals(offeringInstanceModel.crn(), "testString");
     assertEquals(offeringInstanceModel.label(), "testString");
@@ -59,12 +81,19 @@ public class OfferingInstanceTest {
     assertEquals(offeringInstanceModel.clusterRegion(), "testString");
     assertEquals(offeringInstanceModel.clusterNamespaces(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(offeringInstanceModel.clusterAllNamespaces(), Boolean.valueOf(true));
+    assertEquals(offeringInstanceModel.schematicsWorkspaceId(), "testString");
+    assertEquals(offeringInstanceModel.resourceGroupId(), "testString");
+    assertEquals(offeringInstanceModel.installPlan(), "testString");
+    assertEquals(offeringInstanceModel.channel(), "testString");
+    assertEquals(offeringInstanceModel.metadata(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
+    assertEquals(offeringInstanceModel.lastOperation(), offeringInstanceLastOperationModel);
 
     String json = TestUtilities.serialize(offeringInstanceModel);
 
     OfferingInstance offeringInstanceModelNew = TestUtilities.deserialize(json, OfferingInstance.class);
     assertTrue(offeringInstanceModelNew instanceof OfferingInstance);
     assertEquals(offeringInstanceModelNew.id(), "testString");
+    assertEquals(offeringInstanceModelNew.rev(), "testString");
     assertEquals(offeringInstanceModelNew.url(), "testString");
     assertEquals(offeringInstanceModelNew.crn(), "testString");
     assertEquals(offeringInstanceModelNew.label(), "testString");
@@ -75,5 +104,10 @@ public class OfferingInstanceTest {
     assertEquals(offeringInstanceModelNew.clusterId(), "testString");
     assertEquals(offeringInstanceModelNew.clusterRegion(), "testString");
     assertEquals(offeringInstanceModelNew.clusterAllNamespaces(), Boolean.valueOf(true));
+    assertEquals(offeringInstanceModelNew.schematicsWorkspaceId(), "testString");
+    assertEquals(offeringInstanceModelNew.resourceGroupId(), "testString");
+    assertEquals(offeringInstanceModelNew.installPlan(), "testString");
+    assertEquals(offeringInstanceModelNew.channel(), "testString");
+    assertEquals(offeringInstanceModelNew.lastOperation().toString(), offeringInstanceLastOperationModel.toString());
   }
 }

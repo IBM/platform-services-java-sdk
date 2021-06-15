@@ -14,6 +14,7 @@ package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -24,6 +25,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class OfferingInstance extends GenericModel {
 
   protected String id;
+  @SerializedName("_rev")
+  protected String rev;
   protected String url;
   protected String crn;
   protected String label;
@@ -42,12 +45,23 @@ public class OfferingInstance extends GenericModel {
   protected List<String> clusterNamespaces;
   @SerializedName("cluster_all_namespaces")
   protected Boolean clusterAllNamespaces;
+  @SerializedName("schematics_workspace_id")
+  protected String schematicsWorkspaceId;
+  @SerializedName("resource_group_id")
+  protected String resourceGroupId;
+  @SerializedName("install_plan")
+  protected String installPlan;
+  protected String channel;
+  protected Map<String, Object> metadata;
+  @SerializedName("last_operation")
+  protected OfferingInstanceLastOperation lastOperation;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String id;
+    private String rev;
     private String url;
     private String crn;
     private String label;
@@ -59,9 +73,16 @@ public class OfferingInstance extends GenericModel {
     private String clusterRegion;
     private List<String> clusterNamespaces;
     private Boolean clusterAllNamespaces;
+    private String schematicsWorkspaceId;
+    private String resourceGroupId;
+    private String installPlan;
+    private String channel;
+    private Map<String, Object> metadata;
+    private OfferingInstanceLastOperation lastOperation;
 
     private Builder(OfferingInstance offeringInstance) {
       this.id = offeringInstance.id;
+      this.rev = offeringInstance.rev;
       this.url = offeringInstance.url;
       this.crn = offeringInstance.crn;
       this.label = offeringInstance.label;
@@ -73,6 +94,12 @@ public class OfferingInstance extends GenericModel {
       this.clusterRegion = offeringInstance.clusterRegion;
       this.clusterNamespaces = offeringInstance.clusterNamespaces;
       this.clusterAllNamespaces = offeringInstance.clusterAllNamespaces;
+      this.schematicsWorkspaceId = offeringInstance.schematicsWorkspaceId;
+      this.resourceGroupId = offeringInstance.resourceGroupId;
+      this.installPlan = offeringInstance.installPlan;
+      this.channel = offeringInstance.channel;
+      this.metadata = offeringInstance.metadata;
+      this.lastOperation = offeringInstance.lastOperation;
     }
 
     /**
@@ -114,6 +141,17 @@ public class OfferingInstance extends GenericModel {
      */
     public Builder id(String id) {
       this.id = id;
+      return this;
+    }
+
+    /**
+     * Set the rev.
+     *
+     * @param rev the rev
+     * @return the OfferingInstance builder
+     */
+    public Builder rev(String rev) {
+      this.rev = rev;
       return this;
     }
 
@@ -238,10 +276,77 @@ public class OfferingInstance extends GenericModel {
       this.clusterAllNamespaces = clusterAllNamespaces;
       return this;
     }
+
+    /**
+     * Set the schematicsWorkspaceId.
+     *
+     * @param schematicsWorkspaceId the schematicsWorkspaceId
+     * @return the OfferingInstance builder
+     */
+    public Builder schematicsWorkspaceId(String schematicsWorkspaceId) {
+      this.schematicsWorkspaceId = schematicsWorkspaceId;
+      return this;
+    }
+
+    /**
+     * Set the resourceGroupId.
+     *
+     * @param resourceGroupId the resourceGroupId
+     * @return the OfferingInstance builder
+     */
+    public Builder resourceGroupId(String resourceGroupId) {
+      this.resourceGroupId = resourceGroupId;
+      return this;
+    }
+
+    /**
+     * Set the installPlan.
+     *
+     * @param installPlan the installPlan
+     * @return the OfferingInstance builder
+     */
+    public Builder installPlan(String installPlan) {
+      this.installPlan = installPlan;
+      return this;
+    }
+
+    /**
+     * Set the channel.
+     *
+     * @param channel the channel
+     * @return the OfferingInstance builder
+     */
+    public Builder channel(String channel) {
+      this.channel = channel;
+      return this;
+    }
+
+    /**
+     * Set the metadata.
+     *
+     * @param metadata the metadata
+     * @return the OfferingInstance builder
+     */
+    public Builder metadata(Map<String, Object> metadata) {
+      this.metadata = metadata;
+      return this;
+    }
+
+    /**
+     * Set the lastOperation.
+     *
+     * @param lastOperation the lastOperation
+     * @return the OfferingInstance builder
+     */
+    public Builder lastOperation(OfferingInstanceLastOperation lastOperation) {
+      this.lastOperation = lastOperation;
+      return this;
+    }
   }
 
   protected OfferingInstance(Builder builder) {
     id = builder.id;
+    rev = builder.rev;
     url = builder.url;
     crn = builder.crn;
     label = builder.label;
@@ -253,6 +358,12 @@ public class OfferingInstance extends GenericModel {
     clusterRegion = builder.clusterRegion;
     clusterNamespaces = builder.clusterNamespaces;
     clusterAllNamespaces = builder.clusterAllNamespaces;
+    schematicsWorkspaceId = builder.schematicsWorkspaceId;
+    resourceGroupId = builder.resourceGroupId;
+    installPlan = builder.installPlan;
+    channel = builder.channel;
+    metadata = builder.metadata;
+    lastOperation = builder.lastOperation;
   }
 
   /**
@@ -273,6 +384,17 @@ public class OfferingInstance extends GenericModel {
    */
   public String id() {
     return id;
+  }
+
+  /**
+   * Gets the rev.
+   *
+   * Cloudant revision.
+   *
+   * @return the rev
+   */
+  public String rev() {
+    return rev;
   }
 
   /**
@@ -394,6 +516,73 @@ public class OfferingInstance extends GenericModel {
    */
   public Boolean clusterAllNamespaces() {
     return clusterAllNamespaces;
+  }
+
+  /**
+   * Gets the schematicsWorkspaceId.
+   *
+   * Id of the schematics workspace, for offering instances provisioned through schematics.
+   *
+   * @return the schematicsWorkspaceId
+   */
+  public String schematicsWorkspaceId() {
+    return schematicsWorkspaceId;
+  }
+
+  /**
+   * Gets the resourceGroupId.
+   *
+   * Id of the resource group to provision the offering instance into.
+   *
+   * @return the resourceGroupId
+   */
+  public String resourceGroupId() {
+    return resourceGroupId;
+  }
+
+  /**
+   * Gets the installPlan.
+   *
+   * Type of install plan (also known as approval strategy) for operator subscriptions. Can be either automatic, which
+   * automatically upgrades operators to the latest in a channel, or manual, which requires approval on the cluster.
+   *
+   * @return the installPlan
+   */
+  public String installPlan() {
+    return installPlan;
+  }
+
+  /**
+   * Gets the channel.
+   *
+   * Channel to pin the operator subscription to.
+   *
+   * @return the channel
+   */
+  public String channel() {
+    return channel;
+  }
+
+  /**
+   * Gets the metadata.
+   *
+   * Map of metadata values for this offering instance.
+   *
+   * @return the metadata
+   */
+  public Map<String, Object> metadata() {
+    return metadata;
+  }
+
+  /**
+   * Gets the lastOperation.
+   *
+   * the last operation performed and status.
+   *
+   * @return the lastOperation
+   */
+  public OfferingInstanceLastOperation lastOperation() {
+    return lastOperation;
   }
 }
 

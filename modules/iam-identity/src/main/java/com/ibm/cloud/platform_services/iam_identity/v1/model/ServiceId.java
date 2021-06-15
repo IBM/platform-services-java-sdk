@@ -194,7 +194,8 @@ public class ServiceId extends GenericModel {
   /**
    * Gets the apikey.
    *
-   * Response body format for API key V1 REST requests.
+   * Api key details for the Service ID. The apikey is only included in the response when creating a Service ID with an
+   * apikey.
    *
    * @return the apikey
    */

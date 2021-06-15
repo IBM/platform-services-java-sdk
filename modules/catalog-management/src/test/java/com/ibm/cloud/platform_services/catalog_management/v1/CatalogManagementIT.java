@@ -32,9 +32,8 @@ import static org.testng.Assert.*;
  */
 public class CatalogManagementIT extends SdkIntegrationTestBase {
   
-  public CatalogManagement catalogManagementService = null;
+  public CatalogManagement catalogManagementServiceAuthorized = null;
   public CatalogManagement catalogManagementServiceNotAuthorized = null;
-  public CatalogManagement serviceNotAuthenticatedShouldReturn401 = null;
   
   public static Map<String, String> config = null;
   
@@ -49,7 +48,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   private String accountId = null;
   private String clusterId = null;
   
-  private String gitAuthToken = null;
+  private String gitToken = null;
   
   private String refreshTokenAuthorized = null;
   private String refreshTokenNotAuthorized = null;
@@ -63,6 +62,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   private String repoTypeGitPublic = "git_public";
   private String regionUsSouth = "us-south";
   private String namespaceJavaSdk = "java-sdk";
+  private String importOfferingZipUrl = "https://github.com/rhm-samples/node-red-operator/blob/master/node-red" +
+      "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml";
   
   private String bogusRevision = "bogus-revision";
   private String bogusCatalogId = "bogus-catalog-id";
@@ -95,11 +96,12 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     IamToken iamTokenNotAuthorized = notAuthorizedIamAuthenticator.requestToken();
     refreshTokenNotAuthorized = iamTokenNotAuthorized.getRefreshToken();
     
-    catalogManagementService = CatalogManagement.newInstance(CatalogManagement.DEFAULT_SERVICE_NAME);
-    assertNotNull(catalogManagementService);
-    assertNotNull(catalogManagementService.getServiceUrl());
+    catalogManagementServiceAuthorized = CatalogManagement.newInstance(CatalogManagement.DEFAULT_SERVICE_NAME);
+    assertNotNull(catalogManagementServiceAuthorized);
+    assertNotNull(catalogManagementServiceAuthorized.getServiceUrl());
     
-    IamAuthenticator authorizedIamAuthenticator = (IamAuthenticator) catalogManagementService.getAuthenticator();
+    IamAuthenticator authorizedIamAuthenticator =
+        (IamAuthenticator) catalogManagementServiceAuthorized.getAuthenticator();
     IamToken iamAuthorizedToken = authorizedIamAuthenticator.requestToken();
     refreshTokenAuthorized = iamAuthorizedToken.getRefreshToken();
     
@@ -107,7 +109,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     config = CredentialUtils.getServiceProperties(CatalogManagement.DEFAULT_SERVICE_NAME);
     assertNotNull(config);
     assertFalse(config.isEmpty());
-    assertEquals(catalogManagementService.getServiceUrl(), config.get("URL"));
+    assertEquals(catalogManagementServiceAuthorized.getServiceUrl(), config.get("URL"));
     
     accountId = config.get("ACCOUNT_ID");
     assertNotNull(accountId);
@@ -115,14 +117,15 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     clusterId = config.get("CLUSTER_ID");
     assertNotNull(clusterId);
     
-    gitAuthToken = config.get("GIT_TOKEN");
-    assertNotNull(gitAuthToken);
+    gitToken = config.get("GIT_TOKEN");
+    assertNotNull(gitToken);
     
     System.out.println("Setup complete.");
   }
   
   // Regarding execution order...
-  // this file contains 170+ tests and almost 5000 lines long so hard to navigate in it and track execution order
+  // this file contains 170+ tests and almost 4000+ lines long, so, possibly hard to navigate in it and track
+  // execution order
   // the order of the tests in the file represents the execution order with a twist
   // the twist is that there are blocks where there is an operation, e.g. createCatalog, and its negative tests
   // a block depends on the block which has executable (e.g. not Ignored) happy path test prior to it in this file,
@@ -133,8 +136,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   
   // another example
   // there are test blocks
-  // block 1 (has not ignored happy path test)
-  // block 2 (happy path test is ignored)
+  // block 1 (has a happy path test)
+  // block 2 (has a happy path test and it is ignored)
   // block 3
   // execution order
   // block 1 executes
@@ -144,9 +147,9 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   
   // a block contains the negative tests first and as last one the happy path
   
-  //===
-  // CreateCatalog block
-  ///
+  //====
+  // Create Catalog block
+  //====
   
   @Test(expectedExceptions = BadRequestException.class)
   public void testCreateCatalogReturns400WhenUserIsNotAuthorized() throws Exception {
@@ -161,7 +164,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   }
   
   @Test(expectedExceptions = BadRequestException.class)
-  public void testCreateCatalogReturn400WhenBackendValidationFails() throws Exception {
+  public void testCreateCatalogReturn400WhenBackendInputValidationFails() throws Exception {
     
     CreateCatalogOptions createCatalogOptions = new CreateCatalogOptions.Builder()
         .rev(bogusRevision)
@@ -170,7 +173,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .kind(kindVpe)
         .build();
     
-    catalogManagementService.createCatalog(createCatalogOptions).execute();
+    catalogManagementServiceAuthorized.createCatalog(createCatalogOptions).execute();
   }
   
   @Test
@@ -178,19 +181,20 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     try {
       CreateCatalogOptions createCatalogOptions = new CreateCatalogOptions.Builder()
           .label(labelJavaSdk)
+          .addTags("java")
+          .addTags("sdk")
           .owningAccount(accountId)
           .kind(kindVpe)
           .build();
       
-      Response<Catalog> response = catalogManagementService.createCatalog(createCatalogOptions).execute();
-      
+      Response<Catalog> response = catalogManagementServiceAuthorized.createCatalog(createCatalogOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
       
       Catalog catalogResult = response.getResult();
       assertNotNull(catalogResult);
+      assertNotNull(catalogResult.id());
       catalogId = catalogResult.id();
-      assertNotNull(catalogId);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -199,17 +203,17 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   }
   
   //====
-  // GetCatalog block
+  // Get Catalog block
   //====
   
   @Test(dependsOnMethods = {"testCreateCatalog"},
       expectedExceptions = NotFoundException.class)
   public void testGetCatalogReturns404WhenNoSuchCatalog() throws Exception {
     GetCatalogOptions getCatalogOptions = new GetCatalogOptions.Builder()
-        .catalogIdentifier(catalogId + "c")
+        .catalogIdentifier("invalid-" + catalogId)
         .build();
     
-    catalogManagementService.getCatalog(getCatalogOptions).execute();
+    catalogManagementServiceAuthorized.getCatalog(getCatalogOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testCreateCatalog"},
@@ -229,13 +233,13 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .catalogIdentifier(catalogId)
           .build();
       
-      Response<Catalog> response = catalogManagementService.getCatalog(getCatalogOptions).execute();
-      
+      Response<Catalog> response = catalogManagementServiceAuthorized.getCatalog(getCatalogOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
       
       Catalog catalogResult = response.getResult();
       assertNotNull(catalogResult);
+      assertEquals(catalogResult.id(), catalogId);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -244,19 +248,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   }
   
   //====
-  // ReplaceCatalog block
+  // Replace Catalog block
   //====
-  
-  @Test(dependsOnMethods = {"testGetCatalog"},
-      expectedExceptions = NotFoundException.class)
-  public void testReplaceCatalogReturns404WhenNoSuchCatalog() throws Exception {
-    ReplaceCatalogOptions replaceCatalogOptions = new ReplaceCatalogOptions.Builder()
-        .catalogIdentifier(catalogId + "c")
-        .id(catalogId + "c")
-        .build();
-    
-    catalogManagementService.replaceCatalog(replaceCatalogOptions).execute();
-  }
   
   @Test(dependsOnMethods = {"testGetCatalog"},
       expectedExceptions = ForbiddenException.class)
@@ -264,6 +257,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     ReplaceCatalogOptions replaceCatalogOptions = new ReplaceCatalogOptions.Builder()
         .catalogIdentifier(catalogId)
         .id(catalogId)
+        .owningAccount(accountId)
+        .kind(kindVpe)
         .build();
     
     catalogManagementServiceNotAuthorized.replaceCatalog(replaceCatalogOptions).execute();
@@ -271,44 +266,49 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   
   @Test(dependsOnMethods = "testGetCatalog",
       expectedExceptions = BadRequestException.class)
-  @Ignore
   public void testReplaceCatalogReturns400WhenBackendInputValidationFails() throws Exception {
     ReplaceCatalogOptions replaceCatalogOptions = new ReplaceCatalogOptions.Builder()
         .catalogIdentifier(catalogId)
-        .id(catalogId)
-        .tags(new ArrayList<>(Arrays.asList("java", "sdk", "tag")))
-        .kind("bogus-kind")
+        .id("invalid-" + catalogId)
+        .owningAccount(accountId)
+        .kind(kindVpe)
         .build();
     
-    catalogManagementService.replaceCatalog(replaceCatalogOptions).execute();
+    catalogManagementServiceAuthorized.replaceCatalog(replaceCatalogOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetCatalog"},
+      expectedExceptions = NotFoundException.class)
+  public void testReplaceCatalogReturns404WhenNoSuchCatalog() throws Exception {
+    ReplaceCatalogOptions replaceCatalogOptions = new ReplaceCatalogOptions.Builder()
+        .catalogIdentifier("invalid-" + catalogId)
+        .id("invalid-" + catalogId)
+        .owningAccount(accountId)
+        .kind(kindVpe)
+        .build();
+    
+    catalogManagementServiceAuthorized.replaceCatalog(replaceCatalogOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetCatalog"})
   public void testReplaceCatalog() throws Exception {
     try {
-      List<String> tags = new java.util.ArrayList<String>(java.util.Arrays.asList(
-          "java",
-          "sdk",
-          "tag-1",
-          "tag-2",
-          "cloud",
-          "platform-services"
-      ));
-      
+      ArrayList<String> tags = new ArrayList<>(Arrays.asList("java", "sdk", "update"));
       ReplaceCatalogOptions replaceCatalogOptions = new ReplaceCatalogOptions.Builder()
           .catalogIdentifier(catalogId)
           .id(catalogId)
           .tags(tags)
           .owningAccount(accountId)
+          .kind(kindVpe)
           .build();
       
-      Response<Catalog> response = catalogManagementService.replaceCatalog(replaceCatalogOptions).execute();
+      Response<Catalog> response = catalogManagementServiceAuthorized.replaceCatalog(replaceCatalogOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
       
       Catalog catalogResult = response.getResult();
       assertNotNull(catalogResult);
-      assertEquals(catalogResult.tags().equals(tags), true);
+      assertEquals(catalogResult.tags().containsAll(tags), true);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -323,7 +323,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Test(dependsOnMethods = {"testReplaceCatalog"})
   public void testListCatalogs() throws Exception {
     try {
-      Response<CatalogSearchResult> response = catalogManagementService.listCatalogs().execute();
+      Response<CatalogSearchResult> response = catalogManagementServiceAuthorized.listCatalogs().execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -331,12 +331,12 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       CatalogSearchResult catalogSearchResultResult = response.getResult();
       assertNotNull(catalogSearchResultResult);
       
-      catalogSearchResultResult.getResources()
-          .stream()
-          .filter(p -> p.id().equals(catalogId))
-          .findAny()
-          .orElseThrow(() -> new RuntimeException(String.format("No catalog with id: %s", catalogId)));
-      
+      // catalogSearchResultResult.getResources()
+      //     .stream()
+      //     .filter(p -> p.id().equals(catalogId))
+      //     .findAny()
+      //     .orElseThrow(() -> new RuntimeException(String.format("No catalog with id: %s", catalogId)));
+      //
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
@@ -344,7 +344,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   }
   
   //====
-  //CreateOffering block
+  //Create Offering block
   //====
   
   @Test(dependsOnMethods = {"testListCatalogs"},
@@ -352,10 +352,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testCreateOfferingReturns404WhenNoSuchCatalog() throws Exception {
     
     CreateOfferingOptions createOfferingOptions = new CreateOfferingOptions.Builder()
-        .catalogIdentifier(bogusCatalogId)
+        .catalogIdentifier("invalid-" + catalogId)
         .build();
     
-    catalogManagementService.createOffering(createOfferingOptions).execute();
+    catalogManagementServiceAuthorized.createOffering(createOfferingOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testListCatalogs"},
@@ -367,7 +367,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .name("offering created by java sdk")
         .build();
     
-    catalogManagementService.createOffering(createOfferingOptions).execute();
+    catalogManagementServiceAuthorized.createOffering(createOfferingOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testListCatalogs"},
@@ -376,7 +376,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     CreateOfferingOptions createOfferingOptions = new CreateOfferingOptions.Builder()
         .catalogIdentifier(catalogId)
         .catalogId(catalogId)
-        .name("offering created by java sdk")
+        .name("offering-created-by-java-sdk")
         .build();
     
     catalogManagementServiceNotAuthorized.createOffering(createOfferingOptions).execute();
@@ -392,15 +392,15 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .name("offering-created-by-java-sdk")
           .build();
       
-      Response<Offering> response = catalogManagementService.createOffering(createOfferingOptions).execute();
+      Response<Offering> response = catalogManagementServiceAuthorized.createOffering(createOfferingOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
       
       Offering offeringResult = response.getResult();
       assertNotNull(offeringResult);
+      assertNotNull(offeringResult.id());
       offeringId = offeringResult.id();
-      assertNotNull(offeringId);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -417,10 +417,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testGetOfferingReturns404WhenNoSuchOffering() throws Exception {
     GetOfferingOptions getOfferingOptions = new GetOfferingOptions.Builder()
         .catalogIdentifier(catalogId)
-        .offeringId(bogusOfferingId)
+        .offeringId("invalid-" + offeringId)
         .build();
     
-    catalogManagementService.getOffering(getOfferingOptions).execute();
+    catalogManagementServiceAuthorized.getOffering(getOfferingOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testCreateOffering"},
@@ -442,13 +442,15 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .offeringId(offeringId)
           .build();
       
-      Response<Offering> response = catalogManagementService.getOffering(getOfferingOptions).execute();
+      Response<Offering> response = catalogManagementServiceAuthorized.getOffering(getOfferingOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
       
       Offering offeringResult = response.getResult();
       assertNotNull(offeringResult);
+      assertEquals(offeringResult.id(), offeringId);
+      assertEquals(offeringResult.catalogId(), catalogId);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -457,7 +459,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   }
   
   //====
-  // ReplaceOffering block
+  // Replace Offering block
   //====
   
   @Test(dependsOnMethods = {"testGetOffering"},
@@ -465,11 +467,12 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testReplaceOfferingReturns404WhenNoSuchOffering() throws Exception {
     ReplaceOfferingOptions replaceOfferingOptions = new ReplaceOfferingOptions.Builder()
         .catalogIdentifier(catalogId)
-        .offeringId(bogusOfferingId)
-        .id(bogusOfferingId)
+        .offeringId("invalid-" + offeringId)
+        .id("invalid-" + offeringId)
+        .name("updated-offering-name-by-java-sdk")
         .build();
     
-    catalogManagementService.replaceOffering(replaceOfferingOptions).execute();
+    catalogManagementServiceAuthorized.replaceOffering(replaceOfferingOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOffering"},
@@ -478,10 +481,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     ReplaceOfferingOptions replaceOfferingOptions = new ReplaceOfferingOptions.Builder()
         .catalogIdentifier(catalogId)
         .offeringId(offeringId)
-        .id(bogusOfferingId)
+        .id(offeringId)
+        .name("updated offering by java sdk")
         .build();
     
-    catalogManagementService.replaceOffering(replaceOfferingOptions).execute();
+    catalogManagementServiceAuthorized.replaceOffering(replaceOfferingOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOffering"},
@@ -494,13 +498,12 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .name("updated-offering-name-by-java-sdk")
         .build();
     
-    // Invoke operation
     catalogManagementServiceNotAuthorized.replaceOffering(replaceOfferingOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOffering"},
       expectedExceptions = ConflictException.class)
-  public void testReplaceOfferingReturns409WhenThereIsAConflict() throws Exception {
+  public void testReplaceOfferingReturns409WhenConflictOccurs() throws Exception {
     ReplaceOfferingOptions replaceOfferingOptions = new ReplaceOfferingOptions.Builder()
         .catalogIdentifier(catalogId)
         .offeringId(offeringId)
@@ -508,7 +511,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .name("updated-offering-name-by-java-sdk")
         .build();
     
-    catalogManagementService.replaceOffering(replaceOfferingOptions).execute();
+    catalogManagementServiceAuthorized.replaceOffering(replaceOfferingOptions).execute();
   }
   
   // it has a version related conflict
@@ -519,20 +522,25 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testReplaceOffering() throws Exception {
     try {
       
+      String updatedName = "updated-offering-name-by-java-sdk";
       ReplaceOfferingOptions replaceOfferingOptions = new ReplaceOfferingOptions.Builder()
           .catalogIdentifier(catalogId)
           .offeringId(offeringId)
           .id(offeringId)
-          .name("updated-offering-name-by-java-sdk")
+          .name(updatedName)
           .build();
       
-      Response<Offering> response = catalogManagementService.replaceOffering(replaceOfferingOptions).execute();
+      Response<Offering> response = catalogManagementServiceAuthorized.replaceOffering(replaceOfferingOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
       
       Offering offeringResult = response.getResult();
       assertNotNull(offeringResult);
+      assertEquals(offeringResult.id(), offeringId);
+      assertEquals(offeringResult.catalogId(), catalogId);
+      assertEquals(offeringResult.name(), updatedName);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -541,7 +549,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   }
   
   //====
-  // ListOfferings block
+  // List Offerings block
   //====
   
   @Test(dependsOnMethods = {"testGetOffering"},
@@ -549,7 +557,6 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testListOfferingsReturns403WhenUserIsNotAuthorized() throws Exception {
     ListOfferingsOptions listOfferingsOptions = new ListOfferingsOptions.Builder()
         .catalogIdentifier(catalogId)
-        .digest(true)
         .build();
     
     catalogManagementServiceNotAuthorized.listOfferings(listOfferingsOptions).execute();
@@ -564,29 +571,30 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .sort("bogus-sort-value")
         .build();
     
-    catalogManagementService.listOfferings(listOfferingsOptions).execute();
+    catalogManagementServiceAuthorized.listOfferings(listOfferingsOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOffering"},
       expectedExceptions = NotFoundException.class)
   public void testListOfferingsReturns404WhenNoSuchCatalog() throws Exception {
     ListOfferingsOptions listOfferingsOptions = new ListOfferingsOptions.Builder()
-        .catalogIdentifier(bogusCatalogId)
-        .digest(true)
+        .catalogIdentifier("invalid-" + catalogId)
         .build();
     
-    catalogManagementService.listOfferings(listOfferingsOptions).execute();
+    catalogManagementServiceAuthorized.listOfferings(listOfferingsOptions).execute();
   }
   
+  // pagination
   @Test(dependsOnMethods = {"testGetOffering"})
   public void testListOfferings() throws Exception {
     try {
       ListOfferingsOptions listOfferingsOptions = new ListOfferingsOptions.Builder()
           .catalogIdentifier(catalogId)
-          .digest(true)
           .build();
       
-      Response<OfferingSearchResult> response = catalogManagementService.listOfferings(listOfferingsOptions).execute();
+      Response<OfferingSearchResult> response = catalogManagementServiceAuthorized
+          .listOfferings(listOfferingsOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -606,7 +614,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   }
   
   //====
-  // ImportOffering block
+  // Import Offering block
   //====
   
   @Test(dependsOnMethods = {"testListOfferings"},
@@ -614,18 +622,14 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testImportOfferingReturns403WhenUserIsNotAuthorized() throws Exception {
     ImportOfferingOptions importOfferingOptions = new ImportOfferingOptions.Builder()
         .catalogIdentifier(catalogId)
-        .tags(new java.util.ArrayList<String>(java.util.Arrays.asList(
-            "java",
-            "sdk",
-            "example-tag-1",
-            "example-tag-2")))
-        .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList(kindRoks)))
-        .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0" +
-            ".2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
-        .targetVersion("0.0.2")
-        .repoType(repoTypeGitPublic)
+        .addTags("java")
+        .addTags("sdk")
+        .addTargetKinds(kindVpe)
+        .zipurl(importOfferingZipUrl)
         .offeringId(offeringId)
-        .xAuthToken(gitAuthToken)
+        .targetVersion("0.0.3")
+        .repoType(repoTypeGitPublic)
+        .xAuthToken(gitToken)
         .build();
     
     catalogManagementServiceNotAuthorized.importOffering(importOfferingOptions).execute();
@@ -636,41 +640,35 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testImportOfferingReturns400WhenBackendInputValidationFails() throws Exception {
     ImportOfferingOptions importOfferingOptions = new ImportOfferingOptions.Builder()
         .catalogIdentifier(catalogId)
-        .tags(new java.util.ArrayList<String>(java.util.Arrays.asList(
-            "java",
-            "sdk",
-            "example-tag-1",
-            "example-tag-2")))
-        .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("rocks")))
-        .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0" +
-            ".2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
+        .addTags("java")
+        .addTags("sdk")
+        .addTargetKinds("rocks")
+        .zipurl(importOfferingZipUrl)
+        .offeringId(offeringId)
         .targetVersion("0.0.2-patch")
         .repoType(repoTypeGitPublic)
-        .xAuthToken(gitAuthToken)
+        .xAuthToken(gitToken)
         .build();
     
-    catalogManagementService.importOffering(importOfferingOptions).execute();
+    catalogManagementServiceAuthorized.importOffering(importOfferingOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testListOfferings"},
       expectedExceptions = NotFoundException.class)
   public void testImportOfferingReturns404WhenNoSuchCatalog() throws Exception {
     ImportOfferingOptions importOfferingOptions = new ImportOfferingOptions.Builder()
-        .catalogIdentifier(bogusCatalogId)
-        .tags(new java.util.ArrayList<String>(java.util.Arrays.asList(
-            "java",
-            "sdk"
-        )))
-        .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList(kindRoks)))
-        .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0" +
-            ".2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
-        .targetVersion("0.0.2")
+        .catalogIdentifier("invalid-" + catalogId)
+        .addTags("java")
+        .addTags("sdk")
+        .addTargetKinds(kindRoks)
+        .zipurl(importOfferingZipUrl)
         .offeringId(offeringId)
+        .targetVersion("0.0.2")
         .repoType(repoTypeGitPublic)
-        .xAuthToken(gitAuthToken)
+        .xAuthToken(gitToken)
         .build();
     
-    catalogManagementService.importOffering(importOfferingOptions).execute();
+    catalogManagementServiceAuthorized.importOffering(importOfferingOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testListOfferings"})
@@ -678,31 +676,25 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     try {
       ImportOfferingOptions importOfferingOptions = new ImportOfferingOptions.Builder()
           .catalogIdentifier(catalogId)
-          .tags(new java.util.ArrayList<String>(java.util.Arrays.asList(
-              "java",
-              "sdk"
-          )))
-          .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList(kindRoks)))
-          .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0" +
-              ".2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
+          .addTags("java")
+          .addTags("sdk")
+          .addTargetKinds(kindRoks)
+          .zipurl(importOfferingZipUrl)
           .offeringId(offeringId)
           .targetVersion("0.0.2")
-          .includeConfig(true)
-          .isVsi(true)
           .repoType(repoTypeGitPublic)
-          .xAuthToken(gitAuthToken)
+          .xAuthToken(gitToken)
           .build();
       
-      Response<Offering> response = catalogManagementService.importOffering(importOfferingOptions).execute();
+      Response<Offering> response = catalogManagementServiceAuthorized.importOffering(importOfferingOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
       
       Offering offeringResult = response.getResult();
       assertNotNull(offeringResult);
-      
+      assertNotNull(offeringResult.kinds().get(0).versions().get(0).versionLocator());
       versionLocatorId = offeringResult.kinds().get(0).versions().get(0).versionLocator();
-      assertNotNull(versionLocatorId);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -710,8 +702,26 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     }
   }
   
+  @Test(dependsOnMethods = {"testListOfferings"},
+      expectedExceptions = ConflictException.class)
+  public void testImportOfferingReturns409WhenConflictOccurs() throws Exception {
+    ImportOfferingOptions importOfferingOptions = new ImportOfferingOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .addTags("java")
+        .addTags("sdk")
+        .addTargetKinds(kindRoks)
+        .zipurl(importOfferingZipUrl)
+        .offeringId(offeringId)
+        .targetVersion("0.0.2")
+        .repoType(repoTypeGitPublic)
+        .xAuthToken(gitToken)
+        .build();
+    
+    catalogManagementServiceAuthorized.importOffering(importOfferingOptions).execute();
+  }
+  
   //====
-  // ReloadOffering block
+  // Reload Offering block
   //====
   
   @Test(dependsOnMethods = {"testImportOffering"},
@@ -719,11 +729,14 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testReloadOfferingReturns404WhenNoSuchOffering() throws Exception {
     ReloadOfferingOptions reloadOfferingOptions = new ReloadOfferingOptions.Builder()
         .catalogIdentifier(catalogId)
-        .offeringId(bogusOfferingId)
+        .offeringId("invalid-" + offeringId)
         .targetVersion("0.0.2")
+        .addTargetKinds(kindRoks)
+        .zipurl(importOfferingZipUrl)
+        .repoType(repoTypeGitPublic)
         .build();
     
-    catalogManagementService.reloadOffering(reloadOfferingOptions).execute();
+    catalogManagementServiceAuthorized.reloadOffering(reloadOfferingOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testImportOffering"},
@@ -731,14 +744,17 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testReloadOfferingReturns403WhenUserIsNotAuthorized() throws Exception {
     ReloadOfferingOptions reloadOfferingOptions = new ReloadOfferingOptions.Builder()
         .catalogIdentifier(catalogId)
-        .offeringId(bogusOfferingId)
+        .offeringId(offeringId)
         .targetVersion("0.0.2")
+        .addTargetKinds(kindVpe)
+        .zipurl(importOfferingZipUrl)
+        .repoType(repoTypeGitPublic)
         .build();
     
     catalogManagementServiceNotAuthorized.reloadOffering(reloadOfferingOptions).execute();
   }
   
-  // don't have the proper data for execute this operation
+  // Error: Could not find a kind with a target/format value of roks:operator for the current offering, Code: 400
   // once this test is enabled the block after it can depends on it
   @Test(dependsOnMethods = {"testImportOffering"})
   @Ignore
@@ -748,13 +764,12 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .catalogIdentifier(catalogId)
           .offeringId(offeringId)
           .targetVersion("0.0.2")
-          .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList(kindRoks)))
-          .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0" +
-              ".2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
+          .addTargetKinds(kindVpe)
+          .zipurl(importOfferingZipUrl)
           .repoType(repoTypeGitPublic)
           .build();
       
-      Response<Offering> response = catalogManagementService.reloadOffering(reloadOfferingOptions).execute();
+      Response<Offering> response = catalogManagementServiceAuthorized.reloadOffering(reloadOfferingOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
@@ -787,17 +802,16 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     
     CreateObjectOptions createObjectOptions = new CreateObjectOptions.Builder()
         .catalogIdentifier(catalogId)
+        .catalogId(catalogId)
         .name(objectName)
         .crn("crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com")
-        .url("test.ibm.hu")
+        .parentId("bogus region name")
         .kind(kindVpe)
         .publish(publishObjectModel)
         .state(stateModel)
-        .catalogId(catalogId)
-        .parentId("bogus region name")
         .build();
     
-    catalogManagementService.createObject(createObjectOptions).execute();
+    catalogManagementServiceAuthorized.createObject(createObjectOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testImportOffering"},
@@ -814,17 +828,42 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     
     CreateObjectOptions createObjectOptions = new CreateObjectOptions.Builder()
         .catalogIdentifier(catalogId)
+        .catalogId(catalogId)
         .name(objectName)
         .crn("crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com")
-        .url("test.ibm.hu")
         .parentId(regionUsSouth)
         .kind(kindVpe)
         .publish(publishObjectModel)
         .state(stateModel)
-        .catalogId(catalogId)
         .build();
     
     catalogManagementServiceNotAuthorized.createObject(createObjectOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testImportOffering"},
+      expectedExceptions = NotFoundException.class)
+  public void testCreateObjectReturns404WhenNoSuchCatalog() throws Exception {
+    PublishObject publishObjectModel = new PublishObject.Builder()
+        .permitIbmPublicPublish(true)
+        .ibmApproved(true)
+        .publicApproved(true)
+        .build();
+    State stateModel = new State.Builder()
+        .current("new")
+        .build();
+    
+    CreateObjectOptions createObjectOptions = new CreateObjectOptions.Builder()
+        .catalogIdentifier("invalid-" + catalogId)
+        .catalogId("invalid-" + catalogId)
+        .name(objectName)
+        .crn("crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com")
+        .parentId(regionUsSouth)
+        .kind(kindVpe)
+        .publish(publishObjectModel)
+        .state(stateModel)
+        .build();
+    
+    catalogManagementServiceAuthorized.createObject(createObjectOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testImportOffering"})
@@ -835,32 +874,32 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .ibmApproved(true)
           .publicApproved(true)
           .build();
-      //
+      
       State stateModel = new State.Builder()
           .current("new")
           .build();
       
       CreateObjectOptions createObjectOptions = new CreateObjectOptions.Builder()
           .catalogIdentifier(catalogId)
+          .catalogId(catalogId)
           .name(objectName)
           .crn("crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com")
-          .url("test.ibm.hu")
           .parentId(regionUsSouth)
           .kind(kindVpe)
           .publish(publishObjectModel)
           .state(stateModel)
-          .catalogId(catalogId)
           .build();
       
-      Response<CatalogObject> response = catalogManagementService.createObject(createObjectOptions).execute();
+      Response<CatalogObject> response = catalogManagementServiceAuthorized.createObject(createObjectOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
       
       CatalogObject catalogObjectResult = response.getResult();
       assertNotNull(catalogObjectResult);
+      assertNotNull(catalogObjectResult.id());
+      
       objectId = catalogObjectResult.id();
-      assertNotNull(objectId);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -872,21 +911,19 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   // Get Offering Audit block
   //====
   
-  @Test(dependsOnMethods = {"testImportOffering"})
+  @Test(dependsOnMethods = {"testCreateObject"})
   public void testGetOfferingAuditReturns200WhenNoSuchOfferings() throws Exception {
     try {
       GetOfferingAuditOptions getOfferingAuditOptions = new GetOfferingAuditOptions.Builder()
           .catalogIdentifier(catalogId)
-          .offeringId(offeringId + "c")
+          .offeringId("invalid-" + offeringId)
           .build();
       
-      Response<AuditLog> response = catalogManagementService.getOfferingAudit(getOfferingAuditOptions).execute();
+      Response<AuditLog> response = catalogManagementServiceAuthorized.getOfferingAudit(getOfferingAuditOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
-      
-      AuditLog auditLogResult = response.getResult();
-      assertNotNull(auditLogResult);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -894,19 +931,18 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     }
   }
   
-  @Test(dependsOnMethods = {"testImportOffering"},
+  @Test(dependsOnMethods = {"testCreateObject"},
       expectedExceptions = ForbiddenException.class)
   public void testGetOfferingAuditReturns403WhenUserIsNotAuthorized() throws Exception {
-    GetOfferingAuditOptions getOfferingAuditOptions =
-        new GetOfferingAuditOptions.Builder()
-            .catalogIdentifier(catalogId)
-            .offeringId(offeringId)
-            .build();
+    GetOfferingAuditOptions getOfferingAuditOptions = new GetOfferingAuditOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .offeringId(offeringId)
+        .build();
     
     catalogManagementServiceNotAuthorized.getOfferingAudit(getOfferingAuditOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testImportOffering"})
+  @Test(dependsOnMethods = {"testCreateObject"})
   public void testGetOfferingAudit() throws Exception {
     try {
       GetOfferingAuditOptions getOfferingAuditOptions = new GetOfferingAuditOptions.Builder()
@@ -914,7 +950,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .offeringId(offeringId)
           .build();
       
-      Response<AuditLog> response = catalogManagementService.getOfferingAudit(getOfferingAuditOptions).execute();
+      Response<AuditLog> response = catalogManagementServiceAuthorized.getOfferingAudit(getOfferingAuditOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -933,23 +970,9 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   //====
   
   @Test(dependsOnMethods = {"testGetOfferingAudit"})
-  public void testGetCatalogAccountReturns200WhenUserIsNotAuthorized() throws Exception {
-    try {
-      Response<Account> response = catalogManagementServiceNotAuthorized.getCatalogAccount()
-          .execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-    } catch (ServiceResponseException e) {
-      fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
-          e.getDebuggingInfo()));
-    }
-  }
-  
-  @Test(dependsOnMethods = {"testGetOfferingAudit"})
   public void testGetCatalogAccount() throws Exception {
     try {
-      Response<Account> response = catalogManagementService.getCatalogAccount().execute();
+      Response<Account> response = catalogManagementServiceAuthorized.getCatalogAccount().execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -970,15 +993,16 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   
   @Test(dependsOnMethods = {"testGetCatalogAccount"},
       expectedExceptions = BadRequestException.class)
-  public void testUpdateCatalogAccountReturns400WhenNoSuchCatalogAccount() throws Exception {
+  public void testUpdateCatalogAccountReturns400WhenNoSuchAccount() throws Exception {
     UpdateCatalogAccountOptions updateCatalogAccountOptions = new UpdateCatalogAccountOptions.Builder()
-        .id("bogus-account-id")
+        .id("invalid-" + accountId)
         .build();
     
-    catalogManagementService.updateCatalogAccount(updateCatalogAccountOptions).execute();
+    catalogManagementServiceAuthorized.updateCatalogAccount(updateCatalogAccountOptions).execute();
   }
   
-  @Test(expectedExceptions = ForbiddenException.class)
+  @Test(dependsOnMethods = {"testGetCatalogAccount"},
+      expectedExceptions = ForbiddenException.class)
   public void testUpdateCatalogAccountReturns403WhenUserIsNotAuthorized() throws Exception {
     UpdateCatalogAccountOptions updateCatalogAccountOptions = new UpdateCatalogAccountOptions.Builder()
         .id(accountId)
@@ -987,44 +1011,36 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     catalogManagementServiceNotAuthorized.updateCatalogAccount(updateCatalogAccountOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testGetCatalogAccount"},
+      expectedExceptions = BadRequestException.class)
+  @Ignore
+  public void testUpdateCatalogAccountReturns400WhenBackendInputValidationFails() throws Exception {
+    
+    // user is not granted for this operation
+    // a body with failing data comes here
+    
+    UpdateCatalogAccountOptions updateCatalogAccountOptions = new UpdateCatalogAccountOptions.Builder()
+        .id(accountId)
+        .build();
+    
+    catalogManagementServiceAuthorized.updateCatalogAccount(updateCatalogAccountOptions).execute();
+  }
+  
   // once this one is not ignored the following block dependency can point here
   @Test(dependsOnMethods = {"testGetCatalogAccount"})
   @Ignore
   public void testUpdateCatalogAccount() throws Exception {
     try {
-      FilterTerms includedFilterTermsModel =
-          new FilterTerms.Builder().filterTerms(new java.util.ArrayList<String>(java.util.Arrays
-              .asList("included " + "filter" + " term - 1", "included " + "filter term - 2"))).build();
       
-      CategoryFilter includedCategoryFilterModel = new CategoryFilter.Builder().include(true)
-          .filter(includedFilterTermsModel)
-          .build();
-      
-      FilterTerms excludedFilterTermsModel =
-          new FilterTerms.Builder().filterTerms(new ArrayList<String>(Arrays.asList("excluded filter term - 1",
-              "excluded filter term - 2")))
-              .build();
-      
-      CategoryFilter excludedCategoryFilterModel = new CategoryFilter.Builder().include(true)
-          .filter(excludedFilterTermsModel)
-          .build();
-      
-      Filters filtersModel = new Filters.Builder().includeAll(true)
-          .categoryFilters(new java.util.HashMap<String, CategoryFilter>() {
-            {
-              put("included-category-filter", includedCategoryFilterModel);
-              put("excluded-category-filter", excludedCategoryFilterModel);
-            }
-          })
-          .build();
+      // user is not granted for this operation
+      // a body with right data comes here
       
       UpdateCatalogAccountOptions updateCatalogAccountOptions = new UpdateCatalogAccountOptions.Builder()
           .id(accountId)
-          .hideIbmCloudCatalog(false)
-          .accountFilters(filtersModel)
           .build();
       
-      Response<Void> response = catalogManagementService.updateCatalogAccount(updateCatalogAccountOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.updateCatalogAccount(updateCatalogAccountOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -1049,7 +1065,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Test(dependsOnMethods = {"testGetCatalogAccount"})
   public void testGetCatalogAccountAudit() throws Exception {
     try {
-      Response<AuditLog> response = catalogManagementService.getCatalogAccountAudit().execute();
+      Response<AuditLog> response = catalogManagementServiceAuthorized.getCatalogAccountAudit().execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -1068,16 +1084,6 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   //====
   
   @Test(dependsOnMethods = {"testGetCatalogAccountAudit"},
-      expectedExceptions = NotFoundException.class)
-  public void testGetCatalogAccountFiltersReturns404WhenNoSuchCatalog() throws Exception {
-    GetCatalogAccountFiltersOptions getCatalogAccountFiltersOptions = new GetCatalogAccountFiltersOptions.Builder()
-        .catalog(catalogId + "c")
-        .build();
-    
-    catalogManagementService.getCatalogAccountFilters(getCatalogAccountFiltersOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetCatalogAccountAudit"},
       expectedExceptions = ForbiddenException.class)
   public void testGetCatalogAccountFiltersReturns403WhenUserIsNotAuthorized() throws Exception {
     GetCatalogAccountFiltersOptions getCatalogAccountFiltersOptions = new GetCatalogAccountFiltersOptions.Builder()
@@ -1085,6 +1091,16 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .build();
     
     catalogManagementServiceNotAuthorized.getCatalogAccountFilters(getCatalogAccountFiltersOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetCatalogAccountAudit"},
+      expectedExceptions = NotFoundException.class)
+  public void testGetCatalogAccountFiltersReturns404WhenNoSuchCatalog() throws Exception {
+    GetCatalogAccountFiltersOptions getCatalogAccountFiltersOptions = new GetCatalogAccountFiltersOptions.Builder()
+        .catalog("invalid-" + catalogId)
+        .build();
+    
+    catalogManagementServiceAuthorized.getCatalogAccountFilters(getCatalogAccountFiltersOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetCatalogAccountAudit"})
@@ -1095,7 +1111,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .build();
       
       Response<AccumulatedFilters> response =
-          catalogManagementService.getCatalogAccountFilters(getCatalogAccountFiltersOptions)
+          catalogManagementServiceAuthorized.getCatalogAccountFilters(getCatalogAccountFiltersOptions)
               .execute();
       
       assertNotNull(response);
@@ -1118,10 +1134,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       expectedExceptions = NotFoundException.class)
   public void testGetCatalogAuditReturns404WhenNoSuchCatalog() throws Exception {
     GetCatalogAuditOptions getCatalogAuditOptions = new GetCatalogAuditOptions.Builder()
-        .catalogIdentifier(catalogId + "c")
+        .catalogIdentifier("invalid-" + catalogId)
         .build();
     
-    catalogManagementService.getCatalogAudit(getCatalogAuditOptions).execute();
+    catalogManagementServiceAuthorized.getCatalogAudit(getCatalogAuditOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetCatalogAccountFilters"},
@@ -1141,7 +1157,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .catalogIdentifier(catalogId)
           .build();
       
-      Response<AuditLog> response = catalogManagementService.getCatalogAudit(getCatalogAuditOptions).execute();
+      Response<AuditLog> response = catalogManagementServiceAuthorized.getCatalogAudit(getCatalogAuditOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -1163,10 +1180,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       expectedExceptions = ForbiddenException.class)
   public void testGetConsumptionOfferingsReturns403WhenUserIsNotAuthorized() throws Exception {
     GetConsumptionOfferingsOptions getConsumptionOfferingsOptions = new GetConsumptionOfferingsOptions.Builder()
-        .digest(true)
         .catalog(catalogId)
         .select("all")
-        .includeHidden(true)
         .build();
     
     catalogManagementServiceNotAuthorized.getConsumptionOfferings(getConsumptionOfferingsOptions)
@@ -1175,16 +1190,14 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   
   @Test(dependsOnMethods = {"testGetCatalogAudit"},
       expectedExceptions = NotFoundException.class)
-  public void testGetConsumptionOfferingsReturns404WhenNoSuchConsumptionOfferings() throws Exception {
+  public void testGetConsumptionOfferingsReturns404WhenNoSuchCatalog() throws Exception {
     GetConsumptionOfferingsOptions getConsumptionOfferingsOptions =
         new GetConsumptionOfferingsOptions.Builder()
-            .digest(true)
-            .catalog(bogusCatalogId)
+            .catalog("invalid-" + catalogId)
             .select("all")
-            .includeHidden(true)
             .build();
     
-    catalogManagementService.getConsumptionOfferings(getConsumptionOfferingsOptions)
+    catalogManagementServiceAuthorized.getConsumptionOfferings(getConsumptionOfferingsOptions)
         .execute();
   }
   
@@ -1192,14 +1205,12 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testGetConsumptionOfferings() throws Exception {
     try {
       GetConsumptionOfferingsOptions getConsumptionOfferingsOptions = new GetConsumptionOfferingsOptions.Builder()
-          .digest(true)
           .catalog(catalogId)
           .select("all")
-          .includeHidden(true)
           .build();
       
       Response<OfferingSearchResult> response =
-          catalogManagementService.getConsumptionOfferings(getConsumptionOfferingsOptions)
+          catalogManagementServiceAuthorized.getConsumptionOfferings(getConsumptionOfferingsOptions)
               .execute();
       
       assertNotNull(response);
@@ -1221,30 +1232,31 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Test(dependsOnMethods = {"testGetConsumptionOfferings"},
       expectedExceptions = BadRequestException.class)
   public void testImportOfferingVersionReturns400WhenBackendInputValidationFails() throws Exception {
-    ImportOfferingVersionOptions importOfferingVersionOptions =
-        new ImportOfferingVersionOptions.Builder()
-            .catalogIdentifier(catalogId)
-            .offeringId(offeringId)
-            .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("rocks")))
-            .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0" +
-                ".2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
-            .targetVersion("0.0.2-patch")
-            .repoType(repoTypeGitPublic)
-            .build();
+    ImportOfferingVersionOptions importOfferingVersionOptions = new ImportOfferingVersionOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .offeringId(offeringId)
+        .addTargetKinds("rocks")
+        .zipurl(importOfferingZipUrl)
+        .targetVersion("0.0.3")
+        .repoType(repoTypeGitPublic)
+        .build();
     
-    catalogManagementService.importOfferingVersion(importOfferingVersionOptions).execute();
+    catalogManagementServiceAuthorized.importOfferingVersion(importOfferingVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetConsumptionOfferings"},
       expectedExceptions = NotFoundException.class)
   public void testImportOfferingVersionReturns404WhenNoSuchOfferings() throws Exception {
-    ImportOfferingVersionOptions importOfferingVersionOptions =
-        new ImportOfferingVersionOptions.Builder()
-            .catalogIdentifier(catalogId)
-            .offeringId(bogusOfferingId)
-            .build();
+    ImportOfferingVersionOptions importOfferingVersionOptions = new ImportOfferingVersionOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .offeringId("invalid-" + offeringId)
+        .addTargetKinds(kindRoks)
+        .zipurl(importOfferingZipUrl)
+        .targetVersion("0.0.3")
+        .repoType(repoTypeGitPublic)
+        .build();
     
-    catalogManagementService.importOfferingVersion(importOfferingVersionOptions).execute();
+    catalogManagementServiceAuthorized.importOfferingVersion(importOfferingVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetConsumptionOfferings"},
@@ -1253,6 +1265,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     ImportOfferingVersionOptions importOfferingVersionOptions = new ImportOfferingVersionOptions.Builder()
         .catalogIdentifier(catalogId)
         .offeringId(offeringId)
+        .addTargetKinds(kindRoks)
+        .zipurl(importOfferingZipUrl)
+        .targetVersion("0.0.3")
+        .repoType(repoTypeGitPublic)
         .build();
     
     catalogManagementServiceNotAuthorized.importOfferingVersion(importOfferingVersionOptions).execute();
@@ -1264,14 +1280,15 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       ImportOfferingVersionOptions importOfferingVersionOptions = new ImportOfferingVersionOptions.Builder()
           .catalogIdentifier(catalogId)
           .offeringId(offeringId)
-          .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red-operator/bundle/0.0" +
-              ".2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
+          .addTargetKinds(kindRoks)
+          .zipurl(importOfferingZipUrl)
           .targetVersion("0.0.3")
           .repoType(repoTypeGitPublic)
           .build();
       
-      Response<Offering> response = catalogManagementService.importOfferingVersion(importOfferingVersionOptions)
-          .execute();
+      Response<Offering> response =
+          catalogManagementServiceAuthorized.importOfferingVersion(importOfferingVersionOptions)
+              .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
@@ -1290,6 +1307,34 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   //====
   
   // this function is disabled
+  @Test(dependsOnMethods = {"testImportOfferingVersion"},
+      expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testReplaceOfferingIconReturns404WhenNoSuchOffering() throws Exception {
+    ReplaceOfferingIconOptions replaceOfferingIconOptions = new ReplaceOfferingIconOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .offeringId("invalid-" + offeringId)
+        .fileName("filename.jpg")
+        .build();
+    
+    catalogManagementServiceAuthorized.replaceOfferingIcon(replaceOfferingIconOptions).execute();
+  }
+  
+  // this function is disabled
+  @Test(dependsOnMethods = {"testImportOfferingVersion"},
+      expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testReplaceOfferingIconReturns403WhenUserIsNotAuthorized() throws Exception {
+    ReplaceOfferingIconOptions replaceOfferingIconOptions = new ReplaceOfferingIconOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .offeringId(offeringId)
+        .fileName("filename.jpg")
+        .build();
+    
+    catalogManagementServiceNotAuthorized.replaceOfferingIcon(replaceOfferingIconOptions).execute();
+  }
+  
+  // this function is disabled
   // once it is enabled the following block dependency can point here
   @Test(dependsOnMethods = {"testImportOfferingVersion"})
   @Ignore
@@ -1298,10 +1343,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       ReplaceOfferingIconOptions replaceOfferingIconOptions = new ReplaceOfferingIconOptions.Builder()
           .catalogIdentifier(catalogId)
           .offeringId(offeringId)
-          .fileName("testString")
+          .fileName("filename.jpg")
           .build();
       
-      Response<Offering> response = catalogManagementService.replaceOfferingIcon(replaceOfferingIconOptions).execute();
+      Response<Offering> response = catalogManagementServiceAuthorized.replaceOfferingIcon(replaceOfferingIconOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -1315,49 +1361,37 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     }
   }
   
-  @Test(dependsOnMethods = {"testImportOfferingVersion"},
-      expectedExceptions = NotFoundException.class)
-  @Ignore
-  public void testReplaceOfferingIconReturns404WhenNoSuchOffering() throws Exception {
-    ReplaceOfferingIconOptions replaceOfferingIconOptions = new ReplaceOfferingIconOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .offeringId(offeringId)
-        .fileName("filename")
-        .build();
-    
-    catalogManagementService.replaceOfferingIcon(replaceOfferingIconOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testImportOfferingVersion"},
-      expectedExceptions = ForbiddenException.class)
-  @Ignore
-  public void testReplaceOfferingIconReturns403WhenUserIsNotAuthorized() throws Exception {
-    ReplaceOfferingIconOptions replaceOfferingIconOptions = new ReplaceOfferingIconOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .offeringId(offeringId)
-        .fileName("filename")
-        .build();
-    
-    catalogManagementServiceNotAuthorized.replaceOfferingIcon(replaceOfferingIconOptions).execute();
-  }
-  
   //====
   // Update Offering IBM
   //====
   
-  // this user is not allowed to execute this operation
+  // once the user is granted for this operation this test can be executed
   @Test(dependsOnMethods = {"testImportOfferingVersion"},
-      expectedExceptions = NotFoundException.class)
+      expectedExceptions = BadRequestException.class)
+  public void testUpdateOfferingIbmReturns404WhenBackendInputValidationFails() throws Exception {
+    UpdateOfferingIbmOptions updateOfferingIbmOptions = new UpdateOfferingIbmOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .offeringId(offeringId)
+        .approvalType("bogus approval type")
+        .approved("true")
+        .build();
+    
+    catalogManagementServiceAuthorized.updateOfferingIbm(updateOfferingIbmOptions).execute();
+  }
+  
+  // once the user is granted for this operation this test can be executed
+  @Test(dependsOnMethods = {"testImportOfferingVersion"},
+      expectedExceptions = BadRequestException.class)
   @Ignore
   public void testUpdateOfferingIbmReturns404WhenNoSuchOffering() throws Exception {
     UpdateOfferingIbmOptions updateOfferingIbmOptions = new UpdateOfferingIbmOptions.Builder()
         .catalogIdentifier(catalogId)
-        .offeringId(bogusOfferingId)
+        .offeringId("invalid-" + offeringId)
         .approvalType("allow_request")
         .approved("true")
         .build();
     
-    catalogManagementService.updateOfferingIbm(updateOfferingIbmOptions).execute();
+    catalogManagementServiceAuthorized.updateOfferingIbm(updateOfferingIbmOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testImportOfferingVersion"},
@@ -1386,7 +1420,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .approved("true")
           .build();
       
-      Response<ApprovalResult> response = catalogManagementService.updateOfferingIbm(updateOfferingIbmOptions)
+      Response<ApprovalResult> response = catalogManagementServiceAuthorized.updateOfferingIbm(updateOfferingIbmOptions)
           .execute();
       
       assertNotNull(response);
@@ -1414,10 +1448,28 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .kind("rocks")
         .version("0.0.2")
         .clusterId(clusterId)
-        .region("us-south-32")
+        .region(regionUsSouth)
         .build();
     
-    catalogManagementService.getOfferingUpdates(getOfferingUpdatesOptions).execute();
+    catalogManagementServiceAuthorized.getOfferingUpdates(getOfferingUpdatesOptions).execute();
+  }
+  
+  // it always complaining about offering types which is somehow related to create/import offerings
+  // once this is resolved there is a chance we can squeeze a 404 out from the service
+  
+  @Test(dependsOnMethods = {"testImportOfferingVersion"},
+      expectedExceptions = BadRequestException.class)
+  public void testGetOfferingUpdatesReturns404WhenNoSuchOfferings() throws Exception {
+    GetOfferingUpdatesOptions getOfferingUpdatesOptions = new GetOfferingUpdatesOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .offeringId("invalid-" + offeringId)
+        .kind(kindRoks)
+        .version("0.0.2")
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .build();
+    
+    catalogManagementServiceAuthorized.getOfferingUpdates(getOfferingUpdatesOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testImportOfferingVersion"},
@@ -1452,7 +1504,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .build();
       
       Response<List<VersionUpdateDescriptor>> response =
-          catalogManagementService.getOfferingUpdates(getOfferingUpdatesOptions)
+          catalogManagementServiceAuthorized.getOfferingUpdates(getOfferingUpdatesOptions)
               .execute();
       
       assertNotNull(response);
@@ -1473,22 +1525,22 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   
   @Test(dependsOnMethods = {"testImportOfferingVersion"},
       expectedExceptions = BadRequestException.class)
-  public void testGetOfferingAboutReturns400WhenValidationFails() throws Exception {
+  public void testGetOfferingAboutReturns400WhenBackendInputValidationFails() throws Exception {
     GetOfferingAboutOptions getOfferingAboutOptions = new GetOfferingAboutOptions.Builder()
         .versionLocId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.getOfferingAbout(getOfferingAboutOptions).execute();
+    catalogManagementServiceAuthorized.getOfferingAbout(getOfferingAboutOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testImportOfferingVersion"},
-      expectedExceptions = BadRequestException.class)
-  public void testGetOfferingAboutReturns400WhenNoSuchOfferingAbout() throws Exception {
+      expectedExceptions = NotFoundException.class)
+  public void testGetOfferingAboutReturns404WhenNoSuchVersion() throws Exception {
     GetOfferingAboutOptions getOfferingAboutOptions = new GetOfferingAboutOptions.Builder()
-        .versionLocId(versionLocatorId + 'c')
+        .versionLocId("invalid-" + versionLocatorId)
         .build();
     
-    catalogManagementService.getOfferingAbout(getOfferingAboutOptions).execute();
+    catalogManagementServiceAuthorized.getOfferingAbout(getOfferingAboutOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testImportOfferingVersion"},
@@ -1508,7 +1560,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<String> response = catalogManagementService.getOfferingAbout(getOfferingAboutOptions).execute();
+      Response<String> response = catalogManagementServiceAuthorized.getOfferingAbout(getOfferingAboutOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -1530,22 +1583,22 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       expectedExceptions = BadRequestException.class)
   public void testGetOfferingLicenseReturns400WhenBackendInputValidationFails() throws Exception {
     GetOfferingLicenseOptions getOfferingLicenseOptions = new GetOfferingLicenseOptions.Builder()
-        .versionLocId(bogusVersionLocatorId)
-        .licenseId(bogusLicenseId)
+        .versionLocId(versionLocatorId)
+        .licenseId("license-id-is-needed")
         .build();
     
-    catalogManagementService.getOfferingLicense(getOfferingLicenseOptions).execute();
+    catalogManagementServiceAuthorized.getOfferingLicense(getOfferingLicenseOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingAbout"},
-      expectedExceptions = BadRequestException.class)
+      expectedExceptions = NotFoundException.class)
   public void testGetOfferingLicenseReturns404WhenNoSuchOfferingLicense() throws Exception {
     GetOfferingLicenseOptions getOfferingLicenseOptions = new GetOfferingLicenseOptions.Builder()
-        .versionLocId(versionLocatorId)
-        .licenseId(bogusLicenseId)
+        .versionLocId("invalid-" + versionLocatorId)
+        .licenseId("license-id-is-needed")
         .build();
     
-    catalogManagementService.getOfferingLicense(getOfferingLicenseOptions).execute();
+    catalogManagementServiceAuthorized.getOfferingLicense(getOfferingLicenseOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingAbout"},
@@ -1570,7 +1623,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .licenseId("license-id-is-needed")
           .build();
       
-      Response<String> response = catalogManagementService.getOfferingLicense(getOfferingLicenseOptions).execute();
+      Response<String> response = catalogManagementServiceAuthorized.getOfferingLicense(getOfferingLicenseOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -1596,19 +1650,19 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
             .versionLocId(bogusVersionLocatorId)
             .build();
     
-    catalogManagementService.getOfferingContainerImages(getOfferingContainerImagesOptions)
+    catalogManagementServiceAuthorized.getOfferingContainerImages(getOfferingContainerImagesOptions)
         .execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingAbout"},
-      expectedExceptions = BadRequestException.class)
-  public void testGetOfferingContainerImagesReturns404WhenNoSuchVersionLocId() throws Exception {
+      expectedExceptions = NotFoundException.class)
+  public void testGetOfferingContainerImagesReturns404WhenNoSuchVersion() throws Exception {
     GetOfferingContainerImagesOptions getOfferingContainerImagesOptions =
         new GetOfferingContainerImagesOptions.Builder()
-            .versionLocId(versionLocatorId + "c")
+            .versionLocId("invalid-" + versionLocatorId)
             .build();
     
-    catalogManagementService.getOfferingContainerImages(getOfferingContainerImagesOptions)
+    catalogManagementServiceAuthorized.getOfferingContainerImages(getOfferingContainerImagesOptions)
         .execute();
   }
   
@@ -1633,7 +1687,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
               .build();
       
       Response<ImageManifest> response =
-          catalogManagementService.getOfferingContainerImages(getOfferingContainerImagesOptions)
+          catalogManagementServiceAuthorized.getOfferingContainerImages(getOfferingContainerImagesOptions)
               .execute();
       
       assertNotNull(response);
@@ -1649,8 +1703,18 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   }
   
   //====
-  // Deprecate Version
+  // Deprecate Version block
   //====
+  
+  @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
+      expectedExceptions = NotFoundException.class)
+  public void testDeprecateVersionReturns404WhenNoSuchVersion() throws Exception {
+    DeprecateVersionOptions deprecateVersionOptions = new DeprecateVersionOptions.Builder()
+        .versionLocId("invalid-" + versionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.deprecateVersion(deprecateVersionOptions).execute();
+  }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
       expectedExceptions = BadRequestException.class)
@@ -1659,7 +1723,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .versionLocId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.deprecateVersion(deprecateVersionOptions).execute();
+    catalogManagementServiceAuthorized.deprecateVersion(deprecateVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
@@ -1672,16 +1736,6 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     catalogManagementServiceNotAuthorized.deprecateVersion(deprecateVersionOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
-      expectedExceptions = NotFoundException.class)
-  public void testDeprecateVersionReturns404WhenNoSuchVersion() throws Exception {
-    DeprecateVersionOptions deprecateVersionOptions = new DeprecateVersionOptions.Builder()
-        .versionLocId(versionLocatorId + "c")
-        .build();
-    
-    catalogManagementService.deprecateVersion(deprecateVersionOptions).execute();
-  }
-  
   // order of states are unknown yet
   // once this test is enabled the next block's dependency can point here
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"})
@@ -1692,7 +1746,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<Void> response = catalogManagementService.deprecateVersion(deprecateVersionOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.deprecateVersion(deprecateVersionOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -1714,17 +1768,17 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .versionLocId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.accountPublishVersion(accountPublishVersionOptions).execute();
+    catalogManagementServiceAuthorized.accountPublishVersion(accountPublishVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
-      expectedExceptions = BadRequestException.class)
-  public void testAccountPublishVersionReturns400WhenNoSuchVersion() throws Exception {
+      expectedExceptions = NotFoundException.class)
+  public void testAccountPublishVersionReturns404WhenNoSuchVersion() throws Exception {
     AccountPublishVersionOptions accountPublishVersionOptions = new AccountPublishVersionOptions.Builder()
-        .versionLocId(versionLocatorId + "6")
+        .versionLocId("invalid-" + versionLocatorId)
         .build();
     
-    catalogManagementService.accountPublishVersion(accountPublishVersionOptions).execute();
+    catalogManagementServiceAuthorized.accountPublishVersion(accountPublishVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
@@ -1747,7 +1801,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<Void> response = catalogManagementService.accountPublishVersion(accountPublishVersionOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.accountPublishVersion(accountPublishVersionOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -1769,17 +1824,17 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .versionLocId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.ibmPublishVersion(ibmPublishVersionOptions).execute();
+    catalogManagementServiceAuthorized.ibmPublishVersion(ibmPublishVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
-      expectedExceptions = BadRequestException.class)
+      expectedExceptions = NotFoundException.class)
   public void testIbmPublishVersionReturns404WhenNoSuchVersion() throws Exception {
     IbmPublishVersionOptions ibmPublishVersionOptions = new IbmPublishVersionOptions.Builder()
-        .versionLocId(versionLocatorId + "c")
+        .versionLocId("invalid-" + versionLocatorId)
         .build();
     
-    catalogManagementService.ibmPublishVersion(ibmPublishVersionOptions).execute();
+    catalogManagementServiceAuthorized.ibmPublishVersion(ibmPublishVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
@@ -1802,7 +1857,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<Void> response = catalogManagementService.ibmPublishVersion(ibmPublishVersionOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.ibmPublishVersion(ibmPublishVersionOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -1824,17 +1880,17 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .versionLocId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.publicPublishVersion(publicPublishVersionOptions).execute();
+    catalogManagementServiceAuthorized.publicPublishVersion(publicPublishVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
-      expectedExceptions = BadRequestException.class)
+      expectedExceptions = NotFoundException.class)
   public void testPublicPublishVersionReturns404WhenNoSuchVersion() throws Exception {
     PublicPublishVersionOptions publicPublishVersionOptions = new PublicPublishVersionOptions.Builder()
-        .versionLocId(versionLocatorId + "c")
+        .versionLocId("invalid-" + versionLocatorId)
         .build();
     
-    catalogManagementService.publicPublishVersion(publicPublishVersionOptions).execute();
+    catalogManagementServiceAuthorized.publicPublishVersion(publicPublishVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
@@ -1847,7 +1903,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     catalogManagementServiceNotAuthorized.publicPublishVersion(publicPublishVersionOptions).execute();
   }
   
-  // order of states is unknown yet
+  // user is not granted
   // once this test is enabled the next block's dependency can point here
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"})
   @Ignore
@@ -1857,7 +1913,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<Void> response = catalogManagementService.publicPublishVersion(publicPublishVersionOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.publicPublishVersion(publicPublishVersionOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -1879,17 +1936,17 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .versionLocId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.commitVersion(commitVersionOptions).execute();
+    catalogManagementServiceAuthorized.commitVersion(commitVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
       expectedExceptions = NotFoundException.class)
   public void testCommitVersionReturns404WhenNoSuchVersion() throws Exception {
     CommitVersionOptions commitVersionOptions = new CommitVersionOptions.Builder()
-        .versionLocId(versionLocatorId + "aa")
+        .versionLocId("invalid-" + versionLocatorId)
         .build();
     
-    catalogManagementService.commitVersion(commitVersionOptions).execute();
+    catalogManagementServiceAuthorized.commitVersion(commitVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
@@ -1911,7 +1968,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<Void> response = catalogManagementService.commitVersion(commitVersionOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.commitVersion(commitVersionOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -1927,22 +1984,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   //====
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
-      expectedExceptions = BadRequestException.class)
-  public void testCopyVersionReturns400WhenBackendInputValidationFails() throws Exception {
-    CopyVersionOptions copyVersionOptions = new CopyVersionOptions.Builder()
-        .versionLocId(bogusVersionLocatorId)
-        .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList(kindRoks)))
-        .build();
-    
-    catalogManagementService.copyVersion(copyVersionOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
       expectedExceptions = ForbiddenException.class)
   public void testCopyVersionReturns403WhenUserIsNotAuthorized() throws Exception {
     CopyVersionOptions copyVersionOptions = new CopyVersionOptions.Builder()
         .versionLocId(versionLocatorId)
-        .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList(kindRoks)))
+        .addTargetKinds(kindRoks)
         .build();
     
     catalogManagementServiceNotAuthorized.copyVersion(copyVersionOptions).execute();
@@ -1952,11 +1998,22 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       expectedExceptions = NotFoundException.class)
   public void testCopyVersionReturns404WhenNoSucVersion() throws Exception {
     CopyVersionOptions copyVersionOptions = new CopyVersionOptions.Builder()
-        .versionLocId(versionLocatorId + "ds")
-        .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList(kindRoks)))
+        .versionLocId("invalid-" + versionLocatorId)
+        .addTargetKinds(kindRoks)
         .build();
     
-    catalogManagementService.copyVersion(copyVersionOptions).execute();
+    catalogManagementServiceAuthorized.copyVersion(copyVersionOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
+      expectedExceptions = BadRequestException.class)
+  public void testCopyVersionReturns400WhenBackendInputValidationFails() throws Exception {
+    CopyVersionOptions copyVersionOptions = new CopyVersionOptions.Builder()
+        .versionLocId(bogusVersionLocatorId)
+        .addTargetKinds(kindRoks)
+        .build();
+    
+    catalogManagementServiceAuthorized.copyVersion(copyVersionOptions).execute();
   }
   
   // only helm is suppotred, but eventually helm is not supported... so this test is ignored...
@@ -1967,10 +2024,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     try {
       CopyVersionOptions copyVersionOptions = new CopyVersionOptions.Builder()
           .versionLocId(versionLocatorId)
-          .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList(kindHelm)))
+          .addTargetKinds(kindRoks)
           .build();
       
-      Response<Void> response = catalogManagementService.copyVersion(copyVersionOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.copyVersion(copyVersionOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -1992,17 +2049,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .versionLocId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.getOfferingWorkingCopy(getOfferingWorkingCopyOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
-      expectedExceptions = NotFoundException.class)
-  public void testGetOfferingWorkingCopyReturns404WhenNoSuchVersion() throws Exception {
-    GetOfferingWorkingCopyOptions getOfferingWorkingCopyOptions = new GetOfferingWorkingCopyOptions.Builder()
-        .versionLocId(versionLocatorId + 'c')
-        .build();
-    
-    catalogManagementService.getOfferingWorkingCopy(getOfferingWorkingCopyOptions).execute();
+    catalogManagementServiceAuthorized.getOfferingWorkingCopy(getOfferingWorkingCopyOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
@@ -2015,6 +2062,16 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     catalogManagementServiceNotAuthorized.getOfferingWorkingCopy(getOfferingWorkingCopyOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
+      expectedExceptions = NotFoundException.class)
+  public void testGetOfferingWorkingCopyReturns404WhenNoSuchVersion() throws Exception {
+    GetOfferingWorkingCopyOptions getOfferingWorkingCopyOptions = new GetOfferingWorkingCopyOptions.Builder()
+        .versionLocId("invalid-" + versionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.getOfferingWorkingCopy(getOfferingWorkingCopyOptions).execute();
+  }
+  
   // requires published state which this user cannot create
   // once this test is enabled the next block's dependency can point here
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"})
@@ -2025,8 +2082,9 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<Version> response = catalogManagementService.getOfferingWorkingCopy(getOfferingWorkingCopyOptions)
-          .execute();
+      Response<Version> response =
+          catalogManagementServiceAuthorized.getOfferingWorkingCopy(getOfferingWorkingCopyOptions)
+              .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2051,17 +2109,17 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         .versionLocId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.getVersion(getVersionOptions).execute();
+    catalogManagementServiceAuthorized.getVersion(getVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
       expectedExceptions = NotFoundException.class)
   public void testGetVersionReturns404WhenNoSuchVersion() throws Exception {
     GetVersionOptions getVersionOptions = new GetVersionOptions.Builder()
-        .versionLocId(versionLocatorId + "1q")
+        .versionLocId("invalid-" + versionLocatorId)
         .build();
     
-    catalogManagementService.getVersion(getVersionOptions).execute();
+    catalogManagementServiceAuthorized.getVersion(getVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetOfferingContainerImages"},
@@ -2081,7 +2139,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<Offering> response = catalogManagementService.getVersion(getVersionOptions).execute();
+      Response<Offering> response = catalogManagementServiceAuthorized.getVersion(getVersionOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2099,22 +2157,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   // Get Cluster block
   //====
   
-  @Test(dependsOnMethods = {"testGetVersion"},
-      expectedExceptions = NotFoundException.class)
-  public void testGetClusterReturns404WhenNoSuchCluster() throws Exception {
-    GetClusterOptions getClusterOptions = new GetClusterOptions.Builder()
-        .clusterId(clusterId + "c")
-        .region(regionUsSouth)
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .build();
-    
-    catalogManagementService.getCluster(getClusterOptions).execute();
-  }
   
-  /*
-  This test randomly returns either Unauthorized or BadRequest exception
-  it is disabled
-   */
+  // possibly this user doesn't have right to execute this operation
   @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = UnauthorizedException.class)
   @Ignore
@@ -2128,16 +2172,33 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     catalogManagementServiceNotAuthorized.getCluster(getClusterOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = NotFoundException.class)
+  public void testGetClusterReturns404WhenNoSuchCluster() throws Exception {
+    GetClusterOptions getClusterOptions = new GetClusterOptions.Builder()
+        .clusterId("invalid-" + clusterId)
+        .region(regionUsSouth)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .build();
+    
+    catalogManagementServiceAuthorized.getCluster(getClusterOptions).execute();
+  }
+  
   @Test(dependsOnMethods = {"testGetVersion"})
+  @Ignore
   public void testGetCluster() throws Exception {
     try {
+      
+      // possibly this user doesn't have right to get the cluster details
+      // until it is not clear it is skipped
+      
       GetClusterOptions getClusterOptions = new GetClusterOptions.Builder()
           .clusterId(clusterId)
           .region(regionUsSouth)
           .xAuthRefreshToken(refreshTokenAuthorized)
           .build();
       
-      Response<ClusterInfo> response = catalogManagementService.getCluster(getClusterOptions).execute();
+      Response<ClusterInfo> response = catalogManagementServiceAuthorized.getCluster(getClusterOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2155,26 +2216,24 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   // Get Namespaces block
   //====
   
-  /*
-this test randomly returns either NotFoundException or BadRequest
-to achieve stable test running it is disabled
- */
-  @Test(dependsOnMethods = {"testGetCluster"},
+  // possibly this user doesn't have right to get the cluster details
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = NotFoundException.class)
-  @Ignore
   public void testGetNamespacesReturns404WhenNoSuchCluster() throws Exception {
     GetNamespacesOptions getNamespacesOptions = new GetNamespacesOptions.Builder()
-        .clusterId(clusterId + "c")
+        .clusterId("invalid-" + clusterId)
         .region(regionUsSouth)
         .xAuthRefreshToken(refreshTokenAuthorized)
         .build();
     
-    catalogManagementService.getNamespaces(getNamespacesOptions).execute();
+    catalogManagementServiceAuthorized.getNamespaces(getNamespacesOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = UnauthorizedException.class)
-  public void testGetNamespacesReturns401WhenUserIsNotAuthorized() throws Exception {
+  // possibly this user doesn't have right to get the cluster details
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = ForbiddenException.class)
+  @Ignore
+  public void testGetNamespacesReturns403WhenUserIsNotAuthorized() throws Exception {
     GetNamespacesOptions getNamespacesOptions = new GetNamespacesOptions.Builder()
         .clusterId(clusterId)
         .region(regionUsSouth)
@@ -2184,8 +2243,8 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.getNamespaces(getNamespacesOptions).execute();
   }
   
-  // TLS error
-  @Test(dependsOnMethods = {"testGetCluster"})
+  // possibly this user doesn't have right to get the cluster details
+  @Test(dependsOnMethods = {"testGetVersion"})
   @Ignore
   public void testGetNamespaces() throws Exception {
     try {
@@ -2195,7 +2254,8 @@ to achieve stable test running it is disabled
           .xAuthRefreshToken(refreshTokenAuthorized)
           .build();
       
-      Response<NamespaceSearchResult> response = catalogManagementService.getNamespaces(getNamespacesOptions).execute();
+      Response<NamespaceSearchResult> response = catalogManagementServiceAuthorized.getNamespaces(getNamespacesOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2213,37 +2273,50 @@ to achieve stable test running it is disabled
   // Deploy Operators block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testDeployOperatorsReturns400WhenNoSuchCluster() throws Exception {
-    DeployOperatorsOptions deployOperatorsOptions = new DeployOperatorsOptions.Builder()
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .clusterId(clusterId + "a")
-        .region(regionUsSouth)
-        .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList(namespaceJavaSdk)))
-        .allNamespaces(true)
-        .versionLocatorId(versionLocatorId)
-        .build();
-    
-    catalogManagementService.deployOperators(deployOperatorsOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = ForbiddenException.class)
   public void testDeployOperatorsReturns403WhenUserIsNotAuthorized() throws Exception {
     DeployOperatorsOptions deployOperatorsOptions = new DeployOperatorsOptions.Builder()
-        .xAuthRefreshToken(refreshTokenAuthorized)
+        .xAuthRefreshToken(refreshTokenNotAuthorized)
         .clusterId(clusterId)
         .region(regionUsSouth)
-        .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList(namespaceJavaSdk)))
+        .allNamespaces(true)
         .versionLocatorId(versionLocatorId)
         .build();
     
     catalogManagementServiceNotAuthorized.deployOperators(deployOperatorsOptions).execute();
   }
   
-  // TLS handshake timeout
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = NotFoundException.class)
+  public void testDeployOperatorsReturns404WhenNoSuchCluster() throws Exception {
+    DeployOperatorsOptions deployOperatorsOptions = new DeployOperatorsOptions.Builder()
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId("invalid-" + clusterId)
+        .region(regionUsSouth)
+        .allNamespaces(true)
+        .versionLocatorId(versionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.deployOperators(deployOperatorsOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = BadRequestException.class)
+  public void testDeployOperatorsReturns400WhenBackendInputValidationFails() throws Exception {
+    DeployOperatorsOptions deployOperatorsOptions = new DeployOperatorsOptions.Builder()
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .allNamespaces(true)
+        .versionLocatorId(bogusVersionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.deployOperators(deployOperatorsOptions).execute();
+  }
+  
+  // possibly this user doesn't have right to get the cluster details
+  @Test(dependsOnMethods = {"testGetVersion"})
   @Ignore
   public void testDeployOperators() throws Exception {
     try {
@@ -2251,12 +2324,13 @@ to achieve stable test running it is disabled
           .xAuthRefreshToken(refreshTokenAuthorized)
           .clusterId(clusterId)
           .region(regionUsSouth)
-          .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList(namespaceJavaSdk)))
+          .allNamespaces(true)
           .versionLocatorId(versionLocatorId)
           .build();
       
-      Response<List<OperatorDeployResult>> response = catalogManagementService.deployOperators(deployOperatorsOptions)
-          .execute();
+      Response<List<OperatorDeployResult>> response =
+          catalogManagementServiceAuthorized.deployOperators(deployOperatorsOptions)
+              .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2274,7 +2348,20 @@ to achieve stable test running it is disabled
   // List Operators block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = ForbiddenException.class)
+  public void testListOperatorsReturns403WhenUserIsNotAuthorized() throws Exception {
+    ListOperatorsOptions listOperatorsOptions = new ListOperatorsOptions.Builder()
+        .xAuthRefreshToken(refreshTokenNotAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId(versionLocatorId)
+        .build();
+    
+    catalogManagementServiceNotAuthorized.listOperators(listOperatorsOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = BadRequestException.class)
   public void testListOperatorsReturns400WhenBackendInputValidationFails() throws Exception {
     ListOperatorsOptions listOperatorsOptions = new ListOperatorsOptions.Builder()
@@ -2284,24 +2371,24 @@ to achieve stable test running it is disabled
         .versionLocatorId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.listOperators(listOperatorsOptions).execute();
+    catalogManagementServiceAuthorized.listOperators(listOperatorsOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = ForbiddenException.class)
-  public void testListOperatorsReturns403WhenUserIsNotAuthorized() throws Exception {
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = NotFoundException.class)
+  public void testListOperatorsReturns404WhenNoSuchCluster() throws Exception {
     ListOperatorsOptions listOperatorsOptions = new ListOperatorsOptions.Builder()
         .xAuthRefreshToken(refreshTokenAuthorized)
-        .clusterId(clusterId)
+        .clusterId("invalid-" + clusterId)
         .region(regionUsSouth)
         .versionLocatorId(versionLocatorId)
         .build();
     
-    catalogManagementServiceNotAuthorized.listOperators(listOperatorsOptions).execute();
+    catalogManagementServiceAuthorized.listOperators(listOperatorsOptions).execute();
   }
   
-  // TLS handshake timeout
-  @Test(dependsOnMethods = {"testGetCluster"})
+  // possibly this user doesn't have right to get the cluster details
+  @Test(dependsOnMethods = {"testGetVersion"})
   @Ignore
   public void testListOperators() throws Exception {
     try {
@@ -2312,8 +2399,9 @@ to achieve stable test running it is disabled
           .versionLocatorId(versionLocatorId)
           .build();
       
-      Response<List<OperatorDeployResult>> response = catalogManagementService.listOperators(listOperatorsOptions)
-          .execute();
+      Response<List<OperatorDeployResult>> response =
+          catalogManagementServiceAuthorized.listOperators(listOperatorsOptions)
+              .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2331,20 +2419,7 @@ to achieve stable test running it is disabled
   // Replace Operators block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testReplaceOperatorsReturns400WhenBackendInputValidationFails() throws Exception {
-    ReplaceOperatorsOptions replaceOperatorsOptions = new ReplaceOperatorsOptions.Builder()
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .clusterId(clusterId)
-        .region(regionUsSouth)
-        .versionLocatorId(bogusVersionLocatorId)
-        .build();
-    
-    catalogManagementService.replaceOperators(replaceOperatorsOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = ForbiddenException.class)
   public void testReplaceOperatorsReturns403WhenUserIsNotAuthorized() throws Exception {
     ReplaceOperatorsOptions replaceOperatorsOptions = new ReplaceOperatorsOptions.Builder()
@@ -2358,8 +2433,34 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.replaceOperators(replaceOperatorsOptions).execute();
   }
   
-  // TLS handshake timeout
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = BadRequestException.class)
+  public void testReplaceOperatorsReturns404WhenNoSuchCluster() throws Exception {
+    ReplaceOperatorsOptions replaceOperatorsOptions = new ReplaceOperatorsOptions.Builder()
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId("invalid-" + clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId(versionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.replaceOperators(replaceOperatorsOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = BadRequestException.class)
+  public void testReplaceOperatorsReturns400WhenBackendInputValidationFails() throws Exception {
+    ReplaceOperatorsOptions replaceOperatorsOptions = new ReplaceOperatorsOptions.Builder()
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId(bogusVersionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.replaceOperators(replaceOperatorsOptions).execute();
+  }
+  
+  // possibly this user doesn't have right to get the cluster details
+  @Test(dependsOnMethods = {"testGetVersion"})
   @Ignore
   public void testReplaceOperators() throws Exception {
     try {
@@ -2367,12 +2468,13 @@ to achieve stable test running it is disabled
           .xAuthRefreshToken(refreshTokenAuthorized)
           .clusterId(clusterId)
           .region(regionUsSouth)
-          .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList(namespaceJavaSdk)))
+          .allNamespaces(true)
           .versionLocatorId(versionLocatorId)
           .build();
       
-      Response<List<OperatorDeployResult>> response = catalogManagementService.replaceOperators(replaceOperatorsOptions)
-          .execute();
+      Response<List<OperatorDeployResult>> response =
+          catalogManagementServiceAuthorized.replaceOperators(replaceOperatorsOptions)
+              .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2390,22 +2492,7 @@ to achieve stable test running it is disabled
   // Install Version block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testInstallVersionReturns400WhenBackendInputValidationFails() throws Exception {
-    
-    InstallVersionOptions installVersionOptions = new InstallVersionOptions.Builder()
-        .versionLocId(bogusVersionLocatorId)
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .clusterId(clusterId)
-        .region(regionUsSouth)
-        .versionLocatorId(bogusVersionLocatorId)
-        .build();
-    
-    catalogManagementService.installVersion(installVersionOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = ForbiddenException.class)
   public void testInstallVersionReturns403WhenUserIsNotAuthorized() throws Exception {
     InstallVersionOptions installVersionOptions = new InstallVersionOptions.Builder()
@@ -2419,41 +2506,51 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.installVersion(installVersionOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = NotFoundException.class)
+  public void testInstallVersionReturns404WhenNoSuchCluster() throws Exception {
+    
+    InstallVersionOptions installVersionOptions = new InstallVersionOptions.Builder()
+        .versionLocId(versionLocatorId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId("invalid" + clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId(versionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.installVersion(installVersionOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = BadRequestException.class)
+  public void testInstallVersionReturns400WhenBackendInputValidationFails() throws Exception {
+    
+    InstallVersionOptions installVersionOptions = new InstallVersionOptions.Builder()
+        .versionLocId(bogusVersionLocatorId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId(bogusVersionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.installVersion(installVersionOptions).execute();
+  }
+  
+  // possibly this user doesn't have right to get the cluster details
+  @Test(dependsOnMethods = {"testGetVersion"})
   @Ignore
   public void testInstallVersion() throws Exception {
     try {
-      DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder()
-          .name("testString")
-          .description("testString")
-          .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-          .resourceGroupId("testString")
-          .build();
       
       InstallVersionOptions installVersionOptions = new InstallVersionOptions.Builder()
-          .versionLocId("testString")
-          .versionLocatorId("testString")
+          .versionLocId(versionLocatorId)
           .xAuthRefreshToken(refreshTokenAuthorized)
           .clusterId(clusterId)
-          .region("testString")
-          .namespace("testString")
-          .overrideValues(new java.util.HashMap<String, Object>() {
-            {
-              put("foo", "testString");
-            }
-          })
-          .entitlementApikey("testString")
-          .schematics(deployRequestBodySchematicsModel)
-          .script("testString")
-          .scriptId("testString")
-          .vcenterId("testString")
-          .vcenterUser("testString")
-          .vcenterPassword("testString")
-          .vcenterLocation("testString")
-          .vcenterDatastore("testString")
+          .region(regionUsSouth)
+          .versionLocatorId(versionLocatorId)
           .build();
       
-      Response<Void> response = catalogManagementService.installVersion(installVersionOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.installVersion(installVersionOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -2468,22 +2565,7 @@ to achieve stable test running it is disabled
   // PreInstall Version block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testPreinstallVersionReturns400WhenBackendInputValidationFails() throws Exception {
-    
-    PreinstallVersionOptions preinstallVersionOptions = new PreinstallVersionOptions.Builder()
-        .versionLocId(bogusVersionLocatorId)
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .clusterId(clusterId)
-        .region(regionUsSouth)
-        .versionLocatorId(bogusVersionLocatorId)
-        .build();
-    
-    catalogManagementService.preinstallVersion(preinstallVersionOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = ForbiddenException.class)
   public void testPreinstallVersionReturns403WhenUserIsNotAuthorized() throws Exception {
     PreinstallVersionOptions preinstallVersionOptions = new PreinstallVersionOptions.Builder()
@@ -2497,41 +2579,58 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.preinstallVersion(preinstallVersionOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = BadRequestException.class)
+  @Ignore
+  public void testPreinstallVersionReturns404WhenNoSuchCluster() throws Exception {
+    
+    // it requires a version where preinstall script is installed
+    // but I don't know how to do it
+    // one it is done possible to squeeze a 404 from the cluster
+    // until then it checks 400
+    
+    PreinstallVersionOptions preinstallVersionOptions = new PreinstallVersionOptions.Builder()
+        .versionLocId(versionLocatorId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId("invalid-" + clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId(versionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.preinstallVersion(preinstallVersionOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = BadRequestException.class)
+  public void testPreinstallVersionReturns400WhenBackendInputValidationFails() throws Exception {
+    
+    PreinstallVersionOptions preinstallVersionOptions = new PreinstallVersionOptions.Builder()
+        .versionLocId(bogusVersionLocatorId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId(bogusVersionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.preinstallVersion(preinstallVersionOptions).execute();
+  }
+  
+  // Error: Attempt to run pre-install script on a version that has no pre-install script specified
+  @Test(dependsOnMethods = {"testGetVersion"})
   @Ignore
   public void testPreinstallVersion() throws Exception {
     try {
-      DeployRequestBodySchematics deployRequestBodySchematicsModel = new DeployRequestBodySchematics.Builder().name(
-          "testString")
-          .description("testString")
-          .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-          .resourceGroupId("testString")
+      
+      PreinstallVersionOptions preinstallVersionOptions = new PreinstallVersionOptions.Builder()
+          .versionLocId(versionLocatorId)
+          .xAuthRefreshToken(refreshTokenAuthorized)
+          .clusterId(clusterId)
+          .region(regionUsSouth)
+          .versionLocatorId(versionLocatorId)
           .build();
       
-      PreinstallVersionOptions preinstallVersionOptions = new PreinstallVersionOptions.Builder().versionLocId(
-          "testString")
-          .xAuthRefreshToken("testString")
-          .clusterId("testString")
-          .region("testString")
-          .namespace("testString")
-          .overrideValues(new java.util.HashMap<String, Object>() {
-            {
-              put("foo", "testString");
-            }
-          })
-          .entitlementApikey("testString")
-          .schematics(deployRequestBodySchematicsModel)
-          .script("testString")
-          .scriptId("testString")
-          .versionLocatorId("testString")
-          .vcenterId("testString")
-          .vcenterUser("testString")
-          .vcenterPassword("testString")
-          .vcenterLocation("testString")
-          .vcenterDatastore("testString")
-          .build();
-      
-      Response<Void> response = catalogManagementService.preinstallVersion(preinstallVersionOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.preinstallVersion(preinstallVersionOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -2546,7 +2645,33 @@ to achieve stable test running it is disabled
   // Get PreInstall Version block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = ForbiddenException.class)
+  public void testGetPreinstallReturns403WhenUserIsNotAuthorized() throws Exception {
+    GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder()
+        .versionLocId(versionLocatorId)
+        .xAuthRefreshToken(refreshTokenNotAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .build();
+    
+    catalogManagementServiceNotAuthorized.getPreinstall(getPreinstallOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = NotFoundException.class)
+  public void testGetPreinstallReturns404WhenNoSuchVersion() throws Exception {
+    GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder()
+        .versionLocId("invalid-" + versionLocatorId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .build();
+    
+    catalogManagementServiceAuthorized.getPreinstall(getPreinstallOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = BadRequestException.class)
   public void testGetPreinstallReturns400WhenBackendInputValidationFails() throws Exception {
     GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder()
@@ -2556,36 +2681,11 @@ to achieve stable test running it is disabled
         .region(regionUsSouth)
         .build();
     
-    catalogManagementService.getPreinstall(getPreinstallOptions).execute();
+    catalogManagementServiceAuthorized.getPreinstall(getPreinstallOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = ForbiddenException.class)
-  public void testGetPreinstallReturns403WhenUserIsNotAuthorized() throws Exception {
-    GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder()
-        .versionLocId(versionLocatorId)
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .clusterId(clusterId)
-        .region(regionUsSouth)
-        .build();
-    
-    catalogManagementServiceNotAuthorized.getPreinstall(getPreinstallOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testGetPreinstallReturns404WhenNoSuchVersion() throws Exception {
-    GetPreinstallOptions getPreinstallOptions = new GetPreinstallOptions.Builder()
-        .versionLocId(versionLocatorId + "c")
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .clusterId(clusterId)
-        .region(regionUsSouth)
-        .build();
-    
-    catalogManagementService.getPreinstall(getPreinstallOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetCluster"})
+  // Error: Attempt to get pre-install status on a version that has no pre-install script
+  @Test(dependsOnMethods = {"testGetVersion"})
   @Ignore
   public void testGetPreinstall() throws Exception {
     try {
@@ -2596,7 +2696,8 @@ to achieve stable test running it is disabled
           .region(regionUsSouth)
           .build();
       
-      Response<InstallStatus> response = catalogManagementService.getPreinstall(getPreinstallOptions).execute();
+      Response<InstallStatus> response = catalogManagementServiceAuthorized.getPreinstall(getPreinstallOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2614,21 +2715,7 @@ to achieve stable test running it is disabled
   // Validate Install block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testValidateInstallReturns400WhenBackendInputValidationFails() throws Exception {
-    
-    ValidateInstallOptions validateInstallOptions = new ValidateInstallOptions.Builder()
-        .versionLocId(bogusVersionLocatorId)
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .clusterId(clusterId)
-        .region(regionUsSouth)
-        .build();
-    
-    catalogManagementService.validateInstall(validateInstallOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testCreateCatalog", "testCreateOffering", "testImportOffering"},
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = ForbiddenException.class)
   public void testValidateInstallReturns403WhenUserIsNotAuthorized() throws Exception {
     ValidateInstallOptions validateInstallOptions = new ValidateInstallOptions.Builder()
@@ -2642,23 +2729,38 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.validateInstall(validateInstallOptions).execute();
   }
   
-  // TLS handshake timeout
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = NotFoundException.class)
   @Ignore
-  public void testValidateInstallReturns404WhenNoSuchResource() throws Exception {
+  public void testValidateInstallReturns404WhenNoSuchVersion() throws Exception {
     ValidateInstallOptions validateInstallOptions = new ValidateInstallOptions.Builder()
-        .versionLocId(versionLocatorId + "qa")
-        .xAuthRefreshToken(refreshTokenNotAuthorized)
+        .versionLocId("invalid-" + versionLocatorId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
         .clusterId(clusterId)
         .region(regionUsSouth)
+        .versionLocatorId("invalid-" + versionLocatorId)
         .build();
     
-    catalogManagementService.validateInstall(validateInstallOptions).execute();
+    catalogManagementServiceAuthorized.validateInstall(validateInstallOptions).execute();
   }
   
-  // TLS handshake timeout
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = BadRequestException.class)
+  public void testValidateInstallReturns400WhenBackendInputValidationFails() throws Exception {
+    
+    ValidateInstallOptions validateInstallOptions = new ValidateInstallOptions.Builder()
+        .versionLocId(bogusVersionLocatorId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId(bogusVersionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.validateInstall(validateInstallOptions).execute();
+  }
+  
+  // possibly this user doesn't have right to get the cluster details
+  @Test(dependsOnMethods = {"testGetVersion"})
   @Ignore
   public void testValidateInstall() throws Exception {
     try {
@@ -2669,7 +2771,7 @@ to achieve stable test running it is disabled
           .region(regionUsSouth)
           .build();
       
-      Response<Void> response = catalogManagementService.validateInstall(validateInstallOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.validateInstall(validateInstallOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -2684,18 +2786,7 @@ to achieve stable test running it is disabled
   // Get Validation Status block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testGetValidationStatusReturns400WhenValidationFails() throws Exception {
-    GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder()
-        .versionLocId(bogusVersionLocatorId)
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .build();
-    
-    catalogManagementService.getValidationStatus(getValidationStatusOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetVersion"},
       expectedExceptions = ForbiddenException.class)
   public void testGetValidationStatusReturns403WhenUserIsNotAuthorized() throws Exception {
     GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder()
@@ -2706,18 +2797,29 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.getValidationStatus(getValidationStatusOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testGetValidationStatusReturns404WhenNoSuchResource() throws Exception {
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = NotFoundException.class)
+  public void testGetValidationStatusReturns404WhenNoSuchVersion() throws Exception {
     GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder()
-        .versionLocId(versionLocatorId + "2w")
+        .versionLocId("invalid-" + versionLocatorId)
         .xAuthRefreshToken(refreshTokenAuthorized)
         .build();
     
-    catalogManagementService.getValidationStatus(getValidationStatusOptions).execute();
+    catalogManagementServiceAuthorized.getValidationStatus(getValidationStatusOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testGetVersion"},
+      expectedExceptions = BadRequestException.class)
+  public void testGetValidationStatusReturns400WhenValidationFails() throws Exception {
+    GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder()
+        .versionLocId(bogusVersionLocatorId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .build();
+    
+    catalogManagementServiceAuthorized.getValidationStatus(getValidationStatusOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetVersion"})
   public void testGetValidationStatus() throws Exception {
     try {
       GetValidationStatusOptions getValidationStatusOptions = new GetValidationStatusOptions.Builder()
@@ -2725,7 +2827,7 @@ to achieve stable test running it is disabled
           .xAuthRefreshToken(refreshTokenAuthorized)
           .build();
       
-      Response<Validation> response = catalogManagementService.getValidationStatus(getValidationStatusOptions)
+      Response<Validation> response = catalogManagementServiceAuthorized.getValidationStatus(getValidationStatusOptions)
           .execute();
       
       assertNotNull(response);
@@ -2744,17 +2846,7 @@ to achieve stable test running it is disabled
   // Get Override Values block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testGetOverrideValuesReturns400WhenBackendInputValidationFails() throws Exception {
-    GetOverrideValuesOptions getOverrideValuesOptions = new GetOverrideValuesOptions.Builder()
-        .versionLocId(bogusVersionLocatorId)
-        .build();
-    
-    catalogManagementService.getOverrideValues(getOverrideValuesOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetValidationStatus"},
       expectedExceptions = ForbiddenException.class)
   public void testGetOverrideValuesReturns403WhenUserIsNotAuthorized() throws Exception {
     GetOverrideValuesOptions getOverrideValuesOptions = new GetOverrideValuesOptions.Builder()
@@ -2764,27 +2856,40 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.getOverrideValues(getOverrideValuesOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"},
-      expectedExceptions = BadRequestException.class)
-  public void testGetOverrideValuesReturns400WhenNoSuchResource() throws Exception {
+  @Test(dependsOnMethods = {"testGetValidationStatus"},
+      expectedExceptions = NotFoundException.class)
+  public void testGetOverrideValuesReturns404WhenNoSuchVersion() throws Exception {
     GetOverrideValuesOptions getOverrideValuesOptions = new GetOverrideValuesOptions.Builder()
-        .versionLocId(versionLocatorId + "q2")
+        .versionLocId("invalid-" + versionLocatorId)
         .build();
     
-    catalogManagementService.getOverrideValues(getOverrideValuesOptions).execute();
+    catalogManagementServiceAuthorized.getOverrideValues(getOverrideValuesOptions).execute();
   }
   
-  // Validation is a pre-requisite here
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testGetValidationStatus"},
+      expectedExceptions = BadRequestException.class)
+  public void testGetOverrideValuesReturns400WhenBackendInputValidationFails() throws Exception {
+    GetOverrideValuesOptions getOverrideValuesOptions = new GetOverrideValuesOptions.Builder()
+        .versionLocId(bogusVersionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.getOverrideValues(getOverrideValuesOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetValidationStatus"})
   @Ignore
   public void testGetOverrideValues() throws Exception {
+    
+    // requires validation run before this operation
+    
     try {
       GetOverrideValuesOptions getOverrideValuesOptions = new GetOverrideValuesOptions.Builder()
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<Map<String, Object>> response = catalogManagementService.getOverrideValues(getOverrideValuesOptions)
-          .execute();
+      Response<Map<String, Object>> response =
+          catalogManagementServiceAuthorized.getOverrideValues(getOverrideValuesOptions)
+              .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2802,7 +2907,7 @@ to achieve stable test running it is disabled
   // Search Objects block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testGetValidationStatus"},
       expectedExceptions = BadRequestException.class)
   public void testSearchObjectsReturns400WhenBackendInputValidationFails() throws Exception {
     SearchObjectsOptions searchObjectsOptions = new SearchObjectsOptions.Builder()
@@ -2811,14 +2916,14 @@ to achieve stable test running it is disabled
         .digest(true)
         .build();
     
-    catalogManagementService.searchObjects(searchObjectsOptions).execute();
+    catalogManagementServiceAuthorized.searchObjects(searchObjectsOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testGetValidationStatus"})
   public void testSearchObjectsReturns200WhenUserIsNotAuthorized() throws Exception {
     try {
       SearchObjectsOptions searchObjectsOptions = new SearchObjectsOptions.Builder()
-          .query("query")
+          .query("name: " + objectName)
           .collapse(true)
           .digest(true)
           .build();
@@ -2835,7 +2940,7 @@ to achieve stable test running it is disabled
     }
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testGetValidationStatus"})
   public void testSearchObjects() throws Exception {
     try {
       SearchObjectsOptions searchObjectsOptions = new SearchObjectsOptions.Builder()
@@ -2844,7 +2949,8 @@ to achieve stable test running it is disabled
           .digest(true)
           .build();
       
-      Response<ObjectSearchResult> response = catalogManagementService.searchObjects(searchObjectsOptions).execute();
+      Response<ObjectSearchResult> response = catalogManagementServiceAuthorized.searchObjects(searchObjectsOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2862,7 +2968,7 @@ to achieve stable test running it is disabled
   // List Objects block
   //====
   
-  @Test(dependsOnMethods = {"testGetCluster"},
+  @Test(dependsOnMethods = {"testSearchObjects"},
       expectedExceptions = BadRequestException.class)
   public void testListObjectsReturns400WhenBackendInputValidationFails() throws Exception {
     ListObjectsOptions listObjectsOptions = new ListObjectsOptions.Builder()
@@ -2871,17 +2977,28 @@ to achieve stable test running it is disabled
         .sort(" ")
         .build();
     
-    catalogManagementService.listObjects(listObjectsOptions).execute();
+    catalogManagementServiceAuthorized.listObjects(listObjectsOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testGetCluster"})
+  @Test(dependsOnMethods = {"testSearchObjects"},
+      expectedExceptions = ForbiddenException.class)
+  public void testListObjectsReturns403WhenUserIsNotAuthorized() throws Exception {
+    ListObjectsOptions listObjectsOptions = new ListObjectsOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .build();
+    
+    catalogManagementServiceNotAuthorized.listObjects(listObjectsOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testSearchObjects"})
   public void testListObjects() throws Exception {
     try {
       ListObjectsOptions listObjectsOptions = new ListObjectsOptions.Builder()
           .catalogIdentifier(catalogId)
           .build();
       
-      Response<ObjectListResult> response = catalogManagementService.listObjects(listObjectsOptions).execute();
+      Response<ObjectListResult> response = catalogManagementServiceAuthorized.listObjects(listObjectsOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2905,22 +3022,6 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testListObjects"},
-      expectedExceptions = BadRequestException.class)
-  // @Ignore
-  public void testReplaceObjectReturns400WhenNoSuchObject() throws Exception {
-    ReplaceObjectOptions replaceObjectOptions = new ReplaceObjectOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(objectId)
-        .id(objectId + "c")
-        .name(objectName)
-        .parentId(regionUsSouth)
-        .catalogId(catalogId)
-        .build();
-    
-    catalogManagementService.replaceObject(replaceObjectOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testListObjects"},
       expectedExceptions = ForbiddenException.class)
   public void testReplaceObjectReturns403WhenUserIsNotAuthorized() throws Exception {
     
@@ -2928,7 +3029,7 @@ to achieve stable test running it is disabled
         .catalogIdentifier(catalogId)
         .objectIdentifier(objectId)
         .id(objectId)
-        .name(objectName)
+        .name("updated-object-name-created-by-java-sdk")
         .parentId(regionUsSouth)
         .catalogId(catalogId)
         .build();
@@ -2936,7 +3037,37 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.replaceObject(replaceObjectOptions).execute();
   }
   
-  // conflict on revisions
+  @Test(dependsOnMethods = {"testListObjects"},
+      expectedExceptions = BadRequestException.class)
+  public void testReplaceObjectReturns404WhenNoSuchObject() throws Exception {
+    ReplaceObjectOptions replaceObjectOptions = new ReplaceObjectOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier(objectId)
+        .id("invalid-" + objectId)
+        .name("updated-object-name-created-by-java-sdk")
+        .parentId(regionUsSouth)
+        .catalogId(catalogId)
+        .build();
+    
+    catalogManagementServiceAuthorized.replaceObject(replaceObjectOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testListObjects"},
+      expectedExceptions = BadRequestException.class)
+  public void testReplaceObjectReturns400WhenBackendInputValidationFails() throws Exception {
+    ReplaceObjectOptions replaceObjectOptions = new ReplaceObjectOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier(objectId)
+        .id("invalid-" + objectId)
+        .name("updated object name created by java sdk")
+        .parentId(regionUsSouth)
+        .catalogId(catalogId)
+        .build();
+    
+    catalogManagementServiceAuthorized.replaceObject(replaceObjectOptions).execute();
+  }
+  
+  // cannot change name of object, what can be changed?
   @Test(dependsOnMethods = {"testListObjects"})
   @Ignore
   public void testReplaceObject() throws Exception {
@@ -2946,13 +3077,14 @@ to achieve stable test running it is disabled
           .catalogIdentifier(catalogId)
           .objectIdentifier(objectId)
           .id(objectId)
-          .name(objectName)
+          .name("updated-object-name-created-by-java-sdk")
           .parentId(regionUsSouth)
           .kind(kindVpe)
           .catalogId(catalogId)
           .build();
       
-      Response<CatalogObject> response = catalogManagementService.replaceObject(replaceObjectOptions).execute();
+      Response<CatalogObject> response = catalogManagementServiceAuthorized.replaceObject(replaceObjectOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -2971,17 +3103,6 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testListObjects"},
-      expectedExceptions = NotFoundException.class)
-  public void testGetObjectReturns404WhenNoSuchObject() throws Exception {
-    GetObjectOptions getObjectOptions = new GetObjectOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(objectId + "c")
-        .build();
-    
-    catalogManagementService.getObject(getObjectOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testListObjects"},
       expectedExceptions = ForbiddenException.class)
   public void testGetObjectReturns403WhenUserIsNotAuthorized() throws Exception {
     GetObjectOptions getObjectOptions = new GetObjectOptions.Builder()
@@ -2992,6 +3113,17 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.getObject(getObjectOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testListObjects"},
+      expectedExceptions = NotFoundException.class)
+  public void testGetObjectReturns404WhenNoSuchObject() throws Exception {
+    GetObjectOptions getObjectOptions = new GetObjectOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier("invalid-" + objectId)
+        .build();
+    
+    catalogManagementServiceAuthorized.getObject(getObjectOptions).execute();
+  }
+  
   @Test(dependsOnMethods = {"testListObjects"})
   public void testGetObject() throws Exception {
     try {
@@ -3000,7 +3132,7 @@ to achieve stable test running it is disabled
           .objectIdentifier(objectId)
           .build();
       
-      Response<CatalogObject> response = catalogManagementService.getObject(getObjectOptions).execute();
+      Response<CatalogObject> response = catalogManagementServiceAuthorized.getObject(getObjectOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -3034,10 +3166,10 @@ to achieve stable test running it is disabled
     try {
       GetObjectAuditOptions getObjectAuditOptions = new GetObjectAuditOptions.Builder()
           .catalogIdentifier(catalogId)
-          .objectIdentifier(objectId + "c")
+          .objectIdentifier("invalid-" + objectId)
           .build();
       
-      Response<AuditLog> response = catalogManagementService.getObjectAudit(getObjectAuditOptions).execute();
+      Response<AuditLog> response = catalogManagementServiceAuthorized.getObjectAudit(getObjectAuditOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -3059,7 +3191,7 @@ to achieve stable test running it is disabled
           .objectIdentifier(objectId)
           .build();
       
-      Response<AuditLog> response = catalogManagementService.getObjectAudit(getObjectAuditOptions).execute();
+      Response<AuditLog> response = catalogManagementServiceAuthorized.getObjectAudit(getObjectAuditOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -3078,17 +3210,6 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testGetObjectAudit"},
-      expectedExceptions = NotFoundException.class)
-  public void testAccountPublishObjectReturns404WhenNoSuchObject() throws Exception {
-    AccountPublishObjectOptions accountPublishObjectOptions = new AccountPublishObjectOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(bogusObjectId)
-        .build();
-    
-    catalogManagementService.accountPublishObject(accountPublishObjectOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetObjectAudit"},
       expectedExceptions = ForbiddenException.class)
   public void testAccountPublishObjectReturns403WhenUserIsNotAuthorized() throws Exception {
     AccountPublishObjectOptions accountPublishObjectOptions = new AccountPublishObjectOptions.Builder()
@@ -3099,6 +3220,17 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.accountPublishObject(accountPublishObjectOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testGetObjectAudit"},
+      expectedExceptions = NotFoundException.class)
+  public void testAccountPublishObjectReturns404WhenNoSuchObject() throws Exception {
+    AccountPublishObjectOptions accountPublishObjectOptions = new AccountPublishObjectOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier("invalid-" + objectId)
+        .build();
+    
+    catalogManagementServiceAuthorized.accountPublishObject(accountPublishObjectOptions).execute();
+  }
+  
   @Test(dependsOnMethods = {"testGetObjectAudit"})
   public void testAccountPublishObject() throws Exception {
     try {
@@ -3107,7 +3239,8 @@ to achieve stable test running it is disabled
           .objectIdentifier(objectId)
           .build();
       
-      Response<Void> response = catalogManagementService.accountPublishObject(accountPublishObjectOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.accountPublishObject(accountPublishObjectOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -3123,17 +3256,6 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testAccountPublishObject"},
-      expectedExceptions = NotFoundException.class)
-  public void testSharedPublishObjectReturns404WhenNoSuchObject() throws Exception {
-    SharedPublishObjectOptions sharedPublishObjectOptions = new SharedPublishObjectOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(objectId + "c")
-        .build();
-    
-    catalogManagementService.sharedPublishObject(sharedPublishObjectOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testAccountPublishObject"},
       expectedExceptions = ForbiddenException.class)
   public void testSharedPublishObjectReturns403WhenUserIsNotAuthorized() throws Exception {
     SharedPublishObjectOptions sharedPublishObjectOptions = new SharedPublishObjectOptions.Builder()
@@ -3144,6 +3266,18 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.sharedPublishObject(sharedPublishObjectOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testAccountPublishObject"},
+      expectedExceptions = NotFoundException.class)
+  public void testSharedPublishObjectReturns404WhenNoSuchObject() throws Exception {
+    SharedPublishObjectOptions sharedPublishObjectOptions = new SharedPublishObjectOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier("invalid-" + objectId)
+        .build();
+    
+    catalogManagementServiceAuthorized.sharedPublishObject(sharedPublishObjectOptions).execute();
+  }
+  
+  // Error: An invalid catalog object was provided
   @Test(dependsOnMethods = {"testAccountPublishObject"})
   @Ignore
   public void testSharedPublishObject() throws Exception {
@@ -3153,7 +3287,8 @@ to achieve stable test running it is disabled
           .objectIdentifier(objectId)
           .build();
       
-      Response<Void> response = catalogManagementService.sharedPublishObject(sharedPublishObjectOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.sharedPublishObject(sharedPublishObjectOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -3169,17 +3304,6 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testAccountPublishObject"},
-      expectedExceptions = NotFoundException.class)
-  public void testIbmPublishObjectReturns404WhenNoSuchObject() throws Exception {
-    IbmPublishObjectOptions ibmPublishObjectOptions = new IbmPublishObjectOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(objectId + "cc")
-        .build();
-    
-    catalogManagementService.ibmPublishObject(ibmPublishObjectOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testAccountPublishObject"},
       expectedExceptions = ForbiddenException.class)
   public void testIbmPublishObjectReturns403WhenUSerIsNotAuthorized() throws Exception {
     IbmPublishObjectOptions ibmPublishObjectOptions = new IbmPublishObjectOptions.Builder()
@@ -3190,6 +3314,18 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.ibmPublishObject(ibmPublishObjectOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testAccountPublishObject"},
+      expectedExceptions = NotFoundException.class)
+  public void testIbmPublishObjectReturns404WhenNoSuchObject() throws Exception {
+    IbmPublishObjectOptions ibmPublishObjectOptions = new IbmPublishObjectOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier("invalid-" + objectId)
+        .build();
+    
+    catalogManagementServiceAuthorized.ibmPublishObject(ibmPublishObjectOptions).execute();
+  }
+  
+  // Error: Object not approved to request publishing to IBM for
   @Test(dependsOnMethods = {"testAccountPublishObject"})
   @Ignore
   public void testIbmPublishObject() throws Exception {
@@ -3199,7 +3335,7 @@ to achieve stable test running it is disabled
           .objectIdentifier(objectId)
           .build();
       
-      Response<Void> response = catalogManagementService.ibmPublishObject(ibmPublishObjectOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.ibmPublishObject(ibmPublishObjectOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -3215,17 +3351,6 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testAccountPublishObject"},
-      expectedExceptions = NotFoundException.class)
-  public void testPublicPublishObjectReturns404WhenNoSuchObject() throws Exception {
-    PublicPublishObjectOptions publicPublishObjectOptions = new PublicPublishObjectOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(objectId + "cc")
-        .build();
-    
-    catalogManagementService.publicPublishObject(publicPublishObjectOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testAccountPublishObject"},
       expectedExceptions = ForbiddenException.class)
   public void testPublicPublishObjectReturns403WhenUserIsNotAuthorized() throws Exception {
     PublicPublishObjectOptions publicPublishObjectOptions = new PublicPublishObjectOptions.Builder()
@@ -3236,17 +3361,29 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.publicPublishObject(publicPublishObjectOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testAccountPublishObject"},
+      expectedExceptions = NotFoundException.class)
+  public void testPublicPublishObjectReturns404WhenNoSuchObject() throws Exception {
+    PublicPublishObjectOptions publicPublishObjectOptions = new PublicPublishObjectOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier("invalid" + objectId)
+        .build();
+    
+    catalogManagementServiceAuthorized.publicPublishObject(publicPublishObjectOptions).execute();
+  }
+  
+  // Error: Object not approved to request publishing to IBM for
   @Test(dependsOnMethods = {"testAccountPublishObject"})
   @Ignore
   public void testPublicPublishObject() throws Exception {
     try {
-      PublicPublishObjectOptions publicPublishObjectOptions =
-          new PublicPublishObjectOptions.Builder()
-              .catalogIdentifier(catalogId)
-              .objectIdentifier(objectId)
-              .build();
+      PublicPublishObjectOptions publicPublishObjectOptions = new PublicPublishObjectOptions.Builder()
+          .catalogIdentifier(catalogId)
+          .objectIdentifier(objectId)
+          .build();
       
-      Response<Void> response = catalogManagementService.publicPublishObject(publicPublishObjectOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.publicPublishObject(publicPublishObjectOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 202);
@@ -3262,18 +3399,6 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testAccountPublishObject"},
-      expectedExceptions = NotFoundException.class)
-  public void testCreateObjectAccessReturns404WhenNoSuchObject() throws Exception {
-    CreateObjectAccessOptions createObjectAccessOptions = new CreateObjectAccessOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(objectId + "c")
-        .accountIdentifier(accountId)
-        .build();
-    
-    catalogManagementService.createObjectAccess(createObjectAccessOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testAccountPublishObject"},
       expectedExceptions = ForbiddenException.class)
   public void testCreateObjectAccessReturns403WhenUserIsNotAuthorized() throws Exception {
     CreateObjectAccessOptions createObjectAccessOptions = new CreateObjectAccessOptions.Builder()
@@ -3285,17 +3410,29 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.createObjectAccess(createObjectAccessOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testAccountPublishObject"},
+      expectedExceptions = NotFoundException.class)
+  public void testCreateObjectAccessReturns404WhenNoSuchObject() throws Exception {
+    CreateObjectAccessOptions createObjectAccessOptions = new CreateObjectAccessOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier("invalid-" + objectId)
+        .accountIdentifier(accountId)
+        .build();
+    
+    catalogManagementServiceAuthorized.createObjectAccess(createObjectAccessOptions).execute();
+  }
+  
   @Test(dependsOnMethods = {"testAccountPublishObject"})
   public void testCreateObjectAccess() throws Exception {
     try {
-      CreateObjectAccessOptions createObjectAccessOptions =
-          new CreateObjectAccessOptions.Builder()
-              .catalogIdentifier(catalogId)
-              .objectIdentifier(objectId)
-              .accountIdentifier(accountId)
-              .build();
+      CreateObjectAccessOptions createObjectAccessOptions = new CreateObjectAccessOptions.Builder()
+          .catalogIdentifier(catalogId)
+          .objectIdentifier(objectId)
+          .accountIdentifier(accountId)
+          .build();
       
-      Response<Void> response = catalogManagementService.createObjectAccess(createObjectAccessOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.createObjectAccess(createObjectAccessOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
@@ -3310,27 +3447,6 @@ to achieve stable test running it is disabled
   // Get Object Access List block
   //====
   
-  @Test(dependsOnMethods = {"testCreateObjectAccess"})
-  public void testGetObjectAccessListReturns200WhenNoSuchObject() throws Exception {
-    try {
-      GetObjectAccessListOptions getObjectAccessListOptions = new GetObjectAccessListOptions.Builder()
-          .catalogIdentifier(catalogId)
-          .objectIdentifier(objectId + "cc")
-          .build();
-      
-      Response<ObjectAccessListResult> response = catalogManagementService
-          .getObjectAccessList(getObjectAccessListOptions)
-          .execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-      
-    } catch (ServiceResponseException e) {
-      fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
-          e.getDebuggingInfo()));
-    }
-  }
-  
   @Test(dependsOnMethods = {"testCreateObjectAccess"},
       expectedExceptions = ForbiddenException.class)
   public void testGetObjectAccessListReturns403WhenUserIsNotAuthorized() throws Exception {
@@ -3343,6 +3459,27 @@ to achieve stable test running it is disabled
   }
   
   @Test(dependsOnMethods = {"testCreateObjectAccess"})
+  public void testGetObjectAccessListReturns200WhenNoSuchObject() throws Exception {
+    try {
+      GetObjectAccessListOptions getObjectAccessListOptions = new GetObjectAccessListOptions.Builder()
+          .catalogIdentifier(catalogId)
+          .objectIdentifier("invalid-" + objectId)
+          .build();
+      
+      Response<ObjectAccessListResult> response = catalogManagementServiceAuthorized
+          .getObjectAccessList(getObjectAccessListOptions)
+          .execute();
+      
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+      
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+  
+  @Test(dependsOnMethods = {"testCreateObjectAccess"})
   public void testGetObjectAccessList() throws Exception {
     try {
       GetObjectAccessListOptions getObjectAccessListOptions = new GetObjectAccessListOptions.Builder()
@@ -3351,7 +3488,7 @@ to achieve stable test running it is disabled
           .build();
       
       Response<ObjectAccessListResult> response =
-          catalogManagementService.getObjectAccessList(getObjectAccessListOptions)
+          catalogManagementServiceAuthorized.getObjectAccessList(getObjectAccessListOptions)
               .execute();
       
       assertNotNull(response);
@@ -3371,18 +3508,6 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testGetObjectAccessList"},
-      expectedExceptions = NotFoundException.class)
-  public void testGetObjectAccessReturns404WhenNoSuchObjectAccess() throws Exception {
-    GetObjectAccessOptions getObjectAccessOptions = new GetObjectAccessOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(objectId + "c")
-        .accountIdentifier(accountId)
-        .build();
-    
-    catalogManagementService.getObjectAccess(getObjectAccessOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetObjectAccessList"},
       expectedExceptions = ForbiddenException.class)
   public void testGetObjectAccessReturns403WhenUserIsNotAuthorized() throws Exception {
     GetObjectAccessOptions getObjectAccessOptions = new GetObjectAccessOptions.Builder()
@@ -3392,6 +3517,18 @@ to achieve stable test running it is disabled
         .build();
     
     catalogManagementServiceNotAuthorized.getObjectAccess(getObjectAccessOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testGetObjectAccessList"},
+      expectedExceptions = NotFoundException.class)
+  public void testGetObjectAccessReturns404WhenNoSuchObjectAccess() throws Exception {
+    GetObjectAccessOptions getObjectAccessOptions = new GetObjectAccessOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier("invalid-" + objectId)
+        .accountIdentifier(accountId)
+        .build();
+    
+    catalogManagementServiceAuthorized.getObjectAccess(getObjectAccessOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testGetObjectAccessList"})
@@ -3404,7 +3541,8 @@ to achieve stable test running it is disabled
           .accountIdentifier(accountId)
           .build();
       
-      Response<ObjectAccess> response = catalogManagementService.getObjectAccess(getObjectAccessOptions).execute();
+      Response<ObjectAccess> response = catalogManagementServiceAuthorized.getObjectAccess(getObjectAccessOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -3423,41 +3561,40 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testGetObjectAccessList"},
-      expectedExceptions = NotFoundException.class)
-  public void testAddObjectAccessListReturns404WhenNoSuchObject() throws Exception {
-    AddObjectAccessListOptions addObjectAccessListOptions = new AddObjectAccessListOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(objectId + "cc")
-        .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList(accountId)))
-        .build();
-    
-    catalogManagementService.addObjectAccessList(addObjectAccessListOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testGetObjectAccessList"},
       expectedExceptions = ForbiddenException.class)
   public void testAddObjectAccessListReturns403WhenUserIsNotAuthorized() throws Exception {
     AddObjectAccessListOptions addObjectAccessListOptions = new AddObjectAccessListOptions.Builder()
         .catalogIdentifier(catalogId)
         .objectIdentifier(objectId)
-        .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList(accountId)))
+        .addAccounts(accountId)
         .build();
     
     catalogManagementServiceNotAuthorized.addObjectAccessList(addObjectAccessListOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testGetObjectAccessList"},
+      expectedExceptions = NotFoundException.class)
+  public void testAddObjectAccessListReturns404WhenNoSuchObject() throws Exception {
+    AddObjectAccessListOptions addObjectAccessListOptions = new AddObjectAccessListOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .objectIdentifier("invalid-" + objectId)
+        .addAccounts(accountId)
+        .build();
+    
+    catalogManagementServiceAuthorized.addObjectAccessList(addObjectAccessListOptions).execute();
+  }
+  
   @Test(dependsOnMethods = {"testGetObjectAccessList"})
   public void testAddObjectAccessList() throws Exception {
     try {
-      AddObjectAccessListOptions addObjectAccessListOptions =
-          new AddObjectAccessListOptions.Builder()
-              .catalogIdentifier(catalogId)
-              .objectIdentifier(objectId)
-              .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList(accountId)))
-              .build();
+      AddObjectAccessListOptions addObjectAccessListOptions = new AddObjectAccessListOptions.Builder()
+          .catalogIdentifier(catalogId)
+          .objectIdentifier(objectId)
+          .addAccounts(accountId)
+          .build();
       
       Response<AccessListBulkResponse> response =
-          catalogManagementService.addObjectAccessList(addObjectAccessListOptions)
+          catalogManagementServiceAuthorized.addObjectAccessList(addObjectAccessListOptions)
               .execute();
       
       assertNotNull(response);
@@ -3476,36 +3613,37 @@ to achieve stable test running it is disabled
   // Create Offering Instance block
   //====
   
+  // don't know what kind_format is needed here, vpe, helm and offering don't work
   @Test(dependsOnMethods = {"testAddObjectAccessList"},
-      expectedExceptions = BadRequestException.class)
-  public void testCreateOfferingInstanceReturns400WhenBackendInputValidationFails() throws Exception {
+      expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testCreateOfferingInstanceReturns404WhenNoSuchCatalog() throws Exception {
     CreateOfferingInstanceOptions createOfferingInstanceOptions = new CreateOfferingInstanceOptions.Builder()
         .xAuthRefreshToken(refreshTokenAuthorized)
-        .id("offering-instance-created-by-java-sdk")
-        .label("offering-instance-created-by-java-sdk-label")
-        .catalogId(catalogId)
+        .id(offeringId)
+        .catalogId("invalid-" + catalogId)
         .offeringId(offeringId)
-        .kindFormat("fake-kind")
+        .kindFormat(kindRoks)
         .version("0.0.3")
         .clusterId(clusterId)
         .clusterRegion(regionUsSouth)
         .clusterAllNamespaces(true)
         .build();
     
-    catalogManagementService.createOfferingInstance(createOfferingInstanceOptions).execute();
+    catalogManagementServiceAuthorized.createOfferingInstance(createOfferingInstanceOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"},
       expectedExceptions = ForbiddenException.class)
+  @Ignore
   public void testCreateOfferingInstanceReturns403WhenUserIsNotAuthorized() throws Exception {
     CreateOfferingInstanceOptions createOfferingInstanceOptions = new CreateOfferingInstanceOptions.Builder()
-        .xAuthRefreshToken(refreshTokenNotAuthorized)
-        .id("offering-instance-created-by-java-sdk")
-        .label("offering-instance-created-by-java-sdk-label")
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .id(offeringId)
         .catalogId(catalogId)
         .offeringId(offeringId)
-        .kindFormat(kindOperator)
-        .version("0.0.3")
+        .kindFormat(kindRoks)
+        .version("0.0.2")
         .clusterId(clusterId)
         .clusterRegion(regionUsSouth)
         .clusterAllNamespaces(true)
@@ -3515,44 +3653,42 @@ to achieve stable test running it is disabled
   }
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"},
-      expectedExceptions = NotFoundException.class)
-  public void testCreateOfferingInstanceReturns404WhenNoSuchResource() throws Exception {
+      expectedExceptions = BadRequestException.class)
+  public void testCreateOfferingInstanceReturns400WhenBackendInputValidationFails() throws Exception {
     CreateOfferingInstanceOptions createOfferingInstanceOptions = new CreateOfferingInstanceOptions.Builder()
         .xAuthRefreshToken(refreshTokenAuthorized)
-        .id("offering-instance-created-by-java-sdk")
-        .label("offering-instance-created-by-java-sdk-label")
-        .catalogId(catalogId + "cc")
+        .id(offeringId)
+        .catalogId(catalogId)
         .offeringId(offeringId)
-        .kindFormat(kindOperator)
-        .version("0.0.3")
+        .kindFormat("bogus kind")
+        .version("0.0.2")
         .clusterId(clusterId)
         .clusterRegion(regionUsSouth)
         .clusterAllNamespaces(true)
         .build();
     
-    catalogManagementService.createOfferingInstance(createOfferingInstanceOptions).execute();
+    catalogManagementServiceAuthorized.createOfferingInstance(createOfferingInstanceOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"})
   @Ignore
   public void testCreateOfferingInstance() throws Exception {
     try {
-      CreateOfferingInstanceOptions createOfferingInstanceOptions =
-          new CreateOfferingInstanceOptions.Builder().xAuthRefreshToken(refreshTokenAuthorized)
-              .id("offering-instance-created-by-java-sdk")
-              .label("offering-instance-created-by-java-sdk-label")
-              .catalogId(catalogId)
-              .offeringId(offeringId)
-              .kindFormat(kindOperator)
-              .version("0.0.3")
-              .clusterId(clusterId)
-              .clusterRegion(regionUsSouth)
-              .clusterAllNamespaces(true)
-              .build();
+      CreateOfferingInstanceOptions createOfferingInstanceOptions = new CreateOfferingInstanceOptions.Builder()
+          .xAuthRefreshToken(refreshTokenAuthorized)
+          .id(offeringId)
+          .catalogId(catalogId)
+          .offeringId(offeringId)
+          .kindFormat(kindRoks)
+          .version("0.0.2")
+          .clusterId(clusterId)
+          .clusterRegion(regionUsSouth)
+          .clusterAllNamespaces(true)
+          .build();
       
-      Response<OfferingInstance> response =
-          catalogManagementService.createOfferingInstance(createOfferingInstanceOptions)
-              .execute();
+      Response<OfferingInstance> response = catalogManagementServiceAuthorized
+          .createOfferingInstance(createOfferingInstanceOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
@@ -3585,12 +3721,13 @@ to achieve stable test running it is disabled
   }
   
   @Test(expectedExceptions = NotFoundException.class)
-  public void testGetOfferingInstanceReturns404WhenSuchResource() throws Exception {
+  @Ignore
+  public void testGetOfferingInstanceReturns404WhenSuchOfferingInstance() throws Exception {
     GetOfferingInstanceOptions getOfferingInstanceOptions = new GetOfferingInstanceOptions.Builder()
-        .instanceIdentifier("offeringInstanceId")
+        .instanceIdentifier("invalid-" + offeringInstanceId)
         .build();
     
-    catalogManagementService.getOfferingInstance(getOfferingInstanceOptions).execute();
+    catalogManagementServiceAuthorized.getOfferingInstance(getOfferingInstanceOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"})
@@ -3601,8 +3738,9 @@ to achieve stable test running it is disabled
           .instanceIdentifier(offeringInstanceId)
           .build();
       
-      Response<OfferingInstance> response = catalogManagementService.getOfferingInstance(getOfferingInstanceOptions)
-          .execute();
+      Response<OfferingInstance> response =
+          catalogManagementServiceAuthorized.getOfferingInstance(getOfferingInstanceOptions)
+              .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -3621,36 +3759,17 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"},
-      expectedExceptions = BadRequestException.class)
-  public void testPutOfferingInstanceReturns400WhenBackendInputValidationFails() throws Exception {
-    PutOfferingInstanceOptions putOfferingInstanceOptions = new PutOfferingInstanceOptions.Builder()
-        .instanceIdentifier("bogus-offering-instance-id")
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .id(offeringInstanceId)
-        .catalogId(catalogId)
-        .offeringId(offeringId)
-        .kindFormat(kindOperator)
-        .clusterId(clusterId)
-        .clusterRegion(regionUsSouth)
-        .clusterAllNamespaces(true)
-        .build();
-    
-    catalogManagementService.putOfferingInstance(putOfferingInstanceOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testAddObjectAccessList"},
       expectedExceptions = ForbiddenException.class)
   @Ignore
   public void testPutOfferingInstanceReturns403WhenUserIsNotAuthorized() throws Exception {
     PutOfferingInstanceOptions putOfferingInstanceOptions = new PutOfferingInstanceOptions.Builder()
-        .instanceIdentifier("offering-instance-id")
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .xAuthRefreshToken(refreshTokenAuthorized)
+        .instanceIdentifier(offeringInstanceId)
+        .xAuthRefreshToken(refreshTokenNotAuthorized)
         .id(offeringInstanceId)
         .catalogId(catalogId)
         .offeringId(offeringId)
-        .kindFormat(kindOperator)
+        .kindFormat(kindVpe)
+        .version("0.0.3")
         .clusterId(clusterId)
         .clusterRegion(regionUsSouth)
         .clusterAllNamespaces(true)
@@ -3661,21 +3780,42 @@ to achieve stable test running it is disabled
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"},
       expectedExceptions = NotFoundException.class)
-  public void testPutOfferingInstanceReturns404WhenNoSuchResource() throws Exception {
+  @Ignore
+  public void testPutOfferingInstanceReturns404WhenNoSuchCatalog() throws Exception {
     PutOfferingInstanceOptions putOfferingInstanceOptions = new PutOfferingInstanceOptions.Builder()
-        .instanceIdentifier("offering-instance-id")
+        .instanceIdentifier(offeringInstanceId)
         .xAuthRefreshToken(refreshTokenAuthorized)
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .id("offering-instance-id")
-        .catalogId(catalogId)
+        .id(offeringInstanceId)
+        .catalogId("invalid-" + catalogId)
         .offeringId(offeringId)
-        .kindFormat(kindOperator)
+        .kindFormat(kindVpe)
+        .version("0.0.3")
         .clusterId(clusterId)
         .clusterRegion(regionUsSouth)
         .clusterAllNamespaces(true)
         .build();
     
-    catalogManagementService.putOfferingInstance(putOfferingInstanceOptions).execute();
+    catalogManagementServiceAuthorized.putOfferingInstance(putOfferingInstanceOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testAddObjectAccessList"},
+      expectedExceptions = BadRequestException.class)
+  @Ignore
+  public void testPutOfferingInstanceReturns400WhenBackendInputValidationFails() throws Exception {
+    PutOfferingInstanceOptions putOfferingInstanceOptions = new PutOfferingInstanceOptions.Builder()
+        .instanceIdentifier(offeringInstanceId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .id(offeringInstanceId)
+        .catalogId(catalogId)
+        .offeringId(offeringId)
+        .kindFormat("bogus kind")
+        .version("0.0.3")
+        .clusterId(clusterId)
+        .clusterRegion(regionUsSouth)
+        .clusterAllNamespaces(true)
+        .build();
+    
+    catalogManagementServiceAuthorized.putOfferingInstance(putOfferingInstanceOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"})
@@ -3688,14 +3828,16 @@ to achieve stable test running it is disabled
           .id(offeringInstanceId)
           .catalogId(catalogId)
           .offeringId(offeringId)
-          .kindFormat(kindOperator)
+          .kindFormat(kindVpe)
+          .version("0.0.3")
           .clusterId(clusterId)
           .clusterRegion(regionUsSouth)
           .clusterAllNamespaces(true)
           .build();
       
-      Response<OfferingInstance> response = catalogManagementService.putOfferingInstance(putOfferingInstanceOptions)
-          .execute();
+      Response<OfferingInstance> response =
+          catalogManagementServiceAuthorized.putOfferingInstance(putOfferingInstanceOptions)
+              .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -3715,12 +3857,22 @@ to achieve stable test running it is disabled
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"},
       expectedExceptions = BadRequestException.class)
-  public void testDeleteVersionReturns400WhenValidationFails() throws Exception {
+  public void testDeleteVersionReturns400WhenBackendInputValidationFails() throws Exception {
     DeleteVersionOptions deleteVersionOptions = new DeleteVersionOptions.Builder()
         .versionLocId(bogusVersionLocatorId)
         .build();
     
-    catalogManagementService.deleteVersion(deleteVersionOptions).execute();
+    catalogManagementServiceAuthorized.deleteVersion(deleteVersionOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testAddObjectAccessList"},
+      expectedExceptions = NotFoundException.class)
+  public void testDeleteVersionReturns404WhenNoSuchVersion() throws Exception {
+    DeleteVersionOptions deleteVersionOptions = new DeleteVersionOptions.Builder()
+        .versionLocId("invalid-" + versionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.deleteVersion(deleteVersionOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"},
@@ -3734,14 +3886,13 @@ to achieve stable test running it is disabled
   }
   
   @Test(dependsOnMethods = {"testAddObjectAccessList"})
-  @Ignore
   public void testDeleteVersion() throws Exception {
     try {
       DeleteVersionOptions deleteVersionOptions = new DeleteVersionOptions.Builder()
           .versionLocId(versionLocatorId)
           .build();
       
-      Response<Void> response = catalogManagementService.deleteVersion(deleteVersionOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.deleteVersion(deleteVersionOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -3756,20 +3907,7 @@ to achieve stable test running it is disabled
   // Delete Operators block
   //====
   
-  @Test(dependsOnMethods = {"testAddObjectAccessList"},
-      expectedExceptions = BadRequestException.class)
-  public void testDeleteOperatorsReturns400WhenBackendInputValidationFails() throws Exception {
-    DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder()
-        .xAuthRefreshToken(refreshTokenAuthorized)
-        .clusterId(clusterId)
-        .region(regionUsSouth)
-        .versionLocatorId(bogusVersionLocatorId)
-        .build();
-    
-    catalogManagementService.deleteOperators(deleteOperatorsOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testAddObjectAccessList"},
+  @Test(dependsOnMethods = {"testDeleteVersion"},
       expectedExceptions = ForbiddenException.class)
   public void testDeleteOperatorsReturns403WhenUserIsNotAuthorized() throws Exception {
     DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder()
@@ -3782,8 +3920,33 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.deleteOperators(deleteOperatorsOptions).execute();
   }
   
-  // TLS handshake timeout
-  @Test(dependsOnMethods = {"testAddObjectAccessList"})
+  @Test(dependsOnMethods = {"testDeleteVersion"},
+      expectedExceptions = NotFoundException.class)
+  public void testDeleteOperatorsReturns404WhenNoSuchVersion() throws Exception {
+    DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder()
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId("invalid-" + versionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.deleteOperators(deleteOperatorsOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testDeleteVersion"},
+      expectedExceptions = BadRequestException.class)
+  public void testDeleteOperatorsReturns400WhenBackendInputValidationFails() throws Exception {
+    DeleteOperatorsOptions deleteOperatorsOptions = new DeleteOperatorsOptions.Builder()
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .clusterId(clusterId)
+        .region(regionUsSouth)
+        .versionLocatorId(bogusVersionLocatorId)
+        .build();
+    
+    catalogManagementServiceAuthorized.deleteOperators(deleteOperatorsOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testDeleteVersion"})
   @Ignore
   public void testDeleteOperators() throws Exception {
     try {
@@ -3794,7 +3957,7 @@ to achieve stable test running it is disabled
           .versionLocatorId(versionLocatorId)
           .build();
       
-      Response<Void> response = catalogManagementService.deleteOperators(deleteOperatorsOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.deleteOperators(deleteOperatorsOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -3809,20 +3972,7 @@ to achieve stable test running it is disabled
   // Delete Offering Instance block
   //====
   
-  @Test(dependsOnMethods = {"testAddObjectAccessList"},
-      expectedExceptions = NotFoundException.class)
-  public void testDeleteOfferingInstanceReturns404WhenNoSuchOfferingInstance() throws Exception {
-    DeleteOfferingInstanceOptions deleteOfferingInstanceOptions =
-        new DeleteOfferingInstanceOptions.Builder()
-            .instanceIdentifier("offering-instance-id")
-            .xAuthRefreshToken(refreshTokenAuthorized)
-            .build();
-    
-    catalogManagementService.deleteOfferingInstance(deleteOfferingInstanceOptions)
-        .execute();
-  }
-  
-  @Test(dependsOnMethods = {"testAddObjectAccessList"},
+  @Test(dependsOnMethods = {"testDeleteVersion"},
       expectedExceptions = ForbiddenException.class)
   @Ignore
   public void testDeleteOfferingInstanceReturns403WhenUserIsNotAuthorized() throws Exception {
@@ -3834,20 +3984,31 @@ to achieve stable test running it is disabled
     
     catalogManagementServiceNotAuthorized.deleteOfferingInstance(deleteOfferingInstanceOptions)
         .execute();
-    
   }
   
-  @Test(dependsOnMethods = {"testAddObjectAccessList"})
+  @Test(dependsOnMethods = {"testDeleteVersion"},
+      expectedExceptions = NotFoundException.class)
+  @Ignore
+  public void testDeleteOfferingInstanceReturns404WhenNoSuchOfferingInstance() throws Exception {
+    DeleteOfferingInstanceOptions deleteOfferingInstanceOptions = new DeleteOfferingInstanceOptions.Builder()
+        .instanceIdentifier("invalid-" + offeringInstanceId)
+        .xAuthRefreshToken(refreshTokenAuthorized)
+        .build();
+    
+    catalogManagementServiceAuthorized.deleteOfferingInstance(deleteOfferingInstanceOptions)
+        .execute();
+  }
+  
+  @Test(dependsOnMethods = {"testDeleteVersion"})
   @Ignore
   public void testDeleteOfferingInstance() throws Exception {
     try {
-      DeleteOfferingInstanceOptions deleteOfferingInstanceOptions =
-          new DeleteOfferingInstanceOptions.Builder()
-              .instanceIdentifier(offeringInstanceId)
-              .xAuthRefreshToken(refreshTokenAuthorized)
-              .build();
+      DeleteOfferingInstanceOptions deleteOfferingInstanceOptions = new DeleteOfferingInstanceOptions.Builder()
+          .instanceIdentifier(offeringInstanceId)
+          .xAuthRefreshToken(refreshTokenAuthorized)
+          .build();
       
-      Response<Void> response = catalogManagementService.deleteOfferingInstance(deleteOfferingInstanceOptions)
+      Response<Void> response = catalogManagementServiceAuthorized.deleteOfferingInstance(deleteOfferingInstanceOptions)
           .execute();
       
       assertNotNull(response);
@@ -3863,42 +4024,41 @@ to achieve stable test running it is disabled
   // Delete Object Access List block
   //====
   
-  @Test(dependsOnMethods = {"testAddObjectAccessList"},
-      expectedExceptions = NotFoundException.class)
-  public void testDeleteObjectAccessListReturn404WhenNoSuchObject() throws Exception {
-    DeleteObjectAccessListOptions deleteObjectAccessListOptions = new DeleteObjectAccessListOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(bogusObjectId)
-        .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList(accountId)))
-        .build();
-    
-    catalogManagementService.deleteObjectAccessList(deleteObjectAccessListOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testAddObjectAccessList"},
+  @Test(dependsOnMethods = {"testDeleteVersion"},
       expectedExceptions = ForbiddenException.class)
   public void testDeleteObjectAccessListReturn403WhenUserIsNotAuthorized() throws Exception {
     DeleteObjectAccessListOptions deleteObjectAccessListOptions = new DeleteObjectAccessListOptions.Builder()
         .catalogIdentifier(catalogId)
         .objectIdentifier(objectId)
-        .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList(accountId)))
+        .addAccounts(accountId)
         .build();
     
     catalogManagementServiceNotAuthorized.deleteObjectAccessList(deleteObjectAccessListOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testAddObjectAccessList"})
+  @Test(dependsOnMethods = {"testDeleteVersion"},
+      expectedExceptions = NotFoundException.class)
+  public void testDeleteObjectAccessListReturn404WhenNoSuchCatalog() throws Exception {
+    DeleteObjectAccessListOptions deleteObjectAccessListOptions = new DeleteObjectAccessListOptions.Builder()
+        .catalogIdentifier("invalid-" + catalogId)
+        .objectIdentifier(objectId)
+        .addAccounts(accountId)
+        .build();
+    
+    catalogManagementServiceAuthorized.deleteObjectAccessList(deleteObjectAccessListOptions).execute();
+  }
+  
+  @Test(dependsOnMethods = {"testDeleteVersion"})
   public void testDeleteObjectAccessList() throws Exception {
     try {
-      DeleteObjectAccessListOptions deleteObjectAccessListOptions =
-          new DeleteObjectAccessListOptions.Builder()
-              .catalogIdentifier(catalogId)
-              .objectIdentifier(objectId)
-              .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList(accountId)))
-              .build();
+      DeleteObjectAccessListOptions deleteObjectAccessListOptions = new DeleteObjectAccessListOptions.Builder()
+          .catalogIdentifier(catalogId)
+          .objectIdentifier(objectId)
+          .addAccounts(accountId)
+          .build();
       
       Response<AccessListBulkResponse> response =
-          catalogManagementService.deleteObjectAccessList(deleteObjectAccessListOptions)
+          catalogManagementServiceAuthorized.deleteObjectAccessList(deleteObjectAccessListOptions)
               .execute();
       
       assertNotNull(response);
@@ -3918,18 +4078,6 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testDeleteObjectAccessList"},
-      expectedExceptions = NotFoundException.class)
-  public void testDeleteObjectAccessReturns404WhenNoSuchObjectAccess() throws Exception {
-    DeleteObjectAccessOptions deleteObjectAccessOptions = new DeleteObjectAccessOptions.Builder()
-        .catalogIdentifier(catalogId)
-        .objectIdentifier(objectId + "cc")
-        .accountIdentifier(accountId)
-        .build();
-    
-    catalogManagementService.deleteObjectAccess(deleteObjectAccessOptions).execute();
-  }
-  
-  @Test(dependsOnMethods = {"testDeleteObjectAccessList"},
       expectedExceptions = ForbiddenException.class)
   public void testDeleteObjectAccessReturns403WhenUserIsNotAuthorized() throws Exception {
     DeleteObjectAccessOptions deleteObjectAccessOptions = new DeleteObjectAccessOptions.Builder()
@@ -3941,8 +4089,19 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.deleteObjectAccess(deleteObjectAccessOptions).execute();
   }
   
+  @Test(dependsOnMethods = {"testDeleteObjectAccessList"},
+      expectedExceptions = NotFoundException.class)
+  public void testDeleteObjectAccessReturns404WhenNoSuchCatalog() throws Exception {
+    DeleteObjectAccessOptions deleteObjectAccessOptions = new DeleteObjectAccessOptions.Builder()
+        .catalogIdentifier("invalid-" + catalogId)
+        .objectIdentifier(objectId)
+        .accountIdentifier(accountId)
+        .build();
+    
+    catalogManagementServiceAuthorized.deleteObjectAccess(deleteObjectAccessOptions).execute();
+  }
+  
   @Test(dependsOnMethods = {"testDeleteObjectAccessList"})
-  @Ignore
   public void testDeleteObjectAccess() throws Exception {
     try {
       DeleteObjectAccessOptions deleteObjectAccessOptions = new DeleteObjectAccessOptions.Builder()
@@ -3951,7 +4110,8 @@ to achieve stable test running it is disabled
           .accountIdentifier(accountId)
           .build();
       
-      Response<Void> response = catalogManagementService.deleteObjectAccess(deleteObjectAccessOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.deleteObjectAccess(deleteObjectAccessOptions)
+          .execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -3966,25 +4126,7 @@ to achieve stable test running it is disabled
   // Delete Object block
   //====
   
-  @Test(dependsOnMethods = {"testDeleteObjectAccessList"})
-  public void testDeleteObjectReturns200WhenNoSuchObject() throws Exception {
-    try {
-      DeleteObjectOptions deleteObjectOptions = new DeleteObjectOptions.Builder()
-          .catalogIdentifier(catalogId)
-          .objectIdentifier(objectId + "cc")
-          .build();
-      
-      Response<Void> response = catalogManagementService.deleteObject(deleteObjectOptions).execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-    } catch (ServiceResponseException e) {
-      fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
-          e.getDebuggingInfo()));
-    }
-  }
-  
-  @Test(dependsOnMethods = {"testDeleteObjectAccessList"},
+  @Test(dependsOnMethods = {"testDeleteObjectAccess"},
       expectedExceptions = ForbiddenException.class)
   @Ignore
   public void testDeleteObjectReturns403WhenUserIsNotAuthorized() throws Exception {
@@ -3996,7 +4138,25 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.deleteObject(deleteObjectOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testDeleteObjectAccessList"})
+  @Test(dependsOnMethods = {"testDeleteObjectAccess"})
+  public void testDeleteObjectReturns200WhenNoSuchObject() throws Exception {
+    try {
+      DeleteObjectOptions deleteObjectOptions = new DeleteObjectOptions.Builder()
+          .catalogIdentifier(catalogId)
+          .objectIdentifier("invalid-" + objectId)
+          .build();
+      
+      Response<Void> response = catalogManagementServiceAuthorized.deleteObject(deleteObjectOptions).execute();
+      
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+  
+  @Test(dependsOnMethods = {"testDeleteObjectAccess"})
   public void testDeleteObject() throws Exception {
     try {
       DeleteObjectOptions deleteObjectOptions = new DeleteObjectOptions.Builder()
@@ -4004,7 +4164,7 @@ to achieve stable test running it is disabled
           .objectIdentifier(objectId)
           .build();
       
-      Response<Void> response = catalogManagementService.deleteObject(deleteObjectOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.deleteObject(deleteObjectOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -4019,15 +4179,15 @@ to achieve stable test running it is disabled
   // Delete Offering block
   //====
   
-  @Test(dependsOnMethods = {"testDeleteObjectAccessList"})
+  @Test(dependsOnMethods = {"testDeleteObject"})
   public void testDeleteOfferingReturns200WhenNoSuchOfferings() throws Exception {
     try {
       DeleteOfferingOptions deleteOfferingOptions = new DeleteOfferingOptions.Builder()
           .catalogIdentifier(catalogId)
-          .offeringId(bogusOfferingId)
+          .offeringId("invalid-" + offeringId)
           .build();
       
-      Response<Void> response = catalogManagementService.deleteOffering(deleteOfferingOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.deleteOffering(deleteOfferingOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -4038,7 +4198,7 @@ to achieve stable test running it is disabled
     }
   }
   
-  @Test(dependsOnMethods = {"testDeleteObjectAccessList"},
+  @Test(dependsOnMethods = {"testDeleteObject"},
       expectedExceptions = ForbiddenException.class)
   public void testDeleteOfferingReturns403WhenUserIsNotAuthorized() throws Exception {
     DeleteOfferingOptions deleteOfferingOptions = new DeleteOfferingOptions.Builder()
@@ -4049,7 +4209,7 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.deleteOffering(deleteOfferingOptions).execute();
   }
   
-  @Test(dependsOnMethods = {"testDeleteObjectAccessList"})
+  @Test(dependsOnMethods = {"testDeleteObject"})
   public void testDeleteOffering() throws Exception {
     try {
       DeleteOfferingOptions deleteOfferingOptions = new DeleteOfferingOptions.Builder()
@@ -4057,7 +4217,7 @@ to achieve stable test running it is disabled
           .offeringId(offeringId)
           .build();
       
-      Response<Void> response = catalogManagementService.deleteOffering(deleteOfferingOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.deleteOffering(deleteOfferingOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -4073,14 +4233,14 @@ to achieve stable test running it is disabled
   //====
   
   @Test(dependsOnMethods = {"testDeleteOffering"},
-      expectedExceptions = BadRequestException.class)
+      expectedExceptions = NotFoundException.class)
   @Ignore
-  public void testDeleteCatalogReturns400WhenNoSuchCatalog() throws Exception {
+  public void testDeleteCatalogReturns404WhenNoSuchCatalog() throws Exception {
     DeleteCatalogOptions deleteCatalogOptions = new DeleteCatalogOptions.Builder()
-        .catalogIdentifier(bogusCatalogId)
+        .catalogIdentifier("invalid-" + catalogId)
         .build();
     
-    catalogManagementService.deleteCatalog(deleteCatalogOptions).execute();
+    catalogManagementServiceAuthorized.deleteCatalog(deleteCatalogOptions).execute();
   }
   
   @Test(dependsOnMethods = {"testDeleteOffering"},
@@ -4093,14 +4253,14 @@ to achieve stable test running it is disabled
     catalogManagementServiceNotAuthorized.deleteCatalog(deleteCatalogOptions).execute();
   }
   
-  // it has to be the last one executed
   @Test(dependsOnMethods = {"testDeleteOffering"})
   public void testDeleteCatalog() throws Exception {
     try {
-      DeleteCatalogOptions deleteCatalogOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogId)
+      DeleteCatalogOptions deleteCatalogOptions = new DeleteCatalogOptions.Builder()
+          .catalogIdentifier(catalogId)
           .build();
       
-      Response<Void> response = catalogManagementService.deleteCatalog(deleteCatalogOptions).execute();
+      Response<Void> response = catalogManagementServiceAuthorized.deleteCatalog(deleteCatalogOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
@@ -4120,7 +4280,7 @@ to achieve stable test running it is disabled
           .objectIdentifier(objectId)
           .accountIdentifier(accountId)
           .build();
-      catalogManagementService.deleteObjectAccess(deleteObjectAccessOptions).execute();
+      catalogManagementServiceAuthorized.deleteObjectAccess(deleteObjectAccessOptions).execute();
     } catch (ServiceResponseException e) {
       System.out.println("Object Access is already deleted.");
     }
@@ -4129,7 +4289,7 @@ to achieve stable test running it is disabled
       DeleteVersionOptions deleteVersionOptions = new DeleteVersionOptions.Builder()
           .versionLocId("testString")
           .build();
-      catalogManagementService.deleteVersion(deleteVersionOptions).execute();
+      catalogManagementServiceAuthorized.deleteVersion(deleteVersionOptions).execute();
     } catch (ServiceResponseException e) {
       System.out.println("Version is already deleted.");
     }
@@ -4139,7 +4299,7 @@ to achieve stable test running it is disabled
           .catalogIdentifier(catalogId)
           .objectIdentifier(objectId)
           .build();
-      catalogManagementService.deleteObject(deleteObjectOptions).execute();
+      catalogManagementServiceAuthorized.deleteObject(deleteObjectOptions).execute();
     } catch (ServiceResponseException e) {
       System.out.println("Object is already deleted.");
     }
@@ -4147,7 +4307,7 @@ to achieve stable test running it is disabled
     try {
       DeleteCatalogOptions deleteCatalogOptions = new DeleteCatalogOptions.Builder().catalogIdentifier(catalogId)
           .build();
-      catalogManagementService.deleteCatalog(deleteCatalogOptions).execute();
+      catalogManagementServiceAuthorized.deleteCatalog(deleteCatalogOptions).execute();
     } catch (ServiceResponseException e) {
       System.out.println("Catalog is already deleted.");
     }

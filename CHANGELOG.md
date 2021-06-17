@@ -1,3 +1,24 @@
+## [0.18.12](https://github.com/IBM/platform-services-java-sdk/compare/0.18.11...0.18.12) (2021-06-15)
+
+
+### Bug Fixes
+
+* **IAM Identity:** re-gen service after recent API changes ([#107](https://github.com/IBM/platform-services-java-sdk/issues/107)) ([4d8fab3](https://github.com/IBM/platform-services-java-sdk/commit/4d8fab3dfe458723306a702118417a53ad9fbb71))
+
+## [0.18.11](https://github.com/IBM/platform-services-java-sdk/compare/0.18.10...0.18.11) (2021-06-13)
+
+
+### Bug Fixes
+
+* **Global Search/Tagging:** regenerate services with latest API definitions ([#106](https://github.com/IBM/platform-services-java-sdk/issues/106)) ([6620458](https://github.com/IBM/platform-services-java-sdk/commit/66204587d27b075acc2432422d1cfb9e4f945c4b))
+
+## [0.18.10](https://github.com/IBM/platform-services-java-sdk/compare/0.18.9...0.18.10) (2021-06-02)
+
+
+### Bug Fixes
+
+* **build:** correct deployment errors ([#105](https://github.com/IBM/platform-services-java-sdk/issues/105)) ([0aca124](https://github.com/IBM/platform-services-java-sdk/commit/0aca12434510670b5a83cfb7a607ec3304ddf1a2))
+
 ## [0.18.9](https://github.com/IBM/platform-services-java-sdk/compare/0.18.8...0.18.9) (2021-06-01)
 
 

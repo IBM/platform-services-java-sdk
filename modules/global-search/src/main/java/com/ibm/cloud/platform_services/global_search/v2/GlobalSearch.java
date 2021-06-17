@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+ * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  */
 
 package com.ibm.cloud.platform_services.global_search.v2;
@@ -35,13 +35,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Search for resources with the global and shared resource properties repository integrated in the IBM Cloud Platform.
+ * Search for resources with the global and shared resource properties repository integrated in the IBM Cloud platform.
  * The search repository stores and searches cloud resources attributes, which categorize or classify resources. A
- * resource is a physical or logical component that can be provisioned or reserved for an application or service
- * instance and is owned by resource providers, such as Cloud Foundry, IBM containers, or Resource Controller, in the
- * IBM Cloud platform. Resources are uniquely identified by a CRN (Cloud Resource Naming identifier) or by an IMS ID.
- * The properties of a resource include tags and system properties. Both properties are defined in an IBM Cloud billing
- * account, and span across many regions.
+ * resource is a physical or logical component that can be created or reserved for an application or service instance
+ * and is owned by resource providers, such as Cloud Foundry, IBM Kubernetes Service, or resource controller in IBM
+ * Cloud. Resources are uniquely identified by a Cloud Resource Name (CRN)  or by an IMS ID. The properties of a
+ * resource include tags and system properties. Both properties are defined in an IBM Cloud billing account, and span
+ * across many regions.
  *
  * @version v2
  */
@@ -90,17 +90,20 @@ public class GlobalSearch extends BaseService {
   /**
    * Find instances of resources (v3).
    *
-   * Find cloud foundry resources, resource controller-enabled resources, or storage and network resources running on
-   * classic infrastructure in a specific account ID. You can apply query strings if necessary. To filter results, you
-   * can insert a string using the Lucene syntax and the query string is parsed into a series of terms and operators. A
-   * term can be a single word or a phrase, in which case the search is performed for all the words, in the same order.
-   * To filter for a specific value regardless of the property that contains it, use an asterisk as the key name. Only
-   * resources that belong to the account ID and that are accessible by the client are returned. You must use this
-   * operation when you need to fetch more than `10000` resource items. The `/v2/resources/search` prohibits paginating
-   * through such a big number. On the first call, the operation returns a live cursor on the data that you must use on
-   * all the subsequent calls to get the next batch of results until you get the empty result set. By default, the
-   * fields returned for every resources are: "crn", "name", "family", "type", "account_id". You can specify the subset
-   * of the fields you want in your request.
+   * Find Cloud Foundry resources, IAM-enabled resources, or  storage and network resources running on classic
+   * infrastructure in a  specific account ID. You can apply query strings if necessary.
+   *
+   * To filter results, you can insert a string using the Lucene syntax and the  query string is parsed into a series of
+   * terms and operators. A term can be  a single word or a phrase, in which case the search is performed for all  the
+   * words, in the same order. To filter for a specific value regardless of  the property that contains it, type the
+   * search term without specifying a  field. Only resources that belong to the account ID and that are accessible  by
+   * the client are returned.
+   *
+   * You must use `/v3/resources/search` when you need to fetch more than `10000`  resource items. The
+   * `/v2/resources/search` prohibits paginating through such  a big number. On the first call, the operation returns a
+   * live cursor on the  data that you must use on all the subsequent calls to get the next batch of  results until you
+   * get the empty result set. By default, the fields returned  for every resource are "crn", "name", "family", "type",
+   * and "account_id". You  can specify the subset of the fields you want in your request.
    *
    * @param searchOptions the {@link SearchOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
@@ -148,17 +151,20 @@ public class GlobalSearch extends BaseService {
   /**
    * Find instances of resources (v3).
    *
-   * Find cloud foundry resources, resource controller-enabled resources, or storage and network resources running on
-   * classic infrastructure in a specific account ID. You can apply query strings if necessary. To filter results, you
-   * can insert a string using the Lucene syntax and the query string is parsed into a series of terms and operators. A
-   * term can be a single word or a phrase, in which case the search is performed for all the words, in the same order.
-   * To filter for a specific value regardless of the property that contains it, use an asterisk as the key name. Only
-   * resources that belong to the account ID and that are accessible by the client are returned. You must use this
-   * operation when you need to fetch more than `10000` resource items. The `/v2/resources/search` prohibits paginating
-   * through such a big number. On the first call, the operation returns a live cursor on the data that you must use on
-   * all the subsequent calls to get the next batch of results until you get the empty result set. By default, the
-   * fields returned for every resources are: "crn", "name", "family", "type", "account_id". You can specify the subset
-   * of the fields you want in your request.
+   * Find Cloud Foundry resources, IAM-enabled resources, or  storage and network resources running on classic
+   * infrastructure in a  specific account ID. You can apply query strings if necessary.
+   *
+   * To filter results, you can insert a string using the Lucene syntax and the  query string is parsed into a series of
+   * terms and operators. A term can be  a single word or a phrase, in which case the search is performed for all  the
+   * words, in the same order. To filter for a specific value regardless of  the property that contains it, type the
+   * search term without specifying a  field. Only resources that belong to the account ID and that are accessible  by
+   * the client are returned.
+   *
+   * You must use `/v3/resources/search` when you need to fetch more than `10000`  resource items. The
+   * `/v2/resources/search` prohibits paginating through such  a big number. On the first call, the operation returns a
+   * live cursor on the  data that you must use on all the subsequent calls to get the next batch of  results until you
+   * get the empty result set. By default, the fields returned  for every resource are "crn", "name", "family", "type",
+   * and "account_id". You  can specify the subset of the fields you want in your request.
    *
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
    */

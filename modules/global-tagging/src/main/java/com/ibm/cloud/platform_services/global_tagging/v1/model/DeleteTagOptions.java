@@ -196,7 +196,8 @@ public class DeleteTagOptions extends GenericModel {
   /**
    * Gets the providers.
    *
-   * Select a provider. Supported values are `ghost` and `ims`. To delete tag both in GhoST in IMS, use `ghost,ims`.
+   * Select a provider. Supported values are `ghost` and `ims`. To delete tags both in Global Search and Tagging and in
+   * IMS, use `ghost,ims`.
    *
    * @return the providers
    */

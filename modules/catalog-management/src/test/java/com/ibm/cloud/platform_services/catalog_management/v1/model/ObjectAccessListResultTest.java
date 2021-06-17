@@ -13,16 +13,15 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccess;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccessListResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
+import org.testng.annotations.Test;
+
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import static org.testng.Assert.assertNull;
 
 /**
  * Unit test class for the ObjectAccessListResult model.

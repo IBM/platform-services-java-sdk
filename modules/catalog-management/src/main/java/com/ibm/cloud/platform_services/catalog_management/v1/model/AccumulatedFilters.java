@@ -12,10 +12,10 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
+import java.util.List;
 
 /**
  * The accumulated filters for an account. This will return the account filters plus a filter for each catalog the user

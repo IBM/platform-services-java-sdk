@@ -13,20 +13,15 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatus;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatusContentMgmt;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatusMetadata;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatusRelease;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import org.testng.annotations.Test;
+
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import static org.testng.Assert.assertNull;
 
 /**
  * Unit test class for the InstallStatus model.

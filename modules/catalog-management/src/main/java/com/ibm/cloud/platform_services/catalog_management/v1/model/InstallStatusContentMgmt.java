@@ -12,10 +12,10 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
+import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
 import java.util.List;
 import java.util.Map;
-
-import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
  * Content management information.

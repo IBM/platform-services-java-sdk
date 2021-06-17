@@ -24,6 +24,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>catalog-management</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>configuration-governance</artifactId>
             <version>${project.version}</version>
         </dependency>

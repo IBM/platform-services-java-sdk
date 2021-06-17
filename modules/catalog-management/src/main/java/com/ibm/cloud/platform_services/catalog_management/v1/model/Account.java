@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,6 +21,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class Account extends GenericModel {
 
   protected String id;
+  @SerializedName("hide_IBM_cloud_catalog")
+  protected Boolean hideIbmCloudCatalog;
   @SerializedName("account_filters")
   protected Filters accountFilters;
 
@@ -29,10 +31,12 @@ public class Account extends GenericModel {
    */
   public static class Builder {
     private String id;
+    private Boolean hideIbmCloudCatalog;
     private Filters accountFilters;
 
     private Builder(Account account) {
       this.id = account.id;
+      this.hideIbmCloudCatalog = account.hideIbmCloudCatalog;
       this.accountFilters = account.accountFilters;
     }
 
@@ -63,6 +67,17 @@ public class Account extends GenericModel {
     }
 
     /**
+     * Set the hideIbmCloudCatalog.
+     *
+     * @param hideIbmCloudCatalog the hideIbmCloudCatalog
+     * @return the Account builder
+     */
+    public Builder hideIbmCloudCatalog(Boolean hideIbmCloudCatalog) {
+      this.hideIbmCloudCatalog = hideIbmCloudCatalog;
+      return this;
+    }
+
+    /**
      * Set the accountFilters.
      *
      * @param accountFilters the accountFilters
@@ -76,6 +91,7 @@ public class Account extends GenericModel {
 
   protected Account(Builder builder) {
     id = builder.id;
+    hideIbmCloudCatalog = builder.hideIbmCloudCatalog;
     accountFilters = builder.accountFilters;
   }
 
@@ -97,6 +113,17 @@ public class Account extends GenericModel {
    */
   public String id() {
     return id;
+  }
+
+  /**
+   * Gets the hideIbmCloudCatalog.
+   *
+   * Hide the public catalog in this account.
+   *
+   * @return the hideIbmCloudCatalog
+   */
+  public Boolean hideIbmCloudCatalog() {
+    return hideIbmCloudCatalog;
   }
 
   /**

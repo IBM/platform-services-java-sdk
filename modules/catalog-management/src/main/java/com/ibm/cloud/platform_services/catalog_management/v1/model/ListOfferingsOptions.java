@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,6 +21,10 @@ public class ListOfferingsOptions extends GenericModel {
 
   protected String catalogIdentifier;
   protected Boolean digest;
+  protected Long limit;
+  protected Long offset;
+  protected String name;
+  protected String sort;
 
   /**
    * Builder.
@@ -28,10 +32,18 @@ public class ListOfferingsOptions extends GenericModel {
   public static class Builder {
     private String catalogIdentifier;
     private Boolean digest;
+    private Long limit;
+    private Long offset;
+    private String name;
+    private String sort;
 
     private Builder(ListOfferingsOptions listOfferingsOptions) {
       this.catalogIdentifier = listOfferingsOptions.catalogIdentifier;
       this.digest = listOfferingsOptions.digest;
+      this.limit = listOfferingsOptions.limit;
+      this.offset = listOfferingsOptions.offset;
+      this.name = listOfferingsOptions.name;
+      this.sort = listOfferingsOptions.sort;
     }
 
     /**
@@ -79,6 +91,50 @@ public class ListOfferingsOptions extends GenericModel {
       this.digest = digest;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListOfferingsOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the offset.
+     *
+     * @param offset the offset
+     * @return the ListOfferingsOptions builder
+     */
+    public Builder offset(long offset) {
+      this.offset = offset;
+      return this;
+    }
+
+    /**
+     * Set the name.
+     *
+     * @param name the name
+     * @return the ListOfferingsOptions builder
+     */
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    /**
+     * Set the sort.
+     *
+     * @param sort the sort
+     * @return the ListOfferingsOptions builder
+     */
+    public Builder sort(String sort) {
+      this.sort = sort;
+      return this;
+    }
   }
 
   protected ListOfferingsOptions(Builder builder) {
@@ -86,6 +142,10 @@ public class ListOfferingsOptions extends GenericModel {
       "catalogIdentifier cannot be empty");
     catalogIdentifier = builder.catalogIdentifier;
     digest = builder.digest;
+    limit = builder.limit;
+    offset = builder.offset;
+    name = builder.name;
+    sort = builder.sort;
   }
 
   /**
@@ -118,6 +178,52 @@ public class ListOfferingsOptions extends GenericModel {
    */
   public Boolean digest() {
     return digest;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * The maximum number of results to return.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the offset.
+   *
+   * The number of results to skip before returning values.
+   *
+   * @return the offset
+   */
+  public Long offset() {
+    return offset;
+  }
+
+  /**
+   * Gets the name.
+   *
+   * Only return results that contain the specified string.
+   *
+   * @return the name
+   */
+  public String name() {
+    return name;
+  }
+
+  /**
+   * Gets the sort.
+   *
+   * The field on which the output is sorted. Sorts by default by **label** property. Available fields are **name**,
+   * **label**, **created**, and **updated**. By adding **-** (i.e. **-label**) in front of the query string, you can
+   * specify descending order. Default is ascending order.
+   *
+   * @return the sort
+   */
+  public String sort() {
+    return sort;
   }
 }
 

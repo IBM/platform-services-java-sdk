@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -49,6 +49,7 @@ public class Catalog extends GenericModel {
   protected Filters catalogFilters;
   @SerializedName("syndication_settings")
   protected SyndicationResource syndicationSettings;
+  protected String kind;
 
   /**
    * Builder.
@@ -60,17 +61,13 @@ public class Catalog extends GenericModel {
     private String shortDescription;
     private String catalogIconUrl;
     private List<String> tags;
-    private String url;
-    private String crn;
-    private String offeringsUrl;
     private List<Feature> features;
     private Boolean disabled;
-    private Date created;
-    private Date updated;
     private String resourceGroupId;
     private String owningAccount;
     private Filters catalogFilters;
     private SyndicationResource syndicationSettings;
+    private String kind;
 
     private Builder(Catalog catalog) {
       this.id = catalog.id;
@@ -79,17 +76,13 @@ public class Catalog extends GenericModel {
       this.shortDescription = catalog.shortDescription;
       this.catalogIconUrl = catalog.catalogIconUrl;
       this.tags = catalog.tags;
-      this.url = catalog.url;
-      this.crn = catalog.crn;
-      this.offeringsUrl = catalog.offeringsUrl;
       this.features = catalog.features;
       this.disabled = catalog.disabled;
-      this.created = catalog.created;
-      this.updated = catalog.updated;
       this.resourceGroupId = catalog.resourceGroupId;
       this.owningAccount = catalog.owningAccount;
       this.catalogFilters = catalog.catalogFilters;
       this.syndicationSettings = catalog.syndicationSettings;
+      this.kind = catalog.kind;
     }
 
     /**
@@ -207,39 +200,6 @@ public class Catalog extends GenericModel {
     }
 
     /**
-     * Set the url.
-     *
-     * @param url the url
-     * @return the Catalog builder
-     */
-    public Builder url(String url) {
-      this.url = url;
-      return this;
-    }
-
-    /**
-     * Set the crn.
-     *
-     * @param crn the crn
-     * @return the Catalog builder
-     */
-    public Builder crn(String crn) {
-      this.crn = crn;
-      return this;
-    }
-
-    /**
-     * Set the offeringsUrl.
-     *
-     * @param offeringsUrl the offeringsUrl
-     * @return the Catalog builder
-     */
-    public Builder offeringsUrl(String offeringsUrl) {
-      this.offeringsUrl = offeringsUrl;
-      return this;
-    }
-
-    /**
      * Set the features.
      * Existing features will be replaced.
      *
@@ -259,28 +219,6 @@ public class Catalog extends GenericModel {
      */
     public Builder disabled(Boolean disabled) {
       this.disabled = disabled;
-      return this;
-    }
-
-    /**
-     * Set the created.
-     *
-     * @param created the created
-     * @return the Catalog builder
-     */
-    public Builder created(Date created) {
-      this.created = created;
-      return this;
-    }
-
-    /**
-     * Set the updated.
-     *
-     * @param updated the updated
-     * @return the Catalog builder
-     */
-    public Builder updated(Date updated) {
-      this.updated = updated;
       return this;
     }
 
@@ -327,6 +265,17 @@ public class Catalog extends GenericModel {
       this.syndicationSettings = syndicationSettings;
       return this;
     }
+
+    /**
+     * Set the kind.
+     *
+     * @param kind the kind
+     * @return the Catalog builder
+     */
+    public Builder kind(String kind) {
+      this.kind = kind;
+      return this;
+    }
   }
 
   protected Catalog(Builder builder) {
@@ -336,17 +285,13 @@ public class Catalog extends GenericModel {
     shortDescription = builder.shortDescription;
     catalogIconUrl = builder.catalogIconUrl;
     tags = builder.tags;
-    url = builder.url;
-    crn = builder.crn;
-    offeringsUrl = builder.offeringsUrl;
     features = builder.features;
     disabled = builder.disabled;
-    created = builder.created;
-    updated = builder.updated;
     resourceGroupId = builder.resourceGroupId;
     owningAccount = builder.owningAccount;
     catalogFilters = builder.catalogFilters;
     syndicationSettings = builder.syndicationSettings;
+    kind = builder.kind;
   }
 
   /**
@@ -482,7 +427,7 @@ public class Catalog extends GenericModel {
   /**
    * Gets the created.
    *
-   * The date'time this catalog was created.
+   * The date-time this catalog was created.
    *
    * @return the created
    */
@@ -493,7 +438,7 @@ public class Catalog extends GenericModel {
   /**
    * Gets the updated.
    *
-   * The date'time this catalog was last updated.
+   * The date-time this catalog was last updated.
    *
    * @return the updated
    */
@@ -543,6 +488,17 @@ public class Catalog extends GenericModel {
    */
   public SyndicationResource syndicationSettings() {
     return syndicationSettings;
+  }
+
+  /**
+   * Gets the kind.
+   *
+   * Kind of catalog. Supported kinds are offering and vpe.
+   *
+   * @return the kind
+   */
+  public String kind() {
+    return kind;
   }
 }
 

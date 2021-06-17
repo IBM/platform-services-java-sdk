@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -24,15 +24,13 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationCl
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationHistory;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationResource;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -45,10 +43,40 @@ public class CatalogTest {
 
   @Test
   public void testCatalog() throws Throwable {
+    Feature featureModel = new Feature.Builder()
+      .title("testString")
+      .description("testString")
+      .build();
+    assertEquals(featureModel.title(), "testString");
+    assertEquals(featureModel.description(), "testString");
+
     FilterTerms filterTermsModel = new FilterTerms.Builder()
       .filterTerms(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .build();
     assertEquals(filterTermsModel.filterTerms(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+
+    CategoryFilter categoryFilterModel = new CategoryFilter.Builder()
+      .include(true)
+      .filter(filterTermsModel)
+      .build();
+    assertEquals(categoryFilterModel.include(), Boolean.valueOf(true));
+    assertEquals(categoryFilterModel.filter(), filterTermsModel);
+
+    IDFilter idFilterModel = new IDFilter.Builder()
+      .include(filterTermsModel)
+      .exclude(filterTermsModel)
+      .build();
+    assertEquals(idFilterModel.include(), filterTermsModel);
+    assertEquals(idFilterModel.exclude(), filterTermsModel);
+
+    Filters filtersModel = new Filters.Builder()
+      .includeAll(true)
+      .categoryFilters(new java.util.HashMap<String, CategoryFilter>() { { put("foo", categoryFilterModel); } })
+      .idFilters(idFilterModel)
+      .build();
+    assertEquals(filtersModel.includeAll(), Boolean.valueOf(true));
+    assertEquals(filtersModel.categoryFilters(), new java.util.HashMap<String, CategoryFilter>() { { put("foo", categoryFilterModel); } });
+    assertEquals(filtersModel.idFilters(), idFilterModel);
 
     SyndicationCluster syndicationClusterModel = new SyndicationCluster.Builder()
       .region("testString")
@@ -67,51 +95,21 @@ public class CatalogTest {
     assertEquals(syndicationClusterModel.namespaces(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(syndicationClusterModel.allNamespaces(), Boolean.valueOf(true));
 
-    CategoryFilter categoryFilterModel = new CategoryFilter.Builder()
-      .include(true)
-      .filter(filterTermsModel)
-      .build();
-    assertEquals(categoryFilterModel.include(), Boolean.valueOf(true));
-    assertEquals(categoryFilterModel.filter(), filterTermsModel);
-
-    IDFilter idFilterModel = new IDFilter.Builder()
-      .include(filterTermsModel)
-      .exclude(filterTermsModel)
-      .build();
-    assertEquals(idFilterModel.include(), filterTermsModel);
-    assertEquals(idFilterModel.exclude(), filterTermsModel);
-
-    SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
-      .token("testString")
-      .lastRun(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .build();
-    assertEquals(syndicationAuthorizationModel.token(), "testString");
-    assertEquals(syndicationAuthorizationModel.lastRun(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-
     SyndicationHistory syndicationHistoryModel = new SyndicationHistory.Builder()
       .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .clusters(new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)))
-      .lastRun(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .build();
     assertEquals(syndicationHistoryModel.namespaces(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(syndicationHistoryModel.clusters(), new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)));
-    assertEquals(syndicationHistoryModel.lastRun(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(syndicationHistoryModel.lastRun(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
 
-    Feature featureModel = new Feature.Builder()
-      .title("testString")
-      .description("testString")
+    SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
+      .token("testString")
+      .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .build();
-    assertEquals(featureModel.title(), "testString");
-    assertEquals(featureModel.description(), "testString");
-
-    Filters filtersModel = new Filters.Builder()
-      .includeAll(true)
-      .categoryFilters(new java.util.HashMap<String,CategoryFilter>(){{put("foo", categoryFilterModel); }})
-      .idFilters(idFilterModel)
-      .build();
-    assertEquals(filtersModel.includeAll(), Boolean.valueOf(true));
-    assertEquals(filtersModel.categoryFilters(), new java.util.HashMap<String,CategoryFilter>(){{put("foo", categoryFilterModel); }});
-    assertEquals(filtersModel.idFilters(), idFilterModel);
+    assertEquals(syndicationAuthorizationModel.token(), "testString");
+    assertEquals(syndicationAuthorizationModel.lastRun(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
 
     SyndicationResource syndicationResourceModel = new SyndicationResource.Builder()
       .removeRelatedComponents(true)
@@ -131,17 +129,13 @@ public class CatalogTest {
       .shortDescription("testString")
       .catalogIconUrl("testString")
       .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .url("testString")
-      .crn("testString")
-      .offeringsUrl("testString")
       .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
       .disabled(true)
-      .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
       .resourceGroupId("testString")
       .owningAccount("testString")
       .catalogFilters(filtersModel)
       .syndicationSettings(syndicationResourceModel)
+      .kind("testString")
       .build();
     assertEquals(catalogModel.id(), "testString");
     assertEquals(catalogModel.rev(), "testString");
@@ -149,17 +143,13 @@ public class CatalogTest {
     assertEquals(catalogModel.shortDescription(), "testString");
     assertEquals(catalogModel.catalogIconUrl(), "testString");
     assertEquals(catalogModel.tags(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
-    assertEquals(catalogModel.url(), "testString");
-    assertEquals(catalogModel.crn(), "testString");
-    assertEquals(catalogModel.offeringsUrl(), "testString");
     assertEquals(catalogModel.features(), new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)));
     assertEquals(catalogModel.disabled(), Boolean.valueOf(true));
-    assertEquals(catalogModel.created(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(catalogModel.updated(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
     assertEquals(catalogModel.resourceGroupId(), "testString");
     assertEquals(catalogModel.owningAccount(), "testString");
     assertEquals(catalogModel.catalogFilters(), filtersModel);
     assertEquals(catalogModel.syndicationSettings(), syndicationResourceModel);
+    assertEquals(catalogModel.kind(), "testString");
 
     String json = TestUtilities.serialize(catalogModel);
 
@@ -170,15 +160,11 @@ public class CatalogTest {
     assertEquals(catalogModelNew.label(), "testString");
     assertEquals(catalogModelNew.shortDescription(), "testString");
     assertEquals(catalogModelNew.catalogIconUrl(), "testString");
-    assertEquals(catalogModelNew.url(), "testString");
-    assertEquals(catalogModelNew.crn(), "testString");
-    assertEquals(catalogModelNew.offeringsUrl(), "testString");
     assertEquals(catalogModelNew.disabled(), Boolean.valueOf(true));
-    assertEquals(catalogModelNew.created().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
-    assertEquals(catalogModelNew.updated().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
     assertEquals(catalogModelNew.resourceGroupId(), "testString");
     assertEquals(catalogModelNew.owningAccount(), "testString");
     assertEquals(catalogModelNew.catalogFilters().toString(), filtersModel.toString());
     assertEquals(catalogModelNew.syndicationSettings().toString(), syndicationResourceModel.toString());
+    assertEquals(catalogModelNew.kind(), "testString");
   }
 }

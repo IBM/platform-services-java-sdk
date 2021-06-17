@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,15 +29,13 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.Validation;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Version;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionEntitlement;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -50,6 +48,24 @@ public class OfferingTest {
 
   @Test
   public void testOffering() throws Throwable {
+    Rating ratingModel = new Rating.Builder()
+      .oneStarCount(Long.valueOf("26"))
+      .twoStarCount(Long.valueOf("26"))
+      .threeStarCount(Long.valueOf("26"))
+      .fourStarCount(Long.valueOf("26"))
+      .build();
+    assertEquals(ratingModel.oneStarCount(), Long.valueOf("26"));
+    assertEquals(ratingModel.twoStarCount(), Long.valueOf("26"));
+    assertEquals(ratingModel.threeStarCount(), Long.valueOf("26"));
+    assertEquals(ratingModel.fourStarCount(), Long.valueOf("26"));
+
+    Feature featureModel = new Feature.Builder()
+      .title("testString")
+      .description("testString")
+      .build();
+    assertEquals(featureModel.title(), "testString");
+    assertEquals(featureModel.description(), "testString");
+
     Configuration configurationModel = new Configuration.Builder()
       .key("testString")
       .type("testString")
@@ -69,46 +85,18 @@ public class OfferingTest {
     assertEquals(configurationModel.options(), new java.util.ArrayList<Object>(java.util.Arrays.asList("testString")));
     assertEquals(configurationModel.hidden(), Boolean.valueOf(true));
 
-    Deployment deploymentModel = new Deployment.Builder()
-      .id("testString")
-      .label("testString")
-      .name("testString")
-      .shortDescription("testString")
-      .longDescription("testString")
-      .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
-      .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+    Validation validationModel = new Validation.Builder()
+      .validated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .requested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .state("testString")
+      .lastOperation("testString")
+      .target(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
       .build();
-    assertEquals(deploymentModel.id(), "testString");
-    assertEquals(deploymentModel.label(), "testString");
-    assertEquals(deploymentModel.name(), "testString");
-    assertEquals(deploymentModel.shortDescription(), "testString");
-    assertEquals(deploymentModel.longDescription(), "testString");
-    assertEquals(deploymentModel.metadata(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
-    assertEquals(deploymentModel.tags(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
-    assertEquals(deploymentModel.created(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(deploymentModel.updated(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-
-    Feature featureModel = new Feature.Builder()
-      .title("testString")
-      .description("testString")
-      .build();
-    assertEquals(featureModel.title(), "testString");
-    assertEquals(featureModel.description(), "testString");
-
-    License licenseModel = new License.Builder()
-      .id("testString")
-      .name("testString")
-      .type("testString")
-      .url("testString")
-      .description("testString")
-      .build();
-    assertEquals(licenseModel.id(), "testString");
-    assertEquals(licenseModel.name(), "testString");
-    assertEquals(licenseModel.type(), "testString");
-    assertEquals(licenseModel.url(), "testString");
-    assertEquals(licenseModel.description(), "testString");
+    assertEquals(validationModel.validated(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(validationModel.requested(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(validationModel.state(), "testString");
+    assertEquals(validationModel.lastOperation(), "testString");
+    assertEquals(validationModel.target(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
 
     Resource resourceModel = new Resource.Builder()
       .type("mem")
@@ -130,32 +118,6 @@ public class OfferingTest {
     assertEquals(scriptModel.deleteScript(), "testString");
     assertEquals(scriptModel.scope(), "testString");
 
-    State stateModel = new State.Builder()
-      .current("testString")
-      .currentEntered(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .pending("testString")
-      .pendingRequested(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .previous("testString")
-      .build();
-    assertEquals(stateModel.current(), "testString");
-    assertEquals(stateModel.currentEntered(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(stateModel.pending(), "testString");
-    assertEquals(stateModel.pendingRequested(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(stateModel.previous(), "testString");
-
-    Validation validationModel = new Validation.Builder()
-      .validated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .requested(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .state("testString")
-      .lastOperation("testString")
-      .target(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
-      .build();
-    assertEquals(validationModel.validated(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(validationModel.requested(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(validationModel.state(), "testString");
-    assertEquals(validationModel.lastOperation(), "testString");
-    assertEquals(validationModel.target(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
-
     VersionEntitlement versionEntitlementModel = new VersionEntitlement.Builder()
       .providerName("testString")
       .providerId("testString")
@@ -169,30 +131,31 @@ public class OfferingTest {
     assertEquals(versionEntitlementModel.partNumbers(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(versionEntitlementModel.imageRepoName(), "testString");
 
-    Plan planModel = new Plan.Builder()
+    License licenseModel = new License.Builder()
       .id("testString")
-      .label("testString")
       .name("testString")
-      .shortDescription("testString")
-      .longDescription("testString")
-      .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
-      .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
-      .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .deployments(new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)))
+      .type("testString")
+      .url("testString")
+      .description("testString")
       .build();
-    assertEquals(planModel.id(), "testString");
-    assertEquals(planModel.label(), "testString");
-    assertEquals(planModel.name(), "testString");
-    assertEquals(planModel.shortDescription(), "testString");
-    assertEquals(planModel.longDescription(), "testString");
-    assertEquals(planModel.metadata(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
-    assertEquals(planModel.tags(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
-    assertEquals(planModel.additionalFeatures(), new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)));
-    assertEquals(planModel.created(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(planModel.updated(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(planModel.deployments(), new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)));
+    assertEquals(licenseModel.id(), "testString");
+    assertEquals(licenseModel.name(), "testString");
+    assertEquals(licenseModel.type(), "testString");
+    assertEquals(licenseModel.url(), "testString");
+    assertEquals(licenseModel.description(), "testString");
+
+    State stateModel = new State.Builder()
+      .current("testString")
+      .currentEntered(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .pending("testString")
+      .pendingRequested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .previous("testString")
+      .build();
+    assertEquals(stateModel.current(), "testString");
+    assertEquals(stateModel.currentEntered(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(stateModel.pending(), "testString");
+    assertEquals(stateModel.pendingRequested(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(stateModel.previous(), "testString");
 
     Version versionModel = new Version.Builder()
       .id("testString")
@@ -200,8 +163,8 @@ public class OfferingTest {
       .crn("testString")
       .version("testString")
       .sha("testString")
-      .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .offeringId("testString")
       .catalogId("testString")
       .kindId("testString")
@@ -210,7 +173,7 @@ public class OfferingTest {
       .sourceUrl("testString")
       .tgzUrl("testString")
       .configuration(new java.util.ArrayList<Configuration>(java.util.Arrays.asList(configurationModel)))
-      .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+      .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
       .validation(validationModel)
       .requiredResources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
       .singleInstance(true)
@@ -232,8 +195,8 @@ public class OfferingTest {
     assertEquals(versionModel.crn(), "testString");
     assertEquals(versionModel.version(), "testString");
     assertEquals(versionModel.sha(), "testString");
-    assertEquals(versionModel.created(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(versionModel.updated(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(versionModel.created(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(versionModel.updated(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(versionModel.offeringId(), "testString");
     assertEquals(versionModel.catalogId(), "testString");
     assertEquals(versionModel.kindId(), "testString");
@@ -242,7 +205,7 @@ public class OfferingTest {
     assertEquals(versionModel.sourceUrl(), "testString");
     assertEquals(versionModel.tgzUrl(), "testString");
     assertEquals(versionModel.configuration(), new java.util.ArrayList<Configuration>(java.util.Arrays.asList(configurationModel)));
-    assertEquals(versionModel.metadata(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
+    assertEquals(versionModel.metadata(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
     assertEquals(versionModel.validation(), validationModel);
     assertEquals(versionModel.requiredResources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
     assertEquals(versionModel.singleInstance(), Boolean.valueOf(true));
@@ -259,41 +222,76 @@ public class OfferingTest {
     assertEquals(versionModel.longDescription(), "testString");
     assertEquals(versionModel.whitelistedAccounts(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
 
+    Deployment deploymentModel = new Deployment.Builder()
+      .id("testString")
+      .label("testString")
+      .name("testString")
+      .shortDescription("testString")
+      .longDescription("testString")
+      .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+      .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .build();
+    assertEquals(deploymentModel.id(), "testString");
+    assertEquals(deploymentModel.label(), "testString");
+    assertEquals(deploymentModel.name(), "testString");
+    assertEquals(deploymentModel.shortDescription(), "testString");
+    assertEquals(deploymentModel.longDescription(), "testString");
+    assertEquals(deploymentModel.metadata(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
+    assertEquals(deploymentModel.tags(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(deploymentModel.created(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(deploymentModel.updated(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+
+    Plan planModel = new Plan.Builder()
+      .id("testString")
+      .label("testString")
+      .name("testString")
+      .shortDescription("testString")
+      .longDescription("testString")
+      .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+      .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
+      .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .deployments(new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)))
+      .build();
+    assertEquals(planModel.id(), "testString");
+    assertEquals(planModel.label(), "testString");
+    assertEquals(planModel.name(), "testString");
+    assertEquals(planModel.shortDescription(), "testString");
+    assertEquals(planModel.longDescription(), "testString");
+    assertEquals(planModel.metadata(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
+    assertEquals(planModel.tags(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(planModel.additionalFeatures(), new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)));
+    assertEquals(planModel.created(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(planModel.updated(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(planModel.deployments(), new java.util.ArrayList<Deployment>(java.util.Arrays.asList(deploymentModel)));
+
     Kind kindModel = new Kind.Builder()
       .id("testString")
       .formatKind("testString")
       .targetKind("testString")
-      .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+      .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
       .installDescription("testString")
       .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .additionalFeatures(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
-      .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .versions(new java.util.ArrayList<Version>(java.util.Arrays.asList(versionModel)))
       .plans(new java.util.ArrayList<Plan>(java.util.Arrays.asList(planModel)))
       .build();
     assertEquals(kindModel.id(), "testString");
     assertEquals(kindModel.formatKind(), "testString");
     assertEquals(kindModel.targetKind(), "testString");
-    assertEquals(kindModel.metadata(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
+    assertEquals(kindModel.metadata(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
     assertEquals(kindModel.installDescription(), "testString");
     assertEquals(kindModel.tags(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(kindModel.additionalFeatures(), new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)));
-    assertEquals(kindModel.created(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(kindModel.updated(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(kindModel.created(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(kindModel.updated(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(kindModel.versions(), new java.util.ArrayList<Version>(java.util.Arrays.asList(versionModel)));
     assertEquals(kindModel.plans(), new java.util.ArrayList<Plan>(java.util.Arrays.asList(planModel)));
-
-    Rating ratingModel = new Rating.Builder()
-      .oneStarCount(Long.valueOf("26"))
-      .twoStarCount(Long.valueOf("26"))
-      .threeStarCount(Long.valueOf("26"))
-      .fourStarCount(Long.valueOf("26"))
-      .build();
-    assertEquals(ratingModel.oneStarCount(), Long.valueOf("26"));
-    assertEquals(ratingModel.twoStarCount(), Long.valueOf("26"));
-    assertEquals(ratingModel.threeStarCount(), Long.valueOf("26"));
-    assertEquals(ratingModel.fourStarCount(), Long.valueOf("26"));
 
     RepoInfo repoInfoModel = new RepoInfo.Builder()
       .token("testString")
@@ -313,9 +311,10 @@ public class OfferingTest {
       .offeringDocsUrl("testString")
       .offeringSupportUrl("testString")
       .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .keywords(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .rating(ratingModel)
-      .created(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .updated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .created(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .updated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .shortDescription("testString")
       .longDescription("testString")
       .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)))
@@ -329,7 +328,7 @@ public class OfferingTest {
       .portalUiUrl("testString")
       .catalogId("testString")
       .catalogName("testString")
-      .metadata(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+      .metadata(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
       .disclaimer("testString")
       .hidden(true)
       .provider("testString")
@@ -345,9 +344,10 @@ public class OfferingTest {
     assertEquals(offeringModel.offeringDocsUrl(), "testString");
     assertEquals(offeringModel.offeringSupportUrl(), "testString");
     assertEquals(offeringModel.tags(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(offeringModel.keywords(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(offeringModel.rating(), ratingModel);
-    assertEquals(offeringModel.created(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(offeringModel.updated(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(offeringModel.created(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(offeringModel.updated(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(offeringModel.shortDescription(), "testString");
     assertEquals(offeringModel.longDescription(), "testString");
     assertEquals(offeringModel.features(), new java.util.ArrayList<Feature>(java.util.Arrays.asList(featureModel)));
@@ -361,7 +361,7 @@ public class OfferingTest {
     assertEquals(offeringModel.portalUiUrl(), "testString");
     assertEquals(offeringModel.catalogId(), "testString");
     assertEquals(offeringModel.catalogName(), "testString");
-    assertEquals(offeringModel.metadata(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
+    assertEquals(offeringModel.metadata(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
     assertEquals(offeringModel.disclaimer(), "testString");
     assertEquals(offeringModel.hidden(), Boolean.valueOf(true));
     assertEquals(offeringModel.provider(), "testString");
@@ -381,8 +381,8 @@ public class OfferingTest {
     assertEquals(offeringModelNew.offeringDocsUrl(), "testString");
     assertEquals(offeringModelNew.offeringSupportUrl(), "testString");
     assertEquals(offeringModelNew.rating().toString(), ratingModel.toString());
-    assertEquals(offeringModelNew.created().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
-    assertEquals(offeringModelNew.updated().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
+    assertEquals(offeringModelNew.created(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(offeringModelNew.updated(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(offeringModelNew.shortDescription(), "testString");
     assertEquals(offeringModelNew.longDescription(), "testString");
     assertEquals(offeringModelNew.permitRequestIbmPublicPublish(), Boolean.valueOf(true));
@@ -394,7 +394,6 @@ public class OfferingTest {
     assertEquals(offeringModelNew.portalUiUrl(), "testString");
     assertEquals(offeringModelNew.catalogId(), "testString");
     assertEquals(offeringModelNew.catalogName(), "testString");
-    assertEquals(offeringModelNew.metadata().toString(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }}.toString());
     assertEquals(offeringModelNew.disclaimer(), "testString");
     assertEquals(offeringModelNew.hidden(), Boolean.valueOf(true));
     assertEquals(offeringModelNew.provider(), "testString");

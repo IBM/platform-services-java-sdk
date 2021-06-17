@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -186,7 +186,7 @@ public class GetNamespacesOptions extends GenericModel {
   /**
    * Gets the limit.
    *
-   * number or results to return.
+   * The maximum number of results to return.
    *
    * @return the limit
    */
@@ -197,7 +197,7 @@ public class GetNamespacesOptions extends GenericModel {
   /**
    * Gets the offset.
    *
-   * number of results to skip before returning values.
+   * The number of results to skip before returning values.
    *
    * @return the offset
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,6 +13,7 @@
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
@@ -21,8 +22,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class InstallStatusContentMgmt extends GenericModel {
 
-  protected List<Object> pods;
-  protected List<Object> errors;
+  protected List<Map<String, String>> pods;
+  protected List<Map<String, String>> errors;
 
   /**
    * Gets the pods.
@@ -31,7 +32,7 @@ public class InstallStatusContentMgmt extends GenericModel {
    *
    * @return the pods
    */
-  public List<Object> getPods() {
+  public List<Map<String, String>> getPods() {
     return pods;
   }
 
@@ -42,7 +43,7 @@ public class InstallStatusContentMgmt extends GenericModel {
    *
    * @return the errors
    */
-  public List<Object> getErrors() {
+  public List<Map<String, String>> getErrors() {
     return errors;
   }
 }

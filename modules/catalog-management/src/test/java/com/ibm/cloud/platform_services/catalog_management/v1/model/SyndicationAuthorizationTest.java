@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -15,13 +15,11 @@ package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationAuthorization;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.List;
-
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
@@ -36,16 +34,16 @@ public class SyndicationAuthorizationTest {
   public void testSyndicationAuthorization() throws Throwable {
     SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
       .token("testString")
-      .lastRun(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .build();
     assertEquals(syndicationAuthorizationModel.token(), "testString");
-    assertEquals(syndicationAuthorizationModel.lastRun(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(syndicationAuthorizationModel.lastRun(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
 
     String json = TestUtilities.serialize(syndicationAuthorizationModel);
 
     SyndicationAuthorization syndicationAuthorizationModelNew = TestUtilities.deserialize(json, SyndicationAuthorization.class);
     assertTrue(syndicationAuthorizationModelNew instanceof SyndicationAuthorization);
     assertEquals(syndicationAuthorizationModelNew.token(), "testString");
-    assertEquals(syndicationAuthorizationModelNew.lastRun().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
+    assertEquals(syndicationAuthorizationModelNew.lastRun(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
   }
 }

@@ -114,6 +114,7 @@ import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.exception.UnauthorizedException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.UrlHelper;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Ignore;
@@ -176,6 +177,8 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   private String versionLocatorId = null;
   
   private String objectId = null;
+  private ArrayList<String> offeringIds = new ArrayList<>();
+  private ArrayList<String> objectIds = new ArrayList<>();
   
   @BeforeClass
   public void constructService() {
@@ -502,21 +505,33 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testCreateOffering() throws Exception {
     try {
       
-      CreateOfferingOptions createOfferingOptions = new CreateOfferingOptions.Builder()
-          .catalogIdentifier(catalogId)
-          .label(labelJavaSdk)
-          .name("offering-created-by-java-sdk")
-          .build();
-      
-      Response<Offering> response = catalogManagementServiceAuthorized.createOffering(createOfferingOptions).execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 201);
-      
-      Offering offeringResult = response.getResult();
-      assertNotNull(offeringResult);
-      assertNotNull(offeringResult.id());
-      offeringId = offeringResult.id();
+      // we need at least two offerings, one for later operations in the test set where offering id is needed
+      // the second one is needed for testing the pagination of list of offerings
+      for (int i = 0; i < 2; i++) {
+        
+        String offeringName = String.format("offering-created-by-java-sdk-%s", i);
+        CreateOfferingOptions createOfferingOptions = new CreateOfferingOptions.Builder()
+            .catalogIdentifier(catalogId)
+            .label(labelJavaSdk)
+            .name(offeringName)
+            .build();
+        
+        Response<Offering> response = catalogManagementServiceAuthorized.createOffering(createOfferingOptions)
+            .execute();
+        
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 201);
+        
+        Offering offeringResult = response.getResult();
+        assertNotNull(offeringResult);
+        assertNotNull(offeringResult.id());
+        
+        if (offeringId == null) {
+          offeringId = offeringResult.id();
+        }
+        // we need to collect the ids for clean up
+        offeringIds.add(offeringResult.id());
+      }
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -706,12 +721,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     try {
       
       int offset = 0;
-      int limit = 50;
-      boolean fetch = true;
+      int limit = 1;
       boolean isOfferingFound = false;
       int amountOfOfferings = 0;
       
-      while (fetch) {
+      do {
         ListOfferingsOptions listOfferingsOptions = new ListOfferingsOptions.Builder()
             .catalogIdentifier(catalogId)
             .offset(offset)
@@ -728,14 +742,15 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         OfferingSearchResult offeringSearchResultResult = response.getResult();
         assertNotNull(offeringSearchResultResult);
         
-        if (offeringSearchResultResult.getResourceCount() > 0) {
-          offset += 50;
-          amountOfOfferings += offeringSearchResultResult.getResourceCount().intValue();
+        String offsetValue = UrlHelper.getQueryParam(offeringSearchResultResult.getNext(), "offset");
+        if (offsetValue != null) {
+          offset = Integer.parseInt(offsetValue);
         } else {
-          fetch = false;
+          offset = 0;
         }
         
-        if (!isOfferingFound) {
+        if (offeringSearchResultResult.getResourceCount() > 0) {
+          amountOfOfferings += offeringSearchResultResult.getResourceCount().intValue();
           Integer result = Math.toIntExact(response.getResult().getResources().stream()
               .filter(f -> f.id().equals(offeringId))
               .count());
@@ -743,9 +758,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
             isOfferingFound = true;
           }
         }
-      }
+      } while (offset > 0);
       
       System.out.println(String.format("Amount of offerings: %s", amountOfOfferings));
+      assertTrue(isOfferingFound);
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -1012,37 +1028,49 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Test(dependsOnMethods = {"testImportOffering"})
   public void testCreateObject() throws Exception {
     try {
-      PublishObject publishObjectModel = new PublishObject.Builder()
-          .permitIbmPublicPublish(true)
-          .ibmApproved(true)
-          .publicApproved(true)
-          .build();
       
-      State stateModel = new State.Builder()
-          .current("new")
-          .build();
+      // we need two objects for later operations in this test set and object id is needed for these operations
+      // we need another one for exercising pagination
       
-      CreateObjectOptions createObjectOptions = new CreateObjectOptions.Builder()
-          .catalogIdentifier(catalogId)
-          .catalogId(catalogId)
-          .name(objectName)
-          .crn(objectCrn)
-          .parentId(regionUsSouth)
-          .kind(kindVpe)
-          .publish(publishObjectModel)
-          .state(stateModel)
-          .build();
-      
-      Response<CatalogObject> response = catalogManagementServiceAuthorized.createObject(createObjectOptions).execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 201);
-      
-      CatalogObject catalogObjectResult = response.getResult();
-      assertNotNull(catalogObjectResult);
-      assertNotNull(catalogObjectResult.id());
-      
-      objectId = catalogObjectResult.id();
+      for (int i = 0; i < 2; i++) {
+        PublishObject publishObjectModel = new PublishObject.Builder()
+            .permitIbmPublicPublish(true)
+            .ibmApproved(true)
+            .publicApproved(true)
+            .build();
+        
+        State stateModel = new State.Builder()
+            .current("new")
+            .build();
+        
+        String name = String.format("%s_%s", objectName, i);
+        CreateObjectOptions createObjectOptions = new CreateObjectOptions.Builder()
+            .catalogIdentifier(catalogId)
+            .catalogId(catalogId)
+            .name(name)
+            .crn(objectCrn)
+            .parentId(regionUsSouth)
+            .kind(kindVpe)
+            .publish(publishObjectModel)
+            .state(stateModel)
+            .build();
+        
+        Response<CatalogObject> response = catalogManagementServiceAuthorized.createObject(createObjectOptions)
+            .execute();
+        
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 201);
+        
+        CatalogObject catalogObjectResult = response.getResult();
+        assertNotNull(catalogObjectResult);
+        assertNotNull(catalogObjectResult.id());
+        
+        if (objectId == null) {
+          objectId = catalogObjectResult.id();
+        }
+        // we need to collect the ids for cleanup
+        objectIds.add(catalogObjectResult.id());
+      }
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -3066,11 +3094,10 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
     try {
       
       int offset = 0;
-      int limit = 50;
-      boolean fetch = true;
+      int limit = 1;
       int amountOfObjects = 0;
       
-      while (fetch) {
+      do {
         SearchObjectsOptions searchObjectsOptions = new SearchObjectsOptions.Builder()
             .query("name: object*")
             .collapse(true)
@@ -3088,14 +3115,19 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         ObjectSearchResult objectSearchResultResult = response.getResult();
         assertNotNull(objectSearchResultResult);
         
-        if (objectSearchResultResult.getResourceCount() > 0) {
-          offset += 50;
-          amountOfObjects += objectSearchResultResult.getResourceCount().intValue();
+        String offsetValue = UrlHelper.getQueryParam(objectSearchResultResult.getNext(), "offset");
+        if (offsetValue != null) {
+          offset = Integer.parseInt(offsetValue);
         } else {
-          fetch = false;
+          offset = 0;
         }
-      }
-      System.out.println(String.format("Amount of objects: %s", amountOfObjects));
+        
+        if (objectSearchResultResult.getResourceCount() > 0) {
+          amountOfObjects += objectSearchResultResult.getResourceCount().intValue();
+        }
+      } while (offset > 0);
+      
+      System.out.println(String.format("Amount of objects in search result: %s", amountOfObjects));
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
@@ -3133,12 +3165,11 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   public void testListObjects() throws Exception {
     try {
       int offset = 0;
-      int limit = 50;
+      int limit = 1;
       int amountOfObjects = 0;
       boolean isObjectFound = false;
-      boolean fetch = true;
       
-      while (fetch) {
+      do {
         ListObjectsOptions listObjectsOptions = new ListObjectsOptions.Builder()
             .catalogIdentifier(catalogId)
             .limit(limit)
@@ -3154,11 +3185,15 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
         ObjectListResult objectListResultResult = response.getResult();
         assertNotNull(objectListResultResult);
         
+        String offsetValue = UrlHelper.getQueryParam(objectListResultResult.getNext(), "offset");
+        if (offsetValue != null) {
+          offset = Integer.parseInt(offsetValue);
+        } else {
+          offset = 0;
+        }
+        
         if (objectListResultResult.getResourceCount() > 0) {
           amountOfObjects += objectListResultResult.getResourceCount().intValue();
-          offset += 50;
-        } else {
-          fetch = false;
         }
         
         if (!isObjectFound) {
@@ -3169,7 +3204,7 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
             isObjectFound = true;
           }
         }
-      }
+      } while (offset > 0);
       
       System.out.println(String.format("Amount of objects: %s", amountOfObjects));
       
@@ -4326,16 +4361,19 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Test(dependsOnMethods = {"testDeleteObjectAccess"})
   public void testDeleteObject() throws Exception {
     try {
-      DeleteObjectOptions deleteObjectOptions = new DeleteObjectOptions.Builder()
-          .catalogIdentifier(catalogId)
-          .objectIdentifier(objectId)
-          .build();
-      
-      Response<Void> response = catalogManagementServiceAuthorized.deleteObject(deleteObjectOptions).execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-      
+  
+      for (String objectIdToBeDeleted : objectIds) {
+        DeleteObjectOptions deleteObjectOptions = new DeleteObjectOptions.Builder()
+            .catalogIdentifier(catalogId)
+            .objectIdentifier(objectIdToBeDeleted)
+            .build();
+    
+        Response<Void> response = catalogManagementServiceAuthorized.deleteObject(deleteObjectOptions).execute();
+    
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+      }
+  
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
@@ -4379,16 +4417,18 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
   @Test(dependsOnMethods = {"testDeleteObject"})
   public void testDeleteOffering() throws Exception {
     try {
-      DeleteOfferingOptions deleteOfferingOptions = new DeleteOfferingOptions.Builder()
-          .catalogIdentifier(catalogId)
-          .offeringId(offeringId)
-          .build();
-      
-      Response<Void> response = catalogManagementServiceAuthorized.deleteOffering(deleteOfferingOptions).execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-      
+      for (String offeringIdToBeDeleted: offeringIds) {
+        DeleteOfferingOptions deleteOfferingOptions = new DeleteOfferingOptions.Builder()
+            .catalogIdentifier(catalogId)
+            .offeringId(offeringIdToBeDeleted)
+            .build();
+    
+        Response<Void> response = catalogManagementServiceAuthorized.deleteOffering(deleteOfferingOptions).execute();
+    
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+      }
+  
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));

@@ -176,7 +176,7 @@ public class CatalogManagementExamples {
           .addTags("java")
           .addTags("sdk")
           .label("label-java")
-          .kind("VPE")
+          .kind("vpe")
           .owningAccount(accountId)
           .build();
       
@@ -216,7 +216,7 @@ public class CatalogManagementExamples {
           .addTags("ibm")
           .addTags("cloud")
           .owningAccount(accountId)
-          .kind("VPE")
+          .kind("vpe")
           .build();
       
       Response<Catalog> response = catalogManagementService.replaceCatalog(replaceCatalogOptions)
@@ -265,25 +265,6 @@ public class CatalogManagementExamples {
     }
     
     try {
-      System.out.println("createOffering() result:");
-      // begin-create_offering
-      CreateOfferingOptions createOfferingOptions = new CreateOfferingOptions.Builder()
-          .catalogIdentifier(catalogId)
-          .label("label-java")
-          .name("offering-created-by-java-sdk-2")
-          .build();
-      
-      Response<Offering> response = catalogManagementService.createOffering(createOfferingOptions).execute();
-      Offering offering = response.getResult();
-      
-      System.out.println(offering);
-      // end-create_offering
-    } catch (ServiceResponseException e) {
-      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-    
-    try {
       System.out.println("getOffering() result:");
       // begin-get_offering
       GetOfferingOptions getOfferingOptions = new GetOfferingOptions.Builder()
@@ -325,15 +306,11 @@ public class CatalogManagementExamples {
     try {
       System.out.println("listOfferings() result:");
       // begin-list_offerings
-      boolean fetch = true;
-      int offset = 0;
-      int amountOfOfferings = 0;
       
-      while (fetch) {
         ListOfferingsOptions listOfferingsOptions = new ListOfferingsOptions.Builder()
             .catalogIdentifier(catalogId)
-            .limit(1)
-            .offset(offset)
+            .limit(100)
+            .offset(0)
             .digest(false)
             .build();
         
@@ -343,12 +320,6 @@ public class CatalogManagementExamples {
         
         System.out.println(offeringSearchResult);
         
-        if (offeringSearchResult.getResourceCount() == 0) {
-          fetch = false;
-        }
-        offset += 1;
-        amountOfOfferings += offeringSearchResult.getResourceCount();
-      }
       // end-list_offerings
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s",
@@ -365,7 +336,7 @@ public class CatalogManagementExamples {
           .addTags("operator")
           .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red" +
               "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
-          .addTargetKinds("ROKS")
+          .addTargetKinds("roks")
           .targetVersion("0.0.2")
           .repoType("git_public")
           .xAuthToken(gitAuthToken)
@@ -389,7 +360,7 @@ public class CatalogManagementExamples {
           .catalogIdentifier(catalogId)
           .offeringId(offeringId)
           .targetVersion("0.0.2")
-          .addTargetKinds("ROKS")
+          .addTargetKinds("roks")
           .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red" +
               "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
           .addTags("node-red")
@@ -477,6 +448,7 @@ public class CatalogManagementExamples {
     }
   
     try {
+      System.out.println("updateCatalogAccount() result:");
       // begin-update_catalog_account
       Filters filters = new Filters.Builder()
           .includeAll(true)
@@ -484,7 +456,6 @@ public class CatalogManagementExamples {
     
       UpdateCatalogAccountOptions updateCatalogAccountOptions = new UpdateCatalogAccountOptions.Builder()
           .id(accountId)
-          .hideIbmCloudCatalog(true)
           .accountFilters(filters)
           .build();
     
@@ -577,7 +548,7 @@ public class CatalogManagementExamples {
           .catalogIdentifier(catalogId)
           .offeringId(offeringId)
           .targetVersion("0.0.3")
-          .addTargetKinds("ROKS")
+          .addTargetKinds("roks")
           .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red" +
               "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
           .repoType("git_public")
@@ -640,7 +611,7 @@ public class CatalogManagementExamples {
       GetOfferingUpdatesOptions getOfferingUpdatesOptions = new GetOfferingUpdatesOptions.Builder()
           .catalogIdentifier(catalogId)
           .offeringId(offeringId)
-          .kind("ROKS")
+          .kind("roks")
           .version("0.0.2")
           .clusterId(clusterId)
           .region("us-south")
@@ -1041,6 +1012,9 @@ public class CatalogManagementExamples {
       // begin-search_objects
       SearchObjectsOptions searchObjectsOptions = new SearchObjectsOptions.Builder()
           .query("name: object*")
+          .limit(50)
+          .offset(0)
+          .digest(true)
           .build();
     
       Response<ObjectSearchResult> response = catalogManagementService.searchObjects(searchObjectsOptions).execute();
@@ -1058,6 +1032,8 @@ public class CatalogManagementExamples {
       // begin-list_objects
       ListObjectsOptions listObjectsOptions = new ListObjectsOptions.Builder()
           .catalogIdentifier(catalogId)
+          .limit(100)
+          .offset(0)
           .build();
     
       Response<ObjectListResult> response = catalogManagementService.listObjects(listObjectsOptions).execute();
@@ -1076,6 +1052,10 @@ public class CatalogManagementExamples {
       ReplaceObjectOptions replaceObjectOptions = new ReplaceObjectOptions.Builder()
           .catalogIdentifier(catalogId)
           .objectIdentifier(objectId)
+          .id(objectId)
+          .name("updated-object-name")
+          .parentId("us-south")
+          .kind("vpe")
           .build();
     
       Response<CatalogObject> response = catalogManagementService.replaceObject(replaceObjectOptions).execute();
@@ -1268,7 +1248,7 @@ public class CatalogManagementExamples {
           .id(offeringId)
           .catalogId(catalogId)
           .offeringId(offeringId)
-          .kindFormat("ROKS")
+          .kindFormat("roks")
           .version("0.0.2")
           .clusterId(clusterId)
           .clusterRegion("us-south")
@@ -1314,7 +1294,7 @@ public class CatalogManagementExamples {
           .id(offeringId)
           .catalogId(catalogId)
           .offeringId(offeringId)
-          .kindFormat("ROKS")
+          .kindFormat("roks")
           .version("0.0.2")
           .clusterId(clusterId)
           .clusterRegion("us-south")
@@ -1386,7 +1366,7 @@ public class CatalogManagementExamples {
       DeleteObjectAccessListOptions deleteObjectAccessListOptions = new DeleteObjectAccessListOptions.Builder()
           .catalogIdentifier(catalogId)
           .objectIdentifier(objectId)
-          .accounts(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+          .addAccounts(accountId)
           .build();
     
       Response<AccessListBulkResponse> response =

@@ -330,8 +330,8 @@ public class CatalogManagementExamples {
           .offeringId(offeringId)
           .addTags("node-red")
           .addTags("operator")
-          .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red" +
-              "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
+          .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red"
+              + "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
           .addTargetKinds("roks")
           .targetVersion("0.0.2")
           .repoType("git_public")
@@ -357,8 +357,8 @@ public class CatalogManagementExamples {
           .offeringId(offeringId)
           .targetVersion("0.0.2")
           .addTargetKinds("roks")
-          .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red" +
-              "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
+          .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red"
+              + "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
           .addTags("node-red")
           .addTags("operator")
           .repoType("git_public")
@@ -391,8 +391,7 @@ public class CatalogManagementExamples {
           .catalogIdentifier(catalogId)
           .catalogId(catalogId)
           .name("object_in_ibm_cloud")
-          .crn("crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm" +
-              ".com")
+          .crn("crn:v1:bluemix:public:iam-global-endpoint:global:::endpoint:private.iam.cloud.ibm.com")
           .parentId("us-south")
           .kind("vpe")
           .publish(publishObjectModel)
@@ -545,8 +544,8 @@ public class CatalogManagementExamples {
           .offeringId(offeringId)
           .targetVersion("0.0.3")
           .addTargetKinds("roks")
-          .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red" +
-              "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
+          .zipurl("https://github.com/rhm-samples/node-red-operator/blob/master/node-red"
+              + "-operator/bundle/0.0.2/node-red-operator.v0.0.2.clusterserviceversion.yaml")
           .repoType("git_public")
           .build();
 

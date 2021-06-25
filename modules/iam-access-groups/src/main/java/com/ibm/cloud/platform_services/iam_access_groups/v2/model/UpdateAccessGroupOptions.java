@@ -172,8 +172,8 @@ public class UpdateAccessGroupOptions extends GenericModel {
   /**
    * Gets the name.
    *
-   * Assign the specified name to the access group. This field is case-sensitive and has a limit of 100 characters. The
-   * group name has to be unique within an account.
+   * Assign the specified name to the access group. This field is case-insensitive and has a limit of 100 characters.
+   * The group name has to be unique within an account.
    *
    * @return the name
    */

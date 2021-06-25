@@ -11,6 +11,6 @@
  * specific language governing permissions and limitations under the License.
  */
 /**
- * IAM Access Groups API v2.
+ * IAM Access Groups v2.
  */
 package com.ibm.cloud.platform_services.iam_access_groups.v2;

@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+ * IBM OpenAPI SDK Code Generator Version: 3.34.1-ad041667-20210617-195430
  */
 
 package com.ibm.cloud.platform_services.iam_access_groups.v2;

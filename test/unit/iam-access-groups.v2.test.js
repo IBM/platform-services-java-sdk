@@ -29,12 +29,12 @@ const {
   checkUserHeader,
 } = unitTestUtils;
 
-const service = {
+const iamAccessGroupsServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://iam.cloud.ibm.com/v2',
 };
 
-const iamAccessGroupsService = new IamAccessGroupsV2(service);
+const iamAccessGroupsService = new IamAccessGroupsV2(iamAccessGroupsServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(iamAccessGroupsService, 'createRequest');

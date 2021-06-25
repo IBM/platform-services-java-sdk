@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+ * IBM OpenAPI SDK Code Generator Version: 3.34.1-ad041667-20210617-195430
  */
 
 import * as extend from 'extend';
@@ -107,8 +107,8 @@ class IamAccessGroupsV2 extends BaseService {
    * @param {string} params.accountId - Account ID of the API keys(s) to query. If a service IAM ID is specified in
    * iam_id then account_id must match the account of the IAM ID. If a user IAM ID is specified in iam_id then then
    * account_id must match the account of the Authorization token.
-   * @param {string} params.name - Assign the specified name to the access group. This field is case-sensitive and has a
-   * limit of 100 characters. The group name has to be unique within an account.
+   * @param {string} params.name - Assign the specified name to the access group. This field is case-insensitive and has
+   * a limit of 100 characters. The group name has to be unique within an account.
    * @param {string} [params.description] - Assign an optional description for the access group. This field has a limit
    * of 250 characters.
    * @param {string} [params.transactionId] - An optional transaction ID can be passed to your request, which can be
@@ -320,8 +320,8 @@ class IamAccessGroupsV2 extends BaseService {
    * @param {string} params.accessGroupId - The access group identifier.
    * @param {string} params.ifMatch - The current revision number of the group being updated. This can be found in the
    * Create/Get access group response ETag header.
-   * @param {string} [params.name] - Assign the specified name to the access group. This field is case-sensitive and has
-   * a limit of 100 characters. The group name has to be unique within an account.
+   * @param {string} [params.name] - Assign the specified name to the access group. This field is case-insensitive and
+   * has a limit of 100 characters. The group name has to be unique within an account.
    * @param {string} [params.description] - Assign an optional description for the access group. This field has a limit
    * of 250 characters.
    * @param {string} [params.transactionId] - An optional transaction ID can be passed to your request, which can be
@@ -1428,7 +1428,7 @@ namespace IamAccessGroupsV2 {
      *  account of the Authorization token.
      */
     accountId: string;
-    /** Assign the specified name to the access group. This field is case-sensitive and has a limit of 100
+    /** Assign the specified name to the access group. This field is case-insensitive and has a limit of 100
      *  characters. The group name has to be unique within an account.
      */
     name: string;
@@ -1495,7 +1495,7 @@ namespace IamAccessGroupsV2 {
      *  response ETag header.
      */
     ifMatch: string;
-    /** Assign the specified name to the access group. This field is case-sensitive and has a limit of 100
+    /** Assign the specified name to the access group. This field is case-insensitive and has a limit of 100
      *  characters. The group name has to be unique within an account.
      */
     name?: string;

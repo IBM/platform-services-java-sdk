@@ -1,3 +1,10 @@
+## [0.18.14](https://github.com/IBM/platform-services-java-sdk/compare/0.18.13...0.18.14) (2021-06-28)
+
+
+### Bug Fixes
+
+* **catalog-management:** update catalog mgmt service after recent api changes ([7847687](https://github.com/IBM/platform-services-java-sdk/commit/784768729950facf018bb0caf251a9fa6a3d2ebc))
+
 ## [0.18.13](https://github.com/IBM/platform-services-java-sdk/compare/0.18.12...0.18.13) (2021-06-25)
 
 

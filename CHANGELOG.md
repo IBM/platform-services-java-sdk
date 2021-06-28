@@ -1,3 +1,10 @@
+## [0.18.14](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.13...v0.18.14) (2021-06-28)
+
+
+### Bug Fixes
+
+* **catalog-management:** update catalog management sdk examples after recent api changes ([deaaa22](https://github.com/IBM/platform-services-node-sdk/commit/deaaa22810f3bf286227f7216e5103de79205975))
+
 ## [0.18.13](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.12...v0.18.13) (2021-06-28)
 
 

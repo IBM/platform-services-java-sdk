@@ -12,11 +12,11 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import java.util.Date;
-import java.util.Map;
-
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
+import java.util.Date;
+import java.util.Map;
 
 /**
  * Validation response.

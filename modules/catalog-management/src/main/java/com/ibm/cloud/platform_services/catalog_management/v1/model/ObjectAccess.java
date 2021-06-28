@@ -17,6 +17,8 @@ import java.util.Date;
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
+import java.util.Date;
+
 /**
  * object access.
  */

@@ -13,19 +13,15 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOperatorOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import java.io.InputStream;
+import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Unit test class for the ReplaceOperatorOptions model.

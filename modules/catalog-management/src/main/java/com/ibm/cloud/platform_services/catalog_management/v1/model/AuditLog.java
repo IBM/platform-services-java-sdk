@@ -16,6 +16,8 @@ import java.util.List;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
+import java.util.List;
+
 /**
  * A collection of audit records.
  */

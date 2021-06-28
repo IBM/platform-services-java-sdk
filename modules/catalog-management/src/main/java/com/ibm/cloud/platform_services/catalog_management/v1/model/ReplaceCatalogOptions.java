@@ -12,10 +12,10 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
+import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
  * The replaceCatalog options.

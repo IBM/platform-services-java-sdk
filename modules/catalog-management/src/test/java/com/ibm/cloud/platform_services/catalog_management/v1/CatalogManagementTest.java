@@ -12,18 +12,14 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.CatalogManagement;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccessListBulkResponse;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Account;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFilters;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFiltersCatalogFiltersItem;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFiltersCatalogFiltersItemCatalog;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AddObjectAccessListOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ApprovalResult;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.AuditLog;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AuditRecord;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Catalog;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogObject;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogSearchResult;
@@ -79,14 +75,10 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionOpt
 import com.ibm.cloud.platform_services.catalog_management.v1.model.IDFilter;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Image;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ImageManifest;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatus;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatusContentMgmt;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatusMetadata;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatusRelease;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Kind;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.License;
@@ -136,18 +128,9 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionEntitl
 import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionUpdateDescriptor;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.DateUtils;
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -158,7 +141,17 @@ import org.powermock.modules.testng.PowerMockTestCase;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
 
 /**
  * Unit test class for the CatalogManagement service.

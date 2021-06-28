@@ -13,32 +13,15 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Configuration;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Deployment;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Feature;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Kind;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.License;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Offering;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingSearchResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Plan;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Rating;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.RepoInfo;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Resource;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Script;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.State;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Validation;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Version;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionEntitlement;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
+import org.testng.annotations.Test;
+
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import static org.testng.Assert.assertNull;
 
 /**
  * Unit test class for the OfferingSearchResult model.

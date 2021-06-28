@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-8d569e8f-20201030-111043
+ * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
  */
 
 import * as extend from 'extend';
@@ -74,7 +74,7 @@ class CatalogManagementV1 extends BaseService {
    * Construct a CatalogManagementV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service (e.g. 'https://gateway.watsonplatform.net/api/v1-beta'). The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {Authenticator} options.authenticator - The Authenticator object used to authenticate requests to the service
    * @constructor
@@ -96,7 +96,7 @@ class CatalogManagementV1 extends BaseService {
    ************************/
 
   /**
-   * Get the account settings.
+   * Get catalog account settings.
    *
    * Get the account level settings for the account for private catalog.
    *
@@ -136,10 +136,13 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Set the account settings.
+   * Update account settings.
+   *
+   * Update the account level settings for the account for private catalog.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.id] - Account identification.
+   * @param {boolean} [params.hideIbmCloudCatalog] - Hide the public catalog in this account.
    * @param {Filters} [params.accountFilters] - Filters for account and catalog filters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
@@ -151,6 +154,7 @@ class CatalogManagementV1 extends BaseService {
 
     const body = {
       'id': _params.id,
+      'hide_IBM_cloud_catalog': _params.hideIbmCloudCatalog,
       'account_filters': _params.accountFilters,
     };
 
@@ -182,23 +186,18 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get the audit log(s) for catalog account.
+   * Get catalog account audit log.
    *
-   * Get the audit log(s) for catalog account.
+   * Get the audit log associated with a catalog account.
    *
    * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.id] - Log identification.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.AuditLog>>}
    */
   public getCatalogAccountAudit(
     params?: CatalogManagementV1.GetCatalogAccountAuditParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.AuditLog>> {
     const _params = { ...params };
-
-    const query = {
-      'id': _params.id,
-    };
 
     const sdkHeaders = getSdkHeaders(
       CatalogManagementV1.DEFAULT_SERVICE_NAME,
@@ -210,10 +209,16 @@ class CatalogManagementV1 extends BaseService {
       options: {
         url: '/catalogaccount/audit',
         method: 'GET',
-        qs: query,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
@@ -221,7 +226,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get the accumulated filters of the account and of the catalogs you have access to.
+   * Get catalog account filters.
    *
    * Get the accumulated filters of the account and of the catalogs you have access to.
    *
@@ -273,7 +278,8 @@ class CatalogManagementV1 extends BaseService {
   /**
    * Get list of catalogs.
    *
-   * List the available catalogs for a given account.
+   * Retrieves the available catalogs for a given account. This can be used by an unauthenticated user to retrieve the
+   * public catalog.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -322,17 +328,13 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.shortDescription] - Description in the requested language.
    * @param {string} [params.catalogIconUrl] - URL for an icon associated with this catalog.
    * @param {string[]} [params.tags] - List of tags associated with this catalog.
-   * @param {string} [params.url] - The url for this specific catalog.
-   * @param {string} [params.crn] - CRN associated with the catalog.
-   * @param {string} [params.offeringsUrl] - URL path to offerings.
    * @param {Feature[]} [params.features] - List of features associated with this catalog.
    * @param {boolean} [params.disabled] - Denotes whether a catalog is disabled.
-   * @param {string} [params.created] - The date'time this catalog was created.
-   * @param {string} [params.updated] - The date'time this catalog was last updated.
    * @param {string} [params.resourceGroupId] - Resource group id the catalog is owned by.
    * @param {string} [params.owningAccount] - Account that owns catalog.
    * @param {Filters} [params.catalogFilters] - Filters for account and catalog filters.
    * @param {SyndicationResource} [params.syndicationSettings] - Feature information.
+   * @param {string} [params.kind] - Kind of catalog. Supported kinds are offering and vpe.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>>}
    */
@@ -348,17 +350,13 @@ class CatalogManagementV1 extends BaseService {
       'short_description': _params.shortDescription,
       'catalog_icon_url': _params.catalogIconUrl,
       'tags': _params.tags,
-      'url': _params.url,
-      'crn': _params.crn,
-      'offerings_url': _params.offeringsUrl,
       'features': _params.features,
       'disabled': _params.disabled,
-      'created': _params.created,
-      'updated': _params.updated,
       'resource_group_id': _params.resourceGroupId,
       'owning_account': _params.owningAccount,
       'catalog_filters': _params.catalogFilters,
       'syndication_settings': _params.syndicationSettings,
+      'kind': _params.kind,
     };
 
     const sdkHeaders = getSdkHeaders(
@@ -390,9 +388,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get a catalog.
+   * Get catalog.
    *
-   * Get a catalog.
+   * Get a catalog. This can also be used by an unauthenticated user to get the public catalog.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
@@ -438,7 +436,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Update a catalog.
+   * Update catalog.
    *
    * Update a catalog.
    *
@@ -450,17 +448,13 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.shortDescription] - Description in the requested language.
    * @param {string} [params.catalogIconUrl] - URL for an icon associated with this catalog.
    * @param {string[]} [params.tags] - List of tags associated with this catalog.
-   * @param {string} [params.url] - The url for this specific catalog.
-   * @param {string} [params.crn] - CRN associated with the catalog.
-   * @param {string} [params.offeringsUrl] - URL path to offerings.
    * @param {Feature[]} [params.features] - List of features associated with this catalog.
    * @param {boolean} [params.disabled] - Denotes whether a catalog is disabled.
-   * @param {string} [params.created] - The date'time this catalog was created.
-   * @param {string} [params.updated] - The date'time this catalog was last updated.
    * @param {string} [params.resourceGroupId] - Resource group id the catalog is owned by.
    * @param {string} [params.owningAccount] - Account that owns catalog.
    * @param {Filters} [params.catalogFilters] - Filters for account and catalog filters.
    * @param {SyndicationResource} [params.syndicationSettings] - Feature information.
+   * @param {string} [params.kind] - Kind of catalog. Supported kinds are offering and vpe.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>>}
    */
@@ -482,17 +476,13 @@ class CatalogManagementV1 extends BaseService {
       'short_description': _params.shortDescription,
       'catalog_icon_url': _params.catalogIconUrl,
       'tags': _params.tags,
-      'url': _params.url,
-      'crn': _params.crn,
-      'offerings_url': _params.offeringsUrl,
       'features': _params.features,
       'disabled': _params.disabled,
-      'created': _params.created,
-      'updated': _params.updated,
       'resource_group_id': _params.resourceGroupId,
       'owning_account': _params.owningAccount,
       'catalog_filters': _params.catalogFilters,
       'syndication_settings': _params.syndicationSettings,
+      'kind': _params.kind,
     };
 
     const path = {
@@ -529,7 +519,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Delete a catalog.
+   * Delete catalog.
    *
    * Delete a catalog.
    *
@@ -574,19 +564,18 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get the audit log(s) for catalog.
+   * Get catalog audit log.
    *
-   * Get the audit log(s) for catalog.
+   * Get the audit log associated with a catalog.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
-   * @param {string} [params.id] - Log identification.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.AuditLog>>}
    */
   public getCatalogAudit(
     params: CatalogManagementV1.GetCatalogAuditParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.AuditLog>> {
     const _params = { ...params };
     const requiredParams = ['catalogIdentifier'];
 
@@ -594,10 +583,6 @@ class CatalogManagementV1 extends BaseService {
     if (missingParams) {
       return Promise.reject(missingParams);
     }
-
-    const query = {
-      'id': _params.id,
-    };
 
     const path = {
       'catalog_identifier': _params.catalogIdentifier,
@@ -612,56 +597,6 @@ class CatalogManagementV1 extends BaseService {
     const parameters = {
       options: {
         url: '/catalogs/{catalog_identifier}/audit',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /*************************
-   * enterprise
-   ************************/
-
-  /**
-   * Get the enterprise settings for the specified enterprise ID.
-   *
-   * Get the enterprise settings for the specified enterprise ID.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.enterpriseId - Enterprise identification.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Enterprise>>}
-   */
-  public getEnterprise(
-    params: CatalogManagementV1.GetEnterpriseParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Enterprise>> {
-    const _params = { ...params };
-    const requiredParams = ['enterpriseId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const path = {
-      'enterprise_id': _params.enterpriseId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getEnterprise'
-    );
-
-    const parameters = {
-      options: {
-        url: '/enterprises/{enterprise_id}',
         method: 'GET',
         path,
       },
@@ -680,128 +615,16 @@ class CatalogManagementV1 extends BaseService {
     return this.createRequest(parameters);
   }
 
-  /**
-   * Set the enterprise settings.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.enterpriseId - Enterprise identification.
-   * @param {string} [params.id] - Enterprise identification.
-   * @param {string} [params.rev] - Cloudant revision.
-   * @param {Filters} [params.accountFilters] - Filters for account and catalog filters.
-   * @param {EnterpriseAccountGroups} [params.accountGroups] - Map of account group ids to AccountGroup objects.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
-   */
-  public replaceEnterprise(
-    params: CatalogManagementV1.ReplaceEnterpriseParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = { ...params };
-    const requiredParams = ['enterpriseId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const body = {
-      'id': _params.id,
-      '_rev': _params.rev,
-      'account_filters': _params.accountFilters,
-      'account_groups': _params.accountGroups,
-    };
-
-    const path = {
-      'enterprise_id': _params.enterpriseId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'replaceEnterprise'
-    );
-
-    const parameters = {
-      options: {
-        url: '/enterprises/{enterprise_id}',
-        method: 'PUT',
-        body,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Content-Type': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get the audit log(s) for enterprises.
-   *
-   * Get the audit log(s) for enterprises.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.enterpriseId - Enterprise identification.
-   * @param {string} [params.id] - Log identification.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
-   */
-  public getEnterprisesAudit(
-    params: CatalogManagementV1.GetEnterprisesAuditParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = { ...params };
-    const requiredParams = ['enterpriseId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'id': _params.id,
-    };
-
-    const path = {
-      'enterprise_id': _params.enterpriseId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getEnterprisesAudit'
-    );
-
-    const parameters = {
-      options: {
-        url: '/enterprises/{enterprise_id}/audit',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
   /*************************
    * offerings
    ************************/
 
   /**
-   * Get list of offerings for consumption.
+   * Get consumption offerings.
    *
-   * List the available offerings from both public and from the account that currently scoped for consumption. These
-   * copies cannot be used updating. They are not complete and only return what is visible to the caller.
+   * Retrieve the available offerings from both public and from the account that currently scoped for consumption. These
+   * copies cannot be used for updating. They are not complete and only return what is visible to the caller. This can
+   * be used by an unauthenticated user to retreive publicly available offerings.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {boolean} [params.digest] - true - Strip down the content of what is returned. For example don't return the
@@ -861,15 +684,16 @@ class CatalogManagementV1 extends BaseService {
   /**
    * Get list of offerings.
    *
-   * List the available offerings in the specified catalog.
+   * Retrieve the available offerings in the specified catalog. This can also be used by an unauthenticated user to
+   * retreive publicly available offerings.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
    * @param {boolean} [params.digest] - true - Strip down the content of what is returned. For example don't return the
    * readme. Makes the result much smaller. Defaults to false.
-   * @param {number} [params.limit] - number or results to return.
-   * @param {number} [params.offset] - number of results to skip before returning values.
-   * @param {string} [params.name] - only return results that contain the specified string.
+   * @param {number} [params.limit] - The maximum number of results to return.
+   * @param {number} [params.offset] - The number of results to skip before returning values.
+   * @param {string} [params.name] - Only return results that contain the specified string.
    * @param {string} [params.sort] - The field on which the output is sorted. Sorts by default by **label** property.
    * Available fields are **name**, **label**, **created**, and **updated**. By adding **-** (i.e. **-label**) in front
    * of the query string, you can specify descending order. Default is ascending order.
@@ -928,7 +752,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Create an offering.
+   * Create offering.
    *
    * Create an offering.
    *
@@ -945,6 +769,7 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.offeringSupportUrl] - URL to be displayed in the Consumption UI for getting support on this
    * offering.
    * @param {string[]} [params.tags] - List of tags associated with this catalog.
+   * @param {string[]} [params.keywords] - List of keywords associated with offering, typically used to search for it.
    * @param {Rating} [params.rating] - Repository info for offerings.
    * @param {string} [params.created] - The date and time this catalog was created.
    * @param {string} [params.updated] - The date and time this catalog was last updated.
@@ -992,6 +817,7 @@ class CatalogManagementV1 extends BaseService {
       'offering_docs_url': _params.offeringDocsUrl,
       'offering_support_url': _params.offeringSupportUrl,
       'tags': _params.tags,
+      'keywords': _params.keywords,
       'rating': _params.rating,
       'created': _params.created,
       'updated': _params.updated,
@@ -1049,7 +875,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Import new version to offering from a tgz.
+   * Import offering version.
    *
    * Import new version to offering from a tgz.
    *
@@ -1059,13 +885,14 @@ class CatalogManagementV1 extends BaseService {
    * @param {string[]} [params.tags] - Tags array.
    * @param {string[]} [params.targetKinds] - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and
    * 'terraform'.
-   * @param {number[]} [params.content] - byte array representing the content to be imported.  Only supported for OVA
+   * @param {string} [params.content] - byte array representing the content to be imported.  Only supported for OVA
    * images at this time.
    * @param {string} [params.zipurl] - URL path to zip location.  If not specified, must provide content in the body of
    * this call.
    * @param {string} [params.targetVersion] - The semver value for this new version, if not found in the zip url package
    * content.
    * @param {boolean} [params.includeConfig] - Add all possible configuration values to this version when importing.
+   * @param {boolean} [params.isVsi] - Indicates that the current terraform template is used to install a VSI Image.
    * @param {string} [params.repoType] - The type of repository containing this version.  Valid values are 'public_git'
    * or 'enterprise_git'.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -1092,6 +919,7 @@ class CatalogManagementV1 extends BaseService {
       'zipurl': _params.zipurl,
       'targetVersion': _params.targetVersion,
       'includeConfig': _params.includeConfig,
+      'isVSI': _params.isVsi,
       'repoType': _params.repoType,
     };
 
@@ -1131,7 +959,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Import a new offering from a tgz.
+   * Import offering.
    *
    * Import a new offering from a tgz.
    *
@@ -1140,13 +968,14 @@ class CatalogManagementV1 extends BaseService {
    * @param {string[]} [params.tags] - Tags array.
    * @param {string[]} [params.targetKinds] - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and
    * 'terraform'.
-   * @param {number[]} [params.content] - byte array representing the content to be imported.  Only supported for OVA
+   * @param {string} [params.content] - byte array representing the content to be imported.  Only supported for OVA
    * images at this time.
    * @param {string} [params.zipurl] - URL path to zip location.  If not specified, must provide content in this post
    * body.
    * @param {string} [params.offeringId] - Re-use the specified offeringID during import.
    * @param {string} [params.targetVersion] - The semver value for this new version.
    * @param {boolean} [params.includeConfig] - Add all possible configuration items when creating this version.
+   * @param {boolean} [params.isVsi] - Indicates that the current terraform template is used to install a VSI Image.
    * @param {string} [params.repoType] - The type of repository containing this version.  Valid values are 'public_git'
    * or 'enterprise_git'.
    * @param {string} [params.xAuthToken] - Authentication token used to access the specified zip file.
@@ -1175,6 +1004,7 @@ class CatalogManagementV1 extends BaseService {
       'offeringID': _params.offeringId,
       'targetVersion': _params.targetVersion,
       'includeConfig': _params.includeConfig,
+      'isVSI': _params.isVsi,
       'repoType': _params.repoType,
     };
 
@@ -1214,9 +1044,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Reload existing version in offering from a tgz.
+   * Reload offering.
    *
-   * Reload existing version in offering from a tgz.
+   * Reload an existing version in offering from a tgz.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
@@ -1225,7 +1055,7 @@ class CatalogManagementV1 extends BaseService {
    * @param {string[]} [params.tags] - Tags array.
    * @param {string[]} [params.targetKinds] - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and
    * 'terraform'.
-   * @param {number[]} [params.content] - byte array representing the content to be imported.  Only supported for OVA
+   * @param {string} [params.content] - byte array representing the content to be imported.  Only supported for OVA
    * images at this time.
    * @param {string} [params.zipurl] - URL path to zip location.  If not specified, must provide content in this post
    * body.
@@ -1293,9 +1123,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get an offering.
+   * Get offering.
    *
-   * Get an offering.
+   * Get an offering. This can be used by an unauthenticated user for publicly available offerings.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
@@ -1343,7 +1173,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Update an offering.
+   * Update offering.
    *
    * Update an offering.
    *
@@ -1361,6 +1191,7 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.offeringSupportUrl] - URL to be displayed in the Consumption UI for getting support on this
    * offering.
    * @param {string[]} [params.tags] - List of tags associated with this catalog.
+   * @param {string[]} [params.keywords] - List of keywords associated with offering, typically used to search for it.
    * @param {Rating} [params.rating] - Repository info for offerings.
    * @param {string} [params.created] - The date and time this catalog was created.
    * @param {string} [params.updated] - The date and time this catalog was last updated.
@@ -1384,11 +1215,11 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.provider] - Provider of this offering.
    * @param {RepoInfo} [params.repoInfo] - Repository info for offerings.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>>}
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>>}
    */
   public replaceOffering(
     params: CatalogManagementV1.ReplaceOfferingParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Catalog>> {
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Offering>> {
     const _params = { ...params };
     const requiredParams = ['catalogIdentifier', 'offeringId'];
 
@@ -1408,6 +1239,7 @@ class CatalogManagementV1 extends BaseService {
       'offering_docs_url': _params.offeringDocsUrl,
       'offering_support_url': _params.offeringSupportUrl,
       'tags': _params.tags,
+      'keywords': _params.keywords,
       'rating': _params.rating,
       'created': _params.created,
       'updated': _params.updated,
@@ -1466,7 +1298,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Delete an offering.
+   * Delete offering.
    *
    * Delete an offering.
    *
@@ -1513,20 +1345,19 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get the audit log(s) for offering.
+   * Get offering audit log.
    *
-   * Get the audit log(s) for offering.
+   * Get the audit log associated with an offering.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
    * @param {string} params.offeringId - Offering identifier.
-   * @param {string} [params.id] - Log identification.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.AuditLog>>}
    */
   public getOfferingAudit(
     params: CatalogManagementV1.GetOfferingAuditParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.AuditLog>> {
     const _params = { ...params };
     const requiredParams = ['catalogIdentifier', 'offeringId'];
 
@@ -1534,10 +1365,6 @@ class CatalogManagementV1 extends BaseService {
     if (missingParams) {
       return Promise.reject(missingParams);
     }
-
-    const query = {
-      'id': _params.id,
-    };
 
     const path = {
       'catalog_identifier': _params.catalogIdentifier,
@@ -1554,11 +1381,17 @@ class CatalogManagementV1 extends BaseService {
       options: {
         url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/audit',
         method: 'GET',
-        qs: query,
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
       }),
     };
 
@@ -1566,9 +1399,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * upload an icon for the offering.
+   * Upload icon for offering.
    *
-   * upload an icon file to be stored in GC. File is uploaded as a binary payload - not as a form.
+   * Upload an icon file to be stored in GC. File is uploaded as a binary payload - not as a form.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
@@ -1622,7 +1455,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Approve offering to be permitted to publish or to request to be published to IBM Public Catalog (IBMers only or Everyone).
+   * Allow offering to be published.
    *
    * Approve or disapprove the offering to be allowed to publish to the IBM Public Catalog. Options:
    * * `allow_request` - (Allow requesting to publish to IBM)
@@ -1688,12 +1521,83 @@ class CatalogManagementV1 extends BaseService {
     return this.createRequest(parameters);
   }
 
+  /**
+   * Get version updates.
+   *
+   * Get available updates for the specified version.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.offeringId - Offering identification.
+   * @param {string} params.kind - The kind of offering (e.g, helm, ova, terraform ...).
+   * @param {string} [params.version] - optionaly provide an existing version to check updates for if one is not given,
+   * all version will be returned.
+   * @param {string} [params.clusterId] - The id of the cluster where this version was installed.
+   * @param {string} [params.region] - The region of the cluster where this version was installed.
+   * @param {string} [params.resourceGroupId] - The resource group id of the cluster where this version was installed.
+   * @param {string} [params.namespace] - The namespace of the cluster where this version was installed.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.VersionUpdateDescriptor[]>>}
+   */
+  public getOfferingUpdates(
+    params: CatalogManagementV1.GetOfferingUpdatesParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.VersionUpdateDescriptor[]>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'offeringId', 'kind'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'kind': _params.kind,
+      'version': _params.version,
+      'cluster_id': _params.clusterId,
+      'region': _params.region,
+      'resource_group_id': _params.resourceGroupId,
+      'namespace': _params.namespace,
+    };
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'offering_id': _params.offeringId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getOfferingUpdates'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/offerings/{offering_id}/updates',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
   /*************************
    * versions
    ************************/
 
   /**
-   * Get the about information, in markdown, for the current version.
+   * Get version about information.
    *
    * Get the about information, in markdown, for the current version.
    *
@@ -1702,8 +1606,8 @@ class CatalogManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<string>>}
    */
-  public getVersionAbout(
-    params: CatalogManagementV1.GetVersionAboutParams
+  public getOfferingAbout(
+    params: CatalogManagementV1.GetOfferingAboutParams
   ): Promise<CatalogManagementV1.Response<string>> {
     const _params = { ...params };
     const requiredParams = ['versionLocId'];
@@ -1720,7 +1624,7 @@ class CatalogManagementV1 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       CatalogManagementV1.DEFAULT_SERVICE_NAME,
       'v1',
-      'getVersionAbout'
+      'getOfferingAbout'
     );
 
     const parameters = {
@@ -1745,7 +1649,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get the license content for the specified license ID in the specified version.
+   * Get version license content.
    *
    * Get the license content for the specified license ID in the specified version.
    *
@@ -1754,11 +1658,11 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} params.licenseId - The ID of the license, which maps to the file name in the 'licenses' directory
    * of this verions tgz file.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   * @returns {Promise<CatalogManagementV1.Response<string>>}
    */
-  public getVersionLicense(
-    params: CatalogManagementV1.GetVersionLicenseParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+  public getOfferingLicense(
+    params: CatalogManagementV1.GetOfferingLicenseParams
+  ): Promise<CatalogManagementV1.Response<string>> {
     const _params = { ...params };
     const requiredParams = ['versionLocId', 'licenseId'];
 
@@ -1775,7 +1679,7 @@ class CatalogManagementV1 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       CatalogManagementV1.DEFAULT_SERVICE_NAME,
       'v1',
-      'getVersionLicense'
+      'getOfferingLicense'
     );
 
     const parameters = {
@@ -1785,7 +1689,14 @@ class CatalogManagementV1 extends BaseService {
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'text/plain',
+          },
+          _params.headers
+        ),
       }),
     };
 
@@ -1793,18 +1704,18 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get get the list of container images associated with this version.
+   * Get version's container images.
    *
-   * The "image_manifest_url" property of the version should be pointing the a URL for the image manifest, this api
-   * reflects that content.
+   * Get the list of container images associated with the specified version. The "image_manifest_url" property of the
+   * version should be the URL for the image manifest, and the operation will return that content.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.versionLocId - A dotted value of `catalogID`.`versionID`.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ImageManifest>>}
    */
-  public getVersionContainerImages(
-    params: CatalogManagementV1.GetVersionContainerImagesParams
+  public getOfferingContainerImages(
+    params: CatalogManagementV1.GetOfferingContainerImagesParams
   ): Promise<CatalogManagementV1.Response<CatalogManagementV1.ImageManifest>> {
     const _params = { ...params };
     const requiredParams = ['versionLocId'];
@@ -1821,7 +1732,7 @@ class CatalogManagementV1 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       CatalogManagementV1.DEFAULT_SERVICE_NAME,
       'v1',
-      'getVersionContainerImages'
+      'getOfferingContainerImages'
     );
 
     const parameters = {
@@ -1846,7 +1757,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Deprecate the specified version.
+   * Deprecate version.
    *
    * Deprecate the specified version.
    *
@@ -1891,7 +1802,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Publish the specified version so it is viewable by account members.
+   * Publish version to account members.
    *
    * Publish the specified version so it is viewable by account members.
    *
@@ -1936,7 +1847,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Publish the specified version so that it is visible to IBMers in the public catalog.
+   * Publish version to IBMers in public catalog.
    *
    * Publish the specified version so that it is visible to IBMers in the public catalog.
    *
@@ -1981,7 +1892,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Publish the specified version so it is visible to all users in the public catalog.
+   * Publish version to all users in public catalog.
    *
    * Publish the specified version so it is visible to all users in the public catalog.
    *
@@ -2026,7 +1937,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Commit a working copy of the specified version.
+   * Commit version.
    *
    * Commit a working copy of the specified version.
    *
@@ -2071,7 +1982,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Copy the specified version to a new target kind within the same offering.
+   * Copy version to new target kind.
    *
    * Copy the specified version to a new target kind within the same offering.
    *
@@ -2080,7 +1991,7 @@ class CatalogManagementV1 extends BaseService {
    * @param {string[]} [params.tags] - Tags array.
    * @param {string[]} [params.targetKinds] - Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and
    * 'terraform'.
-   * @param {number[]} [params.content] - byte array representing the content to be imported.  Only supported for OVA
+   * @param {string} [params.content] - byte array representing the content to be imported.  Only supported for OVA
    * images at this time.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
@@ -2131,7 +2042,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Create a working copy of the specified version.
+   * Create working copy of version.
    *
    * Create a working copy of the specified version.
    *
@@ -2140,8 +2051,8 @@ class CatalogManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Version>>}
    */
-  public getVersionWorkingCopy(
-    params: CatalogManagementV1.GetVersionWorkingCopyParams
+  public getOfferingWorkingCopy(
+    params: CatalogManagementV1.GetOfferingWorkingCopyParams
   ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Version>> {
     const _params = { ...params };
     const requiredParams = ['versionLocId'];
@@ -2158,7 +2069,7 @@ class CatalogManagementV1 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       CatalogManagementV1.DEFAULT_SERVICE_NAME,
       'v1',
-      'getVersionWorkingCopy'
+      'getOfferingWorkingCopy'
     );
 
     const parameters = {
@@ -2183,71 +2094,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get available updates for the specified version.
-   *
-   * Get available updates for the specified version.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.versionLocId - A dotted value of `catalogID`.`versionID`.
-   * @param {string} [params.clusterId] - The id of the cluster where this version was installed.
-   * @param {string} [params.region] - The region of the cluster where this version was installed.
-   * @param {string} [params.resourceGroupId] - The resource group id of the cluster where this version was installed.
-   * @param {string} [params.namespace] - The namespace of the cluster where this version was installed.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.VersionUpdateDescriptor[]>>}
-   */
-  public getVersionUpdates(
-    params: CatalogManagementV1.GetVersionUpdatesParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.VersionUpdateDescriptor[]>> {
-    const _params = { ...params };
-    const requiredParams = ['versionLocId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'cluster_id': _params.clusterId,
-      'region': _params.region,
-      'resource_group_id': _params.resourceGroupId,
-      'namespace': _params.namespace,
-    };
-
-    const path = {
-      'version_loc_id': _params.versionLocId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getVersionUpdates'
-    );
-
-    const parameters = {
-      options: {
-        url: '/versions/{version_loc_id}/updates',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get the Offering/Kind/Version 'branch' for the specified locator ID.
+   * Get offering/kind/version 'branch'.
    *
    * Get the Offering/Kind/Version 'branch' for the specified locator ID.
    *
@@ -2295,9 +2142,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Delete a version.
+   * Delete version.
    *
-   * Delete a the specified version.  If the version is an active version with a working copy, the working copy will be
+   * Delete the specified version.  If the version is an active version with a working copy, the working copy will be
    * deleted as well.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2340,224 +2187,14 @@ class CatalogManagementV1 extends BaseService {
     return this.createRequest(parameters);
   }
 
-  /**
-   * Search for versions.
-   *
-   * [deprecated] use /search/license/versions api instead.   Search across all accounts for versions, requires global
-   * admin permission.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.q - query, for now only "q=entitlement_key:<some-key>" is supported.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
-   */
-  public listVersions(
-    params: CatalogManagementV1.ListVersionsParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = { ...params };
-    const requiredParams = ['q'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'q': _params.q,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listVersions'
-    );
-
-    const parameters = {
-      options: {
-        url: '/versions',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /*************************
-   * repo
-   ************************/
-
-  /**
-   * List a repo's entries.
-   *
-   * List the available entries from a given repo.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.type - The type of repo (valid repo types: helm).
-   * @param {string} params.repourl - The URL for the repo's root (e.g
-   * https://kubernetes-charts-incubator.storage.googleapis.com).
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.HelmRepoList>>}
-   */
-  public getRepos(
-    params: CatalogManagementV1.GetReposParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.HelmRepoList>> {
-    const _params = { ...params };
-    const requiredParams = ['type', 'repourl'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'repourl': _params.repourl,
-    };
-
-    const path = {
-      'type': _params.type,
-    };
-
-    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getRepos');
-
-    const parameters = {
-      options: {
-        url: '/repo/{type}/entries',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get contents of a repo.
-   *
-   * Get the contents of a given repo.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.type - The type of repo (valid repo types: helm).
-   * @param {string} params.charturl - The URL for the repo's chart zip file (e.g
-   * https://registry.bluemix.net/helm/ibm-charts/charts/ibm-redis-ha-dev-1.0.0.tgz).
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.HelmPackage>>}
-   */
-  public getRepo(
-    params: CatalogManagementV1.GetRepoParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.HelmPackage>> {
-    const _params = { ...params };
-    const requiredParams = ['type', 'charturl'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'charturl': _params.charturl,
-    };
-
-    const path = {
-      'type': _params.type,
-    };
-
-    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getRepo');
-
-    const parameters = {
-      options: {
-        url: '/repo/{type}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
   /*************************
    * deploy
    ************************/
 
   /**
-   * List Kube clusters.
+   * Get kubernetes cluster.
    *
-   * List Kube clusters.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {number} [params.limit] - number or results to return.
-   * @param {number} [params.offset] - number of results to skip before returning values.
-   * @param {string} [params.type] - Kubernetes or OpenShift.  Default is kubernetes.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ClusterSearchResult>>}
-   */
-  public listClusters(
-    params?: CatalogManagementV1.ListClustersParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.ClusterSearchResult>> {
-    const _params = { ...params };
-
-    const query = {
-      'limit': _params.limit,
-      'offset': _params.offset,
-      'type': _params.type,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listClusters'
-    );
-
-    const parameters = {
-      options: {
-        url: '/deploy/kubernetes/clusters',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get Kube cluster.
-   *
-   * Get Kube cluster.
+   * Get the contents of the specified kubernetes cluster.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.clusterId - ID of the cluster.
@@ -2613,14 +2250,14 @@ class CatalogManagementV1 extends BaseService {
   /**
    * Get cluster namespaces.
    *
-   * Get cluster namespaces.
+   * Get the namespaces associated with the specified kubernetes cluster.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.clusterId - ID of the cluster.
    * @param {string} params.region - Cluster region.
    * @param {string} params.xAuthRefreshToken - IAM Refresh token.
-   * @param {number} [params.limit] - number or results to return.
-   * @param {number} [params.offset] - number of results to skip before returning values.
+   * @param {number} [params.limit] - The maximum number of results to return.
+   * @param {number} [params.offset] - The number of results to skip before returning values.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.NamespaceSearchResult>>}
    */
@@ -2675,9 +2312,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Deploy Operator(s) on a Kube cluster.
+   * Deploy operators.
    *
-   * Deploy Operator(s) on a Kube cluster.
+   * Deploy operators on a kubernetes cluster.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.xAuthRefreshToken - IAM Refresh token.
@@ -2689,8 +2326,8 @@ class CatalogManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>>}
    */
-  public createOperator(
-    params: CatalogManagementV1.CreateOperatorParams
+  public deployOperators(
+    params: CatalogManagementV1.DeployOperatorsParams
   ): Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>> {
     const _params = { ...params };
     const requiredParams = ['xAuthRefreshToken'];
@@ -2711,7 +2348,7 @@ class CatalogManagementV1 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       CatalogManagementV1.DEFAULT_SERVICE_NAME,
       'v1',
-      'createOperator'
+      'deployOperators'
     );
 
     const parameters = {
@@ -2738,9 +2375,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get Operator(s) from a Kube cluster.
+   * List operators.
    *
-   * Get Operator(s) from a Kube cluster.
+   * List the operators from a kubernetes cluster.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.xAuthRefreshToken - IAM Refresh token.
@@ -2796,9 +2433,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Update Operator(s) on a Kube cluster.
+   * Update operators.
    *
-   * Update Operator(s) on a Kube cluster.
+   * Update the operators on a kubernetes cluster.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.xAuthRefreshToken - IAM Refresh token.
@@ -2810,8 +2447,8 @@ class CatalogManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>>}
    */
-  public replaceOperator(
-    params: CatalogManagementV1.ReplaceOperatorParams
+  public replaceOperators(
+    params: CatalogManagementV1.ReplaceOperatorsParams
   ): Promise<CatalogManagementV1.Response<CatalogManagementV1.OperatorDeployResult[]>> {
     const _params = { ...params };
     const requiredParams = ['xAuthRefreshToken'];
@@ -2832,7 +2469,7 @@ class CatalogManagementV1 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       CatalogManagementV1.DEFAULT_SERVICE_NAME,
       'v1',
-      'replaceOperator'
+      'replaceOperators'
     );
 
     const parameters = {
@@ -2859,9 +2496,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Delete Operator(s) from a Kube cluster.
+   * Delete operators.
    *
-   * Delete Operator(s) from a Kube cluster.
+   * Delete operators from a kubernetes cluster.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.xAuthRefreshToken - IAM Refresh token.
@@ -2871,8 +2508,8 @@ class CatalogManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
-  public deleteOperator(
-    params: CatalogManagementV1.DeleteOperatorParams
+  public deleteOperators(
+    params: CatalogManagementV1.DeleteOperatorsParams
   ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
     const _params = { ...params };
     const requiredParams = ['xAuthRefreshToken', 'clusterId', 'region', 'versionLocatorId'];
@@ -2891,7 +2528,7 @@ class CatalogManagementV1 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       CatalogManagementV1.DEFAULT_SERVICE_NAME,
       'v1',
-      'deleteOperator'
+      'deleteOperators'
     );
 
     const parameters = {
@@ -2916,9 +2553,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Create an install.
+   * Install version.
    *
-   * Create an install.
+   * Create an install for the specified version.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.versionLocId - A dotted value of `catalogID`.`versionID`.
@@ -2926,7 +2563,9 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.clusterId] - Cluster ID.
    * @param {string} [params.region] - Cluster region.
    * @param {string} [params.namespace] - Kube namespace.
-   * @param {JsonObject} [params.overrideValues] - Object containing Helm chart override values.
+   * @param {JsonObject} [params.overrideValues] - Object containing Helm chart override values.  To use a secret for
+   * items of type password, specify a JSON encoded value of $ref:#/components/schemas/SecretInstance, prefixed with
+   * `cmsm_v1:`.
    * @param {string} [params.entitlementApikey] - Entitlement API Key for this offering.
    * @param {DeployRequestBodySchematics} [params.schematics] - Schematics workspace configuration.
    * @param {string} [params.script] - Script.
@@ -3002,9 +2641,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Create a preinstall.
+   * Pre-install version.
    *
-   * Create a preinstall.
+   * Create a pre-install for the specified version.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.versionLocId - A dotted value of `catalogID`.`versionID`.
@@ -3012,7 +2651,9 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.clusterId] - Cluster ID.
    * @param {string} [params.region] - Cluster region.
    * @param {string} [params.namespace] - Kube namespace.
-   * @param {JsonObject} [params.overrideValues] - Object containing Helm chart override values.
+   * @param {JsonObject} [params.overrideValues] - Object containing Helm chart override values.  To use a secret for
+   * items of type password, specify a JSON encoded value of $ref:#/components/schemas/SecretInstance, prefixed with
+   * `cmsm_v1:`.
    * @param {string} [params.entitlementApikey] - Entitlement API Key for this offering.
    * @param {DeployRequestBodySchematics} [params.schematics] - Schematics workspace configuration.
    * @param {string} [params.script] - Script.
@@ -3088,9 +2729,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get a preinstall.
+   * Get version pre-install status.
    *
-   * Get a preinstall.
+   * Get the pre-install status for the specified version.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.versionLocId - A dotted value of `catalogID`.`versionID`.
@@ -3152,9 +2793,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Validate a offering.
+   * Validate offering.
    *
-   * Validate a offering.
+   * Validate the offering associated with the specified version.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.versionLocId - A dotted value of `catalogID`.`versionID`.
@@ -3162,7 +2803,9 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.clusterId] - Cluster ID.
    * @param {string} [params.region] - Cluster region.
    * @param {string} [params.namespace] - Kube namespace.
-   * @param {JsonObject} [params.overrideValues] - Object containing Helm chart override values.
+   * @param {JsonObject} [params.overrideValues] - Object containing Helm chart override values.  To use a secret for
+   * items of type password, specify a JSON encoded value of $ref:#/components/schemas/SecretInstance, prefixed with
+   * `cmsm_v1:`.
    * @param {string} [params.entitlementApikey] - Entitlement API Key for this offering.
    * @param {DeployRequestBodySchematics} [params.schematics] - Schematics workspace configuration.
    * @param {string} [params.script] - Script.
@@ -3176,8 +2819,8 @@ class CatalogManagementV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
    */
-  public validationInstall(
-    params: CatalogManagementV1.ValidationInstallParams
+  public validateInstall(
+    params: CatalogManagementV1.ValidateInstallParams
   ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
     const _params = { ...params };
     const requiredParams = ['versionLocId', 'xAuthRefreshToken'];
@@ -3211,7 +2854,7 @@ class CatalogManagementV1 extends BaseService {
     const sdkHeaders = getSdkHeaders(
       CatalogManagementV1.DEFAULT_SERVICE_NAME,
       'v1',
-      'validationInstall'
+      'validateInstall'
     );
 
     const parameters = {
@@ -3238,7 +2881,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Returns the install status for the specified offering version.
+   * Get offering install status.
    *
    * Returns the install status for the specified offering version.
    *
@@ -3292,7 +2935,7 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Returns the override values that were used to validate the specified offering version.
+   * Get override values.
    *
    * Returns the override values that were used to validate the specified offering version.
    *
@@ -3343,617 +2986,23 @@ class CatalogManagementV1 extends BaseService {
     return this.createRequest(parameters);
   }
 
-  /**
-   * Returns the schematics workspaces for the specified offering version.
-   *
-   * Returns the schematics workspaces for the specified offering version.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.versionLocId - A dotted value of `catalogID`.`versionID`.
-   * @param {string} params.xAuthRefreshToken - IAM Refresh token.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.SchematicsWorkspaceSearchResult>>}
-   */
-  public getSchematicsWorkspaces(
-    params: CatalogManagementV1.GetSchematicsWorkspacesParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.SchematicsWorkspaceSearchResult>> {
-    const _params = { ...params };
-    const requiredParams = ['versionLocId', 'xAuthRefreshToken'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const path = {
-      'version_loc_id': _params.versionLocId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getSchematicsWorkspaces'
-    );
-
-    const parameters = {
-      options: {
-        url: '/versions/{version_loc_id}/workspaces',
-        method: 'GET',
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-            'X-Auth-Refresh-Token': _params.xAuthRefreshToken,
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Returns the schematics permissions for the specified user.
-   *
-   * Returns the schematics permissions for the specified user.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.versionLocId - A dotted value of `catalogID`.`versionID`.
-   * @param {string} params.clusterId - ID of the cluster.
-   * @param {string} params.region - Cluster region.
-   * @param {string} [params.namespace] - Required if the version's pre-install scope is `namespace`.
-   * @param {string} [params.resourceGroupId] - Resource group identification.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.DeployRequirementsCheck>>}
-   */
-  public canDeploySchematics(
-    params: CatalogManagementV1.CanDeploySchematicsParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.DeployRequirementsCheck>> {
-    const _params = { ...params };
-    const requiredParams = ['versionLocId', 'clusterId', 'region'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'cluster_id': _params.clusterId,
-      'region': _params.region,
-      'namespace': _params.namespace,
-      'resource_group_id': _params.resourceGroupId,
-    };
-
-    const path = {
-      'version_loc_id': _params.versionLocId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'canDeploySchematics'
-    );
-
-    const parameters = {
-      options: {
-        url: '/versions/{version_loc_id}/candeploy',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Returns all active resource groups in the current account, where the current user has permission to create schematics workspaces.
-   *
-   * Returns all active resource groups in the current account, where the current user has permission to create
-   * schematics workspaces.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ResourceGroups>>}
-   */
-  public getResourceGroups(
-    params?: CatalogManagementV1.GetResourceGroupsParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.ResourceGroups>> {
-    const _params = { ...params };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getResourceGroups'
-    );
-
-    const parameters = {
-      options: {
-        url: '/deploy/schematics/resourcegroups',
-        method: 'GET',
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /*************************
-   * licensing
-   ************************/
-
-  /**
-   * Get license providers.
-   *
-   * Get license providers.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseProviders>>}
-   */
-  public getLicenseProviders(
-    params?: CatalogManagementV1.GetLicenseProvidersParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseProviders>> {
-    const _params = { ...params };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getLicenseProviders'
-    );
-
-    const parameters = {
-      options: {
-        url: '/license/license_providers',
-        method: 'GET',
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get license entitlements.
-   *
-   * Get license entitlements bound to an account.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.accountId] - The account ID to query for the entitlement. Default is the account from the
-   * user's token.
-   * @param {string} [params.licenseProductId] - The license product ID. If from PPA (Passport Advantage) this is the
-   * product Part number(s) which can be one or more IDs, eg. D1YGZLL,5737L09.
-   * @param {string} [params.versionId] - The GC ID of the specific offering version.
-   * @param {string} [params.state] - The state of the license entitlement. eg. usually 'active', or if it's been
-   * deleted will show as 'removed'.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlements>>}
-   */
-  public listLicenseEntitlements(
-    params?: CatalogManagementV1.ListLicenseEntitlementsParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlements>> {
-    const _params = { ...params };
-
-    const query = {
-      'account_id': _params.accountId,
-      'license_product_id': _params.licenseProductId,
-      'version_id': _params.versionId,
-      'state': _params.state,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listLicenseEntitlements'
-    );
-
-    const parameters = {
-      options: {
-        url: '/license/entitlements',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Create a license entitlement.
-   *
-   * Create an entitlement for a Cloud account.  This is used to give an account an entitlement to a license.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.name] - Entitlement name.
-   * @param {string} [params.effectiveFrom] - Entitlement is good from this starting date. eg.
-   * '2019-07-17T21:21:47.6794935Z'.
-   * @param {string} [params.effectiveUntil] - Entitlement is good until this ending date. eg.
-   * '2019-07-17T21:21:47.6794935Z'.
-   * @param {string} [params.versionId] - Global Catalog ID of the version.
-   * @param {string} [params.licenseId] - Specific license entitlement ID from the license provider, eg. D1W3R4.
-   * @param {string} [params.licenseOwnerId] - IBM ID of the owner of this license entitlement.
-   * @param {string} [params.licenseProviderId] - License provider ID.
-   * @param {string} [params.licenseProductId] - License product ID.
-   * @param {string} [params.accountId] - if not specified the token's account will be used.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlement>>}
-   */
-  public createLicenseEntitlement(
-    params?: CatalogManagementV1.CreateLicenseEntitlementParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlement>> {
-    const _params = { ...params };
-
-    const body = {
-      'name': _params.name,
-      'effective_from': _params.effectiveFrom,
-      'effective_until': _params.effectiveUntil,
-      'version_id': _params.versionId,
-      'license_id': _params.licenseId,
-      'license_owner_id': _params.licenseOwnerId,
-      'license_provider_id': _params.licenseProviderId,
-      'license_product_id': _params.licenseProductId,
-    };
-
-    const query = {
-      'account_id': _params.accountId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createLicenseEntitlement'
-    );
-
-    const parameters = {
-      options: {
-        url: '/license/entitlements',
-        method: 'POST',
-        body,
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get entitlements for a specific license product ID.
-   *
-   * Get an entitlements for a specific license product ID bound to an account.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.licenseProductId - The license product ID. If from PPA (Passport Advantage) this is a
-   * specific product Part number, eg. D1YGZLL.
-   * @param {string} [params.accountId] - The account ID to query for the entitlement. Default is the account from the
-   * user's token.
-   * @param {string} [params.versionId] - The GC ID of the specific offering version.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlements>>}
-   */
-  public getLicenseEntitlements(
-    params: CatalogManagementV1.GetLicenseEntitlementsParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.LicenseEntitlements>> {
-    const _params = { ...params };
-    const requiredParams = ['licenseProductId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'account_id': _params.accountId,
-      'version_id': _params.versionId,
-    };
-
-    const path = {
-      'license_product_id': _params.licenseProductId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getLicenseEntitlements'
-    );
-
-    const parameters = {
-      options: {
-        url: '/license/entitlements/productID/{license_product_id}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Delete license entitlement.
-   *
-   * Delete a license entitlement that is bound to an account. Note that BSS will mark the entitlement field "state":
-   * "removed".
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.entitlementId - The specific entitlement ID (can be obtained from one of the license
-   * entitlement queries).
-   * @param {string} [params.accountId] - The account ID to query for the entitlement. Default is the account from the
-   * user's token.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
-   */
-  public deleteLicenseEntitlement(
-    params: CatalogManagementV1.DeleteLicenseEntitlementParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = { ...params };
-    const requiredParams = ['entitlementId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'account_id': _params.accountId,
-    };
-
-    const path = {
-      'entitlement_id': _params.entitlementId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteLicenseEntitlement'
-    );
-
-    const parameters = {
-      options: {
-        url: '/license/entitlements/{entitlement_id}',
-        method: 'DELETE',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get licenses.
-   *
-   * Retrieve available licenses from supported license subsystems.  This is used to get the list of available licenses
-   * that the user has.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.licenseProviderId - ID of the license provider, ie. retrieved from GET license_providers.
-   * @param {string} [params.accountId] - If not specified the token's account will be used.
-   * @param {string} [params.name] - License name.
-   * @param {string} [params.licenseType] - Type of license, if not specified, default is ibm-ppa.
-   * @param {string} [params.licenseProductId] - The license product ID. If from PPA (Passport Advantage) this is the
-   * product Part number, eg. D1YGZLL.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Licenses>>}
-   */
-  public getLicenses(
-    params: CatalogManagementV1.GetLicensesParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Licenses>> {
-    const _params = { ...params };
-    const requiredParams = ['licenseProviderId'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'license_provider_id': _params.licenseProviderId,
-      'account_id': _params.accountId,
-      'name': _params.name,
-      'license_type': _params.licenseType,
-      'license_product_id': _params.licenseProductId,
-    };
-
-    const sdkHeaders = getSdkHeaders(CatalogManagementV1.DEFAULT_SERVICE_NAME, 'v1', 'getLicenses');
-
-    const parameters = {
-      options: {
-        url: '/license/licenses',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /*************************
-   * crossAccountSearch
-   ************************/
-
-  /**
-   * Search for versions.
-   *
-   * Search across accounts for all versions usig a particular license, requires global admin permission.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.q - query, for now only "q=entitlement_key:<some-key>" is supported.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
-   */
-  public searchLicenseVersions(
-    params: CatalogManagementV1.SearchLicenseVersionsParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = { ...params };
-    const requiredParams = ['q'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'q': _params.q,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'searchLicenseVersions'
-    );
-
-    const parameters = {
-      options: {
-        url: '/search/license/versions',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Search for Offerings.
-   *
-   * Search across accounts for all offerings using a particular license, requires global admin permission.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.q - query, for now only "q=entitlement_key:<some-key>" is supported.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
-   */
-  public searchLicenseOfferings(
-    params: CatalogManagementV1.SearchLicenseOfferingsParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
-    const _params = { ...params };
-    const requiredParams = ['q'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      'q': _params.q,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      CatalogManagementV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'searchLicenseOfferings'
-    );
-
-    const parameters = {
-      options: {
-        url: '/search/license/offerings',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
   /*************************
    * objects
    ************************/
 
   /**
-   * Search for objects across catalogs.
+   * List objects across catalogs.
    *
-   * List the available objects from both public and private. These copies cannot be used for updating. They are not
-   * complete and only return what is visible to the caller.
+   * List the available objects from both public and private catalogs. These copies cannot be used for updating. They
+   * are not complete and only return what is visible to the caller.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.query - Lucene query string.
-   * @param {number} [params.limit] - number or results to return.
-   * @param {number} [params.offset] - number of results to skip before returning values.
-   * @param {boolean} [params.collapse] - when true, hide private objects that correspond to public or IBM published
+   * @param {number} [params.limit] - The maximum number of results to return.
+   * @param {number} [params.offset] - The number of results to skip before returning values.
+   * @param {boolean} [params.collapse] - When true, hide private objects that correspond to public or IBM published
    * objects.
+   * @param {boolean} [params.digest] - Display a digests of search results, has default value of true.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ObjectSearchResult>>}
    */
@@ -3973,6 +3022,7 @@ class CatalogManagementV1 extends BaseService {
       'limit': _params.limit,
       'offset': _params.offset,
       'collapse': _params.collapse,
+      'digest': _params.digest,
     };
 
     const sdkHeaders = getSdkHeaders(
@@ -4003,15 +3053,15 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get list of objects.
+   * List objects within a catalog.
    *
-   * List the available objects in the specified catalog.
+   * List the available objects within the specified catalog.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
-   * @param {number} [params.limit] - number or results to return.
-   * @param {number} [params.offset] - number of results to skip before returning values.
-   * @param {string} [params.name] - only return results that contain the specified string.
+   * @param {number} [params.limit] - The number of results to return.
+   * @param {number} [params.offset] - The number of results to skip before returning values.
+   * @param {string} [params.name] - Only return results that contain the specified string.
    * @param {string} [params.sort] - The field on which the output is sorted. Sorts by default by **label** property.
    * Available fields are **name**, **label**, **created**, and **updated**. By adding **-** (i.e. **-label**) in front
    * of the query string, you can specify descending order. Default is ascending order.
@@ -4065,9 +3115,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Create an object.
+   * Create catalog object.
    *
-   * Create an object.
+   * Create an object with a specific catalog.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
@@ -4077,7 +3127,6 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.crn] - The crn for this specific object.
    * @param {string} [params.url] - The url for this specific object.
    * @param {string} [params.parentId] - The parent for this specific object.
-   * @param {string[]} [params.allowList] - List of allowed accounts for this specific object.
    * @param {string} [params.labelI18n] - Translated display name in the requested language.
    * @param {string} [params.label] - Display name in the requested language.
    * @param {string[]} [params.tags] - List of tags associated with this catalog.
@@ -4092,11 +3141,11 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.catalogName] - The name of the catalog.
    * @param {JsonObject} [params.data] - Map of data values for this object.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<Object>>}
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.CatalogObject>>}
    */
   public createObject(
     params: CatalogManagementV1.CreateObjectParams
-  ): Promise<CatalogManagementV1.Response<Object>> {
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.CatalogObject>> {
     const _params = { ...params };
     const requiredParams = ['catalogIdentifier'];
 
@@ -4112,7 +3161,6 @@ class CatalogManagementV1 extends BaseService {
       'crn': _params.crn,
       'url': _params.url,
       'parent_id': _params.parentId,
-      'allow_list': _params.allowList,
       'label_i18n': _params.labelI18n,
       'label': _params.label,
       'tags': _params.tags,
@@ -4162,19 +3210,19 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get an object.
+   * Get catalog object.
    *
-   * Get an object.
+   * Get the specified object from within the specified catalog.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
    * @param {string} params.objectIdentifier - Object identifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<Object>>}
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.CatalogObject>>}
    */
   public getObject(
     params: CatalogManagementV1.GetObjectParams
-  ): Promise<CatalogManagementV1.Response<Object>> {
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.CatalogObject>> {
     const _params = { ...params };
     const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
 
@@ -4212,9 +3260,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Update an object.
+   * Update catalog object.
    *
-   * Update an object.
+   * Update an object within a specific catalog.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
@@ -4225,7 +3273,6 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.crn] - The crn for this specific object.
    * @param {string} [params.url] - The url for this specific object.
    * @param {string} [params.parentId] - The parent for this specific object.
-   * @param {string[]} [params.allowList] - List of allowed accounts for this specific object.
    * @param {string} [params.labelI18n] - Translated display name in the requested language.
    * @param {string} [params.label] - Display name in the requested language.
    * @param {string[]} [params.tags] - List of tags associated with this catalog.
@@ -4240,11 +3287,11 @@ class CatalogManagementV1 extends BaseService {
    * @param {string} [params.catalogName] - The name of the catalog.
    * @param {JsonObject} [params.data] - Map of data values for this object.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<Object>>}
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.CatalogObject>>}
    */
   public replaceObject(
     params: CatalogManagementV1.ReplaceObjectParams
-  ): Promise<CatalogManagementV1.Response<Object>> {
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.CatalogObject>> {
     const _params = { ...params };
     const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
 
@@ -4260,7 +3307,6 @@ class CatalogManagementV1 extends BaseService {
       'crn': _params.crn,
       'url': _params.url,
       'parent_id': _params.parentId,
-      'allow_list': _params.allowList,
       'label_i18n': _params.labelI18n,
       'label': _params.label,
       'tags': _params.tags,
@@ -4311,9 +3357,9 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Delete an object.
+   * Delete catalog object.
    *
-   * Delete an object.
+   * Delete a specific object within a specific catalog.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
@@ -4358,20 +3404,19 @@ class CatalogManagementV1 extends BaseService {
   }
 
   /**
-   * Get the audit log(s) for object.
+   * Get catalog object audit log.
    *
-   * Get the audit log(s) for object.
+   * Get the audit log associated with a specific catalog object.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.catalogIdentifier - Catalog identifier.
    * @param {string} params.objectIdentifier - Object identifier.
-   * @param {string} [params.id] - Log identification.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.AuditLog>>}
    */
   public getObjectAudit(
     params: CatalogManagementV1.GetObjectAuditParams
-  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.AuditLog>> {
     const _params = { ...params };
     const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
 
@@ -4379,10 +3424,6 @@ class CatalogManagementV1 extends BaseService {
     if (missingParams) {
       return Promise.reject(missingParams);
     }
-
-    const query = {
-      'id': _params.id,
-    };
 
     const path = {
       'catalog_identifier': _params.catalogIdentifier,
@@ -4397,13 +3438,843 @@ class CatalogManagementV1 extends BaseService {
 
     const parameters = {
       options: {
-        url: '/catalogs/{catalog_identifier}/offerings/{object_identifier}/audit',
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/audit',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Publish object to account.
+   *
+   * Publish a catalog object to account.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public accountPublishObject(
+    params: CatalogManagementV1.AccountPublishObjectParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'accountPublishObject'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/account-publish',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {}, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Publish object to share with allow list.
+   *
+   * Publish the specified object so that it is visible to those in the allow list.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public sharedPublishObject(
+    params: CatalogManagementV1.SharedPublishObjectParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'sharedPublishObject'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/shared-publish',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {}, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Publish object to share with IBMers.
+   *
+   * Publish the specified object so that it is visible to IBMers in the public catalog.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public ibmPublishObject(
+    params: CatalogManagementV1.IbmPublishObjectParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'ibmPublishObject'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/ibm-publish',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {}, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Publish object to share with all users.
+   *
+   * Publish the specified object so it is visible to all users in the public catalog.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public publicPublishObject(
+    params: CatalogManagementV1.PublicPublishObjectParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'publicPublishObject'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/public-publish',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {}, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Add account ID to object access list.
+   *
+   * Add an account ID to an object's access list.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {string} params.accountIdentifier - Account identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public createObjectAccess(
+    params: CatalogManagementV1.CreateObjectAccessParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier', 'accountIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+      'account_identifier': _params.accountIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createObjectAccess'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}',
+        method: 'POST',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {}, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Check for account ID in object access list.
+   *
+   * Determine if an account ID is in an object's access list.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {string} params.accountIdentifier - Account identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ObjectAccess>>}
+   */
+  public getObjectAccess(
+    params: CatalogManagementV1.GetObjectAccessParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.ObjectAccess>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier', 'accountIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+      'account_identifier': _params.accountIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getObjectAccess'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Remove account ID from object access list.
+   *
+   * Delete the specified account ID from the specified object's access list.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {string} params.accountIdentifier - Account identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public deleteObjectAccess(
+    params: CatalogManagementV1.DeleteObjectAccessParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier', 'accountIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+      'account_identifier': _params.accountIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteObjectAccess'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/access/{account_identifier}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {}, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get object access list.
+   *
+   * Get the access list associated with the specified object.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {number} [params.limit] - The maximum number of results to return.
+   * @param {number} [params.offset] - The number of results to skip before returning values.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.ObjectAccessListResult>>}
+   */
+  public getObjectAccessList(
+    params: CatalogManagementV1.GetObjectAccessListParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.ObjectAccessListResult>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'limit': _params.limit,
+      'offset': _params.offset,
+    };
+
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getObjectAccessList'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/access',
         method: 'GET',
         qs: query,
         path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(true, sdkHeaders, {}, _params.headers),
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete accounts from object access list.
+   *
+   * Delete all or a set of accounts from an object's access list.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {string[]} params.accounts - A list of accounts to delete.  An entry with star["*"] will remove all
+   * accounts.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.AccessListBulkResponse>>}
+   */
+  public deleteObjectAccessList(
+    params: CatalogManagementV1.DeleteObjectAccessListParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.AccessListBulkResponse>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier', 'accounts'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = _params.accounts;
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteObjectAccessList'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/access',
+        method: 'DELETE',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Add accounts to object access list.
+   *
+   * Add one or more accounts to the specified object's access list.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.catalogIdentifier - Catalog identifier.
+   * @param {string} params.objectIdentifier - Object identifier.
+   * @param {string[]} params.accounts - A list of accounts to add.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.AccessListBulkResponse>>}
+   */
+  public addObjectAccessList(
+    params: CatalogManagementV1.AddObjectAccessListParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.AccessListBulkResponse>> {
+    const _params = { ...params };
+    const requiredParams = ['catalogIdentifier', 'objectIdentifier', 'accounts'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = _params.accounts;
+    const path = {
+      'catalog_identifier': _params.catalogIdentifier,
+      'object_identifier': _params.objectIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'addObjectAccessList'
+    );
+
+    const parameters = {
+      options: {
+        url: '/catalogs/{catalog_identifier}/objects/{object_identifier}/access',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /*************************
+   * instances
+   ************************/
+
+  /**
+   * Create an offering resource instance.
+   *
+   * Provision a new offering in a given account, and return its resource instance.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.xAuthRefreshToken - IAM Refresh token.
+   * @param {string} [params.id] - provisioned instance ID (part of the CRN).
+   * @param {string} [params.rev] - Cloudant revision.
+   * @param {string} [params.url] - url reference to this object.
+   * @param {string} [params.crn] - platform CRN for this instance.
+   * @param {string} [params.label] - the label for this instance.
+   * @param {string} [params.catalogId] - Catalog ID this instance was created from.
+   * @param {string} [params.offeringId] - Offering ID this instance was created from.
+   * @param {string} [params.kindFormat] - the format this instance has (helm, operator, ova...).
+   * @param {string} [params.version] - The version this instance was installed from (not version id).
+   * @param {string} [params.clusterId] - Cluster ID.
+   * @param {string} [params.clusterRegion] - Cluster region (e.g., us-south).
+   * @param {string[]} [params.clusterNamespaces] - List of target namespaces to install into.
+   * @param {boolean} [params.clusterAllNamespaces] - designate to install into all namespaces.
+   * @param {string} [params.schematicsWorkspaceId] - Id of the schematics workspace, for offering instances provisioned
+   * through schematics.
+   * @param {string} [params.resourceGroupId] - Id of the resource group to provision the offering instance into.
+   * @param {string} [params.installPlan] - Type of install plan (also known as approval strategy) for operator
+   * subscriptions. Can be either automatic, which automatically upgrades operators to the latest in a channel, or
+   * manual, which requires approval on the cluster.
+   * @param {string} [params.channel] - Channel to pin the operator subscription to.
+   * @param {JsonObject} [params.metadata] - Map of metadata values for this offering instance.
+   * @param {OfferingInstanceLastOperation} [params.lastOperation] - the last operation performed and status.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingInstance>>}
+   */
+  public createOfferingInstance(
+    params: CatalogManagementV1.CreateOfferingInstanceParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingInstance>> {
+    const _params = { ...params };
+    const requiredParams = ['xAuthRefreshToken'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'id': _params.id,
+      '_rev': _params.rev,
+      'url': _params.url,
+      'crn': _params.crn,
+      'label': _params.label,
+      'catalog_id': _params.catalogId,
+      'offering_id': _params.offeringId,
+      'kind_format': _params.kindFormat,
+      'version': _params.version,
+      'cluster_id': _params.clusterId,
+      'cluster_region': _params.clusterRegion,
+      'cluster_namespaces': _params.clusterNamespaces,
+      'cluster_all_namespaces': _params.clusterAllNamespaces,
+      'schematics_workspace_id': _params.schematicsWorkspaceId,
+      'resource_group_id': _params.resourceGroupId,
+      'install_plan': _params.installPlan,
+      'channel': _params.channel,
+      'metadata': _params.metadata,
+      'last_operation': _params.lastOperation,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'createOfferingInstance'
+    );
+
+    const parameters = {
+      options: {
+        url: '/instances/offerings',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-Auth-Refresh-Token': _params.xAuthRefreshToken,
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get Offering Instance.
+   *
+   * Get the resource associated with an installed offering instance.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.instanceIdentifier - Version Instance identifier.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingInstance>>}
+   */
+  public getOfferingInstance(
+    params: CatalogManagementV1.GetOfferingInstanceParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingInstance>> {
+    const _params = { ...params };
+    const requiredParams = ['instanceIdentifier'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'instance_identifier': _params.instanceIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'getOfferingInstance'
+    );
+
+    const parameters = {
+      options: {
+        url: '/instances/offerings/{instance_identifier}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Update Offering Instance.
+   *
+   * Update an installed offering instance.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.instanceIdentifier - Version Instance identifier.
+   * @param {string} params.xAuthRefreshToken - IAM Refresh token.
+   * @param {string} [params.id] - provisioned instance ID (part of the CRN).
+   * @param {string} [params.rev] - Cloudant revision.
+   * @param {string} [params.url] - url reference to this object.
+   * @param {string} [params.crn] - platform CRN for this instance.
+   * @param {string} [params.label] - the label for this instance.
+   * @param {string} [params.catalogId] - Catalog ID this instance was created from.
+   * @param {string} [params.offeringId] - Offering ID this instance was created from.
+   * @param {string} [params.kindFormat] - the format this instance has (helm, operator, ova...).
+   * @param {string} [params.version] - The version this instance was installed from (not version id).
+   * @param {string} [params.clusterId] - Cluster ID.
+   * @param {string} [params.clusterRegion] - Cluster region (e.g., us-south).
+   * @param {string[]} [params.clusterNamespaces] - List of target namespaces to install into.
+   * @param {boolean} [params.clusterAllNamespaces] - designate to install into all namespaces.
+   * @param {string} [params.schematicsWorkspaceId] - Id of the schematics workspace, for offering instances provisioned
+   * through schematics.
+   * @param {string} [params.resourceGroupId] - Id of the resource group to provision the offering instance into.
+   * @param {string} [params.installPlan] - Type of install plan (also known as approval strategy) for operator
+   * subscriptions. Can be either automatic, which automatically upgrades operators to the latest in a channel, or
+   * manual, which requires approval on the cluster.
+   * @param {string} [params.channel] - Channel to pin the operator subscription to.
+   * @param {JsonObject} [params.metadata] - Map of metadata values for this offering instance.
+   * @param {OfferingInstanceLastOperation} [params.lastOperation] - the last operation performed and status.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingInstance>>}
+   */
+  public putOfferingInstance(
+    params: CatalogManagementV1.PutOfferingInstanceParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.OfferingInstance>> {
+    const _params = { ...params };
+    const requiredParams = ['instanceIdentifier', 'xAuthRefreshToken'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'id': _params.id,
+      '_rev': _params.rev,
+      'url': _params.url,
+      'crn': _params.crn,
+      'label': _params.label,
+      'catalog_id': _params.catalogId,
+      'offering_id': _params.offeringId,
+      'kind_format': _params.kindFormat,
+      'version': _params.version,
+      'cluster_id': _params.clusterId,
+      'cluster_region': _params.clusterRegion,
+      'cluster_namespaces': _params.clusterNamespaces,
+      'cluster_all_namespaces': _params.clusterAllNamespaces,
+      'schematics_workspace_id': _params.schematicsWorkspaceId,
+      'resource_group_id': _params.resourceGroupId,
+      'install_plan': _params.installPlan,
+      'channel': _params.channel,
+      'metadata': _params.metadata,
+      'last_operation': _params.lastOperation,
+    };
+
+    const path = {
+      'instance_identifier': _params.instanceIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'putOfferingInstance'
+    );
+
+    const parameters = {
+      options: {
+        url: '/instances/offerings/{instance_identifier}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-Auth-Refresh-Token': _params.xAuthRefreshToken,
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete a version instance.
+   *
+   * Delete and instance deployed out of a product version.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.instanceIdentifier - Version Instance identifier.
+   * @param {string} params.xAuthRefreshToken - IAM Refresh token.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>>}
+   */
+  public deleteOfferingInstance(
+    params: CatalogManagementV1.DeleteOfferingInstanceParams
+  ): Promise<CatalogManagementV1.Response<CatalogManagementV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['instanceIdentifier', 'xAuthRefreshToken'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'instance_identifier': _params.instanceIdentifier,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      CatalogManagementV1.DEFAULT_SERVICE_NAME,
+      'v1',
+      'deleteOfferingInstance'
+    );
+
+    const parameters = {
+      options: {
+        url: '/instances/offerings/{instance_identifier}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'X-Auth-Refresh-Token': _params.xAuthRefreshToken,
+          },
+          _params.headers
+        ),
       }),
     };
 
@@ -4448,6 +4319,8 @@ namespace CatalogManagementV1 {
   export interface UpdateCatalogAccountParams {
     /** Account identification. */
     id?: string;
+    /** Hide the public catalog in this account. */
+    hideIbmCloudCatalog?: boolean;
     /** Filters for account and catalog filters. */
     accountFilters?: Filters;
     headers?: OutgoingHttpHeaders;
@@ -4455,8 +4328,6 @@ namespace CatalogManagementV1 {
 
   /** Parameters for the `getCatalogAccountAudit` operation. */
   export interface GetCatalogAccountAuditParams {
-    /** Log identification. */
-    id?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4486,20 +4357,10 @@ namespace CatalogManagementV1 {
     catalogIconUrl?: string;
     /** List of tags associated with this catalog. */
     tags?: string[];
-    /** The url for this specific catalog. */
-    url?: string;
-    /** CRN associated with the catalog. */
-    crn?: string;
-    /** URL path to offerings. */
-    offeringsUrl?: string;
     /** List of features associated with this catalog. */
     features?: Feature[];
     /** Denotes whether a catalog is disabled. */
     disabled?: boolean;
-    /** The date'time this catalog was created. */
-    created?: string;
-    /** The date'time this catalog was last updated. */
-    updated?: string;
     /** Resource group id the catalog is owned by. */
     resourceGroupId?: string;
     /** Account that owns catalog. */
@@ -4508,6 +4369,8 @@ namespace CatalogManagementV1 {
     catalogFilters?: Filters;
     /** Feature information. */
     syndicationSettings?: SyndicationResource;
+    /** Kind of catalog. Supported kinds are offering and vpe. */
+    kind?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4534,20 +4397,10 @@ namespace CatalogManagementV1 {
     catalogIconUrl?: string;
     /** List of tags associated with this catalog. */
     tags?: string[];
-    /** The url for this specific catalog. */
-    url?: string;
-    /** CRN associated with the catalog. */
-    crn?: string;
-    /** URL path to offerings. */
-    offeringsUrl?: string;
     /** List of features associated with this catalog. */
     features?: Feature[];
     /** Denotes whether a catalog is disabled. */
     disabled?: boolean;
-    /** The date'time this catalog was created. */
-    created?: string;
-    /** The date'time this catalog was last updated. */
-    updated?: string;
     /** Resource group id the catalog is owned by. */
     resourceGroupId?: string;
     /** Account that owns catalog. */
@@ -4556,6 +4409,8 @@ namespace CatalogManagementV1 {
     catalogFilters?: Filters;
     /** Feature information. */
     syndicationSettings?: SyndicationResource;
+    /** Kind of catalog. Supported kinds are offering and vpe. */
+    kind?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4570,39 +4425,6 @@ namespace CatalogManagementV1 {
   export interface GetCatalogAuditParams {
     /** Catalog identifier. */
     catalogIdentifier: string;
-    /** Log identification. */
-    id?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getEnterprise` operation. */
-  export interface GetEnterpriseParams {
-    /** Enterprise identification. */
-    enterpriseId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `replaceEnterprise` operation. */
-  export interface ReplaceEnterpriseParams {
-    /** Enterprise identification. */
-    enterpriseId: string;
-    /** Enterprise identification. */
-    id?: string;
-    /** Cloudant revision. */
-    rev?: string;
-    /** Filters for account and catalog filters. */
-    accountFilters?: Filters;
-    /** Map of account group ids to AccountGroup objects. */
-    accountGroups?: EnterpriseAccountGroups;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getEnterprisesAudit` operation. */
-  export interface GetEnterprisesAuditParams {
-    /** Enterprise identification. */
-    enterpriseId: string;
-    /** Log identification. */
-    id?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4649,11 +4471,11 @@ namespace CatalogManagementV1 {
      *  much smaller. Defaults to false.
      */
     digest?: boolean;
-    /** number or results to return. */
+    /** The maximum number of results to return. */
     limit?: number;
-    /** number of results to skip before returning values. */
+    /** The number of results to skip before returning values. */
     offset?: number;
-    /** only return results that contain the specified string. */
+    /** Only return results that contain the specified string. */
     name?: string;
     /** The field on which the output is sorted. Sorts by default by **label** property. Available fields are
      *  **name**, **label**, **created**, and **updated**. By adding **-** (i.e. **-label**) in front of the query
@@ -4687,6 +4509,8 @@ namespace CatalogManagementV1 {
     offeringSupportUrl?: string;
     /** List of tags associated with this catalog. */
     tags?: string[];
+    /** List of keywords associated with offering, typically used to search for it. */
+    keywords?: string[];
     /** Repository info for offerings. */
     rating?: Rating;
     /** The date and time this catalog was created. */
@@ -4743,13 +4567,15 @@ namespace CatalogManagementV1 {
     /** Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'. */
     targetKinds?: string[];
     /** byte array representing the content to be imported.  Only supported for OVA images at this time. */
-    content?: number[];
+    content?: string;
     /** URL path to zip location.  If not specified, must provide content in the body of this call. */
     zipurl?: string;
     /** The semver value for this new version, if not found in the zip url package content. */
     targetVersion?: string;
     /** Add all possible configuration values to this version when importing. */
     includeConfig?: boolean;
+    /** Indicates that the current terraform template is used to install a VSI Image. */
+    isVsi?: boolean;
     /** The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'. */
     repoType?: string;
     headers?: OutgoingHttpHeaders;
@@ -4764,7 +4590,7 @@ namespace CatalogManagementV1 {
     /** Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'. */
     targetKinds?: string[];
     /** byte array representing the content to be imported.  Only supported for OVA images at this time. */
-    content?: number[];
+    content?: string;
     /** URL path to zip location.  If not specified, must provide content in this post body. */
     zipurl?: string;
     /** Re-use the specified offeringID during import. */
@@ -4773,6 +4599,8 @@ namespace CatalogManagementV1 {
     targetVersion?: string;
     /** Add all possible configuration items when creating this version. */
     includeConfig?: boolean;
+    /** Indicates that the current terraform template is used to install a VSI Image. */
+    isVsi?: boolean;
     /** The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'. */
     repoType?: string;
     /** Authentication token used to access the specified zip file. */
@@ -4793,7 +4621,7 @@ namespace CatalogManagementV1 {
     /** Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'. */
     targetKinds?: string[];
     /** byte array representing the content to be imported.  Only supported for OVA images at this time. */
-    content?: number[];
+    content?: string;
     /** URL path to zip location.  If not specified, must provide content in this post body. */
     zipurl?: string;
     /** The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'. */
@@ -4836,6 +4664,8 @@ namespace CatalogManagementV1 {
     offeringSupportUrl?: string;
     /** List of tags associated with this catalog. */
     tags?: string[];
+    /** List of keywords associated with offering, typically used to search for it. */
+    keywords?: string[];
     /** Repository info for offerings. */
     rating?: Rating;
     /** The date and time this catalog was created. */
@@ -4896,8 +4726,6 @@ namespace CatalogManagementV1 {
     catalogIdentifier: string;
     /** Offering identifier. */
     offeringId: string;
-    /** Log identification. */
-    id?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -4940,15 +4768,38 @@ namespace CatalogManagementV1 {
     }
   }
 
-  /** Parameters for the `getVersionAbout` operation. */
-  export interface GetVersionAboutParams {
+  /** Parameters for the `getOfferingUpdates` operation. */
+  export interface GetOfferingUpdatesParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Offering identification. */
+    offeringId: string;
+    /** The kind of offering (e.g, helm, ova, terraform ...). */
+    kind: string;
+    /** optionaly provide an existing version to check updates for if one is not given, all version will be
+     *  returned.
+     */
+    version?: string;
+    /** The id of the cluster where this version was installed. */
+    clusterId?: string;
+    /** The region of the cluster where this version was installed. */
+    region?: string;
+    /** The resource group id of the cluster where this version was installed. */
+    resourceGroupId?: string;
+    /** The namespace of the cluster where this version was installed. */
+    namespace?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getOfferingAbout` operation. */
+  export interface GetOfferingAboutParams {
     /** A dotted value of `catalogID`.`versionID`. */
     versionLocId: string;
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `getVersionLicense` operation. */
-  export interface GetVersionLicenseParams {
+  /** Parameters for the `getOfferingLicense` operation. */
+  export interface GetOfferingLicenseParams {
     /** A dotted value of `catalogID`.`versionID`. */
     versionLocId: string;
     /** The ID of the license, which maps to the file name in the 'licenses' directory of this verions tgz file. */
@@ -4956,8 +4807,8 @@ namespace CatalogManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `getVersionContainerImages` operation. */
-  export interface GetVersionContainerImagesParams {
+  /** Parameters for the `getOfferingContainerImages` operation. */
+  export interface GetOfferingContainerImagesParams {
     /** A dotted value of `catalogID`.`versionID`. */
     versionLocId: string;
     headers?: OutgoingHttpHeaders;
@@ -5007,29 +4858,14 @@ namespace CatalogManagementV1 {
     /** Target kinds.  Current valid values are 'iks', 'roks', 'vcenter', and 'terraform'. */
     targetKinds?: string[];
     /** byte array representing the content to be imported.  Only supported for OVA images at this time. */
-    content?: number[];
+    content?: string;
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `getVersionWorkingCopy` operation. */
-  export interface GetVersionWorkingCopyParams {
+  /** Parameters for the `getOfferingWorkingCopy` operation. */
+  export interface GetOfferingWorkingCopyParams {
     /** A dotted value of `catalogID`.`versionID`. */
     versionLocId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getVersionUpdates` operation. */
-  export interface GetVersionUpdatesParams {
-    /** A dotted value of `catalogID`.`versionID`. */
-    versionLocId: string;
-    /** The id of the cluster where this version was installed. */
-    clusterId?: string;
-    /** The region of the cluster where this version was installed. */
-    region?: string;
-    /** The resource group id of the cluster where this version was installed. */
-    resourceGroupId?: string;
-    /** The namespace of the cluster where this version was installed. */
-    namespace?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -5044,44 +4880,6 @@ namespace CatalogManagementV1 {
   export interface DeleteVersionParams {
     /** A dotted value of `catalogID`.`versionID`. */
     versionLocId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `listVersions` operation. */
-  export interface ListVersionsParams {
-    /** query, for now only "q=entitlement_key:<some-key>" is supported. */
-    q: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getRepos` operation. */
-  export interface GetReposParams {
-    /** The type of repo (valid repo types: helm). */
-    type: string;
-    /** The URL for the repo's root (e.g https://kubernetes-charts-incubator.storage.googleapis.com). */
-    repourl: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getRepo` operation. */
-  export interface GetRepoParams {
-    /** The type of repo (valid repo types: helm). */
-    type: string;
-    /** The URL for the repo's chart zip file (e.g
-     *  https://registry.bluemix.net/helm/ibm-charts/charts/ibm-redis-ha-dev-1.0.0.tgz).
-     */
-    charturl: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `listClusters` operation. */
-  export interface ListClustersParams {
-    /** number or results to return. */
-    limit?: number;
-    /** number of results to skip before returning values. */
-    offset?: number;
-    /** Kubernetes or OpenShift.  Default is kubernetes. */
-    type?: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -5104,15 +4902,15 @@ namespace CatalogManagementV1 {
     region: string;
     /** IAM Refresh token. */
     xAuthRefreshToken: string;
-    /** number or results to return. */
+    /** The maximum number of results to return. */
     limit?: number;
-    /** number of results to skip before returning values. */
+    /** The number of results to skip before returning values. */
     offset?: number;
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `createOperator` operation. */
-  export interface CreateOperatorParams {
+  /** Parameters for the `deployOperators` operation. */
+  export interface DeployOperatorsParams {
     /** IAM Refresh token. */
     xAuthRefreshToken: string;
     /** Cluster ID. */
@@ -5141,8 +4939,8 @@ namespace CatalogManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `replaceOperator` operation. */
-  export interface ReplaceOperatorParams {
+  /** Parameters for the `replaceOperators` operation. */
+  export interface ReplaceOperatorsParams {
     /** IAM Refresh token. */
     xAuthRefreshToken: string;
     /** Cluster ID. */
@@ -5158,8 +4956,8 @@ namespace CatalogManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `deleteOperator` operation. */
-  export interface DeleteOperatorParams {
+  /** Parameters for the `deleteOperators` operation. */
+  export interface DeleteOperatorsParams {
     /** IAM Refresh token. */
     xAuthRefreshToken: string;
     /** Cluster identification. */
@@ -5183,7 +4981,9 @@ namespace CatalogManagementV1 {
     region?: string;
     /** Kube namespace. */
     namespace?: string;
-    /** Object containing Helm chart override values. */
+    /** Object containing Helm chart override values.  To use a secret for items of type password, specify a JSON
+     *  encoded value of $ref:#/components/schemas/SecretInstance, prefixed with `cmsm_v1:`.
+     */
     overrideValues?: JsonObject;
     /** Entitlement API Key for this offering. */
     entitlementApikey?: string;
@@ -5220,7 +5020,9 @@ namespace CatalogManagementV1 {
     region?: string;
     /** Kube namespace. */
     namespace?: string;
-    /** Object containing Helm chart override values. */
+    /** Object containing Helm chart override values.  To use a secret for items of type password, specify a JSON
+     *  encoded value of $ref:#/components/schemas/SecretInstance, prefixed with `cmsm_v1:`.
+     */
     overrideValues?: JsonObject;
     /** Entitlement API Key for this offering. */
     entitlementApikey?: string;
@@ -5260,8 +5062,8 @@ namespace CatalogManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `validationInstall` operation. */
-  export interface ValidationInstallParams {
+  /** Parameters for the `validateInstall` operation. */
+  export interface ValidateInstallParams {
     /** A dotted value of `catalogID`.`versionID`. */
     versionLocId: string;
     /** IAM Refresh token. */
@@ -5272,7 +5074,9 @@ namespace CatalogManagementV1 {
     region?: string;
     /** Kube namespace. */
     namespace?: string;
-    /** Object containing Helm chart override values. */
+    /** Object containing Helm chart override values.  To use a secret for items of type password, specify a JSON
+     *  encoded value of $ref:#/components/schemas/SecretInstance, prefixed with `cmsm_v1:`.
+     */
     overrideValues?: JsonObject;
     /** Entitlement API Key for this offering. */
     entitlementApikey?: string;
@@ -5313,139 +5117,18 @@ namespace CatalogManagementV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `getSchematicsWorkspaces` operation. */
-  export interface GetSchematicsWorkspacesParams {
-    /** A dotted value of `catalogID`.`versionID`. */
-    versionLocId: string;
-    /** IAM Refresh token. */
-    xAuthRefreshToken: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `canDeploySchematics` operation. */
-  export interface CanDeploySchematicsParams {
-    /** A dotted value of `catalogID`.`versionID`. */
-    versionLocId: string;
-    /** ID of the cluster. */
-    clusterId: string;
-    /** Cluster region. */
-    region: string;
-    /** Required if the version's pre-install scope is `namespace`. */
-    namespace?: string;
-    /** Resource group identification. */
-    resourceGroupId?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getResourceGroups` operation. */
-  export interface GetResourceGroupsParams {
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getLicenseProviders` operation. */
-  export interface GetLicenseProvidersParams {
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `listLicenseEntitlements` operation. */
-  export interface ListLicenseEntitlementsParams {
-    /** The account ID to query for the entitlement. Default is the account from the user's token. */
-    accountId?: string;
-    /** The license product ID. If from PPA (Passport Advantage) this is the product Part number(s) which can be one
-     *  or more IDs, eg. D1YGZLL,5737L09.
-     */
-    licenseProductId?: string;
-    /** The GC ID of the specific offering version. */
-    versionId?: string;
-    /** The state of the license entitlement. eg. usually 'active', or if it's been deleted will show as 'removed'. */
-    state?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `createLicenseEntitlement` operation. */
-  export interface CreateLicenseEntitlementParams {
-    /** Entitlement name. */
-    name?: string;
-    /** Entitlement is good from this starting date. eg. '2019-07-17T21:21:47.6794935Z'. */
-    effectiveFrom?: string;
-    /** Entitlement is good until this ending date. eg. '2019-07-17T21:21:47.6794935Z'. */
-    effectiveUntil?: string;
-    /** Global Catalog ID of the version. */
-    versionId?: string;
-    /** Specific license entitlement ID from the license provider, eg. D1W3R4. */
-    licenseId?: string;
-    /** IBM ID of the owner of this license entitlement. */
-    licenseOwnerId?: string;
-    /** License provider ID. */
-    licenseProviderId?: string;
-    /** License product ID. */
-    licenseProductId?: string;
-    /** if not specified the token's account will be used. */
-    accountId?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getLicenseEntitlements` operation. */
-  export interface GetLicenseEntitlementsParams {
-    /** The license product ID. If from PPA (Passport Advantage) this is a specific product Part number, eg.
-     *  D1YGZLL.
-     */
-    licenseProductId: string;
-    /** The account ID to query for the entitlement. Default is the account from the user's token. */
-    accountId?: string;
-    /** The GC ID of the specific offering version. */
-    versionId?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `deleteLicenseEntitlement` operation. */
-  export interface DeleteLicenseEntitlementParams {
-    /** The specific entitlement ID (can be obtained from one of the license entitlement queries). */
-    entitlementId: string;
-    /** The account ID to query for the entitlement. Default is the account from the user's token. */
-    accountId?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getLicenses` operation. */
-  export interface GetLicensesParams {
-    /** ID of the license provider, ie. retrieved from GET license_providers. */
-    licenseProviderId: string;
-    /** If not specified the token's account will be used. */
-    accountId?: string;
-    /** License name. */
-    name?: string;
-    /** Type of license, if not specified, default is ibm-ppa. */
-    licenseType?: string;
-    /** The license product ID. If from PPA (Passport Advantage) this is the product Part number, eg. D1YGZLL. */
-    licenseProductId?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `searchLicenseVersions` operation. */
-  export interface SearchLicenseVersionsParams {
-    /** query, for now only "q=entitlement_key:<some-key>" is supported. */
-    q: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `searchLicenseOfferings` operation. */
-  export interface SearchLicenseOfferingsParams {
-    /** query, for now only "q=entitlement_key:<some-key>" is supported. */
-    q: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
   /** Parameters for the `searchObjects` operation. */
   export interface SearchObjectsParams {
     /** Lucene query string. */
     query: string;
-    /** number or results to return. */
+    /** The maximum number of results to return. */
     limit?: number;
-    /** number of results to skip before returning values. */
+    /** The number of results to skip before returning values. */
     offset?: number;
-    /** when true, hide private objects that correspond to public or IBM published objects. */
+    /** When true, hide private objects that correspond to public or IBM published objects. */
     collapse?: boolean;
+    /** Display a digests of search results, has default value of true. */
+    digest?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -5453,11 +5136,11 @@ namespace CatalogManagementV1 {
   export interface ListObjectsParams {
     /** Catalog identifier. */
     catalogIdentifier: string;
-    /** number or results to return. */
+    /** The number of results to return. */
     limit?: number;
-    /** number of results to skip before returning values. */
+    /** The number of results to skip before returning values. */
     offset?: number;
-    /** only return results that contain the specified string. */
+    /** Only return results that contain the specified string. */
     name?: string;
     /** The field on which the output is sorted. Sorts by default by **label** property. Available fields are
      *  **name**, **label**, **created**, and **updated**. By adding **-** (i.e. **-label**) in front of the query
@@ -5483,8 +5166,6 @@ namespace CatalogManagementV1 {
     url?: string;
     /** The parent for this specific object. */
     parentId?: string;
-    /** List of allowed accounts for this specific object. */
-    allowList?: string[];
     /** Translated display name in the requested language. */
     labelI18n?: string;
     /** Display name in the requested language. */
@@ -5541,8 +5222,6 @@ namespace CatalogManagementV1 {
     url?: string;
     /** The parent for this specific object. */
     parentId?: string;
-    /** List of allowed accounts for this specific object. */
-    allowList?: string[];
     /** Translated display name in the requested language. */
     labelI18n?: string;
     /** Display name in the requested language. */
@@ -5587,8 +5266,224 @@ namespace CatalogManagementV1 {
     catalogIdentifier: string;
     /** Object identifier. */
     objectIdentifier: string;
-    /** Log identification. */
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `accountPublishObject` operation. */
+  export interface AccountPublishObjectParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `sharedPublishObject` operation. */
+  export interface SharedPublishObjectParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `ibmPublishObject` operation. */
+  export interface IbmPublishObjectParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `publicPublishObject` operation. */
+  export interface PublicPublishObjectParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createObjectAccess` operation. */
+  export interface CreateObjectAccessParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    /** Account identifier. */
+    accountIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getObjectAccess` operation. */
+  export interface GetObjectAccessParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    /** Account identifier. */
+    accountIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteObjectAccess` operation. */
+  export interface DeleteObjectAccessParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    /** Account identifier. */
+    accountIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getObjectAccessList` operation. */
+  export interface GetObjectAccessListParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    /** The maximum number of results to return. */
+    limit?: number;
+    /** The number of results to skip before returning values. */
+    offset?: number;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteObjectAccessList` operation. */
+  export interface DeleteObjectAccessListParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    /** A list of accounts to delete.  An entry with star["*"] will remove all accounts. */
+    accounts: string[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `addObjectAccessList` operation. */
+  export interface AddObjectAccessListParams {
+    /** Catalog identifier. */
+    catalogIdentifier: string;
+    /** Object identifier. */
+    objectIdentifier: string;
+    /** A list of accounts to add. */
+    accounts: string[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createOfferingInstance` operation. */
+  export interface CreateOfferingInstanceParams {
+    /** IAM Refresh token. */
+    xAuthRefreshToken: string;
+    /** provisioned instance ID (part of the CRN). */
     id?: string;
+    /** Cloudant revision. */
+    rev?: string;
+    /** url reference to this object. */
+    url?: string;
+    /** platform CRN for this instance. */
+    crn?: string;
+    /** the label for this instance. */
+    label?: string;
+    /** Catalog ID this instance was created from. */
+    catalogId?: string;
+    /** Offering ID this instance was created from. */
+    offeringId?: string;
+    /** the format this instance has (helm, operator, ova...). */
+    kindFormat?: string;
+    /** The version this instance was installed from (not version id). */
+    version?: string;
+    /** Cluster ID. */
+    clusterId?: string;
+    /** Cluster region (e.g., us-south). */
+    clusterRegion?: string;
+    /** List of target namespaces to install into. */
+    clusterNamespaces?: string[];
+    /** designate to install into all namespaces. */
+    clusterAllNamespaces?: boolean;
+    /** Id of the schematics workspace, for offering instances provisioned through schematics. */
+    schematicsWorkspaceId?: string;
+    /** Id of the resource group to provision the offering instance into. */
+    resourceGroupId?: string;
+    /** Type of install plan (also known as approval strategy) for operator subscriptions. Can be either automatic,
+     *  which automatically upgrades operators to the latest in a channel, or manual, which requires approval on the
+     *  cluster.
+     */
+    installPlan?: string;
+    /** Channel to pin the operator subscription to. */
+    channel?: string;
+    /** Map of metadata values for this offering instance. */
+    metadata?: JsonObject;
+    /** the last operation performed and status. */
+    lastOperation?: OfferingInstanceLastOperation;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getOfferingInstance` operation. */
+  export interface GetOfferingInstanceParams {
+    /** Version Instance identifier. */
+    instanceIdentifier: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `putOfferingInstance` operation. */
+  export interface PutOfferingInstanceParams {
+    /** Version Instance identifier. */
+    instanceIdentifier: string;
+    /** IAM Refresh token. */
+    xAuthRefreshToken: string;
+    /** provisioned instance ID (part of the CRN). */
+    id?: string;
+    /** Cloudant revision. */
+    rev?: string;
+    /** url reference to this object. */
+    url?: string;
+    /** platform CRN for this instance. */
+    crn?: string;
+    /** the label for this instance. */
+    label?: string;
+    /** Catalog ID this instance was created from. */
+    catalogId?: string;
+    /** Offering ID this instance was created from. */
+    offeringId?: string;
+    /** the format this instance has (helm, operator, ova...). */
+    kindFormat?: string;
+    /** The version this instance was installed from (not version id). */
+    version?: string;
+    /** Cluster ID. */
+    clusterId?: string;
+    /** Cluster region (e.g., us-south). */
+    clusterRegion?: string;
+    /** List of target namespaces to install into. */
+    clusterNamespaces?: string[];
+    /** designate to install into all namespaces. */
+    clusterAllNamespaces?: boolean;
+    /** Id of the schematics workspace, for offering instances provisioned through schematics. */
+    schematicsWorkspaceId?: string;
+    /** Id of the resource group to provision the offering instance into. */
+    resourceGroupId?: string;
+    /** Type of install plan (also known as approval strategy) for operator subscriptions. Can be either automatic,
+     *  which automatically upgrades operators to the latest in a channel, or manual, which requires approval on the
+     *  cluster.
+     */
+    installPlan?: string;
+    /** Channel to pin the operator subscription to. */
+    channel?: string;
+    /** Map of metadata values for this offering instance. */
+    metadata?: JsonObject;
+    /** the last operation performed and status. */
+    lastOperation?: OfferingInstanceLastOperation;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteOfferingInstance` operation. */
+  export interface DeleteOfferingInstanceParams {
+    /** Version Instance identifier. */
+    instanceIdentifier: string;
+    /** IAM Refresh token. */
+    xAuthRefreshToken: string;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -5596,18 +5491,18 @@ namespace CatalogManagementV1 {
    * model interfaces
    ************************/
 
+  /** Access List Add/Remove result. */
+  export interface AccessListBulkResponse {
+    /** in the case of error on an account add/remove - account: error. */
+    errors?: JsonObject;
+  }
+
   /** Account information. */
   export interface Account {
     /** Account identification. */
     id?: string;
-    /** Filters for account and catalog filters. */
-    account_filters?: Filters;
-  }
-
-  /** Filters for an Account Group. */
-  export interface AccountGroup {
-    /** Account group identification. */
-    id?: string;
+    /** Hide the public catalog in this account. */
+    hide_IBM_cloud_catalog?: boolean;
     /** Filters for account and catalog filters. */
     account_filters?: Filters;
   }
@@ -5648,6 +5543,30 @@ namespace CatalogManagementV1 {
     changed?: boolean;
   }
 
+  /** A collection of audit records. */
+  export interface AuditLog {
+    /** A list of audit records. */
+    list?: AuditRecord[];
+  }
+
+  /** An audit record which describes a change made to a catalog or associated resource. */
+  export interface AuditRecord {
+    /** The identifier of the audit record. */
+    id?: string;
+    /** The time at which the change was made. */
+    created?: string;
+    /** The type of change described by the audit record. */
+    change_type?: string;
+    /** The resource type associated with the change. */
+    target_type?: string;
+    /** The identifier of the resource that was changed. */
+    target_id?: string;
+    /** The email address of the user that made the change. */
+    who_delegate_email?: string;
+    /** A message which describes the change. */
+    message?: string;
+  }
+
   /** Catalog information. */
   export interface Catalog {
     /** Unique ID. */
@@ -5672,9 +5591,9 @@ namespace CatalogManagementV1 {
     features?: Feature[];
     /** Denotes whether a catalog is disabled. */
     disabled?: boolean;
-    /** The date'time this catalog was created. */
+    /** The date-time this catalog was created. */
     created?: string;
-    /** The date'time this catalog was last updated. */
+    /** The date-time this catalog was last updated. */
     updated?: string;
     /** Resource group id the catalog is owned by. */
     resource_group_id?: string;
@@ -5684,26 +5603,56 @@ namespace CatalogManagementV1 {
     catalog_filters?: Filters;
     /** Feature information. */
     syndication_settings?: SyndicationResource;
+    /** Kind of catalog. Supported kinds are offering and vpe. */
+    kind?: string;
+  }
+
+  /** object information. */
+  export interface CatalogObject {
+    /** unique id. */
+    id?: string;
+    /** The programmatic name of this offering. */
+    name?: string;
+    /** Cloudant revision. */
+    _rev?: string;
+    /** The crn for this specific object. */
+    crn?: string;
+    /** The url for this specific object. */
+    url?: string;
+    /** The parent for this specific object. */
+    parent_id?: string;
+    /** Translated display name in the requested language. */
+    label_i18n?: string;
+    /** Display name in the requested language. */
+    label?: string;
+    /** List of tags associated with this catalog. */
+    tags?: string[];
+    /** The date and time this catalog was created. */
+    created?: string;
+    /** The date and time this catalog was last updated. */
+    updated?: string;
+    /** Short description in the requested language. */
+    short_description?: string;
+    /** Short description translation. */
+    short_description_i18n?: string;
+    /** Kind of object. */
+    kind?: string;
+    /** Publish information. */
+    publish?: PublishObject;
+    /** Offering state. */
+    state?: State;
+    /** The id of the catalog containing this offering. */
+    catalog_id?: string;
+    /** The name of the catalog. */
+    catalog_name?: string;
+    /** Map of data values for this object. */
+    data?: JsonObject;
   }
 
   /** Paginated catalog search result. */
   export interface CatalogSearchResult {
-    /** The offset (origin 0) of the first resource in this page of search results. */
-    offset?: number;
-    /** The maximum number of resources returned in each page of search results. */
-    limit?: number;
     /** The overall total number of resources in the search result set. */
     total_count?: number;
-    /** The number of resources returned in this page of search results. */
-    resource_count?: number;
-    /** A URL for retrieving the first page of search results. */
-    first?: string;
-    /** A URL for retrieving the last page of search results. */
-    last?: string;
-    /** A URL for retrieving the previous page of search results. */
-    prev?: string;
-    /** A URL for retrieving the next page of search results. */
-    next?: string;
     /** Resulting objects. */
     resources?: Catalog[];
   }
@@ -5730,35 +5679,15 @@ namespace CatalogManagementV1 {
     region?: string;
   }
 
-  /** Paginated cluster search result. */
-  export interface ClusterSearchResult {
-    /** The offset (origin 0) of the first resource in this page of search results. */
-    offset?: number;
-    /** The maximum number of resources returned in each page of search results. */
-    limit?: number;
-    /** The overall total number of resources in the search result set. */
-    total_count?: number;
-    /** The number of resources returned in this page of search results. */
-    resource_count?: number;
-    /** A URL for retrieving the first page of search results. */
-    first?: string;
-    /** A URL for retrieving the last page of search results. */
-    last?: string;
-    /** A URL for retrieving the previous page of search results. */
-    prev?: string;
-    /** A URL for retrieving the next page of search results. */
-    next?: string;
-    /** Resulting objects. */
-    resources?: ClusterInfo[];
-  }
-
   /** Configuration description. */
   export interface Configuration {
     /** Configuration key. */
     key?: string;
     /** Value type (string, boolean, int). */
     type?: string;
-    /** The default value. */
+    /** The default value.  To use a secret when the type is password, specify a JSON encoded value of
+     *  $ref:#/components/schemas/SecretInstance, prefixed with `cmsm_v1:`.
+     */
     default_value?: any;
     /** Constraint associated with value, e.g., for string type - regx:[a-z]. */
     value_constraint?: string;
@@ -5767,7 +5696,7 @@ namespace CatalogManagementV1 {
     /** Is key required to install. */
     required?: boolean;
     /** List of options of type. */
-    options?: JsonObject[];
+    options?: any[];
     /** Hide values. */
     hidden?: boolean;
   }
@@ -5782,14 +5711,6 @@ namespace CatalogManagementV1 {
     tags?: string[];
     /** Resource group to use when creating the schematics workspace. */
     resource_group_id?: string;
-  }
-
-  /** Failed deployment requirements. */
-  export interface DeployRequirementsCheck {
-    /** Failed during pre-install. */
-    pre_install?: JsonObject;
-    /** Failed during install. */
-    install?: JsonObject;
   }
 
   /** Deployment for offering. */
@@ -5812,24 +5733,6 @@ namespace CatalogManagementV1 {
     created?: string;
     /** the date'time this catalog was last updated. */
     updated?: string;
-  }
-
-  /** Enterprise account information. */
-  export interface Enterprise {
-    /** Enterprise identification. */
-    id?: string;
-    /** Cloudant revision. */
-    _rev?: string;
-    /** Filters for account and catalog filters. */
-    account_filters?: Filters;
-    /** Map of account group ids to AccountGroup objects. */
-    account_groups?: EnterpriseAccountGroups;
-  }
-
-  /** Map of account group ids to AccountGroup objects. */
-  export interface EnterpriseAccountGroups {
-    /** Filters for an Account Group. */
-    keys?: AccountGroup;
   }
 
   /** Feature information. */
@@ -5860,80 +5763,6 @@ namespace CatalogManagementV1 {
     category_filters?: JsonObject;
     /** Filter on offering ID's. There is an include filter and an exclule filter. Both can be set. */
     id_filters?: IDFilter;
-  }
-
-  /** Helm chart. */
-  export interface HelmChart {
-    /** Chart name. */
-    name?: string;
-    /** Chart description. */
-    description?: string;
-    /** Chart icon. */
-    icon?: string;
-    /** Chart version. */
-    version?: string;
-    /** Chart app version. */
-    appVersion?: string;
-  }
-
-  /** Helm package. */
-  export interface HelmPackage {
-    /** The name of the requested chart, or the name of a nested chart within the requested chart. */
-    chart?: HelmPackageChart;
-  }
-
-  /** The name of the requested chart, or the name of a nested chart within the requested chart. */
-  export interface HelmPackageChart {
-    /** Helm chart. */
-    'Chart.yaml'?: HelmChart;
-    /** Project SHA. */
-    sha?: JsonObject;
-    /** Helm chart description. */
-    'README.md'?: string;
-    /** Values metadata. */
-    'values-metadata'?: JsonObject;
-    /** License metadata. */
-    'license-metadata'?: JsonObject;
-  }
-
-  /** Helm repository metadata. */
-  export interface HelmRepoList {
-    /** A chart entry in the repo. This response will contain many chart names. */
-    chart?: HelmRepoListChart;
-  }
-
-  /** A chart entry in the repo. This response will contain many chart names. */
-  export interface HelmRepoListChart {
-    /** API version. */
-    api_version?: string;
-    /** Date and time created. */
-    created?: string;
-    /** Description of Helm repo entry. */
-    description?: string;
-    /** Denotes whether repo entry is deprecated. */
-    deprecated?: boolean;
-    /** Digest of entry. */
-    digest?: string;
-    /** Location of repo entry. */
-    home?: string;
-    /** Entry icon. */
-    icon?: string;
-    /** List of keywords. */
-    keywords?: string[];
-    /** Emails and names of repo maintainers. */
-    maintainers?: Maintainers[];
-    /** Entry name. */
-    name?: string;
-    /** Helm server version. */
-    tiller_version?: string;
-    /** Array of URLs. */
-    urls?: string[];
-    /** Array of sources. */
-    sources?: string[];
-    /** Entry version. */
-    version?: string;
-    /** Application version. */
-    appVersion?: string;
   }
 
   /** Filter on offering ID's. There is an include filter and an exclule filter. Both can be set. */
@@ -6044,206 +5873,12 @@ namespace CatalogManagementV1 {
     description?: string;
   }
 
-  /** License entitlement. */
-  export interface LicenseEntitlement {
-    /** Entitlement name. */
-    name?: string;
-    /** Entitlement ID. */
-    id?: string;
-    /** Entitlement CRN. */
-    crn?: string;
-    /** URL for the BSS entitlement, e.g. /v1/licensing/entitlements/:id. */
-    url?: string;
-    /** Entitlement offering type. */
-    offering_type?: string;
-    /** State of the BSS entitlement, e.g. 'active' or if it's been deleted, 'removed'. */
-    state?: string;
-    /** Entitlement is good from this starting date. eg. '2019-07-17T21:21:47.6794935Z'. */
-    effective_from?: string;
-    /** Entitlement is good until this ending date. eg. '2019-07-17T21:21:47.6794935Z'. */
-    effective_until?: string;
-    /** Account ID where this entitlement is bound to. */
-    account_id?: string;
-    /** Account ID of owner. */
-    owner_id?: string;
-    /** GC ID of the specific offering version. */
-    version_id?: string;
-    /** Marketplace offering ID for this license entitlement. */
-    license_offering_id?: string;
-    /** Specific license entitlement ID from the license provider, eg. D1W3R4. */
-    license_id?: string;
-    /** IBM ID of the owner of this license entitlement. */
-    license_owner_id?: string;
-    /** Type of license entitlement, e.g. ibm-ppa. */
-    license_type?: string;
-    /** ID of the license provider. */
-    license_provider_id?: string;
-    /** URL for the BSS license provider, e.g. /v1/licensing/license_providers/:license_provider_id. */
-    license_provider_url?: string;
-    /** Specific license entitlement ID from the license provider, eg. D1W3R4. */
-    license_product_id?: string;
-    /** Location of the registry images, eg. cp/cp4d. */
-    namespace_repository?: string;
-    /** API key for access to the license entitlement. */
-    apikey?: string;
-    /** IBM ID. */
-    create_by?: string;
-    /** IBM ID. */
-    update_by?: string;
-    /** Creation date, eg. '2019-07-17T21:21:47.6794935Z'. */
-    create_at?: string;
-    /** Date last updated, eg. '2019-07-17T21:21:47.6794935Z'. */
-    updated_at?: string;
-    /** Entitlement history. */
-    history?: LicenseEntitlementHistoryItem[];
-    /** Array of license offering references. */
-    offering_list?: LicenseOfferingReference[];
-  }
-
-  /** LicenseEntitlementHistoryItem. */
-  export interface LicenseEntitlementHistoryItem {
-    /** Eg. create. */
-    action?: string;
-    /** Eg. IBM ID of user. */
-    user?: string;
-    /** Date of action, eg. '2019-07-17T21:21:47.6794935Z'. */
-    date?: string;
-  }
-
-  /** Paginated list of license entitlements. */
-  export interface LicenseEntitlements {
-    /** Total number of results. */
-    total_results?: number;
-    /** Total number of pages. */
-    total_pages?: number;
-    /** Previous URL. */
-    prev_url?: string;
-    /** Next URL. */
-    next_url?: string;
-    /** Resulting Entitlement objects. */
-    resources?: LicenseEntitlement[];
-  }
-
-  /** License information. */
-  export interface LicenseObject {
-    /** License name. */
-    name?: string;
-    /** Type of offering. */
-    offering_type?: string;
-    /** Number of seats allowed for license. */
-    seats_allowed?: string;
-    /** Number of seats used for license. */
-    seats_used?: string;
-    /** ID of license owner. */
-    owner_id?: string;
-    /** Marketplace offering ID for this license. */
-    license_offering_id?: string;
-    /** specific license entitlement ID from the license provider, eg. D1W3R4. */
-    license_id?: string;
-    /** IBM ID of the owner of this license entitlement. */
-    license_owner_id?: string;
-    /** type of license entitlement, e.g. ibm-ppa. */
-    license_type?: string;
-    /** ID of the license provider. */
-    license_provider_id?: string;
-    /** specific license entitlement ID from the license provider, eg. D1W3R4. */
-    license_product_id?: string;
-    /** URL for the BSS license provider, e.g. /v1/licensing/license_providers/:license_provider_id. */
-    license_provider_url?: string;
-    /** license is good from this starting date. eg. '2019-07-17T21:21:47.6794935Z'. */
-    effective_from?: string;
-    /** license is good until this ending date. eg. '2019-07-17T21:21:47.6794935Z'. */
-    effective_until?: string;
-    /** If true, this will allow use of this license by all IBMers. */
-    internal?: boolean;
-    /** Array of license offering references. */
-    offering_list?: LicenseOfferingReference[];
-  }
-
-  /** License offering reference. */
-  export interface LicenseOfferingReference {
-    /** Offering ID. */
-    id?: string;
-    /** Offering name. */
-    name?: string;
-    /** Offering label'. */
-    label?: string;
-    /** URL to offering icon. */
-    offering_icon_url?: string;
-    /** Account ID associated with offering. */
-    account_id?: string;
-    /** Catalog ID associated with offering. */
-    catalog_id?: string;
-  }
-
-  /** BSS License provider. */
-  export interface LicenseProvider {
-    /** Provider name, eg. IBM Passport Advantage. */
-    name?: string;
-    /** Short description of license provider. */
-    short_description?: string;
-    /** Provider ID. */
-    id?: string;
-    /** Type of license entitlement, e.g. ibm-ppa. */
-    licence_type?: string;
-    /** Type of offering. */
-    offering_type?: string;
-    /** URL of the license provider for where to create/get a license, e.g.
-     *  https://www.ibm.com/software/passportadvantage/aboutpassport.html.
-     */
-    create_url?: string;
-    /** URL of the license provider for additional info, e.g. https://www.ibm.com/software/passportadvantage. */
-    info_url?: string;
-    /** URL for the BSS license provider, e.g. /v1/licensing/license_providers/:id. */
-    url?: string;
-    /** Provider CRN. */
-    crn?: string;
-    /** State of license provider. */
-    state?: string;
-  }
-
-  /** Paginated list of license providers. */
-  export interface LicenseProviders {
-    /** Total number of results. */
-    total_results?: number;
-    /** Total number of pages. */
-    total_pages?: number;
-    /** Previous URL. */
-    prev_url?: string;
-    /** Next URL. */
-    next_url?: string;
-    /** Resulting License Provider objects. */
-    resources?: LicenseProvider[];
-  }
-
-  /** Paginated list of licenses. */
-  export interface Licenses {
-    /** Total number of results. */
-    total_results?: number;
-    /** Total number of pages. */
-    total_pages?: number;
-    /** Previous URL. */
-    prev_url?: string;
-    /** Next URL. */
-    next_url?: string;
-    /** Resulting License objects. */
-    resources?: LicenseObject[];
-  }
-
-  /** Repo maintainers. */
-  export interface Maintainers {
-    /** Maintainer email address. */
-    email?: string;
-    /** Name of maintainer. */
-    name?: string;
-  }
-
   /** Paginated list of namespace search results. */
   export interface NamespaceSearchResult {
     /** The offset (origin 0) of the first resource in this page of search results. */
-    offset?: number;
+    offset: number;
     /** The maximum number of resources returned in each page of search results. */
-    limit?: number;
+    limit: number;
     /** The overall total number of resources in the search result set. */
     total_count?: number;
     /** The number of resources returned in this page of search results. */
@@ -6260,84 +5895,48 @@ namespace CatalogManagementV1 {
     resources?: string[];
   }
 
-  /** object information. */
-  export interface Object {
+  /** object access. */
+  export interface ObjectAccess {
     /** unique id. */
     id?: string;
-    /** The programmatic name of this offering. */
-    name?: string;
-    /** Cloudant revision. */
-    _rev?: string;
-    /** The crn for this specific object. */
-    crn?: string;
-    /** The url for this specific object. */
-    url?: string;
-    /** The parent for this specific object. */
-    parent_id?: string;
-    /** List of allowed accounts for this specific object. */
-    allow_list?: string[];
-    /** Translated display name in the requested language. */
-    label_i18n?: string;
-    /** Display name in the requested language. */
-    label?: string;
-    /** List of tags associated with this catalog. */
-    tags?: string[];
-    /** The date and time this catalog was created. */
-    created?: string;
-    /** The date and time this catalog was last updated. */
-    updated?: string;
-    /** Short description in the requested language. */
-    short_description?: string;
-    /** Short description translation. */
-    short_description_i18n?: string;
-    /** Kind of object. */
-    kind?: string;
-    /** Publish information. */
-    publish?: PublishObject;
-    /** Offering state. */
-    state?: State;
-    /** The id of the catalog containing this offering. */
-    catalog_id?: string;
-    /** The name of the catalog. */
-    catalog_name?: string;
-    /** Map of data values for this object. */
-    data?: JsonObject;
-  }
-
-  /** object information. */
-  export interface ObjectDigest {
+    /** account id. */
+    account?: string;
     /** unique id. */
-    id?: string;
-    /** Lucene match order. */
-    order?: number[];
-    /** Object digest. */
-    fields?: ObjectDigestFields;
+    catalog_id?: string;
+    /** object id. */
+    target_id?: string;
+    /** date and time create. */
+    create?: string;
   }
 
-  /** Object digest. */
-  export interface ObjectDigestFields {
-    /** The id of the catalog containing this offering. */
-    catalog_id?: string;
-    /** The programmatic name of this offering. */
-    name?: string;
-    /** The parent for this specific object. */
-    parent_id?: string;
-    /** Display name in the requested language. */
-    label?: string;
-    /** The date and time this catalog was last updated. */
-    updated?: string;
-    /** Kind of object. */
-    kind?: string;
-    /** The name of the object's parent. */
-    parent_name?: string;
+  /** Paginated object search result. */
+  export interface ObjectAccessListResult {
+    /** The offset (origin 0) of the first resource in this page of search results. */
+    offset: number;
+    /** The maximum number of resources returned in each page of search results. */
+    limit: number;
+    /** The overall total number of resources in the search result set. */
+    total_count?: number;
+    /** The number of resources returned in this page of search results. */
+    resource_count?: number;
+    /** A URL for retrieving the first page of search results. */
+    first?: string;
+    /** A URL for retrieving the last page of search results. */
+    last?: string;
+    /** A URL for retrieving the previous page of search results. */
+    prev?: string;
+    /** A URL for retrieving the next page of search results. */
+    next?: string;
+    /** Resulting objects. */
+    resources?: ObjectAccess[];
   }
 
   /** Paginated object search result. */
   export interface ObjectListResult {
     /** The offset (origin 0) of the first resource in this page of search results. */
-    offset?: number;
+    offset: number;
     /** The maximum number of resources returned in each page of search results. */
-    limit?: number;
+    limit: number;
     /** The overall total number of resources in the search result set. */
     total_count?: number;
     /** The number of resources returned in this page of search results. */
@@ -6351,15 +5950,15 @@ namespace CatalogManagementV1 {
     /** A URL for retrieving the next page of search results. */
     next?: string;
     /** Resulting objects. */
-    resources?: Object[];
+    resources?: CatalogObject[];
   }
 
   /** Paginated object search result. */
   export interface ObjectSearchResult {
     /** The offset (origin 0) of the first resource in this page of search results. */
-    offset?: number;
+    offset: number;
     /** The maximum number of resources returned in each page of search results. */
-    limit?: number;
+    limit: number;
     /** The overall total number of resources in the search result set. */
     total_count?: number;
     /** The number of resources returned in this page of search results. */
@@ -6373,7 +5972,7 @@ namespace CatalogManagementV1 {
     /** A URL for retrieving the next page of search results. */
     next?: string;
     /** Resulting objects. */
-    resources?: ObjectDigest[];
+    resources?: CatalogObject[];
   }
 
   /** Offering information. */
@@ -6398,6 +5997,8 @@ namespace CatalogManagementV1 {
     offering_support_url?: string;
     /** List of tags associated with this catalog. */
     tags?: string[];
+    /** List of keywords associated with offering, typically used to search for it. */
+    keywords?: string[];
     /** Repository info for offerings. */
     rating?: Rating;
     /** The date and time this catalog was created. */
@@ -6442,12 +6043,71 @@ namespace CatalogManagementV1 {
     repo_info?: RepoInfo;
   }
 
+  /** A offering instance resource (provision instance of a catalog offering). */
+  export interface OfferingInstance {
+    /** provisioned instance ID (part of the CRN). */
+    id?: string;
+    /** Cloudant revision. */
+    _rev?: string;
+    /** url reference to this object. */
+    url?: string;
+    /** platform CRN for this instance. */
+    crn?: string;
+    /** the label for this instance. */
+    label?: string;
+    /** Catalog ID this instance was created from. */
+    catalog_id?: string;
+    /** Offering ID this instance was created from. */
+    offering_id?: string;
+    /** the format this instance has (helm, operator, ova...). */
+    kind_format?: string;
+    /** The version this instance was installed from (not version id). */
+    version?: string;
+    /** Cluster ID. */
+    cluster_id?: string;
+    /** Cluster region (e.g., us-south). */
+    cluster_region?: string;
+    /** List of target namespaces to install into. */
+    cluster_namespaces?: string[];
+    /** designate to install into all namespaces. */
+    cluster_all_namespaces?: boolean;
+    /** Id of the schematics workspace, for offering instances provisioned through schematics. */
+    schematics_workspace_id?: string;
+    /** Id of the resource group to provision the offering instance into. */
+    resource_group_id?: string;
+    /** Type of install plan (also known as approval strategy) for operator subscriptions. Can be either automatic,
+     *  which automatically upgrades operators to the latest in a channel, or manual, which requires approval on the
+     *  cluster.
+     */
+    install_plan?: string;
+    /** Channel to pin the operator subscription to. */
+    channel?: string;
+    /** Map of metadata values for this offering instance. */
+    metadata?: JsonObject;
+    /** the last operation performed and status. */
+    last_operation?: OfferingInstanceLastOperation;
+  }
+
+  /** the last operation performed and status. */
+  export interface OfferingInstanceLastOperation {
+    /** last operation performed. */
+    operation?: string;
+    /** state after the last operation performed. */
+    state?: string;
+    /** additional information about the last operation. */
+    message?: string;
+    /** transaction id from the last operation. */
+    transaction_id?: string;
+    /** Date and time last updated. */
+    updated?: string;
+  }
+
   /** Paginated offering search result. */
   export interface OfferingSearchResult {
     /** The offset (origin 0) of the first resource in this page of search results. */
-    offset?: number;
+    offset: number;
     /** The maximum number of resources returned in each page of search results. */
-    limit?: number;
+    limit: number;
     /** The overall total number of resources in the search result set. */
     total_count?: number;
     /** The number of resources returned in this page of search results. */
@@ -6550,148 +6210,6 @@ namespace CatalogManagementV1 {
     type?: string;
     /** mem, disk, cores, and nodes can be parsed as an int.  targetVersion will be a semver range value. */
     value?: any;
-  }
-
-  /** Resource group details. */
-  export interface ResourceGroup {
-    /** Resource Group ID. */
-    id?: string;
-    /** Provider name, eg. IBM Passport Advantage. */
-    name?: string;
-    /** Provider CRN. */
-    crn?: string;
-    /** Account ID for this Resource Group. */
-    account_id?: string;
-    /** State of this Resource Group. */
-    state?: string;
-    /** Indicates if this Resource Group is active or not. */
-    default?: boolean;
-  }
-
-  /** Resource groups details. */
-  export interface ResourceGroups {
-    /** The offset (origin 0) of the first resource in this page of search results. */
-    offset?: number;
-    /** The maximum number of resources returned in each page of search results. */
-    limit?: number;
-    /** The overall total number of resources in the search result set. */
-    total_count?: number;
-    /** The number of resources returned in this page of search results. */
-    resource_count?: number;
-    /** A URL for retrieving the first page of search results. */
-    first?: string;
-    /** A URL for retrieving the last page of search results. */
-    last?: string;
-    /** A URL for retrieving the previous page of search results. */
-    prev?: string;
-    /** A URL for retrieving the next page of search results. */
-    next?: string;
-    /** Resulting Resource Group objects. */
-    resources?: ResourceGroup[];
-  }
-
-  /** Schematics workspace information. */
-  export interface SchematicsWorkspace {
-    /** Workspace ID. */
-    id?: string;
-    /** Workspace name. */
-    name?: string;
-    /** Workspace types. */
-    type?: string[];
-    /** Workspace description. */
-    description?: string;
-    /** Workspace tags. */
-    tags?: string[];
-    /** Workspace creation date and time. */
-    created_at?: string;
-    /** Email address of user that created the ID. */
-    created_by?: string;
-    /** Workspace apply status. */
-    status?: string;
-    /** Workspace frozen/locked status. */
-    workspace_status?: SchematicsWorkspaceWorkspaceStatus;
-    /** Template reference. */
-    template_ref?: string;
-    /** Template repository. */
-    template_repo?: SchematicsWorkspaceTemplateRepo;
-    /** Map of template data. */
-    template_data?: JsonObject[];
-    /** Data describing runtime. */
-    runtime_data?: SchematicsWorkspaceRuntimeData;
-    /** Map of shared data. */
-    shared_data?: JsonObject;
-    /** Catalog reference. */
-    catalog_ref?: SchematicsWorkspaceCatalogRef;
-  }
-
-  /** Catalog reference. */
-  export interface SchematicsWorkspaceCatalogRef {
-    /** Version locator ID. */
-    item_id?: string;
-    /** The name of the offering that generated this Blueprint. */
-    item_name?: string;
-    /** Relative Dashboard URL for content that generated this Blueprint. */
-    item_url?: string;
-  }
-
-  /** Data describing runtime. */
-  export interface SchematicsWorkspaceRuntimeData {
-    /** Runtime ID. */
-    id?: string;
-    /** Engine name. */
-    engine_name?: string;
-    /** Engine version. */
-    engine_version?: string;
-    /** URL path to state store. */
-    state_store_url?: string;
-    /** URL path to log store. */
-    log_store_url?: string;
-  }
-
-  /** Result of schematics workspace search. */
-  export interface SchematicsWorkspaceSearchResult {
-    /** The offset (origin 0) of the first resource in this page of search results. */
-    offset?: number;
-    /** The maximum number of resources returned in each page of search results. */
-    limit?: number;
-    /** The overall total number of resources in the search result set. */
-    total_count?: number;
-    /** The number of resources returned in this page of search results. */
-    resource_count?: number;
-    /** A URL for retrieving the first page of search results. */
-    first?: string;
-    /** A URL for retrieving the last page of search results. */
-    last?: string;
-    /** A URL for retrieving the previous page of search results. */
-    prev?: string;
-    /** A URL for retrieving the next page of search results. */
-    next?: string;
-    /** Resulting objects. */
-    resources?: SchematicsWorkspace[];
-  }
-
-  /** Template repository. */
-  export interface SchematicsWorkspaceTemplateRepo {
-    /** The fully qualified path of the tgz used in the deploy. */
-    repo_url?: string;
-    /** Name of chart. */
-    chart_name?: string;
-    /** Name of script. */
-    script_name?: string;
-    /** Name of uninstall script. */
-    uninstall_script_name?: string;
-    /** Name of folder. */
-    folder_name?: string;
-    /** Digest of project. */
-    repo_sha_value?: string;
-  }
-
-  /** Workspace frozen/locked status. */
-  export interface SchematicsWorkspaceWorkspaceStatus {
-    /** Workspace frozen state. */
-    frozen?: boolean;
-    /** Workspace locked state. */
-    locked?: boolean;
   }
 
   /** Script information. */

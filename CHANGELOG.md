@@ -1,3 +1,10 @@
+## [0.18.13](https://github.com/IBM/platform-services-java-sdk/compare/0.18.12...0.18.13) (2021-06-25)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** update service after recent api changes ([#111](https://github.com/IBM/platform-services-java-sdk/issues/111)) ([3ba6d2b](https://github.com/IBM/platform-services-java-sdk/commit/3ba6d2b01771228dd0523b1f6670134bcd59c681))
+
 ## [0.18.12](https://github.com/IBM/platform-services-java-sdk/compare/0.18.11...0.18.12) (2021-06-15)
 
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,20 +12,20 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.utils;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.List;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import com.ibm.cloud.sdk.core.util.GsonSingleton;
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.RecordedRequest;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.io.InputStream;
-import java.io.ByteArrayInputStream;
-import java.text.SimpleDateFormat;
-
-import okhttp3.mockwebserver.RecordedRequest;
-import okhttp3.HttpUrl;
-import com.ibm.cloud.sdk.core.util.GsonSingleton;
-import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *  A class used by the unit tests containing utility functions.
@@ -120,10 +120,10 @@ public class TestUtilities {
     }
 
     public static Date createMockDate(String date) throws Exception {
-        return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        return DateUtils.parseAsDate(date);
     }
 
     public static Date createMockDateTime(String date) throws Exception {
-        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date);
+        return DateUtils.parseAsDateTime(date);
     }
 }

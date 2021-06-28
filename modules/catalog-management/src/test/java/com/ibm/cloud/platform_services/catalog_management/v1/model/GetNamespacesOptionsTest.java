@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,17 +13,15 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetNamespacesOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import java.io.InputStream;
+import org.testng.annotations.Test;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Unit test class for the GetNamespacesOptions model.
@@ -38,13 +36,13 @@ public class GetNamespacesOptionsTest {
       .clusterId("testString")
       .region("testString")
       .xAuthRefreshToken("testString")
-      .limit(Long.valueOf("26"))
+      .limit(Long.valueOf("1000"))
       .offset(Long.valueOf("26"))
       .build();
     assertEquals(getNamespacesOptionsModel.clusterId(), "testString");
     assertEquals(getNamespacesOptionsModel.region(), "testString");
     assertEquals(getNamespacesOptionsModel.xAuthRefreshToken(), "testString");
-    assertEquals(getNamespacesOptionsModel.limit(), Long.valueOf("26"));
+    assertEquals(getNamespacesOptionsModel.limit(), Long.valueOf("1000"));
     assertEquals(getNamespacesOptionsModel.offset(), Long.valueOf("26"));
   }
 

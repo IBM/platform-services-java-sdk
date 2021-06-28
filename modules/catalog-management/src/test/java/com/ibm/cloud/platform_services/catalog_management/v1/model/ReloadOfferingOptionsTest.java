@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,19 +13,15 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReloadOfferingOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import java.io.InputStream;
+import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Unit test class for the ReloadOfferingOptions model.
@@ -39,21 +35,21 @@ public class ReloadOfferingOptionsTest {
     ReloadOfferingOptions reloadOfferingOptionsModel = new ReloadOfferingOptions.Builder()
       .catalogIdentifier("testString")
       .offeringId("testString")
-      .zipurl("testString")
       .targetVersion("testString")
       .tags(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .targetKinds(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .content(TestUtilities.createMockByteArray("This is a mock byte array value."))
+      .zipurl("testString")
       .repoType("testString")
-      .xAuthToken("testString")
       .build();
     assertEquals(reloadOfferingOptionsModel.catalogIdentifier(), "testString");
     assertEquals(reloadOfferingOptionsModel.offeringId(), "testString");
-    assertEquals(reloadOfferingOptionsModel.zipurl(), "testString");
     assertEquals(reloadOfferingOptionsModel.targetVersion(), "testString");
     assertEquals(reloadOfferingOptionsModel.tags(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(reloadOfferingOptionsModel.targetKinds(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(reloadOfferingOptionsModel.content(), TestUtilities.createMockByteArray("This is a mock byte array value."));
+    assertEquals(reloadOfferingOptionsModel.zipurl(), "testString");
     assertEquals(reloadOfferingOptionsModel.repoType(), "testString");
-    assertEquals(reloadOfferingOptionsModel.xAuthToken(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

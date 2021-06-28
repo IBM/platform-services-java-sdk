@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,10 +12,10 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
+import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
  * The reloadOffering options.
@@ -24,12 +24,12 @@ public class ReloadOfferingOptions extends GenericModel {
 
   protected String catalogIdentifier;
   protected String offeringId;
-  protected String zipurl;
   protected String targetVersion;
   protected List<String> tags;
   protected List<String> targetKinds;
+  protected byte[] content;
+  protected String zipurl;
   protected String repoType;
-  protected String xAuthToken;
 
   /**
    * Builder.
@@ -37,22 +37,22 @@ public class ReloadOfferingOptions extends GenericModel {
   public static class Builder {
     private String catalogIdentifier;
     private String offeringId;
-    private String zipurl;
     private String targetVersion;
     private List<String> tags;
     private List<String> targetKinds;
+    private byte[] content;
+    private String zipurl;
     private String repoType;
-    private String xAuthToken;
 
     private Builder(ReloadOfferingOptions reloadOfferingOptions) {
       this.catalogIdentifier = reloadOfferingOptions.catalogIdentifier;
       this.offeringId = reloadOfferingOptions.offeringId;
-      this.zipurl = reloadOfferingOptions.zipurl;
       this.targetVersion = reloadOfferingOptions.targetVersion;
       this.tags = reloadOfferingOptions.tags;
       this.targetKinds = reloadOfferingOptions.targetKinds;
+      this.content = reloadOfferingOptions.content;
+      this.zipurl = reloadOfferingOptions.zipurl;
       this.repoType = reloadOfferingOptions.repoType;
-      this.xAuthToken = reloadOfferingOptions.xAuthToken;
     }
 
     /**
@@ -66,13 +66,11 @@ public class ReloadOfferingOptions extends GenericModel {
      *
      * @param catalogIdentifier the catalogIdentifier
      * @param offeringId the offeringId
-     * @param zipurl the zipurl
      * @param targetVersion the targetVersion
      */
-    public Builder(String catalogIdentifier, String offeringId, String zipurl, String targetVersion) {
+    public Builder(String catalogIdentifier, String offeringId, String targetVersion) {
       this.catalogIdentifier = catalogIdentifier;
       this.offeringId = offeringId;
-      this.zipurl = zipurl;
       this.targetVersion = targetVersion;
     }
 
@@ -140,17 +138,6 @@ public class ReloadOfferingOptions extends GenericModel {
     }
 
     /**
-     * Set the zipurl.
-     *
-     * @param zipurl the zipurl
-     * @return the ReloadOfferingOptions builder
-     */
-    public Builder zipurl(String zipurl) {
-      this.zipurl = zipurl;
-      return this;
-    }
-
-    /**
      * Set the targetVersion.
      *
      * @param targetVersion the targetVersion
@@ -186,6 +173,28 @@ public class ReloadOfferingOptions extends GenericModel {
     }
 
     /**
+     * Set the content.
+     *
+     * @param content the content
+     * @return the ReloadOfferingOptions builder
+     */
+    public Builder content(byte[] content) {
+      this.content = content;
+      return this;
+    }
+
+    /**
+     * Set the zipurl.
+     *
+     * @param zipurl the zipurl
+     * @return the ReloadOfferingOptions builder
+     */
+    public Builder zipurl(String zipurl) {
+      this.zipurl = zipurl;
+      return this;
+    }
+
+    /**
      * Set the repoType.
      *
      * @param repoType the repoType
@@ -195,17 +204,6 @@ public class ReloadOfferingOptions extends GenericModel {
       this.repoType = repoType;
       return this;
     }
-
-    /**
-     * Set the xAuthToken.
-     *
-     * @param xAuthToken the xAuthToken
-     * @return the ReloadOfferingOptions builder
-     */
-    public Builder xAuthToken(String xAuthToken) {
-      this.xAuthToken = xAuthToken;
-      return this;
-    }
   }
 
   protected ReloadOfferingOptions(Builder builder) {
@@ -213,18 +211,16 @@ public class ReloadOfferingOptions extends GenericModel {
       "catalogIdentifier cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.offeringId,
       "offeringId cannot be empty");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.zipurl,
-      "zipurl cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.targetVersion,
       "targetVersion cannot be null");
     catalogIdentifier = builder.catalogIdentifier;
     offeringId = builder.offeringId;
-    zipurl = builder.zipurl;
     targetVersion = builder.targetVersion;
     tags = builder.tags;
     targetKinds = builder.targetKinds;
+    content = builder.content;
+    zipurl = builder.zipurl;
     repoType = builder.repoType;
-    xAuthToken = builder.xAuthToken;
   }
 
   /**
@@ -256,17 +252,6 @@ public class ReloadOfferingOptions extends GenericModel {
    */
   public String offeringId() {
     return offeringId;
-  }
-
-  /**
-   * Gets the zipurl.
-   *
-   * URL path to zip location.
-   *
-   * @return the zipurl
-   */
-  public String zipurl() {
-    return zipurl;
   }
 
   /**
@@ -303,6 +288,28 @@ public class ReloadOfferingOptions extends GenericModel {
   }
 
   /**
+   * Gets the content.
+   *
+   * byte array representing the content to be imported.  Only supported for OVA images at this time.
+   *
+   * @return the content
+   */
+  public byte[] content() {
+    return content;
+  }
+
+  /**
+   * Gets the zipurl.
+   *
+   * URL path to zip location.  If not specified, must provide content in this post body.
+   *
+   * @return the zipurl
+   */
+  public String zipurl() {
+    return zipurl;
+  }
+
+  /**
    * Gets the repoType.
    *
    * The type of repository containing this version.  Valid values are 'public_git' or 'enterprise_git'.
@@ -311,17 +318,6 @@ public class ReloadOfferingOptions extends GenericModel {
    */
   public String repoType() {
     return repoType;
-  }
-
-  /**
-   * Gets the xAuthToken.
-   *
-   * Authentication token used to access the specified zip file.
-   *
-   * @return the xAuthToken
-   */
-  public String xAuthToken() {
-    return xAuthToken;
   }
 }
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,23 +13,16 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Account;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CategoryFilter;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.FilterTerms;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Filters;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.IDFilter;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import java.io.InputStream;
+import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Unit test class for the Account model.
@@ -61,18 +54,20 @@ public class AccountTest {
 
     Filters filtersModel = new Filters.Builder()
       .includeAll(true)
-      .categoryFilters(new java.util.HashMap<String,CategoryFilter>(){{put("foo", categoryFilterModel); }})
+      .categoryFilters(new java.util.HashMap<String, CategoryFilter>() { { put("foo", categoryFilterModel); } })
       .idFilters(idFilterModel)
       .build();
     assertEquals(filtersModel.includeAll(), Boolean.valueOf(true));
-    assertEquals(filtersModel.categoryFilters(), new java.util.HashMap<String,CategoryFilter>(){{put("foo", categoryFilterModel); }});
+    assertEquals(filtersModel.categoryFilters(), new java.util.HashMap<String, CategoryFilter>() { { put("foo", categoryFilterModel); } });
     assertEquals(filtersModel.idFilters(), idFilterModel);
 
     Account accountModel = new Account.Builder()
       .id("testString")
+      .hideIbmCloudCatalog(true)
       .accountFilters(filtersModel)
       .build();
     assertEquals(accountModel.id(), "testString");
+    assertEquals(accountModel.hideIbmCloudCatalog(), Boolean.valueOf(true));
     assertEquals(accountModel.accountFilters(), filtersModel);
 
     String json = TestUtilities.serialize(accountModel);
@@ -80,6 +75,7 @@ public class AccountTest {
     Account accountModelNew = TestUtilities.deserialize(json, Account.class);
     assertTrue(accountModelNew instanceof Account);
     assertEquals(accountModelNew.id(), "testString");
+    assertEquals(accountModelNew.hideIbmCloudCatalog(), Boolean.valueOf(true));
     assertEquals(accountModelNew.accountFilters().toString(), filtersModel.toString());
   }
 }

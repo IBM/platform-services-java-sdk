@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,17 +13,17 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Validation;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import java.io.InputStream;
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import org.testng.annotations.Test;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Unit test class for the Validation model.
@@ -35,26 +35,25 @@ public class ValidationTest {
   @Test
   public void testValidation() throws Throwable {
     Validation validationModel = new Validation.Builder()
-      .validated(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .requested(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .validated(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .requested(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .state("testString")
       .lastOperation("testString")
-      .target(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+      .target(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
       .build();
-    assertEquals(validationModel.validated(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-    assertEquals(validationModel.requested(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(validationModel.validated(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(validationModel.requested(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(validationModel.state(), "testString");
     assertEquals(validationModel.lastOperation(), "testString");
-    assertEquals(validationModel.target(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
+    assertEquals(validationModel.target(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
 
     String json = TestUtilities.serialize(validationModel);
 
     Validation validationModelNew = TestUtilities.deserialize(json, Validation.class);
     assertTrue(validationModelNew instanceof Validation);
-    assertEquals(validationModelNew.validated().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
-    assertEquals(validationModelNew.requested().toString(), TestUtilities.createMockDateTime("2019-01-01T12:00:00").toString());
+    assertEquals(validationModelNew.validated(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+    assertEquals(validationModelNew.requested(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
     assertEquals(validationModelNew.state(), "testString");
     assertEquals(validationModelNew.lastOperation(), "testString");
-    assertEquals(validationModelNew.target().toString(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }}.toString());
   }
 }

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,22 +13,17 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationAuthorization;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationCluster;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationHistory;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationResource;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import java.io.InputStream;
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Unit test class for the SyndicationResource model.
@@ -56,21 +51,21 @@ public class SyndicationResourceTest {
     assertEquals(syndicationClusterModel.namespaces(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(syndicationClusterModel.allNamespaces(), Boolean.valueOf(true));
 
-    SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
-      .token("testString")
-      .lastRun(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
-      .build();
-    assertEquals(syndicationAuthorizationModel.token(), "testString");
-    assertEquals(syndicationAuthorizationModel.lastRun(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
-
     SyndicationHistory syndicationHistoryModel = new SyndicationHistory.Builder()
       .namespaces(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .clusters(new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)))
-      .lastRun(TestUtilities.createMockDateTime("2019-01-01T12:00:00"))
+      .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
       .build();
     assertEquals(syndicationHistoryModel.namespaces(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(syndicationHistoryModel.clusters(), new java.util.ArrayList<SyndicationCluster>(java.util.Arrays.asList(syndicationClusterModel)));
-    assertEquals(syndicationHistoryModel.lastRun(), TestUtilities.createMockDateTime("2019-01-01T12:00:00"));
+    assertEquals(syndicationHistoryModel.lastRun(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
+
+    SyndicationAuthorization syndicationAuthorizationModel = new SyndicationAuthorization.Builder()
+      .token("testString")
+      .lastRun(DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"))
+      .build();
+    assertEquals(syndicationAuthorizationModel.token(), "testString");
+    assertEquals(syndicationAuthorizationModel.lastRun(), DateUtils.parseAsDateTime("2019-01-01T12:00:00.000Z"));
 
     SyndicationResource syndicationResourceModel = new SyndicationResource.Builder()
       .removeRelatedComponents(true)

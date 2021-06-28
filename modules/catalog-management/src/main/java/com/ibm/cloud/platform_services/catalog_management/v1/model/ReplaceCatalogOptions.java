@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,11 +12,10 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The replaceCatalog options.
@@ -30,17 +29,13 @@ public class ReplaceCatalogOptions extends GenericModel {
   protected String shortDescription;
   protected String catalogIconUrl;
   protected List<String> tags;
-  protected String url;
-  protected String crn;
-  protected String offeringsUrl;
   protected List<Feature> features;
   protected Boolean disabled;
-  protected Date created;
-  protected Date updated;
   protected String resourceGroupId;
   protected String owningAccount;
   protected Filters catalogFilters;
   protected SyndicationResource syndicationSettings;
+  protected String kind;
 
   /**
    * Builder.
@@ -53,17 +48,13 @@ public class ReplaceCatalogOptions extends GenericModel {
     private String shortDescription;
     private String catalogIconUrl;
     private List<String> tags;
-    private String url;
-    private String crn;
-    private String offeringsUrl;
     private List<Feature> features;
     private Boolean disabled;
-    private Date created;
-    private Date updated;
     private String resourceGroupId;
     private String owningAccount;
     private Filters catalogFilters;
     private SyndicationResource syndicationSettings;
+    private String kind;
 
     private Builder(ReplaceCatalogOptions replaceCatalogOptions) {
       this.catalogIdentifier = replaceCatalogOptions.catalogIdentifier;
@@ -73,17 +64,13 @@ public class ReplaceCatalogOptions extends GenericModel {
       this.shortDescription = replaceCatalogOptions.shortDescription;
       this.catalogIconUrl = replaceCatalogOptions.catalogIconUrl;
       this.tags = replaceCatalogOptions.tags;
-      this.url = replaceCatalogOptions.url;
-      this.crn = replaceCatalogOptions.crn;
-      this.offeringsUrl = replaceCatalogOptions.offeringsUrl;
       this.features = replaceCatalogOptions.features;
       this.disabled = replaceCatalogOptions.disabled;
-      this.created = replaceCatalogOptions.created;
-      this.updated = replaceCatalogOptions.updated;
       this.resourceGroupId = replaceCatalogOptions.resourceGroupId;
       this.owningAccount = replaceCatalogOptions.owningAccount;
       this.catalogFilters = replaceCatalogOptions.catalogFilters;
       this.syndicationSettings = replaceCatalogOptions.syndicationSettings;
+      this.kind = replaceCatalogOptions.kind;
     }
 
     /**
@@ -221,39 +208,6 @@ public class ReplaceCatalogOptions extends GenericModel {
     }
 
     /**
-     * Set the url.
-     *
-     * @param url the url
-     * @return the ReplaceCatalogOptions builder
-     */
-    public Builder url(String url) {
-      this.url = url;
-      return this;
-    }
-
-    /**
-     * Set the crn.
-     *
-     * @param crn the crn
-     * @return the ReplaceCatalogOptions builder
-     */
-    public Builder crn(String crn) {
-      this.crn = crn;
-      return this;
-    }
-
-    /**
-     * Set the offeringsUrl.
-     *
-     * @param offeringsUrl the offeringsUrl
-     * @return the ReplaceCatalogOptions builder
-     */
-    public Builder offeringsUrl(String offeringsUrl) {
-      this.offeringsUrl = offeringsUrl;
-      return this;
-    }
-
-    /**
      * Set the features.
      * Existing features will be replaced.
      *
@@ -273,28 +227,6 @@ public class ReplaceCatalogOptions extends GenericModel {
      */
     public Builder disabled(Boolean disabled) {
       this.disabled = disabled;
-      return this;
-    }
-
-    /**
-     * Set the created.
-     *
-     * @param created the created
-     * @return the ReplaceCatalogOptions builder
-     */
-    public Builder created(Date created) {
-      this.created = created;
-      return this;
-    }
-
-    /**
-     * Set the updated.
-     *
-     * @param updated the updated
-     * @return the ReplaceCatalogOptions builder
-     */
-    public Builder updated(Date updated) {
-      this.updated = updated;
       return this;
     }
 
@@ -343,6 +275,17 @@ public class ReplaceCatalogOptions extends GenericModel {
     }
 
     /**
+     * Set the kind.
+     *
+     * @param kind the kind
+     * @return the ReplaceCatalogOptions builder
+     */
+    public Builder kind(String kind) {
+      this.kind = kind;
+      return this;
+    }
+
+    /**
      * Set the catalog.
      *
      * @param catalog the catalog
@@ -355,17 +298,13 @@ public class ReplaceCatalogOptions extends GenericModel {
       this.shortDescription = catalog.shortDescription();
       this.catalogIconUrl = catalog.catalogIconUrl();
       this.tags = catalog.tags();
-      this.url = catalog.url();
-      this.crn = catalog.crn();
-      this.offeringsUrl = catalog.offeringsUrl();
       this.features = catalog.features();
       this.disabled = catalog.disabled();
-      this.created = catalog.created();
-      this.updated = catalog.updated();
       this.resourceGroupId = catalog.resourceGroupId();
       this.owningAccount = catalog.owningAccount();
       this.catalogFilters = catalog.catalogFilters();
       this.syndicationSettings = catalog.syndicationSettings();
+      this.kind = catalog.kind();
       return this;
     }
   }
@@ -380,17 +319,13 @@ public class ReplaceCatalogOptions extends GenericModel {
     shortDescription = builder.shortDescription;
     catalogIconUrl = builder.catalogIconUrl;
     tags = builder.tags;
-    url = builder.url;
-    crn = builder.crn;
-    offeringsUrl = builder.offeringsUrl;
     features = builder.features;
     disabled = builder.disabled;
-    created = builder.created;
-    updated = builder.updated;
     resourceGroupId = builder.resourceGroupId;
     owningAccount = builder.owningAccount;
     catalogFilters = builder.catalogFilters;
     syndicationSettings = builder.syndicationSettings;
+    kind = builder.kind;
   }
 
   /**
@@ -480,39 +415,6 @@ public class ReplaceCatalogOptions extends GenericModel {
   }
 
   /**
-   * Gets the url.
-   *
-   * The url for this specific catalog.
-   *
-   * @return the url
-   */
-  public String url() {
-    return url;
-  }
-
-  /**
-   * Gets the crn.
-   *
-   * CRN associated with the catalog.
-   *
-   * @return the crn
-   */
-  public String crn() {
-    return crn;
-  }
-
-  /**
-   * Gets the offeringsUrl.
-   *
-   * URL path to offerings.
-   *
-   * @return the offeringsUrl
-   */
-  public String offeringsUrl() {
-    return offeringsUrl;
-  }
-
-  /**
    * Gets the features.
    *
    * List of features associated with this catalog.
@@ -532,28 +434,6 @@ public class ReplaceCatalogOptions extends GenericModel {
    */
   public Boolean disabled() {
     return disabled;
-  }
-
-  /**
-   * Gets the created.
-   *
-   * The date'time this catalog was created.
-   *
-   * @return the created
-   */
-  public Date created() {
-    return created;
-  }
-
-  /**
-   * Gets the updated.
-   *
-   * The date'time this catalog was last updated.
-   *
-   * @return the updated
-   */
-  public Date updated() {
-    return updated;
   }
 
   /**
@@ -598,6 +478,17 @@ public class ReplaceCatalogOptions extends GenericModel {
    */
   public SyndicationResource syndicationSettings() {
     return syndicationSettings;
+  }
+
+  /**
+   * Gets the kind.
+   *
+   * Kind of catalog. Supported kinds are offering and vpe.
+   *
+   * @return the kind
+   */
+  public String kind() {
+    return kind;
   }
 }
 

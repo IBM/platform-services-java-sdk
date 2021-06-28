@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,20 +13,15 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployRequestBodySchematics;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.PreinstallVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import java.io.InputStream;
+import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Unit test class for the PreinstallVersionOptions model.
@@ -54,30 +49,34 @@ public class PreinstallVersionOptionsTest {
       .clusterId("testString")
       .region("testString")
       .namespace("testString")
-      .overrideValues(new java.util.HashMap<String,Object>(){{put("foo", "testString"); }})
+      .overrideValues(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
       .entitlementApikey("testString")
       .schematics(deployRequestBodySchematicsModel)
       .script("testString")
       .scriptId("testString")
       .versionLocatorId("testString")
       .vcenterId("testString")
+      .vcenterUser("testString")
       .vcenterPassword("testString")
       .vcenterLocation("testString")
+      .vcenterDatastore("testString")
       .build();
     assertEquals(preinstallVersionOptionsModel.versionLocId(), "testString");
     assertEquals(preinstallVersionOptionsModel.xAuthRefreshToken(), "testString");
     assertEquals(preinstallVersionOptionsModel.clusterId(), "testString");
     assertEquals(preinstallVersionOptionsModel.region(), "testString");
     assertEquals(preinstallVersionOptionsModel.namespace(), "testString");
-    assertEquals(preinstallVersionOptionsModel.overrideValues(), new java.util.HashMap<String,Object>(){{put("foo", "testString"); }});
+    assertEquals(preinstallVersionOptionsModel.overrideValues(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
     assertEquals(preinstallVersionOptionsModel.entitlementApikey(), "testString");
     assertEquals(preinstallVersionOptionsModel.schematics(), deployRequestBodySchematicsModel);
     assertEquals(preinstallVersionOptionsModel.script(), "testString");
     assertEquals(preinstallVersionOptionsModel.scriptId(), "testString");
     assertEquals(preinstallVersionOptionsModel.versionLocatorId(), "testString");
     assertEquals(preinstallVersionOptionsModel.vcenterId(), "testString");
+    assertEquals(preinstallVersionOptionsModel.vcenterUser(), "testString");
     assertEquals(preinstallVersionOptionsModel.vcenterPassword(), "testString");
     assertEquals(preinstallVersionOptionsModel.vcenterLocation(), "testString");
+    assertEquals(preinstallVersionOptionsModel.vcenterDatastore(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

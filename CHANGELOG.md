@@ -1,3 +1,10 @@
+# [0.19.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.14...v0.19.0) (2021-06-29)
+
+
+### Features
+
+* **cloudshell:** add service, tests and examples to project ([dcce91f](https://github.com/IBM/platform-services-node-sdk/commit/dcce91f5dfbae633233e681ce14f805d7a1062de))
+
 ## [0.18.14](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.13...v0.18.14) (2021-06-28)
 
 

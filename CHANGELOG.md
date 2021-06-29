@@ -1,3 +1,10 @@
+# [0.19.0](https://github.com/IBM/platform-services-java-sdk/compare/0.18.15...0.19.0) (2021-06-29)
+
+
+### Features
+
+* **cloudshell:** add service, tests and examples to project ([5ffb885](https://github.com/IBM/platform-services-java-sdk/commit/5ffb88505edf0d82356cd0c97b7e2856ffe56cfa))
+
 ## [0.18.15](https://github.com/IBM/platform-services-java-sdk/compare/0.18.14...0.18.15) (2021-06-28)
 
 

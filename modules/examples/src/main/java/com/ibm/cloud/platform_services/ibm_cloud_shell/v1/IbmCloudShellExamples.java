@@ -75,36 +75,36 @@ public class IbmCloudShellExamples {
       System.out.println("updateAccountSettings() result:");
       // begin-update_account_settings
       Feature fileManagerFeatureModel = new Feature.Builder()
-      .enabled(false)
-      .key("server.file_manager")
-      .build();
+        .enabled(false)
+        .key("server.file_manager")
+        .build();
       Feature webPreviewFeatureModel = new Feature.Builder()
-      .enabled(true)
-      .key("server.web_preview")
-      .build();
+        .enabled(true)
+        .key("server.web_preview")
+        .build();
 
       RegionSetting euRegionSettingModel = new RegionSetting.Builder()
-      .enabled(true)
-      .key("eu-de")
-      .build();
+        .enabled(true)
+        .key("eu-de")
+        .build();
       RegionSetting jpRegionSettingModel = new RegionSetting.Builder()
-      .enabled(false)
-      .key("jp-tok")
-      .build();
+        .enabled(false)
+        .key("jp-tok")
+        .build();
       RegionSetting usRegionSettingModel = new RegionSetting.Builder()
-      .enabled(false)
-      .key("us-south")
-      .build();
+        .enabled(false)
+        .key("us-south")
+        .build();
 
       UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
-      .accountId(accountId)
-      .rev(String.format("130-%s", accountId))
-      .defaultEnableNewFeatures(false)
-      .defaultEnableNewRegions(true)
-      .enabled(true)
-      .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(fileManagerFeatureModel, webPreviewFeatureModel)))
-      .regions(new java.util.ArrayList<RegionSetting>(java.util.Arrays.asList(euRegionSettingModel, jpRegionSettingModel, usRegionSettingModel)))
-      .build();
+        .accountId(accountId)
+        .rev(String.format("130-%s", accountId))
+        .defaultEnableNewFeatures(false)
+        .defaultEnableNewRegions(true)
+        .enabled(true)
+        .features(new java.util.ArrayList<Feature>(java.util.Arrays.asList(fileManagerFeatureModel, webPreviewFeatureModel)))
+        .regions(new java.util.ArrayList<RegionSetting>(java.util.Arrays.asList(euRegionSettingModel, jpRegionSettingModel, usRegionSettingModel)))
+        .build();
 
       Response<AccountSettings> response = ibmCloudShellService.updateAccountSettings(updateAccountSettingsOptions).execute();
       AccountSettings accountSettings = response.getResult();

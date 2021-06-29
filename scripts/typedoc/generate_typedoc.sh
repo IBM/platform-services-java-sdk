@@ -15,6 +15,7 @@
     ./iam-access-groups/v2.ts \
     ./iam-identity/v1.ts \
     ./iam-policy-management/v1.ts \
+    ./ibm-cloud-shell/v1.ts \
     ./open-service-broker/v1.ts \
     ./resource-controller/v2 \
     ./resource-manager/v2 \

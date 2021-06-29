@@ -18,6 +18,7 @@ global-tagging/*.js
 iam-access-groups/*.js
 iam-identity/*.js
 iam-policy-management/*.js
+ibm-cloud-shell/*.js
 open-service-broker/*.js
 resource-manager/*.js
 resource-controller/*.js

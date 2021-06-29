@@ -56,6 +56,7 @@
         <module>modules/iam-access-groups</module>
         <module>modules/iam-identity</module>
         <module>modules/iam-policy-management</module>
+        <module>modules/ibm-cloud-shell</module>
         <module>modules/open-service-broker</module>
         <module>modules/posture-management</module>
         <module>modules/resource-controller</module>

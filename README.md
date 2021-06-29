@@ -59,6 +59,7 @@ Service Name | Artifact Coordinates
 [IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | com.ibm.cloud:iam-access-groups:0.18.15
 [IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | com.ibm.cloud:iam-identity:0.18.15
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | com.ibm.cloud:iam-policy-management:0.18.15
+[IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell) | com.ibm.cloud:ibm-cloud-shell:0.18.15
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | com.ibm.cloud:open-service-broker:0.18.15
 [Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture) | com.ibm.cloud:posture_management:0.18.15
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | com.ibm.cloud:resource-controller:0.18.15

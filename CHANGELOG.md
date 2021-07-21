@@ -1,3 +1,10 @@
+## [0.19.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.19.0...v0.19.1) (2021-07-21)
+
+
+### Bug Fixes
+
+* move ibm-platform-services package to [@ibm-cloud](https://github.com/ibm-cloud) npm org ([#118](https://github.com/IBM/platform-services-node-sdk/issues/118)) ([751dc4d](https://github.com/IBM/platform-services-node-sdk/commit/751dc4db0a26c6ff79fe1bf3374070c1002ba776))
+
 # [0.19.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.18.14...v0.19.0) (2021-06-29)
 
 

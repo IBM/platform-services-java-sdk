@@ -10,9 +10,6 @@
     "ibm"
   ],
   "author": "IBM Corp.",
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "eslint:fix": "eslint . --fix",
     "eslint:check": "eslint . --cache",
@@ -33,6 +30,9 @@
     "check-packages": "installed-check -e -d -v"
   },
   "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=10.0.0"
   },

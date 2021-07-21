@@ -10,6 +10,9 @@
     "ibm"
   ],
   "author": "IBM Corp.",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "eslint:fix": "eslint . --fix",
     "eslint:check": "eslint . --cache",

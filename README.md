@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/IBM/platform-services-node-sdk.svg?branch=main)](https://travis-ci.com/IBM/platform-services-node-sdk)
 [![Release](https://img.shields.io/github/v/release/IBM/platform-services-node-sdk)](https://github.com/IBM/platform-services-node-sdk/releases/latest)
-[![npm](https://img.shields.io/npm/v/ibm-platform-services)](https://www.npmjs.com/package/ibm-platform-services)
-![npm](https://img.shields.io/npm/dm/ibm-platform-services)
+[![npm](https://img.shields.io/npm/v/@ibm-cloud/platform-services)](https://www.npmjs.com/package/@ibm-cloud/platform-services)
+![npm](https://img.shields.io/npm/dm/@ibm-cloud/platform-services)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![codecov](https://codecov.io/gh/IBM/platform-services-node-sdk/branch/main/graph/badge.svg)](https://codecov.io/gh/IBM/platform-services-node-sdk)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
@@ -47,26 +47,26 @@ IBM Cloud services:
 
 Service Name | Import Path
 --- | --- 
-[Case Management](https://cloud.ibm.com/apidocs/case-management) | ibm-platform-services/case-management/v1
-[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | ibm-platform-services/catalog-management/v1
-[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | ibm-platform-services/configuration-governance/v1
-[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit) | ibm-platform-services/enterprise-billing-units/v1
-[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | ibm-platform-services/enterprise-management/v1
-[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | ibm-platform-services/enterprise-usage-reports/v1
-[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | ibm-platform-services/global-catalog/v1
-[Global Search](https://cloud.ibm.com/apidocs/search) | ibm-platform-services/global-search/v2
-[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | ibm-platform-services/global-tagging/v1
-[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | ibm-platform-services/iam-access-groups/v2
-[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | ibm-platform-services/iam-identity/v1
-[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | ibm-platform-services/iam-policy-management/v1
-[IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell) | ibm-platform-services/ibm-cloud-shell/v1
-[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | ibm-platform-services/open-service-broker/v1
-[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture) | ibm-platform-services/posture-management/v1
-[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | ibm-platform-services/resource-controller/v2
-[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | ibm-platform-services/resource-manager/v2
-[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | ibm-platform-services/usage-metering/v4
-[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | ibm-platform-services/usage-reports/v4
-[User Management](https://cloud.ibm.com/apidocs/user-management) | ibm-platform-services/user-management/v1
+[Case Management](https://cloud.ibm.com/apidocs/case-management) | @ibm-cloud/platform-services/case-management/v1
+[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog) | @ibm-cloud/platform-services/catalog-management/v1
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config) | @ibm-cloud/platform-services/configuration-governance/v1
+[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit) | @ibm-cloud/platform-services/enterprise-billing-units/v1
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise) | @ibm-cloud/platform-services/enterprise-management/v1
+[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports) | @ibm-cloud/platform-services/enterprise-usage-reports/v1
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog) | @ibm-cloud/platform-services/global-catalog/v1
+[Global Search](https://cloud.ibm.com/apidocs/search) | @ibm-cloud/platform-services/global-search/v2
+[Global Tagging](https://cloud.ibm.com/apidocs/tagging) | @ibm-cloud/platform-services/global-tagging/v1
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups) | @ibm-cloud/platform-services/iam-access-groups/v2
+[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api) | @ibm-cloud/platform-services/iam-identity/v1
+[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management) | @ibm-cloud/platform-services/iam-policy-management/v1
+[IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell) | @ibm-cloud/platform-services/ibm-cloud-shell/v1
+[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api) | @ibm-cloud/platform-services/open-service-broker/v1
+[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture) | @ibm-cloud/platform-services/posture-management/v1
+[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller) | @ibm-cloud/platform-services/resource-controller/v2
+[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager) | @ibm-cloud/platform-services/resource-manager/v2
+[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering) | @ibm-cloud/platform-services/usage-metering/v4
+[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting) | @ibm-cloud/platform-services/usage-reports/v4
+[User Management](https://cloud.ibm.com/apidocs/user-management) | @ibm-cloud/platform-services/user-management/v1
 
 ## Prerequisites
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.
@@ -77,7 +77,7 @@ Service Name | Import Path
 ## Installation
 
 ```sh
-npm install ibm-platform-services
+npm install @ibm-cloud/platform-services
 ```
 
 ## Using the SDK

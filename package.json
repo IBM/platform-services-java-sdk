@@ -1,5 +1,5 @@
 {
-  "name": "ibm-platform-services",
+  "name": "@ibm-cloud/platform-services",
   "version": "0.19.0",
   "description": "Node.js client library for IBM Cloud Platform Services",
   "repository": {

@@ -1,3 +1,10 @@
+## [0.19.3](https://github.com/IBM/platform-services-node-sdk/compare/v0.19.2...v0.19.3) (2021-07-21)
+
+
+### Bug Fixes
+
+* add public publish option ([#120](https://github.com/IBM/platform-services-node-sdk/issues/120)) ([d7bbdc3](https://github.com/IBM/platform-services-node-sdk/commit/d7bbdc3157cc3e86f8a9476184ea03bb49484fd2))
+
 ## [0.19.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.19.1...v0.19.2) (2021-07-21)
 
 

@@ -40,6 +40,30 @@ Node.js client library to interact with various
 <!-- tocstop -->
 
 <!-- --------------------------------------------------------------- -->
+## Migration
+
+`ibm-platform-services` package has been deprecated! 
+The Platform Services Node SDK is now available as `@ibm-cloud/platform-services`.
+
+To migrate to the new package, you can use the commands listed below:
+
+```
+npm uninstall ibm-platform-services
+npm install @ibm-cloud/platform-services
+```
+
+You will also need to modify any references to the old package `ibm-platform-services` within import/require statements so they reflect the new package `@ibm-cloud/platform-services`.  Here is an example:
+
+```javascript
+
+// A 'require' statement that reflects the old package name:
+const UserManagementV1 = require('ibm-platform-services/user-management/v1');
+
+// Modify this to reflect the new package name:
+const UserManagementV1 = require('@ibm-cloud/platform-services/user-management/v1');
+
+```
+
 ## Overview
 
 The IBM Cloud Platform Services Node.js SDK allows developers to programmatically interact with the following 

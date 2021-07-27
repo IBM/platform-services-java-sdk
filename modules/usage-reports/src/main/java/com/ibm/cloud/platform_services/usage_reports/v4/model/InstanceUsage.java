@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -26,13 +26,24 @@ public class InstanceUsage extends GenericModel {
   protected String accountId;
   @SerializedName("resource_instance_id")
   protected String resourceInstanceId;
+  @SerializedName("resource_instance_name")
+  protected String resourceInstanceName;
   @SerializedName("resource_id")
   protected String resourceId;
+  @SerializedName("resource_name")
+  protected String resourceName;
   @SerializedName("resource_group_id")
   protected String resourceGroupId;
+  @SerializedName("resource_group_name")
+  protected String resourceGroupName;
   @SerializedName("organization_id")
   protected String organizationId;
-  protected String space;
+  @SerializedName("organization_name")
+  protected String organizationName;
+  @SerializedName("space_id")
+  protected String spaceId;
+  @SerializedName("space_name")
+  protected String spaceName;
   @SerializedName("consumer_id")
   protected String consumerId;
   protected String region;
@@ -45,6 +56,8 @@ public class InstanceUsage extends GenericModel {
   protected Boolean billable;
   @SerializedName("plan_id")
   protected String planId;
+  @SerializedName("plan_name")
+  protected String planName;
   protected String month;
   protected List<Metric> usage;
 
@@ -71,6 +84,17 @@ public class InstanceUsage extends GenericModel {
   }
 
   /**
+   * Gets the resourceInstanceName.
+   *
+   * The name of the resource instance.
+   *
+   * @return the resourceInstanceName
+   */
+  public String getResourceInstanceName() {
+    return resourceInstanceName;
+  }
+
+  /**
    * Gets the resourceId.
    *
    * The ID of the resource.
@@ -79,6 +103,17 @@ public class InstanceUsage extends GenericModel {
    */
   public String getResourceId() {
     return resourceId;
+  }
+
+  /**
+   * Gets the resourceName.
+   *
+   * The name of the resource.
+   *
+   * @return the resourceName
+   */
+  public String getResourceName() {
+    return resourceName;
   }
 
   /**
@@ -93,6 +128,17 @@ public class InstanceUsage extends GenericModel {
   }
 
   /**
+   * Gets the resourceGroupName.
+   *
+   * The name of the resource group.
+   *
+   * @return the resourceGroupName
+   */
+  public String getResourceGroupName() {
+    return resourceGroupName;
+  }
+
+  /**
    * Gets the organizationId.
    *
    * The ID of the organization.
@@ -104,14 +150,36 @@ public class InstanceUsage extends GenericModel {
   }
 
   /**
-   * Gets the space.
+   * Gets the organizationName.
+   *
+   * The name of the organization.
+   *
+   * @return the organizationName
+   */
+  public String getOrganizationName() {
+    return organizationName;
+  }
+
+  /**
+   * Gets the spaceId.
    *
    * The ID of the space.
    *
-   * @return the space
+   * @return the spaceId
    */
-  public String getSpace() {
-    return space;
+  public String getSpaceId() {
+    return spaceId;
+  }
+
+  /**
+   * Gets the spaceName.
+   *
+   * The name of the space.
+   *
+   * @return the spaceName
+   */
+  public String getSpaceName() {
+    return spaceName;
   }
 
   /**
@@ -189,6 +257,17 @@ public class InstanceUsage extends GenericModel {
    */
   public String getPlanId() {
     return planId;
+  }
+
+  /**
+   * Gets the planName.
+   *
+   * The name of the plan where the instance was provisioned and rated.
+   *
+   * @return the planName
+   */
+  public String getPlanName() {
+    return planName;
   }
 
   /**

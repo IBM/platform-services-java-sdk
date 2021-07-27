@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -45,6 +45,7 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import java.io.IOException;
 import java.io.InputStream;
@@ -108,7 +109,7 @@ public class UsageReportsTest extends PowerMockTestCase {
   @Test
   public void testGetAccountSummaryWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"billing_month\": \"billingMonth\", \"billing_country_code\": \"billingCountryCode\", \"billing_currency_code\": \"billingCurrencyCode\", \"resources\": {\"billable_cost\": 12, \"non_billable_cost\": 15}, \"offers\": [{\"offer_id\": \"offerId\", \"credits_total\": 12, \"offer_template\": \"offerTemplate\", \"valid_from\": \"2019-01-01T12:00:00\", \"expires_on\": \"2019-01-01T12:00:00\", \"credits\": {\"starting_balance\": 15, \"used\": 4, \"balance\": 7}}], \"support\": [{\"cost\": 4, \"type\": \"type\", \"overage\": 7}], \"subscription\": {\"overage\": 7, \"subscriptions\": [{\"subscription_id\": \"subscriptionId\", \"charge_agreement_number\": \"chargeAgreementNumber\", \"type\": \"type\", \"subscription_amount\": 18, \"start\": \"2019-01-01T12:00:00\", \"end\": \"2019-01-01T12:00:00\", \"credits_total\": 12, \"terms\": [{\"start\": \"2019-01-01T12:00:00\", \"end\": \"2019-01-01T12:00:00\", \"credits\": {\"total\": 5, \"starting_balance\": 15, \"used\": 4, \"balance\": 7}}]}]}}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"billing_month\": \"billingMonth\", \"billing_country_code\": \"billingCountryCode\", \"billing_currency_code\": \"billingCurrencyCode\", \"resources\": {\"billable_cost\": 12, \"non_billable_cost\": 15}, \"offers\": [{\"offer_id\": \"offerId\", \"credits_total\": 12, \"offer_template\": \"offerTemplate\", \"valid_from\": \"2019-01-01T12:00:00.000Z\", \"expires_on\": \"2019-01-01T12:00:00.000Z\", \"credits\": {\"starting_balance\": 15, \"used\": 4, \"balance\": 7}}], \"support\": [{\"cost\": 4, \"type\": \"type\", \"overage\": 7}], \"subscription\": {\"overage\": 7, \"subscriptions\": [{\"subscription_id\": \"subscriptionId\", \"charge_agreement_number\": \"chargeAgreementNumber\", \"type\": \"type\", \"subscription_amount\": 18, \"start\": \"2019-01-01T12:00:00.000Z\", \"end\": \"2019-01-01T12:00:00.000Z\", \"credits_total\": 12, \"terms\": [{\"start\": \"2019-01-01T12:00:00.000Z\", \"end\": \"2019-01-01T12:00:00.000Z\", \"credits\": {\"total\": 5, \"starting_balance\": 15, \"used\": 4, \"balance\": 7}}]}]}}";
     String getAccountSummaryPath = "/v4/accounts/testString/summary/testString";
 
     server.enqueue(new MockResponse()
@@ -159,7 +160,7 @@ public class UsageReportsTest extends PowerMockTestCase {
   @Test
   public void testGetAccountUsageWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"month\": \"2017-08\", \"resources\": [{\"resource_id\": \"resourceId\", \"billable_cost\": 12, \"billable_rated_cost\": 17, \"non_billable_cost\": 15, \"non_billable_rated_cost\": 20, \"plans\": [{\"plan_id\": \"planId\", \"pricing_region\": \"pricingRegion\", \"billable\": true, \"cost\": 4, \"rated_cost\": 9, \"usage\": [{\"metric\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"month\": \"2017-08\", \"resources\": [{\"resource_id\": \"resourceId\", \"resource_name\": \"resourceName\", \"billable_cost\": 12, \"billable_rated_cost\": 17, \"non_billable_cost\": 15, \"non_billable_rated_cost\": 20, \"plans\": [{\"plan_id\": \"planId\", \"plan_name\": \"planName\", \"pricing_region\": \"pricingRegion\", \"billable\": true, \"cost\": 4, \"rated_cost\": 9, \"usage\": [{\"metric\": \"UP-TIME\", \"metric_name\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"unit_name\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}";
     String getAccountUsagePath = "/v4/accounts/testString/usage/testString";
 
     server.enqueue(new MockResponse()
@@ -213,7 +214,7 @@ public class UsageReportsTest extends PowerMockTestCase {
   @Test
   public void testGetResourceGroupUsageWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"month\": \"2017-08\", \"resources\": [{\"resource_id\": \"resourceId\", \"billable_cost\": 12, \"billable_rated_cost\": 17, \"non_billable_cost\": 15, \"non_billable_rated_cost\": 20, \"plans\": [{\"plan_id\": \"planId\", \"pricing_region\": \"pricingRegion\", \"billable\": true, \"cost\": 4, \"rated_cost\": 9, \"usage\": [{\"metric\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_name\": \"resourceGroupName\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"month\": \"2017-08\", \"resources\": [{\"resource_id\": \"resourceId\", \"resource_name\": \"resourceName\", \"billable_cost\": 12, \"billable_rated_cost\": 17, \"non_billable_cost\": 15, \"non_billable_rated_cost\": 20, \"plans\": [{\"plan_id\": \"planId\", \"plan_name\": \"planName\", \"pricing_region\": \"pricingRegion\", \"billable\": true, \"cost\": 4, \"rated_cost\": 9, \"usage\": [{\"metric\": \"UP-TIME\", \"metric_name\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"unit_name\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}";
     String getResourceGroupUsagePath = "/v4/accounts/testString/resource_groups/testString/usage/testString";
 
     server.enqueue(new MockResponse()
@@ -266,64 +267,9 @@ public class UsageReportsTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testGetOrgUsageWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"account_id\": \"accountId\", \"organization_id\": \"organizationId\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"month\": \"2017-08\", \"resources\": [{\"resource_id\": \"resourceId\", \"billable_cost\": 12, \"billable_rated_cost\": 17, \"non_billable_cost\": 15, \"non_billable_rated_cost\": 20, \"plans\": [{\"plan_id\": \"planId\", \"pricing_region\": \"pricingRegion\", \"billable\": true, \"cost\": 4, \"rated_cost\": 9, \"usage\": [{\"metric\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}";
-    String getOrgUsagePath = "/v4/accounts/testString/organizations/testString/usage/testString";
-
-    server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
-
-    // Construct an instance of the GetOrgUsageOptions model
-    GetOrgUsageOptions getOrgUsageOptionsModel = new GetOrgUsageOptions.Builder()
-    .accountId("testString")
-    .organizationId("testString")
-    .billingmonth("testString")
-    .names(true)
-    .acceptLanguage("testString")
-    .build();
-
-    // Invoke operation with valid options model (positive test)
-    Response<OrgUsage> response = usageReportsService.getOrgUsage(getOrgUsageOptionsModel).execute();
-    assertNotNull(response);
-    OrgUsage responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(Boolean.valueOf(query.get("_names")), Boolean.valueOf(true));
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getOrgUsagePath);
-  }
-
-  // Test the getOrgUsage operation with null options model parameter
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetOrgUsageNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
-    server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
-    usageReportsService.getOrgUsage(null).execute();
-  }
-
-  @Test
   public void testGetResourceUsageAccountWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"limit\": 5, \"count\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"account_id\": \"accountId\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_id\": \"resourceId\", \"resource_group_id\": \"resourceGroupId\", \"organization_id\": \"organizationId\", \"space\": \"space\", \"consumer_id\": \"consumerId\", \"region\": \"region\", \"pricing_region\": \"pricingRegion\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"billable\": true, \"plan_id\": \"planId\", \"month\": \"2017-08\", \"usage\": [{\"metric\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}]}";
+    String mockResponseBody = "{\"limit\": 5, \"count\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"account_id\": \"accountId\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_instance_name\": \"resourceInstanceName\", \"resource_id\": \"resourceId\", \"resource_name\": \"resourceName\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_name\": \"resourceGroupName\", \"organization_id\": \"organizationId\", \"organization_name\": \"organizationName\", \"space_id\": \"spaceId\", \"space_name\": \"spaceName\", \"consumer_id\": \"consumerId\", \"region\": \"region\", \"pricing_region\": \"pricingRegion\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"billable\": true, \"plan_id\": \"planId\", \"plan_name\": \"planName\", \"month\": \"2017-08\", \"usage\": [{\"metric\": \"UP-TIME\", \"metric_name\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"unit_name\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}]}";
     String getResourceUsageAccountPath = "/v4/accounts/testString/resource_instances/usage/testString";
 
     server.enqueue(new MockResponse()
@@ -393,7 +339,7 @@ public class UsageReportsTest extends PowerMockTestCase {
   @Test
   public void testGetResourceUsageResourceGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"limit\": 5, \"count\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"account_id\": \"accountId\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_id\": \"resourceId\", \"resource_group_id\": \"resourceGroupId\", \"organization_id\": \"organizationId\", \"space\": \"space\", \"consumer_id\": \"consumerId\", \"region\": \"region\", \"pricing_region\": \"pricingRegion\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"billable\": true, \"plan_id\": \"planId\", \"month\": \"2017-08\", \"usage\": [{\"metric\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}]}";
+    String mockResponseBody = "{\"limit\": 5, \"count\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"account_id\": \"accountId\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_instance_name\": \"resourceInstanceName\", \"resource_id\": \"resourceId\", \"resource_name\": \"resourceName\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_name\": \"resourceGroupName\", \"organization_id\": \"organizationId\", \"organization_name\": \"organizationName\", \"space_id\": \"spaceId\", \"space_name\": \"spaceName\", \"consumer_id\": \"consumerId\", \"region\": \"region\", \"pricing_region\": \"pricingRegion\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"billable\": true, \"plan_id\": \"planId\", \"plan_name\": \"planName\", \"month\": \"2017-08\", \"usage\": [{\"metric\": \"UP-TIME\", \"metric_name\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"unit_name\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}]}";
     String getResourceUsageResourceGroupPath = "/v4/accounts/testString/resource_groups/testString/resource_instances/usage/testString";
 
     server.enqueue(new MockResponse()
@@ -460,7 +406,7 @@ public class UsageReportsTest extends PowerMockTestCase {
   @Test
   public void testGetResourceUsageOrgWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"limit\": 5, \"count\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"account_id\": \"accountId\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_id\": \"resourceId\", \"resource_group_id\": \"resourceGroupId\", \"organization_id\": \"organizationId\", \"space\": \"space\", \"consumer_id\": \"consumerId\", \"region\": \"region\", \"pricing_region\": \"pricingRegion\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"billable\": true, \"plan_id\": \"planId\", \"month\": \"2017-08\", \"usage\": [{\"metric\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}]}";
+    String mockResponseBody = "{\"limit\": 5, \"count\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"account_id\": \"accountId\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_instance_name\": \"resourceInstanceName\", \"resource_id\": \"resourceId\", \"resource_name\": \"resourceName\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_name\": \"resourceGroupName\", \"organization_id\": \"organizationId\", \"organization_name\": \"organizationName\", \"space_id\": \"spaceId\", \"space_name\": \"spaceName\", \"consumer_id\": \"consumerId\", \"region\": \"region\", \"pricing_region\": \"pricingRegion\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"billable\": true, \"plan_id\": \"planId\", \"plan_name\": \"planName\", \"month\": \"2017-08\", \"usage\": [{\"metric\": \"UP-TIME\", \"metric_name\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"unit_name\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}]}";
     String getResourceUsageOrgPath = "/v4/accounts/testString/organizations/testString/resource_instances/usage/testString";
 
     server.enqueue(new MockResponse()
@@ -522,6 +468,61 @@ public class UsageReportsTest extends PowerMockTestCase {
 
     // Invoke operation with null options model (negative test)
     usageReportsService.getResourceUsageOrg(null).execute();
+  }
+
+  @Test
+  public void testGetOrgUsageWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"organization_id\": \"organizationId\", \"organization_name\": \"organizationName\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"month\": \"2017-08\", \"resources\": [{\"resource_id\": \"resourceId\", \"resource_name\": \"resourceName\", \"billable_cost\": 12, \"billable_rated_cost\": 17, \"non_billable_cost\": 15, \"non_billable_rated_cost\": 20, \"plans\": [{\"plan_id\": \"planId\", \"plan_name\": \"planName\", \"pricing_region\": \"pricingRegion\", \"billable\": true, \"cost\": 4, \"rated_cost\": 9, \"usage\": [{\"metric\": \"UP-TIME\", \"metric_name\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"unit_name\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}]}";
+    String getOrgUsagePath = "/v4/accounts/testString/organizations/testString/usage/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetOrgUsageOptions model
+    GetOrgUsageOptions getOrgUsageOptionsModel = new GetOrgUsageOptions.Builder()
+    .accountId("testString")
+    .organizationId("testString")
+    .billingmonth("testString")
+    .names(true)
+    .acceptLanguage("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<OrgUsage> response = usageReportsService.getOrgUsage(getOrgUsageOptionsModel).execute();
+    assertNotNull(response);
+    OrgUsage responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    // Get query params
+    assertEquals(Boolean.valueOf(query.get("_names")), Boolean.valueOf(true));
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getOrgUsagePath);
+  }
+
+  // Test the getOrgUsage operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetOrgUsageNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    usageReportsService.getOrgUsage(null).execute();
   }
 
   /** Initialize the server */

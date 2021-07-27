@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 3.36.0-6f5b0381-20210716-180747
  */
 
 package com.ibm.cloud.platform_services.usage_reports.v4;
@@ -180,39 +180,6 @@ public class UsageReports extends BaseService {
   }
 
   /**
-   * Get organization usage.
-   *
-   * Usage for all the resources and plans in an organization in a given month. Account billing managers or organization
-   * billing managers are authorized to access this report.
-   *
-   * @param getOrgUsageOptions the {@link GetOrgUsageOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OrgUsage}
-   */
-  public ServiceCall<OrgUsage> getOrgUsage(GetOrgUsageOptions getOrgUsageOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getOrgUsageOptions,
-      "getOrgUsageOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_id", getOrgUsageOptions.accountId());
-    pathParamsMap.put("organization_id", getOrgUsageOptions.organizationId());
-    pathParamsMap.put("billingmonth", getOrgUsageOptions.billingmonth());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("usage_reports", "v4", "getOrgUsage");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getOrgUsageOptions.acceptLanguage() != null) {
-      builder.header("Accept-Language", getOrgUsageOptions.acceptLanguage());
-    }
-    if (getOrgUsageOptions.names() != null) {
-      builder.query("_names", String.valueOf(getOrgUsageOptions.names()));
-    }
-    ResponseConverter<OrgUsage> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OrgUsage>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
    * Get resource instance usage in an account.
    *
    * Query for resource instance usage in an account. Filter the results with query parameters. Account billing
@@ -367,6 +334,39 @@ public class UsageReports extends BaseService {
     }
     ResponseConverter<InstancesUsage> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<InstancesUsage>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get organization usage.
+   *
+   * Usage for all the resources and plans in an organization in a given month. Account billing managers or organization
+   * billing managers are authorized to access this report.
+   *
+   * @param getOrgUsageOptions the {@link GetOrgUsageOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link OrgUsage}
+   */
+  public ServiceCall<OrgUsage> getOrgUsage(GetOrgUsageOptions getOrgUsageOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getOrgUsageOptions,
+      "getOrgUsageOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getOrgUsageOptions.accountId());
+    pathParamsMap.put("organization_id", getOrgUsageOptions.organizationId());
+    pathParamsMap.put("billingmonth", getOrgUsageOptions.billingmonth());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("usage_reports", "v4", "getOrgUsage");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getOrgUsageOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", getOrgUsageOptions.acceptLanguage());
+    }
+    if (getOrgUsageOptions.names() != null) {
+      builder.query("_names", String.valueOf(getOrgUsageOptions.names()));
+    }
+    ResponseConverter<OrgUsage> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OrgUsage>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

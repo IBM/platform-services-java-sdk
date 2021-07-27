@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -38,10 +38,15 @@ public class InstanceUsageTest {
     InstanceUsage instanceUsageModel = new InstanceUsage();
     assertNull(instanceUsageModel.getAccountId());
     assertNull(instanceUsageModel.getResourceInstanceId());
+    assertNull(instanceUsageModel.getResourceInstanceName());
     assertNull(instanceUsageModel.getResourceId());
+    assertNull(instanceUsageModel.getResourceName());
     assertNull(instanceUsageModel.getResourceGroupId());
+    assertNull(instanceUsageModel.getResourceGroupName());
     assertNull(instanceUsageModel.getOrganizationId());
-    assertNull(instanceUsageModel.getSpace());
+    assertNull(instanceUsageModel.getOrganizationName());
+    assertNull(instanceUsageModel.getSpaceId());
+    assertNull(instanceUsageModel.getSpaceName());
     assertNull(instanceUsageModel.getConsumerId());
     assertNull(instanceUsageModel.getRegion());
     assertNull(instanceUsageModel.getPricingRegion());
@@ -49,6 +54,7 @@ public class InstanceUsageTest {
     assertNull(instanceUsageModel.getCurrencyCode());
     assertNull(instanceUsageModel.isBillable());
     assertNull(instanceUsageModel.getPlanId());
+    assertNull(instanceUsageModel.getPlanName());
     assertNull(instanceUsageModel.getMonth());
     assertNull(instanceUsageModel.getUsage());
   }

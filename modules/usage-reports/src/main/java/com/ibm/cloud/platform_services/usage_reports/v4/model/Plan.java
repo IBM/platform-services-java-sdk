@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -24,6 +24,8 @@ public class Plan extends GenericModel {
 
   @SerializedName("plan_id")
   protected String planId;
+  @SerializedName("plan_name")
+  protected String planName;
   @SerializedName("pricing_region")
   protected String pricingRegion;
   protected Boolean billable;
@@ -42,6 +44,17 @@ public class Plan extends GenericModel {
    */
   public String getPlanId() {
     return planId;
+  }
+
+  /**
+   * Gets the planName.
+   *
+   * The name of the plan.
+   *
+   * @return the planName
+   */
+  public String getPlanName() {
+    return planName;
   }
 
   /**

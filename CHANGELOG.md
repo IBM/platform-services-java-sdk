@@ -1,3 +1,10 @@
+## [0.19.4](https://github.com/IBM/platform-services-node-sdk/compare/v0.19.3...v0.19.4) (2021-07-29)
+
+
+### Bug Fixes
+
+* **usage reports:** add optional name parameters to struct ([#122](https://github.com/IBM/platform-services-node-sdk/issues/122)) ([b5efcbf](https://github.com/IBM/platform-services-node-sdk/commit/b5efcbf7a65ee12d5e0a38dfddae9cbb13eb030d))
+
 ## [0.19.3](https://github.com/IBM/platform-services-node-sdk/compare/v0.19.2...v0.19.3) (2021-07-21)
 
 

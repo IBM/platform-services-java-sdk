@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 3.36.0-6f5b0381-20210716-180747
  */
 
 import * as extend from 'extend';
@@ -91,7 +91,7 @@ class UsageReportsV4 extends BaseService {
   }
 
   /*************************
-   * usageReports
+   * accountOperations
    ************************/
 
   /**
@@ -212,6 +212,10 @@ class UsageReportsV4 extends BaseService {
     return this.createRequest(parameters);
   }
 
+  /*************************
+   * resourceOperations
+   ************************/
+
   /**
    * Get resource group usage.
    *
@@ -260,70 +264,6 @@ class UsageReportsV4 extends BaseService {
     const parameters = {
       options: {
         url: '/v4/accounts/{account_id}/resource_groups/{resource_group_id}/usage/{billingmonth}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-            'Accept-Language': _params.acceptLanguage,
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get organization usage.
-   *
-   * Usage for all the resources and plans in an organization in a given month. Account billing managers or organization
-   * billing managers are authorized to access this report.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.accountId - Account ID for which the usage report is requested.
-   * @param {string} params.organizationId - ID of the organization.
-   * @param {string} params.billingmonth - The billing month for which the usage report is requested.  Format is
-   * yyyy-mm.
-   * @param {boolean} [params.names] - Include the name of every resource, plan, resource instance, organization, and
-   * resource group.
-   * @param {string} [params.acceptLanguage] - Prioritize the names returned in the order of the specified languages.
-   * Language will default to English.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<UsageReportsV4.Response<UsageReportsV4.OrgUsage>>}
-   */
-  public getOrgUsage(
-    params: UsageReportsV4.GetOrgUsageParams
-  ): Promise<UsageReportsV4.Response<UsageReportsV4.OrgUsage>> {
-    const _params = { ...params };
-    const requiredParams = ['accountId', 'organizationId', 'billingmonth'];
-
-    const missingParams = getMissingParams(_params, requiredParams);
-    if (missingParams) {
-      return Promise.reject(missingParams);
-    }
-
-    const query = {
-      '_names': _params.names,
-    };
-
-    const path = {
-      'account_id': _params.accountId,
-      'organization_id': _params.organizationId,
-      'billingmonth': _params.billingmonth,
-    };
-
-    const sdkHeaders = getSdkHeaders(UsageReportsV4.DEFAULT_SERVICE_NAME, 'v4', 'getOrgUsage');
-
-    const parameters = {
-      options: {
-        url: '/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}',
         method: 'GET',
         qs: query,
         path,
@@ -588,6 +528,74 @@ class UsageReportsV4 extends BaseService {
 
     return this.createRequest(parameters);
   }
+
+  /*************************
+   * organizationOperations
+   ************************/
+
+  /**
+   * Get organization usage.
+   *
+   * Usage for all the resources and plans in an organization in a given month. Account billing managers or organization
+   * billing managers are authorized to access this report.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.accountId - Account ID for which the usage report is requested.
+   * @param {string} params.organizationId - ID of the organization.
+   * @param {string} params.billingmonth - The billing month for which the usage report is requested.  Format is
+   * yyyy-mm.
+   * @param {boolean} [params.names] - Include the name of every resource, plan, resource instance, organization, and
+   * resource group.
+   * @param {string} [params.acceptLanguage] - Prioritize the names returned in the order of the specified languages.
+   * Language will default to English.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<UsageReportsV4.Response<UsageReportsV4.OrgUsage>>}
+   */
+  public getOrgUsage(
+    params: UsageReportsV4.GetOrgUsageParams
+  ): Promise<UsageReportsV4.Response<UsageReportsV4.OrgUsage>> {
+    const _params = { ...params };
+    const requiredParams = ['accountId', 'organizationId', 'billingmonth'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      '_names': _params.names,
+    };
+
+    const path = {
+      'account_id': _params.accountId,
+      'organization_id': _params.organizationId,
+      'billingmonth': _params.billingmonth,
+    };
+
+    const sdkHeaders = getSdkHeaders(UsageReportsV4.DEFAULT_SERVICE_NAME, 'v4', 'getOrgUsage');
+
+    const parameters = {
+      options: {
+        url: '/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Accept-Language': _params.acceptLanguage,
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
 }
 
 /*************************
@@ -646,21 +654,6 @@ namespace UsageReportsV4 {
     accountId: string;
     /** Resource group for which the usage report is requested. */
     resourceGroupId: string;
-    /** The billing month for which the usage report is requested.  Format is yyyy-mm. */
-    billingmonth: string;
-    /** Include the name of every resource, plan, resource instance, organization, and resource group. */
-    names?: boolean;
-    /** Prioritize the names returned in the order of the specified languages. Language will default to English. */
-    acceptLanguage?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getOrgUsage` operation. */
-  export interface GetOrgUsageParams {
-    /** Account ID for which the usage report is requested. */
-    accountId: string;
-    /** ID of the organization. */
-    organizationId: string;
     /** The billing month for which the usage report is requested.  Format is yyyy-mm. */
     billingmonth: string;
     /** Include the name of every resource, plan, resource instance, organization, and resource group. */
@@ -753,6 +746,21 @@ namespace UsageReportsV4 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `getOrgUsage` operation. */
+  export interface GetOrgUsageParams {
+    /** Account ID for which the usage report is requested. */
+    accountId: string;
+    /** ID of the organization. */
+    organizationId: string;
+    /** The billing month for which the usage report is requested.  Format is yyyy-mm. */
+    billingmonth: string;
+    /** Include the name of every resource, plan, resource instance, organization, and resource group. */
+    names?: boolean;
+    /** Prioritize the names returned in the order of the specified languages. Language will default to English. */
+    acceptLanguage?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /*************************
    * model interfaces
    ************************/
@@ -796,9 +804,9 @@ namespace UsageReportsV4 {
     /** The reference ID of the discount. */
     ref: string;
     /** The name of the discount indicating category. */
-    name: string;
+    name?: string;
     /** The name of the discount. */
-    display_name: string;
+    display_name?: string;
     /** The discount percentage. */
     discount: number;
   }
@@ -809,14 +817,24 @@ namespace UsageReportsV4 {
     account_id: string;
     /** The ID of the resource instance. */
     resource_instance_id: string;
+    /** The name of the resource instance. */
+    resource_instance_name?: string;
     /** The ID of the resource. */
     resource_id: string;
+    /** The name of the resource. */
+    resource_name?: string;
     /** The ID of the resource group. */
     resource_group_id?: string;
+    /** The name of the resource group. */
+    resource_group_name?: string;
     /** The ID of the organization. */
     organization_id?: string;
+    /** The name of the organization. */
+    organization_name?: string;
     /** The ID of the space. */
-    space?: string;
+    space_id?: string;
+    /** The name of the space. */
+    space_name?: string;
     /** The ID of the consumer. */
     consumer_id?: string;
     /** The region where instance was provisioned. */
@@ -831,6 +849,8 @@ namespace UsageReportsV4 {
     billable: boolean;
     /** The ID of the plan where the instance was provisioned and rated. */
     plan_id: string;
+    /** The name of the plan where the instance was provisioned and rated. */
+    plan_name?: string;
     /** The month. */
     month: string;
     /** All the resource used in the account. */
@@ -867,8 +887,10 @@ namespace UsageReportsV4 {
 
   /** Information about a metric. */
   export interface Metric {
-    /** The name of the metric. */
+    /** The ID of the metric. */
     metric: string;
+    /** The name of the metric. */
+    metric_name?: string;
     /** The aggregated value for the metric. */
     quantity: number;
     /** The quantity that is used for calculating charges. */
@@ -881,6 +903,8 @@ namespace UsageReportsV4 {
     price?: any[];
     /** The unit that qualifies the quantity. */
     unit?: string;
+    /** The name of the unit. */
+    unit_name?: string;
     /** When set to `true`, the cost is for informational purpose and is not included while calculating the plan
      *  charges.
      */
@@ -921,6 +945,8 @@ namespace UsageReportsV4 {
     account_id: string;
     /** The ID of the organization. */
     organization_id: string;
+    /** The name of the organization. */
+    organization_name?: string;
     /** The target country pricing that should be used. */
     pricing_country: string;
     /** The currency for the cost fields in the resources, plans and metrics. */
@@ -935,6 +961,8 @@ namespace UsageReportsV4 {
   export interface Plan {
     /** The ID of the plan. */
     plan_id: string;
+    /** The name of the plan. */
+    plan_name?: string;
     /** The pricing region for the plan. */
     pricing_region?: string;
     /** Indicates if the plan charges are billed to the customer. */
@@ -953,6 +981,8 @@ namespace UsageReportsV4 {
   export interface Resource {
     /** The ID of the resource. */
     resource_id: string;
+    /** The name of the resource. */
+    resource_name?: string;
     /** The billable charges for the account. */
     billable_cost: number;
     /** The pre-discounted billable charges for the account. */
@@ -973,6 +1003,8 @@ namespace UsageReportsV4 {
     account_id: string;
     /** The ID of the resource group. */
     resource_group_id: string;
+    /** The name of the resource group. */
+    resource_group_name?: string;
     /** The target country pricing that should be used. */
     pricing_country: string;
     /** The currency for the cost fields in the resources, plans and metrics. */

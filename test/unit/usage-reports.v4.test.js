@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,12 +29,12 @@ const {
   checkUserHeader,
 } = unitTestUtils;
 
-const service = {
+const usageReportsServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
   url: 'https://billing.cloud.ibm.com',
 };
 
-const usageReportsService = new UsageReportsV4(service);
+const usageReportsService = new UsageReportsV4(usageReportsServiceOptions);
 
 // dont actually create a request
 const createRequestMock = jest.spyOn(usageReportsService, 'createRequest');
@@ -329,90 +329,6 @@ describe('UsageReportsV4', () => {
         expectToBePromise(getResourceGroupUsagePromise);
 
         getResourceGroupUsagePromise.catch(err => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
-      });
-    });
-  });
-  describe('getOrgUsage', () => {
-    describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
-        // Construct the params object for operation getOrgUsage
-        const accountId = 'testString';
-        const organizationId = 'testString';
-        const billingmonth = 'testString';
-        const names = true;
-        const acceptLanguage = 'testString';
-        const params = {
-          accountId: accountId,
-          organizationId: organizationId,
-          billingmonth: billingmonth,
-          names: names,
-          acceptLanguage: acceptLanguage,
-        };
-
-        const getOrgUsageResult = usageReportsService.getOrgUsage(params);
-
-        // all methods should return a Promise
-        expectToBePromise(getOrgUsageResult);
-
-        // assert that create request was called
-        expect(createRequestMock).toHaveBeenCalledTimes(1);
-
-        const options = getOptions(createRequestMock);
-
-        checkUrlAndMethod(options, '/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}', 'GET');
-        const expectedAccept = 'application/json';
-        const expectedContentType = undefined;
-        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
-        expect(options.qs['_names']).toEqual(names);
-        expect(options.path['account_id']).toEqual(accountId);
-        expect(options.path['organization_id']).toEqual(organizationId);
-        expect(options.path['billingmonth']).toEqual(billingmonth);
-      });
-
-      test('should prioritize user-given headers', () => {
-        // parameters
-        const accountId = 'testString';
-        const organizationId = 'testString';
-        const billingmonth = 'testString';
-        const userAccept = 'fake/accept';
-        const userContentType = 'fake/contentType';
-        const params = {
-          accountId,
-          organizationId,
-          billingmonth,
-          headers: {
-            Accept: userAccept,
-            'Content-Type': userContentType,
-          },
-        };
-
-        usageReportsService.getOrgUsage(params);
-        checkMediaHeaders(createRequestMock, userAccept, userContentType);
-      });
-    });
-
-    describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
-        let err;
-        try {
-          await usageReportsService.getOrgUsage({});
-        } catch (e) {
-          err = e;
-        }
-
-        expect(err.message).toMatch(/Missing required parameters/);
-        done();
-      });
-
-      test('should reject promise when required params are not given', done => {
-        const getOrgUsagePromise = usageReportsService.getOrgUsage();
-        expectToBePromise(getOrgUsagePromise);
-
-        getOrgUsagePromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -720,6 +636,90 @@ describe('UsageReportsV4', () => {
         expectToBePromise(getResourceUsageOrgPromise);
 
         getResourceUsageOrgPromise.catch(err => {
+          expect(err.message).toMatch(/Missing required parameters/);
+          done();
+        });
+      });
+    });
+  });
+  describe('getOrgUsage', () => {
+    describe('positive tests', () => {
+      test('should pass the right params to createRequest', () => {
+        // Construct the params object for operation getOrgUsage
+        const accountId = 'testString';
+        const organizationId = 'testString';
+        const billingmonth = 'testString';
+        const names = true;
+        const acceptLanguage = 'testString';
+        const params = {
+          accountId: accountId,
+          organizationId: organizationId,
+          billingmonth: billingmonth,
+          names: names,
+          acceptLanguage: acceptLanguage,
+        };
+
+        const getOrgUsageResult = usageReportsService.getOrgUsage(params);
+
+        // all methods should return a Promise
+        expectToBePromise(getOrgUsageResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const options = getOptions(createRequestMock);
+
+        checkUrlAndMethod(options, '/v4/accounts/{account_id}/organizations/{organization_id}/usage/{billingmonth}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        checkUserHeader(createRequestMock, 'Accept-Language', acceptLanguage);
+        expect(options.qs['_names']).toEqual(names);
+        expect(options.path['account_id']).toEqual(accountId);
+        expect(options.path['organization_id']).toEqual(organizationId);
+        expect(options.path['billingmonth']).toEqual(billingmonth);
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const accountId = 'testString';
+        const organizationId = 'testString';
+        const billingmonth = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const params = {
+          accountId,
+          organizationId,
+          billingmonth,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        usageReportsService.getOrgUsage(params);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async done => {
+        let err;
+        try {
+          await usageReportsService.getOrgUsage({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+        done();
+      });
+
+      test('should reject promise when required params are not given', done => {
+        const getOrgUsagePromise = usageReportsService.getOrgUsage();
+        expectToBePromise(getOrgUsagePromise);
+
+        getOrgUsagePromise.catch(err => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

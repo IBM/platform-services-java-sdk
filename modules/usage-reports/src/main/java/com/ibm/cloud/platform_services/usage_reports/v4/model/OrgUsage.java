@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -26,6 +26,8 @@ public class OrgUsage extends GenericModel {
   protected String accountId;
   @SerializedName("organization_id")
   protected String organizationId;
+  @SerializedName("organization_name")
+  protected String organizationName;
   @SerializedName("pricing_country")
   protected String pricingCountry;
   @SerializedName("currency_code")
@@ -53,6 +55,17 @@ public class OrgUsage extends GenericModel {
    */
   public String getOrganizationId() {
     return organizationId;
+  }
+
+  /**
+   * Gets the organizationName.
+   *
+   * The name of the organization.
+   *
+   * @return the organizationName
+   */
+  public String getOrganizationName() {
+    return organizationName;
   }
 
   /**

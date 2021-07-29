@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,6 +23,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class Metric extends GenericModel {
 
   protected String metric;
+  @SerializedName("metric_name")
+  protected String metricName;
   protected Double quantity;
   @SerializedName("rateable_quantity")
   protected Double rateableQuantity;
@@ -31,6 +33,8 @@ public class Metric extends GenericModel {
   protected Double ratedCost;
   protected List<Object> price;
   protected String unit;
+  @SerializedName("unit_name")
+  protected String unitName;
   @SerializedName("non_chargeable")
   protected Boolean nonChargeable;
   protected List<Discount> discounts;
@@ -38,12 +42,23 @@ public class Metric extends GenericModel {
   /**
    * Gets the metric.
    *
-   * The name of the metric.
+   * The ID of the metric.
    *
    * @return the metric
    */
   public String getMetric() {
     return metric;
+  }
+
+  /**
+   * Gets the metricName.
+   *
+   * The name of the metric.
+   *
+   * @return the metricName
+   */
+  public String getMetricName() {
+    return metricName;
   }
 
   /**
@@ -110,6 +125,17 @@ public class Metric extends GenericModel {
    */
   public String getUnit() {
     return unit;
+  }
+
+  /**
+   * Gets the unitName.
+   *
+   * The name of the unit.
+   *
+   * @return the unitName
+   */
+  public String getUnitName() {
+    return unitName;
   }
 
   /**

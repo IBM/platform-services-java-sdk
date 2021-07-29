@@ -1,3 +1,10 @@
+## [0.19.1](https://github.com/IBM/platform-services-java-sdk/compare/0.19.0...0.19.1) (2021-07-29)
+
+
+### Bug Fixes
+
+* **usage reports:** add optional name parameters to struct ([#114](https://github.com/IBM/platform-services-java-sdk/issues/114)) ([318e605](https://github.com/IBM/platform-services-java-sdk/commit/318e60520dac982660b6cdf4f24ea92332b16b97))
+
 # [0.19.0](https://github.com/IBM/platform-services-java-sdk/compare/0.18.15...0.19.0) (2021-06-29)
 
 

@@ -43,6 +43,11 @@ jobs:
       after_success:
         - build/publishCodeCoverage.sh
 
+    - jdk: openjdk11
+      install: true
+      script:
+        - mvn verify -fae -DskipITs $MVN_ARGS
+
     - stage: Semantic-Release
       install:
         - sudo apt-get install python

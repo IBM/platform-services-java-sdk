@@ -43,3 +43,6 @@ hs_err_pid*
 package.json
 package-lock.json
 node_modules/
+
+# MacOS specific .DS_Store file
+.DS_Store 

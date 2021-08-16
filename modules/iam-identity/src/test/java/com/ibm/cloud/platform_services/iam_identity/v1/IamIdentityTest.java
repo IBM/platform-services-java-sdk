@@ -18,25 +18,48 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyInsideCreateServiceIdRequest;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ResponseContext;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
@@ -880,6 +903,800 @@ public class IamIdentityTest extends PowerMockTestCase {
 
     // Invoke operation with null options model (negative test)
     iamIdentityService.unlockServiceId(null).execute();
+  }
+
+  @Test
+  public void testCreateProfileWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}]}";
+    String createProfilePath = "/v1/profiles";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(201)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the CreateProfileOptions model
+    CreateProfileOptions createProfileOptionsModel = new CreateProfileOptions.Builder()
+    .name("testString")
+    .accountId("testString")
+    .description("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<TrustedProfile> response = iamIdentityService.createProfile(createProfileOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfile responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createProfilePath);
+  }
+
+  // Test the createProfile operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateProfileNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.createProfile(null).execute();
+  }
+
+  @Test
+  public void testListProfileWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 5, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profiles\": [{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}]}]}";
+    String listProfilePath = "/v1/profiles";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the ListProfileOptions model
+    ListProfileOptions listProfileOptionsModel = new ListProfileOptions.Builder()
+    .accountId("testString")
+    .name("testString")
+    .pagesize(Long.valueOf("26"))
+    .sort("testString")
+    .order("asc")
+    .includeHistory(false)
+    .pagetoken("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<TrustedProfilesList> response = iamIdentityService.listProfile(listProfileOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfilesList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    // Get query params
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("name"), "testString");
+    assertEquals(Long.valueOf(query.get("pagesize")), Long.valueOf("26"));
+    assertEquals(query.get("sort"), "testString");
+    assertEquals(query.get("order"), "asc");
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
+    assertEquals(query.get("pagetoken"), "testString");
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listProfilePath);
+  }
+
+  // Test the listProfile operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListProfileNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.listProfile(null).execute();
+  }
+
+  @Test
+  public void testGetProfileWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}]}";
+    String getProfilePath = "/v1/profiles/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetProfileOptions model
+    GetProfileOptions getProfileOptionsModel = new GetProfileOptions.Builder()
+    .profileId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<TrustedProfile> response = iamIdentityService.getProfile(getProfileOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfile responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getProfilePath);
+  }
+
+  // Test the getProfile operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetProfileNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.getProfile(null).execute();
+  }
+
+  @Test
+  public void testUpdateProfileWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}]}";
+    String updateProfilePath = "/v1/profiles/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the UpdateProfileOptions model
+    UpdateProfileOptions updateProfileOptionsModel = new UpdateProfileOptions.Builder()
+    .profileId("testString")
+    .ifMatch("testString")
+    .name("testString")
+    .description("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<TrustedProfile> response = iamIdentityService.updateProfile(updateProfileOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfile responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    assertEquals(request.getHeader("If-Match"), "testString");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateProfilePath);
+  }
+
+  // Test the updateProfile operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateProfileNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.updateProfile(null).execute();
+  }
+
+  @Test
+  public void testDeleteProfileWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String deleteProfilePath = "/v1/profiles/testString";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(204)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the DeleteProfileOptions model
+    DeleteProfileOptions deleteProfileOptionsModel = new DeleteProfileOptions.Builder()
+    .profileId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = iamIdentityService.deleteProfile(deleteProfileOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteProfilePath);
+  }
+
+  // Test the deleteProfile operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteProfileNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.deleteProfile(null).execute();
+  }
+
+  @Test
+  public void testCreateClaimRuleWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"type\": \"type\", \"realm_name\": \"realmName\", \"expiration\": 10, \"cr_type\": \"crType\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}";
+    String createClaimRulePath = "/v1/profiles/testString/rules";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(201)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the ProfileClaimRuleConditions model
+    ProfileClaimRuleConditions profileClaimRuleConditionsModel = new ProfileClaimRuleConditions.Builder()
+    .claim("testString")
+    .operator("testString")
+    .value("testString")
+    .build();
+
+    // Construct an instance of the ResponseContext model
+    ResponseContext responseContextModel = new ResponseContext.Builder()
+    .transactionId("testString")
+    .operation("testString")
+    .userAgent("testString")
+    .url("testString")
+    .instanceId("testString")
+    .threadId("testString")
+    .host("testString")
+    .startTime("testString")
+    .endTime("testString")
+    .elapsedTime("testString")
+    .clusterName("testString")
+    .build();
+
+    // Construct an instance of the CreateClaimRuleOptions model
+    CreateClaimRuleOptions createClaimRuleOptionsModel = new CreateClaimRuleOptions.Builder()
+    .profileId("testString")
+    .type("testString")
+    .conditions(new java.util.ArrayList<ProfileClaimRuleConditions>(java.util.Arrays.asList(profileClaimRuleConditionsModel)))
+    .context(responseContextModel)
+    .name("testString")
+    .realmName("testString")
+    .crType("testString")
+    .expiration(Long.valueOf("26"))
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ProfileClaimRule> response = iamIdentityService.createClaimRule(createClaimRuleOptionsModel).execute();
+    assertNotNull(response);
+    ProfileClaimRule responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createClaimRulePath);
+  }
+
+  // Test the createClaimRule operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateClaimRuleNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.createClaimRule(null).execute();
+  }
+
+  @Test
+  public void testListClaimRulesWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"rules\": [{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"type\": \"type\", \"realm_name\": \"realmName\", \"expiration\": 10, \"cr_type\": \"crType\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}]}";
+    String listClaimRulesPath = "/v1/profiles/testString/rules";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the ListClaimRulesOptions model
+    ListClaimRulesOptions listClaimRulesOptionsModel = new ListClaimRulesOptions.Builder()
+    .profileId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ProfileClaimRuleList> response = iamIdentityService.listClaimRules(listClaimRulesOptionsModel).execute();
+    assertNotNull(response);
+    ProfileClaimRuleList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listClaimRulesPath);
+  }
+
+  // Test the listClaimRules operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListClaimRulesNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.listClaimRules(null).execute();
+  }
+
+  @Test
+  public void testGetClaimRuleWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"type\": \"type\", \"realm_name\": \"realmName\", \"expiration\": 10, \"cr_type\": \"crType\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}";
+    String getClaimRulePath = "/v1/profiles/testString/rules/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetClaimRuleOptions model
+    GetClaimRuleOptions getClaimRuleOptionsModel = new GetClaimRuleOptions.Builder()
+    .profileId("testString")
+    .ruleId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ProfileClaimRule> response = iamIdentityService.getClaimRule(getClaimRuleOptionsModel).execute();
+    assertNotNull(response);
+    ProfileClaimRule responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getClaimRulePath);
+  }
+
+  // Test the getClaimRule operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetClaimRuleNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.getClaimRule(null).execute();
+  }
+
+  @Test
+  public void testUpdateClaimRuleWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"type\": \"type\", \"realm_name\": \"realmName\", \"expiration\": 10, \"cr_type\": \"crType\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}";
+    String updateClaimRulePath = "/v1/profiles/testString/rules/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the ProfileClaimRuleConditions model
+    ProfileClaimRuleConditions profileClaimRuleConditionsModel = new ProfileClaimRuleConditions.Builder()
+    .claim("testString")
+    .operator("testString")
+    .value("testString")
+    .build();
+
+    // Construct an instance of the ResponseContext model
+    ResponseContext responseContextModel = new ResponseContext.Builder()
+    .transactionId("testString")
+    .operation("testString")
+    .userAgent("testString")
+    .url("testString")
+    .instanceId("testString")
+    .threadId("testString")
+    .host("testString")
+    .startTime("testString")
+    .endTime("testString")
+    .elapsedTime("testString")
+    .clusterName("testString")
+    .build();
+
+    // Construct an instance of the UpdateClaimRuleOptions model
+    UpdateClaimRuleOptions updateClaimRuleOptionsModel = new UpdateClaimRuleOptions.Builder()
+    .profileId("testString")
+    .ruleId("testString")
+    .ifMatch("testString")
+    .type("testString")
+    .conditions(new java.util.ArrayList<ProfileClaimRuleConditions>(java.util.Arrays.asList(profileClaimRuleConditionsModel)))
+    .context(responseContextModel)
+    .name("testString")
+    .realmName("testString")
+    .crType("testString")
+    .expiration(Long.valueOf("26"))
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ProfileClaimRule> response = iamIdentityService.updateClaimRule(updateClaimRuleOptionsModel).execute();
+    assertNotNull(response);
+    ProfileClaimRule responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    assertEquals(request.getHeader("If-Match"), "testString");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateClaimRulePath);
+  }
+
+  // Test the updateClaimRule operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateClaimRuleNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.updateClaimRule(null).execute();
+  }
+
+  @Test
+  public void testDeleteClaimRuleWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String deleteClaimRulePath = "/v1/profiles/testString/rules/testString";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(204)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the DeleteClaimRuleOptions model
+    DeleteClaimRuleOptions deleteClaimRuleOptionsModel = new DeleteClaimRuleOptions.Builder()
+    .profileId("testString")
+    .ruleId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = iamIdentityService.deleteClaimRule(deleteClaimRuleOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteClaimRulePath);
+  }
+
+  // Test the deleteClaimRule operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteClaimRuleNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.deleteClaimRule(null).execute();
+  }
+
+  @Test
+  public void testCreateLinkWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\"}}";
+    String createLinkPath = "/v1/profiles/testString/links";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(201)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the CreateProfileLinkRequestLink model
+    CreateProfileLinkRequestLink createProfileLinkRequestLinkModel = new CreateProfileLinkRequestLink.Builder()
+    .crn("testString")
+    .namespace("testString")
+    .name("testString")
+    .build();
+
+    // Construct an instance of the CreateLinkOptions model
+    CreateLinkOptions createLinkOptionsModel = new CreateLinkOptions.Builder()
+    .profileId("testString")
+    .crType("testString")
+    .link(createProfileLinkRequestLinkModel)
+    .name("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ProfileLink> response = iamIdentityService.createLink(createLinkOptionsModel).execute();
+    assertNotNull(response);
+    ProfileLink responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createLinkPath);
+  }
+
+  // Test the createLink operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateLinkNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.createLink(null).execute();
+  }
+
+  @Test
+  public void testListLinkWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"links\": [{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\"}}]}";
+    String listLinkPath = "/v1/profiles/testString/links";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the ListLinkOptions model
+    ListLinkOptions listLinkOptionsModel = new ListLinkOptions.Builder()
+    .profileId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ProfileLinkList> response = iamIdentityService.listLink(listLinkOptionsModel).execute();
+    assertNotNull(response);
+    ProfileLinkList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listLinkPath);
+  }
+
+  // Test the listLink operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListLinkNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.listLink(null).execute();
+  }
+
+  @Test
+  public void testGetLinkWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\"}}";
+    String getLinkPath = "/v1/profiles/testString/links/testString";
+
+    server.enqueue(new MockResponse()
+    .setHeader("Content-type", "application/json")
+    .setResponseCode(200)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the GetLinkOptions model
+    GetLinkOptions getLinkOptionsModel = new GetLinkOptions.Builder()
+    .profileId("testString")
+    .linkId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<ProfileLink> response = iamIdentityService.getLink(getLinkOptionsModel).execute();
+    assertNotNull(response);
+    ProfileLink responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getLinkPath);
+  }
+
+  // Test the getLink operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetLinkNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.getLink(null).execute();
+  }
+
+  @Test
+  public void testDeleteLinkWOptions() throws Throwable {
+    // Schedule some responses.
+    String mockResponseBody = "";
+    String deleteLinkPath = "/v1/profiles/testString/links/testString";
+
+    server.enqueue(new MockResponse()
+    .setResponseCode(204)
+    .setBody(mockResponseBody));
+
+    constructClientService();
+
+    // Construct an instance of the DeleteLinkOptions model
+    DeleteLinkOptions deleteLinkOptionsModel = new DeleteLinkOptions.Builder()
+    .profileId("testString")
+    .linkId("testString")
+    .build();
+
+    // Invoke operation with valid options model (positive test)
+    Response<Void> response = iamIdentityService.deleteLink(deleteLinkOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    // Response does not have a return type. Check that the result is null.
+    assertNull(responseObj);
+
+    // Verify the contents of the request
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+
+    // Check query
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+
+    // Check request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteLinkPath);
+  }
+
+  // Test the deleteLink operation with null options model parameter
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteLinkNoOptions() throws Throwable {
+    // construct the service
+    constructClientService();
+
+    server.enqueue(new MockResponse());
+
+    // Invoke operation with null options model (negative test)
+    iamIdentityService.deleteLink(null).execute();
   }
 
   @Test

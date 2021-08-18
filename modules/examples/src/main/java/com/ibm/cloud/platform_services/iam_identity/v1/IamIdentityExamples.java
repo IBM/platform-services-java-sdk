@@ -509,7 +509,7 @@ public class IamIdentityExamples {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
-        
+
         try {
             System.out.println("updateProfile() result:");
 
@@ -544,7 +544,7 @@ public class IamIdentityExamples {
                     .operator("EQUALS")
                     .value("\"cloud-docs-dev\"")
                     .build();
-            
+
             List<ProfileClaimRuleConditions> conditions = null;
             conditions.add(condition);
 
@@ -559,7 +559,7 @@ public class IamIdentityExamples {
             Response<ProfileClaimRule> response = service.createClaimRule(createClaimRuleOptions).execute();
             ProfileClaimRule claimRule = response.getResult();
             claimRuleId = claimRule.getId();
-       
+
             System.out.println(claimRule);
 
             // end-create_claimrule
@@ -582,7 +582,7 @@ public class IamIdentityExamples {
             Response<ProfileClaimRule> response = service.getClaimRule(getClaimRuleOptions).execute();
             ProfileClaimRule claimRule = response.getResult();
             claimRuleEtag = response.getHeaders().values("Etag").get(0);
-       
+
             System.out.println(claimRule);
 
             // end-get_claimrule
@@ -603,7 +603,7 @@ public class IamIdentityExamples {
 
             Response<ProfileClaimRuleList> response = service.listClaimRules(listClaimRulesOptions).execute();
             ProfileClaimRuleList claimRules = response.getResult();
-       
+
             System.out.println(claimRules);
 
             // end-list_claimrule
@@ -623,7 +623,7 @@ public class IamIdentityExamples {
                     .operator("CONTAINS")
                     .value("\"Europe_Group\"")
                     .build();
-            
+
             List<ProfileClaimRuleConditions> conditions = null;
             conditions.add(condition);
 
@@ -637,7 +637,7 @@ public class IamIdentityExamples {
 
             Response<ProfileClaimRule> response = service.updateClaimRule(updateClaimRuleOptions).execute();
             ProfileClaimRule claimRule = response.getResult();
-       
+
             System.out.println(claimRule);
 
             // end-update_claimrule
@@ -765,7 +765,7 @@ public class IamIdentityExamples {
             DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
                     .profileId(profileId)
                     .build();
-            
+
             Response<Void> response = service.deleteProfile(deleteProfileOptions).execute();
 
             // end-delete_profile
@@ -774,7 +774,7 @@ public class IamIdentityExamples {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
-        
+
         try {
             System.out.println("getAccountSettings() result:");
 

@@ -14,6 +14,7 @@
 package com.ibm.cloud.platform_services.iam_identity.v1;
 
 import java.util.Map;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
@@ -492,7 +494,7 @@ public class IamIdentityExamples {
             // begin-get_list_profile
 
             ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
-                        .accountId(ACCOUNT_ID)
+                        .accountId(accountId)
                         .includeHistory(false)
                         .build();
 
@@ -634,9 +636,9 @@ public class IamIdentityExamples {
                     .build();
 
             Response<ProfileClaimRule> response = service.updateClaimRule(updateClaimRuleOptions).execute();
-            ProfileClaimRuleList claimRules = response.getResult();
+            ProfileClaimRule claimRule = response.getResult();
        
-            System.out.println(claimRules);
+            System.out.println(claimRule);
 
             // end-update_claimrule
 
@@ -675,7 +677,7 @@ public class IamIdentityExamples {
                     .build();
 
             CreateLinkOptions createLinkOptions = new CreateLinkOptions.Builder()
-                    .profileId(profileId2)
+                    .profileId(profileId)
                     .name("Nice link")
                     .crType("ROKS_SA")
                     .link(link)

@@ -68,6 +68,9 @@ public class IamIdentityExamples {
 
     private static String apiKeyName = "Example-ApiKey";
     private static String serviceIdName = "Example-ServiceId";
+    private static String profileName = "Example-Profile";
+    private static String claimRuleType = "Profile-SAML";
+    private static String realmName = "https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20";
 
     //values to be read from the env file
     private static String accountId;
@@ -79,6 +82,12 @@ public class IamIdentityExamples {
     private static String apikeyEtag;
     private static String svcId;
     private static String svcIdEtag;
+    private static String profileId;
+    private static String profileIamId;
+    private static String profileEtag;
+    private static String claimRuleId;
+    private static String claimRuleEtag;
+    private static String linkId;
     private static String accountSettingsEtag;
 
     static {
@@ -408,6 +417,340 @@ public class IamIdentityExamples {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
+        try {
+            System.out.println("createProfile() result:");
+
+            // begin-create_profile
+
+            CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
+                    .name(profileName)
+                    .description("Example Profile")
+                    .accountId(accountId)
+                    .build();
+
+            Response<TrustedProfile> response = service.createProfile(createProfileOptions).execute();
+            TrustedProfile profile = response.getResult();
+            profileId = profile.getId();
+            profileIamId = profile.getIamId();
+
+            System.out.println(profile);
+
+            // end-create_profile
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getProfile() result:");
+
+            // begin-get_profile
+
+            GetProfileOptions getProfileOptions = new GetProfileOptions.Builder()
+                    .profileId(profileId)
+                    .build();
+
+            Response<TrustedProfile> response = service.getProfile(getProfileOptions).execute();
+            TrustedProfile profile = response.getResult();
+            profileEtag = response.getHeaders().values("Etag").get(0);
+
+            System.out.println(profile);
+
+            // end-get_profile
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getListProfile() result:");
+
+            // begin-get_list_profile
+
+            ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
+                        .accountId(ACCOUNT_ID)
+                        .includeHistory(false)
+                        .build();
+
+            Response<TrustedProfilesList> response = service.listProfile(listProfileOptions).execute();
+            TrustedProfilesList profiles = response.getResult();
+
+            System.out.println(profiles);
+
+            // end-get_list_profile
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+        
+        try {
+            System.out.println("updateProfile() result:");
+
+            // begin-update_profile
+
+            String newDescription = "updated description";
+            UpdateProfileOptions updateProfileOptions = new UpdateProfileOptions.Builder()
+                    .profileId(profileId)
+                    .ifMatch(profileEtag)
+                    .description(newDescription)
+                    .build();
+
+            Response<TrustedProfile> response = service.updateProfile(updateProfileOptions).execute();
+            TrustedProfile profile = response.getResult();
+
+            System.out.println(profile);
+
+            // end-update_profile
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createClaimRule() result:");
+
+            // begin-create_claimrule
+
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("blueGroups")
+                    .operator("EQUALS")
+                    .value("\"cloud-docs-dev\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = null;
+            conditions.add(condition);
+
+            CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
+                    .profileId(profileId)
+                    .type(claimRuleType)
+                    .realmName(realmName)
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            Response<ProfileClaimRule> response = service.createClaimRule(createClaimRuleOptions).execute();
+            ProfileClaimRule claimRule = response.getResult();
+            claimRuleId = claimRule.getId();
+       
+            System.out.println(claimRule);
+
+            // end-create_claimrule
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getClaimRule() result:");
+
+            // begin-get_claimrule
+
+            GetClaimRuleOptions getClaimRuleOptions = new GetClaimRuleOptions.Builder()
+                    .profileId(profileId)
+                    .ruleId(claimRuleId)
+                    .build();
+
+            Response<ProfileClaimRule> response = service.getClaimRule(getClaimRuleOptions).execute();
+            ProfileClaimRule claimRule = response.getResult();
+            claimRuleEtag = response.getHeaders().values("Etag").get(0);
+       
+            System.out.println(claimRule);
+
+            // end-get_claimrule
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listClaimRule() result:");
+
+            // begin-list_claimrule
+
+            ListClaimRulesOptions listClaimRulesOptions = new ListClaimRulesOptions.Builder()
+                    .profileId(profileId)
+                    .build();
+
+            Response<ProfileClaimRuleList> response = service.listClaimRules(listClaimRulesOptions).execute();
+            ProfileClaimRuleList claimRules = response.getResult();
+       
+            System.out.println(claimRules);
+
+            // end-list_claimrule
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("updateClaimRule() result:");
+
+            // begin-update_claimrule
+
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("blueGroups")
+                    .operator("CONTAINS")
+                    .value("\"Europe_Group\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = null;
+            conditions.add(condition);
+
+            UpdateClaimRuleOptions updateClaimRuleOptions = new UpdateClaimRuleOptions.Builder()
+                    .profileId(profileId)
+                    .ruleId(claimRuleId)
+                    .ifMatch(claimRuleEtag)
+                    .expiration(33200)
+                    .conditions(conditions)
+                    .build();
+
+            Response<ProfileClaimRule> response = service.updateClaimRule(updateClaimRuleOptions).execute();
+            ProfileClaimRuleList claimRules = response.getResult();
+       
+            System.out.println(claimRules);
+
+            // end-update_claimrule
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteClaimRule() result:");
+
+            // begin-delete_claimrule
+
+            DeleteClaimRuleOptions deleteClaimRuleOptions = new DeleteClaimRuleOptions.Builder()
+                    .profileId(profileId)
+                    .ruleId(claimRuleId)
+                    .build();
+            Response<Void> response = service.deleteClaimRule(deleteClaimRuleOptions).execute();
+
+            // end-delete_claimrule
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createLink() result:");
+
+            // begin-create_link
+
+            CreateProfileLinkRequestLink link = new CreateProfileLinkRequestLink.Builder()
+                    .crn("crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource")
+                    .namespace("default")
+                    .name("nice name")
+                    .build();
+
+            CreateLinkOptions createLinkOptions = new CreateLinkOptions.Builder()
+                    .profileId(profileId2)
+                    .name("Nice link")
+                    .crType("ROKS_SA")
+                    .link(link)
+                    .build();
+
+            Response<ProfileLink> response = service.createLink(createLinkOptions).execute();
+            ProfileLink link = response.getResult();
+            linkId = link.getId();
+
+            System.out.println(link);
+
+            // end-create_link
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getLink() result:");
+
+            // begin-get_link
+
+            GetLinkOptions getLinkOptions = new GetLinkOptions.Builder()
+                    .profileId(profileId)
+                    .linkId(linkId)
+                    .build();
+
+            Response<ProfileLink> response = service.getLink(getLinkOptions).execute();
+            ProfileLink link = response.getResult();
+
+            System.out.println(link);
+
+            // end-get_link
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listLink() result:");
+
+            // begin-list_link
+
+            ListLinkOptions listLinkOptions = new ListLinkOptions.Builder()
+                    .profileId(profileId)
+                    .build();
+
+            Response<ProfileLinkList> response = service.listLink(listLinkOptions).execute();
+            ProfileLinkList links = response.getResult();
+
+            System.out.println(links);
+
+            // end-list_link
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteLink() result:");
+
+            // begin-delete_link
+
+            DeleteLinkOptions deleteLinkOptions = new DeleteLinkOptions.Builder()
+                    .profileId(profileId)
+                    .linkId(linkId)
+                    .build();
+            Response<Void> response = service.deleteLink(deleteLinkOptions).execute();
+
+            // end-delete_link
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteProfile() result:");
+
+            // begin-delete_profile
+
+            DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
+                    .profileId(profileId)
+                    .build();
+            
+            Response<Void> response = service.deleteProfile(deleteProfileOptions).execute();
+
+            // end-delete_profile
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+        
         try {
             System.out.println("getAccountSettings() result:");
 

@@ -1,3 +1,10 @@
+## [0.19.6](https://github.com/IBM/platform-services-node-sdk/compare/v0.19.5...v0.19.6) (2021-08-18)
+
+
+### Bug Fixes
+
+* bump node core version to 2.12.2 ([#125](https://github.com/IBM/platform-services-node-sdk/issues/125)) ([0d8f483](https://github.com/IBM/platform-services-node-sdk/commit/0d8f483c7ba7fc3eb0a7a6faad106b85b154f32e))
+
 ## [0.19.5](https://github.com/IBM/platform-services-node-sdk/compare/v0.19.4...v0.19.5) (2021-08-10)
 
 

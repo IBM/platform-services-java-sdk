@@ -684,10 +684,10 @@ public class IamIdentityExamples {
                     .build();
 
             Response<ProfileLink> response = service.createLink(createLinkOptions).execute();
-            ProfileLink link = response.getResult();
-            linkId = link.getId();
+            ProfileLink linkResponse = response.getResult();
+            linkId = linkResponse.getId();
 
-            System.out.println(link);
+            System.out.println(linkResponse);
 
             // end-create_link
 

@@ -684,7 +684,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     @Test
     public void testCreateProfile1() throws Exception{
-        try{
+        try {
             CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
                     .name(PROFILE_NAME_1)
                     .description("JavaSDK test Profile #1")
@@ -702,7 +702,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             profile1IamId = trustedProfileResult.getIamId();
             assertNotNull(profileId1);
             assertNotNull(profile1IamId);
-        }catch (ServiceResponseException e) {
+        } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
@@ -710,7 +710,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     @Test
     public void testCreateProfile2() throws Exception{
-        try{
+        try {
             CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
                     .name(PROFILE_NAME_2)
                     .description("JavaSDK test Profile #2")
@@ -725,7 +725,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             profileId2 = trustedProfileResult.getId();
             assertNotNull(profileId2);
-        }catch (ServiceResponseException e) {
+        } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
@@ -857,7 +857,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testDeleteProfile1" })
     public void testCreateClaimRule1() throws Exception {
         try {
 
@@ -867,7 +867,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .value("\"cloud-docs-dev\"")
                     .build();
             
-            List<ProfileClaimRuleConditions> conditions = null;
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
             conditions.add(condition);
 
             CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
@@ -894,7 +894,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testCreateClaimRule1" })
     public void testCreateClaimRule2() throws Exception {
         try {
 
@@ -904,7 +904,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .value("\"Europe_Group\"")
                     .build();
             
-            List<ProfileClaimRuleConditions> conditions = null;
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
             conditions.add(condition);
 
             CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
@@ -931,7 +931,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test(dependsOnMethods = { "testCreateClaimRule" })
+    @Test(dependsOnMethods = { "testCreateClaimRule2" })
     public void testGetClaimRule() throws Exception {
         assertNotNull(claimRuleId1);
         try {
@@ -1003,11 +1003,11 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         try {
             ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
                     .claim("blueGroups")
-                    .operator("CONTAINS")
+                    .operator("EQUALS")
                     .value("\"Europe_Group\"")
                     .build();
             
-            List<ProfileClaimRuleConditions> conditions = null;
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
             conditions.add(condition);
 
             UpdateClaimRuleOptions updateClaimRuleOptions = new UpdateClaimRuleOptions.Builder()
@@ -1016,6 +1016,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .ifMatch(claimRuleEtag)
                     .expiration(33200)
                     .conditions(conditions)
+                    .type(CLAIMRULE_TYPE)
+                    .realmName(REALM_NAME)
                     .build();
 
             Response<ProfileClaimRule> response = service.updateClaimRule(updateClaimRuleOptions).execute();
@@ -1055,7 +1057,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     @Test(dependsOnMethods = { "testDeleteClaimRule1" })
     public void testDeleteClaimRule2() throws Exception {
         sleep(1);
-        assertNotNull(claimRuleId1);
+        assertNotNull(claimRuleId2);
         try {
             DeleteClaimRuleOptions deleteClaimRuleOptions = new DeleteClaimRuleOptions.Builder()
                     .profileId(profileId2)
@@ -1074,7 +1076,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testDeleteClaimRule2" })
     public void testCreateLink() throws Exception {
         try {
 
@@ -1109,7 +1111,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     @Test(dependsOnMethods = { "testCreateLink" })
     public void testGetLink() throws Exception {
-        assertNotNull(claimRuleId1);
+        assertNotNull(linkId);
         try {
             GetLinkOptions getLinkOptions = new GetLinkOptions.Builder()
                     .profileId(profileId2)
@@ -1187,7 +1189,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test(dependsOnMethods = { "testCreateClaimRule" })
+    @Test(dependsOnMethods = { "testDeleteLink" })
     public void testDeleteProfile2() throws Exception {
         sleep(1);
         assertNotNull(profileId2);
@@ -1220,7 +1222,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.createProfile(createProfileOptions).execute();
             fail("Invalid accountId should not have succeeded!");
         } catch (ServiceResponseException e) {
-            assertEquals(e.getStatusCode(), 400);
+            assertEquals(e.getStatusCode(), 403);
         }
     }
 
@@ -1397,7 +1399,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             for (TrustedProfile profile : profilesListResult.getProfiles()) {
                 if (PROFILE_NAME_1.equals(profile.getName()) || PROFILE_NAME_2.equals(profile.getName())) {
                     DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
-                            .profileId(profileId1)
+                            .profileId(profile.getId())
                             .build();
 
                     // Invoke operation

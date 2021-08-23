@@ -544,7 +544,7 @@ public class IamIdentityExamples {
                     .value("\"cloud-docs-dev\"")
                     .build();
 
-            List<ProfileClaimRuleConditions> conditions = null;
+            List<ProfileClaimRuleConditions> conditions = = new ArrayList<>();
             conditions.add(condition);
 
             CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
@@ -623,7 +623,7 @@ public class IamIdentityExamples {
                     .value("\"Europe_Group\"")
                     .build();
 
-            List<ProfileClaimRuleConditions> conditions = null;
+            List<ProfileClaimRuleConditions> conditions = = new ArrayList<>();
             conditions.add(condition);
 
             UpdateClaimRuleOptions updateClaimRuleOptions = new UpdateClaimRuleOptions.Builder()
@@ -632,6 +632,8 @@ public class IamIdentityExamples {
                     .ifMatch(claimRuleEtag)
                     .expiration(33200)
                     .conditions(conditions)
+                    .type(claimRuleType)
+                    .realmName(realmName)
                     .build();
 
             Response<ProfileClaimRule> response = service.updateClaimRule(updateClaimRuleOptions).execute();

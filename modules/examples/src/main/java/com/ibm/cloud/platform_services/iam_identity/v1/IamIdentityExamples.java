@@ -15,6 +15,7 @@ package com.ibm.cloud.platform_services.iam_identity.v1;
 
 import java.util.Map;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1140,7 +1140,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         try {
             List<ProfileLink> links = new ArrayList<>();
 
-            // Retrieve one profile at a time and save off the objects that we're interested in,
+            // Retrieve one link at a time and save off the objects that we're interested in,
             // then validate the results at the end.
     
             ListLinkOptions listLinkOptions = new ListLinkOptions.Builder()
@@ -1211,7 +1211,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     }
 
     @Test
-    public void testCreateProfileNegative() throws Exception {
+    public void testCreateProfileUnauthorised() throws Exception {
         try {
             CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
                     .name("Dummy")
@@ -1227,18 +1227,231 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     }
 
     @Test
-    public void testDeleteProfileNegative() throws Exception {
+    public void testCreateProfileBadRequest() throws Exception {
+        try {
+            CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
+                    .name("")
+                    .accountId(ACCOUNT_ID)
+                    .build();
+
+            service.createProfile(createProfileOptions).execute();
+            fail("Bad request should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 400);
+        }
+    }
+
+    @Test
+    public void testDeleteProfileNotFound() throws Exception {
         try {
             DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
                     .profileId("InvalidProfileId")
                     .build();
             service.deleteProfile(deleteProfileOptions).execute();
-            fail("Invalid apikey id should not have succeeded!");
+            fail("Invalid profile id should not have succeeded!");
         } catch (ServiceResponseException e) {
             assertEquals(e.getStatusCode(), 404);
         }
     }
-    
+
+    @Test
+    public void testGetProfileNotFound() throws Exception {
+        try {
+            GetProfileOptions getProfileOptions = new GetProfileOptions.Builder()
+                    .profileId("InvalidProfileId")
+                    .build();
+
+            service.getProfile(getProfileOptions).execute();
+            fail("Invalid profileId should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testUpdateProfileNotFound() throws Exception {
+        try {
+            UpdateProfileOptions updateProfileOptions = new UpdateProfileOptions.Builder()
+                    .profileId("InvalidAccountId")
+                    .ifMatch("dummy")
+                    .description("dummy description")
+                    .build();
+
+            service.updateProfile(updateProfileOptions).execute();
+            fail("Invalid profile id should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+            
+        }
+    }
+
+    @Test
+    public void testCreateClaimRuleNotFound() throws Exception {
+        try {
+
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("fakeClaim")
+                    .operator("EQUALS")
+                    .value("\"does not exist\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+            conditions.add(condition);
+
+            CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
+                    .profileId("fakeProfileId")
+                    .type(CLAIMRULE_TYPE)
+                    .realmName(REALM_NAME)
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            service.createClaimRule(createClaimRuleOptions).execute();
+            fail("Invalid accountId should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testCreateClaimRuleBadRequest() throws Exception {
+        try {
+
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("fakeClaim")
+                    .operator("EQUALS")
+                    .value("\"does not exist\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+            conditions.add(condition);
+
+            CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
+                    .profileId("fakeProfileId")
+                    .type("")
+                    .realmName("")
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            service.createClaimRule(createClaimRuleOptions).execute();
+            fail("Invalid accountId should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 400);
+        }
+    }
+
+    @Test
+    public void testGetClaimRuleNotFound() throws Exception {
+        try {
+            GetClaimRuleOptions getClaimRuleOptions = new GetClaimRuleOptions.Builder()
+                    .profileId("fakeId")
+                    .ruleId("fakeId")
+                    .build();
+
+            service.getClaimRule(getClaimRuleOptions).execute();
+            fail("Bad request should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testUpdateClaimRuleBadRequest() throws Exception {
+        try {
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("fakeClaim")
+                    .operator("EQUALS")
+                    .value("\"does not exist\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+            conditions.add(condition);
+
+            UpdateClaimRuleOptions updateClaimRuleOptions = new UpdateClaimRuleOptions.Builder()
+                    .profileId("fakeProfileId")
+                    .ruleId("fakeRuleId")
+                    .ifMatch("fake")
+                    .type("")
+                    .realmName("")
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            service.updateClaimRule(updateClaimRuleOptions).execute();
+            fail("Invalid profileId and ruleId should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 400);
+        }
+    }
+
+    @Test
+    public void testDeleteClaimRuleNotFound() throws Exception {
+        try {
+            DeleteClaimRuleOptions deleteClaimRuleOptions = new DeleteClaimRuleOptions.Builder()
+                    .profileId("InvalidProfileId")
+                    .ruleId("InvalidRuleId")
+                    .build();
+            service.deleteClaimRule(deleteClaimRuleOptions).execute();
+            fail("Invalid profile id and rule id should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testCreateLinkBadRequest() throws Exception {
+        try {
+
+            CreateProfileLinkRequestLink link = new CreateProfileLinkRequestLink.Builder()
+                    .crn("invalid")
+                    .namespace("default")
+                    .name("nice name")
+                    .build();
+
+            CreateLinkOptions createLinkOptions = new CreateLinkOptions.Builder()
+                    .profileId("invalidId")
+                    .name("Invalid link")
+                    .crType("invalid")
+                    .link(link)
+                    .build();
+
+            service.createLink(createLinkOptions).execute();
+            fail("Bad request should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 400);
+        }
+    }
+
+    @Test
+    public void testGetLinkNotFound() throws Exception {
+        try {
+            GetLinkOptions getLinkOptions = new GetLinkOptions.Builder()
+                    .profileId("invalidId")
+                    .linkId("invalidId")
+                    .build();
+
+            service.getLink(getLinkOptions).execute();
+            fail("Bad request should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testDeleteLinkNotFound() throws Exception {
+        try {
+            DeleteLinkOptions deleteLinkOptions = new DeleteLinkOptions.Builder()
+                    .profileId("invalidId")
+                    .linkId("invalidId")
+                    .build();
+            service.deleteLink(deleteLinkOptions).execute();
+            fail("Invalid profile id and rule id should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
     @Test
     public void testGetAccountSettings() throws Exception {
         try {

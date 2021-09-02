@@ -1,3 +1,10 @@
+# [0.20.0](https://github.com/IBM/platform-services-java-sdk/compare/0.19.2...0.20.0) (2021-09-02)
+
+
+### Features
+
+* **iam-identity:** adding trusted profiles ([#119](https://github.com/IBM/platform-services-java-sdk/issues/119)) ([b26d60a](https://github.com/IBM/platform-services-java-sdk/commit/b26d60a2e91383cd65a6e6b7233457731bea2cb1))
+
 ## [0.19.2](https://github.com/IBM/platform-services-java-sdk/compare/0.19.1...0.19.2) (2021-08-18)
 
 

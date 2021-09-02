@@ -29,7 +29,12 @@ const describe = authHelper.prepareTests(configFile);
 
 const apikeyName = 'Node-SDK-IT-ApiKey';
 const serviceIdName = 'Node-SDK-IT-ServiceId';
+const profileName1 = 'Node-SDK-IT-Profile1';
+const profileName2 = 'Node-SDK-IT-Profile2';
 const newDescription = 'This is an updated description';
+const claimRuleType = 'Profile-SAML';
+const realmName = 'https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20';
+const invalidAccountId = 'invalid';
 
 let iamIdentityService;
 let accountId;
@@ -42,6 +47,17 @@ let apikeyId2;
 
 let serviceId1;
 let serviceIdEtag1;
+
+let profileId1;
+let profileId2;
+let profileIamId;
+let profileEtag;
+
+let claimRuleId1;
+let claimRuleId2;
+let claimRuleEtag;
+
+let linkId;
 
 let accountSettingsEtag;
 
@@ -553,6 +569,683 @@ describe('IamIdentityV1_integration', () => {
         done(err);
       });
   });
+
+  test('createProfile1()', (done) => {
+    const params = {
+      name: profileName1,
+      description: 'NodeSDK test profile #1',
+      accountId,
+    };
+
+    iamIdentityService
+      .createProfile(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(201);
+
+        const { result } = res;
+        expect(result).not.toBeNull();
+        profileId1 = result.id;
+        profileIamId = result.iam_id;
+        expect(profileId1).not.toBeNull();
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('createProfile2()', (done) => {
+    const params = {
+      name: profileName2,
+      description: 'NodeSDK test profile #2',
+      accountId,
+    };
+
+    iamIdentityService
+      .createProfile(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(201);
+
+        const { result } = res;
+        expect(result).not.toBeNull();
+        profileId2 = result.id;
+        expect(profileId2).not.toBeNull();
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('getProfile()', (done) => {
+    expect(profileId1).toBeDefined();
+    expect(profileId1).not.toBeNull();
+    const params = {
+      profileId: profileId1,
+      includeHistory: true,
+    };
+
+    iamIdentityService
+      .getProfile(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(200);
+
+        const { result } = res;
+        expect(result).toBeDefined();
+
+        expect(result.id).toEqual(profileId1);
+        expect(result.name).toEqual(profileName1);
+        expect(result.iam_id).toEqual(profileIamId);
+        expect(result.account_id).toEqual(accountId);
+        expect(result.crn).not.toBeNull();
+
+        profileEtag = result.entity_tag;
+        expect(profileEtag).not.toBeNull();
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('listProfiles()', async (done) => {
+    const pageSize = 1;
+    let pageToken = null;
+    const profiles = [];
+
+    try {
+      do {
+        const params = {
+          accountId,
+          pagesize: pageSize,
+          pagetoken: pageToken,
+          includeHistory: false,
+        };
+
+        const res = await iamIdentityService.listProfile(params);
+        expect(res.status).toEqual(200);
+
+        const { result } = res;
+        expect(result.limit).toEqual(pageSize);
+        expect(result.profiles).toBeDefined();
+        for (const elem of result.profiles) {
+          if (elem.name === profileName1 || elem.name === profileName2) {
+            profiles.push(elem);
+          }
+        }
+        pageToken = getPageTokenFromURL(result.next);
+      } while (pageToken != null);
+    } catch (err) {
+      console.log(err);
+      done(err);
+    }
+
+    expect(profiles).toHaveLength(2);
+    done();
+  });
+
+  test('updateProfile()', (done) => {
+    expect(profileId1).toBeDefined();
+    expect(profileId1).not.toBeNull();
+    expect(profileEtag).toBeDefined();
+    expect(profileEtag).not.toBeNull();
+
+    const params = {
+      profileId: profileId1,
+      ifMatch: profileEtag,
+      description: newDescription,
+    };
+
+    iamIdentityService
+      .updateProfile(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(200);
+
+        const { result } = res;
+        expect(result).not.toBeNull();
+        expect(result.description).toEqual(newDescription);
+
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('deleteProfile1()', async (done) => {
+    expect(profileId1).toBeDefined();
+    expect(profileId1).not.toBeNull();
+    const params = {
+      profileId: profileId1,
+    };
+
+    iamIdentityService
+      .deleteProfile(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(204);
+
+        getProfileById(profileId1).then((profile) => {
+          expect(profile).toBeNull();
+          done();
+        });
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('createClaimRule1()', (done) => {
+    const val = "{'cloud-docs-dev'}";
+    const profileClaimRuleConditionsModel = {
+      claim: 'blueGroups',
+      operator: 'EQUALS',
+      value: JSON.stringify(val),
+    };
+
+    const conditions = [profileClaimRuleConditionsModel];
+
+    const params = {
+      profileId: profileId2,
+      type: claimRuleType,
+      realmName,
+      expiration: 43200,
+      conditions,
+    };
+
+    iamIdentityService
+      .createClaimRule(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(201);
+
+        const { result } = res;
+        expect(result).not.toBeNull();
+        claimRuleId1 = result.id;
+        expect(claimRuleId1).not.toBeNull();
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('createClaimRule2()', (done) => {
+    const val = "{'Europe_Group'}";
+    const profileClaimRuleConditionsModel = {
+      claim: 'blueGroups',
+      operator: 'EQUALS',
+      value: JSON.stringify(val),
+    };
+
+    const conditions = [profileClaimRuleConditionsModel];
+
+    const params = {
+      profileId: profileId2,
+      type: claimRuleType,
+      realmName,
+      expiration: 43200,
+      conditions,
+    };
+
+    iamIdentityService
+      .createClaimRule(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(201);
+
+        const { result } = res;
+        expect(result).not.toBeNull();
+        claimRuleId2 = result.id;
+        expect(claimRuleId2).not.toBeNull();
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('getClaimRule()', (done) => {
+    expect(claimRuleId1).toBeDefined();
+    expect(claimRuleId1).not.toBeNull();
+    const params = {
+      profileId: profileId2,
+      ruleId: claimRuleId1,
+    };
+
+    iamIdentityService
+      .getClaimRule(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(200);
+
+        const { result } = res;
+        expect(result).toBeDefined();
+
+        expect(result.id).toEqual(claimRuleId1);
+        expect(result.type).toEqual(claimRuleType);
+        expect(result.realm_name).toEqual(realmName);
+        expect(result.conditions).not.toBeNull();
+
+        claimRuleEtag = result.entity_tag;
+        expect(claimRuleEtag).not.toBeNull();
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('listClaimRules()', async (done) => {
+    const claimRules = [];
+    const params = {
+      profileId: profileId2,
+    };
+
+    const res = await iamIdentityService.listClaimRules(params);
+    expect(res.status).toEqual(200);
+
+    const { result } = res;
+    expect(result.rules).toBeDefined();
+    for (const elem of result.rules) {
+      if (elem.id === claimRuleId1 || elem.id === claimRuleId2) {
+        claimRules.push(elem);
+      }
+    }
+    expect(claimRules).toHaveLength(2);
+    done();
+  });
+
+  test('updateClaimRule()', (done) => {
+    expect(claimRuleId1).toBeDefined();
+    expect(claimRuleId1).not.toBeNull();
+    expect(claimRuleEtag).toBeDefined();
+    expect(claimRuleEtag).not.toBeNull();
+
+    const val = "{'Europe_Group'}";
+    const profileClaimRuleConditionsModel = {
+      claim: 'blueGroups',
+      operator: 'EQUALS',
+      value: JSON.stringify(val),
+    };
+
+    const conditions = [profileClaimRuleConditionsModel];
+
+    const params = {
+      profileId: profileId2,
+      ruleId: claimRuleId1,
+      ifMatch: claimRuleEtag,
+      type: claimRuleType,
+      realmName,
+      expiration: 33200,
+      conditions,
+    };
+
+    iamIdentityService
+      .updateClaimRule(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(200);
+
+        const { result } = res;
+        expect(result).not.toBeNull();
+
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('deleteClaimRule1()', async (done) => {
+    expect(claimRuleId1).toBeDefined();
+    expect(claimRuleId1).not.toBeNull();
+    const params = {
+      profileId: profileId2,
+      ruleId: claimRuleId1,
+    };
+
+    iamIdentityService
+      .deleteClaimRule(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(204);
+
+        getClaimRuleById(profileId2, claimRuleId1).then((claimRule) => {
+          expect(claimRule).toBeNull();
+          done();
+        });
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('createLink()', (done) => {
+    const CreateProfileLinkRequestLink = {
+      crn: 'crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource',
+      namespace: 'default',
+      name: 'nice name',
+    };
+
+    const params = {
+      profileId: profileId2,
+      name: 'nice link',
+      crType: 'ROKS_SA',
+      link: CreateProfileLinkRequestLink,
+    };
+
+    iamIdentityService
+      .createLink(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(201);
+
+        const { result } = res;
+        expect(result).not.toBeNull();
+        linkId = result.id;
+        expect(linkId).not.toBeNull();
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('getLink()', (done) => {
+    expect(linkId).toBeDefined();
+    expect(linkId).not.toBeNull();
+    const params = {
+      profileId: profileId2,
+      linkId,
+    };
+
+    iamIdentityService
+      .getLink(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(200);
+
+        const { result } = res;
+        expect(result).toBeDefined();
+
+        expect(result.id).toEqual(linkId);
+        expect(result.name).toEqual('nice link');
+        expect(result.cr_type).toEqual('ROKS_SA');
+        expect(result.link).not.toBeNull();
+
+        done();
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('listLink()', async (done) => {
+    const links = [];
+    const params = {
+      profileId: profileId2,
+    };
+
+    const res = await iamIdentityService.listLink(params);
+    expect(res.status).toEqual(200);
+
+    const { result } = res;
+    expect(result.links).toBeDefined();
+    for (const elem of result.links) {
+      if (elem.id === linkId) {
+        links.push(elem);
+      }
+    }
+    expect(links).toHaveLength(1);
+    done();
+  });
+
+  test('deleteLink()', async (done) => {
+    expect(linkId).toBeDefined();
+    expect(linkId).not.toBeNull();
+    const params = {
+      profileId: profileId2,
+      linkId,
+    };
+
+    iamIdentityService
+      .deleteLink(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(204);
+
+        getLinkById(profileId2, linkId).then((link) => {
+          expect(link).toBeNull();
+          done();
+        });
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('deleteClaimRule2()', async (done) => {
+    expect(claimRuleId2).toBeDefined();
+    expect(claimRuleId2).not.toBeNull();
+    const params = {
+      profileId: profileId2,
+      ruleId: claimRuleId2,
+    };
+
+    iamIdentityService
+      .deleteClaimRule(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(204);
+
+        getClaimRuleById(profileId2, claimRuleId2).then((claimRule) => {
+          expect(claimRule).toBeNull();
+          done();
+        });
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('deleteProfile2()', async (done) => {
+    expect(profileId2).toBeDefined();
+    expect(profileId2).not.toBeNull();
+    const params = {
+      profileId: profileId2,
+    };
+
+    iamIdentityService
+      .deleteProfile(params)
+      .then((res) => {
+        expect(res).not.toBeNull();
+        expect(res.status).toEqual(204);
+
+        getProfileById(profileId2).then((profile) => {
+          expect(profile).toBeNull();
+          done();
+        });
+      })
+      .catch((err) => {
+        console.warn(err);
+        done(err);
+      });
+  });
+
+  test('createProfileBadRequest()', async () => {
+    const params = {
+      name: profileName1,
+      description: 'NodeSDK test profile #1',
+      accountId: invalidAccountId,
+    };
+
+    await expect(iamIdentityService.createProfile(params)).rejects.toMatchObject({
+      status: 400,
+    });
+  });
+
+  test('getProfileNotFound()', async () => {
+    const params = {
+      profileId: 'invalid',
+    };
+
+    await expect(iamIdentityService.getProfile(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  test('updateProfileNotFound()', async () => {
+    const params = {
+      profileId: 'invalid',
+      ifMatch: 'invalid',
+      description: 'invalid',
+    };
+
+    await expect(iamIdentityService.updateProfile(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  test('deleteProfileNotFound()', async () => {
+    const params = {
+      profileId: 'invalid',
+    };
+
+    await expect(iamIdentityService.deleteProfile(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  test('createClaimRuleNotFound()', async () => {
+    const val = "{'cloud-docs-dev'}";
+    const profileClaimRuleConditionsModel = {
+      claim: 'blueGroups',
+      operator: 'EQUALS',
+      value: JSON.stringify(val),
+    };
+
+    const conditions = [profileClaimRuleConditionsModel];
+
+    const params = {
+      profileId: 'invalid',
+      type: claimRuleType,
+      realmName,
+      expiration: 43200,
+      conditions,
+    };
+
+    await expect(iamIdentityService.createClaimRule(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  test('getClaimRuleNotFound()', async () => {
+    const params = {
+      profileId: 'invalid',
+      ruleId: 'invalid',
+    };
+
+    await expect(iamIdentityService.getClaimRule(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  test('updateClaimRuleNotFound()', async () => {
+    const val = "{'Europe_Group'}";
+    const profileClaimRuleConditionsModel = {
+      claim: 'blueGroups',
+      operator: 'EQUALS',
+      value: JSON.stringify(val),
+    };
+
+    const conditions = [profileClaimRuleConditionsModel];
+
+    const params = {
+      profileId: 'invalid',
+      ruleId: 'invalid',
+      ifMatch: 'invalid',
+      type: claimRuleType,
+      realmName,
+      expiration: 33200,
+      conditions,
+    };
+
+    await expect(iamIdentityService.updateClaimRule(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  test('deleteClaimRuleNotFound()', async () => {
+    const params = {
+      profileId: 'invalid',
+      ruleId: 'invalid',
+    };
+
+    await expect(iamIdentityService.deleteClaimRule(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  test('createLinkNotFound()', async () => {
+    const CreateProfileLinkRequestLink = {
+      crn: 'crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource',
+      namespace: 'default',
+      name: 'nice name',
+    };
+
+    const params = {
+      profileId: 'invalid',
+      name: 'nice link',
+      crType: 'ROKS_SA',
+      link: CreateProfileLinkRequestLink,
+    };
+
+    await expect(iamIdentityService.createLink(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  test('getLinkNotFound()', async () => {
+    const params = {
+      profileId: 'invalid',
+      linkId: 'invalid',
+    };
+
+    await expect(iamIdentityService.getLink(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
+  test('deleteLinkNotFound()', async () => {
+    const params = {
+      profileId: 'invalid',
+      linkId: 'invalid',
+    };
+
+    await expect(iamIdentityService.deleteLink(params)).rejects.toMatchObject({
+      status: 404,
+    });
+  });
+
   test('getAccountSettings()', (done) => {
     expect(accountSettingsEtag).toBeUndefined();
     const params = {
@@ -678,6 +1371,59 @@ describe('IamIdentityV1_integration', () => {
     }
   }
 
+  async function getProfileById(profileId) {
+    let result = null;
+    try {
+      const params = {
+        profileId,
+      };
+
+      const res = await iamIdentityService.getProfile(params);
+      if (res != null) {
+        result = res.result;
+      }
+      return result;
+    } catch (err) {
+      return result;
+    }
+  }
+
+  async function getClaimRuleById(profileId, claimRuleId) {
+    let result = null;
+    try {
+      const params = {
+        profileId,
+        ruleId: claimRuleId,
+      };
+
+      const res = await iamIdentityService.getClaimRule(params);
+      if (res != null) {
+        result = res.result;
+      }
+      return result;
+    } catch (err) {
+      return result;
+    }
+  }
+
+  async function getLinkById(profileId, linkId) {
+    let result = null;
+    try {
+      const params = {
+        profileId,
+        linkId,
+      };
+
+      const res = await iamIdentityService.getLink(params);
+      if (res != null) {
+        result = res.result;
+      }
+      return result;
+    } catch (err) {
+      return result;
+    }
+  }
+
   async function cleanupResources() {
     console.log('Cleaning resources...');
 
@@ -721,6 +1467,25 @@ describe('IamIdentityV1_integration', () => {
             id: elem.id,
           };
           const response = await iamIdentityService.deleteServiceId(params);
+          expect(response).not.toBeNull();
+          expect(response.status).toEqual(204);
+        }
+      }
+
+      // list profiles
+      const profileParams = {
+        accountId,
+      };
+
+      const profilesResponse = await iamIdentityService.listProfile(profileParams);
+      const profilesResult = profilesResponse.result;
+      if (profilesResult.profiles) {
+        for (const elem of profilesResult.profiles) {
+          console.log('Cleaning profile: ', elem.id);
+          const params = {
+            profileId: elem.id,
+          };
+          const response = await iamIdentityService.deleteProfile(params);
           expect(response).not.toBeNull();
           expect(response.status).toEqual(204);
         }

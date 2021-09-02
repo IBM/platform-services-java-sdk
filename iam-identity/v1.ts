@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+ * IBM OpenAPI SDK Code Generator Version: 3.37.0-a85661cd-20210802-190136
  */
 
 import * as extend from 'extend';
@@ -91,7 +91,7 @@ class IamIdentityV1 extends BaseService {
   }
 
   /*************************
-   * identityOperations
+   * APIKeyOperations
    ************************/
 
   /**
@@ -528,12 +528,16 @@ class IamIdentityV1 extends BaseService {
 
     return this.createRequest(parameters);
   }
+  /*************************
+   * serviceIDOperations
+   ************************/
 
   /**
    * List service IDs.
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
-   * that are bound to an entity they have access to.
+   * that are bound to an entity they have access to. Note: apikey details are only included in the response when
+   * creating a Service ID with an api key.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.accountId] - Account ID of the service ID(s) to query. This parameter is required (unless
@@ -658,7 +662,8 @@ class IamIdentityV1 extends BaseService {
    * Get details of a service ID.
    *
    * Returns the details of a service ID. Users can manage user API keys for themself, or service ID API keys for
-   * service IDs that are bound to an entity they have access to.
+   * service IDs that are bound to an entity they have access to. Note: apikey details are only included in the response
+   * when  creating a Service ID with an api key.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - Unique ID of the service ID.
@@ -715,7 +720,8 @@ class IamIdentityV1 extends BaseService {
    * Updates properties of a service ID. This does NOT affect existing access tokens. Their token content will stay
    * unchanged until the access token is refreshed. To update a service ID, pass the property to be modified. To delete
    * one property's value, pass the property with an empty value "".Users can manage user API keys for themself, or
-   * service ID API keys for service IDs that are bound to an entity they have access to.
+   * service ID API keys for service IDs that are bound to an entity they have access to.   Note: apikey details are
+   * only included in the response when creating a  Service ID with an apikey.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - Unique ID of the service ID to be updated.
@@ -909,7 +915,765 @@ class IamIdentityV1 extends BaseService {
 
     return this.createRequest(parameters);
   }
+  /*************************
+   * trustedProfilesOperations
+   ************************/
 
+  /**
+   * Create a trusted profile.
+   *
+   * Creates a trusted profile for a given account ID.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.name - Name of the trusted profile. The name is checked for uniqueness. Therefore trusted
+   * profiles with the same names can not exist in the same account.
+   * @param {string} params.accountId - The account ID of the trusted profile.
+   * @param {string} [params.description] - The optional description of the trusted profile. The 'description' property
+   * is only available if a description was provided during creation of trusted profile.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfile>>}
+   */
+  public createProfile(
+    params: IamIdentityV1.CreateProfileParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfile>> {
+    const _params = { ...params };
+    const requiredParams = ['name', 'accountId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'name': _params.name,
+      'account_id': _params.accountId,
+      'description': _params.description,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'createProfile');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles',
+        method: 'POST',
+        body,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get list of trusted profiles for a given account ID.
+   *
+   * Returns the list of trusted profiles for a given account ID.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.accountId - Account ID to query for trusted profiles.
+   * @param {string} [params.name] - Name of the trusted profile to query.
+   * @param {number} [params.pagesize] - Optional size of a single page. Default is 20 items per page. Valid range is 1
+   * to 100.
+   * @param {string} [params.sort] - Optional sort property, valid values are name, description, created_at and
+   * modified_at. If specified, the items are sorted by the value of this property.
+   * @param {string} [params.order] - Optional sort order, valid values are asc and desc. Default: asc.
+   * @param {boolean} [params.includeHistory] - Defines if the entity history is included in the response.
+   * @param {string} [params.pagetoken] - Optional Prev or Next page token returned from a previous query execution.
+   * Default is start with first page.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfilesList>>}
+   */
+  public listProfile(
+    params: IamIdentityV1.ListProfileParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfilesList>> {
+    const _params = { ...params };
+    const requiredParams = ['accountId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const query = {
+      'account_id': _params.accountId,
+      'name': _params.name,
+      'pagesize': _params.pagesize,
+      'sort': _params.sort,
+      'order': _params.order,
+      'include_history': _params.includeHistory,
+      'pagetoken': _params.pagetoken,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'listProfile');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get a trusted profile.
+   *
+   * Get a trusted profile.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile to get.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfile>>}
+   */
+  public getProfile(
+    params: IamIdentityV1.GetProfileParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfile>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'profile-id': _params.profileId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'getProfile');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Update a trusted profile.
+   *
+   * Updates a trusted profile.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile to be updated.
+   * @param {string} params.ifMatch - Version of the trusted profile to be updated.  Specify the version that you
+   * retrived when reading list of trusted profiles. This value helps to identify any parallel usage of trusted profile.
+   * Pass * to indicate to update any version available. This might result in stale updates.
+   * @param {string} [params.name] - The name of the trusted profile to update. If specified in the request the
+   * parameter must not be empty. The name is checked for uniqueness. Failure to this will result in an Error condition.
+   * @param {string} [params.description] - The description of the trusted profile to update. If specified an empty
+   * description will clear the description of the trusted profile. If a non empty value is provided the trusted profile
+   * will be updated.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfile>>}
+   */
+  public updateProfile(
+    params: IamIdentityV1.UpdateProfileParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfile>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId', 'ifMatch'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+    };
+
+    const path = {
+      'profile-id': _params.profileId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'updateProfile');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'If-Match': _params.ifMatch,
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete a trusted profile.
+   *
+   * Deletes a trusted profile.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.Empty>>}
+   */
+  public deleteProfile(
+    params: IamIdentityV1.DeleteProfileParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'profile-id': _params.profileId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteProfile');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {}, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Create claim rule for a trusted profile.
+   *
+   * Claim rule can be created for a given trusted profile, There is a limit of 20 rules allowed per trusted profile.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile to create a claim rule.
+   * @param {string} params.type - Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
+   * @param {ProfileClaimRuleConditions[]} params.conditions - Conditions of this claim rule.
+   * @param {ResponseContext} [params.context] - Context with key properties for problem determination.
+   * @param {string} [params.name] - Name of the claim rule to be created or updated.
+   * @param {string} [params.realmName] - The realm name of the Idp this claim rule applies to. This field is required
+   * only if the type is specified as 'Profile-SAML'.
+   * @param {string} [params.crType] - The compute resource type the rule applies to, required only if type is specified
+   * as 'Profile-CR'. Valid values are VSI, IKS_SA, ROKS_SA.
+   * @param {number} [params.expiration] - Session expiration in seconds, only required if type is 'Profile-SAML'.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ProfileClaimRule>>}
+   */
+  public createClaimRule(
+    params: IamIdentityV1.CreateClaimRuleParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ProfileClaimRule>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId', 'type', 'conditions'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'type': _params.type,
+      'conditions': _params.conditions,
+      'context': _params.context,
+      'name': _params.name,
+      'realm_name': _params.realmName,
+      'cr_type': _params.crType,
+      'expiration': _params.expiration,
+    };
+
+    const path = {
+      'profile-id': _params.profileId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'createClaimRule');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}/rules',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get all claim rules for a given trusted profile.
+   *
+   * Returns list of claim rules for a trusted profile.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ProfileClaimRuleList>>}
+   */
+  public listClaimRules(
+    params: IamIdentityV1.ListClaimRulesParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ProfileClaimRuleList>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'profile-id': _params.profileId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'listClaimRules');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}/rules',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get claim rule for a trusted profile.
+   *
+   * Claim rule can be fetched for a given trusted profile ID and rule ID.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile.
+   * @param {string} params.ruleId - ID of the claim rule to get.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ProfileClaimRule>>}
+   */
+  public getClaimRule(
+    params: IamIdentityV1.GetClaimRuleParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ProfileClaimRule>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId', 'ruleId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'profile-id': _params.profileId,
+      'rule-id': _params.ruleId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'getClaimRule');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}/rules/{rule-id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Update claim rule for a trusted profile.
+   *
+   * Claim rule can be updated for a given trusted profile ID and rule ID.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile.
+   * @param {string} params.ruleId - ID of the claim rule to update.
+   * @param {string} params.ifMatch - Version of the claim rule to be updated.  Specify the version that you retrived
+   * when reading list of claim rules. This value helps to identify any parallel usage of claim rule. Pass * to indicate
+   * to update any version available. This might result in stale updates.
+   * @param {string} params.type - Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
+   * @param {ProfileClaimRuleConditions[]} params.conditions - Conditions of this claim rule.
+   * @param {ResponseContext} [params.context] - Context with key properties for problem determination.
+   * @param {string} [params.name] - Name of the claim rule to be created or updated.
+   * @param {string} [params.realmName] - The realm name of the Idp this claim rule applies to. This field is required
+   * only if the type is specified as 'Profile-SAML'.
+   * @param {string} [params.crType] - The compute resource type the rule applies to, required only if type is specified
+   * as 'Profile-CR'. Valid values are VSI, IKS_SA, ROKS_SA.
+   * @param {number} [params.expiration] - Session expiration in seconds, only required if type is 'Profile-SAML'.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ProfileClaimRule>>}
+   */
+  public updateClaimRule(
+    params: IamIdentityV1.UpdateClaimRuleParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ProfileClaimRule>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId', 'ruleId', 'ifMatch', 'type', 'conditions'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'type': _params.type,
+      'conditions': _params.conditions,
+      'context': _params.context,
+      'name': _params.name,
+      'realm_name': _params.realmName,
+      'cr_type': _params.crType,
+      'expiration': _params.expiration,
+    };
+
+    const path = {
+      'profile-id': _params.profileId,
+      'rule-id': _params.ruleId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'updateClaimRule');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}/rules/{rule-id}',
+        method: 'PUT',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'If-Match': _params.ifMatch,
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete a claim rule.
+   *
+   * Deletes a claim rule.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile.
+   * @param {string} params.ruleId - ID of the claim rule to delete.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.Empty>>}
+   */
+  public deleteClaimRule(
+    params: IamIdentityV1.DeleteClaimRuleParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId', 'ruleId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'profile-id': _params.profileId,
+      'rule-id': _params.ruleId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteClaimRule');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}/rules/{rule-id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {}, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Create link to a trusted profile.
+   *
+   * Link compute resource to a trusted profile.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile.
+   * @param {string} params.crType - The compute resource type. Valid values are VSI, IKS_SA, ROKS_SA.
+   * @param {CreateProfileLinkRequestLink} params.link - Link details.
+   * @param {string} [params.name] - Optional name of the Link.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ProfileLink>>}
+   */
+  public createLink(
+    params: IamIdentityV1.CreateLinkParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ProfileLink>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId', 'crType', 'link'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const body = {
+      'cr_type': _params.crType,
+      'link': _params.link,
+      'name': _params.name,
+    };
+
+    const path = {
+      'profile-id': _params.profileId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'createLink');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}/links',
+        method: 'POST',
+        body,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get list of links to a trusted profile.
+   *
+   * Gets list of link to a trusted profile.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ProfileLinkList>>}
+   */
+  public listLink(
+    params: IamIdentityV1.ListLinkParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ProfileLinkList>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'profile-id': _params.profileId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'listLink');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}/links',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get link to a trusted profile.
+   *
+   * Gets link to a trusted profile.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile.
+   * @param {string} params.linkId - ID of the link.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ProfileLink>>}
+   */
+  public getLink(
+    params: IamIdentityV1.GetLinkParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.ProfileLink>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId', 'linkId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'profile-id': _params.profileId,
+      'link-id': _params.linkId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'getLink');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}/links/{link-id}',
+        method: 'GET',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete link to a trusted profile.
+   *
+   * Deletes link to a trusted profile.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.profileId - ID of the trusted profile.
+   * @param {string} params.linkId - ID of the link.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.Empty>>}
+   */
+  public deleteLink(
+    params: IamIdentityV1.DeleteLinkParams
+  ): Promise<IamIdentityV1.Response<IamIdentityV1.Empty>> {
+    const _params = { ...params };
+    const requiredParams = ['profileId', 'linkId'];
+
+    const missingParams = getMissingParams(_params, requiredParams);
+    if (missingParams) {
+      return Promise.reject(missingParams);
+    }
+
+    const path = {
+      'profile-id': _params.profileId,
+      'link-id': _params.linkId,
+    };
+
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteLink');
+
+    const parameters = {
+      options: {
+        url: '/v1/profiles/{profile-id}/links/{link-id}',
+        method: 'DELETE',
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(true, sdkHeaders, {}, _params.headers),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
   /*************************
    * accountSettings
    ************************/
@@ -1344,6 +2108,205 @@ namespace IamIdentityV1 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `createProfile` operation. */
+  export interface CreateProfileParams {
+    /** Name of the trusted profile. The name is checked for uniqueness. Therefore trusted profiles with the same
+     *  names can not exist in the same account.
+     */
+    name: string;
+    /** The account ID of the trusted profile. */
+    accountId: string;
+    /** The optional description of the trusted profile. The 'description' property is only available if a
+     *  description was provided during creation of trusted profile.
+     */
+    description?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listProfile` operation. */
+  export interface ListProfileParams {
+    /** Account ID to query for trusted profiles. */
+    accountId: string;
+    /** Name of the trusted profile to query. */
+    name?: string;
+    /** Optional size of a single page. Default is 20 items per page. Valid range is 1 to 100. */
+    pagesize?: number;
+    /** Optional sort property, valid values are name, description, created_at and modified_at. If specified, the
+     *  items are sorted by the value of this property.
+     */
+    sort?: string;
+    /** Optional sort order, valid values are asc and desc. Default: asc. */
+    order?: ListProfileConstants.Order | string;
+    /** Defines if the entity history is included in the response. */
+    includeHistory?: boolean;
+    /** Optional Prev or Next page token returned from a previous query execution. Default is start with first page. */
+    pagetoken?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `listProfile` operation. */
+  export namespace ListProfileConstants {
+    /** Optional sort order, valid values are asc and desc. Default: asc. */
+    export enum Order {
+      ASC = 'asc',
+      DESC = 'desc',
+    }
+  }
+
+  /** Parameters for the `getProfile` operation. */
+  export interface GetProfileParams {
+    /** ID of the trusted profile to get. */
+    profileId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateProfile` operation. */
+  export interface UpdateProfileParams {
+    /** ID of the trusted profile to be updated. */
+    profileId: string;
+    /** Version of the trusted profile to be updated.  Specify the version that you retrived when reading list of
+     *  trusted profiles. This value helps to identify any parallel usage of trusted profile. Pass * to indicate to
+     *  update any version available. This might result in stale updates.
+     */
+    ifMatch: string;
+    /** The name of the trusted profile to update. If specified in the request the parameter must not be empty. The
+     *  name is checked for uniqueness. Failure to this will result in an Error condition.
+     */
+    name?: string;
+    /** The description of the trusted profile to update. If specified an empty description will clear the
+     *  description of the trusted profile. If a non empty value is provided the trusted profile will be updated.
+     */
+    description?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteProfile` operation. */
+  export interface DeleteProfileParams {
+    /** ID of the trusted profile. */
+    profileId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createClaimRule` operation. */
+  export interface CreateClaimRuleParams {
+    /** ID of the trusted profile to create a claim rule. */
+    profileId: string;
+    /** Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'. */
+    type: string;
+    /** Conditions of this claim rule. */
+    conditions: ProfileClaimRuleConditions[];
+    /** Context with key properties for problem determination. */
+    context?: ResponseContext;
+    /** Name of the claim rule to be created or updated. */
+    name?: string;
+    /** The realm name of the Idp this claim rule applies to. This field is required only if the type is specified
+     *  as 'Profile-SAML'.
+     */
+    realmName?: string;
+    /** The compute resource type the rule applies to, required only if type is specified as 'Profile-CR'. Valid
+     *  values are VSI, IKS_SA, ROKS_SA.
+     */
+    crType?: string;
+    /** Session expiration in seconds, only required if type is 'Profile-SAML'. */
+    expiration?: number;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listClaimRules` operation. */
+  export interface ListClaimRulesParams {
+    /** ID of the trusted profile. */
+    profileId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getClaimRule` operation. */
+  export interface GetClaimRuleParams {
+    /** ID of the trusted profile. */
+    profileId: string;
+    /** ID of the claim rule to get. */
+    ruleId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateClaimRule` operation. */
+  export interface UpdateClaimRuleParams {
+    /** ID of the trusted profile. */
+    profileId: string;
+    /** ID of the claim rule to update. */
+    ruleId: string;
+    /** Version of the claim rule to be updated.  Specify the version that you retrived when reading list of claim
+     *  rules. This value helps to identify any parallel usage of claim rule. Pass * to indicate to update any version
+     *  available. This might result in stale updates.
+     */
+    ifMatch: string;
+    /** Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'. */
+    type: string;
+    /** Conditions of this claim rule. */
+    conditions: ProfileClaimRuleConditions[];
+    /** Context with key properties for problem determination. */
+    context?: ResponseContext;
+    /** Name of the claim rule to be created or updated. */
+    name?: string;
+    /** The realm name of the Idp this claim rule applies to. This field is required only if the type is specified
+     *  as 'Profile-SAML'.
+     */
+    realmName?: string;
+    /** The compute resource type the rule applies to, required only if type is specified as 'Profile-CR'. Valid
+     *  values are VSI, IKS_SA, ROKS_SA.
+     */
+    crType?: string;
+    /** Session expiration in seconds, only required if type is 'Profile-SAML'. */
+    expiration?: number;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteClaimRule` operation. */
+  export interface DeleteClaimRuleParams {
+    /** ID of the trusted profile. */
+    profileId: string;
+    /** ID of the claim rule to delete. */
+    ruleId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createLink` operation. */
+  export interface CreateLinkParams {
+    /** ID of the trusted profile. */
+    profileId: string;
+    /** The compute resource type. Valid values are VSI, IKS_SA, ROKS_SA. */
+    crType: string;
+    /** Link details. */
+    link: CreateProfileLinkRequestLink;
+    /** Optional name of the Link. */
+    name?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listLink` operation. */
+  export interface ListLinkParams {
+    /** ID of the trusted profile. */
+    profileId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `getLink` operation. */
+  export interface GetLinkParams {
+    /** ID of the trusted profile. */
+    profileId: string;
+    /** ID of the link. */
+    linkId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `deleteLink` operation. */
+  export interface DeleteLinkParams {
+    /** ID of the trusted profile. */
+    profileId: string;
+    /** ID of the link. */
+    linkId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `getAccountSettings` operation. */
   export interface GetAccountSettingsParams {
     /** Unique ID of the account. */
@@ -1575,6 +2538,16 @@ namespace IamIdentityV1 {
     apikeys: ApiKey[];
   }
 
+  /** Link details. */
+  export interface CreateProfileLinkRequestLink {
+    /** The CRN of the compute resource. */
+    crn: string;
+    /** The compute resource namespace, only required if cr_type is IKS_SA or ROKS_SA. */
+    namespace: string;
+    /** Name of the compute resource, only required if cr_type is IKS_SA or ROKS_SA. */
+    name?: string;
+  }
+
   /** Response body format for an entity history record. */
   export interface EnityHistoryRecord {
     /** Timestamp when the action was triggered. */
@@ -1589,6 +2562,83 @@ namespace IamIdentityV1 {
     params: string[];
     /** Message which summarizes the executed action. */
     message: string;
+  }
+
+  /** ProfileClaimRule. */
+  export interface ProfileClaimRule {
+    /** the unique identifier of the claim rule. */
+    id: string;
+    /** version of the claim rule. */
+    entity_tag: string;
+    /** If set contains a date time string of the creation date in ISO format. */
+    created_at: string;
+    /** If set contains a date time string of the last modification date in ISO format. */
+    modified_at?: string;
+    /** The optional claim rule name. */
+    name?: string;
+    /** Type of the Calim rule, either 'Profile-SAML' or 'Profile-CR'. */
+    type: string;
+    /** The realm name of the Idp this claim rule applies to. */
+    realm_name?: string;
+    /** Session expiration in seconds. */
+    expiration: number;
+    /** The compute resource type. Not required if type is Profile-SAML. Valid values are VSI, IKS_SA, ROKS_SA. */
+    cr_type?: string;
+    /** Conditions of this claim rule. */
+    conditions: ProfileClaimRuleConditions[];
+  }
+
+  /** ProfileClaimRuleConditions. */
+  export interface ProfileClaimRuleConditions {
+    /** The claim to valuate againt. */
+    claim: string;
+    /** The operation to perform on the claim. valid values are EQUALS, NOT_EQUALS, EQUALS_IGNORE_CASE,
+     *  NOT_EQUALS_IGNORE_CASE, CONTAINS, IN.
+     */
+    operator: string;
+    /** The stringified JSON value that the claim is compared to using the operator. */
+    value: string;
+  }
+
+  /** ProfileClaimRuleList. */
+  export interface ProfileClaimRuleList {
+    /** Context with key properties for problem determination. */
+    context?: ResponseContext;
+    /** List of claim rules. */
+    rules: ProfileClaimRule[];
+  }
+
+  /** Link details. */
+  export interface ProfileLink {
+    /** the unique identifier of the claim rule. */
+    id: string;
+    /** version of the claim rule. */
+    entity_tag: string;
+    /** If set contains a date time string of the creation date in ISO format. */
+    created_at: string;
+    /** If set contains a date time string of the last modification date in ISO format. */
+    modified_at: string;
+    /** Optional name of the Link. */
+    name?: string;
+    /** The compute resource type. Valid values are VSI, IKS_SA, ROKS_SA. */
+    cr_type: string;
+    link: ProfileLinkLink;
+  }
+
+  /** ProfileLinkLink. */
+  export interface ProfileLinkLink {
+    /** The CRN of the compute resource. */
+    crn?: string;
+    /** The compute resource namespace, only required if cr_type is IKS_SA or ROKS_SA. */
+    namespace?: string;
+    /** Name of the compute resource, only required if cr_type is IKS_SA or ROKS_SA. */
+    name?: string;
+  }
+
+  /** ProfileLinkList. */
+  export interface ProfileLinkList {
+    /** List of links to a trusted profile. */
+    links: ProfileLink[];
   }
 
   /** Context with key properties for problem determination. */
@@ -1653,9 +2703,7 @@ namespace IamIdentityV1 {
     unique_instance_crns?: string[];
     /** History of the Service ID. */
     history?: EnityHistoryRecord[];
-    /** Api key details for the Service ID. The apikey is only included in the response when creating a Service ID
-     *  with an apikey.
-     */
+    /** Response body format for API key V1 REST requests. */
     apikey?: ApiKey;
   }
 
@@ -1679,6 +2727,64 @@ namespace IamIdentityV1 {
      *  the response but might be empty depending on the query parameter values provided.
      */
     serviceids: ServiceId[];
+  }
+
+  /** Response body format for trusted profile V1 REST requests. */
+  export interface TrustedProfile {
+    /** Context with key properties for problem determination. */
+    context?: ResponseContext;
+    /** the unique identifier of the trusted profile. Example:'Profile-94497d0d-2ac3-41bf-a993-a49d1b14627c'. */
+    id: string;
+    /** Version of the trusted profile details object. You need to specify this value when updating the trusted
+     *  profile to avoid stale updates.
+     */
+    entity_tag: string;
+    /** Cloud Resource Name of the item. Example Cloud Resource Name:
+     *  'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::profile:Profile-94497d0d-2ac3-41bf-a993-a49d1b14627c'.
+     */
+    crn: string;
+    /** Name of the trusted profile. The name is checked for uniqueness. Therefore trusted profiles with the same
+     *  names can not exist in the same account.
+     */
+    name: string;
+    /** The optional description of the trusted profile. The 'description' property is only available if a
+     *  description was provided during a create of a trusted profile.
+     */
+    description?: string;
+    /** If set contains a date time string of the creation date in ISO format. */
+    created_at?: string;
+    /** If set contains a date time string of the last modification date in ISO format. */
+    modified_at?: string;
+    /** The iam_id of this trusted profile. */
+    iam_id: string;
+    /** ID of the account that this trusted profile belong to. */
+    account_id: string;
+    /** IMS acount ID of the trusted profile. */
+    ims_account_id?: number;
+    /** IMS user ID of the trusted profile. */
+    ims_user_id?: number;
+    /** History of the trusted profile. */
+    history?: EnityHistoryRecord[];
+  }
+
+  /** Response body format for the List trusted profiles V1 REST request. */
+  export interface TrustedProfilesList {
+    /** Context with key properties for problem determination. */
+    context?: ResponseContext;
+    /** The offset of the current page. */
+    offset?: number;
+    /** Optional size of a single page. Default is 20 items per page. Valid range is 1 to 100. */
+    limit?: number;
+    /** Link to the first page. */
+    first?: string;
+    /** Link to the previous available page. If 'previous' property is not part of the response no previous page is
+     *  available.
+     */
+    previous?: string;
+    /** Link to the next available page. If 'next' property is not part of the response no next page is available. */
+    next?: string;
+    /** List of trusted profiles. */
+    profiles: TrustedProfile[];
   }
 }
 

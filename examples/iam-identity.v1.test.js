@@ -74,6 +74,14 @@ describe('IamIdentityV1', () => {
   let svcId = null;
   let svcIdEtag = null;
 
+  let profileId= null;
+  let profileEtag = null;
+
+  let claimRuleId = null;
+  let claimRuleEtag = null;
+
+  let linkId =null;
+
   let accountSettingsEtag = null;
 
   test('createApiKey request example', done => {
@@ -498,6 +506,432 @@ describe('IamIdentityV1', () => {
       });
 
     // end-delete_service_id
+  });
+  test('createProfile request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+  
+    originalLog('createProfile() result:');
+    // begin-create_profile
+
+    const params = {
+      name: 'profileName',
+      description: 'Example Profile',
+      accountId,
+    };
+
+    iamIdentityService.createProfile(params)
+      .then(res => {
+        profileId = res.result.id
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-create_profile
+  });
+  test('getProfile request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+  
+    originalLog('getProfile() result:');
+    // begin-get_profile
+
+    const params = {
+      profileId,
+    };
+
+    iamIdentityService.getProfile(params)
+      .then(res => {
+        profileEtag = res.headers['etag'];
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-get_profile
+  });
+  test('listProfiles request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+  
+    originalLog('listProfiles() result:');
+    // begin-list_profiles
+
+    const params = {
+      accountId: accountId,
+      includeHistory: false,
+    };
+
+    iamIdentityService.listProfile(params)
+      .then(res => {
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-list_profiles
+  });
+  test('updateProfile request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+
+    expect(apikeyId).not.toBeNull();
+    expect(apikeyEtag).not.toBeNull();
+  
+    originalLog('updateProfile() result:');
+    // begin-update_profile
+
+    const params = {
+      profileId: profileId,
+      ifMatch: profileEtag,
+      description: 'This is an updated description',
+    };
+
+    iamIdentityService.updateProfile(params)
+      .then(res => {
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-update_profile
+  });
+  test('createClaimRule request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+  
+    originalLog('createClaimRule() result:');
+    // begin-create_claimRule
+
+    const val = "{'Europe_Group'}";
+    const profileClaimRuleConditionsModel = {
+      claim: 'blueGroups',
+      operator: 'EQUALS',
+      value: JSON.stringify(val),
+    };
+
+    const conditions = [profileClaimRuleConditionsModel];
+
+    const params = {
+      profileId: profileId,
+      type: 'Profile-SAML',
+      realmName: 'https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
+      expiration: 43200,
+      conditions,
+    };
+
+    iamIdentityService.createClaimRule(params)
+      .then(res => {
+        claimRuleId = res.result.id
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-create_claimRule
+  });
+  test('getClaimRule request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+  
+    originalLog('getClaimRule() result:');
+    // begin-get_claimRule
+
+    const params = {
+      profileId,
+      ruleId: claimRuleId,
+    };
+
+    iamIdentityService.getClaimRule(params)
+      .then(res => {
+        claimRuleEtag = res.headers['etag'];
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-get_claimRule
+  });
+  test('listClaimRules request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+  
+    originalLog('listClaimRules() result:');
+    // begin-list_claimRules
+
+    const params = {
+      profileId,
+    };
+
+    iamIdentityService.listClaimRules(params)
+      .then(res => {
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-list_claimRules
+  });
+  test('updateClaimRule request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+
+    expect(apikeyId).not.toBeNull();
+    expect(apikeyEtag).not.toBeNull();
+  
+    originalLog('updateClaimRule() result:');
+    // begin-update_claimRule
+
+    const val = "{'Europe_Group'}";
+    const profileClaimRuleConditionsModel = {
+      claim: 'blueGroups',
+      operator: 'EQUALS',
+      value: JSON.stringify(val),
+    };
+
+    const conditions = [profileClaimRuleConditionsModel];
+
+    const params = {
+      profileId,
+      ruleId: claimRuleId,
+      ifMatch: claimRuleEtag,
+      type: 'Profile-SAML',
+      realmName:'https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
+      expiration: 33200,
+      conditions,
+    };
+
+    iamIdentityService.updateClaimRule(params)
+      .then(res => {
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-update_claimRule
+  });
+  test('deleteClaimRule request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+
+    expect(profileId).not.toBeNull();
+    expect(claimRuleId).not.toBeNull();
+
+    // begin-delete_claimRule
+
+    const params = {
+      profileId,
+      ruleId: claimRuleId,
+    };
+
+    iamIdentityService.deleteClaimRule(params)
+      .then(res => {
+        done();
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-delete_claimRule
+  });
+  test('createLink request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+  
+    originalLog('createLink() result:');
+    // begin-create_link
+
+    const CreateProfileLinkRequestLink = {
+      crn: 'crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource',
+      namespace: 'default',
+      name: 'nice name',
+    };
+
+    const params = {
+      profileId: profileId,
+      name: 'nice link',
+      crType: 'ROKS_SA',
+      link: CreateProfileLinkRequestLink,
+    };
+
+    iamIdentityService.createLink(params)
+      .then(res => {
+        linkId = res.result.id
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-create_link
+  });
+  test('getLink request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+  
+    originalLog('getLink() result:');
+    // begin-get_link
+
+    const params = {
+      profileId: profileId,
+      linkId,
+    };
+
+    iamIdentityService.getLink(params)
+      .then(res => {
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-get_link
+  });
+  test('listLinks request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+  
+    originalLog('listLinks() result:');
+    // begin-list_links
+
+    const params = {
+      profileId,
+    };
+
+    iamIdentityService.listLink(params)
+      .then(res => {
+        console.log(JSON.stringify(res.result, null, 2));
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-list_links
+  });
+  test('deleteLink request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+
+    expect(profileId).not.toBeNull();
+    expect(linkId).not.toBeNull();
+
+    // begin-delete_link
+
+    const params = {
+      profileId,
+      linkId,
+    };
+
+    iamIdentityService.deleteLink(params)
+      .then(res => {
+        done();
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-delete_link
+  });
+  test('deleteProfile request example', done => {
+
+    consoleLogMock.mockImplementation(output => {
+      done();
+    });
+    consoleWarnMock.mockImplementation(output => {
+      done(output);
+    });
+
+    expect(profileId).not.toBeNull();
+
+    // begin-delete_profile
+
+    const params = {
+      profileId
+    };
+
+    iamIdentityService.deleteProfile(params)
+      .then(res => {
+        done();
+      })
+      .catch(err => {
+        console.warn(err);
+      });
+
+    // end-delete_profile
   });
   test('getAccountSettings request example', done => {
 

@@ -13,24 +13,37 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ResponseContext;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ResponseContext model.
+ * Unit test class for the CreateClaimRuleOptions model.
  */
-public class ResponseContextTest {
+public class CreateClaimRuleOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testResponseContext() throws Throwable {
+  public void testCreateClaimRuleOptions() throws Throwable {
+    ProfileClaimRuleConditions profileClaimRuleConditionsModel = new ProfileClaimRuleConditions.Builder()
+      .claim("testString")
+      .operator("testString")
+      .value("testString")
+      .build();
+    assertEquals(profileClaimRuleConditionsModel.claim(), "testString");
+    assertEquals(profileClaimRuleConditionsModel.operator(), "testString");
+    assertEquals(profileClaimRuleConditionsModel.value(), "testString");
+
     ResponseContext responseContextModel = new ResponseContext.Builder()
       .transactionId("testString")
       .operation("testString")
@@ -56,20 +69,29 @@ public class ResponseContextTest {
     assertEquals(responseContextModel.elapsedTime(), "testString");
     assertEquals(responseContextModel.clusterName(), "testString");
 
-    String json = TestUtilities.serialize(responseContextModel);
-
-    ResponseContext responseContextModelNew = TestUtilities.deserialize(json, ResponseContext.class);
-    assertTrue(responseContextModelNew instanceof ResponseContext);
-    assertEquals(responseContextModelNew.transactionId(), "testString");
-    assertEquals(responseContextModelNew.operation(), "testString");
-    assertEquals(responseContextModelNew.userAgent(), "testString");
-    assertEquals(responseContextModelNew.url(), "testString");
-    assertEquals(responseContextModelNew.instanceId(), "testString");
-    assertEquals(responseContextModelNew.threadId(), "testString");
-    assertEquals(responseContextModelNew.host(), "testString");
-    assertEquals(responseContextModelNew.startTime(), "testString");
-    assertEquals(responseContextModelNew.endTime(), "testString");
-    assertEquals(responseContextModelNew.elapsedTime(), "testString");
-    assertEquals(responseContextModelNew.clusterName(), "testString");
+    CreateClaimRuleOptions createClaimRuleOptionsModel = new CreateClaimRuleOptions.Builder()
+      .profileId("testString")
+      .type("testString")
+      .conditions(new java.util.ArrayList<ProfileClaimRuleConditions>(java.util.Arrays.asList(profileClaimRuleConditionsModel)))
+      .context(responseContextModel)
+      .name("testString")
+      .realmName("testString")
+      .crType("testString")
+      .expiration(Long.valueOf("26"))
+      .build();
+    assertEquals(createClaimRuleOptionsModel.profileId(), "testString");
+    assertEquals(createClaimRuleOptionsModel.type(), "testString");
+    assertEquals(createClaimRuleOptionsModel.conditions(), new java.util.ArrayList<ProfileClaimRuleConditions>(java.util.Arrays.asList(profileClaimRuleConditionsModel)));
+    assertEquals(createClaimRuleOptionsModel.context(), responseContextModel);
+    assertEquals(createClaimRuleOptionsModel.name(), "testString");
+    assertEquals(createClaimRuleOptionsModel.realmName(), "testString");
+    assertEquals(createClaimRuleOptionsModel.crType(), "testString");
+    assertEquals(createClaimRuleOptionsModel.expiration(), Long.valueOf("26"));
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateClaimRuleOptionsError() throws Throwable {
+    new CreateClaimRuleOptions.Builder().build();
+  }
+
 }

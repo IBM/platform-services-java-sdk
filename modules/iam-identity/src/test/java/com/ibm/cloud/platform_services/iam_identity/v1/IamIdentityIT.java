@@ -24,6 +24,7 @@ import static org.testng.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -33,20 +34,43 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResp
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
@@ -68,6 +92,10 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private static String APIKEY_NAME = "Java-SDK-IT-ApiKey";
     private static String SERVICEID_NAME = "Java-SDK-IT-ServiceId";
+    private static String PROFILE_NAME_1 = "Java-SDK-IT-TrustedProfile1";
+    private static String PROFILE_NAME_2 = "Java-SDK-IT-TrustedProfile2"; 
+    private static String CLAIMRULE_TYPE = "Profile-SAML";
+    private static String REALM_NAME = "https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20";
 
     private static String ACCOUNT_ID;
     private static String IAM_ID;
@@ -75,7 +103,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private static String IAM_ID_INVALID = "IAM-InvalidId";
     private static String ACCOUNT_ID_INVALID = "Account-InvalidId";
-
+    
     // Variables that hold values to be shared between the test methods.
     private String apikeyId1;
     private String apikeyEtag1;
@@ -84,16 +112,22 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private String serviceId1;
     private String serviceIdEtag1;
 
-    private String accountSettingsEtag;
+    private String profileId1;
+    private String profile1IamId;
+    private String profileId2;
+    private String profileEtag;
 
+    private String claimRuleId1;
+    private String claimRuleId2;
+    private String claimRuleEtag;
+
+    private String linkId;
+
+    private String accountSettingsEtag;
+    
     @Override
     public String getConfigFilename() {
         return "../../iam_identity.env";
-    }
-
-    @Override
-    public boolean loggingEnabled() {
-        return false;
     }
 
     @BeforeClass
@@ -123,7 +157,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         // Make sure we start with a clean slate.
         cleanupResources();
 
-        log("Setup complete.");
     }
 
     @Test
@@ -141,7 +174,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             ApiKey apiKeyResult = response.getResult();
             assertNotNull(apiKeyResult);
-            log(String.format(">>> createApiKey #1 response:\n%s", apiKeyResult.toString()));
 
             // Save the id for use by other test methods.
             apikeyId1 = apiKeyResult.getId();
@@ -167,7 +199,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             ApiKey apiKeyResult = response.getResult();
             assertNotNull(apiKeyResult);
-            log(String.format("\n>>> createApiKey #2 response:\n%s", apiKeyResult.toString()));
 
             // Save the apikey id for use by other test methods.
             apikeyId2 = apiKeyResult.getId();
@@ -193,7 +224,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             ApiKey apiKeyResult = response.getResult();
             assertNotNull(apiKeyResult);
-            log(String.format("\n>>> getApiKey response:\n%s", apiKeyResult.toString()));
 
             assertEquals(apiKeyResult.getId(), apikeyId1);
             assertEquals(apiKeyResult.getName(), APIKEY_NAME);
@@ -229,7 +259,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             ApiKey apiKeyResult = response.getResult();
             assertNotNull(apiKeyResult);
-            log(String.format("\n>>> getApiKeysDetails response:\n%s", apiKeyResult.toString()));
 
             assertEquals(apiKeyResult.getAccountId(), ACCOUNT_ID);
             assertEquals(apiKeyResult.getIamId(), IAM_ID);
@@ -269,7 +298,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
                 ApiKeyList apiKeyListResult = response.getResult();
                 assertNotNull(apiKeyListResult);
-                log(String.format("\n>>> listApiKeys response:\n%s", apiKeyListResult.toString()));
 
                 assertEquals(apiKeyListResult.getLimit(), Long.valueOf(pagesize));
 
@@ -310,7 +338,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             ApiKey apiKeyResult = response.getResult();
             assertNotNull(apiKeyResult);
-            log(String.format("\n>>> updateApiKey response:\n%s", apiKeyResult.toString()));
 
             assertEquals(apiKeyResult.getDescription(), newDescription);
             assertEquals(apiKeyResult.getName(), APIKEY_NAME);
@@ -426,7 +453,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             ServiceId serviceIdResult = response.getResult();
             assertNotNull(serviceIdResult);
-            log(String.format("\n>>> createServiceId response:\n%s", serviceIdResult.toString()));
 
             // Save off the id for use in other test methods.
             serviceId1 = serviceIdResult.getId();
@@ -452,7 +478,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             ServiceId serviceIdResult = response.getResult();
             assertNotNull(serviceIdResult);
-            log(String.format("\n>>> getServiceId response:\n%s", serviceIdResult.toString()));
 
             assertEquals(serviceIdResult.getDescription(), "JavaSDK test serviceId");
             assertEquals(serviceIdResult.getName(), SERVICEID_NAME);
@@ -484,7 +509,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(response.getStatusCode(), 200);
             ServiceIdList serviceIdListResult = response.getResult();
             assertNotNull(serviceIdListResult);
-            log(String.format("\n>>> listServiceIds response:\n%s", serviceIdListResult.toString()));
 
             // Verify that we received exactly 1 serviceId.
             assertNotNull(serviceIdListResult.getServiceids());
@@ -518,7 +542,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             ServiceId serviceIdResult = response.getResult();
             assertNotNull(serviceIdResult);
-            log(String.format("\n>>> updateServiceId response:\n%s", serviceIdResult.toString()));
 
             assertEquals(serviceIdResult.getDescription(), newDescription);
         } catch (ServiceResponseException e) {
@@ -603,8 +626,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.createApiKey(createApiKeyOptions).execute();
             fail("Invalid iam_id should not have succeeded!");
         } catch (ServiceResponseException e) {
-            log(String.format("Service returned status code %s: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
             assertEquals(e.getStatusCode(), 400);
         }
     }
@@ -618,8 +639,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.deleteApiKey(deleteApiKeyOptions).execute();
             fail("Invalid apikey id should not have succeeded!");
         } catch (ServiceResponseException e) {
-            log(String.format("Service returned status code %s: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
             assertEquals(e.getStatusCode(), 404);
         }
     }
@@ -644,8 +663,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.createServiceId(createServiceIdOptions).execute();
             fail("Invalid account_id should not have succeeded!");
         } catch (ServiceResponseException e) {
-            log(String.format("Service returned status code %s: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
             assertEquals(e.getStatusCode(), 400);
         }
     }
@@ -661,8 +678,776 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.getServiceId(getServiceIdOptions).execute();
             fail("Invalid service id should not have succeeded!");
         } catch (ServiceResponseException e) {
-            log(String.format("Service returned status code %s: %s\nError details: %s",
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testCreateProfile1() throws Exception{
+        try {
+            CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
+                    .name(PROFILE_NAME_1)
+                    .description("JavaSDK test Profile #1")
+                    .accountId(ACCOUNT_ID)
+                    .build();
+            Response<TrustedProfile> response = service.createProfile(createProfileOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
+
+            TrustedProfile trustedProfileResult = response.getResult();
+            assertNotNull(trustedProfileResult);
+
+            // Save the id for use by other test methods.
+            profileId1 = trustedProfileResult.getId();
+            profile1IamId = trustedProfileResult.getIamId();
+            assertNotNull(profileId1);
+            assertNotNull(profile1IamId);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testCreateProfile2() throws Exception{
+        try {
+            CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
+                    .name(PROFILE_NAME_2)
+                    .description("JavaSDK test Profile #2")
+                    .accountId(ACCOUNT_ID)
+                    .build();
+            Response<TrustedProfile> response = service.createProfile(createProfileOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
+
+            TrustedProfile trustedProfileResult = response.getResult();
+            assertNotNull(trustedProfileResult);
+
+            profileId2 = trustedProfileResult.getId();
+            assertNotNull(profileId2);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateProfile1" })
+    public void testGetProfile() throws Exception {
+        assertNotNull(profileId1);
+        try {
+            GetProfileOptions getProfileOptions = new GetProfileOptions.Builder()
+                    .profileId(profileId1)
+                    .build();
+
+            Response<TrustedProfile> response = service.getProfile(getProfileOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            TrustedProfile trustedProfileResult = response.getResult();
+            assertNotNull(trustedProfileResult);
+
+            assertEquals(trustedProfileResult.getId(), profileId1);
+            assertEquals(trustedProfileResult.getName(), PROFILE_NAME_1);
+            assertEquals(trustedProfileResult.getIamId(), profile1IamId);
+            assertEquals(trustedProfileResult.getAccountId(), ACCOUNT_ID);
+            assertNotNull(trustedProfileResult.getCrn());
+
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(response.getHeaders().values("Etag"));
+            assertEquals(response.getHeaders().values("Etag").size(), 1);
+            profileEtag = response.getHeaders().values("Etag").get(0);
+            assertNotNull(profileEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateProfile1", "testCreateProfile2" })
+    public void testListProfiles() throws Exception {
+        try {
+            List<TrustedProfile> profiles = new ArrayList<>();
+
+            // Retrieve one profile at a time and save off the objects that we're interested in,
+            // then validate the results at the end.
+            long pagesize = 1;
+
+            String pagetoken = null;
+            do {
+                // Get the "next" page of results.
+                ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
+                        .accountId(ACCOUNT_ID)
+                        .pagetoken(pagetoken)
+                        .pagesize(pagesize)
+                        .includeHistory(false)
+                        .build();
+
+                Response<TrustedProfilesList> response = service.listProfile(listProfileOptions).execute();
+                assertNotNull(response);
+                assertEquals(response.getStatusCode(), 200);
+
+                TrustedProfilesList profilesListResult = response.getResult();
+                assertNotNull(profilesListResult);
+
+                assertEquals(profilesListResult.getLimit(), Long.valueOf(pagesize));
+
+                // Walk through the returned results
+                for (TrustedProfile profile : profilesListResult.getProfiles()) {
+                    if (PROFILE_NAME_1.equals(profile.getName()) || PROFILE_NAME_2.equals(profile.getName())) {
+                        profiles.add(profile);
+                    }
+                }
+
+                // Retrieve the pagetoken value for the next page of results.
+                pagetoken = getPageTokenFromURL(profilesListResult.getNext());
+            } while (pagetoken != null);
+
+            assertEquals(profiles.size(), 2);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testListProfiles" })
+    public void testUpdateProfile() throws Exception {
+        assertNotNull(profileId1);
+        assertNotNull(profileEtag);
+        try {
+            String newDescription = "updated description";
+            UpdateProfileOptions updateProfileOptions = new UpdateProfileOptions.Builder()
+                    .profileId(profileId1)
+                    .ifMatch(profileEtag)
+                    .description(newDescription)
+                    .build();
+
+            Response<TrustedProfile> response = service.updateProfile(updateProfileOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            TrustedProfile profileResult = response.getResult();
+            assertNotNull(profileResult);
+
+            assertEquals(profileResult.getDescription(), newDescription);
+            assertEquals(profileResult.getName(), PROFILE_NAME_1);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testUpdateProfile" })
+    public void testDeleteProfile1() throws Exception {
+        sleep(1);
+        assertNotNull(profileId1);
+        try {
+            DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
+                    .profileId(profileId1)
+                    .build();
+            Response<Void> response = service.deleteProfile(deleteProfileOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
+            // Now make sure the get operation does not return it.
+            TrustedProfile profile = getProfile(profileId1);
+            assertNull(profile);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testDeleteProfile1" })
+    public void testCreateClaimRule1() throws Exception {
+        try {
+
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("blueGroups")
+                    .operator("EQUALS")
+                    .value("\"cloud-docs-dev\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+            conditions.add(condition);
+
+            CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
+                    .profileId(profileId2)
+                    .type(CLAIMRULE_TYPE)
+                    .realmName(REALM_NAME)
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            Response<ProfileClaimRule> response = service.createClaimRule(createClaimRuleOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
+
+            ProfileClaimRule profileClaimRuleResult = response.getResult();
+            assertNotNull(profileClaimRuleResult);
+
+            // Save the id for use by other test methods.
+            claimRuleId1 = profileClaimRuleResult.getId();
+            assertNotNull(claimRuleId1);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateClaimRule1" })
+    public void testCreateClaimRule2() throws Exception {
+        try {
+
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("blueGroups")
+                    .operator("EQUALS")
+                    .value("\"Europe_Group\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+            conditions.add(condition);
+
+            CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
+                    .profileId(profileId2)
+                    .type(CLAIMRULE_TYPE)
+                    .realmName(REALM_NAME)
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            Response<ProfileClaimRule> response = service.createClaimRule(createClaimRuleOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
+
+            ProfileClaimRule profileClaimRuleResult = response.getResult();
+            assertNotNull(profileClaimRuleResult);
+
+            // Save the id for use by other test methods.
+            claimRuleId2 = profileClaimRuleResult.getId();
+            assertNotNull(claimRuleId2);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateClaimRule2" })
+    public void testGetClaimRule() throws Exception {
+        assertNotNull(claimRuleId1);
+        try {
+            GetClaimRuleOptions getClaimRuleOptions = new GetClaimRuleOptions.Builder()
+                    .profileId(profileId2)
+                    .ruleId(claimRuleId1)
+                    .build();
+
+            Response<ProfileClaimRule> response = service.getClaimRule(getClaimRuleOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ProfileClaimRule profileClaimRuleResult = response.getResult();
+            assertNotNull(profileClaimRuleResult);
+
+            assertEquals(profileClaimRuleResult.getId(), claimRuleId1);
+            assertEquals(profileClaimRuleResult.getType(), CLAIMRULE_TYPE);
+            assertEquals(profileClaimRuleResult.getRealmName(), REALM_NAME);
+            assertNotNull(profileClaimRuleResult.getConditions());
+
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(response.getHeaders().values("Etag"));
+            assertEquals(response.getHeaders().values("Etag").size(), 1);
+            claimRuleEtag = response.getHeaders().values("Etag").get(0);
+            assertNotNull(claimRuleEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateClaimRule1", "testCreateClaimRule2" })
+    public void testListClaimRules() throws Exception {
+        try {
+            List<ProfileClaimRule> claimRules = new ArrayList<>();
+
+            // Retrieve one profile at a time and save off the objects that we're interested in,
+            // then validate the results at the end.
+    
+            ListClaimRulesOptions listClaimRulesOptions = new ListClaimRulesOptions.Builder()
+                    .profileId(profileId2)
+                    .build();
+
+            Response<ProfileClaimRuleList> response = service.listClaimRules(listClaimRulesOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ProfileClaimRuleList claimRuleListResult = response.getResult();
+            assertNotNull(claimRuleListResult);
+
+            // Walk through the returned results
+            for (ProfileClaimRule claimRule : claimRuleListResult.getRules()) {
+                if (claimRuleId1.equals(claimRule.getId()) || claimRuleId2.equals(claimRule.getId())) {
+                    claimRules.add(claimRule);
+                }
+            }
+
+            assertEquals(claimRules.size(), 2);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testListClaimRules" })
+    public void testUpdateClaimRule() throws Exception {
+        assertNotNull(claimRuleId1);
+        assertNotNull(claimRuleEtag);
+        try {
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("blueGroups")
+                    .operator("EQUALS")
+                    .value("\"Europe_Group\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+            conditions.add(condition);
+
+            UpdateClaimRuleOptions updateClaimRuleOptions = new UpdateClaimRuleOptions.Builder()
+                    .profileId(profileId2)
+                    .ruleId(claimRuleId1)
+                    .ifMatch(claimRuleEtag)
+                    .expiration(33200)
+                    .conditions(conditions)
+                    .type(CLAIMRULE_TYPE)
+                    .realmName(REALM_NAME)
+                    .build();
+
+            Response<ProfileClaimRule> response = service.updateClaimRule(updateClaimRuleOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ProfileClaimRule claimRuleResult = response.getResult();
+            assertNotNull(claimRuleResult);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testUpdateClaimRule" })
+    public void testDeleteClaimRule1() throws Exception {
+        sleep(1);
+        assertNotNull(claimRuleId1);
+        try {
+            DeleteClaimRuleOptions deleteClaimRuleOptions = new DeleteClaimRuleOptions.Builder()
+                    .profileId(profileId2)
+                    .ruleId(claimRuleId1)
+                    .build();
+            Response<Void> response = service.deleteClaimRule(deleteClaimRuleOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
+            // Now make sure the get operation does not return it.
+            ProfileClaimRule claimRule = getClaimRule(profileId2, claimRuleId1);
+            assertNull(claimRule);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testDeleteClaimRule1" })
+    public void testDeleteClaimRule2() throws Exception {
+        sleep(1);
+        assertNotNull(claimRuleId2);
+        try {
+            DeleteClaimRuleOptions deleteClaimRuleOptions = new DeleteClaimRuleOptions.Builder()
+                    .profileId(profileId2)
+                    .ruleId(claimRuleId2)
+                    .build();
+            Response<Void> response = service.deleteClaimRule(deleteClaimRuleOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
+            // Now make sure the get operation does not return it.
+            ProfileClaimRule claimRule = getClaimRule(profileId2, claimRuleId2);
+            assertNull(claimRule);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testDeleteClaimRule2" })
+    public void testCreateLink() throws Exception {
+        try {
+
+            CreateProfileLinkRequestLink link = new CreateProfileLinkRequestLink.Builder()
+                    .crn("crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource")
+                    .namespace("default")
+                    .name("nice name")
+                    .build();
+
+            CreateLinkOptions createLinkOptions = new CreateLinkOptions.Builder()
+                    .profileId(profileId2)
+                    .name("Nice link")
+                    .crType("ROKS_SA")
+                    .link(link)
+                    .build();
+
+            Response<ProfileLink> response = service.createLink(createLinkOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
+
+            ProfileLink profileLinkResult = response.getResult();
+            assertNotNull(profileLinkResult);
+
+            // Save the id for use by other test methods.
+            linkId = profileLinkResult.getId();
+            assertNotNull(linkId);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateLink" })
+    public void testGetLink() throws Exception {
+        assertNotNull(linkId);
+        try {
+            GetLinkOptions getLinkOptions = new GetLinkOptions.Builder()
+                    .profileId(profileId2)
+                    .linkId(linkId)
+                    .build();
+
+            Response<ProfileLink> response = service.getLink(getLinkOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ProfileLink profileLinkResult = response.getResult();
+            assertNotNull(profileLinkResult);
+
+            assertEquals(profileLinkResult.getId(), linkId);
+            assertEquals(profileLinkResult.getName(), "Nice link");
+            assertEquals(profileLinkResult.getCrType(), "ROKS_SA");
+            assertNotNull(profileLinkResult.getLink());
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testGetLink" })
+    public void testListLink() throws Exception {
+        try {
+            List<ProfileLink> links = new ArrayList<>();
+
+            // Retrieve one link at a time and save off the objects that we're interested in,
+            // then validate the results at the end.
+    
+            ListLinkOptions listLinkOptions = new ListLinkOptions.Builder()
+                    .profileId(profileId2)
+                    .build();
+
+            Response<ProfileLinkList> response = service.listLink(listLinkOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ProfileLinkList profileLinkListResult = response.getResult();
+            assertNotNull(profileLinkListResult);
+
+            // Walk through the returned results
+            for (ProfileLink link : profileLinkListResult.getLinks()) {
+                if (linkId.equals(link.getId())) {
+                    links.add(link);
+                }
+            }
+            assertEquals(links.size(), 1);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testListLink" })
+    public void testDeleteLink() throws Exception {
+        sleep(1);
+        assertNotNull(linkId);
+        try {
+            DeleteLinkOptions deleteLinkOptions = new DeleteLinkOptions.Builder()
+                    .profileId(profileId2)
+                    .linkId(linkId)
+                    .build();
+            Response<Void> response = service.deleteLink(deleteLinkOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
+            // Now make sure the get operation does not return it.
+            ProfileLink link = getLink(profileId2, linkId);
+            assertNull(link);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testDeleteLink" })
+    public void testDeleteProfile2() throws Exception {
+        sleep(1);
+        assertNotNull(profileId2);
+        try {
+            DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
+                    .profileId(profileId2)
+                    .build();
+            Response<Void> response = service.deleteProfile(deleteProfileOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
+            // Now make sure the get operation does not return it.
+            TrustedProfile profile = getProfile(profileId2);
+            assertNull(profile);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testCreateProfileUnauthorised() throws Exception {
+        try {
+            CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
+                    .name("Dummy")
+                    .description("Negative Test")
+                    .accountId(ACCOUNT_ID_INVALID)
+                    .build();
+
+            service.createProfile(createProfileOptions).execute();
+            fail("Invalid accountId should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 403);
+        }
+    }
+
+    @Test
+    public void testCreateProfileBadRequest() throws Exception {
+        try {
+            CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
+                    .name("")
+                    .accountId(ACCOUNT_ID)
+                    .build();
+
+            service.createProfile(createProfileOptions).execute();
+            fail("Bad request should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 400);
+        }
+    }
+
+    @Test
+    public void testDeleteProfileNotFound() throws Exception {
+        try {
+            DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
+                    .profileId("InvalidProfileId")
+                    .build();
+            service.deleteProfile(deleteProfileOptions).execute();
+            fail("Invalid profile id should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testGetProfileNotFound() throws Exception {
+        try {
+            GetProfileOptions getProfileOptions = new GetProfileOptions.Builder()
+                    .profileId("InvalidProfileId")
+                    .build();
+
+            service.getProfile(getProfileOptions).execute();
+            fail("Invalid profileId should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testUpdateProfileNotFound() throws Exception {
+        try {
+            UpdateProfileOptions updateProfileOptions = new UpdateProfileOptions.Builder()
+                    .profileId("InvalidAccountId")
+                    .ifMatch("dummy")
+                    .description("dummy description")
+                    .build();
+
+            service.updateProfile(updateProfileOptions).execute();
+            fail("Invalid profile id should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+            
+        }
+    }
+
+    @Test
+    public void testCreateClaimRuleNotFound() throws Exception {
+        try {
+
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("fakeClaim")
+                    .operator("EQUALS")
+                    .value("\"does not exist\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+            conditions.add(condition);
+
+            CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
+                    .profileId("fakeProfileId")
+                    .type(CLAIMRULE_TYPE)
+                    .realmName(REALM_NAME)
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            service.createClaimRule(createClaimRuleOptions).execute();
+            fail("Invalid accountId should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testCreateClaimRuleBadRequest() throws Exception {
+        try {
+
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("fakeClaim")
+                    .operator("EQUALS")
+                    .value("\"does not exist\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+            conditions.add(condition);
+
+            CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
+                    .profileId("fakeProfileId")
+                    .type("")
+                    .realmName("")
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            service.createClaimRule(createClaimRuleOptions).execute();
+            fail("Invalid accountId should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 400);
+        }
+    }
+
+    @Test
+    public void testGetClaimRuleNotFound() throws Exception {
+        try {
+            GetClaimRuleOptions getClaimRuleOptions = new GetClaimRuleOptions.Builder()
+                    .profileId("fakeId")
+                    .ruleId("fakeId")
+                    .build();
+
+            service.getClaimRule(getClaimRuleOptions).execute();
+            fail("Bad request should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testUpdateClaimRuleBadRequest() throws Exception {
+        try {
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("fakeClaim")
+                    .operator("EQUALS")
+                    .value("\"does not exist\"")
+                    .build();
+            
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+            conditions.add(condition);
+
+            UpdateClaimRuleOptions updateClaimRuleOptions = new UpdateClaimRuleOptions.Builder()
+                    .profileId("fakeProfileId")
+                    .ruleId("fakeRuleId")
+                    .ifMatch("fake")
+                    .type("")
+                    .realmName("")
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            service.updateClaimRule(updateClaimRuleOptions).execute();
+            fail("Invalid profileId and ruleId should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 400);
+        }
+    }
+
+    @Test
+    public void testDeleteClaimRuleNotFound() throws Exception {
+        try {
+            DeleteClaimRuleOptions deleteClaimRuleOptions = new DeleteClaimRuleOptions.Builder()
+                    .profileId("InvalidProfileId")
+                    .ruleId("InvalidRuleId")
+                    .build();
+            service.deleteClaimRule(deleteClaimRuleOptions).execute();
+            fail("Invalid profile id and rule id should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testCreateLinkBadRequest() throws Exception {
+        try {
+
+            CreateProfileLinkRequestLink link = new CreateProfileLinkRequestLink.Builder()
+                    .crn("invalid")
+                    .namespace("default")
+                    .name("nice name")
+                    .build();
+
+            CreateLinkOptions createLinkOptions = new CreateLinkOptions.Builder()
+                    .profileId("invalidId")
+                    .name("Invalid link")
+                    .crType("invalid")
+                    .link(link)
+                    .build();
+
+            service.createLink(createLinkOptions).execute();
+            fail("Bad request should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 400);
+        }
+    }
+
+    @Test
+    public void testGetLinkNotFound() throws Exception {
+        try {
+            GetLinkOptions getLinkOptions = new GetLinkOptions.Builder()
+                    .profileId("invalidId")
+                    .linkId("invalidId")
+                    .build();
+
+            service.getLink(getLinkOptions).execute();
+            fail("Bad request should not have succeeded!");
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testDeleteLinkNotFound() throws Exception {
+        try {
+            DeleteLinkOptions deleteLinkOptions = new DeleteLinkOptions.Builder()
+                    .profileId("invalidId")
+                    .linkId("invalidId")
+                    .build();
+            service.deleteLink(deleteLinkOptions).execute();
+            fail("Invalid profile id and rule id should not have succeeded!");
+        } catch (ServiceResponseException e) {
             assertEquals(e.getStatusCode(), 404);
         }
     }
@@ -684,7 +1469,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             AccountSettingsResponse accountSettingsResponseResult = response.getResult();
 
             assertNotNull(accountSettingsResponseResult);
-            log(String.format("\n>>> getAccountSettings response:\n%s", accountSettingsResponseResult));
 
             assertEquals(accountSettingsResponseResult.getAccountId(), ACCOUNT_ID);
             assertNotNull(accountSettingsResponseResult.getRestrictCreatePlatformApikey());
@@ -728,7 +1512,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             AccountSettingsResponse accountSettingsResponseResult = response.getResult();
             assertNotNull(accountSettingsResponseResult);
-            log(String.format("\n>>> updateAccountSettings response:\n%s", accountSettingsResponseResult));
 
             assertNull(accountSettingsResponseResult.getAllowedIpAddresses());
             assertEquals(accountSettingsResponseResult.getAccountId(), updateAccountSettingsOptions.accountId());
@@ -749,7 +1532,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         // Add any clean up logic here.
         sleep(5);
         cleanupResources();
-        log("Clean up complete.");
     }
 
     private void sleep(int numSecs) {
@@ -761,7 +1543,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     }
 
     private void cleanupResources() {
-        log(">>> Cleaning up resources.");
 
         ListApiKeysOptions listApiKeysOptions = new ListApiKeysOptions.Builder()
                 .accountId(ACCOUNT_ID)
@@ -775,11 +1556,9 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         ApiKeyList apiKeyListResult = response.getResult();
 
         long numApikeys = apiKeyListResult.getApikeys().size();
-        log(String.format(">>> Cleanup found %d apikeys.", numApikeys));
         if (numApikeys > 0) {
             for (ApiKey apikey : apiKeyListResult.getApikeys()) {
                 if (APIKEY_NAME.equals(apikey.getName())) {
-                    log(String.format(">>> Deleting apikey: %s", apikey.getId()));
                     DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
                             .id(apikey.getId())
                             .build();
@@ -804,11 +1583,9 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         assertNotNull(serviceIdListResult);
 
         long numServiceIds = serviceIdListResult.getServiceids().size();
-        log(String.format(">>> Cleanup found %d service ids.", numServiceIds));
         if (numServiceIds > 0) {
             for (ServiceId serviceId : serviceIdListResult.getServiceids()) {
                 if (SERVICEID_NAME.equals(serviceId.getName())) {
-                    log(String.format(">>> Deleting serviceId: %s", serviceId.getId()));
                     DeleteServiceIdOptions deleteServiceIdOptions = new DeleteServiceIdOptions.Builder()
                             .id(serviceId.getId())
                             .build();
@@ -818,7 +1595,32 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             }
         }
 
-        log(">>> Finished cleanup.");
+        ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
+                        .accountId(ACCOUNT_ID)
+                        .pagesize(100)
+                        .includeHistory(false)
+                        .build();
+
+        Response<TrustedProfilesList> profileResponse = service.listProfile(listProfileOptions).execute();
+        assertNotNull(response);
+        assertEquals(profileResponse.getStatusCode(), 200);
+        
+        TrustedProfilesList profilesListResult = profileResponse.getResult();
+        long numProfiles = profilesListResult.getProfiles().size();
+
+        if (numProfiles > 0) {
+            for (TrustedProfile profile : profilesListResult.getProfiles()) {
+                if (PROFILE_NAME_1.equals(profile.getName()) || PROFILE_NAME_2.equals(profile.getName())) {
+                    DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
+                            .profileId(profile.getId())
+                            .build();
+
+                    // Invoke operation
+                    Response<Void> deleteResponse = service.deleteProfile(deleteProfileOptions).execute();
+                    assertNotNull(deleteResponse);
+                }
+            }
+        }
     }
 
     private String getPageTokenFromURL(String s) {
@@ -850,6 +1652,48 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         try {
             GetServiceIdOptions options = new GetServiceIdOptions.Builder().id(id).build();
             Response<ServiceId> response = service.getServiceId(options).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+            return response.getResult();
+        } catch (NotFoundException e) {
+            return null;
+        } catch (Throwable t) {
+            throw t;
+        }
+    }
+
+    private TrustedProfile getProfile(String id) {
+        try {
+            GetProfileOptions options = new GetProfileOptions.Builder().profileId(id).build();
+            Response<TrustedProfile> response = service.getProfile(options).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+            return response.getResult();
+        } catch (NotFoundException e) {
+            return null;
+        } catch (Throwable t) {
+            throw t;
+        }
+    }
+
+    private ProfileClaimRule getClaimRule(String profileId, String claimRuleId) {
+        try {
+            GetClaimRuleOptions options = new GetClaimRuleOptions.Builder().profileId(profileId).ruleId(claimRuleId).build();
+            Response<ProfileClaimRule> response = service.getClaimRule(options).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+            return response.getResult();
+        } catch (NotFoundException e) {
+            return null;
+        } catch (Throwable t) {
+            throw t;
+        }
+    }
+
+    private ProfileLink getLink(String profileId, String linkId) {
+        try {
+            GetLinkOptions options = new GetLinkOptions.Builder().profileId(profileId).linkId(linkId).build();
+            Response<ProfileLink> response = service.getLink(options).execute();
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
             return response.getResult();

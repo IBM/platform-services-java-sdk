@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+ * IBM OpenAPI SDK Code Generator Version: 3.37.0-a85661cd-20210802-190136
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -23,23 +23,43 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResp
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
@@ -391,7 +411,8 @@ public class IamIdentity extends BaseService {
    * List service IDs.
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
-   * that are bound to an entity they have access to.
+   * that are bound to an entity they have access to. Note: apikey details are only included in the response when
+   * creating a Service ID with an api key.
    *
    * @param listServiceIdsOptions the {@link ListServiceIdsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
@@ -436,7 +457,8 @@ public class IamIdentity extends BaseService {
    * List service IDs.
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
-   * that are bound to an entity they have access to.
+   * that are bound to an entity they have access to. Note: apikey details are only included in the response when
+   * creating a Service ID with an api key.
    *
    * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
    */
@@ -487,7 +509,8 @@ public class IamIdentity extends BaseService {
    * Get details of a service ID.
    *
    * Returns the details of a service ID. Users can manage user API keys for themself, or service ID API keys for
-   * service IDs that are bound to an entity they have access to.
+   * service IDs that are bound to an entity they have access to. Note: apikey details are only included in the response
+   * when  creating a Service ID with an api key.
    *
    * @param getServiceIdOptions the {@link GetServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceId}
@@ -517,7 +540,8 @@ public class IamIdentity extends BaseService {
    * Updates properties of a service ID. This does NOT affect existing access tokens. Their token content will stay
    * unchanged until the access token is refreshed. To update a service ID, pass the property to be modified. To delete
    * one property's value, pass the property with an empty value "".Users can manage user API keys for themself, or
-   * service ID API keys for service IDs that are bound to an entity they have access to.
+   * service ID API keys for service IDs that are bound to an entity they have access to.   Note: apikey details are
+   * only included in the response when creating a  Service ID with an apikey.
    *
    * @param updateServiceIdOptions the {@link UpdateServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceId}
@@ -617,6 +641,418 @@ public class IamIdentity extends BaseService {
     pathParamsMap.put("id", unlockServiceIdOptions.id());
     RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}/lock", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "unlockServiceId");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create a trusted profile.
+   *
+   * Creates a trusted profile for a given account ID.
+   *
+   * @param createProfileOptions the {@link CreateProfileOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TrustedProfile}
+   */
+  public ServiceCall<TrustedProfile> createProfile(CreateProfileOptions createProfileOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createProfileOptions,
+      "createProfileOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createProfile");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("name", createProfileOptions.name());
+    contentJson.addProperty("account_id", createProfileOptions.accountId());
+    if (createProfileOptions.description() != null) {
+      contentJson.addProperty("description", createProfileOptions.description());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<TrustedProfile> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TrustedProfile>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get list of trusted profiles for a given account ID.
+   *
+   * Returns the list of trusted profiles for a given account ID.
+   *
+   * @param listProfileOptions the {@link ListProfileOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TrustedProfilesList}
+   */
+  public ServiceCall<TrustedProfilesList> listProfile(ListProfileOptions listProfileOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listProfileOptions,
+      "listProfileOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listProfile");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.query("account_id", String.valueOf(listProfileOptions.accountId()));
+    if (listProfileOptions.name() != null) {
+      builder.query("name", String.valueOf(listProfileOptions.name()));
+    }
+    if (listProfileOptions.pagesize() != null) {
+      builder.query("pagesize", String.valueOf(listProfileOptions.pagesize()));
+    }
+    if (listProfileOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listProfileOptions.sort()));
+    }
+    if (listProfileOptions.order() != null) {
+      builder.query("order", String.valueOf(listProfileOptions.order()));
+    }
+    if (listProfileOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(listProfileOptions.includeHistory()));
+    }
+    if (listProfileOptions.pagetoken() != null) {
+      builder.query("pagetoken", String.valueOf(listProfileOptions.pagetoken()));
+    }
+    ResponseConverter<TrustedProfilesList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TrustedProfilesList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get a trusted profile.
+   *
+   * Get a trusted profile.
+   *
+   * @param getProfileOptions the {@link GetProfileOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TrustedProfile}
+   */
+  public ServiceCall<TrustedProfile> getProfile(GetProfileOptions getProfileOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getProfileOptions,
+      "getProfileOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", getProfileOptions.profileId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getProfile");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<TrustedProfile> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TrustedProfile>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update a trusted profile.
+   *
+   * Updates a trusted profile.
+   *
+   * @param updateProfileOptions the {@link UpdateProfileOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TrustedProfile}
+   */
+  public ServiceCall<TrustedProfile> updateProfile(UpdateProfileOptions updateProfileOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateProfileOptions,
+      "updateProfileOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", updateProfileOptions.profileId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateProfile");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateProfileOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    if (updateProfileOptions.name() != null) {
+      contentJson.addProperty("name", updateProfileOptions.name());
+    }
+    if (updateProfileOptions.description() != null) {
+      contentJson.addProperty("description", updateProfileOptions.description());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<TrustedProfile> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TrustedProfile>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete a trusted profile.
+   *
+   * Deletes a trusted profile.
+   *
+   * @param deleteProfileOptions the {@link DeleteProfileOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteProfile(DeleteProfileOptions deleteProfileOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteProfileOptions,
+      "deleteProfileOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", deleteProfileOptions.profileId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteProfile");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create claim rule for a trusted profile.
+   *
+   * Claim rule can be created for a given trusted profile, There is a limit of 20 rules allowed per trusted profile.
+   *
+   * @param createClaimRuleOptions the {@link CreateClaimRuleOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileClaimRule}
+   */
+  public ServiceCall<ProfileClaimRule> createClaimRule(CreateClaimRuleOptions createClaimRuleOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createClaimRuleOptions,
+      "createClaimRuleOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", createClaimRuleOptions.profileId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/rules", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createClaimRule");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("type", createClaimRuleOptions.type());
+    contentJson.add("conditions", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createClaimRuleOptions.conditions()));
+    if (createClaimRuleOptions.context() != null) {
+      contentJson.add("context", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createClaimRuleOptions.context()));
+    }
+    if (createClaimRuleOptions.name() != null) {
+      contentJson.addProperty("name", createClaimRuleOptions.name());
+    }
+    if (createClaimRuleOptions.realmName() != null) {
+      contentJson.addProperty("realm_name", createClaimRuleOptions.realmName());
+    }
+    if (createClaimRuleOptions.crType() != null) {
+      contentJson.addProperty("cr_type", createClaimRuleOptions.crType());
+    }
+    if (createClaimRuleOptions.expiration() != null) {
+      contentJson.addProperty("expiration", createClaimRuleOptions.expiration());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ProfileClaimRule> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileClaimRule>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get all claim rules for a given trusted profile.
+   *
+   * Returns list of claim rules for a trusted profile.
+   *
+   * @param listClaimRulesOptions the {@link ListClaimRulesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileClaimRuleList}
+   */
+  public ServiceCall<ProfileClaimRuleList> listClaimRules(ListClaimRulesOptions listClaimRulesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listClaimRulesOptions,
+      "listClaimRulesOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", listClaimRulesOptions.profileId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/rules", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listClaimRules");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ProfileClaimRuleList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileClaimRuleList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get claim rule for a trusted profile.
+   *
+   * Claim rule can be fetched for a given trusted profile ID and rule ID.
+   *
+   * @param getClaimRuleOptions the {@link GetClaimRuleOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileClaimRule}
+   */
+  public ServiceCall<ProfileClaimRule> getClaimRule(GetClaimRuleOptions getClaimRuleOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getClaimRuleOptions,
+      "getClaimRuleOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", getClaimRuleOptions.profileId());
+    pathParamsMap.put("rule-id", getClaimRuleOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/rules/{rule-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getClaimRule");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ProfileClaimRule> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileClaimRule>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update claim rule for a trusted profile.
+   *
+   * Claim rule can be updated for a given trusted profile ID and rule ID.
+   *
+   * @param updateClaimRuleOptions the {@link UpdateClaimRuleOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileClaimRule}
+   */
+  public ServiceCall<ProfileClaimRule> updateClaimRule(UpdateClaimRuleOptions updateClaimRuleOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateClaimRuleOptions,
+      "updateClaimRuleOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", updateClaimRuleOptions.profileId());
+    pathParamsMap.put("rule-id", updateClaimRuleOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/rules/{rule-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateClaimRule");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateClaimRuleOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("type", updateClaimRuleOptions.type());
+    contentJson.add("conditions", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateClaimRuleOptions.conditions()));
+    if (updateClaimRuleOptions.context() != null) {
+      contentJson.add("context", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateClaimRuleOptions.context()));
+    }
+    if (updateClaimRuleOptions.name() != null) {
+      contentJson.addProperty("name", updateClaimRuleOptions.name());
+    }
+    if (updateClaimRuleOptions.realmName() != null) {
+      contentJson.addProperty("realm_name", updateClaimRuleOptions.realmName());
+    }
+    if (updateClaimRuleOptions.crType() != null) {
+      contentJson.addProperty("cr_type", updateClaimRuleOptions.crType());
+    }
+    if (updateClaimRuleOptions.expiration() != null) {
+      contentJson.addProperty("expiration", updateClaimRuleOptions.expiration());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ProfileClaimRule> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileClaimRule>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete a claim rule.
+   *
+   * Deletes a claim rule.
+   *
+   * @param deleteClaimRuleOptions the {@link DeleteClaimRuleOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteClaimRule(DeleteClaimRuleOptions deleteClaimRuleOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteClaimRuleOptions,
+      "deleteClaimRuleOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", deleteClaimRuleOptions.profileId());
+    pathParamsMap.put("rule-id", deleteClaimRuleOptions.ruleId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/rules/{rule-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteClaimRule");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create link to a trusted profile.
+   *
+   * Link compute resource to a trusted profile.
+   *
+   * @param createLinkOptions the {@link CreateLinkOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileLink}
+   */
+  public ServiceCall<ProfileLink> createLink(CreateLinkOptions createLinkOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createLinkOptions,
+      "createLinkOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", createLinkOptions.profileId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/links", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createLink");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("cr_type", createLinkOptions.crType());
+    contentJson.add("link", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createLinkOptions.link()));
+    if (createLinkOptions.name() != null) {
+      contentJson.addProperty("name", createLinkOptions.name());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ProfileLink> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileLink>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get list of links to a trusted profile.
+   *
+   * Gets list of link to a trusted profile.
+   *
+   * @param listLinkOptions the {@link ListLinkOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileLinkList}
+   */
+  public ServiceCall<ProfileLinkList> listLink(ListLinkOptions listLinkOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listLinkOptions,
+      "listLinkOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", listLinkOptions.profileId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/links", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listLink");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ProfileLinkList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileLinkList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get link to a trusted profile.
+   *
+   * Gets link to a trusted profile.
+   *
+   * @param getLinkOptions the {@link GetLinkOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileLink}
+   */
+  public ServiceCall<ProfileLink> getLink(GetLinkOptions getLinkOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getLinkOptions,
+      "getLinkOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", getLinkOptions.profileId());
+    pathParamsMap.put("link-id", getLinkOptions.linkId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/links/{link-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getLink");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ProfileLink> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileLink>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete link to a trusted profile.
+   *
+   * Deletes link to a trusted profile.
+   *
+   * @param deleteLinkOptions the {@link DeleteLinkOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteLink(DeleteLinkOptions deleteLinkOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteLinkOptions,
+      "deleteLinkOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", deleteLinkOptions.profileId());
+    pathParamsMap.put("link-id", deleteLinkOptions.linkId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/links/{link-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteLink");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }

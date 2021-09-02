@@ -41,13 +41,203 @@ public class ResponseContext extends GenericModel {
   protected String clusterName;
 
   /**
+   * Builder.
+   */
+  public static class Builder {
+    private String transactionId;
+    private String operation;
+    private String userAgent;
+    private String url;
+    private String instanceId;
+    private String threadId;
+    private String host;
+    private String startTime;
+    private String endTime;
+    private String elapsedTime;
+    private String clusterName;
+
+    private Builder(ResponseContext responseContext) {
+      this.transactionId = responseContext.transactionId;
+      this.operation = responseContext.operation;
+      this.userAgent = responseContext.userAgent;
+      this.url = responseContext.url;
+      this.instanceId = responseContext.instanceId;
+      this.threadId = responseContext.threadId;
+      this.host = responseContext.host;
+      this.startTime = responseContext.startTime;
+      this.endTime = responseContext.endTime;
+      this.elapsedTime = responseContext.elapsedTime;
+      this.clusterName = responseContext.clusterName;
+    }
+
+    /**
+     * Instantiates a new builder.
+     */
+    public Builder() {
+    }
+
+    /**
+     * Builds a ResponseContext.
+     *
+     * @return the new ResponseContext instance
+     */
+    public ResponseContext build() {
+      return new ResponseContext(this);
+    }
+
+    /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the ResponseContext builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
+     * Set the operation.
+     *
+     * @param operation the operation
+     * @return the ResponseContext builder
+     */
+    public Builder operation(String operation) {
+      this.operation = operation;
+      return this;
+    }
+
+    /**
+     * Set the userAgent.
+     *
+     * @param userAgent the userAgent
+     * @return the ResponseContext builder
+     */
+    public Builder userAgent(String userAgent) {
+      this.userAgent = userAgent;
+      return this;
+    }
+
+    /**
+     * Set the url.
+     *
+     * @param url the url
+     * @return the ResponseContext builder
+     */
+    public Builder url(String url) {
+      this.url = url;
+      return this;
+    }
+
+    /**
+     * Set the instanceId.
+     *
+     * @param instanceId the instanceId
+     * @return the ResponseContext builder
+     */
+    public Builder instanceId(String instanceId) {
+      this.instanceId = instanceId;
+      return this;
+    }
+
+    /**
+     * Set the threadId.
+     *
+     * @param threadId the threadId
+     * @return the ResponseContext builder
+     */
+    public Builder threadId(String threadId) {
+      this.threadId = threadId;
+      return this;
+    }
+
+    /**
+     * Set the host.
+     *
+     * @param host the host
+     * @return the ResponseContext builder
+     */
+    public Builder host(String host) {
+      this.host = host;
+      return this;
+    }
+
+    /**
+     * Set the startTime.
+     *
+     * @param startTime the startTime
+     * @return the ResponseContext builder
+     */
+    public Builder startTime(String startTime) {
+      this.startTime = startTime;
+      return this;
+    }
+
+    /**
+     * Set the endTime.
+     *
+     * @param endTime the endTime
+     * @return the ResponseContext builder
+     */
+    public Builder endTime(String endTime) {
+      this.endTime = endTime;
+      return this;
+    }
+
+    /**
+     * Set the elapsedTime.
+     *
+     * @param elapsedTime the elapsedTime
+     * @return the ResponseContext builder
+     */
+    public Builder elapsedTime(String elapsedTime) {
+      this.elapsedTime = elapsedTime;
+      return this;
+    }
+
+    /**
+     * Set the clusterName.
+     *
+     * @param clusterName the clusterName
+     * @return the ResponseContext builder
+     */
+    public Builder clusterName(String clusterName) {
+      this.clusterName = clusterName;
+      return this;
+    }
+  }
+
+  protected ResponseContext(Builder builder) {
+    transactionId = builder.transactionId;
+    operation = builder.operation;
+    userAgent = builder.userAgent;
+    url = builder.url;
+    instanceId = builder.instanceId;
+    threadId = builder.threadId;
+    host = builder.host;
+    startTime = builder.startTime;
+    endTime = builder.endTime;
+    elapsedTime = builder.elapsedTime;
+    clusterName = builder.clusterName;
+  }
+
+  /**
+   * New builder.
+   *
+   * @return a ResponseContext builder
+   */
+  public Builder newBuilder() {
+    return new Builder(this);
+  }
+
+  /**
    * Gets the transactionId.
    *
    * The transaction ID of the inbound REST request.
    *
    * @return the transactionId
    */
-  public String getTransactionId() {
+  public String transactionId() {
     return transactionId;
   }
 
@@ -58,7 +248,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the operation
    */
-  public String getOperation() {
+  public String operation() {
     return operation;
   }
 
@@ -69,7 +259,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the userAgent
    */
-  public String getUserAgent() {
+  public String userAgent() {
     return userAgent;
   }
 
@@ -80,7 +270,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the url
    */
-  public String getUrl() {
+  public String url() {
     return url;
   }
 
@@ -91,7 +281,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the instanceId
    */
-  public String getInstanceId() {
+  public String instanceId() {
     return instanceId;
   }
 
@@ -102,7 +292,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the threadId
    */
-  public String getThreadId() {
+  public String threadId() {
     return threadId;
   }
 
@@ -113,7 +303,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the host
    */
-  public String getHost() {
+  public String host() {
     return host;
   }
 
@@ -124,7 +314,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the startTime
    */
-  public String getStartTime() {
+  public String startTime() {
     return startTime;
   }
 
@@ -135,7 +325,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the endTime
    */
-  public String getEndTime() {
+  public String endTime() {
     return endTime;
   }
 
@@ -146,7 +336,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the elapsedTime
    */
-  public String getElapsedTime() {
+  public String elapsedTime() {
     return elapsedTime;
   }
 
@@ -157,7 +347,7 @@ public class ResponseContext extends GenericModel {
    *
    * @return the clusterName
    */
-  public String getClusterName() {
+  public String clusterName() {
     return clusterName;
   }
 }

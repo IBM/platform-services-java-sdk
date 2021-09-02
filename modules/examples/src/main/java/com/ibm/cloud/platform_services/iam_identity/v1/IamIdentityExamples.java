@@ -595,7 +595,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("listClaimRule() result:");
 
-            // begin-list_claimRule
+            // begin-list_claimRules
 
             ListClaimRulesOptions listClaimRulesOptions = new ListClaimRulesOptions.Builder()
                     .profileId(profileId)
@@ -606,7 +606,7 @@ public class IamIdentityExamples {
 
             System.out.println(claimRules);
 
-            // end-list_claimRule
+            // end-list_claimRules
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

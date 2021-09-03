@@ -537,7 +537,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("createClaimRule() result:");
 
-            // begin-create_claimRule
+            // begin-create_claim_rule
 
             ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
                     .claim("blueGroups")
@@ -562,7 +562,7 @@ public class IamIdentityExamples {
 
             System.out.println(claimRule);
 
-            // end-create_claimRule
+            // end-create_claim_rule
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -572,7 +572,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("getClaimRule() result:");
 
-            // begin-get_claimRule
+            // begin-get_claim_rule
 
             GetClaimRuleOptions getClaimRuleOptions = new GetClaimRuleOptions.Builder()
                     .profileId(profileId)
@@ -585,7 +585,7 @@ public class IamIdentityExamples {
 
             System.out.println(claimRule);
 
-            // end-get_claimRule
+            // end-get_claim_rule
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -595,7 +595,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("listClaimRule() result:");
 
-            // begin-list_claimRules
+            // begin-list_claim_rules
 
             ListClaimRulesOptions listClaimRulesOptions = new ListClaimRulesOptions.Builder()
                     .profileId(profileId)
@@ -606,7 +606,7 @@ public class IamIdentityExamples {
 
             System.out.println(claimRules);
 
-            // end-list_claimRules
+            // end-list_claim_rules
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -616,7 +616,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("updateClaimRule() result:");
 
-            // begin-update_claimRule
+            // begin-update_claim_rule
 
             ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
                     .claim("blueGroups")
@@ -642,7 +642,7 @@ public class IamIdentityExamples {
 
             System.out.println(claimRule);
 
-            // end-update_claimRule
+            // end-update_claim_rule
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -652,7 +652,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("deleteClaimRule() result:");
 
-            // begin-delete_claimRule
+            // begin-delete_claim_rule
 
             DeleteClaimRuleOptions deleteClaimRuleOptions = new DeleteClaimRuleOptions.Builder()
                     .profileId(profileId)
@@ -660,7 +660,7 @@ public class IamIdentityExamples {
                     .build();
             Response<Void> response = service.deleteClaimRule(deleteClaimRuleOptions).execute();
 
-            // end-delete_claimRule
+            // end-delete_claim_rule
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -723,7 +723,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("listLink() result:");
 
-            // begin-list_links
+            // begin-list_link
 
             ListLinkOptions listLinkOptions = new ListLinkOptions.Builder()
                     .profileId(profileId)
@@ -734,7 +734,7 @@ public class IamIdentityExamples {
 
             System.out.println(links);
 
-            // end-list_links
+            // end-list_link
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

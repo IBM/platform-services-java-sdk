@@ -491,7 +491,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("ListProfile() result:");
 
-            // begin-list_profile
+            // begin-list_profiles
 
             ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
                         .accountId(accountId)
@@ -503,7 +503,7 @@ public class IamIdentityExamples {
 
             System.out.println(profiles);
 
-            // end-list_profile
+            // end-list_profiles
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -662,6 +662,8 @@ public class IamIdentityExamples {
 
             // end-delete_claim_rule
 
+            System.out.printf("deleteClaimRule() response status code: %d%n", response.getStatusCode());
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -723,7 +725,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("listLink() result:");
 
-            // begin-list_link
+            // begin-list_links
 
             ListLinkOptions listLinkOptions = new ListLinkOptions.Builder()
                     .profileId(profileId)
@@ -734,7 +736,7 @@ public class IamIdentityExamples {
 
             System.out.println(links);
 
-            // end-list_link
+            // end-list_links
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -754,6 +756,8 @@ public class IamIdentityExamples {
 
             // end-delete_link
 
+            System.out.printf("deleteLink() response status code: %d%n", response.getStatusCode());
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -771,6 +775,8 @@ public class IamIdentityExamples {
             Response<Void> response = service.deleteProfile(deleteProfileOptions).execute();
 
             // end-delete_profile
+
+            System.out.printf("deleteProfile() response status code: %d%n", response.getStatusCode());
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

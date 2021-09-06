@@ -74,13 +74,13 @@ describe('IamIdentityV1', () => {
   let svcId = null;
   let svcIdEtag = null;
 
-  let profileId= null;
+  let profileId = null;
   let profileEtag = null;
 
   let claimRuleId = null;
   let claimRuleEtag = null;
 
-  let linkId =null;
+  let linkId = null;
 
   let accountSettingsEtag = null;
 
@@ -92,7 +92,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('createApiKey() result:');
     // begin-create_api_key
 
@@ -121,7 +121,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('listApiKeys() result:');
     // begin-list_api_keys
 
@@ -149,7 +149,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('getApiKeysDetails() result:');
     // begin-get_api_keys_details
 
@@ -178,7 +178,7 @@ describe('IamIdentityV1', () => {
     });
 
     expect(apikeyId).not.toBeNull();
-  
+
     originalLog('getApiKey() result:');
     // begin-get_api_key
 
@@ -208,7 +208,7 @@ describe('IamIdentityV1', () => {
 
     expect(apikeyId).not.toBeNull();
     expect(apikeyEtag).not.toBeNull();
-  
+
     originalLog('updateApiKey() result:');
     // begin-update_api_key
 
@@ -317,7 +317,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('createServiceId() result:');
     // begin-create_service_id
 
@@ -348,7 +348,7 @@ describe('IamIdentityV1', () => {
     });
 
     expect(svcId).not.toBeNull();
-  
+
     originalLog('getServiceId() result:');
     // begin-get_service_id
 
@@ -375,7 +375,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('listServiceIds() result:');
     // begin-list_service_ids
 
@@ -405,7 +405,7 @@ describe('IamIdentityV1', () => {
 
     expect(svcId).not.toBeNull();
     expect(svcIdEtag).not.toBeNull();
-  
+
     originalLog('updateServiceId() result:');
     // begin-update_service_id
 
@@ -515,7 +515,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('createProfile() result:');
     // begin-create_profile
 
@@ -544,7 +544,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('getProfile() result:');
     // begin-get_profile
 
@@ -571,7 +571,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('listProfiles() result:');
     // begin-list_profiles
 
@@ -601,7 +601,7 @@ describe('IamIdentityV1', () => {
 
     expect(apikeyId).not.toBeNull();
     expect(apikeyEtag).not.toBeNull();
-  
+
     originalLog('updateProfile() result:');
     // begin-update_profile
 
@@ -629,9 +629,9 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('createClaimRule() result:');
-    // begin-create_claimRule
+    // begin-create_claim_rule
 
     const val = "{'Europe_Group'}";
     const profileClaimRuleConditionsModel = {
@@ -659,7 +659,7 @@ describe('IamIdentityV1', () => {
         console.warn(err);
       });
 
-    // end-create_claimRule
+    // end-create_claim_rule
   });
   test('getClaimRule request example', done => {
 
@@ -669,9 +669,9 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('getClaimRule() result:');
-    // begin-get_claimRule
+    // begin-get_claim_rule
 
     const params = {
       profileId,
@@ -687,7 +687,7 @@ describe('IamIdentityV1', () => {
         console.warn(err);
       });
 
-    // end-get_claimRule
+    // end-get_claim_rule
   });
   test('listClaimRules request example', done => {
 
@@ -697,9 +697,9 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('listClaimRules() result:');
-    // begin-list_claimRules
+    // begin-list_claim_rules
 
     const params = {
       profileId,
@@ -713,7 +713,7 @@ describe('IamIdentityV1', () => {
         console.warn(err);
       });
 
-    // end-list_claimRules
+    // end-list_claim_rules
   });
   test('updateClaimRule request example', done => {
 
@@ -726,9 +726,9 @@ describe('IamIdentityV1', () => {
 
     expect(apikeyId).not.toBeNull();
     expect(apikeyEtag).not.toBeNull();
-  
+
     originalLog('updateClaimRule() result:');
-    // begin-update_claimRule
+    // begin-update_claim_rule
 
     const val = "{'Europe_Group'}";
     const profileClaimRuleConditionsModel = {
@@ -744,7 +744,7 @@ describe('IamIdentityV1', () => {
       ruleId: claimRuleId,
       ifMatch: claimRuleEtag,
       type: 'Profile-SAML',
-      realmName:'https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
+      realmName: 'https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20',
       expiration: 33200,
       conditions,
     };
@@ -757,7 +757,7 @@ describe('IamIdentityV1', () => {
         console.warn(err);
       });
 
-    // end-update_claimRule
+    // end-update_claim_rule
   });
   test('deleteClaimRule request example', done => {
 
@@ -771,7 +771,7 @@ describe('IamIdentityV1', () => {
     expect(profileId).not.toBeNull();
     expect(claimRuleId).not.toBeNull();
 
-    // begin-delete_claimRule
+    // begin-delete_claim_rule
 
     const params = {
       profileId,
@@ -786,7 +786,7 @@ describe('IamIdentityV1', () => {
         console.warn(err);
       });
 
-    // end-delete_claimRule
+    // end-delete_claim_rule
   });
   test('createLink request example', done => {
 
@@ -796,7 +796,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('createLink() result:');
     // begin-create_link
 
@@ -832,7 +832,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('getLink() result:');
     // begin-get_link
 
@@ -859,7 +859,7 @@ describe('IamIdentityV1', () => {
     consoleWarnMock.mockImplementation(output => {
       done(output);
     });
-  
+
     originalLog('listLinks() result:');
     // begin-list_links
 
@@ -944,7 +944,7 @@ describe('IamIdentityV1', () => {
     });
 
     expect(accountSettingsEtag).toBeNull();
-  
+
     originalLog('getAccountSettings() result:');
     // begin-getAccountSettings
 
@@ -974,7 +974,7 @@ describe('IamIdentityV1', () => {
     });
 
     expect(accountSettingsEtag).not.toBeNull();
-  
+
     originalLog('updateAccountSettings() result:');
     // begin-updateAccountSettings
 

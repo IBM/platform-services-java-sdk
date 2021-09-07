@@ -1,3 +1,10 @@
+## [0.20.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.20.0...v0.20.1) (2021-09-07)
+
+
+### Bug Fixes
+
+* **IAM Identity:** fix listProfiles and listLinks operation id's ([#128](https://github.com/IBM/platform-services-node-sdk/issues/128)) ([261349a](https://github.com/IBM/platform-services-node-sdk/commit/261349a484cc218ae283f8687ec37c10fbedb71e))
+
 # [0.20.0](https://github.com/IBM/platform-services-node-sdk/compare/v0.19.6...v0.20.0) (2021-09-02)
 
 

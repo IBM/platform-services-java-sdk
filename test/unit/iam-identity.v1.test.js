@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const core = require('ibm-cloud-sdk-core');
+
 const { NoAuthAuthenticator, unitTestUtils } = core;
 
 const IamIdentityV1 = require('../../dist/iam-identity/v1');
@@ -112,7 +112,7 @@ describe('IamIdentityV1', () => {
         const type = 'user';
         const sort = 'testString';
         const order = 'asc';
-        const includeHistory = true;
+        const includeHistory = false;
         const params = {
           accountId: accountId,
           iamId: iamId,
@@ -139,15 +139,15 @@ describe('IamIdentityV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['account_id']).toEqual(accountId);
-        expect(options.qs['iam_id']).toEqual(iamId);
-        expect(options.qs['pagesize']).toEqual(pagesize);
-        expect(options.qs['pagetoken']).toEqual(pagetoken);
-        expect(options.qs['scope']).toEqual(scope);
-        expect(options.qs['type']).toEqual(type);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['order']).toEqual(order);
-        expect(options.qs['include_history']).toEqual(includeHistory);
+        expect(options.qs.account_id).toEqual(accountId);
+        expect(options.qs.iam_id).toEqual(iamId);
+        expect(options.qs.pagesize).toEqual(pagesize);
+        expect(options.qs.pagetoken).toEqual(pagetoken);
+        expect(options.qs.scope).toEqual(scope);
+        expect(options.qs.type).toEqual(type);
+        expect(options.qs.sort).toEqual(sort);
+        expect(options.qs.order).toEqual(order);
+        expect(options.qs.include_history).toEqual(includeHistory);
       });
 
       test('should prioritize user-given headers', () => {
@@ -208,12 +208,12 @@ describe('IamIdentityV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'Entity-Lock', entityLock);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['iam_id']).toEqual(iamId);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['account_id']).toEqual(accountId);
-        expect(options.body['apikey']).toEqual(apikey);
-        expect(options.body['store_value']).toEqual(storeValue);
+        expect(options.body.name).toEqual(name);
+        expect(options.body.iam_id).toEqual(iamId);
+        expect(options.body.description).toEqual(description);
+        expect(options.body.account_id).toEqual(accountId);
+        expect(options.body.apikey).toEqual(apikey);
+        expect(options.body.store_value).toEqual(storeValue);
       });
 
       test('should prioritize user-given headers', () => {
@@ -237,7 +237,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.createApiKey({});
@@ -249,11 +249,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createApiKeyPromise = iamIdentityService.createApiKey();
         expectToBePromise(createApiKeyPromise);
 
-        createApiKeyPromise.catch(err => {
+        createApiKeyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -265,7 +265,7 @@ describe('IamIdentityV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation getApiKeysDetails
         const iamApiKey = 'testString';
-        const includeHistory = true;
+        const includeHistory = false;
         const params = {
           iamApiKey: iamApiKey,
           includeHistory: includeHistory,
@@ -286,7 +286,7 @@ describe('IamIdentityV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'IAM-ApiKey', iamApiKey);
-        expect(options.qs['include_history']).toEqual(includeHistory);
+        expect(options.qs.include_history).toEqual(includeHistory);
       });
 
       test('should prioritize user-given headers', () => {
@@ -316,7 +316,7 @@ describe('IamIdentityV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation getApiKey
         const id = 'testString';
-        const includeHistory = true;
+        const includeHistory = false;
         const params = {
           id: id,
           includeHistory: includeHistory,
@@ -336,8 +336,8 @@ describe('IamIdentityV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['include_history']).toEqual(includeHistory);
-        expect(options.path['id']).toEqual(id);
+        expect(options.qs.include_history).toEqual(includeHistory);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -359,7 +359,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.getApiKey({});
@@ -371,11 +371,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getApiKeyPromise = iamIdentityService.getApiKey();
         expectToBePromise(getApiKeyPromise);
 
-        getApiKeyPromise.catch(err => {
+        getApiKeyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -412,9 +412,9 @@ describe('IamIdentityV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'If-Match', ifMatch);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.path['id']).toEqual(id);
+        expect(options.body.name).toEqual(name);
+        expect(options.body.description).toEqual(description);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -438,7 +438,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.updateApiKey({});
@@ -450,11 +450,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateApiKeyPromise = iamIdentityService.updateApiKey();
         expectToBePromise(updateApiKeyPromise);
 
-        updateApiKeyPromise.catch(err => {
+        updateApiKeyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -484,7 +484,7 @@ describe('IamIdentityV1', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['id']).toEqual(id);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -506,7 +506,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.deleteApiKey({});
@@ -518,11 +518,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteApiKeyPromise = iamIdentityService.deleteApiKey();
         expectToBePromise(deleteApiKeyPromise);
 
-        deleteApiKeyPromise.catch(err => {
+        deleteApiKeyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -552,7 +552,7 @@ describe('IamIdentityV1', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['id']).toEqual(id);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -574,7 +574,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.lockApiKey({});
@@ -586,11 +586,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const lockApiKeyPromise = iamIdentityService.lockApiKey();
         expectToBePromise(lockApiKeyPromise);
 
-        lockApiKeyPromise.catch(err => {
+        lockApiKeyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -620,7 +620,7 @@ describe('IamIdentityV1', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['id']).toEqual(id);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -642,7 +642,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.unlockApiKey({});
@@ -654,11 +654,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const unlockApiKeyPromise = iamIdentityService.unlockApiKey();
         expectToBePromise(unlockApiKeyPromise);
 
-        unlockApiKeyPromise.catch(err => {
+        unlockApiKeyPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -675,7 +675,7 @@ describe('IamIdentityV1', () => {
         const pagetoken = 'testString';
         const sort = 'testString';
         const order = 'asc';
-        const includeHistory = true;
+        const includeHistory = false;
         const params = {
           accountId: accountId,
           name: name,
@@ -700,13 +700,13 @@ describe('IamIdentityV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['account_id']).toEqual(accountId);
-        expect(options.qs['name']).toEqual(name);
-        expect(options.qs['pagesize']).toEqual(pagesize);
-        expect(options.qs['pagetoken']).toEqual(pagetoken);
-        expect(options.qs['sort']).toEqual(sort);
-        expect(options.qs['order']).toEqual(order);
-        expect(options.qs['include_history']).toEqual(includeHistory);
+        expect(options.qs.account_id).toEqual(accountId);
+        expect(options.qs.name).toEqual(name);
+        expect(options.qs.pagesize).toEqual(pagesize);
+        expect(options.qs.pagetoken).toEqual(pagetoken);
+        expect(options.qs.sort).toEqual(sort);
+        expect(options.qs.order).toEqual(order);
+        expect(options.qs.include_history).toEqual(includeHistory);
       });
 
       test('should prioritize user-given headers', () => {
@@ -750,7 +750,7 @@ describe('IamIdentityV1', () => {
         const description = 'testString';
         const uniqueInstanceCrns = ['testString'];
         const apikey = apiKeyInsideCreateServiceIdRequestModel;
-        const entityLock = 'testString';
+        const entityLock = 'false';
         const params = {
           accountId: accountId,
           name: name,
@@ -775,11 +775,11 @@ describe('IamIdentityV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'Entity-Lock', entityLock);
-        expect(options.body['account_id']).toEqual(accountId);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['unique_instance_crns']).toEqual(uniqueInstanceCrns);
-        expect(options.body['apikey']).toEqual(apikey);
+        expect(options.body.account_id).toEqual(accountId);
+        expect(options.body.name).toEqual(name);
+        expect(options.body.description).toEqual(description);
+        expect(options.body.unique_instance_crns).toEqual(uniqueInstanceCrns);
+        expect(options.body.apikey).toEqual(apikey);
       });
 
       test('should prioritize user-given headers', () => {
@@ -803,7 +803,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.createServiceId({});
@@ -815,11 +815,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const createServiceIdPromise = iamIdentityService.createServiceId();
         expectToBePromise(createServiceIdPromise);
 
-        createServiceIdPromise.catch(err => {
+        createServiceIdPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -831,7 +831,7 @@ describe('IamIdentityV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation getServiceId
         const id = 'testString';
-        const includeHistory = true;
+        const includeHistory = false;
         const params = {
           id: id,
           includeHistory: includeHistory,
@@ -851,8 +851,8 @@ describe('IamIdentityV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['include_history']).toEqual(includeHistory);
-        expect(options.path['id']).toEqual(id);
+        expect(options.qs.include_history).toEqual(includeHistory);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -874,7 +874,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.getServiceId({});
@@ -886,11 +886,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getServiceIdPromise = iamIdentityService.getServiceId();
         expectToBePromise(getServiceIdPromise);
 
-        getServiceIdPromise.catch(err => {
+        getServiceIdPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -929,10 +929,10 @@ describe('IamIdentityV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'If-Match', ifMatch);
-        expect(options.body['name']).toEqual(name);
-        expect(options.body['description']).toEqual(description);
-        expect(options.body['unique_instance_crns']).toEqual(uniqueInstanceCrns);
-        expect(options.path['id']).toEqual(id);
+        expect(options.body.name).toEqual(name);
+        expect(options.body.description).toEqual(description);
+        expect(options.body.unique_instance_crns).toEqual(uniqueInstanceCrns);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -956,7 +956,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.updateServiceId({});
@@ -968,11 +968,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateServiceIdPromise = iamIdentityService.updateServiceId();
         expectToBePromise(updateServiceIdPromise);
 
-        updateServiceIdPromise.catch(err => {
+        updateServiceIdPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1002,7 +1002,7 @@ describe('IamIdentityV1', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['id']).toEqual(id);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1024,7 +1024,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.deleteServiceId({});
@@ -1036,11 +1036,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const deleteServiceIdPromise = iamIdentityService.deleteServiceId();
         expectToBePromise(deleteServiceIdPromise);
 
-        deleteServiceIdPromise.catch(err => {
+        deleteServiceIdPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1070,7 +1070,7 @@ describe('IamIdentityV1', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['id']).toEqual(id);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1092,7 +1092,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.lockServiceId({});
@@ -1104,11 +1104,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const lockServiceIdPromise = iamIdentityService.lockServiceId();
         expectToBePromise(lockServiceIdPromise);
 
-        lockServiceIdPromise.catch(err => {
+        lockServiceIdPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1138,7 +1138,7 @@ describe('IamIdentityV1', () => {
         const expectedAccept = undefined;
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.path['id']).toEqual(id);
+        expect(options.path.id).toEqual(id);
       });
 
       test('should prioritize user-given headers', () => {
@@ -1160,7 +1160,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.unlockServiceId({});
@@ -1172,11 +1172,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const unlockServiceIdPromise = iamIdentityService.unlockServiceId();
         expectToBePromise(unlockServiceIdPromise);
 
-        unlockServiceIdPromise.catch(err => {
+        unlockServiceIdPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -1259,10 +1259,10 @@ describe('IamIdentityV1', () => {
       });
     });
   });
-  describe('listProfile', () => {
+  describe('listProfiles', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // Construct the params object for operation listProfile
+        // Construct the params object for operation listProfiles
         const accountId = 'testString';
         const name = 'testString';
         const pagesize = 38;
@@ -1280,10 +1280,10 @@ describe('IamIdentityV1', () => {
           pagetoken: pagetoken,
         };
 
-        const listProfileResult = iamIdentityService.listProfile(params);
+        const listProfilesResult = iamIdentityService.listProfiles(params);
 
         // all methods should return a Promise
-        expectToBePromise(listProfileResult);
+        expectToBePromise(listProfilesResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -1316,7 +1316,7 @@ describe('IamIdentityV1', () => {
           },
         };
 
-        iamIdentityService.listProfile(params);
+        iamIdentityService.listProfiles(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -1325,7 +1325,7 @@ describe('IamIdentityV1', () => {
       test('should enforce required parameters', async (done) => {
         let err;
         try {
-          await iamIdentityService.listProfile({});
+          await iamIdentityService.listProfiles({});
         } catch (e) {
           err = e;
         }
@@ -1335,10 +1335,10 @@ describe('IamIdentityV1', () => {
       });
 
       test('should reject promise when required params are not given', (done) => {
-        const listProfilePromise = iamIdentityService.listProfile();
-        expectToBePromise(listProfilePromise);
+        const listProfilesPromise = iamIdentityService.listProfiles();
+        expectToBePromise(listProfilesPromise);
 
-        listProfilePromise.catch((err) => {
+        listProfilesPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2108,19 +2108,19 @@ describe('IamIdentityV1', () => {
       });
     });
   });
-  describe('listLink', () => {
+  describe('listLinks', () => {
     describe('positive tests', () => {
       test('should pass the right params to createRequest', () => {
-        // Construct the params object for operation listLink
+        // Construct the params object for operation listLinks
         const profileId = 'testString';
         const params = {
           profileId: profileId,
         };
 
-        const listLinkResult = iamIdentityService.listLink(params);
+        const listLinksResult = iamIdentityService.listLinks(params);
 
         // all methods should return a Promise
-        expectToBePromise(listLinkResult);
+        expectToBePromise(listLinksResult);
 
         // assert that create request was called
         expect(createRequestMock).toHaveBeenCalledTimes(1);
@@ -2147,7 +2147,7 @@ describe('IamIdentityV1', () => {
           },
         };
 
-        iamIdentityService.listLink(params);
+        iamIdentityService.listLinks(params);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
@@ -2156,7 +2156,7 @@ describe('IamIdentityV1', () => {
       test('should enforce required parameters', async (done) => {
         let err;
         try {
-          await iamIdentityService.listLink({});
+          await iamIdentityService.listLinks({});
         } catch (e) {
           err = e;
         }
@@ -2166,10 +2166,10 @@ describe('IamIdentityV1', () => {
       });
 
       test('should reject promise when required params are not given', (done) => {
-        const listLinkPromise = iamIdentityService.listLink();
-        expectToBePromise(listLinkPromise);
+        const listLinksPromise = iamIdentityService.listLinks();
+        expectToBePromise(listLinksPromise);
 
-        listLinkPromise.catch((err) => {
+        listLinksPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2327,7 +2327,7 @@ describe('IamIdentityV1', () => {
       test('should pass the right params to createRequest', () => {
         // Construct the params object for operation getAccountSettings
         const accountId = 'testString';
-        const includeHistory = true;
+        const includeHistory = false;
         const params = {
           accountId: accountId,
           includeHistory: includeHistory,
@@ -2347,8 +2347,8 @@ describe('IamIdentityV1', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(options.qs['include_history']).toEqual(includeHistory);
-        expect(options.path['account_id']).toEqual(accountId);
+        expect(options.qs.include_history).toEqual(includeHistory);
+        expect(options.path.account_id).toEqual(accountId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2370,7 +2370,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.getAccountSettings({});
@@ -2382,11 +2382,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const getAccountSettingsPromise = iamIdentityService.getAccountSettings();
         expectToBePromise(getAccountSettingsPromise);
 
-        getAccountSettingsPromise.catch(err => {
+        getAccountSettingsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });
@@ -2403,8 +2403,8 @@ describe('IamIdentityV1', () => {
         const restrictCreatePlatformApikey = 'RESTRICTED';
         const allowedIpAddresses = 'testString';
         const mfa = 'NONE';
-        const sessionExpirationInSeconds = 'testString';
-        const sessionInvalidationInSeconds = 'testString';
+        const sessionExpirationInSeconds = '86400';
+        const sessionInvalidationInSeconds = '7200';
         const maxSessionsPerIdentity = 'testString';
         const params = {
           ifMatch: ifMatch,
@@ -2433,14 +2433,14 @@ describe('IamIdentityV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         checkUserHeader(createRequestMock, 'If-Match', ifMatch);
-        expect(options.body['restrict_create_service_id']).toEqual(restrictCreateServiceId);
-        expect(options.body['restrict_create_platform_apikey']).toEqual(restrictCreatePlatformApikey);
-        expect(options.body['allowed_ip_addresses']).toEqual(allowedIpAddresses);
-        expect(options.body['mfa']).toEqual(mfa);
-        expect(options.body['session_expiration_in_seconds']).toEqual(sessionExpirationInSeconds);
-        expect(options.body['session_invalidation_in_seconds']).toEqual(sessionInvalidationInSeconds);
-        expect(options.body['max_sessions_per_identity']).toEqual(maxSessionsPerIdentity);
-        expect(options.path['account_id']).toEqual(accountId);
+        expect(options.body.restrict_create_service_id).toEqual(restrictCreateServiceId);
+        expect(options.body.restrict_create_platform_apikey).toEqual(restrictCreatePlatformApikey);
+        expect(options.body.allowed_ip_addresses).toEqual(allowedIpAddresses);
+        expect(options.body.mfa).toEqual(mfa);
+        expect(options.body.session_expiration_in_seconds).toEqual(sessionExpirationInSeconds);
+        expect(options.body.session_invalidation_in_seconds).toEqual(sessionInvalidationInSeconds);
+        expect(options.body.max_sessions_per_identity).toEqual(maxSessionsPerIdentity);
+        expect(options.path.account_id).toEqual(accountId);
       });
 
       test('should prioritize user-given headers', () => {
@@ -2464,7 +2464,7 @@ describe('IamIdentityV1', () => {
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async done => {
+      test('should enforce required parameters', async (done) => {
         let err;
         try {
           await iamIdentityService.updateAccountSettings({});
@@ -2476,11 +2476,11 @@ describe('IamIdentityV1', () => {
         done();
       });
 
-      test('should reject promise when required params are not given', done => {
+      test('should reject promise when required params are not given', (done) => {
         const updateAccountSettingsPromise = iamIdentityService.updateAccountSettings();
         expectToBePromise(updateAccountSettingsPromise);
 
-        updateAccountSettingsPromise.catch(err => {
+        updateAccountSettingsPromise.catch((err) => {
           expect(err.message).toMatch(/Missing required parameters/);
           done();
         });

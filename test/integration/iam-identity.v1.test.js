@@ -668,7 +668,7 @@ describe('IamIdentityV1_integration', () => {
           includeHistory: false,
         };
 
-        const res = await iamIdentityService.listProfile(params);
+        const res = await iamIdentityService.listProfiles(params);
         expect(res.status).toEqual(200);
 
         const { result } = res;
@@ -997,13 +997,13 @@ describe('IamIdentityV1_integration', () => {
       });
   });
 
-  test('listLink()', async (done) => {
+  test('listLinks()', async (done) => {
     const links = [];
     const params = {
       profileId: profileId2,
     };
 
-    const res = await iamIdentityService.listLink(params);
+    const res = await iamIdentityService.listLinks(params);
     expect(res.status).toEqual(200);
 
     const { result } = res;
@@ -1477,7 +1477,7 @@ describe('IamIdentityV1_integration', () => {
         accountId,
       };
 
-      const profilesResponse = await iamIdentityService.listProfile(profileParams);
+      const profilesResponse = await iamIdentityService.listProfiles(profileParams);
       const profilesResult = profilesResponse.result;
       if (profilesResult.profiles) {
         for (const elem of profilesResult.profiles) {

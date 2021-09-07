@@ -537,7 +537,7 @@ class IamIdentityV1 extends BaseService {
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
    * that are bound to an entity they have access to. Note: apikey details are only included in the response when
-   * creating a Service ID with an api key.
+   * creating a Service ID with an apikey.
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {string} [params.accountId] - Account ID of the service ID(s) to query. This parameter is required (unless
@@ -663,7 +663,7 @@ class IamIdentityV1 extends BaseService {
    *
    * Returns the details of a service ID. Users can manage user API keys for themself, or service ID API keys for
    * service IDs that are bound to an entity they have access to. Note: apikey details are only included in the response
-   * when  creating a Service ID with an api key.
+   * when  creating a Service ID with an apikey.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.id - Unique ID of the service ID.
@@ -922,7 +922,7 @@ class IamIdentityV1 extends BaseService {
   /**
    * Create a trusted profile.
    *
-   * Creates a trusted profile for a given account ID.
+   * Create a trusted profile for a given account ID.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - Name of the trusted profile. The name is checked for uniqueness. Therefore trusted
@@ -975,9 +975,10 @@ class IamIdentityV1 extends BaseService {
   }
 
   /**
-   * Get list of trusted profiles for a given account ID.
+   * List trusted profiles.
    *
-   * Returns the list of trusted profiles for a given account ID.
+   * List the trusted profiles in an account. The `account_id` query parameter determines the account from which to
+   * retrieve the list of trusted profiles.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.accountId - Account ID to query for trusted profiles.
@@ -993,8 +994,8 @@ class IamIdentityV1 extends BaseService {
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfilesList>>}
    */
-  public listProfile(
-    params: IamIdentityV1.ListProfileParams
+  public listProfiles(
+    params: IamIdentityV1.ListProfilesParams
   ): Promise<IamIdentityV1.Response<IamIdentityV1.TrustedProfilesList>> {
     const _params = { ...params };
     const requiredParams = ['accountId'];
@@ -1014,7 +1015,7 @@ class IamIdentityV1 extends BaseService {
       'pagetoken': _params.pagetoken,
     };
 
-    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'listProfile');
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'listProfiles');
 
     const parameters = {
       options: {
@@ -1040,7 +1041,8 @@ class IamIdentityV1 extends BaseService {
   /**
    * Get a trusted profile.
    *
-   * Get a trusted profile.
+   * Retrieve a trusted profile by its `profile-id`. Only the trusted profile's data is returned (`name`, `description`,
+   * `iam_id`, etc.), not the federated users or compute resources that qualify to apply the trusted profile.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile to get.
@@ -1088,7 +1090,7 @@ class IamIdentityV1 extends BaseService {
   /**
    * Update a trusted profile.
    *
-   * Updates a trusted profile.
+   * Update the name or description of an existing trusted profile.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile to be updated.
@@ -1152,7 +1154,8 @@ class IamIdentityV1 extends BaseService {
   /**
    * Delete a trusted profile.
    *
-   * Deletes a trusted profile.
+   * Delete a trusted profile. When you delete trusted profile, compute resources and federated users are unlinked from
+   * the profile and can no longer apply the trusted profile identity.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile.
@@ -1193,7 +1196,7 @@ class IamIdentityV1 extends BaseService {
   /**
    * Create claim rule for a trusted profile.
    *
-   * Claim rule can be created for a given trusted profile, There is a limit of 20 rules allowed per trusted profile.
+   * Create a claim rule for a trusted profile. There is a limit of 20 rules per trusted profile.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile to create a claim rule.
@@ -1260,9 +1263,10 @@ class IamIdentityV1 extends BaseService {
   }
 
   /**
-   * Get all claim rules for a given trusted profile.
+   * List claim rules for a trusted profile.
    *
-   * Returns list of claim rules for a trusted profile.
+   * Get a list of all claim rules for a trusted profile. The `profile-id` query parameter determines the profile from
+   * which to retrieve the list of claim rules.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile.
@@ -1308,9 +1312,9 @@ class IamIdentityV1 extends BaseService {
   }
 
   /**
-   * Get claim rule for a trusted profile.
+   * Get a claim rule for a trusted profile.
    *
-   * Claim rule can be fetched for a given trusted profile ID and rule ID.
+   * A specific claim rule can be fetched for a given trusted profile ID and rule ID.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile.
@@ -1360,7 +1364,7 @@ class IamIdentityV1 extends BaseService {
   /**
    * Update claim rule for a trusted profile.
    *
-   * Claim rule can be updated for a given trusted profile ID and rule ID.
+   * Update a specific claim rule for a given trusted profile ID and rule ID.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile.
@@ -1435,7 +1439,8 @@ class IamIdentityV1 extends BaseService {
   /**
    * Delete a claim rule.
    *
-   * Deletes a claim rule.
+   * Delete a claim rule. When you delete a claim rule, federated user or compute resources are no longer required to
+   * meet the conditions of the claim rule in order to apply the trusted profile.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile.
@@ -1478,7 +1483,8 @@ class IamIdentityV1 extends BaseService {
   /**
    * Create link to a trusted profile.
    *
-   * Link compute resource to a trusted profile.
+   * Create a direct link between a specific compute resource and a trusted profile, rather than creating conditions
+   * that a compute resource must fulfill to apply a trusted profile.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile.
@@ -1535,17 +1541,17 @@ class IamIdentityV1 extends BaseService {
   }
 
   /**
-   * Get list of links to a trusted profile.
+   * List links to a trusted profile.
    *
-   * Gets list of link to a trusted profile.
+   * Get a list of links to a trusted profile.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<IamIdentityV1.Response<IamIdentityV1.ProfileLinkList>>}
    */
-  public listLink(
-    params: IamIdentityV1.ListLinkParams
+  public listLinks(
+    params: IamIdentityV1.ListLinksParams
   ): Promise<IamIdentityV1.Response<IamIdentityV1.ProfileLinkList>> {
     const _params = { ...params };
     const requiredParams = ['profileId'];
@@ -1559,7 +1565,7 @@ class IamIdentityV1 extends BaseService {
       'profile-id': _params.profileId,
     };
 
-    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'listLink');
+    const sdkHeaders = getSdkHeaders(IamIdentityV1.DEFAULT_SERVICE_NAME, 'v1', 'listLinks');
 
     const parameters = {
       options: {
@@ -1585,7 +1591,7 @@ class IamIdentityV1 extends BaseService {
   /**
    * Get link to a trusted profile.
    *
-   * Gets link to a trusted profile.
+   * Get a specific link to a trusted profile by `link_id`.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile.
@@ -1635,7 +1641,7 @@ class IamIdentityV1 extends BaseService {
   /**
    * Delete link to a trusted profile.
    *
-   * Deletes link to a trusted profile.
+   * Delete a link between a compute resource and a trusted profile.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.profileId - ID of the trusted profile.
@@ -2123,8 +2129,8 @@ namespace IamIdentityV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `listProfile` operation. */
-  export interface ListProfileParams {
+  /** Parameters for the `listProfiles` operation. */
+  export interface ListProfilesParams {
     /** Account ID to query for trusted profiles. */
     accountId: string;
     /** Name of the trusted profile to query. */
@@ -2136,7 +2142,7 @@ namespace IamIdentityV1 {
      */
     sort?: string;
     /** Optional sort order, valid values are asc and desc. Default: asc. */
-    order?: ListProfileConstants.Order | string;
+    order?: ListProfilesConstants.Order | string;
     /** Defines if the entity history is included in the response. */
     includeHistory?: boolean;
     /** Optional Prev or Next page token returned from a previous query execution. Default is start with first page. */
@@ -2144,8 +2150,8 @@ namespace IamIdentityV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Constants for the `listProfile` operation. */
-  export namespace ListProfileConstants {
+  /** Constants for the `listProfiles` operation. */
+  export namespace ListProfilesConstants {
     /** Optional sort order, valid values are asc and desc. Default: asc. */
     export enum Order {
       ASC = 'asc',
@@ -2282,8 +2288,8 @@ namespace IamIdentityV1 {
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Parameters for the `listLink` operation. */
-  export interface ListLinkParams {
+  /** Parameters for the `listLinks` operation. */
+  export interface ListLinksParams {
     /** ID of the trusted profile. */
     profileId: string;
     headers?: OutgoingHttpHeaders;
@@ -2590,7 +2596,7 @@ namespace IamIdentityV1 {
 
   /** ProfileClaimRuleConditions. */
   export interface ProfileClaimRuleConditions {
-    /** The claim to valuate againt. */
+    /** The claim to evaluate against. */
     claim: string;
     /** The operation to perform on the claim. valid values are EQUALS, NOT_EQUALS, EQUALS_IGNORE_CASE,
      *  NOT_EQUALS_IGNORE_CASE, CONTAINS, IN.
@@ -2678,7 +2684,7 @@ namespace IamIdentityV1 {
     /** Version of the service ID details object. You need to specify this value when updating the service ID to
      *  avoid stale updates.
      */
-    entity_tag?: string;
+    entity_tag: string;
     /** Cloud Resource Name of the item. Example Cloud Resource Name:
      *  'crn:v1:bluemix:public:iam-identity:us-south:a/myaccount::serviceid:1234-5678-9012'.
      */
@@ -2686,9 +2692,9 @@ namespace IamIdentityV1 {
     /** The service ID cannot be changed if set to true. */
     locked: boolean;
     /** If set contains a date time string of the creation date in ISO format. */
-    created_at?: string;
+    created_at: string;
     /** If set contains a date time string of the last modification date in ISO format. */
-    modified_at?: string;
+    modified_at: string;
     /** ID of the account the service ID belongs to. */
     account_id: string;
     /** Name of the Service Id. The name is not checked for uniqueness. Therefore multiple names with the same value

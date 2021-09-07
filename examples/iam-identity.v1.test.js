@@ -580,7 +580,7 @@ describe('IamIdentityV1', () => {
       includeHistory: false,
     };
 
-    iamIdentityService.listProfile(params)
+    iamIdentityService.listProfiles(params)
       .then(res => {
         console.log(JSON.stringify(res.result, null, 2));
       })
@@ -867,7 +867,7 @@ describe('IamIdentityV1', () => {
       profileId,
     };
 
-    iamIdentityService.listLink(params)
+    iamIdentityService.listLinks(params)
       .then(res => {
         console.log(JSON.stringify(res.result, null, 2));
       })

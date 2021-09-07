@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,23 +23,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListLinkOptions model.
+ * Unit test class for the ListLinksOptions model.
  */
-public class ListLinkOptionsTest {
+public class ListLinksOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListLinkOptions() throws Throwable {
-    ListLinkOptions listLinkOptionsModel = new ListLinkOptions.Builder()
+  public void testListLinksOptions() throws Throwable {
+    ListLinksOptions listLinksOptionsModel = new ListLinksOptions.Builder()
       .profileId("testString")
       .build();
-    assertEquals(listLinkOptionsModel.profileId(), "testString");
+    assertEquals(listLinksOptionsModel.profileId(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListLinkOptionsError() throws Throwable {
-    new ListLinkOptions.Builder().build();
+  public void testListLinksOptionsError() throws Throwable {
+    new ListLinksOptions.Builder().build();
   }
 
 }

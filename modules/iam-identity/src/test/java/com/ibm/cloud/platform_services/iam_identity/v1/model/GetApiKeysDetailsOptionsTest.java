@@ -33,9 +33,9 @@ public class GetApiKeysDetailsOptionsTest {
   public void testGetApiKeysDetailsOptions() throws Throwable {
     GetApiKeysDetailsOptions getApiKeysDetailsOptionsModel = new GetApiKeysDetailsOptions.Builder()
       .iamApiKey("testString")
-      .includeHistory(true)
+      .includeHistory(false)
       .build();
     assertEquals(getApiKeysDetailsOptionsModel.iamApiKey(), "testString");
-    assertEquals(getApiKeysDetailsOptionsModel.includeHistory(), Boolean.valueOf(true));
+    assertEquals(getApiKeysDetailsOptionsModel.includeHistory(), Boolean.valueOf(false));
   }
 }

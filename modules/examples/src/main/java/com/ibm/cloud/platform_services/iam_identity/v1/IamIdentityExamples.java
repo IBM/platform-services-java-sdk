@@ -43,8 +43,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
@@ -489,16 +489,16 @@ public class IamIdentityExamples {
         }
 
         try {
-            System.out.println("ListProfile() result:");
+            System.out.println("ListProfiles() result:");
 
             // begin-list_profiles
 
-            ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
+            ListProfilesOptions listProfilesOptions = new ListProfilesOptions.Builder()
                         .accountId(accountId)
                         .includeHistory(false)
                         .build();
 
-            Response<TrustedProfilesList> response = service.listProfile(listProfileOptions).execute();
+            Response<TrustedProfilesList> response = service.listProfiles(listProfilesOptions).execute();
             TrustedProfilesList profiles = response.getResult();
 
             System.out.println(profiles);
@@ -723,15 +723,15 @@ public class IamIdentityExamples {
         }
 
         try {
-            System.out.println("listLink() result:");
+            System.out.println("listLinks() result:");
 
             // begin-list_links
 
-            ListLinkOptions listLinkOptions = new ListLinkOptions.Builder()
+            ListLinksOptions listLinksOptions = new ListLinksOptions.Builder()
                     .profileId(profileId)
                     .build();
 
-            Response<ProfileLinkList> response = service.listLink(listLinkOptions).execute();
+            Response<ProfileLinkList> response = service.listLinks(listLinksOptions).execute();
             ProfileLinkList links = response.getResult();
 
             System.out.println(links);

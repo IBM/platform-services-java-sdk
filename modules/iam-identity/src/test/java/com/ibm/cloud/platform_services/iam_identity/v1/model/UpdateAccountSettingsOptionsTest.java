@@ -38,8 +38,8 @@ public class UpdateAccountSettingsOptionsTest {
       .restrictCreatePlatformApikey("RESTRICTED")
       .allowedIpAddresses("testString")
       .mfa("NONE")
-      .sessionExpirationInSeconds("testString")
-      .sessionInvalidationInSeconds("testString")
+      .sessionExpirationInSeconds("86400")
+      .sessionInvalidationInSeconds("7200")
       .maxSessionsPerIdentity("testString")
       .build();
     assertEquals(updateAccountSettingsOptionsModel.ifMatch(), "testString");
@@ -48,8 +48,8 @@ public class UpdateAccountSettingsOptionsTest {
     assertEquals(updateAccountSettingsOptionsModel.restrictCreatePlatformApikey(), "RESTRICTED");
     assertEquals(updateAccountSettingsOptionsModel.allowedIpAddresses(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.mfa(), "NONE");
-    assertEquals(updateAccountSettingsOptionsModel.sessionExpirationInSeconds(), "testString");
-    assertEquals(updateAccountSettingsOptionsModel.sessionInvalidationInSeconds(), "testString");
+    assertEquals(updateAccountSettingsOptionsModel.sessionExpirationInSeconds(), "86400");
+    assertEquals(updateAccountSettingsOptionsModel.sessionInvalidationInSeconds(), "7200");
     assertEquals(updateAccountSettingsOptionsModel.maxSessionsPerIdentity(), "testString");
   }
 

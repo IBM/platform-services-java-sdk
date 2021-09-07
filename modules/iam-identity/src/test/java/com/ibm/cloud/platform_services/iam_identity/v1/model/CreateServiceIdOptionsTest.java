@@ -51,14 +51,14 @@ public class CreateServiceIdOptionsTest {
       .description("testString")
       .uniqueInstanceCrns(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
       .apikey(apiKeyInsideCreateServiceIdRequestModel)
-      .entityLock("testString")
+      .entityLock("false")
       .build();
     assertEquals(createServiceIdOptionsModel.accountId(), "testString");
     assertEquals(createServiceIdOptionsModel.name(), "testString");
     assertEquals(createServiceIdOptionsModel.description(), "testString");
     assertEquals(createServiceIdOptionsModel.uniqueInstanceCrns(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
     assertEquals(createServiceIdOptionsModel.apikey(), apiKeyInsideCreateServiceIdRequestModel);
-    assertEquals(createServiceIdOptionsModel.entityLock(), "testString");
+    assertEquals(createServiceIdOptionsModel.entityLock(), "false");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

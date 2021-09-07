@@ -41,8 +41,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
@@ -412,7 +412,7 @@ public class IamIdentity extends BaseService {
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
    * that are bound to an entity they have access to. Note: apikey details are only included in the response when
-   * creating a Service ID with an api key.
+   * creating a Service ID with an apikey.
    *
    * @param listServiceIdsOptions the {@link ListServiceIdsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
@@ -458,7 +458,7 @@ public class IamIdentity extends BaseService {
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
    * that are bound to an entity they have access to. Note: apikey details are only included in the response when
-   * creating a Service ID with an api key.
+   * creating a Service ID with an apikey.
    *
    * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
    */
@@ -510,7 +510,7 @@ public class IamIdentity extends BaseService {
    *
    * Returns the details of a service ID. Users can manage user API keys for themself, or service ID API keys for
    * service IDs that are bound to an entity they have access to. Note: apikey details are only included in the response
-   * when  creating a Service ID with an api key.
+   * when  creating a Service ID with an apikey.
    *
    * @param getServiceIdOptions the {@link GetServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceId}
@@ -651,7 +651,7 @@ public class IamIdentity extends BaseService {
   /**
    * Create a trusted profile.
    *
-   * Creates a trusted profile for a given account ID.
+   * Create a trusted profile for a given account ID.
    *
    * @param createProfileOptions the {@link CreateProfileOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TrustedProfile}
@@ -678,40 +678,41 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Get list of trusted profiles for a given account ID.
+   * List trusted profiles.
    *
-   * Returns the list of trusted profiles for a given account ID.
+   * List the trusted profiles in an account. The `account_id` query parameter determines the account from which to
+   * retrieve the list of trusted profiles.
    *
-   * @param listProfileOptions the {@link ListProfileOptions} containing the options for the call
+   * @param listProfilesOptions the {@link ListProfilesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TrustedProfilesList}
    */
-  public ServiceCall<TrustedProfilesList> listProfile(ListProfileOptions listProfileOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(listProfileOptions,
-      "listProfileOptions cannot be null");
+  public ServiceCall<TrustedProfilesList> listProfiles(ListProfilesOptions listProfilesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listProfilesOptions,
+      "listProfilesOptions cannot be null");
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listProfile");
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listProfiles");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    builder.query("account_id", String.valueOf(listProfileOptions.accountId()));
-    if (listProfileOptions.name() != null) {
-      builder.query("name", String.valueOf(listProfileOptions.name()));
+    builder.query("account_id", String.valueOf(listProfilesOptions.accountId()));
+    if (listProfilesOptions.name() != null) {
+      builder.query("name", String.valueOf(listProfilesOptions.name()));
     }
-    if (listProfileOptions.pagesize() != null) {
-      builder.query("pagesize", String.valueOf(listProfileOptions.pagesize()));
+    if (listProfilesOptions.pagesize() != null) {
+      builder.query("pagesize", String.valueOf(listProfilesOptions.pagesize()));
     }
-    if (listProfileOptions.sort() != null) {
-      builder.query("sort", String.valueOf(listProfileOptions.sort()));
+    if (listProfilesOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listProfilesOptions.sort()));
     }
-    if (listProfileOptions.order() != null) {
-      builder.query("order", String.valueOf(listProfileOptions.order()));
+    if (listProfilesOptions.order() != null) {
+      builder.query("order", String.valueOf(listProfilesOptions.order()));
     }
-    if (listProfileOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(listProfileOptions.includeHistory()));
+    if (listProfilesOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(listProfilesOptions.includeHistory()));
     }
-    if (listProfileOptions.pagetoken() != null) {
-      builder.query("pagetoken", String.valueOf(listProfileOptions.pagetoken()));
+    if (listProfilesOptions.pagetoken() != null) {
+      builder.query("pagetoken", String.valueOf(listProfilesOptions.pagetoken()));
     }
     ResponseConverter<TrustedProfilesList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TrustedProfilesList>() { }.getType());
@@ -721,7 +722,8 @@ public class IamIdentity extends BaseService {
   /**
    * Get a trusted profile.
    *
-   * Get a trusted profile.
+   * Retrieve a trusted profile by its `profile-id`. Only the trusted profile's data is returned (`name`, `description`,
+   * `iam_id`, etc.), not the federated users or compute resources that qualify to apply the trusted profile.
    *
    * @param getProfileOptions the {@link GetProfileOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TrustedProfile}
@@ -745,7 +747,7 @@ public class IamIdentity extends BaseService {
   /**
    * Update a trusted profile.
    *
-   * Updates a trusted profile.
+   * Update the name or description of an existing trusted profile.
    *
    * @param updateProfileOptions the {@link UpdateProfileOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TrustedProfile}
@@ -778,7 +780,8 @@ public class IamIdentity extends BaseService {
   /**
    * Delete a trusted profile.
    *
-   * Deletes a trusted profile.
+   * Delete a trusted profile. When you delete trusted profile, compute resources and federated users are unlinked from
+   * the profile and can no longer apply the trusted profile identity.
    *
    * @param deleteProfileOptions the {@link DeleteProfileOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -800,7 +803,7 @@ public class IamIdentity extends BaseService {
   /**
    * Create claim rule for a trusted profile.
    *
-   * Claim rule can be created for a given trusted profile, There is a limit of 20 rules allowed per trusted profile.
+   * Create a claim rule for a trusted profile. There is a limit of 20 rules per trusted profile.
    *
    * @param createClaimRuleOptions the {@link CreateClaimRuleOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfileClaimRule}
@@ -841,9 +844,10 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Get all claim rules for a given trusted profile.
+   * List claim rules for a trusted profile.
    *
-   * Returns list of claim rules for a trusted profile.
+   * Get a list of all claim rules for a trusted profile. The `profile-id` query parameter determines the profile from
+   * which to retrieve the list of claim rules.
    *
    * @param listClaimRulesOptions the {@link ListClaimRulesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfileClaimRuleList}
@@ -865,9 +869,9 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Get claim rule for a trusted profile.
+   * Get a claim rule for a trusted profile.
    *
-   * Claim rule can be fetched for a given trusted profile ID and rule ID.
+   * A specific claim rule can be fetched for a given trusted profile ID and rule ID.
    *
    * @param getClaimRuleOptions the {@link GetClaimRuleOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfileClaimRule}
@@ -892,7 +896,7 @@ public class IamIdentity extends BaseService {
   /**
    * Update claim rule for a trusted profile.
    *
-   * Claim rule can be updated for a given trusted profile ID and rule ID.
+   * Update a specific claim rule for a given trusted profile ID and rule ID.
    *
    * @param updateClaimRuleOptions the {@link UpdateClaimRuleOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfileClaimRule}
@@ -937,7 +941,8 @@ public class IamIdentity extends BaseService {
   /**
    * Delete a claim rule.
    *
-   * Deletes a claim rule.
+   * Delete a claim rule. When you delete a claim rule, federated user or compute resources are no longer required to
+   * meet the conditions of the claim rule in order to apply the trusted profile.
    *
    * @param deleteClaimRuleOptions the {@link DeleteClaimRuleOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -960,7 +965,8 @@ public class IamIdentity extends BaseService {
   /**
    * Create link to a trusted profile.
    *
-   * Link compute resource to a trusted profile.
+   * Create a direct link between a specific compute resource and a trusted profile, rather than creating conditions
+   * that a compute resource must fulfill to apply a trusted profile.
    *
    * @param createLinkOptions the {@link CreateLinkOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfileLink}
@@ -989,20 +995,20 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Get list of links to a trusted profile.
+   * List links to a trusted profile.
    *
-   * Gets list of link to a trusted profile.
+   * Get a list of links to a trusted profile.
    *
-   * @param listLinkOptions the {@link ListLinkOptions} containing the options for the call
+   * @param listLinksOptions the {@link ListLinksOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfileLinkList}
    */
-  public ServiceCall<ProfileLinkList> listLink(ListLinkOptions listLinkOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(listLinkOptions,
-      "listLinkOptions cannot be null");
+  public ServiceCall<ProfileLinkList> listLinks(ListLinksOptions listLinksOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listLinksOptions,
+      "listLinksOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("profile-id", listLinkOptions.profileId());
+    pathParamsMap.put("profile-id", listLinksOptions.profileId());
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/links", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listLink");
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listLinks");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
@@ -1015,7 +1021,7 @@ public class IamIdentity extends BaseService {
   /**
    * Get link to a trusted profile.
    *
-   * Gets link to a trusted profile.
+   * Get a specific link to a trusted profile by `link_id`.
    *
    * @param getLinkOptions the {@link GetLinkOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfileLink}
@@ -1040,7 +1046,7 @@ public class IamIdentity extends BaseService {
   /**
    * Delete link to a trusted profile.
    *
-   * Deletes link to a trusted profile.
+   * Delete a link between a compute resource and a trusted profile.
    *
    * @param deleteLinkOptions the {@link DeleteLinkOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result

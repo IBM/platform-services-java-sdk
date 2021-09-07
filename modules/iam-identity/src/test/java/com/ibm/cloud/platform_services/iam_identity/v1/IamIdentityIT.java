@@ -53,8 +53,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
@@ -775,14 +775,14 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             String pagetoken = null;
             do {
                 // Get the "next" page of results.
-                ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
+                ListProfilesOptions listProfilesOptions = new ListProfilesOptions.Builder()
                         .accountId(ACCOUNT_ID)
                         .pagetoken(pagetoken)
                         .pagesize(pagesize)
                         .includeHistory(false)
                         .build();
 
-                Response<TrustedProfilesList> response = service.listProfile(listProfileOptions).execute();
+                Response<TrustedProfilesList> response = service.listProfiles(listProfilesOptions).execute();
                 assertNotNull(response);
                 assertEquals(response.getStatusCode(), 200);
 
@@ -1136,18 +1136,18 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     }
 
     @Test(dependsOnMethods = { "testGetLink" })
-    public void testListLink() throws Exception {
+    public void testListLinks() throws Exception {
         try {
             List<ProfileLink> links = new ArrayList<>();
 
             // Retrieve one link at a time and save off the objects that we're interested in,
             // then validate the results at the end.
     
-            ListLinkOptions listLinkOptions = new ListLinkOptions.Builder()
+            ListLinksOptions listLinksOptions = new ListLinksOptions.Builder()
                     .profileId(profileId2)
                     .build();
 
-            Response<ProfileLinkList> response = service.listLink(listLinkOptions).execute();
+            Response<ProfileLinkList> response = service.listLinks(listLinksOptions).execute();
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
@@ -1167,7 +1167,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test(dependsOnMethods = { "testListLink" })
+    @Test(dependsOnMethods = { "testListLinks" })
     public void testDeleteLink() throws Exception {
         sleep(1);
         assertNotNull(linkId);
@@ -1595,13 +1595,13 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             }
         }
 
-        ListProfileOptions listProfileOptions = new ListProfileOptions.Builder()
+        ListProfilesOptions listProfilesOptions = new ListProfilesOptions.Builder()
                         .accountId(ACCOUNT_ID)
                         .pagesize(100)
                         .includeHistory(false)
                         .build();
 
-        Response<TrustedProfilesList> profileResponse = service.listProfile(listProfileOptions).execute();
+        Response<TrustedProfilesList> profileResponse = service.listProfiles(listProfilesOptions).execute();
         assertNotNull(response);
         assertEquals(profileResponse.getStatusCode(), 200);
         

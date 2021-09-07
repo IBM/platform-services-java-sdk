@@ -33,10 +33,10 @@ public class GetApiKeyOptionsTest {
   public void testGetApiKeyOptions() throws Throwable {
     GetApiKeyOptions getApiKeyOptionsModel = new GetApiKeyOptions.Builder()
       .id("testString")
-      .includeHistory(true)
+      .includeHistory(false)
       .build();
     assertEquals(getApiKeyOptionsModel.id(), "testString");
-    assertEquals(getApiKeyOptionsModel.includeHistory(), Boolean.valueOf(true));
+    assertEquals(getApiKeyOptionsModel.includeHistory(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

@@ -1,3 +1,10 @@
+## [0.20.1](https://github.com/IBM/platform-services-java-sdk/compare/0.20.0...0.20.1) (2021-09-07)
+
+
+### Bug Fixes
+
+* **IAM Identity:** fix listProfiles and listLinks operation id's ([#121](https://github.com/IBM/platform-services-java-sdk/issues/121)) ([a45a6b6](https://github.com/IBM/platform-services-java-sdk/commit/a45a6b6d28374140765b6261de4aafc34afc2c3a))
+
 # [0.20.0](https://github.com/IBM/platform-services-java-sdk/compare/0.19.2...0.20.0) (2021-09-02)
 
 

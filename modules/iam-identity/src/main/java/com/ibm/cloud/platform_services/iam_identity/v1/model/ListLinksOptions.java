@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.iam_identity.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The listLink options.
+ * The listLinks options.
  */
-public class ListLinkOptions extends GenericModel {
+public class ListLinksOptions extends GenericModel {
 
   protected String profileId;
 
@@ -27,8 +27,8 @@ public class ListLinkOptions extends GenericModel {
   public static class Builder {
     private String profileId;
 
-    private Builder(ListLinkOptions listLinkOptions) {
-      this.profileId = listLinkOptions.profileId;
+    private Builder(ListLinksOptions listLinksOptions) {
+      this.profileId = listLinksOptions.profileId;
     }
 
     /**
@@ -47,19 +47,19 @@ public class ListLinkOptions extends GenericModel {
     }
 
     /**
-     * Builds a ListLinkOptions.
+     * Builds a ListLinksOptions.
      *
-     * @return the new ListLinkOptions instance
+     * @return the new ListLinksOptions instance
      */
-    public ListLinkOptions build() {
-      return new ListLinkOptions(this);
+    public ListLinksOptions build() {
+      return new ListLinksOptions(this);
     }
 
     /**
      * Set the profileId.
      *
      * @param profileId the profileId
-     * @return the ListLinkOptions builder
+     * @return the ListLinksOptions builder
      */
     public Builder profileId(String profileId) {
       this.profileId = profileId;
@@ -67,7 +67,7 @@ public class ListLinkOptions extends GenericModel {
     }
   }
 
-  protected ListLinkOptions(Builder builder) {
+  protected ListLinksOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,
       "profileId cannot be empty");
     profileId = builder.profileId;
@@ -76,7 +76,7 @@ public class ListLinkOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ListLinkOptions builder
+   * @return a ListLinksOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

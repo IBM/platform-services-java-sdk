@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,15 +23,15 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListProfileOptions model.
+ * Unit test class for the ListProfilesOptions model.
  */
-public class ListProfileOptionsTest {
+public class ListProfilesOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListProfileOptions() throws Throwable {
-    ListProfileOptions listProfileOptionsModel = new ListProfileOptions.Builder()
+  public void testListProfilesOptions() throws Throwable {
+    ListProfilesOptions listProfilesOptionsModel = new ListProfilesOptions.Builder()
       .accountId("testString")
       .name("testString")
       .pagesize(Long.valueOf("26"))
@@ -40,18 +40,18 @@ public class ListProfileOptionsTest {
       .includeHistory(false)
       .pagetoken("testString")
       .build();
-    assertEquals(listProfileOptionsModel.accountId(), "testString");
-    assertEquals(listProfileOptionsModel.name(), "testString");
-    assertEquals(listProfileOptionsModel.pagesize(), Long.valueOf("26"));
-    assertEquals(listProfileOptionsModel.sort(), "testString");
-    assertEquals(listProfileOptionsModel.order(), "asc");
-    assertEquals(listProfileOptionsModel.includeHistory(), Boolean.valueOf(false));
-    assertEquals(listProfileOptionsModel.pagetoken(), "testString");
+    assertEquals(listProfilesOptionsModel.accountId(), "testString");
+    assertEquals(listProfilesOptionsModel.name(), "testString");
+    assertEquals(listProfilesOptionsModel.pagesize(), Long.valueOf("26"));
+    assertEquals(listProfilesOptionsModel.sort(), "testString");
+    assertEquals(listProfilesOptionsModel.order(), "asc");
+    assertEquals(listProfilesOptionsModel.includeHistory(), Boolean.valueOf(false));
+    assertEquals(listProfilesOptionsModel.pagetoken(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListProfileOptionsError() throws Throwable {
-    new ListProfileOptions.Builder().build();
+  public void testListProfilesOptionsError() throws Throwable {
+    new ListProfilesOptions.Builder().build();
   }
 
 }

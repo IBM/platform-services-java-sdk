@@ -33,10 +33,10 @@ public class GetAccountSettingsOptionsTest {
   public void testGetAccountSettingsOptions() throws Throwable {
     GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
       .accountId("testString")
-      .includeHistory(true)
+      .includeHistory(false)
       .build();
     assertEquals(getAccountSettingsOptionsModel.accountId(), "testString");
-    assertEquals(getAccountSettingsOptionsModel.includeHistory(), Boolean.valueOf(true));
+    assertEquals(getAccountSettingsOptionsModel.includeHistory(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

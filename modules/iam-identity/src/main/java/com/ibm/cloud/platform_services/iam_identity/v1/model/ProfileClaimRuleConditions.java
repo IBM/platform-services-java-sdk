@@ -123,7 +123,7 @@ public class ProfileClaimRuleConditions extends GenericModel {
   /**
    * Gets the claim.
    *
-   * The claim to valuate againt.
+   * The claim to evaluate against.
    *
    * @return the claim
    */

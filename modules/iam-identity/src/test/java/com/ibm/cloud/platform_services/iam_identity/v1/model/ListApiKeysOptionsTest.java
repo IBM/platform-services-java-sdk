@@ -40,7 +40,7 @@ public class ListApiKeysOptionsTest {
       .type("user")
       .sort("testString")
       .order("asc")
-      .includeHistory(true)
+      .includeHistory(false)
       .build();
     assertEquals(listApiKeysOptionsModel.accountId(), "testString");
     assertEquals(listApiKeysOptionsModel.iamId(), "testString");
@@ -50,6 +50,6 @@ public class ListApiKeysOptionsTest {
     assertEquals(listApiKeysOptionsModel.type(), "user");
     assertEquals(listApiKeysOptionsModel.sort(), "testString");
     assertEquals(listApiKeysOptionsModel.order(), "asc");
-    assertEquals(listApiKeysOptionsModel.includeHistory(), Boolean.valueOf(true));
+    assertEquals(listApiKeysOptionsModel.includeHistory(), Boolean.valueOf(false));
   }
 }

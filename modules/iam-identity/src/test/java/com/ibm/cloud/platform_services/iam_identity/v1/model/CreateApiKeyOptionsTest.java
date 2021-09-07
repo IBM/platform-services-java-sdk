@@ -38,7 +38,7 @@ public class CreateApiKeyOptionsTest {
       .accountId("testString")
       .apikey("testString")
       .storeValue(true)
-      .entityLock("testString")
+      .entityLock("false")
       .build();
     assertEquals(createApiKeyOptionsModel.name(), "testString");
     assertEquals(createApiKeyOptionsModel.iamId(), "testString");
@@ -46,7 +46,7 @@ public class CreateApiKeyOptionsTest {
     assertEquals(createApiKeyOptionsModel.accountId(), "testString");
     assertEquals(createApiKeyOptionsModel.apikey(), "testString");
     assertEquals(createApiKeyOptionsModel.storeValue(), Boolean.valueOf(true));
-    assertEquals(createApiKeyOptionsModel.entityLock(), "testString");
+    assertEquals(createApiKeyOptionsModel.entityLock(), "false");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

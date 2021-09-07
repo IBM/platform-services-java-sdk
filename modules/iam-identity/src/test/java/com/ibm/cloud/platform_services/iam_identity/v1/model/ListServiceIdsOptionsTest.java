@@ -38,7 +38,7 @@ public class ListServiceIdsOptionsTest {
       .pagetoken("testString")
       .sort("testString")
       .order("asc")
-      .includeHistory(true)
+      .includeHistory(false)
       .build();
     assertEquals(listServiceIdsOptionsModel.accountId(), "testString");
     assertEquals(listServiceIdsOptionsModel.name(), "testString");
@@ -46,6 +46,6 @@ public class ListServiceIdsOptionsTest {
     assertEquals(listServiceIdsOptionsModel.pagetoken(), "testString");
     assertEquals(listServiceIdsOptionsModel.sort(), "testString");
     assertEquals(listServiceIdsOptionsModel.order(), "asc");
-    assertEquals(listServiceIdsOptionsModel.includeHistory(), Boolean.valueOf(true));
+    assertEquals(listServiceIdsOptionsModel.includeHistory(), Boolean.valueOf(false));
   }
 }

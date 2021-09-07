@@ -33,10 +33,10 @@ public class GetServiceIdOptionsTest {
   public void testGetServiceIdOptions() throws Throwable {
     GetServiceIdOptions getServiceIdOptionsModel = new GetServiceIdOptions.Builder()
       .id("testString")
-      .includeHistory(true)
+      .includeHistory(false)
       .build();
     assertEquals(getServiceIdOptionsModel.id(), "testString");
-    assertEquals(getServiceIdOptionsModel.includeHistory(), Boolean.valueOf(true));
+    assertEquals(getServiceIdOptionsModel.includeHistory(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

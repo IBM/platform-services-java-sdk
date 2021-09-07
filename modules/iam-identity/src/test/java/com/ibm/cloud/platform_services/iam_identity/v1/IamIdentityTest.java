@@ -38,8 +38,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
@@ -150,7 +150,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     .type("user")
     .sort("testString")
     .order("asc")
-    .includeHistory(true)
+    .includeHistory(false)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -176,7 +176,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     assertEquals(query.get("type"), "user");
     assertEquals(query.get("sort"), "testString");
     assertEquals(query.get("order"), "asc");
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listApiKeysPath);
@@ -203,7 +203,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     .accountId("testString")
     .apikey("testString")
     .storeValue(true)
-    .entityLock("testString")
+    .entityLock("false")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -254,7 +254,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     // Construct an instance of the GetApiKeysDetailsOptions model
     GetApiKeysDetailsOptions getApiKeysDetailsOptionsModel = new GetApiKeysDetailsOptions.Builder()
     .iamApiKey("testString")
-    .includeHistory(true)
+    .includeHistory(false)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -272,7 +272,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getApiKeysDetailsPath);
@@ -294,7 +294,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     // Construct an instance of the GetApiKeyOptions model
     GetApiKeyOptions getApiKeyOptionsModel = new GetApiKeyOptions.Builder()
     .id("testString")
-    .includeHistory(true)
+    .includeHistory(false)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -312,7 +312,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getApiKeyPath);
@@ -555,7 +555,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     .pagetoken("testString")
     .sort("testString")
     .order("asc")
-    .includeHistory(true)
+    .includeHistory(false)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -579,7 +579,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     assertEquals(query.get("pagetoken"), "testString");
     assertEquals(query.get("sort"), "testString");
     assertEquals(query.get("order"), "asc");
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listServiceIdsPath);
@@ -613,7 +613,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     .description("testString")
     .uniqueInstanceCrns(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
     .apikey(apiKeyInsideCreateServiceIdRequestModel)
-    .entityLock("testString")
+    .entityLock("false")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -664,7 +664,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     // Construct an instance of the GetServiceIdOptions model
     GetServiceIdOptions getServiceIdOptionsModel = new GetServiceIdOptions.Builder()
     .id("testString")
-    .includeHistory(true)
+    .includeHistory(false)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -682,7 +682,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getServiceIdPath);
@@ -958,10 +958,10 @@ public class IamIdentityTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testListProfileWOptions() throws Throwable {
+  public void testListProfilesWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 5, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profiles\": [{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}]}]}";
-    String listProfilePath = "/v1/profiles";
+    String listProfilesPath = "/v1/profiles";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -970,8 +970,8 @@ public class IamIdentityTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ListProfileOptions model
-    ListProfileOptions listProfileOptionsModel = new ListProfileOptions.Builder()
+    // Construct an instance of the ListProfilesOptions model
+    ListProfilesOptions listProfilesOptionsModel = new ListProfilesOptions.Builder()
     .accountId("testString")
     .name("testString")
     .pagesize(Long.valueOf("26"))
@@ -982,7 +982,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<TrustedProfilesList> response = iamIdentityService.listProfile(listProfileOptionsModel).execute();
+    Response<TrustedProfilesList> response = iamIdentityService.listProfiles(listProfilesOptionsModel).execute();
     assertNotNull(response);
     TrustedProfilesList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1005,19 +1005,19 @@ public class IamIdentityTest extends PowerMockTestCase {
     assertEquals(query.get("pagetoken"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listProfilePath);
+    assertEquals(parsedPath, listProfilesPath);
   }
 
-  // Test the listProfile operation with null options model parameter
+  // Test the listProfiles operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListProfileNoOptions() throws Throwable {
+  public void testListProfilesNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    iamIdentityService.listProfile(null).execute();
+    iamIdentityService.listProfiles(null).execute();
   }
 
   @Test
@@ -1548,10 +1548,10 @@ public class IamIdentityTest extends PowerMockTestCase {
   }
 
   @Test
-  public void testListLinkWOptions() throws Throwable {
+  public void testListLinksWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"links\": [{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\"}}]}";
-    String listLinkPath = "/v1/profiles/testString/links";
+    String listLinksPath = "/v1/profiles/testString/links";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -1560,13 +1560,13 @@ public class IamIdentityTest extends PowerMockTestCase {
 
     constructClientService();
 
-    // Construct an instance of the ListLinkOptions model
-    ListLinkOptions listLinkOptionsModel = new ListLinkOptions.Builder()
+    // Construct an instance of the ListLinksOptions model
+    ListLinksOptions listLinksOptionsModel = new ListLinksOptions.Builder()
     .profileId("testString")
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ProfileLinkList> response = iamIdentityService.listLink(listLinkOptionsModel).execute();
+    Response<ProfileLinkList> response = iamIdentityService.listLinks(listLinksOptionsModel).execute();
     assertNotNull(response);
     ProfileLinkList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1582,19 +1582,19 @@ public class IamIdentityTest extends PowerMockTestCase {
 
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listLinkPath);
+    assertEquals(parsedPath, listLinksPath);
   }
 
-  // Test the listLink operation with null options model parameter
+  // Test the listLinks operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListLinkNoOptions() throws Throwable {
+  public void testListLinksNoOptions() throws Throwable {
     // construct the service
     constructClientService();
 
     server.enqueue(new MockResponse());
 
     // Invoke operation with null options model (negative test)
-    iamIdentityService.listLink(null).execute();
+    iamIdentityService.listLinks(null).execute();
   }
 
   @Test
@@ -1702,7 +1702,7 @@ public class IamIdentityTest extends PowerMockTestCase {
   @Test
   public void testGetAccountSettingsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"restrict_create_service_id\": \"RESTRICTED\", \"restrict_create_platform_apikey\": \"RESTRICTED\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"entity_tag\": \"entityTag\", \"mfa\": \"NONE\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"sessionExpirationInSeconds\", \"session_invalidation_in_seconds\": \"sessionInvalidationInSeconds\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\"}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"entity_tag\": \"entityTag\", \"mfa\": \"NONE\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\"}";
     String getAccountSettingsPath = "/v1/accounts/testString/settings/identity";
 
     server.enqueue(new MockResponse()
@@ -1715,7 +1715,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     // Construct an instance of the GetAccountSettingsOptions model
     GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
     .accountId("testString")
-    .includeHistory(true)
+    .includeHistory(false)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -1733,7 +1733,7 @@ public class IamIdentityTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getAccountSettingsPath);
@@ -1754,7 +1754,7 @@ public class IamIdentityTest extends PowerMockTestCase {
   @Test
   public void testUpdateAccountSettingsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"restrict_create_service_id\": \"RESTRICTED\", \"restrict_create_platform_apikey\": \"RESTRICTED\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"entity_tag\": \"entityTag\", \"mfa\": \"NONE\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"sessionExpirationInSeconds\", \"session_invalidation_in_seconds\": \"sessionInvalidationInSeconds\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\"}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"entity_tag\": \"entityTag\", \"mfa\": \"NONE\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\"}";
     String updateAccountSettingsPath = "/v1/accounts/testString/settings/identity";
 
     server.enqueue(new MockResponse()
@@ -1772,8 +1772,8 @@ public class IamIdentityTest extends PowerMockTestCase {
     .restrictCreatePlatformApikey("RESTRICTED")
     .allowedIpAddresses("testString")
     .mfa("NONE")
-    .sessionExpirationInSeconds("testString")
-    .sessionInvalidationInSeconds("testString")
+    .sessionExpirationInSeconds("86400")
+    .sessionInvalidationInSeconds("7200")
     .maxSessionsPerIdentity("testString")
     .build();
 

@@ -11,6 +11,6 @@
  * specific language governing permissions and limitations under the License.
  */
 /**
- * IAM Identity Services API v1.
+ * IAM Identity Services v1.
  */
 package com.ibm.cloud.platform_services.iam_identity.v1;

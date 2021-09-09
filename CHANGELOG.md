@@ -1,3 +1,10 @@
+## [0.20.3](https://github.com/IBM/platform-services-node-sdk/compare/v0.20.2...v0.20.3) (2021-09-09)
+
+
+### Bug Fixes
+
+* **build:** update dependencies ([#131](https://github.com/IBM/platform-services-node-sdk/issues/131)) ([fff7f0e](https://github.com/IBM/platform-services-node-sdk/commit/fff7f0ec32124894a8b2a84d9df7aaebfa663aae))
+
 ## [0.20.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.20.1...v0.20.2) (2021-09-09)
 
 

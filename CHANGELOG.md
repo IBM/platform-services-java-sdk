@@ -1,3 +1,10 @@
+## [0.20.2](https://github.com/IBM/platform-services-node-sdk/compare/v0.20.1...v0.20.2) (2021-09-09)
+
+
+### Bug Fixes
+
+* **build:** bump axios version to avoid vulnerability alerts ([#130](https://github.com/IBM/platform-services-node-sdk/issues/130)) ([664d4ed](https://github.com/IBM/platform-services-node-sdk/commit/664d4ed29245723b3a7108ef788bc01d60f122d8))
+
 ## [0.20.1](https://github.com/IBM/platform-services-node-sdk/compare/v0.20.0...v0.20.1) (2021-09-07)
 
 

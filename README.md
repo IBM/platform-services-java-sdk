@@ -74,6 +74,7 @@ Service Name | Import Path
 [Case Management](https://cloud.ibm.com/apidocs/case-management?code=node) | @ibm-cloud/platform-services/case-management/v1
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog?code=node) | @ibm-cloud/platform-services/catalog-management/v1
 [Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config?code=node) | @ibm-cloud/platform-services/configuration-governance/v1
+[Context Based Restrictions](https://cloud.ibm.com/apidocs/context-based-restrictions/config?code=node) | @ibm-cloud/platform-services/context-based-restrictions/v1
 [Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit?code=node) | @ibm-cloud/platform-services/enterprise-billing-units/v1
 [Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise?code=node) | @ibm-cloud/platform-services/enterprise-management/v1
 [Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports?code=node) | @ibm-cloud/platform-services/enterprise-usage-reports/v1

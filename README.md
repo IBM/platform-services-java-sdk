@@ -50,6 +50,7 @@ Service Name | Artifact Coordinates
 [Case Management](https://cloud.ibm.com/apidocs/case-management?code=java) | com.ibm.cloud:case-management:0.20.1
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog?code=java) | com.ibm.cloud:catalog-management:0.20.1
 [Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config?code=java) | com.ibm.cloud:configuration-governance:0.20.1
+[Context Based Restrictions](https://cloud.ibm.com/apidocs/context-based-restrictions?code=java) | com.ibm.cloud:context-based-restrictions:0.20.1
 [Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit?code=java) | com.ibm.cloud:enterprise-billing-units:0.20.1
 [Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise?code=java) | com.ibm.cloud:enterprise-management:0.20.1
 [Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports?code=java) | com.ibm.cloud:enterprise-usage-reports:0.20.1

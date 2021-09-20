@@ -11,32 +11,32 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.ibm.cloud.context_based_restrictions.v1;
+package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
-import com.ibm.cloud.context_based_restrictions.v1.model.Address;
-import com.ibm.cloud.context_based_restrictions.v1.model.AddressIPAddress;
-import com.ibm.cloud.context_based_restrictions.v1.model.CreateRuleOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.CreateZoneOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.DeleteRuleOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.DeleteZoneOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.GetAccountSettingsOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.GetRuleOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.GetZoneOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.ListRulesOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.ListZonesOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.OutAccountSettings;
-import com.ibm.cloud.context_based_restrictions.v1.model.OutRule;
-import com.ibm.cloud.context_based_restrictions.v1.model.OutRulePage;
-import com.ibm.cloud.context_based_restrictions.v1.model.OutZone;
-import com.ibm.cloud.context_based_restrictions.v1.model.OutZonePage;
-import com.ibm.cloud.context_based_restrictions.v1.model.ReplaceRuleOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.ReplaceZoneOptions;
-import com.ibm.cloud.context_based_restrictions.v1.model.Resource;
-import com.ibm.cloud.context_based_restrictions.v1.model.ResourceAttribute;
-import com.ibm.cloud.context_based_restrictions.v1.model.RuleContext;
-import com.ibm.cloud.context_based_restrictions.v1.model.RuleContextAttribute;
-import com.ibm.cloud.context_based_restrictions.v1.model.ServiceRefTargetPage;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutAccountSettings;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutRule;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutRulePage;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutZone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutZonePage;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceAttribute;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetPage;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -73,7 +73,7 @@ public class ContextBasedRestrictionsExamples {
       // begin-create_zone
       AddressIPAddress addressModel = new AddressIPAddress.Builder()
         .type("ipAddress")
-        .value("169.23.56.234")
+        .ipAddress("testString")
         .build();
       CreateZoneOptions createZoneOptions = new CreateZoneOptions.Builder()
         .name("an example of zone")
@@ -132,7 +132,7 @@ public class ContextBasedRestrictionsExamples {
       // begin-replace_zone
       AddressIPAddress addressModel = new AddressIPAddress.Builder()
         .type("ipAddress")
-        .value("169.23.56.234")
+        .ipAddress("testString")
         .build();
       ReplaceZoneOptions replaceZoneOptions = new ReplaceZoneOptions.Builder()
         .zoneId("testString")

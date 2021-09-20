@@ -45,6 +45,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>context-based-restrictions</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>enterprise-billing-units</artifactId>
             <version>${project.version}</version>
         </dependency>

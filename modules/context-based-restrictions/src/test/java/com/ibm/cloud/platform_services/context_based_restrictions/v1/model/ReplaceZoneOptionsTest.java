@@ -36,10 +36,10 @@ public class ReplaceZoneOptionsTest {
   public void testReplaceZoneOptions() throws Throwable {
     AddressIPAddress addressModel = new AddressIPAddress.Builder()
       .type("ipAddress")
-      .ipAddress("testString")
+      .value("testString")
       .build();
     assertEquals(addressModel.type(), "ipAddress");
-    assertEquals(addressModel.ipAddress(), "testString");
+    assertEquals(addressModel.value(), "testString");
 
     ReplaceZoneOptions replaceZoneOptionsModel = new ReplaceZoneOptions.Builder()
       .zoneId("testString")

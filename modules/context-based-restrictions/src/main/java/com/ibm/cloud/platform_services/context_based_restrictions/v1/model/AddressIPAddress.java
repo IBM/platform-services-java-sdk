@@ -23,14 +23,6 @@ public class AddressIPAddress extends Address {
   public interface Type {
     /** ipAddress. */
     String IPADDRESS = "ipAddress";
-    /** ipRange. */
-    String IPRANGE = "ipRange";
-    /** subnet. */
-    String SUBNET = "subnet";
-    /** vpc. */
-    String VPC = "vpc";
-    /** serviceRef. */
-    String SERVICEREF = "serviceRef";
   }
 
 
@@ -39,11 +31,11 @@ public class AddressIPAddress extends Address {
    */
   public static class Builder {
     private String type;
-    private String ipAddress;
+    private String value;
 
     public Builder(Address addressIpAddress) {
       this.type = addressIpAddress.type;
-      this.ipAddress = addressIpAddress.ipAddress;
+      this.value = addressIpAddress.value;
     }
 
     /**
@@ -56,11 +48,11 @@ public class AddressIPAddress extends Address {
      * Instantiates a new builder with required properties.
      *
      * @param type the type
-     * @param ipAddress the ipAddress
+     * @param value the value
      */
-    public Builder(String type, String ipAddress) {
+    public Builder(String type, String value) {
       this.type = type;
-      this.ipAddress = ipAddress;
+      this.value = value;
     }
 
     /**
@@ -84,13 +76,13 @@ public class AddressIPAddress extends Address {
     }
 
     /**
-     * Set the ipAddress.
+     * Set the value.
      *
-     * @param ipAddress the ipAddress
+     * @param value the value
      * @return the AddressIPAddress builder
      */
-    public Builder ipAddress(String ipAddress) {
-      this.ipAddress = ipAddress;
+    public Builder value(String value) {
+      this.value = value;
       return this;
     }
   }
@@ -98,10 +90,10 @@ public class AddressIPAddress extends Address {
   protected AddressIPAddress(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ipAddress,
-      "ipAddress cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.value,
+      "value cannot be null");
     type = builder.type;
-    ipAddress = builder.ipAddress;
+    value = builder.value;
   }
 
   /**

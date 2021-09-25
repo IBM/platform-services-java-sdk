@@ -58,6 +58,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import org.junit.FixMethodOrder;
+import org.junit.runner.OrderWith;
+import org.junit.runners.MethodSorters;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -66,11 +71,23 @@ import static org.testng.Assert.*;
 /**
  * Integration test class for the ContextBasedRestrictions service.
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   public ContextBasedRestrictions service = null;
   public static Map<String, String> config = null;
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
+
+  private String NonExistentID = "1234567890abcdef1234567890abcdef";
+  private String InvalidID     = "this_is_an_invalid_id";
+
+  private String serviceURL;
+  private String testAccountID;
+  private String testServiceName;
+  private String zoneID;
+  private String zoneRev;
+  private String ruleID;
+  private String ruleRev;
   /**
    * This method provides our config filename to the base class.
    */
@@ -96,24 +113,30 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
     assertFalse(config.isEmpty());
     assertEquals(service.getServiceUrl(), config.get("URL"));
 
+    serviceURL = config.get("URL");
+    testAccountID = config.get("TEST_ACCOUNT_ID");
+    testServiceName = config.get("TEST_SERVICE_NAME");
+
+    System.out.printf("\nService URL: %s\n", serviceURL);
+    System.out.printf("Test Account ID: %s\n", testAccountID);
+    System.out.printf("Test Service Name: %s\n", testServiceName);
     System.out.println("Setup complete.");
   }
 
   @Test
-  public void testCreateZone() throws Exception {
+  public void t01_testCreateZone() throws Exception {
     try {
       AddressIPAddress addressModel = new AddressIPAddress.Builder()
       .type("ipAddress")
-      .ipAddress("testString")
+      .value("169.23.56.234")
       .build();
 
       CreateZoneOptions createZoneOptions = new CreateZoneOptions.Builder()
-      .name("an example of zone")
-      .accountId("12ab34cd56ef78ab90cd12ef34ab56cd")
-      .description("this is an example of zone")
+      .name("SDK TEST - an example of zone")
+      .accountId(testAccountID)
+      .description("SDK TEST - this is an example of zone")
       .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-      .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-      .transactionId("testString")
+      .transactionId("sdk-create-zone-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
@@ -125,6 +148,11 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
       OutZone outZoneResult = response.getResult();
 
       assertNotNull(outZoneResult);
+      this.zoneID = outZoneResult.getId();
+      this.zoneRev = response.getHeaders().values("Etag").get(0);
+      System.out.println(outZoneResult.getId());
+      System.out.println(response.getHeaders().values("Etag").get(0));
+      System.out.println(response.getHeaders().values("Etag").size());
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -132,13 +160,12 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testListZones() throws Exception {
+  public void t02_testListZones() throws Exception {
     try {
+      System.out.printf("\nListZones: %s || %s\n",zoneID,zoneRev);
       ListZonesOptions listZonesOptions = new ListZonesOptions.Builder()
-      .accountId("testString")
-      .transactionId("testString")
-      .name("testString")
-      .sort("testString")
+      .accountId(testAccountID)
+      .transactionId("sdk-list-zones-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
@@ -157,11 +184,11 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testGetZone() throws Exception {
+  public void t03_testGetZone() throws Exception {
     try {
       GetZoneOptions getZoneOptions = new GetZoneOptions.Builder()
-      .zoneId("testString")
-      .transactionId("testString")
+      .zoneId(zoneID)
+      .transactionId("sdk-get-zone-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
@@ -180,22 +207,21 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testReplaceZone() throws Exception {
+  public void t04_testReplaceZone() throws Exception {
     try {
       AddressIPAddress addressModel = new AddressIPAddress.Builder()
       .type("ipAddress")
-      .ipAddress("testString")
+      .value("169.23.56.234")
       .build();
 
       ReplaceZoneOptions replaceZoneOptions = new ReplaceZoneOptions.Builder()
-      .zoneId("testString")
-      .ifMatch("testString")
-      .name("an example of zone")
-      .accountId("12ab34cd56ef78ab90cd12ef34ab56cd")
-      .description("this is an example of zone")
+      .zoneId(zoneID)
+      .ifMatch(zoneRev)
+      .name("SDK TEST - an example of updated zone")
+      .accountId(testAccountID)
+      .description("SDK TEST - this is an example of updated zone")
       .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-      .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-      .transactionId("testString")
+      .transactionId("sdk-replace-zone-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
@@ -214,7 +240,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testListAvailableServicerefTargets() throws Exception {
+  public void t05_testListAvailableServicerefTargets() throws Exception {
     try {
       ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptions = new ListAvailableServicerefTargetsOptions.Builder()
       .type("all")
@@ -236,39 +262,42 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testCreateRule() throws Exception {
+  public void t06_testCreateRule() throws Exception {
     try {
       RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
       .name("networkZoneId")
-      .value("65810ac762004f22ac19f8f8edf70a34")
+      .value(zoneID)
       .build();
 
       RuleContext ruleContextModel = new RuleContext.Builder()
       .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
       .build();
 
-      ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
+      ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
       .name("accountId")
-      .value("12ab34cd56ef78ab90cd12ef34ab56cd")
-      .operator("testString")
+      .value(testAccountID)
       .build();
 
+      ResourceAttribute resourceAttributeModelServiceName = new ResourceAttribute.Builder()
+              .name("serviceName")
+              .value(testServiceName)
+              .build();
+
       ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
-      .name("testString")
-      .value("testString")
-      .operator("testString")
+      .name("tagName")
+      .value("tagValue")
       .build();
 
       Resource resourceModel = new Resource.Builder()
-      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountID,resourceAttributeModelServiceName)))
       .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
       .build();
 
       CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
-      .description("this is an example of rule")
+      .description("SDK TEST - this is an example of rule")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
-      .transactionId("testString")
+      .transactionId("sdk-create-rule-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
@@ -280,6 +309,9 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
       OutRule outRuleResult = response.getResult();
 
       assertNotNull(outRuleResult);
+
+      this.ruleID = outRuleResult.getId();
+      this.ruleRev = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -287,19 +319,11 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testListRules() throws Exception {
+  public void t07_testListRules() throws Exception {
     try {
       ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
-      .accountId("testString")
-      .transactionId("testString")
-      .region("testString")
-      .resource("testString")
-      .resourceType("testString")
-      .serviceInstance("testString")
-      .serviceName("testString")
-      .serviceType("testString")
-      .zoneId("testString")
-      .sort("testString")
+      .accountId(testAccountID)
+      .transactionId("sdk-list-rules-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
@@ -318,11 +342,11 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testGetRule() throws Exception {
+  public void t08_testGetRule() throws Exception {
     try {
       GetRuleOptions getRuleOptions = new GetRuleOptions.Builder()
-      .ruleId("testString")
-      .transactionId("testString")
+      .ruleId(ruleID)
+      .transactionId("sdk-get-rule-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
@@ -341,41 +365,44 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testReplaceRule() throws Exception {
+  public void t09_testReplaceRule() throws Exception {
     try {
       RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
       .name("networkZoneId")
-      .value("76921bd873115033bd2a0909fe081b45")
+      .value(zoneID)
       .build();
 
       RuleContext ruleContextModel = new RuleContext.Builder()
       .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
       .build();
 
-      ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
+      ResourceAttribute resourceAttributeModelAccountName = new ResourceAttribute.Builder()
       .name("accountId")
-      .value("12ab34cd56ef78ab90cd12ef34ab56cd")
-      .operator("testString")
+      .value(testAccountID)
       .build();
 
+      ResourceAttribute resourceAttributeModelServiceName = new ResourceAttribute.Builder()
+              .name("serviceName")
+              .value(testServiceName)
+              .build();
+
       ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
-      .name("testString")
-      .value("testString")
-      .operator("testString")
+      .name("tagName")
+      .value("updatedTagValue")
       .build();
 
       Resource resourceModel = new Resource.Builder()
-      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountName,resourceAttributeModelServiceName)))
       .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
       .build();
 
       ReplaceRuleOptions replaceRuleOptions = new ReplaceRuleOptions.Builder()
-      .ruleId("testString")
-      .ifMatch("testString")
-      .description("this is an example of rule")
+      .ruleId(ruleID)
+      .ifMatch(ruleRev)
+      .description("SDK TEST - this is an example of updated rule")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
-      .transactionId("testString")
+      .transactionId("sdk-replace-rule-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
@@ -394,11 +421,11 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testGetAccountSettings() throws Exception {
+  public void t10_testGetAccountSettings() throws Exception {
     try {
       GetAccountSettingsOptions getAccountSettingsOptions = new GetAccountSettingsOptions.Builder()
-      .accountId("testString")
-      .transactionId("testString")
+      .accountId(testAccountID)
+      .transactionId("sdk-get-account-settings-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
@@ -416,32 +443,301 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
     }
   }
 
+// Requests with errors
+
   @Test
-  public void testDeleteZone() throws Exception {
+  public void t11_testCreateZoneInvalidIP() throws Exception {
     try {
-      DeleteZoneOptions deleteZoneOptions = new DeleteZoneOptions.Builder()
-      .zoneId("testString")
-      .transactionId("testString")
+      AddressIPAddress addressModel = new AddressIPAddress.Builder()
+      .type("ipAddress")
+      .value("169.23.56.234.")
+      .build();
+
+      CreateZoneOptions createZoneOptions = new CreateZoneOptions.Builder()
+      .name("SDK TEST - an example of zone")
+      .accountId(testAccountID)
+      .description("SDK TEST - this is an example of zone")
+      .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .transactionId("sdk-create-zone-"+UUID.randomUUID().toString())
       .build();
 
       // Invoke operation
-      Response<Void> response = service.deleteZone(deleteZoneOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 204);
+      Response<OutZone> response = service.createZone(createZoneOptions).execute();
     } catch (ServiceResponseException e) {
+      if (e.getStatusCode() != 400)
         fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
 
   @Test
-  public void testDeleteRule() throws Exception {
+  public void t12_testListZonesInvalidAccountID() throws Exception {
+    try {
+      ListZonesOptions listZonesOptions = new ListZonesOptions.Builder()
+      .accountId(InvalidID)
+      .transactionId("sdk-list-zones-"+UUID.randomUUID().toString())
+      .build();
+
+      // Invoke operation
+      Response<OutZonePage> response = service.listZones(listZonesOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 400)
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t13_testGetZoneNotFound() throws Exception {
+    try {
+      GetZoneOptions getZoneOptions = new GetZoneOptions.Builder()
+      .zoneId(NonExistentID)
+      .transactionId("sdk-get-zone-"+UUID.randomUUID().toString())
+      .build();
+
+      // Invoke operation
+      Response<OutZone> response = service.getZone(getZoneOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 404)
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t14_testReplaceZoneNotFound() throws Exception {
+    try {
+      AddressIPAddress addressModel = new AddressIPAddress.Builder()
+              .type("ipAddress")
+              .value("169.23.56.234")
+              .build();
+
+      ReplaceZoneOptions replaceZoneOptions = new ReplaceZoneOptions.Builder()
+              .zoneId(NonExistentID)
+              .ifMatch("abc")
+              .name("SDK TEST - an example of zone")
+              .accountId(testAccountID)
+              .description("SDK TEST - this is an example of zone")
+              .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+              .transactionId("sdk-replace-zone-"+UUID.randomUUID().toString())
+              .build();
+
+      // Invoke operation
+      Response<OutZone> response = service.replaceZone(replaceZoneOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 404)
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t15_testListAvailableServicerefTargetsInvalidType() throws Exception {
+    try {
+      ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptions = new ListAvailableServicerefTargetsOptions.Builder()
+              .type("invalid-type")
+              .build();
+
+      // Invoke operation
+      Response<ServiceRefTargetPage> response = service.listAvailableServicerefTargets(listAvailableServicerefTargetsOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 400)
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t16_testCreateRuleNotCBREnabled() throws Exception {
+    try {
+      RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
+              .name("networkZoneId")
+              .value(zoneID)
+              .build();
+
+      RuleContext ruleContextModel = new RuleContext.Builder()
+              .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+              .build();
+
+      ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
+              .name("accountId")
+              .value(testAccountID)
+              .build();
+
+      ResourceAttribute resourceAttributeModelServiceName = new ResourceAttribute.Builder()
+              .name("serviceName")
+              .value("cbr-not-enabled")
+              .build();
+
+      ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
+              .name("tagName")
+              .value("tagValue")
+              .build();
+
+      Resource resourceModel = new Resource.Builder()
+              .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountID,resourceAttributeModelServiceName)))
+              .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+              .build();
+
+      CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
+              .description("SDK TEST - this is an example of rule")
+              .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
+              .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+              .transactionId("sdk-create-rule-"+UUID.randomUUID().toString())
+              .build();
+
+      // Invoke operation
+      Response<OutRule> response = service.createRule(createRuleOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 400)
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t17_testListRulesInvalidAccountID() throws Exception {
+    try {
+      ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
+              .accountId(InvalidID)
+              .transactionId("sdk-list-rules-"+UUID.randomUUID().toString())
+              .build();
+
+      // Invoke operation
+      Response<OutRulePage> response = service.listRules(listRulesOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 400)
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t18_testGetRuleNotFound() throws Exception {
+    try {
+      GetRuleOptions getRuleOptions = new GetRuleOptions.Builder()
+              .ruleId(NonExistentID)
+              .transactionId("sdk-get-rule-"+UUID.randomUUID().toString())
+              .build();
+
+      // Invoke operation
+      Response<OutRule> response = service.getRule(getRuleOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 404)
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t19_testReplaceRuleNotFound() throws Exception {
+    try {
+      RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
+              .name("networkZoneId")
+              .value(zoneID)
+              .build();
+
+      RuleContext ruleContextModel = new RuleContext.Builder()
+              .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+              .build();
+
+      ResourceAttribute resourceAttributeModelAccountName = new ResourceAttribute.Builder()
+              .name("accountId")
+              .value(testAccountID)
+              .build();
+
+      ResourceAttribute resourceAttributeModelServiceName = new ResourceAttribute.Builder()
+              .name("serviceName")
+              .value("cbr-not-enabled")
+              .build();
+
+      ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
+              .name("tagName")
+              .value("updatedTagValue")
+              .build();
+
+      Resource resourceModel = new Resource.Builder()
+              .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountName,resourceAttributeModelServiceName)))
+              .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+              .build();
+
+      ReplaceRuleOptions replaceRuleOptions = new ReplaceRuleOptions.Builder()
+              .ruleId(ruleID)
+              .ifMatch("abc")
+              .description("SDK TEST - this is an example of rule")
+              .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
+              .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+              .transactionId("sdk-replace-rule-"+UUID.randomUUID().toString())
+              .build();
+
+      // Invoke operation
+      Response<OutRule> response = service.replaceRule(replaceRuleOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 412)
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t20_testGetAccountSettingsInvalidAccountID() throws Exception {
+    try {
+      GetAccountSettingsOptions getAccountSettingsOptions = new GetAccountSettingsOptions.Builder()
+              .accountId(InvalidID)
+              .transactionId("sdk-get-account-settings-"+UUID.randomUUID().toString())
+              .build();
+
+      // Invoke operation
+      Response<OutAccountSettings> response = service.getAccountSettings(getAccountSettingsOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 400)
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+
+  @Test
+  public void t21_testDeleteRuleNotFound() throws Exception {
     try {
       DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
-      .ruleId("testString")
-      .transactionId("testString")
-      .build();
+              .ruleId(NonExistentID)
+              .transactionId("sdk-delete-rule-"+UUID.randomUUID().toString())
+              .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteRule(deleteRuleOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 404)
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t22_testDeleteZoneNotFound() throws Exception {
+    try {
+      DeleteZoneOptions deleteZoneOptions = new DeleteZoneOptions.Builder()
+              .zoneId(NonExistentID)
+              .transactionId("sdk-delete-zone-"+UUID.randomUUID().toString())
+              .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteZone(deleteZoneOptions).execute();
+    } catch (ServiceResponseException e) {
+      if(e.getStatusCode() != 404)
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t23_testDeleteRule() throws Exception {
+    try {
+      DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
+              .ruleId(ruleID)
+              .transactionId("sdk-delete-rule-"+UUID.randomUUID().toString())
+              .build();
 
       // Invoke operation
       Response<Void> response = service.deleteRule(deleteRuleOptions).execute();
@@ -449,8 +745,29 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 204);
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void t24_testDeleteZone() throws Exception {
+    try {
+      DeleteZoneOptions deleteZoneOptions = new DeleteZoneOptions.Builder()
+//      .zoneId("b80f86e7c78d20b9c98447e4087b354c")
+//              .zoneId("e0111b4aa62e694769214661c3bb3ed7")
+              .zoneId(zoneID)
+              .transactionId("sdk-delete-zone-"+UUID.randomUUID().toString())
+              .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteZone(deleteZoneOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
 

@@ -33,17 +33,17 @@ public class AddressIPAddressRangeTest {
   public void testAddressIPAddressRange() throws Throwable {
     AddressIPAddressRange addressIpAddressRangeModel = new AddressIPAddressRange.Builder()
       .type("ipRange")
-      .ipRange("testString")
+      .value("testString")
       .build();
     assertEquals(addressIpAddressRangeModel.type(), "ipRange");
-    assertEquals(addressIpAddressRangeModel.ipRange(), "testString");
+    assertEquals(addressIpAddressRangeModel.value(), "testString");
 
     String json = TestUtilities.serialize(addressIpAddressRangeModel);
 
     AddressIPAddressRange addressIpAddressRangeModelNew = TestUtilities.deserialize(json, AddressIPAddressRange.class);
     assertTrue(addressIpAddressRangeModelNew instanceof AddressIPAddressRange);
     assertEquals(addressIpAddressRangeModelNew.type(), "ipRange");
-    assertEquals(addressIpAddressRangeModelNew.ipRange(), "testString");
+    assertEquals(addressIpAddressRangeModelNew.value(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

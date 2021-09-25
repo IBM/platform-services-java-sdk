@@ -21,16 +21,8 @@ public class AddressIPAddressRange extends Address {
    * The type of address.
    */
   public interface Type {
-    /** ipAddress. */
-    String IPADDRESS = "ipAddress";
     /** ipRange. */
     String IPRANGE = "ipRange";
-    /** subnet. */
-    String SUBNET = "subnet";
-    /** vpc. */
-    String VPC = "vpc";
-    /** serviceRef. */
-    String SERVICEREF = "serviceRef";
   }
 
 
@@ -39,11 +31,11 @@ public class AddressIPAddressRange extends Address {
    */
   public static class Builder {
     private String type;
-    private String ipRange;
+    private String value;
 
     public Builder(Address addressIpAddressRange) {
       this.type = addressIpAddressRange.type;
-      this.ipRange = addressIpAddressRange.ipRange;
+      this.value = addressIpAddressRange.value;
     }
 
     /**
@@ -56,11 +48,11 @@ public class AddressIPAddressRange extends Address {
      * Instantiates a new builder with required properties.
      *
      * @param type the type
-     * @param ipRange the ipRange
+     * @param value the value
      */
-    public Builder(String type, String ipRange) {
+    public Builder(String type, String value) {
       this.type = type;
-      this.ipRange = ipRange;
+      this.value = value;
     }
 
     /**
@@ -84,13 +76,13 @@ public class AddressIPAddressRange extends Address {
     }
 
     /**
-     * Set the ipRange.
+     * Set the value.
      *
-     * @param ipRange the ipRange
+     * @param value the value
      * @return the AddressIPAddressRange builder
      */
-    public Builder ipRange(String ipRange) {
-      this.ipRange = ipRange;
+    public Builder value(String value) {
+      this.value = value;
       return this;
     }
   }
@@ -98,10 +90,10 @@ public class AddressIPAddressRange extends Address {
   protected AddressIPAddressRange(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ipRange,
-      "ipRange cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.value,
+      "value cannot be null");
     type = builder.type;
-    ipRange = builder.ipRange;
+    value = builder.value;
   }
 
   /**

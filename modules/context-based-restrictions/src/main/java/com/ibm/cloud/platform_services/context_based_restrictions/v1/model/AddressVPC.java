@@ -21,16 +21,8 @@ public class AddressVPC extends Address {
    * The type of address.
    */
   public interface Type {
-    /** ipAddress. */
-    String IPADDRESS = "ipAddress";
-    /** ipRange. */
-    String IPRANGE = "ipRange";
-    /** subnet. */
-    String SUBNET = "subnet";
     /** vpc. */
     String VPC = "vpc";
-    /** serviceRef. */
-    String SERVICEREF = "serviceRef";
   }
 
 
@@ -39,11 +31,11 @@ public class AddressVPC extends Address {
    */
   public static class Builder {
     private String type;
-    private String vpcCrn;
+    private String value;
 
     public Builder(Address addressVpc) {
       this.type = addressVpc.type;
-      this.vpcCrn = addressVpc.vpcCrn;
+      this.value = addressVpc.value;
     }
 
     /**
@@ -56,11 +48,11 @@ public class AddressVPC extends Address {
      * Instantiates a new builder with required properties.
      *
      * @param type the type
-     * @param vpcCrn the vpcCrn
+     * @param value the value
      */
-    public Builder(String type, String vpcCrn) {
+    public Builder(String type, String value) {
       this.type = type;
-      this.vpcCrn = vpcCrn;
+      this.value = value;
     }
 
     /**
@@ -84,13 +76,13 @@ public class AddressVPC extends Address {
     }
 
     /**
-     * Set the vpcCrn.
+     * Set the value.
      *
-     * @param vpcCrn the vpcCrn
+     * @param value the value
      * @return the AddressVPC builder
      */
-    public Builder vpcCrn(String vpcCrn) {
-      this.vpcCrn = vpcCrn;
+    public Builder value(String value) {
+      this.value = value;
       return this;
     }
   }
@@ -98,10 +90,10 @@ public class AddressVPC extends Address {
   protected AddressVPC(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.vpcCrn,
-      "vpcCrn cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.value,
+      "value cannot be null");
     type = builder.type;
-    vpcCrn = builder.vpcCrn;
+    value = builder.value;
   }
 
   /**

@@ -21,16 +21,8 @@ public class AddressSubnet extends Address {
    * The type of address.
    */
   public interface Type {
-    /** ipAddress. */
-    String IPADDRESS = "ipAddress";
-    /** ipRange. */
-    String IPRANGE = "ipRange";
     /** subnet. */
     String SUBNET = "subnet";
-    /** vpc. */
-    String VPC = "vpc";
-    /** serviceRef. */
-    String SERVICEREF = "serviceRef";
   }
 
 
@@ -39,11 +31,11 @@ public class AddressSubnet extends Address {
    */
   public static class Builder {
     private String type;
-    private String subnet;
+    private String value;
 
     public Builder(Address addressSubnet) {
       this.type = addressSubnet.type;
-      this.subnet = addressSubnet.subnet;
+      this.value = addressSubnet.value;
     }
 
     /**
@@ -56,11 +48,11 @@ public class AddressSubnet extends Address {
      * Instantiates a new builder with required properties.
      *
      * @param type the type
-     * @param subnet the subnet
+     * @param value the value
      */
-    public Builder(String type, String subnet) {
+    public Builder(String type, String value) {
       this.type = type;
-      this.subnet = subnet;
+      this.value = value;
     }
 
     /**
@@ -84,13 +76,13 @@ public class AddressSubnet extends Address {
     }
 
     /**
-     * Set the subnet.
+     * Set the value.
      *
-     * @param subnet the subnet
+     * @param value the value
      * @return the AddressSubnet builder
      */
-    public Builder subnet(String subnet) {
-      this.subnet = subnet;
+    public Builder value(String value) {
+      this.value = value;
       return this;
     }
   }
@@ -98,10 +90,10 @@ public class AddressSubnet extends Address {
   protected AddressSubnet(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.subnet,
-      "subnet cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.value,
+      "value cannot be null");
     type = builder.type;
-    subnet = builder.subnet;
+    value = builder.value;
   }
 
   /**

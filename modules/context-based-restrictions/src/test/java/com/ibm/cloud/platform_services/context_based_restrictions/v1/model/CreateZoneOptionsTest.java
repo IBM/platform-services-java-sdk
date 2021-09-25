@@ -36,10 +36,10 @@ public class CreateZoneOptionsTest {
   public void testCreateZoneOptions() throws Throwable {
     AddressIPAddress addressModel = new AddressIPAddress.Builder()
       .type("ipAddress")
-      .ipAddress("testString")
+      .value("testString")
       .build();
     assertEquals(addressModel.type(), "ipAddress");
-    assertEquals(addressModel.ipAddress(), "testString");
+    assertEquals(addressModel.value(), "testString");
 
     CreateZoneOptions createZoneOptionsModel = new CreateZoneOptions.Builder()
       .name("testString")

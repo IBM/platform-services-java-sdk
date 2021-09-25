@@ -33,17 +33,17 @@ public class AddressSubnetTest {
   public void testAddressSubnet() throws Throwable {
     AddressSubnet addressSubnetModel = new AddressSubnet.Builder()
       .type("subnet")
-      .subnet("testString")
+      .value("testString")
       .build();
     assertEquals(addressSubnetModel.type(), "subnet");
-    assertEquals(addressSubnetModel.subnet(), "testString");
+    assertEquals(addressSubnetModel.value(), "testString");
 
     String json = TestUtilities.serialize(addressSubnetModel);
 
     AddressSubnet addressSubnetModelNew = TestUtilities.deserialize(json, AddressSubnet.class);
     assertTrue(addressSubnetModelNew instanceof AddressSubnet);
     assertEquals(addressSubnetModelNew.type(), "subnet");
-    assertEquals(addressSubnetModelNew.subnet(), "testString");
+    assertEquals(addressSubnetModelNew.value(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

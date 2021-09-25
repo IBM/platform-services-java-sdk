@@ -33,17 +33,17 @@ public class AddressVPCTest {
   public void testAddressVPC() throws Throwable {
     AddressVPC addressVpcModel = new AddressVPC.Builder()
       .type("vpc")
-      .vpcCrn("testString")
+      .value("testString")
       .build();
     assertEquals(addressVpcModel.type(), "vpc");
-    assertEquals(addressVpcModel.vpcCrn(), "testString");
+    assertEquals(addressVpcModel.value(), "testString");
 
     String json = TestUtilities.serialize(addressVpcModel);
 
     AddressVPC addressVpcModelNew = TestUtilities.deserialize(json, AddressVPC.class);
     assertTrue(addressVpcModelNew instanceof AddressVPC);
     assertEquals(addressVpcModelNew.type(), "vpc");
-    assertEquals(addressVpcModelNew.vpcCrn(), "testString");
+    assertEquals(addressVpcModelNew.value(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

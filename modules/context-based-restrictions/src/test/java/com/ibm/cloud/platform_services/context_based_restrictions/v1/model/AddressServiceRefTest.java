@@ -45,17 +45,17 @@ public class AddressServiceRefTest {
 
     AddressServiceRef addressServiceRefModel = new AddressServiceRef.Builder()
       .type("serviceRef")
-      .serviceRef(serviceRefValueModel)
+      .ref(serviceRefValueModel)
       .build();
     assertEquals(addressServiceRefModel.type(), "serviceRef");
-    assertEquals(addressServiceRefModel.serviceRef(), serviceRefValueModel);
+    assertEquals(addressServiceRefModel.ref(), serviceRefValueModel);
 
     String json = TestUtilities.serialize(addressServiceRefModel);
 
     AddressServiceRef addressServiceRefModelNew = TestUtilities.deserialize(json, AddressServiceRef.class);
     assertTrue(addressServiceRefModelNew instanceof AddressServiceRef);
     assertEquals(addressServiceRefModelNew.type(), "serviceRef");
-    assertEquals(addressServiceRefModelNew.serviceRef().toString(), serviceRefValueModel.toString());
+    assertEquals(addressServiceRefModelNew.ref().toString(), serviceRefValueModel.toString());
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

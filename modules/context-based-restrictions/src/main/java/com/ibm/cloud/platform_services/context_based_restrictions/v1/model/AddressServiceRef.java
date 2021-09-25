@@ -21,14 +21,6 @@ public class AddressServiceRef extends Address {
    * The type of address.
    */
   public interface Type {
-    /** ipAddress. */
-    String IPADDRESS = "ipAddress";
-    /** ipRange. */
-    String IPRANGE = "ipRange";
-    /** subnet. */
-    String SUBNET = "subnet";
-    /** vpc. */
-    String VPC = "vpc";
     /** serviceRef. */
     String SERVICEREF = "serviceRef";
   }
@@ -39,11 +31,11 @@ public class AddressServiceRef extends Address {
    */
   public static class Builder {
     private String type;
-    private ServiceRefValue serviceRef;
+    private ServiceRefValue ref;
 
     public Builder(Address addressServiceRef) {
       this.type = addressServiceRef.type;
-      this.serviceRef = addressServiceRef.serviceRef;
+      this.ref = addressServiceRef.ref;
     }
 
     /**
@@ -56,11 +48,11 @@ public class AddressServiceRef extends Address {
      * Instantiates a new builder with required properties.
      *
      * @param type the type
-     * @param serviceRef the serviceRef
+     * @param ref the ref
      */
-    public Builder(String type, ServiceRefValue serviceRef) {
+    public Builder(String type, ServiceRefValue ref) {
       this.type = type;
-      this.serviceRef = serviceRef;
+      this.ref = ref;
     }
 
     /**
@@ -84,13 +76,13 @@ public class AddressServiceRef extends Address {
     }
 
     /**
-     * Set the serviceRef.
+     * Set the ref.
      *
-     * @param serviceRef the serviceRef
+     * @param ref the ref
      * @return the AddressServiceRef builder
      */
-    public Builder serviceRef(ServiceRefValue serviceRef) {
-      this.serviceRef = serviceRef;
+    public Builder ref(ServiceRefValue ref) {
+      this.ref = ref;
       return this;
     }
   }
@@ -98,10 +90,10 @@ public class AddressServiceRef extends Address {
   protected AddressServiceRef(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.serviceRef,
-      "serviceRef cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ref,
+      "ref cannot be null");
     type = builder.type;
-    serviceRef = builder.serviceRef;
+    ref = builder.ref;
   }
 
   /**

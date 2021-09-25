@@ -12,7 +12,6 @@
  */
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
@@ -55,12 +54,8 @@ public class Address extends GenericModel {
   }
 
   protected String type;
-  protected String ipAddress;
-  protected String ipRange;
-  protected String subnet;
-  @SerializedName("vpcCRN")
-  protected String vpcCrn;
-  protected ServiceRefValue serviceRef;
+  protected String value;
+  protected ServiceRefValue ref;
 
   protected Address() {
   }
@@ -77,58 +72,25 @@ public class Address extends GenericModel {
   }
 
   /**
-   * Gets the ipAddress.
+   * Gets the value.
    *
    * The IP address.
    *
-   * @return the ipAddress
+   * @return the value
    */
-  public String ipAddress() {
-    return ipAddress;
+  public String value() {
+    return value;
   }
 
   /**
-   * Gets the ipRange.
-   *
-   * The ip range in &lt;first-ip&gt;-&lt;last-ip&gt; format.
-   *
-   * @return the ipRange
-   */
-  public String ipRange() {
-    return ipRange;
-  }
-
-  /**
-   * Gets the subnet.
-   *
-   * The subnet in CIDR format.
-   *
-   * @return the subnet
-   */
-  public String subnet() {
-    return subnet;
-  }
-
-  /**
-   * Gets the vpcCrn.
-   *
-   * The VPC CRN.
-   *
-   * @return the vpcCrn
-   */
-  public String vpcCrn() {
-    return vpcCrn;
-  }
-
-  /**
-   * Gets the serviceRef.
+   * Gets the ref.
    *
    * A service reference value.
    *
-   * @return the serviceRef
+   * @return the ref
    */
-  public ServiceRefValue serviceRef() {
-    return serviceRef;
+  public ServiceRefValue ref() {
+    return ref;
   }
 }
 

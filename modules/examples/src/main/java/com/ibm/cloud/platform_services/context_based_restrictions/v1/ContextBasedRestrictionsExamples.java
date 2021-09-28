@@ -13,7 +13,31 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.*;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceAttribute;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceTagAttribute;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;

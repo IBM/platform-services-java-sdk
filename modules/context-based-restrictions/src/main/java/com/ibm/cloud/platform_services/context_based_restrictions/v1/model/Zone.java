@@ -25,6 +25,10 @@ public class Zone extends GenericModel {
 
   protected String id;
   protected String crn;
+  @SerializedName("address_count")
+  protected Long addressCount;
+  @SerializedName("excluded_count")
+  protected Long excludedCount;
   protected String name;
   @SerializedName("account_id")
   protected String accountId;
@@ -61,6 +65,28 @@ public class Zone extends GenericModel {
    */
   public String getCrn() {
     return crn;
+  }
+
+  /**
+   * Gets the addressCount.
+   *
+   * The number of addresses in the zone.
+   *
+   * @return the addressCount
+   */
+  public Long getAddressCount() {
+    return addressCount;
+  }
+
+  /**
+   * Gets the excludedCount.
+   *
+   * The number of excluded addresses in the zone.
+   *
+   * @return the excludedCount
+   */
+  public Long getExcludedCount() {
+    return excludedCount;
   }
 
   /**

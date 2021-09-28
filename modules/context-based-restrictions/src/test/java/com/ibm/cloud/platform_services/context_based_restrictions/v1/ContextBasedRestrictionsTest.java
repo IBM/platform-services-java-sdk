@@ -114,7 +114,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   @Test
   public void testCreateZoneWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"description\": \"description\", \"addresses\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"excluded\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"address_count\": 12, \"excluded_count\": 13, \"name\": \"name\", \"account_id\": \"accountId\", \"description\": \"description\", \"addresses\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"excluded\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createZonePath = "/v1/zones";
 
     server.enqueue(new MockResponse()
@@ -219,7 +219,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   @Test
   public void testGetZoneWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"description\": \"description\", \"addresses\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"excluded\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"address_count\": 12, \"excluded_count\": 13, \"name\": \"name\", \"account_id\": \"accountId\", \"description\": \"description\", \"addresses\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"excluded\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getZonePath = "/v1/zones/testString";
 
     server.enqueue(new MockResponse()
@@ -270,7 +270,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   @Test
   public void testReplaceZoneWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"description\": \"description\", \"addresses\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"excluded\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"address_count\": 12, \"excluded_count\": 13, \"name\": \"name\", \"account_id\": \"accountId\", \"description\": \"description\", \"addresses\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"excluded\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String replaceZonePath = "/v1/zones/testString";
 
     server.enqueue(new MockResponse()

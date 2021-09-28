@@ -35,6 +35,8 @@ public class ZoneTest {
     Zone zoneModel = new Zone();
     assertNull(zoneModel.getId());
     assertNull(zoneModel.getCrn());
+    assertNull(zoneModel.getAddressCount());
+    assertNull(zoneModel.getExcludedCount());
     assertNull(zoneModel.getName());
     assertNull(zoneModel.getAccountId());
     assertNull(zoneModel.getDescription());

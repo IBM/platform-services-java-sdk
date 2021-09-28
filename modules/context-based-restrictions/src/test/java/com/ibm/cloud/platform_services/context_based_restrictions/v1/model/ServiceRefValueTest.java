@@ -51,4 +51,10 @@ public class ServiceRefValueTest {
     assertEquals(serviceRefValueModelNew.serviceName(), "testString");
     assertEquals(serviceRefValueModelNew.serviceInstance(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testServiceRefValueError() throws Throwable {
+    new ServiceRefValue.Builder().build();
+  }
+
 }

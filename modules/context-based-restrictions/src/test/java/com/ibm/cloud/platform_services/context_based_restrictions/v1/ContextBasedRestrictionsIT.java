@@ -13,6 +13,7 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
@@ -25,19 +26,18 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZo
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutAccountSettings;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutRule;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutRulePage;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutZone;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutZonePage;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceTagAttribute;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetPage;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
@@ -120,12 +120,12 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZone> response = service.createZone(createZoneOptions).execute();
+            Response<Zone> response = service.createZone(createZoneOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 201);
 
-            OutZone outZoneResult = response.getResult();
+            Zone outZoneResult = response.getResult();
 
             assertNotNull(outZoneResult);
             this.zoneID = outZoneResult.getId();
@@ -153,7 +153,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZone> response = service.createZone(createZoneOptions).execute();
+            service.createZone(createZoneOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 409)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -178,7 +178,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZone> response = service.createZone(createZoneOptions).execute();
+            Response<Zone> response = service.createZone(createZoneOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 400)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -195,14 +195,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZonePage> response = service.listZones(listZonesOptions).execute();
+            Response<ZoneList> response = service.listZones(listZonesOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            OutZonePage outZonePageResult = response.getResult();
+            ZoneList zoneListResult = response.getResult();
 
-            assertNotNull(outZonePageResult);
+            assertNotNull(zoneListResult);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s%nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -219,7 +219,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZonePage> response = service.listZones(listZonesOptions).execute();
+            service.listZones(listZonesOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 400)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -236,14 +236,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZone> response = service.getZone(getZoneOptions).execute();
+            Response<Zone> response = service.getZone(getZoneOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            OutZone outZoneResult = response.getResult();
+            Zone zoneResult = response.getResult();
 
-            assertNotNull(outZoneResult);
+            assertNotNull(zoneResult);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s%nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -259,7 +259,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZone> response = service.getZone(getZoneOptions).execute();
+            service.getZone(getZoneOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 404)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -286,14 +286,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZone> response = service.replaceZone(replaceZoneOptions).execute();
+            Response<Zone> response = service.replaceZone(replaceZoneOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            OutZone outZoneResult = response.getResult();
+            Zone zoneResult = response.getResult();
 
-            assertNotNull(outZoneResult);
+            assertNotNull(zoneResult);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s%nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -320,7 +320,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZone> response = service.replaceZone(replaceZoneOptions).execute();
+            service.replaceZone(replaceZoneOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 404)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -347,7 +347,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutZone> response = service.replaceZone(replaceZoneOptions).execute();
+            service.replaceZone(replaceZoneOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 412)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -363,14 +363,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<ServiceRefTargetPage> response = service.listAvailableServicerefTargets(listAvailableServicerefTargetsOptions).execute();
+            Response<ServiceRefTargetList> response = service.listAvailableServicerefTargets(listAvailableServicerefTargetsOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            ServiceRefTargetPage serviceRefTargetPageResult = response.getResult();
+            ServiceRefTargetList serviceRefTargetListResult = response.getResult();
 
-            assertNotNull(serviceRefTargetPageResult);
+            assertNotNull(serviceRefTargetListResult);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s%nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -385,7 +385,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<ServiceRefTargetPage> response = service.listAvailableServicerefTargets(listAvailableServicerefTargetsOptions).execute();
+            service.listAvailableServicerefTargets(listAvailableServicerefTargetsOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 400)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -433,16 +433,16 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutRule> response = service.createRule(createRuleOptions).execute();
+            Response<Rule> response = service.createRule(createRuleOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 201);
 
-            OutRule outRuleResult = response.getResult();
+            Rule ruleResult = response.getResult();
 
-            assertNotNull(outRuleResult);
+            assertNotNull(ruleResult);
 
-            this.ruleID = outRuleResult.getId();
+            this.ruleID = ruleResult.getId();
             this.ruleRev = response.getHeaders().values("Etag").get(0);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -490,7 +490,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutRule> response = service.createRule(createRuleOptions).execute();
+            service.createRule(createRuleOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 400)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -507,14 +507,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutRulePage> response = service.listRules(listRulesOptions).execute();
+            Response<RuleList> response = service.listRules(listRulesOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            OutRulePage outRulePageResult = response.getResult();
+            RuleList ruleListResult = response.getResult();
 
-            assertNotNull(outRulePageResult);
+            assertNotNull(ruleListResult);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s%nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -531,7 +531,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutRulePage> response = service.listRules(listRulesOptions).execute();
+            service.listRules(listRulesOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 400)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -548,14 +548,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutRule> response = service.getRule(getRuleOptions).execute();
+            Response<Rule> response = service.getRule(getRuleOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            OutRule outRuleResult = response.getResult();
+            Rule ruleResult = response.getResult();
 
-            assertNotNull(outRuleResult);
+            assertNotNull(ruleResult);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s%nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -572,7 +572,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutRule> response = service.getRule(getRuleOptions).execute();
+            service.getRule(getRuleOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 404)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -622,14 +622,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutRule> response = service.replaceRule(replaceRuleOptions).execute();
+            Response<Rule> response = service.replaceRule(replaceRuleOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            OutRule outRuleResult = response.getResult();
+            Rule ruleResult = response.getResult();
 
-            assertNotNull(outRuleResult);
+            assertNotNull(ruleResult);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s%nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -678,7 +678,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutRule> response = service.replaceRule(replaceRuleOptions).execute();
+            service.replaceRule(replaceRuleOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 404)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -695,14 +695,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutAccountSettings> response = service.getAccountSettings(getAccountSettingsOptions).execute();
+            Response<AccountSettings> response = service.getAccountSettings(getAccountSettingsOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            OutAccountSettings outAccountSettingsResult = response.getResult();
+            AccountSettings accountSettingsResult = response.getResult();
 
-            assertNotNull(outAccountSettingsResult);
+            assertNotNull(accountSettingsResult);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s%nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -718,7 +718,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<OutAccountSettings> response = service.getAccountSettings(getAccountSettingsOptions).execute();
+            service.getAccountSettings(getAccountSettingsOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 400)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -756,7 +756,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<Void> response = service.deleteRule(deleteRuleOptions).execute();
+            service.deleteRule(deleteRuleOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 404)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -793,7 +793,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             // Invoke operation
-            Response<Void> response = service.deleteZone(deleteZoneOptions).execute();
+            service.deleteZone(deleteZoneOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 404)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",

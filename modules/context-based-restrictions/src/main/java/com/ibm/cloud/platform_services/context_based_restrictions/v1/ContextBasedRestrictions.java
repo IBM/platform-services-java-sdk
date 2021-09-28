@@ -19,6 +19,7 @@ package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
@@ -29,14 +30,13 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZo
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutAccountSettings;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutRule;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutRulePage;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutZone;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutZonePage;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetPage;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
 import com.ibm.cloud.sdk.core.http.ServiceCall;
@@ -105,9 +105,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation creates a network zone for the specified account.
    *
    * @param createZoneOptions the {@link CreateZoneOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OutZone}
+   * @return a {@link ServiceCall} with a result of type {@link Zone}
    */
-  public ServiceCall<OutZone> createZone(CreateZoneOptions createZoneOptions) {
+  public ServiceCall<Zone> createZone(CreateZoneOptions createZoneOptions) {
     boolean skipBody = false;
     if (createZoneOptions == null) {
       createZoneOptions = new CreateZoneOptions.Builder().build();
@@ -141,8 +141,8 @@ public class ContextBasedRestrictions extends BaseService {
       }
       builder.bodyJson(contentJson);
     }
-    ResponseConverter<OutZone> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OutZone>() { }.getType());
+    ResponseConverter<Zone> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Zone>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -151,9 +151,9 @@ public class ContextBasedRestrictions extends BaseService {
    *
    * This operation creates a network zone for the specified account.
    *
-   * @return a {@link ServiceCall} with a result of type {@link OutZone}
+   * @return a {@link ServiceCall} with a result of type {@link Zone}
    */
-  public ServiceCall<OutZone> createZone() {
+  public ServiceCall<Zone> createZone() {
     return createZone(null);
   }
 
@@ -163,9 +163,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation lists network zones in the specified account.
    *
    * @param listZonesOptions the {@link ListZonesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OutZonePage}
+   * @return a {@link ServiceCall} with a result of type {@link ZoneList}
    */
-  public ServiceCall<OutZonePage> listZones(ListZonesOptions listZonesOptions) {
+  public ServiceCall<ZoneList> listZones(ListZonesOptions listZonesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listZonesOptions,
       "listZonesOptions cannot be null");
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/zones"));
@@ -184,8 +184,8 @@ public class ContextBasedRestrictions extends BaseService {
     if (listZonesOptions.sort() != null) {
       builder.query("sort", String.valueOf(listZonesOptions.sort()));
     }
-    ResponseConverter<OutZonePage> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OutZonePage>() { }.getType());
+    ResponseConverter<ZoneList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ZoneList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -195,9 +195,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation returns the network zone for the specified ID.
    *
    * @param getZoneOptions the {@link GetZoneOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OutZone}
+   * @return a {@link ServiceCall} with a result of type {@link Zone}
    */
-  public ServiceCall<OutZone> getZone(GetZoneOptions getZoneOptions) {
+  public ServiceCall<Zone> getZone(GetZoneOptions getZoneOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getZoneOptions,
       "getZoneOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -211,8 +211,8 @@ public class ContextBasedRestrictions extends BaseService {
     if (getZoneOptions.transactionId() != null) {
       builder.header("Transaction-Id", getZoneOptions.transactionId());
     }
-    ResponseConverter<OutZone> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OutZone>() { }.getType());
+    ResponseConverter<Zone> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Zone>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -222,9 +222,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation updates the network zone with the specified ID.
    *
    * @param replaceZoneOptions the {@link ReplaceZoneOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OutZone}
+   * @return a {@link ServiceCall} with a result of type {@link Zone}
    */
-  public ServiceCall<OutZone> replaceZone(ReplaceZoneOptions replaceZoneOptions) {
+  public ServiceCall<Zone> replaceZone(ReplaceZoneOptions replaceZoneOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceZoneOptions,
       "replaceZoneOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -256,8 +256,8 @@ public class ContextBasedRestrictions extends BaseService {
       contentJson.add("excluded", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceZoneOptions.excluded()));
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<OutZone> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OutZone>() { }.getType());
+    ResponseConverter<Zone> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Zone>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -292,9 +292,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation lists all available service reference targets.
    *
    * @param listAvailableServicerefTargetsOptions the {@link ListAvailableServicerefTargetsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ServiceRefTargetPage}
+   * @return a {@link ServiceCall} with a result of type {@link ServiceRefTargetList}
    */
-  public ServiceCall<ServiceRefTargetPage> listAvailableServicerefTargets(ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptions) {
+  public ServiceCall<ServiceRefTargetList> listAvailableServicerefTargets(ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptions) {
     if (listAvailableServicerefTargetsOptions == null) {
       listAvailableServicerefTargetsOptions = new ListAvailableServicerefTargetsOptions.Builder().build();
     }
@@ -307,8 +307,8 @@ public class ContextBasedRestrictions extends BaseService {
     if (listAvailableServicerefTargetsOptions.type() != null) {
       builder.query("type", String.valueOf(listAvailableServicerefTargetsOptions.type()));
     }
-    ResponseConverter<ServiceRefTargetPage> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceRefTargetPage>() { }.getType());
+    ResponseConverter<ServiceRefTargetList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceRefTargetList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -317,9 +317,9 @@ public class ContextBasedRestrictions extends BaseService {
    *
    * This operation lists all available service reference targets.
    *
-   * @return a {@link ServiceCall} with a result of type {@link ServiceRefTargetPage}
+   * @return a {@link ServiceCall} with a result of type {@link ServiceRefTargetList}
    */
-  public ServiceCall<ServiceRefTargetPage> listAvailableServicerefTargets() {
+  public ServiceCall<ServiceRefTargetList> listAvailableServicerefTargets() {
     return listAvailableServicerefTargets(null);
   }
 
@@ -329,9 +329,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation creates a rule for the specified account.
    *
    * @param createRuleOptions the {@link CreateRuleOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OutRule}
+   * @return a {@link ServiceCall} with a result of type {@link Rule}
    */
-  public ServiceCall<OutRule> createRule(CreateRuleOptions createRuleOptions) {
+  public ServiceCall<Rule> createRule(CreateRuleOptions createRuleOptions) {
     boolean skipBody = false;
     if (createRuleOptions == null) {
       createRuleOptions = new CreateRuleOptions.Builder().build();
@@ -359,8 +359,8 @@ public class ContextBasedRestrictions extends BaseService {
       }
       builder.bodyJson(contentJson);
     }
-    ResponseConverter<OutRule> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OutRule>() { }.getType());
+    ResponseConverter<Rule> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Rule>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -369,9 +369,9 @@ public class ContextBasedRestrictions extends BaseService {
    *
    * This operation creates a rule for the specified account.
    *
-   * @return a {@link ServiceCall} with a result of type {@link OutRule}
+   * @return a {@link ServiceCall} with a result of type {@link Rule}
    */
-  public ServiceCall<OutRule> createRule() {
+  public ServiceCall<Rule> createRule() {
     return createRule(null);
   }
 
@@ -381,9 +381,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation lists rules for the specified account.
    *
    * @param listRulesOptions the {@link ListRulesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OutRulePage}
+   * @return a {@link ServiceCall} with a result of type {@link RuleList}
    */
-  public ServiceCall<OutRulePage> listRules(ListRulesOptions listRulesOptions) {
+  public ServiceCall<RuleList> listRules(ListRulesOptions listRulesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listRulesOptions,
       "listRulesOptions cannot be null");
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/rules"));
@@ -420,8 +420,8 @@ public class ContextBasedRestrictions extends BaseService {
     if (listRulesOptions.sort() != null) {
       builder.query("sort", String.valueOf(listRulesOptions.sort()));
     }
-    ResponseConverter<OutRulePage> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OutRulePage>() { }.getType());
+    ResponseConverter<RuleList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RuleList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -431,9 +431,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation gets the rule for the specified ID.
    *
    * @param getRuleOptions the {@link GetRuleOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OutRule}
+   * @return a {@link ServiceCall} with a result of type {@link Rule}
    */
-  public ServiceCall<OutRule> getRule(GetRuleOptions getRuleOptions) {
+  public ServiceCall<Rule> getRule(GetRuleOptions getRuleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getRuleOptions,
       "getRuleOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -447,8 +447,8 @@ public class ContextBasedRestrictions extends BaseService {
     if (getRuleOptions.transactionId() != null) {
       builder.header("Transaction-Id", getRuleOptions.transactionId());
     }
-    ResponseConverter<OutRule> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OutRule>() { }.getType());
+    ResponseConverter<Rule> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Rule>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -458,9 +458,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation updates the rule for the specified ID.
    *
    * @param replaceRuleOptions the {@link ReplaceRuleOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OutRule}
+   * @return a {@link ServiceCall} with a result of type {@link Rule}
    */
-  public ServiceCall<OutRule> replaceRule(ReplaceRuleOptions replaceRuleOptions) {
+  public ServiceCall<Rule> replaceRule(ReplaceRuleOptions replaceRuleOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(replaceRuleOptions,
       "replaceRuleOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -486,8 +486,8 @@ public class ContextBasedRestrictions extends BaseService {
       contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceRuleOptions.resources()));
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<OutRule> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OutRule>() { }.getType());
+    ResponseConverter<Rule> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Rule>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -522,9 +522,9 @@ public class ContextBasedRestrictions extends BaseService {
    * This operation gets the settings for the specified account ID.
    *
    * @param getAccountSettingsOptions the {@link GetAccountSettingsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link OutAccountSettings}
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettings}
    */
-  public ServiceCall<OutAccountSettings> getAccountSettings(GetAccountSettingsOptions getAccountSettingsOptions) {
+  public ServiceCall<AccountSettings> getAccountSettings(GetAccountSettingsOptions getAccountSettingsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountSettingsOptions,
       "getAccountSettingsOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -538,8 +538,8 @@ public class ContextBasedRestrictions extends BaseService {
     if (getAccountSettingsOptions.transactionId() != null) {
       builder.header("Transaction-Id", getAccountSettingsOptions.transactionId());
     }
-    ResponseConverter<OutAccountSettings> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OutAccountSettings>() { }.getType());
+    ResponseConverter<AccountSettings> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettings>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

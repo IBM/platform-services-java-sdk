@@ -52,6 +52,15 @@ public class ServiceRefValue extends GenericModel {
     }
 
     /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param accountId the accountId
+     */
+    public Builder(String accountId) {
+      this.accountId = accountId;
+    }
+
+    /**
      * Builds a ServiceRefValue.
      *
      * @return the new ServiceRefValue instance
@@ -106,6 +115,8 @@ public class ServiceRefValue extends GenericModel {
   }
 
   protected ServiceRefValue(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,
+      "accountId cannot be null");
     accountId = builder.accountId;
     serviceType = builder.serviceType;
     serviceName = builder.serviceName;

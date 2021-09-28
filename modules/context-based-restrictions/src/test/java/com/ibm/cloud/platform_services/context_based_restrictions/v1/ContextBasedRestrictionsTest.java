@@ -13,6 +13,7 @@
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.ContextBasedRestrictions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddressRange;
@@ -29,22 +30,21 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZo
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutAccountSettings;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutRule;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutRulePage;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutZone;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutZonePage;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OutZoneSummary;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceTagAttribute;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetPage;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefValue;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneSummary;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
@@ -141,9 +141,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OutZone> response = contextBasedRestrictionsService.createZone(createZoneOptionsModel).execute();
+    Response<Zone> response = contextBasedRestrictionsService.createZone(createZoneOptionsModel).execute();
     assertNotNull(response);
-    OutZone responseObj = response.getResult();
+    Zone responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -182,9 +182,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OutZonePage> response = contextBasedRestrictionsService.listZones(listZonesOptionsModel).execute();
+    Response<ZoneList> response = contextBasedRestrictionsService.listZones(listZonesOptionsModel).execute();
     assertNotNull(response);
-    OutZonePage responseObj = response.getResult();
+    ZoneList responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -236,9 +236,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OutZone> response = contextBasedRestrictionsService.getZone(getZoneOptionsModel).execute();
+    Response<Zone> response = contextBasedRestrictionsService.getZone(getZoneOptionsModel).execute();
     assertNotNull(response);
-    OutZone responseObj = response.getResult();
+    Zone responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -299,9 +299,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OutZone> response = contextBasedRestrictionsService.replaceZone(replaceZoneOptionsModel).execute();
+    Response<Zone> response = contextBasedRestrictionsService.replaceZone(replaceZoneOptionsModel).execute();
     assertNotNull(response);
-    OutZone responseObj = response.getResult();
+    Zone responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -385,7 +385,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   @Test
   public void testListAvailableServicerefTargetsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"targets\": [{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\"}]}";
+    String mockResponseBody = "{\"count\": 5, \"targets\": [{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\"}]}";
     String listAvailableServicerefTargetsPath = "/v1/zones/serviceref_targets";
 
     server.enqueue(new MockResponse()
@@ -401,9 +401,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<ServiceRefTargetPage> response = contextBasedRestrictionsService.listAvailableServicerefTargets(listAvailableServicerefTargetsOptionsModel).execute();
+    Response<ServiceRefTargetList> response = contextBasedRestrictionsService.listAvailableServicerefTargets(listAvailableServicerefTargetsOptionsModel).execute();
     assertNotNull(response);
-    ServiceRefTargetPage responseObj = response.getResult();
+    ServiceRefTargetList responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -474,9 +474,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OutRule> response = contextBasedRestrictionsService.createRule(createRuleOptionsModel).execute();
+    Response<Rule> response = contextBasedRestrictionsService.createRule(createRuleOptionsModel).execute();
     assertNotNull(response);
-    OutRule responseObj = response.getResult();
+    Rule responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -521,9 +521,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OutRulePage> response = contextBasedRestrictionsService.listRules(listRulesOptionsModel).execute();
+    Response<RuleList> response = contextBasedRestrictionsService.listRules(listRulesOptionsModel).execute();
     assertNotNull(response);
-    OutRulePage responseObj = response.getResult();
+    RuleList responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -581,9 +581,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OutRule> response = contextBasedRestrictionsService.getRule(getRuleOptionsModel).execute();
+    Response<Rule> response = contextBasedRestrictionsService.getRule(getRuleOptionsModel).execute();
     assertNotNull(response);
-    OutRule responseObj = response.getResult();
+    Rule responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -667,9 +667,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OutRule> response = contextBasedRestrictionsService.replaceRule(replaceRuleOptionsModel).execute();
+    Response<Rule> response = contextBasedRestrictionsService.replaceRule(replaceRuleOptionsModel).execute();
     assertNotNull(response);
-    OutRule responseObj = response.getResult();
+    Rule responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request
@@ -770,9 +770,9 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .build();
 
     // Invoke operation with valid options model (positive test)
-    Response<OutAccountSettings> response = contextBasedRestrictionsService.getAccountSettings(getAccountSettingsOptionsModel).execute();
+    Response<AccountSettings> response = contextBasedRestrictionsService.getAccountSettings(getAccountSettingsOptionsModel).execute();
     assertNotNull(response);
-    OutAccountSettings responseObj = response.getResult();
+    AccountSettings responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request

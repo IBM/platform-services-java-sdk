@@ -42,22 +42,23 @@ import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
-import java.util.Map;
-import java.util.UUID;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.Map;
+import java.util.UUID;
+
 import static org.testng.Assert.*;
 
 /**
  * Integration test class for the ContextBasedRestrictions service.
  */
 public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
-    public ContextBasedRestrictions service = null;
     public static Map<String, String> config = null;
-
-    private String NonExistentID = "1234567890abcdef1234567890abcdef";
-    private String InvalidID = "this_is_an_invalid_id";
+    public ContextBasedRestrictions service = null;
+    private final String NonExistentID = "1234567890abcdef1234567890abcdef";
+    private final String InvalidID = "this_is_an_invalid_id";
 
     private String serviceURL;
     private String testAccountID;
@@ -516,7 +517,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
         try {
             GetRuleOptions getRuleOptions = new GetRuleOptions.Builder()
                     .ruleId(ruleID)
-                    .transactionId("sdk-get-rule-" + UUID.randomUUID().toString())
+                    .transactionId(getTransactionID())
                     .build();
 
             // Invoke operation

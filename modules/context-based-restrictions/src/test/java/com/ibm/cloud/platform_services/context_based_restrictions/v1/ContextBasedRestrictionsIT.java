@@ -328,6 +328,33 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Test(groups = "replaceZone", dependsOnMethods = "testReplaceZone")
+    public void testReplaceZoneInvalidIfMatch() throws Exception {
+        try {
+            AddressIPAddress addressModel = new AddressIPAddress.Builder()
+                    .type("ipAddress")
+                    .value("169.23.56.234")
+                    .build();
+
+            ReplaceZoneOptions replaceZoneOptions = new ReplaceZoneOptions.Builder()
+                    .zoneId(zoneID)
+                    .ifMatch("abc")
+                    .name("SDK TEST - an example of zone")
+                    .accountId(testAccountID)
+                    .description("SDK TEST - this is an example of zone")
+                    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+                    .transactionId(getTransactionID())
+                    .build();
+
+            // Invoke operation
+            Response<OutZone> response = service.replaceZone(replaceZoneOptions).execute();
+        } catch (ServiceResponseException e) {
+            if (e.getStatusCode() != 412)
+                fail(String.format("Service returned status code %d: %s%nError details: %s",
+                        e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
     @Test(groups = "serviceRef", dependsOnGroups = "replaceZone")
     public void testListAvailableServicerefTargets() throws Exception {
         try {

@@ -156,7 +156,7 @@ public class ContextBasedRestrictionsExamples {
                     .ifMatch(zoneRev)
                     .name("SDK TEST - an example of zone")
                     .accountId(accountID)
-                    .description("SDK TEST - this is an example of zone")
+                    .description("SDK TEST - this is an example of updated zone")
                     .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
                     .build();
 
@@ -209,13 +209,14 @@ public class ContextBasedRestrictionsExamples {
                     .value("tagValue")
                     .build();
             Resource resourceModel = new Resource.Builder()
-                    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName)))
+                    .addAttributes(resourceAttributeModelAccountID)
+                    .addAttributes(resourceAttributeModelServiceName)
                     .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
                     .build();
             CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
                     .description("SDK TEST - this is an example of rule")
-                    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-                    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .addContexts(ruleContextModel)
+                    .addResources(resourceModel)
                     .build();
 
             Response<Rule> response = contextBasedRestrictionsService.createRule(createRuleOptions).execute();
@@ -287,15 +288,16 @@ public class ContextBasedRestrictionsExamples {
                     .value("updatedTagValue")
                     .build();
             Resource resourceModel = new Resource.Builder()
-                    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName)))
-                    .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+                    .addAttributes(resourceAttributeModelAccountID)
+                    .addAttributes(resourceAttributeModelServiceName)
+                    .addTags(resourceTagAttributeModel)
                     .build();
             ReplaceRuleOptions replaceRuleOptions = new ReplaceRuleOptions.Builder()
                     .ruleId(ruleID)
                     .ifMatch(ruleRev)
-                    .description("SDK TEST - this is an example of udpated rule")
-                    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-                    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .description("SDK TEST - this is an example of updated rule")
+                    .addContexts(ruleContextModel)
+                    .addResources(resourceModel)
                     .build();
 
             Response<Rule> response = contextBasedRestrictionsService.replaceRule(replaceRuleOptions).execute();

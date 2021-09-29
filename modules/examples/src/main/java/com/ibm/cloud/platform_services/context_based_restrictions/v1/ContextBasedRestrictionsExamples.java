@@ -76,7 +76,13 @@ public class ContextBasedRestrictionsExamples {
         String zoneID = "";
         String zoneRev = "";
         String ruleID = "";
-        String ruleRev = "";
+        String serviceURL = null;
+        String testAccountID = null;
+        String testServiceName = null;
+        String zoneID = null;
+        String zoneRev = null;
+        String ruleID = null;
+        String ruleRev = null;
         // Load up our test-specific config properties.
         Map<String, String> config = CredentialUtils.getServiceProperties(ContextBasedRestrictions.DEFAULT_SERVICE_NAME);
 

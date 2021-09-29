@@ -70,15 +70,9 @@ public class ContextBasedRestrictionsExamples {
     @SuppressWarnings("checkstyle:methodlength")
     public static void main(String[] args) throws Exception {
         ContextBasedRestrictions contextBasedRestrictionsService = ContextBasedRestrictions.newInstance();
-        String serviceURL = "";
-        String testAccountID = "";
-        String testServiceName = "";
-        String zoneID = "";
-        String zoneRev = "";
-        String ruleID = "";
         String serviceURL = null;
-        String testAccountID = null;
-        String testServiceName = null;
+        String accountID = null;
+        String serviceName = null;
         String zoneID = null;
         String zoneRev = null;
         String ruleID = null;
@@ -87,8 +81,8 @@ public class ContextBasedRestrictionsExamples {
         Map<String, String> config = CredentialUtils.getServiceProperties(ContextBasedRestrictions.DEFAULT_SERVICE_NAME);
 
         serviceURL = config.get("URL");
-        testAccountID = config.get("TEST_ACCOUNT_ID");
-        testServiceName = config.get("TEST_SERVICE_NAME");
+        accountID = config.get("TEST_ACCOUNT_ID");
+        serviceName = config.get("TEST_SERVICE_NAME");
 
         try {
             System.out.println("createZone() result:");
@@ -99,7 +93,7 @@ public class ContextBasedRestrictionsExamples {
                     .build();
             CreateZoneOptions createZoneOptions = new CreateZoneOptions.Builder()
                     .name("SDK TEST - an example of zone")
-                    .accountId(testAccountID)
+                    .accountId(accountID)
                     .description("SDK TEST - this is an example of zone")
                     .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
                     .build();
@@ -108,9 +102,9 @@ public class ContextBasedRestrictionsExamples {
             Zone zone = response.getResult();
 
             System.out.println(zone);
+            // end-create_zone
             zoneID = zone.getId();
             zoneRev = response.getHeaders().values("Etag").get(0);
-            // end-create_zone
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -120,7 +114,7 @@ public class ContextBasedRestrictionsExamples {
             System.out.println("listZones() result:");
             // begin-list_zones
             ListZonesOptions listZonesOptions = new ListZonesOptions.Builder()
-                    .accountId(testAccountID)
+                    .accountId(accountID)
                     .build();
 
             Response<ZoneList> response = contextBasedRestrictionsService.listZones(listZonesOptions).execute();
@@ -161,7 +155,7 @@ public class ContextBasedRestrictionsExamples {
                     .zoneId(zoneID)
                     .ifMatch(zoneRev)
                     .name("SDK TEST - an example of zone")
-                    .accountId(testAccountID)
+                    .accountId(accountID)
                     .description("SDK TEST - this is an example of zone")
                     .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
                     .build();
@@ -204,11 +198,11 @@ public class ContextBasedRestrictionsExamples {
                     .build();
             ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
                     .name("accountId")
-                    .value(testAccountID)
+                    .value(accountID)
                     .build();
             ResourceAttribute resourceAttributeModelServiceName = new ResourceAttribute.Builder()
                     .name("serviceName")
-                    .value(testServiceName)
+                    .value(serviceName)
                     .build();
             ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
                     .name("tagName")
@@ -240,7 +234,7 @@ public class ContextBasedRestrictionsExamples {
             System.out.println("listRules() result:");
             // begin-list_rules
             ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
-                    .accountId(testAccountID)
+                    .accountId(accountID)
                     .build();
 
             Response<RuleList> response = contextBasedRestrictionsService.listRules(listRulesOptions).execute();
@@ -282,11 +276,11 @@ public class ContextBasedRestrictionsExamples {
                     .build();
             ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
                     .name("accountId")
-                    .value(testAccountID)
+                    .value(accountID)
                     .build();
             ResourceAttribute resourceAttributeModelServiceName = new ResourceAttribute.Builder()
                     .name("serviceName")
-                    .value(testServiceName)
+                    .value(serviceName)
                     .build();
             ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
                     .name("tagName")
@@ -318,7 +312,7 @@ public class ContextBasedRestrictionsExamples {
             System.out.println("getAccountSettings() result:");
             // begin-get_account_settings
             GetAccountSettingsOptions getAccountSettingsOptions = new GetAccountSettingsOptions.Builder()
-                    .accountId(testAccountID)
+                    .accountId(accountID)
                     .build();
 
             Response<AccountSettings> response = contextBasedRestrictionsService.getAccountSettings(getAccountSettingsOptions).execute();

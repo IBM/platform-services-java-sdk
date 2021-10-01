@@ -1,6 +1,6 @@
 ---
 language: java
-dist: xenial
+dist: bionic
 
 jdk:
 - openjdk8
@@ -30,6 +30,7 @@ stages:
 before_install:
   - sudo apt-get update
   - env | grep TRAVIS
+  - pyenv global 3.8
 
 jobs:
   include:
@@ -50,14 +51,13 @@ jobs:
 
     - stage: Semantic-Release
       install:
-        - sudo apt-get install python
-        - nvm install 12
+        - nvm install 14
         - npm install -g npm@6.x
-        - pip install --user bump2version
         - npm install @semantic-release/changelog
         - npm install @semantic-release/exec
         - npm install @semantic-release/git
         - npm install @semantic-release/github
+        - pip install --user bump2version
       script:
         - npx semantic-release
       after_success:

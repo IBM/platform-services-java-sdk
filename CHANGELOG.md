@@ -1,3 +1,10 @@
+# [0.21.0](https://github.com/IBM/platform-services-java-sdk/compare/0.20.1...0.21.0) (2021-10-01)
+
+
+### Features
+
+* **Context-Based Restrictions:** add service to project ([#123](https://github.com/IBM/platform-services-java-sdk/issues/123)) ([76911b6](https://github.com/IBM/platform-services-java-sdk/commit/76911b6b209c348560d5d2ab27d71a8300e09d0a))
+
 ## [0.20.1](https://github.com/IBM/platform-services-java-sdk/compare/0.20.0...0.20.1) (2021-09-07)
 
 

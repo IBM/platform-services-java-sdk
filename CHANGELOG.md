@@ -1,3 +1,10 @@
+## [0.21.1](https://github.com/IBM/platform-services-java-sdk/compare/0.21.0...0.21.1) (2021-10-02)
+
+
+### Bug Fixes
+
+* **build:** use latest maven gpg plugin ([#126](https://github.com/IBM/platform-services-java-sdk/issues/126)) ([6faf95b](https://github.com/IBM/platform-services-java-sdk/commit/6faf95b244931df5f29177daf6200e4380298319))
+
 # [0.21.0](https://github.com/IBM/platform-services-java-sdk/compare/0.20.1...0.21.0) (2021-10-01)
 
 

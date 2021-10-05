@@ -14,9 +14,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- This is the version associated with the Java core. -->
-        <sdk-core-version>9.12.1</sdk-core-version>
+        <sdk-core-version>9.13.3</sdk-core-version>
 
-        <testng-version>7.1.0</testng-version>
+        <testng-version>7.4.0</testng-version>
         <okhttp3-version>4.9.1</okhttp3-version>
         <surefire-version>3.0.0-M3</surefire-version>
         <jacoco-plugin-version>0.8.5</jacoco-plugin-version>
@@ -37,6 +37,9 @@
         <powermock-version>2.0.5</powermock-version>
         <mockito-version>3.2.4</mockito-version>
         <slf4j-version>1.7.28</slf4j-version>
+        
+        <!-- versions of transitive dependencies we need to override to avoid vulnerability alerts -->
+        <junit-version>4.13.2</junit-version>
     </properties>
 
     <modules>
@@ -136,6 +139,12 @@
                 <groupId>org.testng</groupId>
                 <artifactId>testng</artifactId>
                 <version>${testng-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit-version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>

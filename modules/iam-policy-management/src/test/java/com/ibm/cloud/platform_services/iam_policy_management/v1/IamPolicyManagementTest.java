@@ -103,7 +103,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testListPoliciesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"policies\": [{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"state\"}]}";
+    String mockResponseBody = "{\"policies\": [{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}]}";
     String listPoliciesPath = "/v1/policies";
 
     server.enqueue(new MockResponse()
@@ -116,16 +116,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     // Construct an instance of the ListPoliciesOptions model
     ListPoliciesOptions listPoliciesOptionsModel = new ListPoliciesOptions.Builder()
     .accountId("testString")
-    .acceptLanguage("testString")
+    .acceptLanguage("default")
     .iamId("testString")
     .accessGroupId("testString")
-    .type("testString")
-    .serviceType("testString")
+    .type("access")
+    .serviceType("service")
     .tagName("testString")
     .tagValue("testString")
-    .sort("testString")
-    .format("testString")
-    .state("testString")
+    .sort("id")
+    .format("include_last_permit")
+    .state("active")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -146,17 +146,27 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("iam_id"), "testString");
     assertEquals(query.get("access_group_id"), "testString");
-    assertEquals(query.get("type"), "testString");
-    assertEquals(query.get("service_type"), "testString");
+    assertEquals(query.get("type"), "access");
+    assertEquals(query.get("service_type"), "service");
     assertEquals(query.get("tag_name"), "testString");
     assertEquals(query.get("tag_value"), "testString");
-    assertEquals(query.get("sort"), "testString");
-    assertEquals(query.get("format"), "testString");
-    assertEquals(query.get("state"), "testString");
+    assertEquals(query.get("sort"), "id");
+    assertEquals(query.get("format"), "include_last_permit");
+    assertEquals(query.get("state"), "active");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listPoliciesPath);
   }
+  
+  public void testListPoliciesWOptionsWRetries() throws Throwable {
+    // Enable retries and run testListPoliciesWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testListPoliciesWOptions();
+
+    // Disable retries and run testListPoliciesWOptions.
+    iamPolicyManagementService.disableRetries();
+    testListPoliciesWOptions();
+  }  
 
   // Test the listPolicies operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -173,7 +183,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testCreatePolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"state\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}";
     String createPolicyPath = "/v1/policies";
 
     server.enqueue(new MockResponse()
@@ -226,7 +236,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     .roles(new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)))
     .resources(new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)))
     .description("testString")
-    .acceptLanguage("testString")
+    .acceptLanguage("default")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -248,6 +258,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createPolicyPath);
   }
+  
+  public void testCreatePolicyWOptionsWRetries() throws Throwable {
+    // Enable retries and run testCreatePolicyWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testCreatePolicyWOptions();
+
+    // Disable retries and run testCreatePolicyWOptions.
+    iamPolicyManagementService.disableRetries();
+    testCreatePolicyWOptions();
+  }  
 
   // Test the createPolicy operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -264,7 +284,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testUpdatePolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"state\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}";
     String updatePolicyPath = "/v1/policies/testString";
 
     server.enqueue(new MockResponse()
@@ -341,6 +361,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updatePolicyPath);
   }
+  
+  public void testUpdatePolicyWOptionsWRetries() throws Throwable {
+    // Enable retries and run testUpdatePolicyWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testUpdatePolicyWOptions();
+
+    // Disable retries and run testUpdatePolicyWOptions.
+    iamPolicyManagementService.disableRetries();
+    testUpdatePolicyWOptions();
+  }  
 
   // Test the updatePolicy operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -357,7 +387,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testGetPolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"state\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}";
     String getPolicyPath = "/v1/policies/testString";
 
     server.enqueue(new MockResponse()
@@ -391,6 +421,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getPolicyPath);
   }
+  
+  public void testGetPolicyWOptionsWRetries() throws Throwable {
+    // Enable retries and run testGetPolicyWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testGetPolicyWOptions();
+
+    // Disable retries and run testGetPolicyWOptions.
+    iamPolicyManagementService.disableRetries();
+    testGetPolicyWOptions();
+  }  
 
   // Test the getPolicy operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -441,6 +481,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deletePolicyPath);
   }
+  
+  public void testDeletePolicyWOptionsWRetries() throws Throwable {
+    // Enable retries and run testDeletePolicyWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testDeletePolicyWOptions();
+
+    // Disable retries and run testDeletePolicyWOptions.
+    iamPolicyManagementService.disableRetries();
+    testDeletePolicyWOptions();
+  }  
 
   // Test the deletePolicy operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -457,7 +507,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testPatchPolicyWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"state\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}";
     String patchPolicyPath = "/v1/policies/testString";
 
     server.enqueue(new MockResponse()
@@ -471,7 +521,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     PatchPolicyOptions patchPolicyOptionsModel = new PatchPolicyOptions.Builder()
     .policyId("testString")
     .ifMatch("testString")
-    .state("testString")
+    .state("active")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -494,6 +544,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, patchPolicyPath);
   }
+  
+  public void testPatchPolicyWOptionsWRetries() throws Throwable {
+    // Enable retries and run testPatchPolicyWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testPatchPolicyWOptions();
+
+    // Disable retries and run testPatchPolicyWOptions.
+    iamPolicyManagementService.disableRetries();
+    testPatchPolicyWOptions();
+  }  
 
   // Test the patchPolicy operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -510,7 +570,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testListRolesWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"custom_roles\": [{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}], \"service_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}], \"system_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}]}";
+    String mockResponseBody = "{\"custom_roles\": [{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"Developer\", \"account_id\": \"accountId\", \"service_name\": \"iam-groups\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}], \"service_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}], \"system_roles\": [{\"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\"}]}";
     String listRolesPath = "/v2/roles";
 
     server.enqueue(new MockResponse()
@@ -522,9 +582,11 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
 
     // Construct an instance of the ListRolesOptions model
     ListRolesOptions listRolesOptionsModel = new ListRolesOptions.Builder()
-    .acceptLanguage("testString")
+    .acceptLanguage("default")
     .accountId("testString")
-    .serviceName("testString")
+    .serviceName("iam-groups")
+    .sourceServiceName("iam-groups")
+    .policyType("authorization")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -543,16 +605,28 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     assertNotNull(query);
     // Get query params
     assertEquals(query.get("account_id"), "testString");
-    assertEquals(query.get("service_name"), "testString");
+    assertEquals(query.get("service_name"), "iam-groups");
+    assertEquals(query.get("source_service_name"), "iam-groups");
+    assertEquals(query.get("policy_type"), "authorization");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listRolesPath);
   }
+  
+  public void testListRolesWOptionsWRetries() throws Throwable {
+    // Enable retries and run testListRolesWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testListRolesWOptions();
+
+    // Disable retries and run testListRolesWOptions.
+    iamPolicyManagementService.disableRetries();
+    testListRolesWOptions();
+  }  
 
   @Test
   public void testCreateRoleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"Developer\", \"account_id\": \"accountId\", \"service_name\": \"iam-groups\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
     String createRolePath = "/v2/roles";
 
     server.enqueue(new MockResponse()
@@ -566,11 +640,11 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     CreateRoleOptions createRoleOptionsModel = new CreateRoleOptions.Builder()
     .displayName("testString")
     .actions(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-    .name("testString")
+    .name("Developer")
     .accountId("testString")
-    .serviceName("testString")
+    .serviceName("iam-groups")
     .description("testString")
-    .acceptLanguage("testString")
+    .acceptLanguage("default")
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -592,6 +666,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createRolePath);
   }
+  
+  public void testCreateRoleWOptionsWRetries() throws Throwable {
+    // Enable retries and run testCreateRoleWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testCreateRoleWOptions();
+
+    // Disable retries and run testCreateRoleWOptions.
+    iamPolicyManagementService.disableRetries();
+    testCreateRoleWOptions();
+  }  
 
   // Test the createRole operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -608,7 +692,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testUpdateRoleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"Developer\", \"account_id\": \"accountId\", \"service_name\": \"iam-groups\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
     String updateRolePath = "/v2/roles/testString";
 
     server.enqueue(new MockResponse()
@@ -647,6 +731,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateRolePath);
   }
+  
+  public void testUpdateRoleWOptionsWRetries() throws Throwable {
+    // Enable retries and run testUpdateRoleWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testUpdateRoleWOptions();
+
+    // Disable retries and run testUpdateRoleWOptions.
+    iamPolicyManagementService.disableRetries();
+    testUpdateRoleWOptions();
+  }  
 
   // Test the updateRole operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -663,7 +757,7 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
   @Test
   public void testGetRoleWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"name\", \"account_id\": \"accountId\", \"service_name\": \"serviceName\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"Developer\", \"account_id\": \"accountId\", \"service_name\": \"iam-groups\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
     String getRolePath = "/v2/roles/testString";
 
     server.enqueue(new MockResponse()
@@ -697,6 +791,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getRolePath);
   }
+  
+  public void testGetRoleWOptionsWRetries() throws Throwable {
+    // Enable retries and run testGetRoleWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testGetRoleWOptions();
+
+    // Disable retries and run testGetRoleWOptions.
+    iamPolicyManagementService.disableRetries();
+    testGetRoleWOptions();
+  }  
 
   // Test the getRole operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -747,6 +851,16 @@ public class IamPolicyManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteRolePath);
   }
+  
+  public void testDeleteRoleWOptionsWRetries() throws Throwable {
+    // Enable retries and run testDeleteRoleWOptions.
+    iamPolicyManagementService.enableRetries(4, 30);
+    testDeleteRoleWOptions();
+
+    // Disable retries and run testDeleteRoleWOptions.
+    iamPolicyManagementService.disableRetries();
+    testDeleteRoleWOptions();
+  }  
 
   // Test the deleteRole operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)

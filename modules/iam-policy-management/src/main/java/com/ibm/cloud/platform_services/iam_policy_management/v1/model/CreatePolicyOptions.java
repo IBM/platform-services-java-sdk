@@ -281,7 +281,18 @@ public class CreatePolicyOptions extends GenericModel {
   /**
    * Gets the acceptLanguage.
    *
-   * Translation language code.
+   * Language code for translations
+   * * `default` - English
+   * * `de` -  German (Standard)
+   * * `en` - English
+   * * `es` - Spanish (Spain)
+   * * `fr` - French (Standard)
+   * * `it` - Italian (Standard)
+   * * `ja` - Japanese
+   * * `ko` - Korean
+   * * `pt-br` - Portuguese (Brazil)
+   * * `zh-cn` - Chinese (Simplified, PRC)
+   * * `zh-tw` - (Chinese, Taiwan).
    *
    * @return the acceptLanguage
    */

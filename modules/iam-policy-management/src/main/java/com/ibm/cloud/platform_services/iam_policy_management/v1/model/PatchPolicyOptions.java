@@ -19,6 +19,16 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class PatchPolicyOptions extends GenericModel {
 
+  /**
+   * The policy state.
+   */
+  public interface State {
+    /** active. */
+    String ACTIVE = "active";
+    /** deleted. */
+    String DELETED = "deleted";
+  }
+
   protected String policyId;
   protected String ifMatch;
   protected String state;
@@ -142,7 +152,7 @@ public class PatchPolicyOptions extends GenericModel {
   /**
    * Gets the state.
    *
-   * The policy state; either 'active' or 'deleted'.
+   * The policy state.
    *
    * @return the state
    */

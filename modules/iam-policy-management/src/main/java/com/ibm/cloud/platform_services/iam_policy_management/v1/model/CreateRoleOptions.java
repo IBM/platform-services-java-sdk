@@ -222,7 +222,8 @@ public class CreateRoleOptions extends GenericModel {
   /**
    * Gets the actions.
    *
-   * The actions of the role.
+   * The actions of the role. Please refer to [IAM roles and
+   * actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
    *
    * @return the actions
    */
@@ -277,7 +278,18 @@ public class CreateRoleOptions extends GenericModel {
   /**
    * Gets the acceptLanguage.
    *
-   * Translation language code.
+   * Language code for translations
+   * * `default` - English
+   * * `de` -  German (Standard)
+   * * `en` - English
+   * * `es` - Spanish (Spain)
+   * * `fr` - French (Standard)
+   * * `it` - Italian (Standard)
+   * * `ja` - Japanese
+   * * `ko` - Korean
+   * * `pt-br` - Portuguese (Brazil)
+   * * `zh-cn` - Chinese (Simplified, PRC)
+   * * `zh-tw` - (Chinese, Taiwan).
    *
    * @return the acceptLanguage
    */

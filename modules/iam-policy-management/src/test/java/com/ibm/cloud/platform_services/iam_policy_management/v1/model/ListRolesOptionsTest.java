@@ -32,12 +32,16 @@ public class ListRolesOptionsTest {
   @Test
   public void testListRolesOptions() throws Throwable {
     ListRolesOptions listRolesOptionsModel = new ListRolesOptions.Builder()
-      .acceptLanguage("testString")
+      .acceptLanguage("default")
       .accountId("testString")
-      .serviceName("testString")
+      .serviceName("iam-groups")
+      .sourceServiceName("iam-groups")
+      .policyType("authorization")
       .build();
-    assertEquals(listRolesOptionsModel.acceptLanguage(), "testString");
+    assertEquals(listRolesOptionsModel.acceptLanguage(), "default");
     assertEquals(listRolesOptionsModel.accountId(), "testString");
-    assertEquals(listRolesOptionsModel.serviceName(), "testString");
+    assertEquals(listRolesOptionsModel.serviceName(), "iam-groups");
+    assertEquals(listRolesOptionsModel.sourceServiceName(), "iam-groups");
+    assertEquals(listRolesOptionsModel.policyType(), "authorization");
   }
 }

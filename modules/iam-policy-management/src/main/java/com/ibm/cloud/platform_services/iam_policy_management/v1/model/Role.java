@@ -149,7 +149,8 @@ public class Role extends GenericModel {
   /**
    * Gets the actions.
    *
-   * The actions of the role.
+   * The actions of the role. Please refer to [IAM roles and
+   * actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
    *
    * @return the actions
    */
@@ -160,7 +161,8 @@ public class Role extends GenericModel {
   /**
    * Gets the crn.
    *
-   * The role CRN.
+   * The role Cloud Resource Name (CRN). Example CRN:
+   * 'crn:v1:ibmcloud:public:iam-access-management::a/exampleAccountId::customRole:ExampleRoleName'.
    *
    * @return the crn
    */

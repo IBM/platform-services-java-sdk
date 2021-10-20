@@ -36,19 +36,19 @@ public class CreateRoleOptionsTest {
     CreateRoleOptions createRoleOptionsModel = new CreateRoleOptions.Builder()
       .displayName("testString")
       .actions(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
-      .name("testString")
+      .name("Developer")
       .accountId("testString")
-      .serviceName("testString")
+      .serviceName("iam-groups")
       .description("testString")
-      .acceptLanguage("testString")
+      .acceptLanguage("default")
       .build();
     assertEquals(createRoleOptionsModel.displayName(), "testString");
     assertEquals(createRoleOptionsModel.actions(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
-    assertEquals(createRoleOptionsModel.name(), "testString");
+    assertEquals(createRoleOptionsModel.name(), "Developer");
     assertEquals(createRoleOptionsModel.accountId(), "testString");
-    assertEquals(createRoleOptionsModel.serviceName(), "testString");
+    assertEquals(createRoleOptionsModel.serviceName(), "iam-groups");
     assertEquals(createRoleOptionsModel.description(), "testString");
-    assertEquals(createRoleOptionsModel.acceptLanguage(), "testString");
+    assertEquals(createRoleOptionsModel.acceptLanguage(), "default");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

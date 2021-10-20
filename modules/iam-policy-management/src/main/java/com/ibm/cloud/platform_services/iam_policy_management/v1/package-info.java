@@ -11,6 +11,6 @@
  * specific language governing permissions and limitations under the License.
  */
 /**
- * IAM Policy Management API v1.
+ * IAM Policy Management v1.
  */
 package com.ibm.cloud.platform_services.iam_policy_management.v1;

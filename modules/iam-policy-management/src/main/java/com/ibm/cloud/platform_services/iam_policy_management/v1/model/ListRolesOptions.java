@@ -22,6 +22,8 @@ public class ListRolesOptions extends GenericModel {
   protected String acceptLanguage;
   protected String accountId;
   protected String serviceName;
+  protected String sourceServiceName;
+  protected String policyType;
 
   /**
    * Builder.
@@ -30,11 +32,15 @@ public class ListRolesOptions extends GenericModel {
     private String acceptLanguage;
     private String accountId;
     private String serviceName;
+    private String sourceServiceName;
+    private String policyType;
 
     private Builder(ListRolesOptions listRolesOptions) {
       this.acceptLanguage = listRolesOptions.acceptLanguage;
       this.accountId = listRolesOptions.accountId;
       this.serviceName = listRolesOptions.serviceName;
+      this.sourceServiceName = listRolesOptions.sourceServiceName;
+      this.policyType = listRolesOptions.policyType;
     }
 
     /**
@@ -84,12 +90,36 @@ public class ListRolesOptions extends GenericModel {
       this.serviceName = serviceName;
       return this;
     }
+
+    /**
+     * Set the sourceServiceName.
+     *
+     * @param sourceServiceName the sourceServiceName
+     * @return the ListRolesOptions builder
+     */
+    public Builder sourceServiceName(String sourceServiceName) {
+      this.sourceServiceName = sourceServiceName;
+      return this;
+    }
+
+    /**
+     * Set the policyType.
+     *
+     * @param policyType the policyType
+     * @return the ListRolesOptions builder
+     */
+    public Builder policyType(String policyType) {
+      this.policyType = policyType;
+      return this;
+    }
   }
 
   protected ListRolesOptions(Builder builder) {
     acceptLanguage = builder.acceptLanguage;
     accountId = builder.accountId;
     serviceName = builder.serviceName;
+    sourceServiceName = builder.sourceServiceName;
+    policyType = builder.policyType;
   }
 
   /**
@@ -104,7 +134,18 @@ public class ListRolesOptions extends GenericModel {
   /**
    * Gets the acceptLanguage.
    *
-   * Translation language code.
+   * Language code for translations
+   * * `default` - English
+   * * `de` -  German (Standard)
+   * * `en` - English
+   * * `es` - Spanish (Spain)
+   * * `fr` - French (Standard)
+   * * `it` - Italian (Standard)
+   * * `ja` - Japanese
+   * * `ko` - Korean
+   * * `pt-br` - Portuguese (Brazil)
+   * * `zh-cn` - Chinese (Simplified, PRC)
+   * * `zh-tw` - (Chinese, Taiwan).
    *
    * @return the acceptLanguage
    */
@@ -115,7 +156,7 @@ public class ListRolesOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account GUID in which the roles belong to.
+   * Optional account GUID in which the roles belong to.
    *
    * @return the accountId
    */
@@ -126,12 +167,34 @@ public class ListRolesOptions extends GenericModel {
   /**
    * Gets the serviceName.
    *
-   * The name of service.
+   * Optional name of IAM enabled service.
    *
    * @return the serviceName
    */
   public String serviceName() {
     return serviceName;
+  }
+
+  /**
+   * Gets the sourceServiceName.
+   *
+   * Optional name of source IAM enabled service.
+   *
+   * @return the sourceServiceName
+   */
+  public String sourceServiceName() {
+    return sourceServiceName;
+  }
+
+  /**
+   * Gets the policyType.
+   *
+   * Optional Policy Type.
+   *
+   * @return the policyType
+   */
+  public String policyType() {
+    return policyType;
   }
 }
 

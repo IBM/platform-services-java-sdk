@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.29.1-b338fb38-20210313-010605
+ * IBM OpenAPI SDK Code Generator Version: 3.39.0-748eb4ca-20210917-165907
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -48,7 +48,7 @@ import java.util.Map.Entry;
 /**
  * IAM Policy Management API.
  *
- * @version v1
+ * API Version: 1.0.1
  */
 public class IamPolicyManagement extends BaseService {
 
@@ -179,6 +179,18 @@ public class IamPolicyManagement extends BaseService {
    * or the platform's supported attributes. Both the policy subject and the policy resource must include the
    * **`serviceName`** and **`accountId`** attributes.
    *
+   * ### Attribute Operators
+   *
+   * Currently, only the `stringEquals` and the `stringMatch` operators are available. Resource attributes may support
+   * one or both operators.  For more information, see [how to assign access by using wildcards
+   * policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
+   *
+   * ### Attribute Validations
+   *
+   * Policy attribute values must be between 1 and 1,000 characters in length. If location related attributes like
+   * geography, country, metro, region, satellite, and locationvalues are supported by the service, they are validated
+   * against Global Catalog locations.
+   *
    * @param createPolicyOptions the {@link CreatePolicyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Policy}
    */
@@ -234,6 +246,18 @@ public class IamPolicyManagement extends BaseService {
    * greater to the target resource in order to grant the role. The resource attributes must be a subset of a service's
    * or the platform's supported attributes. Both the policy subject and the policy resource must include the
    * **`serviceName`** and **`accountId`** attributes.
+   *
+   * ### Attribute Operators
+   *
+   * Currently, only the `stringEquals` and the `stringMatch` operators are available. Resource attributes might support
+   * one or both operators.  For more information, see [how to assign access by using wildcards
+   * policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
+   *
+   * ### Attribute Validations
+   *
+   * Policy attribute values must be between 1 and 1,000 characters in length. If location related attributes like
+   * geography, country, metro, region, satellite, and locationvalues are supported by the service, they are validated
+   * against Global Catalog locations.
    *
    * @param updatePolicyOptions the {@link UpdatePolicyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Policy}
@@ -346,9 +370,9 @@ public class IamPolicyManagement extends BaseService {
    * Get roles by filters.
    *
    * Get roles based on the filters. While managing roles, you may want to retrieve roles and filter by usages. This can
-   * be done through query parameters. Currently, we only support the following attributes: account_id, and
-   * service_name. Only roles that match the filter and that the caller has read access to are returned. If the caller
-   * does not have read access to any roles an empty array is returned.
+   * be done through query parameters. Currently, we only support the following attributes: account_id, service_name,
+   * source_service_name and policy_type. Only roles that match the filter and that the caller has read access to are
+   * returned. If the caller does not have read access to any roles an empty array is returned.
    *
    * @param listRolesOptions the {@link ListRolesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link RoleList}
@@ -372,6 +396,12 @@ public class IamPolicyManagement extends BaseService {
     if (listRolesOptions.serviceName() != null) {
       builder.query("service_name", String.valueOf(listRolesOptions.serviceName()));
     }
+    if (listRolesOptions.sourceServiceName() != null) {
+      builder.query("source_service_name", String.valueOf(listRolesOptions.sourceServiceName()));
+    }
+    if (listRolesOptions.policyType() != null) {
+      builder.query("policy_type", String.valueOf(listRolesOptions.policyType()));
+    }
     ResponseConverter<RoleList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -381,9 +411,9 @@ public class IamPolicyManagement extends BaseService {
    * Get roles by filters.
    *
    * Get roles based on the filters. While managing roles, you may want to retrieve roles and filter by usages. This can
-   * be done through query parameters. Currently, we only support the following attributes: account_id, and
-   * service_name. Only roles that match the filter and that the caller has read access to are returned. If the caller
-   * does not have read access to any roles an empty array is returned.
+   * be done through query parameters. Currently, we only support the following attributes: account_id, service_name,
+   * source_service_name and policy_type. Only roles that match the filter and that the caller has read access to are
+   * returned. If the caller does not have read access to any roles an empty array is returned.
    *
    * @return a {@link ServiceCall} with a result of type {@link RoleList}
    */

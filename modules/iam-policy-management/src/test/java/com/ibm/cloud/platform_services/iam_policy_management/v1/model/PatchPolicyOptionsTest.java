@@ -34,11 +34,11 @@ public class PatchPolicyOptionsTest {
     PatchPolicyOptions patchPolicyOptionsModel = new PatchPolicyOptions.Builder()
       .policyId("testString")
       .ifMatch("testString")
-      .state("testString")
+      .state("active")
       .build();
     assertEquals(patchPolicyOptionsModel.policyId(), "testString");
     assertEquals(patchPolicyOptionsModel.ifMatch(), "testString");
-    assertEquals(patchPolicyOptionsModel.state(), "testString");
+    assertEquals(patchPolicyOptionsModel.state(), "active");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

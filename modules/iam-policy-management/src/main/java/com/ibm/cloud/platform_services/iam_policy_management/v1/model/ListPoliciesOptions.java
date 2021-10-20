@@ -19,6 +19,74 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListPoliciesOptions extends GenericModel {
 
+  /**
+   * Optional type of policy.
+   */
+  public interface Type {
+    /** access. */
+    String ACCESS = "access";
+    /** authorization. */
+    String AUTHORIZATION = "authorization";
+  }
+
+  /**
+   * Optional type of service.
+   */
+  public interface ServiceType {
+    /** service. */
+    String SERVICE = "service";
+    /** platform_service. */
+    String PLATFORM_SERVICE = "platform_service";
+  }
+
+  /**
+   * Optional top level policy field to sort results. Ascending sort is default. Descending sort available by prepending
+   * '-' to field. Example '-last_modified_at'.
+   */
+  public interface Sort {
+    /** id. */
+    String ID = "id";
+    /** type. */
+    String TYPE = "type";
+    /** href. */
+    String HREF = "href";
+    /** created_at. */
+    String CREATED_AT = "created_at";
+    /** created_by_id. */
+    String CREATED_BY_ID = "created_by_id";
+    /** last_modified_at. */
+    String LAST_MODIFIED_AT = "last_modified_at";
+    /** last_modified_by_id. */
+    String LAST_MODIFIED_BY_ID = "last_modified_by_id";
+    /** state. */
+    String STATE = "state";
+  }
+
+  /**
+   * Include additional data per policy returned
+   * * `include_last_permit` - returns details of when the policy last granted a permit decision and the number of times
+   * it has done so
+   * * `display` - returns the list of all actions included in each of the policy roles.
+   */
+  public interface Format {
+    /** include_last_permit. */
+    String INCLUDE_LAST_PERMIT = "include_last_permit";
+    /** display. */
+    String DISPLAY = "display";
+  }
+
+  /**
+   * The state of the policy.
+   * * `active` - returns active policies
+   * * `deleted` - returns non-active policies.
+   */
+  public interface State {
+    /** active. */
+    String ACTIVE = "active";
+    /** deleted. */
+    String DELETED = "deleted";
+  }
+
   protected String accountId;
   protected String acceptLanguage;
   protected String iamId;
@@ -246,7 +314,18 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the acceptLanguage.
    *
-   * Translation language code.
+   * Language code for translations
+   * * `default` - English
+   * * `de` -  German (Standard)
+   * * `en` - English
+   * * `es` - Spanish (Spain)
+   * * `fr` - French (Standard)
+   * * `it` - Italian (Standard)
+   * * `ja` - Japanese
+   * * `ko` - Korean
+   * * `pt-br` - Portuguese (Brazil)
+   * * `zh-cn` - Chinese (Simplified, PRC)
+   * * `zh-tw` - (Chinese, Taiwan).
    *
    * @return the acceptLanguage
    */
@@ -257,7 +336,7 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the iamId.
    *
-   * The IAM ID used to identify the subject.
+   * Optional IAM ID used to identify the subject.
    *
    * @return the iamId
    */
@@ -268,7 +347,7 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The access group id.
+   * Optional access group id.
    *
    * @return the accessGroupId
    */
@@ -279,7 +358,7 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the type.
    *
-   * The type of policy (access or authorization).
+   * Optional type of policy.
    *
    * @return the type
    */
@@ -290,7 +369,7 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the serviceType.
    *
-   * The type of service.
+   * Optional type of service.
    *
    * @return the serviceType
    */
@@ -301,7 +380,7 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the tagName.
    *
-   * The name of the access management tag in the policy.
+   * Optional name of the access management tag in the policy.
    *
    * @return the tagName
    */
@@ -312,7 +391,7 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the tagValue.
    *
-   * The value of the access management tag in the policy.
+   * Optional value of the access management tag in the policy.
    *
    * @return the tagValue
    */
@@ -323,7 +402,8 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the sort.
    *
-   * Sort the results by any of the top level policy fields (id, created_at, created_by_id, last_modified_at, etc).
+   * Optional top level policy field to sort results. Ascending sort is default. Descending sort available by prepending
+   * '-' to field. Example '-last_modified_at'.
    *
    * @return the sort
    */
@@ -334,7 +414,10 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the format.
    *
-   * Include additional data per policy returned [include_last_permit, display].
+   * Include additional data per policy returned
+   * * `include_last_permit` - returns details of when the policy last granted a permit decision and the number of times
+   * it has done so
+   * * `display` - returns the list of all actions included in each of the policy roles.
    *
    * @return the format
    */
@@ -345,7 +428,9 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the state.
    *
-   * The state of the policy, 'active' or 'deleted'.
+   * The state of the policy.
+   * * `active` - returns active policies
+   * * `deleted` - returns non-active policies.
    *
    * @return the state
    */

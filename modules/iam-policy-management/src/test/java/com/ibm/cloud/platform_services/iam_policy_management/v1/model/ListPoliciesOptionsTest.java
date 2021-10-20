@@ -33,28 +33,28 @@ public class ListPoliciesOptionsTest {
   public void testListPoliciesOptions() throws Throwable {
     ListPoliciesOptions listPoliciesOptionsModel = new ListPoliciesOptions.Builder()
       .accountId("testString")
-      .acceptLanguage("testString")
+      .acceptLanguage("default")
       .iamId("testString")
       .accessGroupId("testString")
-      .type("testString")
-      .serviceType("testString")
+      .type("access")
+      .serviceType("service")
       .tagName("testString")
       .tagValue("testString")
-      .sort("testString")
-      .format("testString")
-      .state("testString")
+      .sort("id")
+      .format("include_last_permit")
+      .state("active")
       .build();
     assertEquals(listPoliciesOptionsModel.accountId(), "testString");
-    assertEquals(listPoliciesOptionsModel.acceptLanguage(), "testString");
+    assertEquals(listPoliciesOptionsModel.acceptLanguage(), "default");
     assertEquals(listPoliciesOptionsModel.iamId(), "testString");
     assertEquals(listPoliciesOptionsModel.accessGroupId(), "testString");
-    assertEquals(listPoliciesOptionsModel.type(), "testString");
-    assertEquals(listPoliciesOptionsModel.serviceType(), "testString");
+    assertEquals(listPoliciesOptionsModel.type(), "access");
+    assertEquals(listPoliciesOptionsModel.serviceType(), "service");
     assertEquals(listPoliciesOptionsModel.tagName(), "testString");
     assertEquals(listPoliciesOptionsModel.tagValue(), "testString");
-    assertEquals(listPoliciesOptionsModel.sort(), "testString");
-    assertEquals(listPoliciesOptionsModel.format(), "testString");
-    assertEquals(listPoliciesOptionsModel.state(), "testString");
+    assertEquals(listPoliciesOptionsModel.sort(), "id");
+    assertEquals(listPoliciesOptionsModel.format(), "include_last_permit");
+    assertEquals(listPoliciesOptionsModel.state(), "active");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

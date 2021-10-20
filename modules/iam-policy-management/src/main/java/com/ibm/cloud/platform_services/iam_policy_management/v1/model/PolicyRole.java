@@ -90,7 +90,7 @@ public class PolicyRole extends GenericModel {
   /**
    * Gets the roleId.
    *
-   * The role cloud resource name granted by the policy.
+   * The role Cloud Resource Name (CRN) granted by the policy. Example CRN: 'crn:v1:bluemix:public:iam::::role:Editor'.
    *
    * @return the roleId
    */

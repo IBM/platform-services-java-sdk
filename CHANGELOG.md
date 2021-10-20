@@ -1,3 +1,10 @@
+# [0.22.0](https://github.com/IBM/platform-services-java-sdk/compare/0.21.1...0.22.0) (2021-10-20)
+
+
+### Features
+
+* **IAM Policy Management:** support of new query params for v2/roles ([#128](https://github.com/IBM/platform-services-java-sdk/issues/128)) ([b1b4d84](https://github.com/IBM/platform-services-java-sdk/commit/b1b4d84892faca3fc33b877820001689df0e8bf3))
+
 ## [0.21.1](https://github.com/IBM/platform-services-java-sdk/compare/0.21.0...0.21.1) (2021-10-02)
 
 

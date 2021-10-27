@@ -1,3 +1,10 @@
+## [0.22.1](https://github.com/IBM/platform-services-java-sdk/compare/0.22.0...0.22.1) (2021-10-27)
+
+
+### Bug Fixes
+
+* **Resource Manager:** update resource manager endpoint URL ([#129](https://github.com/IBM/platform-services-java-sdk/issues/129)) ([76971cd](https://github.com/IBM/platform-services-java-sdk/commit/76971cd375ecf742ae508c8ff2841babf1b98d20))
+
 # [0.22.0](https://github.com/IBM/platform-services-java-sdk/compare/0.21.1...0.22.0) (2021-10-20)
 
 

@@ -95,8 +95,8 @@ public class ResourceManagerTest extends PowerMockTestCase {
   @Test
   public void testListResourceGroupsWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}]}";
-    String listResourceGroupsPath = "/resource_groups";
+    String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [{\"anyKey\": \"anyValue\"}], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}]}";
+    String listResourceGroupsPath = "/v2/resource_groups";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -138,12 +138,22 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listResourceGroupsPath);
   }
+  
+  public void testListResourceGroupsWOptionsWRetries() throws Throwable {
+    // Enable retries and run testListResourceGroupsWOptions.
+    resourceManagerService.enableRetries(4, 30);
+    testListResourceGroupsWOptions();
+
+    // Disable retries and run testListResourceGroupsWOptions.
+    resourceManagerService.disableRetries();
+    testListResourceGroupsWOptions();
+  }  
 
   @Test
   public void testCreateResourceGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\"}";
-    String createResourceGroupPath = "/resource_groups";
+    String createResourceGroupPath = "/v2/resource_groups";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -177,12 +187,22 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createResourceGroupPath);
   }
+  
+  public void testCreateResourceGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testCreateResourceGroupWOptions.
+    resourceManagerService.enableRetries(4, 30);
+    testCreateResourceGroupWOptions();
+
+    // Disable retries and run testCreateResourceGroupWOptions.
+    resourceManagerService.disableRetries();
+    testCreateResourceGroupWOptions();
+  }  
 
   @Test
   public void testGetResourceGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}";
-    String getResourceGroupPath = "/resource_groups/testString";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [{\"anyKey\": \"anyValue\"}], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}";
+    String getResourceGroupPath = "/v2/resource_groups/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -215,6 +235,16 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getResourceGroupPath);
   }
+  
+  public void testGetResourceGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testGetResourceGroupWOptions.
+    resourceManagerService.enableRetries(4, 30);
+    testGetResourceGroupWOptions();
+
+    // Disable retries and run testGetResourceGroupWOptions.
+    resourceManagerService.disableRetries();
+    testGetResourceGroupWOptions();
+  }  
 
   // Test the getResourceGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -231,8 +261,8 @@ public class ResourceManagerTest extends PowerMockTestCase {
   @Test
   public void testUpdateResourceGroupWOptions() throws Throwable {
     // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [\"anyValue\"], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}";
-    String updateResourceGroupPath = "/resource_groups/testString";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"name\": \"name\", \"state\": \"state\", \"default\": true, \"quota_id\": \"quotaId\", \"quota_url\": \"quotaUrl\", \"payment_methods_url\": \"paymentMethodsUrl\", \"resource_linkages\": [{\"anyKey\": \"anyValue\"}], \"teams_url\": \"teamsUrl\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}";
+    String updateResourceGroupPath = "/v2/resource_groups/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -267,6 +297,16 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateResourceGroupPath);
   }
+  
+  public void testUpdateResourceGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testUpdateResourceGroupWOptions.
+    resourceManagerService.enableRetries(4, 30);
+    testUpdateResourceGroupWOptions();
+
+    // Disable retries and run testUpdateResourceGroupWOptions.
+    resourceManagerService.disableRetries();
+    testUpdateResourceGroupWOptions();
+  }  
 
   // Test the updateResourceGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -284,7 +324,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
   public void testDeleteResourceGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String deleteResourceGroupPath = "/resource_groups/testString";
+    String deleteResourceGroupPath = "/v2/resource_groups/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -317,6 +357,16 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteResourceGroupPath);
   }
+  
+  public void testDeleteResourceGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testDeleteResourceGroupWOptions.
+    resourceManagerService.enableRetries(4, 30);
+    testDeleteResourceGroupWOptions();
+
+    // Disable retries and run testDeleteResourceGroupWOptions.
+    resourceManagerService.disableRetries();
+    testDeleteResourceGroupWOptions();
+  }  
 
   // Test the deleteResourceGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -334,7 +384,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
   public void testListQuotaDefinitionsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"resources\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": [{\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}]}";
-    String listQuotaDefinitionsPath = "/quota_definitions";
+    String listQuotaDefinitionsPath = "/v2/quota_definitions";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -365,12 +415,22 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listQuotaDefinitionsPath);
   }
+  
+  public void testListQuotaDefinitionsWOptionsWRetries() throws Throwable {
+    // Enable retries and run testListQuotaDefinitionsWOptions.
+    resourceManagerService.enableRetries(4, 30);
+    testListQuotaDefinitionsWOptions();
+
+    // Disable retries and run testListQuotaDefinitionsWOptions.
+    resourceManagerService.disableRetries();
+    testListQuotaDefinitionsWOptions();
+  }  
 
   @Test
   public void testGetQuotaDefinitionWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"number_of_apps\": 12, \"number_of_service_instances\": 24, \"default_number_of_instances_per_lite_plan\": 35, \"instances_per_app\": 15, \"instance_memory\": \"instanceMemory\", \"total_app_memory\": \"totalAppMemory\", \"vsi_limit\": 8, \"resource_quotas\": [{\"_id\": \"id\", \"resource_id\": \"resourceId\", \"crn\": \"crn\", \"limit\": 5}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"updated_at\": \"2019-01-01T12:00:00.000Z\"}";
-    String getQuotaDefinitionPath = "/quota_definitions/testString";
+    String getQuotaDefinitionPath = "/v2/quota_definitions/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -403,6 +463,16 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getQuotaDefinitionPath);
   }
+  
+  public void testGetQuotaDefinitionWOptionsWRetries() throws Throwable {
+    // Enable retries and run testGetQuotaDefinitionWOptions.
+    resourceManagerService.enableRetries(4, 30);
+    testGetQuotaDefinitionWOptions();
+
+    // Disable retries and run testGetQuotaDefinitionWOptions.
+    resourceManagerService.disableRetries();
+    testGetQuotaDefinitionWOptions();
+  }  
 
   // Test the getQuotaDefinition operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)

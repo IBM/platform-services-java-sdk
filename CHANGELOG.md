@@ -1,3 +1,10 @@
+## [0.22.2](https://github.com/IBM/platform-services-java-sdk/compare/0.22.1...0.22.2) (2021-11-03)
+
+
+### Bug Fixes
+
+* **Context-Based Restrictions:** add support for the X-Correlation-Id header ([#130](https://github.com/IBM/platform-services-java-sdk/issues/130)) ([f717413](https://github.com/IBM/platform-services-java-sdk/commit/f71741336c2afd1aa09bb9b927feb5d4543de25d))
+
 ## [0.22.1](https://github.com/IBM/platform-services-java-sdk/compare/0.22.0...0.22.1) (2021-10-27)
 
 

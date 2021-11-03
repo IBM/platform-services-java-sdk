@@ -137,6 +137,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .description("this is an example of zone")
     .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
     .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+    .xCorrelationId("testString")
     .transactionId("testString")
     .build();
 
@@ -176,6 +177,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     // Construct an instance of the ListZonesOptions model
     ListZonesOptions listZonesOptionsModel = new ListZonesOptions.Builder()
     .accountId("testString")
+    .xCorrelationId("testString")
     .transactionId("testString")
     .name("testString")
     .sort("testString")
@@ -232,6 +234,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     // Construct an instance of the GetZoneOptions model
     GetZoneOptions getZoneOptionsModel = new GetZoneOptions.Builder()
     .zoneId("testString")
+    .xCorrelationId("testString")
     .transactionId("testString")
     .build();
 
@@ -295,6 +298,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .description("this is an example of zone")
     .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
     .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+    .xCorrelationId("testString")
     .transactionId("testString")
     .build();
 
@@ -346,6 +350,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     // Construct an instance of the DeleteZoneOptions model
     DeleteZoneOptions deleteZoneOptionsModel = new DeleteZoneOptions.Builder()
     .zoneId("testString")
+    .xCorrelationId("testString")
     .transactionId("testString")
     .build();
 
@@ -397,6 +402,8 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
 
     // Construct an instance of the ListAvailableServicerefTargetsOptions model
     ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptionsModel = new ListAvailableServicerefTargetsOptions.Builder()
+    .xCorrelationId("testString")
+    .transactionId("testString")
     .type("all")
     .build();
 
@@ -470,6 +477,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .description("this is an example of rule")
     .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+    .xCorrelationId("testString")
     .transactionId("testString")
     .build();
 
@@ -509,6 +517,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     // Construct an instance of the ListRulesOptions model
     ListRulesOptions listRulesOptionsModel = new ListRulesOptions.Builder()
     .accountId("testString")
+    .xCorrelationId("testString")
     .transactionId("testString")
     .region("testString")
     .resource("testString")
@@ -577,6 +586,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     // Construct an instance of the GetRuleOptions model
     GetRuleOptions getRuleOptionsModel = new GetRuleOptions.Builder()
     .ruleId("testString")
+    .xCorrelationId("testString")
     .transactionId("testString")
     .build();
 
@@ -663,6 +673,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     .description("this is an example of rule")
     .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+    .xCorrelationId("testString")
     .transactionId("testString")
     .build();
 
@@ -714,6 +725,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     // Construct an instance of the DeleteRuleOptions model
     DeleteRuleOptions deleteRuleOptionsModel = new DeleteRuleOptions.Builder()
     .ruleId("testString")
+    .xCorrelationId("testString")
     .transactionId("testString")
     .build();
 
@@ -766,6 +778,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     // Construct an instance of the GetAccountSettingsOptions model
     GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
     .accountId("testString")
+    .xCorrelationId("testString")
     .transactionId("testString")
     .build();
 

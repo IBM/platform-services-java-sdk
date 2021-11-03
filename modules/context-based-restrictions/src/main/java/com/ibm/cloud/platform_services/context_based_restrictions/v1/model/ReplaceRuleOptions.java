@@ -27,6 +27,7 @@ public class ReplaceRuleOptions extends GenericModel {
   protected String description;
   protected List<RuleContext> contexts;
   protected List<Resource> resources;
+  protected String xCorrelationId;
   protected String transactionId;
 
   /**
@@ -38,6 +39,7 @@ public class ReplaceRuleOptions extends GenericModel {
     private String description;
     private List<RuleContext> contexts;
     private List<Resource> resources;
+    private String xCorrelationId;
     private String transactionId;
 
     private Builder(ReplaceRuleOptions replaceRuleOptions) {
@@ -46,6 +48,7 @@ public class ReplaceRuleOptions extends GenericModel {
       this.description = replaceRuleOptions.description;
       this.contexts = replaceRuleOptions.contexts;
       this.resources = replaceRuleOptions.resources;
+      this.xCorrelationId = replaceRuleOptions.xCorrelationId;
       this.transactionId = replaceRuleOptions.transactionId;
     }
 
@@ -165,6 +168,17 @@ public class ReplaceRuleOptions extends GenericModel {
     }
 
     /**
+     * Set the xCorrelationId.
+     *
+     * @param xCorrelationId the xCorrelationId
+     * @return the ReplaceRuleOptions builder
+     */
+    public Builder xCorrelationId(String xCorrelationId) {
+      this.xCorrelationId = xCorrelationId;
+      return this;
+    }
+
+    /**
      * Set the transactionId.
      *
      * @param transactionId the transactionId
@@ -186,6 +200,7 @@ public class ReplaceRuleOptions extends GenericModel {
     description = builder.description;
     contexts = builder.contexts;
     resources = builder.resources;
+    xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
   }
 
@@ -255,12 +270,24 @@ public class ReplaceRuleOptions extends GenericModel {
   }
 
   /**
+   * Gets the xCorrelationId.
+   *
+   * The supplied or generated value of this header is logged for a request and repeated in a response header for the
+   * corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
+   * this headers is not supplied in a request, the service generates a random (version 4) UUID.
+   *
+   * @return the xCorrelationId
+   */
+  public String xCorrelationId() {
+    return xCorrelationId;
+  }
+
+  /**
    * Gets the transactionId.
    *
-   * The UUID that is used to correlate and track transactions. If you omit this field, the service generates and sends
-   * a transaction ID in the response.
-   * **Note:** To help with debugging, we strongly recommend that you generate and supply a `Transaction-Id` with each
-   * request.
+   * The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility
+   * with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and
+   * `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
    *
    * @return the transactionId
    */

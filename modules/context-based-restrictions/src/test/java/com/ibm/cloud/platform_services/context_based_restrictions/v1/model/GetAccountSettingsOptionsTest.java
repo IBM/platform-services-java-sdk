@@ -33,9 +33,11 @@ public class GetAccountSettingsOptionsTest {
   public void testGetAccountSettingsOptions() throws Throwable {
     GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
       .accountId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(getAccountSettingsOptionsModel.accountId(), "testString");
+    assertEquals(getAccountSettingsOptionsModel.xCorrelationId(), "testString");
     assertEquals(getAccountSettingsOptionsModel.transactionId(), "testString");
   }
 

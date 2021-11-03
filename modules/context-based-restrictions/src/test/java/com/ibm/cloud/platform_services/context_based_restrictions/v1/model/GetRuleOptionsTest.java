@@ -33,9 +33,11 @@ public class GetRuleOptionsTest {
   public void testGetRuleOptions() throws Throwable {
     GetRuleOptions getRuleOptionsModel = new GetRuleOptions.Builder()
       .ruleId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(getRuleOptionsModel.ruleId(), "testString");
+    assertEquals(getRuleOptionsModel.xCorrelationId(), "testString");
     assertEquals(getRuleOptionsModel.transactionId(), "testString");
   }
 

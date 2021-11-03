@@ -33,9 +33,11 @@ public class DeleteZoneOptionsTest {
   public void testDeleteZoneOptions() throws Throwable {
     DeleteZoneOptions deleteZoneOptionsModel = new DeleteZoneOptions.Builder()
       .zoneId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(deleteZoneOptionsModel.zoneId(), "testString");
+    assertEquals(deleteZoneOptionsModel.xCorrelationId(), "testString");
     assertEquals(deleteZoneOptionsModel.transactionId(), "testString");
   }
 

@@ -33,11 +33,13 @@ public class ListZonesOptionsTest {
   public void testListZonesOptions() throws Throwable {
     ListZonesOptions listZonesOptionsModel = new ListZonesOptions.Builder()
       .accountId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .name("testString")
       .sort("testString")
       .build();
     assertEquals(listZonesOptionsModel.accountId(), "testString");
+    assertEquals(listZonesOptionsModel.xCorrelationId(), "testString");
     assertEquals(listZonesOptionsModel.transactionId(), "testString");
     assertEquals(listZonesOptionsModel.name(), "testString");
     assertEquals(listZonesOptionsModel.sort(), "testString");

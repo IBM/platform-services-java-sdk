@@ -79,11 +79,13 @@ public class CreateRuleOptionsTest {
       .description("testString")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(createRuleOptionsModel.description(), "testString");
     assertEquals(createRuleOptionsModel.contexts(), new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)));
     assertEquals(createRuleOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
+    assertEquals(createRuleOptionsModel.xCorrelationId(), "testString");
     assertEquals(createRuleOptionsModel.transactionId(), "testString");
   }
 }

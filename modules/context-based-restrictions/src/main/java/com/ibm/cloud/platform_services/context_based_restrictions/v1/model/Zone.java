@@ -136,7 +136,8 @@ public class Zone extends GenericModel {
   /**
    * Gets the excluded.
    *
-   * The list of excluded addresses in the zone.
+   * The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be
+   * excluded.
    *
    * @return the excluded
    */

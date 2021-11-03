@@ -27,6 +27,7 @@ public class CreateZoneOptions extends GenericModel {
   protected String description;
   protected List<Address> addresses;
   protected List<Address> excluded;
+  protected String xCorrelationId;
   protected String transactionId;
 
   /**
@@ -38,6 +39,7 @@ public class CreateZoneOptions extends GenericModel {
     private String description;
     private List<Address> addresses;
     private List<Address> excluded;
+    private String xCorrelationId;
     private String transactionId;
 
     private Builder(CreateZoneOptions createZoneOptions) {
@@ -46,6 +48,7 @@ public class CreateZoneOptions extends GenericModel {
       this.description = createZoneOptions.description;
       this.addresses = createZoneOptions.addresses;
       this.excluded = createZoneOptions.excluded;
+      this.xCorrelationId = createZoneOptions.xCorrelationId;
       this.transactionId = createZoneOptions.transactionId;
     }
 
@@ -154,6 +157,17 @@ public class CreateZoneOptions extends GenericModel {
     }
 
     /**
+     * Set the xCorrelationId.
+     *
+     * @param xCorrelationId the xCorrelationId
+     * @return the CreateZoneOptions builder
+     */
+    public Builder xCorrelationId(String xCorrelationId) {
+      this.xCorrelationId = xCorrelationId;
+      return this;
+    }
+
+    /**
      * Set the transactionId.
      *
      * @param transactionId the transactionId
@@ -171,6 +185,7 @@ public class CreateZoneOptions extends GenericModel {
     description = builder.description;
     addresses = builder.addresses;
     excluded = builder.excluded;
+    xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
   }
 
@@ -230,7 +245,8 @@ public class CreateZoneOptions extends GenericModel {
   /**
    * Gets the excluded.
    *
-   * The list of excluded addresses in the zone.
+   * The list of excluded addresses in the zone. Only addresses of type `ipAddress`, `ipRange`, and `subnet` can be
+   * excluded.
    *
    * @return the excluded
    */
@@ -239,12 +255,24 @@ public class CreateZoneOptions extends GenericModel {
   }
 
   /**
+   * Gets the xCorrelationId.
+   *
+   * The supplied or generated value of this header is logged for a request and repeated in a response header for the
+   * corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
+   * this headers is not supplied in a request, the service generates a random (version 4) UUID.
+   *
+   * @return the xCorrelationId
+   */
+  public String xCorrelationId() {
+    return xCorrelationId;
+  }
+
+  /**
    * Gets the transactionId.
    *
-   * The UUID that is used to correlate and track transactions. If you omit this field, the service generates and sends
-   * a transaction ID in the response.
-   * **Note:** To help with debugging, we strongly recommend that you generate and supply a `Transaction-Id` with each
-   * request.
+   * The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility
+   * with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and
+   * `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
    *
    * @return the transactionId
    */

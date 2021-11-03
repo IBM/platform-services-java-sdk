@@ -33,6 +33,7 @@ public class ListRulesOptionsTest {
   public void testListRulesOptions() throws Throwable {
     ListRulesOptions listRulesOptionsModel = new ListRulesOptions.Builder()
       .accountId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .region("testString")
       .resource("testString")
@@ -44,6 +45,7 @@ public class ListRulesOptionsTest {
       .sort("testString")
       .build();
     assertEquals(listRulesOptionsModel.accountId(), "testString");
+    assertEquals(listRulesOptionsModel.xCorrelationId(), "testString");
     assertEquals(listRulesOptionsModel.transactionId(), "testString");
     assertEquals(listRulesOptionsModel.region(), "testString");
     assertEquals(listRulesOptionsModel.resource(), "testString");

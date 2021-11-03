@@ -49,6 +49,7 @@ public class ReplaceZoneOptionsTest {
       .description("testString")
       .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
       .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(replaceZoneOptionsModel.zoneId(), "testString");
@@ -58,6 +59,7 @@ public class ReplaceZoneOptionsTest {
     assertEquals(replaceZoneOptionsModel.description(), "testString");
     assertEquals(replaceZoneOptionsModel.addresses(), new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)));
     assertEquals(replaceZoneOptionsModel.excluded(), new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)));
+    assertEquals(replaceZoneOptionsModel.xCorrelationId(), "testString");
     assertEquals(replaceZoneOptionsModel.transactionId(), "testString");
   }
 

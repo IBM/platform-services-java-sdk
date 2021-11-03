@@ -769,7 +769,8 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
         try {
             DeleteZoneOptions deleteZoneOptions = new DeleteZoneOptions.Builder()
                     .zoneId(zoneID)
-                    .transactionId(getTransactionID())
+                    // Using the standard X-Correlation-Id header in this case
+                    .xCorrelationId(getTransactionID())
                     .build();
 
             // Invoke operation

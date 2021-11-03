@@ -33,9 +33,11 @@ public class GetZoneOptionsTest {
   public void testGetZoneOptions() throws Throwable {
     GetZoneOptions getZoneOptionsModel = new GetZoneOptions.Builder()
       .zoneId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(getZoneOptionsModel.zoneId(), "testString");
+    assertEquals(getZoneOptionsModel.xCorrelationId(), "testString");
     assertEquals(getZoneOptionsModel.transactionId(), "testString");
   }
 

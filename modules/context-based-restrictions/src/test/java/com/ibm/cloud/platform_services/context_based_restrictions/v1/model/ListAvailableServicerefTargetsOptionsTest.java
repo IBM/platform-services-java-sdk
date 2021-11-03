@@ -32,8 +32,12 @@ public class ListAvailableServicerefTargetsOptionsTest {
   @Test
   public void testListAvailableServicerefTargetsOptions() throws Throwable {
     ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptionsModel = new ListAvailableServicerefTargetsOptions.Builder()
+      .xCorrelationId("testString")
+      .transactionId("testString")
       .type("all")
       .build();
+    assertEquals(listAvailableServicerefTargetsOptionsModel.xCorrelationId(), "testString");
+    assertEquals(listAvailableServicerefTargetsOptionsModel.transactionId(), "testString");
     assertEquals(listAvailableServicerefTargetsOptionsModel.type(), "all");
   }
 }

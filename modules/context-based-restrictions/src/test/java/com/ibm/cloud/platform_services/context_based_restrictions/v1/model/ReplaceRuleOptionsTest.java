@@ -81,6 +81,7 @@ public class ReplaceRuleOptionsTest {
       .description("testString")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(replaceRuleOptionsModel.ruleId(), "testString");
@@ -88,6 +89,7 @@ public class ReplaceRuleOptionsTest {
     assertEquals(replaceRuleOptionsModel.description(), "testString");
     assertEquals(replaceRuleOptionsModel.contexts(), new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)));
     assertEquals(replaceRuleOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
+    assertEquals(replaceRuleOptionsModel.xCorrelationId(), "testString");
     assertEquals(replaceRuleOptionsModel.transactionId(), "testString");
   }
 

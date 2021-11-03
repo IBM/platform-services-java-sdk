@@ -29,15 +29,21 @@ public class ListAvailableServicerefTargetsOptions extends GenericModel {
     String PLATFORM_SERVICE = "platform_service";
   }
 
+  protected String xCorrelationId;
+  protected String transactionId;
   protected String type;
 
   /**
    * Builder.
    */
   public static class Builder {
+    private String xCorrelationId;
+    private String transactionId;
     private String type;
 
     private Builder(ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptions) {
+      this.xCorrelationId = listAvailableServicerefTargetsOptions.xCorrelationId;
+      this.transactionId = listAvailableServicerefTargetsOptions.transactionId;
       this.type = listAvailableServicerefTargetsOptions.type;
     }
 
@@ -57,6 +63,28 @@ public class ListAvailableServicerefTargetsOptions extends GenericModel {
     }
 
     /**
+     * Set the xCorrelationId.
+     *
+     * @param xCorrelationId the xCorrelationId
+     * @return the ListAvailableServicerefTargetsOptions builder
+     */
+    public Builder xCorrelationId(String xCorrelationId) {
+      this.xCorrelationId = xCorrelationId;
+      return this;
+    }
+
+    /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the ListAvailableServicerefTargetsOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
      * Set the type.
      *
      * @param type the type
@@ -69,6 +97,8 @@ public class ListAvailableServicerefTargetsOptions extends GenericModel {
   }
 
   protected ListAvailableServicerefTargetsOptions(Builder builder) {
+    xCorrelationId = builder.xCorrelationId;
+    transactionId = builder.transactionId;
     type = builder.type;
   }
 
@@ -79,6 +109,32 @@ public class ListAvailableServicerefTargetsOptions extends GenericModel {
    */
   public Builder newBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Gets the xCorrelationId.
+   *
+   * The supplied or generated value of this header is logged for a request and repeated in a response header for the
+   * corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
+   * this headers is not supplied in a request, the service generates a random (version 4) UUID.
+   *
+   * @return the xCorrelationId
+   */
+  public String xCorrelationId() {
+    return xCorrelationId;
+  }
+
+  /**
+   * Gets the transactionId.
+   *
+   * The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility
+   * with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and
+   * `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
+   *
+   * @return the transactionId
+   */
+  public String transactionId() {
+    return transactionId;
   }
 
   /**

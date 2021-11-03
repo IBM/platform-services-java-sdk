@@ -50,8 +50,8 @@ import java.util.Map.Entry;
 
 /**
  * With the Context Based Restrictions API, you can:
- * * Create, list, get, update, and delete network zones
- * * Create, list, get, update, and delete context-based restriction rules
+ * * Create, list, get, replace, and delete network zones
+ * * Create, list, get, replace, and delete context-based restriction rules
  * * Get account settings
  * .
  *
@@ -100,7 +100,7 @@ public class ContextBasedRestrictions extends BaseService {
   }
 
   /**
-   * Create a zone.
+   * Create a network zone.
    *
    * This operation creates a network zone for the specified account.
    *
@@ -119,6 +119,9 @@ public class ContextBasedRestrictions extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (createZoneOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", createZoneOptions.xCorrelationId());
+    }
     if (createZoneOptions.transactionId() != null) {
       builder.header("Transaction-Id", createZoneOptions.transactionId());
     }
@@ -147,7 +150,7 @@ public class ContextBasedRestrictions extends BaseService {
   }
 
   /**
-   * Create a zone.
+   * Create a network zone.
    *
    * This operation creates a network zone for the specified account.
    *
@@ -174,6 +177,9 @@ public class ContextBasedRestrictions extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listZonesOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", listZonesOptions.xCorrelationId());
+    }
     if (listZonesOptions.transactionId() != null) {
       builder.header("Transaction-Id", listZonesOptions.transactionId());
     }
@@ -190,9 +196,9 @@ public class ContextBasedRestrictions extends BaseService {
   }
 
   /**
-   * Get the specified network zone.
+   * Get a network zone.
    *
-   * This operation returns the network zone for the specified ID.
+   * This operation retrieves the network zone identified by the specified zone ID.
    *
    * @param getZoneOptions the {@link GetZoneOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Zone}
@@ -208,6 +214,9 @@ public class ContextBasedRestrictions extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (getZoneOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", getZoneOptions.xCorrelationId());
+    }
     if (getZoneOptions.transactionId() != null) {
       builder.header("Transaction-Id", getZoneOptions.transactionId());
     }
@@ -217,9 +226,10 @@ public class ContextBasedRestrictions extends BaseService {
   }
 
   /**
-   * Update the specified network zone.
+   * Replace a network zone.
    *
-   * This operation updates the network zone with the specified ID.
+   * This operation replaces the network zone identified by the specified zone ID. Partial updates are not supported.
+   * The entire network zone object must be replaced.
    *
    * @param replaceZoneOptions the {@link ReplaceZoneOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Zone}
@@ -236,6 +246,9 @@ public class ContextBasedRestrictions extends BaseService {
     }
     builder.header("Accept", "application/json");
     builder.header("If-Match", replaceZoneOptions.ifMatch());
+    if (replaceZoneOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", replaceZoneOptions.xCorrelationId());
+    }
     if (replaceZoneOptions.transactionId() != null) {
       builder.header("Transaction-Id", replaceZoneOptions.transactionId());
     }
@@ -262,9 +275,9 @@ public class ContextBasedRestrictions extends BaseService {
   }
 
   /**
-   * Delete the specified network zone.
+   * Delete a network zone.
    *
-   * This operation deletes the network zone with the specified home ID.
+   * This operation deletes the network zone identified by the specified zone ID.
    *
    * @param deleteZoneOptions the {@link DeleteZoneOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -278,6 +291,9 @@ public class ContextBasedRestrictions extends BaseService {
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("context_based_restrictions", "v1", "deleteZone");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
+    }
+    if (deleteZoneOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", deleteZoneOptions.xCorrelationId());
     }
     if (deleteZoneOptions.transactionId() != null) {
       builder.header("Transaction-Id", deleteZoneOptions.transactionId());
@@ -304,6 +320,12 @@ public class ContextBasedRestrictions extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listAvailableServicerefTargetsOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", listAvailableServicerefTargetsOptions.xCorrelationId());
+    }
+    if (listAvailableServicerefTargetsOptions.transactionId() != null) {
+      builder.header("Transaction-Id", listAvailableServicerefTargetsOptions.transactionId());
+    }
     if (listAvailableServicerefTargetsOptions.type() != null) {
       builder.query("type", String.valueOf(listAvailableServicerefTargetsOptions.type()));
     }
@@ -343,6 +365,9 @@ public class ContextBasedRestrictions extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (createRuleOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", createRuleOptions.xCorrelationId());
+    }
     if (createRuleOptions.transactionId() != null) {
       builder.header("Transaction-Id", createRuleOptions.transactionId());
     }
@@ -378,7 +403,7 @@ public class ContextBasedRestrictions extends BaseService {
   /**
    * List rules.
    *
-   * This operation lists rules for the specified account.
+   * This operation lists rules in the specified account.
    *
    * @param listRulesOptions the {@link ListRulesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link RuleList}
@@ -392,6 +417,9 @@ public class ContextBasedRestrictions extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listRulesOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", listRulesOptions.xCorrelationId());
+    }
     if (listRulesOptions.transactionId() != null) {
       builder.header("Transaction-Id", listRulesOptions.transactionId());
     }
@@ -426,9 +454,9 @@ public class ContextBasedRestrictions extends BaseService {
   }
 
   /**
-   * Get the specified rule.
+   * Get a rule.
    *
-   * This operation gets the rule for the specified ID.
+   * This operation retrieves the rule identified by the specified rule ID.
    *
    * @param getRuleOptions the {@link GetRuleOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Rule}
@@ -444,6 +472,9 @@ public class ContextBasedRestrictions extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (getRuleOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", getRuleOptions.xCorrelationId());
+    }
     if (getRuleOptions.transactionId() != null) {
       builder.header("Transaction-Id", getRuleOptions.transactionId());
     }
@@ -453,9 +484,10 @@ public class ContextBasedRestrictions extends BaseService {
   }
 
   /**
-   * Update the specified rule.
+   * Replace a rule.
    *
-   * This operation updates the rule for the specified ID.
+   * This operation replaces the rule identified by the specified rule ID. Partial updates are not supported. The entire
+   * rule object must be replaced.
    *
    * @param replaceRuleOptions the {@link ReplaceRuleOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Rule}
@@ -472,6 +504,9 @@ public class ContextBasedRestrictions extends BaseService {
     }
     builder.header("Accept", "application/json");
     builder.header("If-Match", replaceRuleOptions.ifMatch());
+    if (replaceRuleOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", replaceRuleOptions.xCorrelationId());
+    }
     if (replaceRuleOptions.transactionId() != null) {
       builder.header("Transaction-Id", replaceRuleOptions.transactionId());
     }
@@ -492,9 +527,9 @@ public class ContextBasedRestrictions extends BaseService {
   }
 
   /**
-   * Delete the specified rule.
+   * Delete a rule.
    *
-   * This operation deletes the rule for the specified home ID.
+   * This operation deletes the rule identified by the specified rule ID.
    *
    * @param deleteRuleOptions the {@link DeleteRuleOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -509,6 +544,9 @@ public class ContextBasedRestrictions extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
+    if (deleteRuleOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", deleteRuleOptions.xCorrelationId());
+    }
     if (deleteRuleOptions.transactionId() != null) {
       builder.header("Transaction-Id", deleteRuleOptions.transactionId());
     }
@@ -517,9 +555,9 @@ public class ContextBasedRestrictions extends BaseService {
   }
 
   /**
-   * Get the specified account settings.
+   * Get account settings.
    *
-   * This operation gets the settings for the specified account ID.
+   * This operation retrieves the settings for the specified account ID.
    *
    * @param getAccountSettingsOptions the {@link GetAccountSettingsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link AccountSettings}
@@ -535,6 +573,9 @@ public class ContextBasedRestrictions extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (getAccountSettingsOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", getAccountSettingsOptions.xCorrelationId());
+    }
     if (getAccountSettingsOptions.transactionId() != null) {
       builder.header("Transaction-Id", getAccountSettingsOptions.transactionId());
     }

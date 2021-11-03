@@ -20,6 +20,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class GetZoneOptions extends GenericModel {
 
   protected String zoneId;
+  protected String xCorrelationId;
   protected String transactionId;
 
   /**
@@ -27,10 +28,12 @@ public class GetZoneOptions extends GenericModel {
    */
   public static class Builder {
     private String zoneId;
+    private String xCorrelationId;
     private String transactionId;
 
     private Builder(GetZoneOptions getZoneOptions) {
       this.zoneId = getZoneOptions.zoneId;
+      this.xCorrelationId = getZoneOptions.xCorrelationId;
       this.transactionId = getZoneOptions.transactionId;
     }
 
@@ -70,6 +73,17 @@ public class GetZoneOptions extends GenericModel {
     }
 
     /**
+     * Set the xCorrelationId.
+     *
+     * @param xCorrelationId the xCorrelationId
+     * @return the GetZoneOptions builder
+     */
+    public Builder xCorrelationId(String xCorrelationId) {
+      this.xCorrelationId = xCorrelationId;
+      return this;
+    }
+
+    /**
      * Set the transactionId.
      *
      * @param transactionId the transactionId
@@ -85,6 +99,7 @@ public class GetZoneOptions extends GenericModel {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.zoneId,
       "zoneId cannot be empty");
     zoneId = builder.zoneId;
+    xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
   }
 
@@ -109,12 +124,24 @@ public class GetZoneOptions extends GenericModel {
   }
 
   /**
+   * Gets the xCorrelationId.
+   *
+   * The supplied or generated value of this header is logged for a request and repeated in a response header for the
+   * corresponding response. The same value is used for downstream requests and retries of those requests. If a value of
+   * this headers is not supplied in a request, the service generates a random (version 4) UUID.
+   *
+   * @return the xCorrelationId
+   */
+  public String xCorrelationId() {
+    return xCorrelationId;
+  }
+
+  /**
    * Gets the transactionId.
    *
-   * The UUID that is used to correlate and track transactions. If you omit this field, the service generates and sends
-   * a transaction ID in the response.
-   * **Note:** To help with debugging, we strongly recommend that you generate and supply a `Transaction-Id` with each
-   * request.
+   * The `Transaction-Id` header behaves as the `X-Correlation-Id` header. It is supported for backward compatibility
+   * with other IBM platform services that support the `Transaction-Id` header only. If both `X-Correlation-Id` and
+   * `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
    *
    * @return the transactionId
    */

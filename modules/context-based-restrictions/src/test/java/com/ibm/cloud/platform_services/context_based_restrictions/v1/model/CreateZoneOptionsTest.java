@@ -47,6 +47,7 @@ public class CreateZoneOptionsTest {
       .description("testString")
       .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
       .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(createZoneOptionsModel.name(), "testString");
@@ -54,6 +55,7 @@ public class CreateZoneOptionsTest {
     assertEquals(createZoneOptionsModel.description(), "testString");
     assertEquals(createZoneOptionsModel.addresses(), new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)));
     assertEquals(createZoneOptionsModel.excluded(), new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)));
+    assertEquals(createZoneOptionsModel.xCorrelationId(), "testString");
     assertEquals(createZoneOptionsModel.transactionId(), "testString");
   }
 }

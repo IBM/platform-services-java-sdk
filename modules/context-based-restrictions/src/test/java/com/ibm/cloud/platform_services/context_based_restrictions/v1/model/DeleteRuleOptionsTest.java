@@ -33,9 +33,11 @@ public class DeleteRuleOptionsTest {
   public void testDeleteRuleOptions() throws Throwable {
     DeleteRuleOptions deleteRuleOptionsModel = new DeleteRuleOptions.Builder()
       .ruleId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(deleteRuleOptionsModel.ruleId(), "testString");
+    assertEquals(deleteRuleOptionsModel.xCorrelationId(), "testString");
     assertEquals(deleteRuleOptionsModel.transactionId(), "testString");
   }
 

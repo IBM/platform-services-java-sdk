@@ -1,3 +1,10 @@
+## [0.22.3](https://github.com/IBM/platform-services-java-sdk/compare/0.22.2...0.22.3) (2021-11-05)
+
+
+### Bug Fixes
+
+* bump java core dependency to get new gson ([#131](https://github.com/IBM/platform-services-java-sdk/issues/131)) ([62c0248](https://github.com/IBM/platform-services-java-sdk/commit/62c024873558f79d5aaa3059c4897c9e8fe415d1))
+
 ## [0.22.2](https://github.com/IBM/platform-services-java-sdk/compare/0.22.1...0.22.2) (2021-11-03)
 
 

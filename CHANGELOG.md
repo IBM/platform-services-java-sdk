@@ -1,3 +1,10 @@
+## [0.22.4](https://github.com/IBM/platform-services-java-sdk/compare/0.22.3...0.22.4) (2021-11-11)
+
+
+### Bug Fixes
+
+* bump java core version to 9.14.1 ([#132](https://github.com/IBM/platform-services-java-sdk/issues/132)) ([6475c07](https://github.com/IBM/platform-services-java-sdk/commit/6475c079acf41bd7026831496fe831bce103fc7e))
+
 ## [0.22.3](https://github.com/IBM/platform-services-java-sdk/compare/0.22.2...0.22.3) (2021-11-05)
 
 

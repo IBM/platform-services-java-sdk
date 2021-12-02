@@ -37,7 +37,7 @@ public class ListAccessGroupMembersOptionsTest {
       .limit(Long.valueOf("26"))
       .offset(Long.valueOf("26"))
       .type("testString")
-      .verbose(true)
+      .verbose(false)
       .sort("testString")
       .build();
     assertEquals(listAccessGroupMembersOptionsModel.accessGroupId(), "testString");
@@ -45,7 +45,7 @@ public class ListAccessGroupMembersOptionsTest {
     assertEquals(listAccessGroupMembersOptionsModel.limit(), Long.valueOf("26"));
     assertEquals(listAccessGroupMembersOptionsModel.offset(), Long.valueOf("26"));
     assertEquals(listAccessGroupMembersOptionsModel.type(), "testString");
-    assertEquals(listAccessGroupMembersOptionsModel.verbose(), Boolean.valueOf(true));
+    assertEquals(listAccessGroupMembersOptionsModel.verbose(), Boolean.valueOf(false));
     assertEquals(listAccessGroupMembersOptionsModel.sort(), "testString");
   }
 

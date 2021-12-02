@@ -37,18 +37,18 @@ public class ListAccessGroupsOptionsTest {
       .iamId("testString")
       .limit(Long.valueOf("26"))
       .offset(Long.valueOf("26"))
-      .sort("testString")
-      .showFederated(true)
-      .hidePublicAccess(true)
+      .sort("name")
+      .showFederated(false)
+      .hidePublicAccess(false)
       .build();
     assertEquals(listAccessGroupsOptionsModel.accountId(), "testString");
     assertEquals(listAccessGroupsOptionsModel.transactionId(), "testString");
     assertEquals(listAccessGroupsOptionsModel.iamId(), "testString");
     assertEquals(listAccessGroupsOptionsModel.limit(), Long.valueOf("26"));
     assertEquals(listAccessGroupsOptionsModel.offset(), Long.valueOf("26"));
-    assertEquals(listAccessGroupsOptionsModel.sort(), "testString");
-    assertEquals(listAccessGroupsOptionsModel.showFederated(), Boolean.valueOf(true));
-    assertEquals(listAccessGroupsOptionsModel.hidePublicAccess(), Boolean.valueOf(true));
+    assertEquals(listAccessGroupsOptionsModel.sort(), "name");
+    assertEquals(listAccessGroupsOptionsModel.showFederated(), Boolean.valueOf(false));
+    assertEquals(listAccessGroupsOptionsModel.hidePublicAccess(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

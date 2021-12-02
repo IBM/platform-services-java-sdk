@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- This is the version associated with the Java core. -->
-        <sdk-core-version>9.14.1</sdk-core-version>
+        <sdk-core-version>9.15.1</sdk-core-version>
 
         <testng-version>7.4.0</testng-version>
         <okhttp3-version>4.9.1</okhttp3-version>

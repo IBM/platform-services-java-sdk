@@ -34,11 +34,11 @@ public class GetAccessGroupOptionsTest {
     GetAccessGroupOptions getAccessGroupOptionsModel = new GetAccessGroupOptions.Builder()
       .accessGroupId("testString")
       .transactionId("testString")
-      .showFederated(true)
+      .showFederated(false)
       .build();
     assertEquals(getAccessGroupOptionsModel.accessGroupId(), "testString");
     assertEquals(getAccessGroupOptionsModel.transactionId(), "testString");
-    assertEquals(getAccessGroupOptionsModel.showFederated(), Boolean.valueOf(true));
+    assertEquals(getAccessGroupOptionsModel.showFederated(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

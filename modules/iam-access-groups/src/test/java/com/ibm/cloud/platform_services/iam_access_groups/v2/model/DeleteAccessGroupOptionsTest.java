@@ -34,11 +34,11 @@ public class DeleteAccessGroupOptionsTest {
     DeleteAccessGroupOptions deleteAccessGroupOptionsModel = new DeleteAccessGroupOptions.Builder()
       .accessGroupId("testString")
       .transactionId("testString")
-      .force(true)
+      .force(false)
       .build();
     assertEquals(deleteAccessGroupOptionsModel.accessGroupId(), "testString");
     assertEquals(deleteAccessGroupOptionsModel.transactionId(), "testString");
-    assertEquals(deleteAccessGroupOptionsModel.force(), Boolean.valueOf(true));
+    assertEquals(deleteAccessGroupOptionsModel.force(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

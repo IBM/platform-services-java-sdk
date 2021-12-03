@@ -121,7 +121,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testCreateAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
-    String createAccessGroupPath = "/groups";
+    String createAccessGroupPath = "/v2/groups";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -158,6 +158,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createAccessGroupPath);
   }
+  
+  public void testCreateAccessGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testCreateAccessGroupWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testCreateAccessGroupWOptions();
+
+    // Disable retries and run testCreateAccessGroupWOptions.
+    iamAccessGroupsService.disableRetries();
+    testCreateAccessGroupWOptions();
+  }  
 
   // Test the createAccessGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -175,7 +185,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testListAccessGroupsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"groups\": [{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}]}";
-    String listAccessGroupsPath = "/groups";
+    String listAccessGroupsPath = "/v2/groups";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -191,9 +201,9 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .iamId("testString")
     .limit(Long.valueOf("26"))
     .offset(Long.valueOf("26"))
-    .sort("testString")
-    .showFederated(true)
-    .hidePublicAccess(true)
+    .sort("name")
+    .showFederated(false)
+    .hidePublicAccess(false)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -215,13 +225,23 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     assertEquals(query.get("iam_id"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
     assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
-    assertEquals(query.get("sort"), "testString");
-    assertEquals(Boolean.valueOf(query.get("show_federated")), Boolean.valueOf(true));
-    assertEquals(Boolean.valueOf(query.get("hide_public_access")), Boolean.valueOf(true));
+    assertEquals(query.get("sort"), "name");
+    assertEquals(Boolean.valueOf(query.get("show_federated")), Boolean.valueOf(false));
+    assertEquals(Boolean.valueOf(query.get("hide_public_access")), Boolean.valueOf(false));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listAccessGroupsPath);
   }
+  
+  public void testListAccessGroupsWOptionsWRetries() throws Throwable {
+    // Enable retries and run testListAccessGroupsWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testListAccessGroupsWOptions();
+
+    // Disable retries and run testListAccessGroupsWOptions.
+    iamAccessGroupsService.disableRetries();
+    testListAccessGroupsWOptions();
+  }  
 
   // Test the listAccessGroups operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -239,7 +259,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testGetAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
-    String getAccessGroupPath = "/groups/testString";
+    String getAccessGroupPath = "/v2/groups/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -252,7 +272,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     GetAccessGroupOptions getAccessGroupOptionsModel = new GetAccessGroupOptions.Builder()
     .accessGroupId("testString")
     .transactionId("testString")
-    .showFederated(true)
+    .showFederated(false)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -270,11 +290,21 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Boolean.valueOf(query.get("show_federated")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("show_federated")), Boolean.valueOf(false));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getAccessGroupPath);
   }
+  
+  public void testGetAccessGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testGetAccessGroupWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testGetAccessGroupWOptions();
+
+    // Disable retries and run testGetAccessGroupWOptions.
+    iamAccessGroupsService.disableRetries();
+    testGetAccessGroupWOptions();
+  }  
 
   // Test the getAccessGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -292,7 +322,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testUpdateAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
-    String updateAccessGroupPath = "/groups/testString";
+    String updateAccessGroupPath = "/v2/groups/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -330,6 +360,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateAccessGroupPath);
   }
+  
+  public void testUpdateAccessGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testUpdateAccessGroupWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testUpdateAccessGroupWOptions();
+
+    // Disable retries and run testUpdateAccessGroupWOptions.
+    iamAccessGroupsService.disableRetries();
+    testUpdateAccessGroupWOptions();
+  }  
 
   // Test the updateAccessGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -347,7 +387,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testDeleteAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String deleteAccessGroupPath = "/groups/testString";
+    String deleteAccessGroupPath = "/v2/groups/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -359,7 +399,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     DeleteAccessGroupOptions deleteAccessGroupOptionsModel = new DeleteAccessGroupOptions.Builder()
     .accessGroupId("testString")
     .transactionId("testString")
-    .force(true)
+    .force(false)
     .build();
 
     // Invoke operation with valid options model (positive test)
@@ -378,11 +418,21 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     // Get query params
-    assertEquals(Boolean.valueOf(query.get("force")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("force")), Boolean.valueOf(false));
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteAccessGroupPath);
   }
+  
+  public void testDeleteAccessGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testDeleteAccessGroupWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testDeleteAccessGroupWOptions();
+
+    // Disable retries and run testDeleteAccessGroupWOptions.
+    iamAccessGroupsService.disableRetries();
+    testDeleteAccessGroupWOptions();
+  }  
 
   // Test the deleteAccessGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -400,7 +450,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testIsMemberOfAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String isMemberOfAccessGroupPath = "/groups/testString/members/testString";
+    String isMemberOfAccessGroupPath = "/v2/groups/testString/members/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -435,6 +485,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, isMemberOfAccessGroupPath);
   }
+  
+  public void testIsMemberOfAccessGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testIsMemberOfAccessGroupWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testIsMemberOfAccessGroupWOptions();
+
+    // Disable retries and run testIsMemberOfAccessGroupWOptions.
+    iamAccessGroupsService.disableRetries();
+    testIsMemberOfAccessGroupWOptions();
+  }  
 
   // Test the isMemberOfAccessGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -452,7 +512,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testAddMembersToAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"members\": [{\"iam_id\": \"iamId\", \"type\": \"type\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"status_code\": 10, \"trace\": \"trace\", \"errors\": [{\"code\": \"code\", \"message\": \"message\"}]}]}";
-    String addMembersToAccessGroupPath = "/groups/testString/members";
+    String addMembersToAccessGroupPath = "/v2/groups/testString/members";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -493,6 +553,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, addMembersToAccessGroupPath);
   }
+  
+  public void testAddMembersToAccessGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testAddMembersToAccessGroupWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testAddMembersToAccessGroupWOptions();
+
+    // Disable retries and run testAddMembersToAccessGroupWOptions.
+    iamAccessGroupsService.disableRetries();
+    testAddMembersToAccessGroupWOptions();
+  }  
 
   // Test the addMembersToAccessGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -510,7 +580,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testListAccessGroupMembersWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"members\": [{\"iam_id\": \"iamId\", \"type\": \"type\", \"name\": \"name\", \"email\": \"email\", \"description\": \"description\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\"}]}";
-    String listAccessGroupMembersPath = "/groups/testString/members";
+    String listAccessGroupMembersPath = "/v2/groups/testString/members";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -526,7 +596,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     .limit(Long.valueOf("26"))
     .offset(Long.valueOf("26"))
     .type("testString")
-    .verbose(true)
+    .verbose(false)
     .sort("testString")
     .build();
 
@@ -548,12 +618,22 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
     assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
     assertEquals(query.get("type"), "testString");
-    assertEquals(Boolean.valueOf(query.get("verbose")), Boolean.valueOf(true));
+    assertEquals(Boolean.valueOf(query.get("verbose")), Boolean.valueOf(false));
     assertEquals(query.get("sort"), "testString");
     // Check request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listAccessGroupMembersPath);
   }
+  
+  public void testListAccessGroupMembersWOptionsWRetries() throws Throwable {
+    // Enable retries and run testListAccessGroupMembersWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testListAccessGroupMembersWOptions();
+
+    // Disable retries and run testListAccessGroupMembersWOptions.
+    iamAccessGroupsService.disableRetries();
+    testListAccessGroupMembersWOptions();
+  }  
 
   // Test the listAccessGroupMembers operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -571,7 +651,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testRemoveMemberFromAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String removeMemberFromAccessGroupPath = "/groups/testString/members/testString";
+    String removeMemberFromAccessGroupPath = "/v2/groups/testString/members/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -606,6 +686,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, removeMemberFromAccessGroupPath);
   }
+  
+  public void testRemoveMemberFromAccessGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testRemoveMemberFromAccessGroupWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testRemoveMemberFromAccessGroupWOptions();
+
+    // Disable retries and run testRemoveMemberFromAccessGroupWOptions.
+    iamAccessGroupsService.disableRetries();
+    testRemoveMemberFromAccessGroupWOptions();
+  }  
 
   // Test the removeMemberFromAccessGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -623,7 +713,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testRemoveMembersFromAccessGroupWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"access_group_id\": \"accessGroupId\", \"members\": [{\"iam_id\": \"iamId\", \"trace\": \"trace\", \"status_code\": 10, \"errors\": [{\"code\": \"code\", \"message\": \"message\"}]}]}";
-    String removeMembersFromAccessGroupPath = "/groups/testString/members/delete";
+    String removeMembersFromAccessGroupPath = "/v2/groups/testString/members/delete";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -658,6 +748,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, removeMembersFromAccessGroupPath);
   }
+  
+  public void testRemoveMembersFromAccessGroupWOptionsWRetries() throws Throwable {
+    // Enable retries and run testRemoveMembersFromAccessGroupWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testRemoveMembersFromAccessGroupWOptions();
+
+    // Disable retries and run testRemoveMembersFromAccessGroupWOptions.
+    iamAccessGroupsService.disableRetries();
+    testRemoveMembersFromAccessGroupWOptions();
+  }  
 
   // Test the removeMembersFromAccessGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -675,7 +775,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testRemoveMemberFromAllAccessGroupsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"iam_id\": \"iamId\", \"groups\": [{\"access_group_id\": \"accessGroupId\", \"status_code\": 10, \"trace\": \"trace\", \"errors\": [{\"code\": \"code\", \"message\": \"message\"}]}]}";
-    String removeMemberFromAllAccessGroupsPath = "/groups/_allgroups/members/testString";
+    String removeMemberFromAllAccessGroupsPath = "/v2/groups/_allgroups/members/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -711,6 +811,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, removeMemberFromAllAccessGroupsPath);
   }
+  
+  public void testRemoveMemberFromAllAccessGroupsWOptionsWRetries() throws Throwable {
+    // Enable retries and run testRemoveMemberFromAllAccessGroupsWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testRemoveMemberFromAllAccessGroupsWOptions();
+
+    // Disable retries and run testRemoveMemberFromAllAccessGroupsWOptions.
+    iamAccessGroupsService.disableRetries();
+    testRemoveMemberFromAllAccessGroupsWOptions();
+  }  
 
   // Test the removeMemberFromAllAccessGroups operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -728,7 +838,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testAddMemberToMultipleAccessGroupsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"iam_id\": \"iamId\", \"groups\": [{\"access_group_id\": \"accessGroupId\", \"status_code\": 10, \"trace\": \"trace\", \"errors\": [{\"code\": \"code\", \"message\": \"message\"}]}]}";
-    String addMemberToMultipleAccessGroupsPath = "/groups/_allgroups/members/testString";
+    String addMemberToMultipleAccessGroupsPath = "/v2/groups/_allgroups/members/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -766,6 +876,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, addMemberToMultipleAccessGroupsPath);
   }
+  
+  public void testAddMemberToMultipleAccessGroupsWOptionsWRetries() throws Throwable {
+    // Enable retries and run testAddMemberToMultipleAccessGroupsWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testAddMemberToMultipleAccessGroupsWOptions();
+
+    // Disable retries and run testAddMemberToMultipleAccessGroupsWOptions.
+    iamAccessGroupsService.disableRetries();
+    testAddMemberToMultipleAccessGroupsWOptions();
+  }  
 
   // Test the addMemberToMultipleAccessGroups operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -783,7 +903,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testAddAccessGroupRuleWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"EQUALS\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
-    String addAccessGroupRulePath = "/groups/testString/rules";
+    String addAccessGroupRulePath = "/v2/groups/testString/rules";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -828,6 +948,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, addAccessGroupRulePath);
   }
+  
+  public void testAddAccessGroupRuleWOptionsWRetries() throws Throwable {
+    // Enable retries and run testAddAccessGroupRuleWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testAddAccessGroupRuleWOptions();
+
+    // Disable retries and run testAddAccessGroupRuleWOptions.
+    iamAccessGroupsService.disableRetries();
+    testAddAccessGroupRuleWOptions();
+  }  
 
   // Test the addAccessGroupRule operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -845,7 +975,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testListAccessGroupRulesWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"rules\": [{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"EQUALS\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
-    String listAccessGroupRulesPath = "/groups/testString/rules";
+    String listAccessGroupRulesPath = "/v2/groups/testString/rules";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -879,6 +1009,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listAccessGroupRulesPath);
   }
+  
+  public void testListAccessGroupRulesWOptionsWRetries() throws Throwable {
+    // Enable retries and run testListAccessGroupRulesWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testListAccessGroupRulesWOptions();
+
+    // Disable retries and run testListAccessGroupRulesWOptions.
+    iamAccessGroupsService.disableRetries();
+    testListAccessGroupRulesWOptions();
+  }  
 
   // Test the listAccessGroupRules operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -896,7 +1036,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testGetAccessGroupRuleWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"EQUALS\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
-    String getAccessGroupRulePath = "/groups/testString/rules/testString";
+    String getAccessGroupRulePath = "/v2/groups/testString/rules/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -931,6 +1071,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getAccessGroupRulePath);
   }
+  
+  public void testGetAccessGroupRuleWOptionsWRetries() throws Throwable {
+    // Enable retries and run testGetAccessGroupRuleWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testGetAccessGroupRuleWOptions();
+
+    // Disable retries and run testGetAccessGroupRuleWOptions.
+    iamAccessGroupsService.disableRetries();
+    testGetAccessGroupRuleWOptions();
+  }  
 
   // Test the getAccessGroupRule operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -948,7 +1098,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testReplaceAccessGroupRuleWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"access_group_id\": \"accessGroupId\", \"account_id\": \"accountId\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"EQUALS\", \"value\": \"value\"}], \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
-    String replaceAccessGroupRulePath = "/groups/testString/rules/testString";
+    String replaceAccessGroupRulePath = "/v2/groups/testString/rules/testString";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -996,6 +1146,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, replaceAccessGroupRulePath);
   }
+  
+  public void testReplaceAccessGroupRuleWOptionsWRetries() throws Throwable {
+    // Enable retries and run testReplaceAccessGroupRuleWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testReplaceAccessGroupRuleWOptions();
+
+    // Disable retries and run testReplaceAccessGroupRuleWOptions.
+    iamAccessGroupsService.disableRetries();
+    testReplaceAccessGroupRuleWOptions();
+  }  
 
   // Test the replaceAccessGroupRule operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1013,7 +1173,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testRemoveAccessGroupRuleWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String removeAccessGroupRulePath = "/groups/testString/rules/testString";
+    String removeAccessGroupRulePath = "/v2/groups/testString/rules/testString";
 
     server.enqueue(new MockResponse()
     .setResponseCode(204)
@@ -1048,6 +1208,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, removeAccessGroupRulePath);
   }
+  
+  public void testRemoveAccessGroupRuleWOptionsWRetries() throws Throwable {
+    // Enable retries and run testRemoveAccessGroupRuleWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testRemoveAccessGroupRuleWOptions();
+
+    // Disable retries and run testRemoveAccessGroupRuleWOptions.
+    iamAccessGroupsService.disableRetries();
+    testRemoveAccessGroupRuleWOptions();
+  }  
 
   // Test the removeAccessGroupRule operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1065,7 +1235,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testGetAccountSettingsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
-    String getAccountSettingsPath = "/groups/settings";
+    String getAccountSettingsPath = "/v2/groups/settings";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -1100,6 +1270,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getAccountSettingsPath);
   }
+  
+  public void testGetAccountSettingsWOptionsWRetries() throws Throwable {
+    // Enable retries and run testGetAccountSettingsWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testGetAccountSettingsWOptions();
+
+    // Disable retries and run testGetAccountSettingsWOptions.
+    iamAccessGroupsService.disableRetries();
+    testGetAccountSettingsWOptions();
+  }  
 
   // Test the getAccountSettings operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1117,7 +1297,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   public void testUpdateAccountSettingsWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "{\"account_id\": \"accountId\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"public_access_enabled\": false}";
-    String updateAccountSettingsPath = "/groups/settings";
+    String updateAccountSettingsPath = "/v2/groups/settings";
 
     server.enqueue(new MockResponse()
     .setHeader("Content-type", "application/json")
@@ -1153,6 +1333,16 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateAccountSettingsPath);
   }
+  
+  public void testUpdateAccountSettingsWOptionsWRetries() throws Throwable {
+    // Enable retries and run testUpdateAccountSettingsWOptions.
+    iamAccessGroupsService.enableRetries(4, 30);
+    testUpdateAccountSettingsWOptions();
+
+    // Disable retries and run testUpdateAccountSettingsWOptions.
+    iamAccessGroupsService.disableRetries();
+    testUpdateAccountSettingsWOptions();
+  }  
 
   // Test the updateAccountSettings operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)

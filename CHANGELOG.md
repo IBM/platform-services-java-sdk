@@ -1,3 +1,10 @@
+## [0.22.5](https://github.com/IBM/platform-services-java-sdk/compare/0.22.4...0.22.5) (2021-12-03)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** update service after service url adjustment ([#134](https://github.com/IBM/platform-services-java-sdk/issues/134)) ([f2435fa](https://github.com/IBM/platform-services-java-sdk/commit/f2435faf520b072e488f2b47a7a3973a8c503119))
+
 ## [0.22.4](https://github.com/IBM/platform-services-java-sdk/compare/0.22.3...0.22.4) (2021-11-11)
 
 

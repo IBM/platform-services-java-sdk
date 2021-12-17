@@ -12,13 +12,13 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.google.gson.annotations.SerializedName;
-import com.ibm.cloud.sdk.core.service.model.GenericModel;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.annotations.SerializedName;
+import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
  * Offering information.
@@ -71,8 +71,12 @@ public class Offering extends GenericModel {
   protected String disclaimer;
   protected Boolean hidden;
   protected String provider;
+  @SerializedName("provider_info")
+  protected ProviderInfo providerInfo;
   @SerializedName("repo_info")
   protected RepoInfo repoInfo;
+  protected Support support;
+  protected List<MediaItem> media;
 
   /**
    * Builder.
@@ -109,7 +113,10 @@ public class Offering extends GenericModel {
     private String disclaimer;
     private Boolean hidden;
     private String provider;
+    private ProviderInfo providerInfo;
     private RepoInfo repoInfo;
+    private Support support;
+    private List<MediaItem> media;
 
     private Builder(Offering offering) {
       this.id = offering.id;
@@ -143,7 +150,10 @@ public class Offering extends GenericModel {
       this.disclaimer = offering.disclaimer;
       this.hidden = offering.hidden;
       this.provider = offering.provider;
+      this.providerInfo = offering.providerInfo;
       this.repoInfo = offering.repoInfo;
+      this.support = offering.support;
+      this.media = offering.media;
     }
 
     /**
@@ -222,6 +232,22 @@ public class Offering extends GenericModel {
         this.kinds = new ArrayList<Kind>();
       }
       this.kinds.add(kinds);
+      return this;
+    }
+
+    /**
+     * Adds an media to media.
+     *
+     * @param media the new media
+     * @return the Offering builder
+     */
+    public Builder addMedia(MediaItem media) {
+      com.ibm.cloud.sdk.core.util.Validator.notNull(media,
+        "media cannot be null");
+      if (this.media == null) {
+        this.media = new ArrayList<MediaItem>();
+      }
+      this.media.add(media);
       return this;
     }
 
@@ -571,6 +597,17 @@ public class Offering extends GenericModel {
     }
 
     /**
+     * Set the providerInfo.
+     *
+     * @param providerInfo the providerInfo
+     * @return the Offering builder
+     */
+    public Builder providerInfo(ProviderInfo providerInfo) {
+      this.providerInfo = providerInfo;
+      return this;
+    }
+
+    /**
      * Set the repoInfo.
      *
      * @param repoInfo the repoInfo
@@ -578,6 +615,29 @@ public class Offering extends GenericModel {
      */
     public Builder repoInfo(RepoInfo repoInfo) {
       this.repoInfo = repoInfo;
+      return this;
+    }
+
+    /**
+     * Set the support.
+     *
+     * @param support the support
+     * @return the Offering builder
+     */
+    public Builder support(Support support) {
+      this.support = support;
+      return this;
+    }
+
+    /**
+     * Set the media.
+     * Existing media will be replaced.
+     *
+     * @param media the media
+     * @return the Offering builder
+     */
+    public Builder media(List<MediaItem> media) {
+      this.media = media;
       return this;
     }
   }
@@ -614,7 +674,10 @@ public class Offering extends GenericModel {
     disclaimer = builder.disclaimer;
     hidden = builder.hidden;
     provider = builder.provider;
+    providerInfo = builder.providerInfo;
     repoInfo = builder.repoInfo;
+    support = builder.support;
+    media = builder.media;
   }
 
   /**
@@ -717,7 +780,8 @@ public class Offering extends GenericModel {
   /**
    * Gets the offeringSupportUrl.
    *
-   * URL to be displayed in the Consumption UI for getting support on this offering.
+   * [deprecated] - Use offering.support instead.  URL to be displayed in the Consumption UI for getting support on this
+   * offering.
    *
    * @return the offeringSupportUrl
    */
@@ -959,12 +1023,23 @@ public class Offering extends GenericModel {
   /**
    * Gets the provider.
    *
-   * Provider of this offering.
+   * Deprecated - Provider of this offering.
    *
    * @return the provider
    */
   public String provider() {
     return provider;
+  }
+
+  /**
+   * Gets the providerInfo.
+   *
+   * Information on the provider for this offering, or omitted if no provider information is given.
+   *
+   * @return the providerInfo
+   */
+  public ProviderInfo providerInfo() {
+    return providerInfo;
   }
 
   /**
@@ -977,5 +1052,28 @@ public class Offering extends GenericModel {
   public RepoInfo repoInfo() {
     return repoInfo;
   }
+
+  /**
+   * Gets the support.
+   *
+   * Offering Support information.
+   *
+   * @return the support
+   */
+  public Support support() {
+    return support;
+  }
+
+  /**
+   * Gets the media.
+   *
+   * A list of media items related to this offering.
+   *
+   * @return the media
+   */
+  public List<MediaItem> media() {
+    return media;
+  }
+
 }
 

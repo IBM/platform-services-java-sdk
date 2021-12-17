@@ -13,15 +13,14 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
+import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateOfferingIbmOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import org.testng.annotations.Test;
-
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
-
-import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * Unit test class for the UpdateOfferingIbmOptions model.
@@ -35,12 +34,12 @@ public class UpdateOfferingIbmOptionsTest {
     UpdateOfferingIbmOptions updateOfferingIbmOptionsModel = new UpdateOfferingIbmOptions.Builder()
       .catalogIdentifier("testString")
       .offeringId("testString")
-      .approvalType("allow_request")
+      .approvalType("pc_managed")
       .approved("true")
       .build();
     assertEquals(updateOfferingIbmOptionsModel.catalogIdentifier(), "testString");
     assertEquals(updateOfferingIbmOptionsModel.offeringId(), "testString");
-    assertEquals(updateOfferingIbmOptionsModel.approvalType(), "allow_request");
+    assertEquals(updateOfferingIbmOptionsModel.approvalType(), "pc_managed");
     assertEquals(updateOfferingIbmOptionsModel.approved(), "true");
   }
 

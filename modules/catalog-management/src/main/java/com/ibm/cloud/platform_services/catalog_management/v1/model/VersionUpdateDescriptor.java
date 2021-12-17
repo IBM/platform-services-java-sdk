@@ -12,11 +12,11 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
-import com.google.gson.annotations.SerializedName;
-import com.ibm.cloud.sdk.core.service.model.GenericModel;
-
 import java.util.List;
 import java.util.Map;
+
+import com.google.gson.annotations.SerializedName;
+import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
  * Indicates if the current version can be upgraded to the version identified by the descriptor.
@@ -31,6 +31,7 @@ public class VersionUpdateDescriptor extends GenericModel {
   protected List<Resource> requiredResources;
   @SerializedName("package_version")
   protected String packageVersion;
+  protected String sha;
   @SerializedName("can_update")
   protected Boolean canUpdate;
   protected Map<String, String> messages;
@@ -88,6 +89,17 @@ public class VersionUpdateDescriptor extends GenericModel {
    */
   public String getPackageVersion() {
     return packageVersion;
+  }
+
+  /**
+   * Gets the sha.
+   *
+   * The SHA value of this version.
+   *
+   * @return the sha
+   */
+  public String getSha() {
+    return sha;
   }
 
   /**

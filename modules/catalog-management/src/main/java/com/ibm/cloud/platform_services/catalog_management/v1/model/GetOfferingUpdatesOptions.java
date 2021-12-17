@@ -12,6 +12,9 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
@@ -22,11 +25,17 @@ public class GetOfferingUpdatesOptions extends GenericModel {
   protected String catalogIdentifier;
   protected String offeringId;
   protected String kind;
+  protected String xAuthRefreshToken;
+  protected String target;
   protected String version;
   protected String clusterId;
   protected String region;
   protected String resourceGroupId;
   protected String namespace;
+  protected String sha;
+  protected String channel;
+  protected List<String> namespaces;
+  protected Boolean allNamespaces;
 
   /**
    * Builder.
@@ -35,21 +44,33 @@ public class GetOfferingUpdatesOptions extends GenericModel {
     private String catalogIdentifier;
     private String offeringId;
     private String kind;
+    private String xAuthRefreshToken;
+    private String target;
     private String version;
     private String clusterId;
     private String region;
     private String resourceGroupId;
     private String namespace;
+    private String sha;
+    private String channel;
+    private List<String> namespaces;
+    private Boolean allNamespaces;
 
     private Builder(GetOfferingUpdatesOptions getOfferingUpdatesOptions) {
       this.catalogIdentifier = getOfferingUpdatesOptions.catalogIdentifier;
       this.offeringId = getOfferingUpdatesOptions.offeringId;
       this.kind = getOfferingUpdatesOptions.kind;
+      this.xAuthRefreshToken = getOfferingUpdatesOptions.xAuthRefreshToken;
+      this.target = getOfferingUpdatesOptions.target;
       this.version = getOfferingUpdatesOptions.version;
       this.clusterId = getOfferingUpdatesOptions.clusterId;
       this.region = getOfferingUpdatesOptions.region;
       this.resourceGroupId = getOfferingUpdatesOptions.resourceGroupId;
       this.namespace = getOfferingUpdatesOptions.namespace;
+      this.sha = getOfferingUpdatesOptions.sha;
+      this.channel = getOfferingUpdatesOptions.channel;
+      this.namespaces = getOfferingUpdatesOptions.namespaces;
+      this.allNamespaces = getOfferingUpdatesOptions.allNamespaces;
     }
 
     /**
@@ -64,11 +85,13 @@ public class GetOfferingUpdatesOptions extends GenericModel {
      * @param catalogIdentifier the catalogIdentifier
      * @param offeringId the offeringId
      * @param kind the kind
+     * @param xAuthRefreshToken the xAuthRefreshToken
      */
-    public Builder(String catalogIdentifier, String offeringId, String kind) {
+    public Builder(String catalogIdentifier, String offeringId, String kind, String xAuthRefreshToken) {
       this.catalogIdentifier = catalogIdentifier;
       this.offeringId = offeringId;
       this.kind = kind;
+      this.xAuthRefreshToken = xAuthRefreshToken;
     }
 
     /**
@@ -78,6 +101,22 @@ public class GetOfferingUpdatesOptions extends GenericModel {
      */
     public GetOfferingUpdatesOptions build() {
       return new GetOfferingUpdatesOptions(this);
+    }
+
+    /**
+     * Adds an namespaces to namespaces.
+     *
+     * @param namespaces the new namespaces
+     * @return the GetOfferingUpdatesOptions builder
+     */
+    public Builder addNamespaces(String namespaces) {
+      com.ibm.cloud.sdk.core.util.Validator.notNull(namespaces,
+        "namespaces cannot be null");
+      if (this.namespaces == null) {
+        this.namespaces = new ArrayList<String>();
+      }
+      this.namespaces.add(namespaces);
+      return this;
     }
 
     /**
@@ -110,6 +149,28 @@ public class GetOfferingUpdatesOptions extends GenericModel {
      */
     public Builder kind(String kind) {
       this.kind = kind;
+      return this;
+    }
+
+    /**
+     * Set the xAuthRefreshToken.
+     *
+     * @param xAuthRefreshToken the xAuthRefreshToken
+     * @return the GetOfferingUpdatesOptions builder
+     */
+    public Builder xAuthRefreshToken(String xAuthRefreshToken) {
+      this.xAuthRefreshToken = xAuthRefreshToken;
+      return this;
+    }
+
+    /**
+     * Set the target.
+     *
+     * @param target the target
+     * @return the GetOfferingUpdatesOptions builder
+     */
+    public Builder target(String target) {
+      this.target = target;
       return this;
     }
 
@@ -167,6 +228,51 @@ public class GetOfferingUpdatesOptions extends GenericModel {
       this.namespace = namespace;
       return this;
     }
+
+    /**
+     * Set the sha.
+     *
+     * @param sha the sha
+     * @return the GetOfferingUpdatesOptions builder
+     */
+    public Builder sha(String sha) {
+      this.sha = sha;
+      return this;
+    }
+
+    /**
+     * Set the channel.
+     *
+     * @param channel the channel
+     * @return the GetOfferingUpdatesOptions builder
+     */
+    public Builder channel(String channel) {
+      this.channel = channel;
+      return this;
+    }
+
+    /**
+     * Set the namespaces.
+     * Existing namespaces will be replaced.
+     *
+     * @param namespaces the namespaces
+     * @return the GetOfferingUpdatesOptions builder
+     */
+    public Builder namespaces(List<String> namespaces) {
+      this.namespaces = namespaces;
+      return this;
+    }
+
+    /**
+     * Set the allNamespaces.
+     *
+     * @param allNamespaces the allNamespaces
+     * @return the GetOfferingUpdatesOptions builder
+     */
+    public Builder allNamespaces(Boolean allNamespaces) {
+      this.allNamespaces = allNamespaces;
+      return this;
+    }
   }
 
   protected GetOfferingUpdatesOptions(Builder builder) {
@@ -176,14 +282,22 @@ public class GetOfferingUpdatesOptions extends GenericModel {
       "offeringId cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.kind,
       "kind cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.xAuthRefreshToken,
+      "xAuthRefreshToken cannot be null");
     catalogIdentifier = builder.catalogIdentifier;
     offeringId = builder.offeringId;
     kind = builder.kind;
+    xAuthRefreshToken = builder.xAuthRefreshToken;
+    target = builder.target;
     version = builder.version;
     clusterId = builder.clusterId;
     region = builder.region;
     resourceGroupId = builder.resourceGroupId;
     namespace = builder.namespace;
+    sha = builder.sha;
+    channel = builder.channel;
+    namespaces = builder.namespaces;
+    allNamespaces = builder.allNamespaces;
   }
 
   /**
@@ -226,6 +340,28 @@ public class GetOfferingUpdatesOptions extends GenericModel {
    */
   public String kind() {
     return kind;
+  }
+
+  /**
+   * Gets the xAuthRefreshToken.
+   *
+   * IAM Refresh token.
+   *
+   * @return the xAuthRefreshToken
+   */
+  public String xAuthRefreshToken() {
+    return xAuthRefreshToken;
+  }
+
+  /**
+   * Gets the target.
+   *
+   * The target kind of the currently installed version (e.g. iks, roks, etc).
+   *
+   * @return the target
+   */
+  public String target() {
+    return target;
   }
 
   /**
@@ -281,6 +417,50 @@ public class GetOfferingUpdatesOptions extends GenericModel {
    */
   public String namespace() {
     return namespace;
+  }
+
+  /**
+   * Gets the sha.
+   *
+   * The sha value of the currently installed version.
+   *
+   * @return the sha
+   */
+  public String sha() {
+    return sha;
+  }
+
+  /**
+   * Gets the channel.
+   *
+   * Optionally provide the channel value of the currently installed version.
+   *
+   * @return the channel
+   */
+  public String channel() {
+    return channel;
+  }
+
+  /**
+   * Gets the namespaces.
+   *
+   * Optionally provide a list of namespaces used for the currently installed version.
+   *
+   * @return the namespaces
+   */
+  public List<String> namespaces() {
+    return namespaces;
+  }
+
+  /**
+   * Gets the allNamespaces.
+   *
+   * Optionally indicate that the current version was installed in all namespaces.
+   *
+   * @return the allNamespaces
+   */
+  public Boolean allNamespaces() {
+    return allNamespaces;
   }
 }
 

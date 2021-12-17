@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2021.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,6 +21,8 @@ public class GetOfferingOptions extends GenericModel {
 
   protected String catalogIdentifier;
   protected String offeringId;
+  protected String type;
+  protected Boolean digest;
 
   /**
    * Builder.
@@ -28,10 +30,14 @@ public class GetOfferingOptions extends GenericModel {
   public static class Builder {
     private String catalogIdentifier;
     private String offeringId;
+    private String type;
+    private Boolean digest;
 
     private Builder(GetOfferingOptions getOfferingOptions) {
       this.catalogIdentifier = getOfferingOptions.catalogIdentifier;
       this.offeringId = getOfferingOptions.offeringId;
+      this.type = getOfferingOptions.type;
+      this.digest = getOfferingOptions.digest;
     }
 
     /**
@@ -81,6 +87,28 @@ public class GetOfferingOptions extends GenericModel {
       this.offeringId = offeringId;
       return this;
     }
+
+    /**
+     * Set the type.
+     *
+     * @param type the type
+     * @return the GetOfferingOptions builder
+     */
+    public Builder type(String type) {
+      this.type = type;
+      return this;
+    }
+
+    /**
+     * Set the digest.
+     *
+     * @param digest the digest
+     * @return the GetOfferingOptions builder
+     */
+    public Builder digest(Boolean digest) {
+      this.digest = digest;
+      return this;
+    }
   }
 
   protected GetOfferingOptions(Builder builder) {
@@ -90,6 +118,8 @@ public class GetOfferingOptions extends GenericModel {
       "offeringId cannot be empty");
     catalogIdentifier = builder.catalogIdentifier;
     offeringId = builder.offeringId;
+    type = builder.type;
+    digest = builder.digest;
   }
 
   /**
@@ -121,6 +151,28 @@ public class GetOfferingOptions extends GenericModel {
    */
   public String offeringId() {
     return offeringId;
+  }
+
+  /**
+   * Gets the type.
+   *
+   * Offering Parameter Type.  Valid values are 'name' or 'id'.  Default is 'id'.
+   *
+   * @return the type
+   */
+  public String type() {
+    return type;
+  }
+
+  /**
+   * Gets the digest.
+   *
+   * Return the digest format of the specified offering.  Default is false.
+   *
+   * @return the digest
+   */
+  public Boolean digest() {
+    return digest;
   }
 }
 

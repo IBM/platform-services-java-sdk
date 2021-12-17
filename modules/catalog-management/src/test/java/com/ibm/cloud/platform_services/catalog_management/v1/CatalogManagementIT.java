@@ -93,6 +93,8 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceCatalo
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingIconOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.JsonPatchOperation;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOperatorsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchObjectsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SharedPublishObjectOptions;
@@ -124,6 +126,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -676,6 +679,60 @@ public class CatalogManagementIT extends SdkIntegrationTestBase {
       
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
+          e.getDebuggingInfo()));
+    }
+  }
+
+  //====
+  // Update Offering block
+  //====
+
+  @Test(dependsOnMethods = {"testGetOffering"})
+  public void testUpdateOffering() throws Exception {
+    try {
+      // Get offering to use rev
+      GetOfferingOptions getOfferingOptions = new GetOfferingOptions.Builder()
+          .catalogIdentifier(catalogId)
+          .offeringId(offeringId)
+          .build();
+      
+      Response<Offering> response = catalogManagementServiceAuthorized.getOffering(getOfferingOptions).execute();
+      
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+      
+      Offering offeringResult = response.getResult();
+
+      String updatedOfferingName = "updated-offering-name-by-java-sdk-patch";
+      // Object value = new HashMap<String, Object>();
+      // value.put("", updatedOfferingName);
+
+      List<JsonPatchOperation> updates = new ArrayList<>(Arrays.asList(new JsonPatchOperation.Builder()
+        .op("replace")
+        .path("/name")
+        .value(updatedOfferingName)
+        .build()
+      ));
+
+      UpdateOfferingOptions updateOfferingOptions = new UpdateOfferingOptions.Builder()
+        .catalogIdentifier(catalogId)
+        .offeringId(offeringId)
+        .ifMatch("\"" + offeringResult.rev() + "\"")
+        .updates(updates)
+        .build();
+
+      Response<Offering> patchResponse = catalogManagementServiceAuthorized.updateOffering(updateOfferingOptions).execute();
+
+      assertNotNull(patchResponse);
+      assertEquals(response.getStatusCode(), 200);
+
+      Offering offeringResultPatch = patchResponse.getResult();
+
+      assertEquals(offeringResultPatch.id(), offeringId);
+      assertEquals(offeringResultPatch.catalogId(), catalogId);
+      assertEquals(offeringResultPatch.name(), updatedOfferingName);
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service return status code %d: %s\nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
     }
   }

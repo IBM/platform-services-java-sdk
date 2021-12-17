@@ -12,20 +12,20 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1.utils;
 
-import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
-import com.ibm.cloud.sdk.core.util.GsonSingleton;
-import okhttp3.HttpUrl;
-import okhttp3.mockwebserver.RecordedRequest;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.util.Map;
+import java.util.Set;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+
+import okhttp3.mockwebserver.RecordedRequest;
+import okhttp3.HttpUrl;
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import com.ibm.cloud.sdk.core.util.GsonSingleton;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 
 /**
  *  A class used by the unit tests containing utility functions.

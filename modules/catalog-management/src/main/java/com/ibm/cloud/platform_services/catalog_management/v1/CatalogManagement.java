@@ -1263,7 +1263,7 @@ public class CatalogManagement extends BaseService {
     pathParamsMap.put("catalog_identifier", deprecateOfferingOptions.catalogIdentifier());
     pathParamsMap.put("offering_id", deprecateOfferingOptions.offeringId());
     pathParamsMap.put("setting", deprecateOfferingOptions.setting());
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}/deprecate/{approved}", pathParamsMap));
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}/deprecate/{setting}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deprecateOffering");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());

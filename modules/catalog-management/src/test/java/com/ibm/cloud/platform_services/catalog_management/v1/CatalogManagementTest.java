@@ -2199,7 +2199,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
   public void testDeprecateOfferingWOptions() throws Throwable {
     // Schedule some responses.
     String mockResponseBody = "";
-    String deprecateOfferingPath = "/catalogs/testString/offerings/testString/deprecate/%7Bapproved%7D";
+    String deprecateOfferingPath = "/catalogs/testString/offerings/testString/deprecate/true";
 
     server.enqueue(new MockResponse()
     .setResponseCode(202)

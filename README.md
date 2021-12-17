@@ -8,7 +8,7 @@
 
 
 
-# IBM Cloud Platform Services Java SDK Version 0.22.5
+# IBM Cloud Platform Services Java SDK Version 0.22.6
 
 Java client library to interact with various 
 [IBM Cloud Platform Service APIs](https://cloud.ibm.com/docs?tab=api-docs&category=platform_services).
@@ -47,27 +47,27 @@ The IBM Cloud Platform Services Java SDK allows developers to programmatically i
 
 Service Name | Artifact Coordinates
 --- | --- 
-[Case Management](https://cloud.ibm.com/apidocs/case-management?code=java) | com.ibm.cloud:case-management:0.22.5
-[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog?code=java) | com.ibm.cloud:catalog-management:0.22.5
-[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config?code=java) | com.ibm.cloud:configuration-governance:0.22.5
-[Context Based Restrictions](https://cloud.ibm.com/apidocs/context-based-restrictions?code=java) | com.ibm.cloud:context-based-restrictions:0.22.5
-[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit?code=java) | com.ibm.cloud:enterprise-billing-units:0.22.5
-[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise?code=java) | com.ibm.cloud:enterprise-management:0.22.5
-[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports?code=java) | com.ibm.cloud:enterprise-usage-reports:0.22.5
-[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog?code=java) | com.ibm.cloud:global-catalog:0.22.5
-[Global Search](https://cloud.ibm.com/apidocs/search?code=java) | com.ibm.cloud:global-search:0.22.5
-[Global Tagging](https://cloud.ibm.com/apidocs/tagging?code=java) | com.ibm.cloud:global-tagging:0.22.5
-[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups?code=java) | com.ibm.cloud:iam-access-groups:0.22.5
-[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api?code=java) | com.ibm.cloud:iam-identity:0.22.5
-[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management?code=java) | com.ibm.cloud:iam-policy-management:0.22.5
-[IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=java) | com.ibm.cloud:ibm-cloud-shell:0.22.5
-[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=java) | com.ibm.cloud:open-service-broker:0.22.5
-[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture?code=java) | com.ibm.cloud:posture_management:0.22.5
-[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=java) | com.ibm.cloud:resource-controller:0.22.5
-[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=java) | com.ibm.cloud:resource-manager:0.22.5
-[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering?code=java) | com.ibm.cloud:usage-metering:0.22.5
-[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting?code=java) | com.ibm.cloud:usage-reports:0.22.5
-[User Management](https://cloud.ibm.com/apidocs/user-management?code=java) | com.ibm.cloud:user-management:0.22.5
+[Case Management](https://cloud.ibm.com/apidocs/case-management?code=java) | com.ibm.cloud:case-management:0.22.6
+[Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog?code=java) | com.ibm.cloud:catalog-management:0.22.6
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config?code=java) | com.ibm.cloud:configuration-governance:0.22.6
+[Context Based Restrictions](https://cloud.ibm.com/apidocs/context-based-restrictions?code=java) | com.ibm.cloud:context-based-restrictions:0.22.6
+[Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit?code=java) | com.ibm.cloud:enterprise-billing-units:0.22.6
+[Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise?code=java) | com.ibm.cloud:enterprise-management:0.22.6
+[Enterprise Usage Reports](https://cloud.ibm.com/apidocs/enterprise-apis/resource-usage-reports?code=java) | com.ibm.cloud:enterprise-usage-reports:0.22.6
+[Global Catalog](https://cloud.ibm.com/apidocs/resource-catalog/global-catalog?code=java) | com.ibm.cloud:global-catalog:0.22.6
+[Global Search](https://cloud.ibm.com/apidocs/search?code=java) | com.ibm.cloud:global-search:0.22.6
+[Global Tagging](https://cloud.ibm.com/apidocs/tagging?code=java) | com.ibm.cloud:global-tagging:0.22.6
+[IAM Access Groups](https://cloud.ibm.com/apidocs/iam-access-groups?code=java) | com.ibm.cloud:iam-access-groups:0.22.6
+[IAM Identity Service](https://cloud.ibm.com/apidocs/iam-identity-token-api?code=java) | com.ibm.cloud:iam-identity:0.22.6
+[IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management?code=java) | com.ibm.cloud:iam-policy-management:0.22.6
+[IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=java) | com.ibm.cloud:ibm-cloud-shell:0.22.6
+[Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=java) | com.ibm.cloud:open-service-broker:0.22.6
+[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture?code=java) | com.ibm.cloud:posture_management:0.22.6
+[Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=java) | com.ibm.cloud:resource-controller:0.22.6
+[Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=java) | com.ibm.cloud:resource-manager:0.22.6
+[Usage Metering](https://cloud.ibm.com/apidocs/usage-metering?code=java) | com.ibm.cloud:usage-metering:0.22.6
+[Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting?code=java) | com.ibm.cloud:usage-reports:0.22.6
+[User Management](https://cloud.ibm.com/apidocs/user-management?code=java) | com.ibm.cloud:user-management:0.22.6
 
 ## Prerequisites
 
@@ -78,7 +78,7 @@ Service Name | Artifact Coordinates
 * Java 8 or above.
 
 ## Installation
-The current version of this SDK is: 0.22.5
+The current version of this SDK is: 0.22.6
 
 Each service's artifact coordinates are listed in the table above.
 
@@ -97,13 +97,13 @@ Here are examples for maven and gradle:
 <dependency>
     <groupId>com.ibm.cloud</groupId>
     <artifactId>case-management</artifactId>
-    <version>0.22.5</version>
+    <version>0.22.6</version>
 </dependency>
 ```
 
 ### Gradle
 ```gradle
-compile 'com.ibm.cloud:case-management:0.22.5'
+compile 'com.ibm.cloud:case-management:0.22.6'
 ```
 
 ## Using the SDK

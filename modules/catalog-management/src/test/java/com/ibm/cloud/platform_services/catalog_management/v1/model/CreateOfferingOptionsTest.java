@@ -13,16 +13,34 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Configuration;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Deployment;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Feature;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Kind;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.License;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.MediaItem;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Plan;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.ProviderInfo;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Rating;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.RepoInfo;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Resource;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Script;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.State;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Support;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Validation;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Version;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionEntitlement;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.DateUtils;
-import org.testng.annotations.Test;
-
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import static org.testng.Assert.assertEquals;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * Unit test class for the CreateOfferingOptions model.
@@ -278,12 +296,39 @@ public class CreateOfferingOptionsTest {
     assertEquals(kindModel.versions(), new java.util.ArrayList<Version>(java.util.Arrays.asList(versionModel)));
     assertEquals(kindModel.plans(), new java.util.ArrayList<Plan>(java.util.Arrays.asList(planModel)));
 
+    ProviderInfo providerInfoModel = new ProviderInfo.Builder()
+      .id("testString")
+      .name("testString")
+      .build();
+    assertEquals(providerInfoModel.id(), "testString");
+    assertEquals(providerInfoModel.name(), "testString");
+
     RepoInfo repoInfoModel = new RepoInfo.Builder()
       .token("testString")
       .type("testString")
       .build();
     assertEquals(repoInfoModel.token(), "testString");
     assertEquals(repoInfoModel.type(), "testString");
+
+    Support supportModel = new Support.Builder()
+      .url("testString")
+      .process("testString")
+      .locations(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .build();
+    assertEquals(supportModel.url(), "testString");
+    assertEquals(supportModel.process(), "testString");
+    assertEquals(supportModel.locations(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+
+    MediaItem mediaItemModel = new MediaItem.Builder()
+      .url("testString")
+      .caption("testString")
+      .type("testString")
+      .thumbnailUrl("testString")
+      .build();
+    assertEquals(mediaItemModel.url(), "testString");
+    assertEquals(mediaItemModel.caption(), "testString");
+    assertEquals(mediaItemModel.type(), "testString");
+    assertEquals(mediaItemModel.thumbnailUrl(), "testString");
 
     CreateOfferingOptions createOfferingOptionsModel = new CreateOfferingOptions.Builder()
       .catalogIdentifier("testString")
@@ -318,7 +363,10 @@ public class CreateOfferingOptionsTest {
       .disclaimer("testString")
       .hidden(true)
       .provider("testString")
+      .providerInfo(providerInfoModel)
       .repoInfo(repoInfoModel)
+      .support(supportModel)
+      .media(new java.util.ArrayList<MediaItem>(java.util.Arrays.asList(mediaItemModel)))
       .build();
     assertEquals(createOfferingOptionsModel.catalogIdentifier(), "testString");
     assertEquals(createOfferingOptionsModel.id(), "testString");
@@ -352,7 +400,10 @@ public class CreateOfferingOptionsTest {
     assertEquals(createOfferingOptionsModel.disclaimer(), "testString");
     assertEquals(createOfferingOptionsModel.hidden(), Boolean.valueOf(true));
     assertEquals(createOfferingOptionsModel.provider(), "testString");
+    assertEquals(createOfferingOptionsModel.providerInfo(), providerInfoModel);
     assertEquals(createOfferingOptionsModel.repoInfo(), repoInfoModel);
+    assertEquals(createOfferingOptionsModel.support(), supportModel);
+    assertEquals(createOfferingOptionsModel.media(), new java.util.ArrayList<MediaItem>(java.util.Arrays.asList(mediaItemModel)));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

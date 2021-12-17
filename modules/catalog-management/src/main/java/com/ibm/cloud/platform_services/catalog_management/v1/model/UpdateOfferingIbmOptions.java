@@ -23,6 +23,8 @@ public class UpdateOfferingIbmOptions extends GenericModel {
    * Type of approval, ibm or public.
    */
   public interface ApprovalType {
+    /** pc_managed. */
+    String PC_MANAGED = "pc_managed";
     /** allow_request. */
     String ALLOW_REQUEST = "allow_request";
     /** ibm. */

@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+ * IBM OpenAPI SDK Code Generator Version: 3.43.0-49eab5c7-20211117-152138
  */
 
 package com.ibm.cloud.platform_services.catalog_management.v1;
@@ -46,6 +46,7 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferin
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOperatorsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployOperatorsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.DeprecateOfferingOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.DeprecateVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountAuditOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountFiltersOptions;
@@ -65,6 +66,7 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingCo
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingInstanceOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingLicenseOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingSourceOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingUpdatesOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingWorkingCopyOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOverrideValuesOptions;
@@ -102,9 +104,11 @@ import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferi
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOperatorsOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchObjectsOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.SetDeprecateVersionOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.SharedPublishObjectOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateCatalogAccountOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateOfferingIbmOptions;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateOfferingOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.ValidateInstallOptions;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Validation;
 import com.ibm.cloud.platform_services.catalog_management.v1.model.Version;
@@ -116,8 +120,9 @@ import com.ibm.cloud.sdk.core.http.ServiceCall;
 import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
+import com.ibm.cloud.sdk.core.util.RequestUtils;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
-
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -127,7 +132,7 @@ import java.util.Map.Entry;
  * This is the API to use for managing private catalogs for IBM Cloud. Private catalogs provide a way to centrally
  * manage access to products in the IBM Cloud catalog and your own catalogs.
  *
- * @version v1
+ * API Version: 1.0
  */
 public class CatalogManagement extends BaseService {
 
@@ -773,8 +778,17 @@ public class CatalogManagement extends BaseService {
     if (createOfferingOptions.provider() != null) {
       contentJson.addProperty("provider", createOfferingOptions.provider());
     }
+    if (createOfferingOptions.providerInfo() != null) {
+      contentJson.add("provider_info", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingOptions.providerInfo()));
+    }
     if (createOfferingOptions.repoInfo() != null) {
       contentJson.add("repo_info", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingOptions.repoInfo()));
+    }
+    if (createOfferingOptions.support() != null) {
+      contentJson.add("support", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingOptions.support()));
+    }
+    if (createOfferingOptions.media() != null) {
+      contentJson.add("media", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createOfferingOptions.media()));
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Offering> responseConverter =
@@ -952,6 +966,12 @@ public class CatalogManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (getOfferingOptions.type() != null) {
+      builder.query("type", String.valueOf(getOfferingOptions.type()));
+    }
+    if (getOfferingOptions.digest() != null) {
+      builder.query("digest", String.valueOf(getOfferingOptions.digest()));
+    }
     ResponseConverter<Offering> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1071,10 +1091,48 @@ public class CatalogManagement extends BaseService {
     if (replaceOfferingOptions.provider() != null) {
       contentJson.addProperty("provider", replaceOfferingOptions.provider());
     }
+    if (replaceOfferingOptions.providerInfo() != null) {
+      contentJson.add("provider_info", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOfferingOptions.providerInfo()));
+    }
     if (replaceOfferingOptions.repoInfo() != null) {
       contentJson.add("repo_info", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOfferingOptions.repoInfo()));
     }
+    if (replaceOfferingOptions.support() != null) {
+      contentJson.add("support", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOfferingOptions.support()));
+    }
+    if (replaceOfferingOptions.media() != null) {
+      contentJson.add("media", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceOfferingOptions.media()));
+    }
     builder.bodyJson(contentJson);
+    ResponseConverter<Offering> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update offering.
+   *
+   * Update an offering.
+   *
+   * @param updateOfferingOptions the {@link UpdateOfferingOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link Offering}
+   */
+  public ServiceCall<Offering> updateOffering(UpdateOfferingOptions updateOfferingOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateOfferingOptions,
+      "updateOfferingOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", updateOfferingOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", updateOfferingOptions.offeringId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "updateOffering");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateOfferingOptions.ifMatch());
+    if (updateOfferingOptions.updates() != null) {
+      builder.bodyContent(com.ibm.cloud.sdk.core.util.GsonSingleton.getGsonWithoutPrettyPrinting().toJson(updateOfferingOptions.updates()), "application/json-patch+json");
+    }
     ResponseConverter<Offering> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Offering>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1166,7 +1224,7 @@ public class CatalogManagement extends BaseService {
    * automatically be disapproved. if disapprove `allow_request` then all rights to publish will be removed. This is
    * because the process steps always go first through `allow` to `ibm` and then to `public`. `ibm` cannot be skipped.
    * Only users with Approval IAM authority can use this. Approvers should use the catalog and offering id from the
-   * public catalog since they wouldn't have access to the private offering.'.
+   * public catalog since they wouldn't have access to the private offering.
    *
    * @param updateOfferingIbmOptions the {@link UpdateOfferingIbmOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApprovalResult}
@@ -1191,6 +1249,38 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
+   * Allows offering to be deprecated.
+   *
+   * Approve or disapprove the offering to be deprecated.
+   *
+   * @param deprecateOfferingOptions the {@link DeprecateOfferingOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deprecateOffering(DeprecateOfferingOptions deprecateOfferingOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deprecateOfferingOptions,
+      "deprecateOfferingOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("catalog_identifier", deprecateOfferingOptions.catalogIdentifier());
+    pathParamsMap.put("offering_id", deprecateOfferingOptions.offeringId());
+    pathParamsMap.put("setting", deprecateOfferingOptions.setting());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/catalogs/{catalog_identifier}/offerings/{offering_id}/deprecate/{setting}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "deprecateOffering");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    final JsonObject contentJson = new JsonObject();
+    if (deprecateOfferingOptions.description() != null) {
+      contentJson.addProperty("description", deprecateOfferingOptions.description());
+    }
+    if (deprecateOfferingOptions.daysUntilDeprecate() != null) {
+      contentJson.addProperty("days_until_deprecate", deprecateOfferingOptions.daysUntilDeprecate());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
    * Get version updates.
    *
    * Get available updates for the specified version.
@@ -1210,7 +1300,11 @@ public class CatalogManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    builder.header("X-Auth-Refresh-Token", getOfferingUpdatesOptions.xAuthRefreshToken());
     builder.query("kind", String.valueOf(getOfferingUpdatesOptions.kind()));
+    if (getOfferingUpdatesOptions.target() != null) {
+      builder.query("target", String.valueOf(getOfferingUpdatesOptions.target()));
+    }
     if (getOfferingUpdatesOptions.version() != null) {
       builder.query("version", String.valueOf(getOfferingUpdatesOptions.version()));
     }
@@ -1226,8 +1320,59 @@ public class CatalogManagement extends BaseService {
     if (getOfferingUpdatesOptions.namespace() != null) {
       builder.query("namespace", String.valueOf(getOfferingUpdatesOptions.namespace()));
     }
+    if (getOfferingUpdatesOptions.sha() != null) {
+      builder.query("sha", String.valueOf(getOfferingUpdatesOptions.sha()));
+    }
+    if (getOfferingUpdatesOptions.channel() != null) {
+      builder.query("channel", String.valueOf(getOfferingUpdatesOptions.channel()));
+    }
+    if (getOfferingUpdatesOptions.namespaces() != null) {
+      builder.query("namespaces", RequestUtils.join(getOfferingUpdatesOptions.namespaces(), ","));
+    }
+    if (getOfferingUpdatesOptions.allNamespaces() != null) {
+      builder.query("all_namespaces", String.valueOf(getOfferingUpdatesOptions.allNamespaces()));
+    }
     ResponseConverter<List<VersionUpdateDescriptor>> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<List<VersionUpdateDescriptor>>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get offering source.
+   *
+   * Get an offering's source.  This request requires authorization, even for public offerings.
+   *
+   * @param getOfferingSourceOptions the {@link GetOfferingSourceOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link InputStream}
+   */
+  public ServiceCall<InputStream> getOfferingSource(GetOfferingSourceOptions getOfferingSourceOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getOfferingSourceOptions,
+      "getOfferingSourceOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/offering/source"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "getOfferingSource");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    if (getOfferingSourceOptions.accept() != null) {
+      builder.header("Accept", getOfferingSourceOptions.accept());
+    }
+    builder.query("version", String.valueOf(getOfferingSourceOptions.version()));
+    if (getOfferingSourceOptions.catalogId() != null) {
+      builder.query("catalogID", String.valueOf(getOfferingSourceOptions.catalogId()));
+    }
+    if (getOfferingSourceOptions.name() != null) {
+      builder.query("name", String.valueOf(getOfferingSourceOptions.name()));
+    }
+    if (getOfferingSourceOptions.id() != null) {
+      builder.query("id", String.valueOf(getOfferingSourceOptions.id()));
+    }
+    if (getOfferingSourceOptions.kind() != null) {
+      builder.query("kind", String.valueOf(getOfferingSourceOptions.kind()));
+    }
+    if (getOfferingSourceOptions.channel() != null) {
+      builder.query("channel", String.valueOf(getOfferingSourceOptions.channel()));
+    }
+    ResponseConverter<InputStream> responseConverter = ResponseConverterUtils.getInputStream();
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -1304,7 +1449,7 @@ public class CatalogManagement extends BaseService {
   }
 
   /**
-   * Deprecate version.
+   * Deprecate version immediately.
    *
    * Deprecate the specified version.
    *
@@ -1321,6 +1466,37 @@ public class CatalogManagement extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Sets version to be deprecated in a certain time period.
+   *
+   * Set or cancel the version to be deprecated.
+   *
+   * @param setDeprecateVersionOptions the {@link SetDeprecateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> setDeprecateVersion(SetDeprecateVersionOptions setDeprecateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(setDeprecateVersionOptions,
+      "setDeprecateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("version_loc_id", setDeprecateVersionOptions.versionLocId());
+    pathParamsMap.put("setting", setDeprecateVersionOptions.setting());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/versions/{version_loc_id}/deprecate/{setting}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("catalog_management", "v1", "setDeprecateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    final JsonObject contentJson = new JsonObject();
+    if (setDeprecateVersionOptions.description() != null) {
+      contentJson.addProperty("description", setDeprecateVersionOptions.description());
+    }
+    if (setDeprecateVersionOptions.daysUntilDeprecate() != null) {
+      contentJson.addProperty("days_until_deprecate", setDeprecateVersionOptions.daysUntilDeprecate());
+    }
+    builder.bodyJson(contentJson);
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }

@@ -13,15 +13,17 @@
 
 package com.ibm.cloud.platform_services.catalog_management.v1.model;
 
+import com.ibm.cloud.platform_services.catalog_management.v1.model.Resource;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.State;
+import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionUpdateDescriptor;
 import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import org.testng.annotations.Test;
-
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
-
-import static org.testng.Assert.assertNull;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * Unit test class for the VersionUpdateDescriptor model.
@@ -38,6 +40,7 @@ public class VersionUpdateDescriptorTest {
     assertNull(versionUpdateDescriptorModel.getState());
     assertNull(versionUpdateDescriptorModel.getRequiredResources());
     assertNull(versionUpdateDescriptorModel.getPackageVersion());
+    assertNull(versionUpdateDescriptorModel.getSha());
     assertNull(versionUpdateDescriptorModel.isCanUpdate());
     assertNull(versionUpdateDescriptorModel.getMessages());
   }

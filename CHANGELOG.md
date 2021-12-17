@@ -1,3 +1,10 @@
+## [0.22.6](https://github.com/IBM/platform-services-java-sdk/compare/0.22.5...0.22.6) (2021-12-17)
+
+
+### Bug Fixes
+
+* **Catalog Management:** update service to add patch operation ([#135](https://github.com/IBM/platform-services-java-sdk/issues/135)) ([1894475](https://github.com/IBM/platform-services-java-sdk/commit/1894475180bb3aeb19bf8096feb7e9a7e66a7231))
+
 ## [0.22.5](https://github.com/IBM/platform-services-java-sdk/compare/0.22.4...0.22.5) (2021-12-03)
 
 

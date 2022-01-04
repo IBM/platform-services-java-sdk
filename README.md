@@ -2,7 +2,6 @@
 [![Javadoc](https://img.shields.io/static/v1?label=javadoc&message=latest&color=blue)](https://ibm.github.io/platform-services-java-sdk/docs/latest)
 [![Release](https://img.shields.io/github/v/release/IBM/platform-services-java-sdk)](https://github.com/IBM/platform-services-java-sdk/releases/latest)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![codecov](https://codecov.io/gh/IBM/platform-services-java-sdk/branch/main/graph/badge.svg)](https://codecov.io/gh/IBM/platform-services-java-sdk)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![CLA assistant](https://cla-assistant.io/readme/badge/IBM/platform-services-java-sdk)](https://cla-assistant.io/IBM/platform-services-java-sdk)
 

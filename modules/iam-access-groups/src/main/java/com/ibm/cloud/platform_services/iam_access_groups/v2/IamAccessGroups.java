@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.43.0-49eab5c7-20211117-152138
+ * IBM OpenAPI SDK Code Generator Version: 3.43.4-432d779b-20220119-173927
  */
 
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
@@ -319,10 +319,11 @@ public class IamAccessGroups extends BaseService {
   /**
    * Add members to an access group.
    *
-   * Use this API to add users (`IBMid-...`) or service IDs (`iam-ServiceId-...`) to an access group. Any member added
-   * gains access to resources defined in the group's policies. To revoke a given user's access, simply remove them from
-   * the group. There is no limit to the number of members one group can have, but each `iam_id` can only be added to 50
-   * groups. Additionally, this API request payload can add up to 50 members per call.
+   * Use this API to add users (`IBMid-...`), service IDs (`iam-ServiceId-...`) or trusted profiles (`iam-Profile-...`)
+   * to an access group. Any member added gains access to resources defined in the group's policies. To revoke a given
+   * members's access, simply remove them from the group. There is no limit to the number of members one group can have,
+   * but each `iam_id` can only be added to 50 groups. Additionally, this API request payload can add up to 50 members
+   * per call.
    *
    * @param addMembersToAccessGroupOptions the {@link AddMembersToAccessGroupOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link AddGroupMembersResponse}
@@ -355,9 +356,9 @@ public class IamAccessGroups extends BaseService {
    * List access group members.
    *
    * List all members of a given group using this API. Parameters for pagination and sorting can be used to filter the
-   * results. The most useful query parameter may be the `verbose` flag. If `verbose=true`, user and service ID names
-   * will be retrieved for each `iam_id`. If performance is a concern, leave the `verbose` parameter off so that name
-   * information does not get retrieved.
+   * results. The most useful query parameter may be the `verbose` flag. If `verbose=true`, user, service ID and trusted
+   * profile names will be retrieved for each `iam_id`. If performance is a concern, leave the `verbose` parameter off
+   * so that name information does not get retrieved.
    *
    * @param listAccessGroupMembersOptions the {@link ListAccessGroupMembersOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link GroupMembersList}

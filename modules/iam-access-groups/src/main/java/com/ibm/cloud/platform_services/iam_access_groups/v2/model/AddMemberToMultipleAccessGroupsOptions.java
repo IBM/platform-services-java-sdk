@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -193,7 +193,7 @@ public class AddMemberToMultipleAccessGroupsOptions extends GenericModel {
   /**
    * Gets the type.
    *
-   * The type of the member, must be either "user" or "service".
+   * The type of the member, must be either "user", "service" or "trusted profile".
    *
    * @return the type
    */

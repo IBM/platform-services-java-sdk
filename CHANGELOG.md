@@ -1,3 +1,10 @@
+## [0.22.8](https://github.com/IBM/platform-services-java-sdk/compare/0.22.7...0.22.8) (2022-02-07)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** add trusted profile as member ([#137](https://github.com/IBM/platform-services-java-sdk/issues/137)) ([1617949](https://github.com/IBM/platform-services-java-sdk/commit/161794918a421b68ae8c3297e5b4a6d7f51c7109))
+
 ## [0.22.7](https://github.com/IBM/platform-services-java-sdk/compare/0.22.6...0.22.7) (2022-01-04)
 
 

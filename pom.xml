@@ -14,12 +14,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- This is the version associated with the Java core. -->
-        <sdk-core-version>9.16.0</sdk-core-version>
+        <sdk-core-version>9.16.1</sdk-core-version>
 
         <testng-version>7.4.0</testng-version>
         <okhttp3-version>4.9.1</okhttp3-version>
         <surefire-version>3.0.0-M3</surefire-version>
-        <jacoco-plugin-version>0.8.5</jacoco-plugin-version>
+        <jacoco-plugin-version>0.8.7</jacoco-plugin-version>
         <maven-deploy-plugin-version>3.0.0-M1</maven-deploy-plugin-version>
         <nexus-staging-plugin-version>1.6.8</nexus-staging-plugin-version>
         <maven-gpg-plugin-version>3.0.1</maven-gpg-plugin-version>
@@ -34,9 +34,9 @@
         <maven-failsafe-plugin-version>3.0.0-M4</maven-failsafe-plugin-version>
         <maven-buildnumber-plugin-version>1.4</maven-buildnumber-plugin-version>
         <maven-shade-plugin-version>3.2.4</maven-shade-plugin-version>
-        <powermock-version>2.0.5</powermock-version>
-        <mockito-version>3.2.4</mockito-version>
-        <slf4j-version>1.7.28</slf4j-version>
+        <powermock-version>2.0.9</powermock-version>
+        <mockito-version>3.12.4</mockito-version>
+        <slf4j-version>1.7.36</slf4j-version>
         
         <!-- versions of transitive dependencies we need to override to avoid vulnerability alerts -->
         <junit-version>4.13.2</junit-version>

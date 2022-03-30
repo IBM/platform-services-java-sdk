@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,15 +20,18 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class GetProfileOptions extends GenericModel {
 
   protected String profileId;
+  protected Boolean includeActivity;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String profileId;
+    private Boolean includeActivity;
 
     private Builder(GetProfileOptions getProfileOptions) {
       this.profileId = getProfileOptions.profileId;
+      this.includeActivity = getProfileOptions.includeActivity;
     }
 
     /**
@@ -65,12 +68,24 @@ public class GetProfileOptions extends GenericModel {
       this.profileId = profileId;
       return this;
     }
+
+    /**
+     * Set the includeActivity.
+     *
+     * @param includeActivity the includeActivity
+     * @return the GetProfileOptions builder
+     */
+    public Builder includeActivity(Boolean includeActivity) {
+      this.includeActivity = includeActivity;
+      return this;
+    }
   }
 
   protected GetProfileOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,
       "profileId cannot be empty");
     profileId = builder.profileId;
+    includeActivity = builder.includeActivity;
   }
 
   /**
@@ -91,6 +106,18 @@ public class GetProfileOptions extends GenericModel {
    */
   public String profileId() {
     return profileId;
+  }
+
+  /**
+   * Gets the includeActivity.
+   *
+   * Defines if the entity's activity is included in the response. Retrieving activity data is an expensive operation,
+   * so please only request this when needed.
+   *
+   * @return the includeActivity
+   */
+  public Boolean includeActivity() {
+    return includeActivity;
   }
 }
 

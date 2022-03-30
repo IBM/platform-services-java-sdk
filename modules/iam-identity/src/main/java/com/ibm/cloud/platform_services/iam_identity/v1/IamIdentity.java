@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.37.0-a85661cd-20210802-190136
+ * IBM OpenAPI SDK Code Generator Version: 3.47.0-60650593-20220330-200002
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -26,6 +26,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
@@ -38,6 +39,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOp
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
@@ -50,6 +52,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
@@ -75,13 +79,13 @@ import java.util.Map.Entry;
 /**
  * The IAM Identity Service API allows for the management of Account Settings and Identities (Service IDs, ApiKeys).
  *
- * @version v1
+ * API Version: 1.0.0
  */
 public class IamIdentity extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "iam_identity";
 
-  public static final String DEFAULT_SERVICE_URL = "https://iam.cloud.ibm.com";
+  public static final String DEFAULT_SERVICE_URL = "https://iam.test.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `IamIdentity` client.
@@ -295,6 +299,9 @@ public class IamIdentity extends BaseService {
     if (getApiKeyOptions.includeHistory() != null) {
       builder.query("include_history", String.valueOf(getApiKeyOptions.includeHistory()));
     }
+    if (getApiKeyOptions.includeActivity() != null) {
+      builder.query("include_activity", String.valueOf(getApiKeyOptions.includeActivity()));
+    }
     ResponseConverter<ApiKey> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ApiKey>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -412,7 +419,7 @@ public class IamIdentity extends BaseService {
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
    * that are bound to an entity they have access to. Note: apikey details are only included in the response when
-   * creating a Service ID with an apikey.
+   * creating a Service ID with an api key.
    *
    * @param listServiceIdsOptions the {@link ListServiceIdsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
@@ -458,7 +465,7 @@ public class IamIdentity extends BaseService {
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
    * that are bound to an entity they have access to. Note: apikey details are only included in the response when
-   * creating a Service ID with an apikey.
+   * creating a Service ID with an api key.
    *
    * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
    */
@@ -510,7 +517,7 @@ public class IamIdentity extends BaseService {
    *
    * Returns the details of a service ID. Users can manage user API keys for themself, or service ID API keys for
    * service IDs that are bound to an entity they have access to. Note: apikey details are only included in the response
-   * when  creating a Service ID with an apikey.
+   * when  creating a Service ID with an api key.
    *
    * @param getServiceIdOptions the {@link GetServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceId}
@@ -528,6 +535,9 @@ public class IamIdentity extends BaseService {
     builder.header("Accept", "application/json");
     if (getServiceIdOptions.includeHistory() != null) {
       builder.query("include_history", String.valueOf(getServiceIdOptions.includeHistory()));
+    }
+    if (getServiceIdOptions.includeActivity() != null) {
+      builder.query("include_activity", String.valueOf(getServiceIdOptions.includeActivity()));
     }
     ResponseConverter<ServiceId> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceId>() { }.getType());
@@ -739,6 +749,9 @@ public class IamIdentity extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (getProfileOptions.includeActivity() != null) {
+      builder.query("include_activity", String.valueOf(getProfileOptions.includeActivity()));
+    }
     ResponseConverter<TrustedProfile> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TrustedProfile>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1139,6 +1152,61 @@ public class IamIdentity extends BaseService {
     builder.bodyJson(contentJson);
     ResponseConverter<AccountSettingsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Trigger activity report across on account scope.
+   *
+   * Trigger activity report across on account scope for a given accountid.
+   *
+   * @param createReportOptions the {@link CreateReportOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ReportReference}
+   */
+  public ServiceCall<ReportReference> createReport(CreateReportOptions createReportOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createReportOptions,
+      "createReportOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account-id", createReportOptions.accountId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account-id}/report", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createReport");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createReportOptions.type() != null) {
+      builder.query("type", String.valueOf(createReportOptions.type()));
+    }
+    if (createReportOptions.duration() != null) {
+      builder.query("duration", String.valueOf(createReportOptions.duration()));
+    }
+    ResponseConverter<ReportReference> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ReportReference>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get activity report across on account scope.
+   *
+   * Get activity report across on account scope for a given accountid.
+   *
+   * @param getReportOptions the {@link GetReportOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link Report}
+   */
+  public ServiceCall<Report> getReport(GetReportOptions getReportOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getReportOptions,
+      "getReportOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account-id", getReportOptions.accountId());
+    pathParamsMap.put("reference", getReportOptions.reference());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account-id}/report/{reference}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getReport");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<Report> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Report>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

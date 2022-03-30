@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -43,6 +43,7 @@ public class TrustedProfile extends GenericModel {
   @SerializedName("ims_user_id")
   protected Long imsUserId;
   protected List<EnityHistoryRecord> history;
+  protected Activity activity;
 
   /**
    * Gets the context.
@@ -189,6 +190,15 @@ public class TrustedProfile extends GenericModel {
    */
   public List<EnityHistoryRecord> getHistory() {
     return history;
+  }
+
+  /**
+   * Gets the activity.
+   *
+   * @return the activity
+   */
+  public Activity getActivity() {
+    return activity;
   }
 }
 

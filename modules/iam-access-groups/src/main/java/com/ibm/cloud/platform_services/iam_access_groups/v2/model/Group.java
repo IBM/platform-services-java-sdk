@@ -38,6 +38,8 @@ public class Group extends GenericModel {
   protected String href;
   @SerializedName("is_federated")
   protected Boolean isFederated;
+  @SerializedName("membership_type")
+  protected String membershipType;
 
   /**
    * Gets the id.
@@ -147,6 +149,17 @@ public class Group extends GenericModel {
    */
   public Boolean isIsFederated() {
     return isFederated;
+  }
+
+  /**
+   * Gets the membershipType.
+   *
+   * Type of the membership. `static` or `dynamic`.
+   *
+   * @return the membershipType
+   */
+  public String getMembershipType() {
+    return membershipType;
   }
 }
 

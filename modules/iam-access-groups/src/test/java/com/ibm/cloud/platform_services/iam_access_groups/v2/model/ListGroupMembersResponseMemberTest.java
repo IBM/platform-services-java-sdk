@@ -34,6 +34,7 @@ public class ListGroupMembersResponseMemberTest {
     ListGroupMembersResponseMember listGroupMembersResponseMemberModel = new ListGroupMembersResponseMember();
     assertNull(listGroupMembersResponseMemberModel.getIamId());
     assertNull(listGroupMembersResponseMemberModel.getType());
+    assertNull(listGroupMembersResponseMemberModel.getMembershipType());
     assertNull(listGroupMembersResponseMemberModel.getName());
     assertNull(listGroupMembersResponseMemberModel.getEmail());
     assertNull(listGroupMembersResponseMemberModel.getDescription());

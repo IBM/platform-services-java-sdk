@@ -25,6 +25,8 @@ public class ListGroupMembersResponseMember extends GenericModel {
   @SerializedName("iam_id")
   protected String iamId;
   protected String type;
+  @SerializedName("membership_type")
+  protected String membershipType;
   protected String name;
   protected String email;
   protected String description;
@@ -48,12 +50,23 @@ public class ListGroupMembersResponseMember extends GenericModel {
   /**
    * Gets the type.
    *
-   * The member type - either `user` or `service`.
+   * The member type - either `user`, `service` or `profile`.
    *
    * @return the type
    */
   public String getType() {
     return type;
+  }
+
+  /**
+   * Gets the membershipType.
+   *
+   * The membership type - either `static` or `dynamic`.
+   *
+   * @return the membershipType
+   */
+  public String getMembershipType() {
+    return membershipType;
   }
 
   /**

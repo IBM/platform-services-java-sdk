@@ -87,7 +87,7 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
     @Override
     public String getConfigFilename() {
-        return "../../iam_access_groups.env";
+        return "../../iam_access_groups_v2.env";
     }
 
     @Override

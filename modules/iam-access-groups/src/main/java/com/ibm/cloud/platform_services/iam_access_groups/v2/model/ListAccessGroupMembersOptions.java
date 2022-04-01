@@ -21,6 +21,7 @@ public class ListAccessGroupMembersOptions extends GenericModel {
 
   protected String accessGroupId;
   protected String transactionId;
+  protected String membershipType;
   protected Long limit;
   protected Long offset;
   protected String type;
@@ -33,6 +34,7 @@ public class ListAccessGroupMembersOptions extends GenericModel {
   public static class Builder {
     private String accessGroupId;
     private String transactionId;
+    private String membershipType;
     private Long limit;
     private Long offset;
     private String type;
@@ -42,6 +44,7 @@ public class ListAccessGroupMembersOptions extends GenericModel {
     private Builder(ListAccessGroupMembersOptions listAccessGroupMembersOptions) {
       this.accessGroupId = listAccessGroupMembersOptions.accessGroupId;
       this.transactionId = listAccessGroupMembersOptions.transactionId;
+      this.membershipType = listAccessGroupMembersOptions.membershipType;
       this.limit = listAccessGroupMembersOptions.limit;
       this.offset = listAccessGroupMembersOptions.offset;
       this.type = listAccessGroupMembersOptions.type;
@@ -92,6 +95,17 @@ public class ListAccessGroupMembersOptions extends GenericModel {
      */
     public Builder transactionId(String transactionId) {
       this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
+     * Set the membershipType.
+     *
+     * @param membershipType the membershipType
+     * @return the ListAccessGroupMembersOptions builder
+     */
+    public Builder membershipType(String membershipType) {
+      this.membershipType = membershipType;
       return this;
     }
 
@@ -156,6 +170,7 @@ public class ListAccessGroupMembersOptions extends GenericModel {
       "accessGroupId cannot be empty");
     accessGroupId = builder.accessGroupId;
     transactionId = builder.transactionId;
+    membershipType = builder.membershipType;
     limit = builder.limit;
     offset = builder.offset;
     type = builder.type;
@@ -197,6 +212,19 @@ public class ListAccessGroupMembersOptions extends GenericModel {
   }
 
   /**
+   * Gets the membershipType.
+   *
+   * Filters members by membership type. Membership type can be either `static`, `dynamic` or `all`. `static` lists
+   * those members explicitly added to the access group, `dynamic` lists those members part of access group via dynamic
+   * rules at the moment. `all` lists both static and dynamic members.
+   *
+   * @return the membershipType
+   */
+  public String membershipType() {
+    return membershipType;
+  }
+
+  /**
    * Gets the limit.
    *
    * Return up to this limit of results where limit is between 0 and 100.
@@ -232,7 +260,7 @@ public class ListAccessGroupMembersOptions extends GenericModel {
   /**
    * Gets the verbose.
    *
-   * Return user's email and name for each user id or the name for each service id or trusted profile.
+   * Return user's email and name for each user ID or the name for each service ID or trusted profile.
    *
    * @return the verbose
    */

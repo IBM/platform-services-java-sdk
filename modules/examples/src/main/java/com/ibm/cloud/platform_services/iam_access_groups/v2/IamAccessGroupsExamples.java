@@ -63,6 +63,7 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 // IAM_ACCESS_GROUPS_APIKEY=<your iam apikey>
 // IAM_ACCESS_GROUPS_AUTH_URL=<IAM token service URL - omit this if using the production environment>
 // IAM_ACCESS_GROUPS_TEST_ACCOUNT_ID=<id of an account used for testing>
+// IAM_ACCESS_GROUPS_TEST_PROFILE_ID=<id of an profile used for testing>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
@@ -73,13 +74,14 @@ public class IamAccessGroupsExamples {
   protected IamAccessGroupsExamples() { }
 
   private static String testAccountId = null;
+  private static String testProfileId = null;
   private static String testGroupId = null;
   private static String testGroupETag = null;
   private static String testClaimRuleId = null;
   private static String testClaimRuleETag = null;
 
   static {
-      System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_access_groups.env");
+      System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_access_groups_v2.env");
   }
 
   public static void main(String[] args) throws Exception {
@@ -88,6 +90,7 @@ public class IamAccessGroupsExamples {
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(IamAccessGroups.DEFAULT_SERVICE_NAME);
     testAccountId = config.get("TEST_ACCOUNT_ID");
+    testProfileId = config.get("TEST_PROFILE_ID");
 
     try {
       System.out.println("createAccessGroup() result:");
@@ -193,10 +196,15 @@ public class IamAccessGroupsExamples {
         .iamId("iam-ServiceId-123")
         .type("service")
         .build();
+        AddGroupMembersRequestMembersItem member3 = new AddGroupMembersRequestMembersItem.Builder()
+        .iamId(testProfileId)
+        .type("profile")
+        .build();
       AddMembersToAccessGroupOptions addMembersToAccessGroupOptions = new AddMembersToAccessGroupOptions.Builder()
         .accessGroupId(testGroupId)
         .addMembers(member1)
         .addMembers(member2)
+        .addMembers(member3)
         .build();
       Response<AddGroupMembersResponse> response = service.addMembersToAccessGroup(addMembersToAccessGroupOptions).execute();
       AddGroupMembersResponse addGroupMembersResponse = response.getResult();
@@ -292,6 +300,28 @@ public class IamAccessGroupsExamples {
     }
 
     try {
+      System.out.println("removeMembersFromAccessGroup() result:");
+
+      // begin-remove_members_from_access_group
+
+      RemoveMembersFromAccessGroupOptions removeMembersFromAccessGroupOptions = new RemoveMembersFromAccessGroupOptions.Builder()
+        .accessGroupId(testGroupId)
+        .addMembers(testProfileId)
+        .build();
+
+      Response<DeleteGroupBulkMembersResponse> response = service.removeMembersFromAccessGroup(removeMembersFromAccessGroupOptions).execute();
+      // DeleteGroupBulkMembersResponse deleteGroupBulkMembersResponse = response.getResult();
+
+      // System.out.println(deleteGroupBulkMembersResponse);
+
+      // end-remove_members_from_access_group
+
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Profile returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
       System.out.println("addMemberToMultipleAccessGroups() result:");
 
       // begin-add_member_to_multiple_access_groups
@@ -351,7 +381,7 @@ public class IamAccessGroupsExamples {
         .accessGroupId(testGroupId)
         .name("Manager group rule")
         .expiration(12)
-        .realmName("https://idp.example.org/SAML2")
+        .realmName("https://idp.example.org/SAML5")
         .addConditions(ruleConditionsModel)
         .build();
 

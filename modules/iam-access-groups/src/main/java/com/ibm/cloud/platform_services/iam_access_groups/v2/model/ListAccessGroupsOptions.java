@@ -22,6 +22,7 @@ public class ListAccessGroupsOptions extends GenericModel {
   protected String accountId;
   protected String transactionId;
   protected String iamId;
+  protected String membershipType;
   protected Long limit;
   protected Long offset;
   protected String sort;
@@ -35,6 +36,7 @@ public class ListAccessGroupsOptions extends GenericModel {
     private String accountId;
     private String transactionId;
     private String iamId;
+    private String membershipType;
     private Long limit;
     private Long offset;
     private String sort;
@@ -45,6 +47,7 @@ public class ListAccessGroupsOptions extends GenericModel {
       this.accountId = listAccessGroupsOptions.accountId;
       this.transactionId = listAccessGroupsOptions.transactionId;
       this.iamId = listAccessGroupsOptions.iamId;
+      this.membershipType = listAccessGroupsOptions.membershipType;
       this.limit = listAccessGroupsOptions.limit;
       this.offset = listAccessGroupsOptions.offset;
       this.sort = listAccessGroupsOptions.sort;
@@ -110,6 +113,17 @@ public class ListAccessGroupsOptions extends GenericModel {
     }
 
     /**
+     * Set the membershipType.
+     *
+     * @param membershipType the membershipType
+     * @return the ListAccessGroupsOptions builder
+     */
+    public Builder membershipType(String membershipType) {
+      this.membershipType = membershipType;
+      return this;
+    }
+
+    /**
      * Set the limit.
      *
      * @param limit the limit
@@ -171,6 +185,7 @@ public class ListAccessGroupsOptions extends GenericModel {
     accountId = builder.accountId;
     transactionId = builder.transactionId;
     iamId = builder.iamId;
+    membershipType = builder.membershipType;
     limit = builder.limit;
     offset = builder.offset;
     sort = builder.sort;
@@ -216,12 +231,26 @@ public class ListAccessGroupsOptions extends GenericModel {
   /**
    * Gets the iamId.
    *
-   * Return groups for member id (IBMid, Service Id or Profile Id).
+   * Return groups for member ID (IBMid, service ID or trusted profile ID).
    *
    * @return the iamId
    */
   public String iamId() {
     return iamId;
+  }
+
+  /**
+   * Gets the membershipType.
+   *
+   * Membership type need to be specified along with iam_id and must be either `static`, `dynamic` or `all`. If
+   * membership type is `static`, members explicitly added to the group will be shown. If membership type is `dynamic`,
+   * members accessing the access group at the moment via dynamic rules will be shown. If membership type is `all`, both
+   * static and dynamic members will be shown.
+   *
+   * @return the membershipType
+   */
+  public String membershipType() {
+    return membershipType;
   }
 
   /**

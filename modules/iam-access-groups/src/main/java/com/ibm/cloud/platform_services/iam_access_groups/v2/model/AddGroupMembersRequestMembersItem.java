@@ -106,7 +106,7 @@ public class AddGroupMembersRequestMembersItem extends GenericModel {
   /**
    * Gets the iamId.
    *
-   * The IBMid, Service Id or Profile Id of the member.
+   * The IBMid, service ID or trusted profile ID of the member.
    *
    * @return the iamId
    */

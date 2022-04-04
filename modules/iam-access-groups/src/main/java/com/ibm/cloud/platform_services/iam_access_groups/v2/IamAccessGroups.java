@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.43.4-432d779b-20220119-173927
+ * IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
  */
 
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
@@ -169,6 +169,9 @@ public class IamAccessGroups extends BaseService {
     if (listAccessGroupsOptions.iamId() != null) {
       builder.query("iam_id", String.valueOf(listAccessGroupsOptions.iamId()));
     }
+    if (listAccessGroupsOptions.membershipType() != null) {
+      builder.query("membership_type", String.valueOf(listAccessGroupsOptions.membershipType()));
+    }
     if (listAccessGroupsOptions.limit() != null) {
       builder.query("limit", String.valueOf(listAccessGroupsOptions.limit()));
     }
@@ -291,9 +294,9 @@ public class IamAccessGroups extends BaseService {
   /**
    * Check membership in an access group.
    *
-   * This HEAD operation determines if a given `iam_id` is present in a group. No response body is returned with this
-   * request. If the membership exists, a `204 - No Content` status code is returned. If the membership or the group
-   * does not exist, a `404 - Not Found` status code is returned.
+   * This HEAD operation determines if a given `iam_id` is present in a group either explicitly or via dynamic rules. No
+   * response body is returned with this request. If the membership exists, a `204 - No Content` status code is
+   * returned. If the membership or the group does not exist, a `404 - Not Found` status code is returned.
    *
    * @param isMemberOfAccessGroupOptions the {@link IsMemberOfAccessGroupOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -377,6 +380,9 @@ public class IamAccessGroups extends BaseService {
     if (listAccessGroupMembersOptions.transactionId() != null) {
       builder.header("Transaction-Id", listAccessGroupMembersOptions.transactionId());
     }
+    if (listAccessGroupMembersOptions.membershipType() != null) {
+      builder.query("membership_type", String.valueOf(listAccessGroupMembersOptions.membershipType()));
+    }
     if (listAccessGroupMembersOptions.limit() != null) {
       builder.query("limit", String.valueOf(listAccessGroupMembersOptions.limit()));
     }
@@ -401,7 +407,8 @@ public class IamAccessGroups extends BaseService {
    * Delete member from an access group.
    *
    * Remove one member from a group using this API. If the operation is successful, only a `204 - No Content` response
-   * with no body is returned. However, if any error occurs, the standard error format will be returned.
+   * with no body is returned. However, if any error occurs, the standard error format will be returned. Dynamic member
+   * cannot be deleted using this API. Dynamic rules needs to be adjusted to delete dynamic members.
    *
    * @param removeMemberFromAccessGroupOptions the {@link RemoveMemberFromAccessGroupOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -429,7 +436,8 @@ public class IamAccessGroups extends BaseService {
    *
    * Remove multiple members from a group using this API. On a successful call, this API will always return 207. It is
    * the caller's responsibility to iterate across the body to determine successful deletion of each member. This API
-   * request payload can delete up to 50 members per call.
+   * request payload can delete up to 50 members per call. This API doesnt delete dynamic members accessing the access
+   * group via dynamic rules.
    *
    * @param removeMembersFromAccessGroupOptions the {@link RemoveMembersFromAccessGroupOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link DeleteGroupBulkMembersResponse}

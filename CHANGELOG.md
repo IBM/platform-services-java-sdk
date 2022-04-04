@@ -1,3 +1,10 @@
+# [0.23.0](https://github.com/IBM/platform-services-java-sdk/compare/0.22.9...0.23.0) (2022-04-04)
+
+
+### Features
+
+* **IAM Access Groups:** add support for dynamic membership ([#143](https://github.com/IBM/platform-services-java-sdk/issues/143)) ([68fc237](https://github.com/IBM/platform-services-java-sdk/commit/68fc2373d75ce3641693f7188d51f12cb75b5251))
+
 ## [0.22.9](https://github.com/IBM/platform-services-java-sdk/compare/0.22.8...0.22.9) (2022-03-16)
 
 

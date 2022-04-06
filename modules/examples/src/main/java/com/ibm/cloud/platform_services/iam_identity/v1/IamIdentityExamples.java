@@ -333,6 +333,7 @@ public class IamIdentityExamples {
 
             GetServiceIdOptions getServiceIdOptions = new GetServiceIdOptions.Builder()
                     .id(svcId)
+                    .includeActivity(false)
                     .build();
 
             Response<ServiceId> response = service.getServiceId(getServiceIdOptions).execute();
@@ -479,6 +480,7 @@ public class IamIdentityExamples {
 
             GetProfileOptions getProfileOptions = new GetProfileOptions.Builder()
                     .profileId(profileId)
+                    .includeActivity(false)
                     .build();
 
             Response<TrustedProfile> response = service.getProfile(getProfileOptions).execute();
@@ -842,7 +844,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("createReport() result:");
 
-            // begin-createReport
+            // begin-create_report
 
             CreateReportOptions createReportOptions = new CreateReportOptions.Builder()
                     .accountId(accountId)
@@ -855,7 +857,7 @@ public class IamIdentityExamples {
 
             System.out.println(reportReferenceValue);
 
-            // end-createReport
+            // end-create_report
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -865,7 +867,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("getReport() result:");
 
-            // begin-getReport
+            // begin-get_report
 
             GetReportOptions getReportOptions = new GetReportOptions.Builder()
                     .accountId(accountId)
@@ -877,7 +879,7 @@ public class IamIdentityExamples {
 
             System.out.println(fetchedReport);
 
-            // end-getReport
+            // end-get_report
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

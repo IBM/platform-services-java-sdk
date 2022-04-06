@@ -85,7 +85,7 @@ public class IamIdentity extends BaseService {
 
   public static final String DEFAULT_SERVICE_NAME = "iam_identity";
 
-  public static final String DEFAULT_SERVICE_URL = "https://iam.test.cloud.ibm.com";
+  public static final String DEFAULT_SERVICE_URL = "https://iam.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `IamIdentity` client.
@@ -1167,8 +1167,8 @@ public class IamIdentity extends BaseService {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createReportOptions,
       "createReportOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account-id", createReportOptions.accountId());
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account-id}/report", pathParamsMap));
+    pathParamsMap.put("account_id", createReportOptions.accountId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account_id}/report", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createReport");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
@@ -1197,9 +1197,9 @@ public class IamIdentity extends BaseService {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getReportOptions,
       "getReportOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account-id", getReportOptions.accountId());
+    pathParamsMap.put("account_id", getReportOptions.accountId());
     pathParamsMap.put("reference", getReportOptions.reference());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account-id}/report/{reference}", pathParamsMap));
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account_id}/report/{reference}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getReport");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());

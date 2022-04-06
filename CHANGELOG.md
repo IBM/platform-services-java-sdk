@@ -1,3 +1,10 @@
+# [0.24.0](https://github.com/IBM/platform-services-java-sdk/compare/0.23.0...0.24.0) (2022-04-06)
+
+
+### Features
+
+* **IAM Identity:** add support for inactivity reports ([#142](https://github.com/IBM/platform-services-java-sdk/issues/142)) ([9a7c3dc](https://github.com/IBM/platform-services-java-sdk/commit/9a7c3dcee44a06a6b5fa162d9f8d47c9928e5c2b))
+
 # [0.23.0](https://github.com/IBM/platform-services-java-sdk/compare/0.22.9...0.23.0) (2022-04-04)
 
 

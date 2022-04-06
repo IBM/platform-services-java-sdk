@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,6 +21,7 @@ public class GetApiKeyOptions extends GenericModel {
 
   protected String id;
   protected Boolean includeHistory;
+  protected Boolean includeActivity;
 
   /**
    * Builder.
@@ -28,10 +29,12 @@ public class GetApiKeyOptions extends GenericModel {
   public static class Builder {
     private String id;
     private Boolean includeHistory;
+    private Boolean includeActivity;
 
     private Builder(GetApiKeyOptions getApiKeyOptions) {
       this.id = getApiKeyOptions.id;
       this.includeHistory = getApiKeyOptions.includeHistory;
+      this.includeActivity = getApiKeyOptions.includeActivity;
     }
 
     /**
@@ -79,6 +82,17 @@ public class GetApiKeyOptions extends GenericModel {
       this.includeHistory = includeHistory;
       return this;
     }
+
+    /**
+     * Set the includeActivity.
+     *
+     * @param includeActivity the includeActivity
+     * @return the GetApiKeyOptions builder
+     */
+    public Builder includeActivity(Boolean includeActivity) {
+      this.includeActivity = includeActivity;
+      return this;
+    }
   }
 
   protected GetApiKeyOptions(Builder builder) {
@@ -86,6 +100,7 @@ public class GetApiKeyOptions extends GenericModel {
       "id cannot be empty");
     id = builder.id;
     includeHistory = builder.includeHistory;
+    includeActivity = builder.includeActivity;
   }
 
   /**
@@ -117,6 +132,18 @@ public class GetApiKeyOptions extends GenericModel {
    */
   public Boolean includeHistory() {
     return includeHistory;
+  }
+
+  /**
+   * Gets the includeActivity.
+   *
+   * Defines if the entity's activity is included in the response. Retrieving activity data is an expensive operation,
+   * so please only request this when needed.
+   *
+   * @return the includeActivity
+   */
+  public Boolean includeActivity() {
+    return includeActivity;
   }
 }
 

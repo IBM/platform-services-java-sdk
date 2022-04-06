@@ -28,6 +28,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOpti
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
@@ -40,6 +41,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOp
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
@@ -53,6 +55,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleCon
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
@@ -113,6 +117,7 @@ public class IamIdentityExamples {
     private static String claimRuleEtag;
     private static String linkId;
     private static String accountSettingsEtag;
+    private static String reportReferenceValue;
 
     static {
         System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_identity.env");
@@ -204,6 +209,7 @@ public class IamIdentityExamples {
             GetApiKeyOptions getApiKeyOptions = new GetApiKeyOptions.Builder()
                     .id(apikeyId)
                     .includeHistory(true)
+                    .includeActivity(true)
                     .build();
 
             Response<ApiKey> response = service.getApiKey(getApiKeyOptions).execute();
@@ -675,7 +681,7 @@ public class IamIdentityExamples {
             // begin-create_link
 
             CreateProfileLinkRequestLink link = new CreateProfileLinkRequestLink.Builder()
-                    .crn("crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource")
+                    .crn("crn:v1:staging:public:iam-identity::a/" + accountId + "::computeresource:Fake-Compute-Resource")
                     .namespace("default")
                     .name("nice name")
                     .build();
@@ -827,6 +833,51 @@ public class IamIdentityExamples {
             System.out.println(accountSettingsResponse);
 
             // end-updateAccountSettings
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createReport() result:");
+
+            // begin-createReport
+
+            CreateReportOptions createReportOptions = new CreateReportOptions.Builder()
+                    .accountId(accountId)
+                    .build();
+
+            Response<ReportReference> response = service.createReport(createReportOptions).execute();
+            ReportReference reportReference = response.getResult();
+
+            reportReferenceValue = reportReference.getReference();
+
+            System.out.println(reportReferenceValue);
+
+            // end-createReport
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getReport() result:");
+
+            // begin-getReport
+
+            GetReportOptions getReportOptions = new GetReportOptions.Builder()
+                    .accountId(accountId)
+                    .reference(reportReferenceValue)
+                    .build();
+
+            Response<Report> response = service.getReport(getReportOptions).execute();
+            Report fetchedReport = response.getResult();
+
+            System.out.println(fetchedReport);
+
+            // end-getReport
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

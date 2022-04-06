@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,9 +34,11 @@ public class GetServiceIdOptionsTest {
     GetServiceIdOptions getServiceIdOptionsModel = new GetServiceIdOptions.Builder()
       .id("testString")
       .includeHistory(false)
+      .includeActivity(false)
       .build();
     assertEquals(getServiceIdOptionsModel.id(), "testString");
     assertEquals(getServiceIdOptionsModel.includeHistory(), Boolean.valueOf(false));
+    assertEquals(getServiceIdOptionsModel.includeActivity(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

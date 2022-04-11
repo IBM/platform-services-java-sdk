@@ -38,6 +38,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOpti
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
@@ -50,6 +51,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOp
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
@@ -64,6 +66,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleLis
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
@@ -124,6 +128,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private String linkId;
 
     private String accountSettingsEtag;
+
+    private String reportReference;
     
     @Override
     public String getConfigFilename() {
@@ -216,6 +222,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             GetApiKeyOptions getApiKeyOptions = new GetApiKeyOptions.Builder()
                     .id(apikeyId1)
                     .includeHistory(true)
+                    .includeActivity(true)
                     .build();
 
             Response<ApiKey> response = service.getApiKey(getApiKeyOptions).execute();
@@ -470,6 +477,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             GetServiceIdOptions getServiceIdOptions = new GetServiceIdOptions.Builder()
                     .id(serviceId1)
                     .includeHistory(true)
+                    .includeActivity(true)
                     .build();
 
             Response<ServiceId> response = service.getServiceId(getServiceIdOptions).execute();
@@ -737,6 +745,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         try {
             GetProfileOptions getProfileOptions = new GetProfileOptions.Builder()
                     .profileId(profileId1)
+                    .includeActivity(true)
                     .build();
 
             Response<TrustedProfile> response = service.getProfile(getProfileOptions).execute();
@@ -1081,7 +1090,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         try {
 
             CreateProfileLinkRequestLink link = new CreateProfileLinkRequestLink.Builder()
-                    .crn("crn:v1:staging:public:iam-identity::a/18e3020749ce4744b0b472466d61fdb4::computeresource:Fake-Compute-Resource")
+                    .crn("crn:v1:staging:public:iam-identity::a/"+ ACCOUNT_ID +"::computeresource:Fake-Compute-Resource")
                     .namespace("default")
                     .name("nice name")
                     .build();
@@ -1521,6 +1530,88 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(accountSettingsResponseResult.getSessionExpirationInSeconds(), updateAccountSettingsOptions.sessionExpirationInSeconds());
             assertEquals(accountSettingsResponseResult.getSessionInvalidationInSeconds(), updateAccountSettingsOptions.sessionInvalidationInSeconds());
             assertNotEquals(accountSettingsResponseResult.getEntityTag(), accountSettingsEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test
+    public void testCreateReport() throws Exception {
+        try{
+            CreateReportOptions createReportOptions = new CreateReportOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .type("inactive")
+                    .duration("150")
+                    .build();
+            Response<ReportReference> response = service.createReport(createReportOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 202);
+
+            ReportReference reportResult = response.getResult();
+            assertNotNull(reportResult);
+
+            reportReference = reportResult.getReference();
+            assertNotNull(reportReference);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testGetReportIncomplete() throws Exception {
+        try{
+            GetReportOptions getReportOptions = new GetReportOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .reference(reportReference)
+                    .build();
+            Response<Report> response = service.getReport(getReportOptions).execute();
+            
+            assertEquals(response.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testGetReportComplete() throws Exception {
+        try{
+            GetReportOptions getReportOptions = new GetReportOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .reference(reportReference)
+                    .build();
+            for (int i = 0; i < 30; i++){
+                Response<Report> response = service.getReport(getReportOptions).execute();
+                if(response.getStatusCode() != 204){
+                    Report reportResult = response.getResult();
+                    assertNotNull(reportResult);
+                    assertEquals(reportResult.getCreatedBy(), IAM_ID);
+                    assertEquals(reportResult.getReference(), reportReference);
+                    assertNotNull(reportResult.getReportDuration());
+                    assertNotNull(reportResult.getReportStartTime());
+                    assertNotNull(reportResult.getReportEndTime());
+                    break;
+                }
+                sleep(1);
+            }
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testGetReportNotFound() throws Exception {
+        try{
+            GetReportOptions getReportOptions = new GetReportOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .reference("test123")
+                    .build();
+            Response<Report> response = service.getReport(getReportOptions).execute();
+            
+            assertEquals(response.getStatusCode(), 404);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

@@ -1,3 +1,10 @@
+## [0.24.1](https://github.com/IBM/platform-services-java-sdk/compare/0.24.0...0.24.1) (2022-04-21)
+
+
+### Bug Fixes
+
+* bump java core to avoid kotlin-stdlib vulnerability ([#145](https://github.com/IBM/platform-services-java-sdk/issues/145)) ([391b1b0](https://github.com/IBM/platform-services-java-sdk/commit/391b1b048604f6b1d42c26559963038ded75e794))
+
 # [0.24.0](https://github.com/IBM/platform-services-java-sdk/compare/0.23.0...0.24.0) (2022-04-06)
 
 

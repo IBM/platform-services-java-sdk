@@ -33,7 +33,9 @@ public class UserActivityTest {
   public void testUserActivity() throws Throwable {
     UserActivity userActivityModel = new UserActivity();
     assertNull(userActivityModel.getIamId());
+    assertNull(userActivityModel.getName());
     assertNull(userActivityModel.getUsername());
+    assertNull(userActivityModel.getEmail());
     assertNull(userActivityModel.getLastAuthn());
   }
 }

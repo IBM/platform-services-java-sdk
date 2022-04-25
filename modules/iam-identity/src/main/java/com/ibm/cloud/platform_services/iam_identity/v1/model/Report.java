@@ -32,7 +32,7 @@ public class Report extends GenericModel {
   @SerializedName("report_end_time")
   protected String reportEndTime;
   protected List<UserActivity> users;
-  protected List<EntityActivity> apikeys;
+  protected List<ApikeyActivity> apikeys;
   protected List<EntityActivity> serviceids;
   protected List<EntityActivity> profiles;
 
@@ -109,7 +109,7 @@ public class Report extends GenericModel {
    *
    * @return the apikeys
    */
-  public List<EntityActivity> getApikeys() {
+  public List<ApikeyActivity> getApikeys() {
     return apikeys;
   }
 

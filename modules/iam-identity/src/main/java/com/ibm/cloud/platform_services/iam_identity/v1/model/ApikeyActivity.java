@@ -16,33 +16,33 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * UserActivity.
+ * Apikeys activity details.
  */
-public class UserActivity extends GenericModel {
+public class ApikeyActivity extends GenericModel {
 
-  @SerializedName("iam_id")
-  protected String iamId;
+  protected String id;
   protected String name;
-  protected String username;
-  protected String email;
+  protected String type;
+  protected ApikeyActivityServiceid serviceid;
+  protected ApikeyActivityUser user;
   @SerializedName("last_authn")
   protected String lastAuthn;
 
   /**
-   * Gets the iamId.
+   * Gets the id.
    *
-   * IAMid of the user.
+   * Unique id of the apikey.
    *
-   * @return the iamId
+   * @return the id
    */
-  public String getIamId() {
-    return iamId;
+  public String getId() {
+    return id;
   }
 
   /**
    * Gets the name.
    *
-   * Name of the user.
+   * Name provided during creation of the apikey.
    *
    * @return the name
    */
@@ -51,31 +51,42 @@ public class UserActivity extends GenericModel {
   }
 
   /**
-   * Gets the username.
+   * Gets the type.
    *
-   * Username of the user.
+   * Type of the apikey. Supported values are `serviceid` and `user`.
    *
-   * @return the username
+   * @return the type
    */
-  public String getUsername() {
-    return username;
+  public String getType() {
+    return type;
   }
 
   /**
-   * Gets the email.
+   * Gets the serviceid.
    *
-   * Email of the user.
+   * serviceid details will be present if type is `serviceid`.
    *
-   * @return the email
+   * @return the serviceid
    */
-  public String getEmail() {
-    return email;
+  public ApikeyActivityServiceid getServiceid() {
+    return serviceid;
+  }
+
+  /**
+   * Gets the user.
+   *
+   * user details will be present if type is `user`.
+   *
+   * @return the user
+   */
+  public ApikeyActivityUser getUser() {
+    return user;
   }
 
   /**
    * Gets the lastAuthn.
    *
-   * Time when the user was last authenticated.
+   * Time when the apikey was last authenticated.
    *
    * @return the lastAuthn
    */

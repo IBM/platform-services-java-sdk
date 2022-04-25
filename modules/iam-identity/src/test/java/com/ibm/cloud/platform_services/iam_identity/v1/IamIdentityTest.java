@@ -18,6 +18,9 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.Activity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyInsideCreateServiceIdRequest;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivity;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityServiceid;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityUser;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
@@ -1904,7 +1907,7 @@ public class IamIdentityTest extends PowerMockTestCase {
   @Test
   public void testGetReportWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"created_by\": \"createdBy\", \"reference\": \"reference\", \"report_duration\": \"reportDuration\", \"report_start_time\": \"reportStartTime\", \"report_end_time\": \"reportEndTime\", \"users\": [{\"iam_id\": \"iamId\", \"username\": \"username\", \"last_authn\": \"lastAuthn\"}], \"apikeys\": [{\"id\": \"id\", \"name\": \"name\", \"last_authn\": \"lastAuthn\"}], \"serviceids\": [{\"id\": \"id\", \"name\": \"name\", \"last_authn\": \"lastAuthn\"}], \"profiles\": [{\"id\": \"id\", \"name\": \"name\", \"last_authn\": \"lastAuthn\"}]}";
+    String mockResponseBody = "{\"created_by\": \"createdBy\", \"reference\": \"reference\", \"report_duration\": \"reportDuration\", \"report_start_time\": \"reportStartTime\", \"report_end_time\": \"reportEndTime\", \"users\": [{\"iam_id\": \"iamId\", \"name\": \"name\", \"username\": \"username\", \"email\": \"email\", \"last_authn\": \"lastAuthn\"}], \"apikeys\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"serviceid\": {\"id\": \"id\", \"name\": \"name\"}, \"user\": {\"iam_id\": \"iamId\", \"name\": \"name\", \"username\": \"username\", \"email\": \"email\"}, \"last_authn\": \"lastAuthn\"}], \"serviceids\": [{\"id\": \"id\", \"name\": \"name\", \"last_authn\": \"lastAuthn\"}], \"profiles\": [{\"id\": \"id\", \"name\": \"name\", \"last_authn\": \"lastAuthn\"}]}";
     String getReportPath = "/v1/activity/accounts/testString/report/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

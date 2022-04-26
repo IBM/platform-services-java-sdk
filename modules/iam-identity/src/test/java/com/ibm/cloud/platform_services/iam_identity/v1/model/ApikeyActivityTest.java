@@ -16,9 +16,6 @@ package com.ibm.cloud.platform_services.iam_identity.v1.model;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityServiceid;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityUser;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.EntityActivity;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UserActivity;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -28,23 +25,20 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Report model.
+ * Unit test class for the ApikeyActivity model.
  */
-public class ReportTest {
+public class ApikeyActivityTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testReport() throws Throwable {
-    Report reportModel = new Report();
-    assertNull(reportModel.getCreatedBy());
-    assertNull(reportModel.getReference());
-    assertNull(reportModel.getReportDuration());
-    assertNull(reportModel.getReportStartTime());
-    assertNull(reportModel.getReportEndTime());
-    assertNull(reportModel.getUsers());
-    assertNull(reportModel.getApikeys());
-    assertNull(reportModel.getServiceids());
-    assertNull(reportModel.getProfiles());
+  public void testApikeyActivity() throws Throwable {
+    ApikeyActivity apikeyActivityModel = new ApikeyActivity();
+    assertNull(apikeyActivityModel.getId());
+    assertNull(apikeyActivityModel.getName());
+    assertNull(apikeyActivityModel.getType());
+    assertNull(apikeyActivityModel.getServiceid());
+    assertNull(apikeyActivityModel.getUser());
+    assertNull(apikeyActivityModel.getLastAuthn());
   }
 }

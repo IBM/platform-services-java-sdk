@@ -16,17 +16,15 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * UserActivity.
+ * user details will be present if type is `user`.
  */
-public class UserActivity extends GenericModel {
+public class ApikeyActivityUser extends GenericModel {
 
   @SerializedName("iam_id")
   protected String iamId;
   protected String name;
   protected String username;
   protected String email;
-  @SerializedName("last_authn")
-  protected String lastAuthn;
 
   /**
    * Gets the iamId.
@@ -70,17 +68,6 @@ public class UserActivity extends GenericModel {
    */
   public String getEmail() {
     return email;
-  }
-
-  /**
-   * Gets the lastAuthn.
-   *
-   * Time when the user was last authenticated.
-   *
-   * @return the lastAuthn
-   */
-  public String getLastAuthn() {
-    return lastAuthn;
   }
 }
 

@@ -1,3 +1,10 @@
+## [0.24.2](https://github.com/IBM/platform-services-java-sdk/compare/0.24.1...0.24.2) (2022-04-26)
+
+
+### Bug Fixes
+
+* **IAM Identity:** update report schema and fix ITs ([#146](https://github.com/IBM/platform-services-java-sdk/issues/146)) ([055ad8d](https://github.com/IBM/platform-services-java-sdk/commit/055ad8d2813b2983ae09a383ddd8890191d098c0))
+
 ## [0.24.1](https://github.com/IBM/platform-services-java-sdk/compare/0.24.0...0.24.1) (2022-04-21)
 
 

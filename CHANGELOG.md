@@ -1,3 +1,10 @@
+## [0.24.4](https://github.com/IBM/platform-services-java-sdk/compare/0.24.3...0.24.4) (2022-06-14)
+
+
+### Bug Fixes
+
+* bump core and okhttp3 to avoid CVE ([#148](https://github.com/IBM/platform-services-java-sdk/issues/148)) ([b857713](https://github.com/IBM/platform-services-java-sdk/commit/b857713ec86f9d234ac495639c2d33b515f7b62b))
+
 ## [0.24.3](https://github.com/IBM/platform-services-java-sdk/compare/0.24.2...0.24.3) (2022-05-30)
 
 

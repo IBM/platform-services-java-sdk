@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -429,6 +429,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .description("SDK TEST - this is an example of rule")
                     .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
                     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .enforcementMode("enabled")
                     .transactionId(getTransactionID())
                     .build();
 
@@ -486,6 +487,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .description("SDK TEST - this is an example of rule")
                     .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
                     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .enforcementMode("enabled")
                     .transactionId(getTransactionID())
                     .build();
 
@@ -618,6 +620,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .description("SDK TEST - this is an example of updated rule")
                     .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
                     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .enforcementMode("disabled")
                     .transactionId(getTransactionID())
                     .build();
 
@@ -674,6 +677,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .description("SDK TEST - this is an example of rule")
                     .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
                     .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .enforcementMode("disabled")
                     .transactionId(getTransactionID())
                     .build();
 

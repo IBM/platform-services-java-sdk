@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,11 +23,29 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class Rule extends GenericModel {
 
+  /**
+   * The rule enforcement mode:
+   *
+   *  * `enabled` - The restrictions are enforced and reported. This is the default.
+   *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
+   *  * `report` - The restrictions are evaluated and reported, but not enforced.
+   */
+  public interface EnforcementMode {
+    /** enabled. */
+    String ENABLED = "enabled";
+    /** disabled. */
+    String DISABLED = "disabled";
+    /** report. */
+    String REPORT = "report";
+  }
+
   protected String id;
   protected String crn;
   protected String description;
   protected List<RuleContext> contexts;
   protected List<Resource> resources;
+  @SerializedName("enforcement_mode")
+  protected String enforcementMode;
   protected String href;
   @SerializedName("created_at")
   protected Date createdAt;
@@ -91,6 +109,21 @@ public class Rule extends GenericModel {
    */
   public List<Resource> getResources() {
     return resources;
+  }
+
+  /**
+   * Gets the enforcementMode.
+   *
+   * The rule enforcement mode:
+   *
+   *  * `enabled` - The restrictions are enforced and reported. This is the default.
+   *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
+   *  * `report` - The restrictions are evaluated and reported, but not enforced.
+   *
+   * @return the enforcementMode
+   */
+  public String getEnforcementMode() {
+    return enforcementMode;
   }
 
   /**

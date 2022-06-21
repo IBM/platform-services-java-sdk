@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -79,12 +79,14 @@ public class CreateRuleOptionsTest {
       .description("testString")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .enforcementMode("enabled")
       .xCorrelationId("testString")
       .transactionId("testString")
       .build();
     assertEquals(createRuleOptionsModel.description(), "testString");
     assertEquals(createRuleOptionsModel.contexts(), new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)));
     assertEquals(createRuleOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
+    assertEquals(createRuleOptionsModel.enforcementMode(), "enabled");
     assertEquals(createRuleOptionsModel.xCorrelationId(), "testString");
     assertEquals(createRuleOptionsModel.transactionId(), "testString");
   }

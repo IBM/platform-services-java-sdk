@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,11 +22,28 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ReplaceRuleOptions extends GenericModel {
 
+  /**
+   * The rule enforcement mode:
+   *
+   *  * `enabled` - The restrictions are enforced and reported. This is the default.
+   *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
+   *  * `report` - The restrictions are evaluated and reported, but not enforced.
+   */
+  public interface EnforcementMode {
+    /** enabled. */
+    String ENABLED = "enabled";
+    /** disabled. */
+    String DISABLED = "disabled";
+    /** report. */
+    String REPORT = "report";
+  }
+
   protected String ruleId;
   protected String ifMatch;
   protected String description;
   protected List<RuleContext> contexts;
   protected List<Resource> resources;
+  protected String enforcementMode;
   protected String xCorrelationId;
   protected String transactionId;
 
@@ -39,6 +56,7 @@ public class ReplaceRuleOptions extends GenericModel {
     private String description;
     private List<RuleContext> contexts;
     private List<Resource> resources;
+    private String enforcementMode;
     private String xCorrelationId;
     private String transactionId;
 
@@ -48,6 +66,7 @@ public class ReplaceRuleOptions extends GenericModel {
       this.description = replaceRuleOptions.description;
       this.contexts = replaceRuleOptions.contexts;
       this.resources = replaceRuleOptions.resources;
+      this.enforcementMode = replaceRuleOptions.enforcementMode;
       this.xCorrelationId = replaceRuleOptions.xCorrelationId;
       this.transactionId = replaceRuleOptions.transactionId;
     }
@@ -168,6 +187,17 @@ public class ReplaceRuleOptions extends GenericModel {
     }
 
     /**
+     * Set the enforcementMode.
+     *
+     * @param enforcementMode the enforcementMode
+     * @return the ReplaceRuleOptions builder
+     */
+    public Builder enforcementMode(String enforcementMode) {
+      this.enforcementMode = enforcementMode;
+      return this;
+    }
+
+    /**
      * Set the xCorrelationId.
      *
      * @param xCorrelationId the xCorrelationId
@@ -190,6 +220,8 @@ public class ReplaceRuleOptions extends GenericModel {
     }
   }
 
+  protected ReplaceRuleOptions() { }
+
   protected ReplaceRuleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.ruleId,
       "ruleId cannot be empty");
@@ -200,6 +232,7 @@ public class ReplaceRuleOptions extends GenericModel {
     description = builder.description;
     contexts = builder.contexts;
     resources = builder.resources;
+    enforcementMode = builder.enforcementMode;
     xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
   }
@@ -267,6 +300,21 @@ public class ReplaceRuleOptions extends GenericModel {
    */
   public List<Resource> resources() {
     return resources;
+  }
+
+  /**
+   * Gets the enforcementMode.
+   *
+   * The rule enforcement mode:
+   *
+   *  * `enabled` - The restrictions are enforced and reported. This is the default.
+   *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
+   *  * `report` - The restrictions are evaluated and reported, but not enforced.
+   *
+   * @return the enforcementMode
+   */
+  public String enforcementMode() {
+    return enforcementMode;
   }
 
   /**

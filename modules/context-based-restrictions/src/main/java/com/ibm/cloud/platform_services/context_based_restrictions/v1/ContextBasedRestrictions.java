@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.36.0-6f5b0381-20210716-180747
+ * IBM OpenAPI SDK Code Generator Version: 3.51.0-5b8b699d-20220613-200818
  */
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
@@ -55,7 +55,7 @@ import java.util.Map.Entry;
  * * Get account settings
  * .
  *
- * @version v1
+ * API Version: 1.0.1
  */
 public class ContextBasedRestrictions extends BaseService {
 
@@ -382,6 +382,9 @@ public class ContextBasedRestrictions extends BaseService {
       if (createRuleOptions.resources() != null) {
         contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRuleOptions.resources()));
       }
+      if (createRuleOptions.enforcementMode() != null) {
+        contentJson.addProperty("enforcement_mode", createRuleOptions.enforcementMode());
+      }
       builder.bodyJson(contentJson);
     }
     ResponseConverter<Rule> responseConverter =
@@ -519,6 +522,9 @@ public class ContextBasedRestrictions extends BaseService {
     }
     if (replaceRuleOptions.resources() != null) {
       contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceRuleOptions.resources()));
+    }
+    if (replaceRuleOptions.enforcementMode() != null) {
+      contentJson.addProperty("enforcement_mode", replaceRuleOptions.enforcementMode());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<Rule> responseConverter =

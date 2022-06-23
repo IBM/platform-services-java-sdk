@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -81,6 +81,7 @@ public class ReplaceRuleOptionsTest {
       .description("testString")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .enforcementMode("enabled")
       .xCorrelationId("testString")
       .transactionId("testString")
       .build();
@@ -89,6 +90,7 @@ public class ReplaceRuleOptionsTest {
     assertEquals(replaceRuleOptionsModel.description(), "testString");
     assertEquals(replaceRuleOptionsModel.contexts(), new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)));
     assertEquals(replaceRuleOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
+    assertEquals(replaceRuleOptionsModel.enforcementMode(), "enabled");
     assertEquals(replaceRuleOptionsModel.xCorrelationId(), "testString");
     assertEquals(replaceRuleOptionsModel.transactionId(), "testString");
   }

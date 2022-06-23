@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -84,466 +84,468 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   protected MockWebServer server;
   protected ContextBasedRestrictions contextBasedRestrictionsService;
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
-  public void constructClientService() throws Throwable {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
-    final String serviceName = "testService";
-
-    contextBasedRestrictionsService = ContextBasedRestrictions.newInstance(serviceName);
-    String url = server.url("/").toString();
-    contextBasedRestrictionsService.setServiceUrl(url);
-  }
-
-  /**
-  * Negative Test - construct the service with a null authenticator.
-  */
+  // Construct the service with a null authenticator (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testConstructorWithNullAuthenticator() throws Throwable {
     final String serviceName = "testService";
-
     new ContextBasedRestrictions(serviceName, null);
   }
 
+  // Test the createZone operation with a valid options model parameter
   @Test
   public void testCreateZoneWOptions() throws Throwable {
-    // Schedule some responses.
+    // Register a mock response
     String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"address_count\": 12, \"excluded_count\": 13, \"name\": \"name\", \"account_id\": \"accountId\", \"description\": \"description\", \"addresses\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"excluded\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createZonePath = "/v1/zones";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(201)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the AddressIPAddress model
     AddressIPAddress addressModel = new AddressIPAddress.Builder()
-    .type("ipAddress")
-    .value("169.23.56.234")
-    .build();
+      .type("ipAddress")
+      .value("169.23.56.234")
+      .build();
 
     // Construct an instance of the CreateZoneOptions model
     CreateZoneOptions createZoneOptionsModel = new CreateZoneOptions.Builder()
-    .name("an example of zone")
-    .accountId("12ab34cd56ef78ab90cd12ef34ab56cd")
-    .description("this is an example of zone")
-    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-    .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .build();
+      .name("an example of zone")
+      .accountId("12ab34cd56ef78ab90cd12ef34ab56cd")
+      .description("this is an example of zone")
+      .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke createZone() with a valid options model and verify the result
     Response<Zone> response = contextBasedRestrictionsService.createZone(createZoneOptionsModel).execute();
     assertNotNull(response);
     Zone responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "POST");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createZonePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
   }
 
+  // Test the createZone operation with and without retries enabled
+  @Test
+  public void testCreateZoneWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testCreateZoneWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testCreateZoneWOptions();
+  }
+
+  // Test the listZones operation with a valid options model parameter
   @Test
   public void testListZonesWOptions() throws Throwable {
-    // Schedule some responses.
+    // Register a mock response
     String mockResponseBody = "{\"count\": 5, \"zones\": [{\"id\": \"id\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"addresses_preview\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"address_count\": 12, \"excluded_count\": 13, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listZonesPath = "/v1/zones";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the ListZonesOptions model
     ListZonesOptions listZonesOptionsModel = new ListZonesOptions.Builder()
-    .accountId("testString")
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .name("testString")
-    .sort("testString")
-    .build();
+      .accountId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .name("testString")
+      .sort("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke listZones() with a valid options model and verify the result
     Response<ZoneList> response = contextBasedRestrictionsService.listZones(listZonesOptionsModel).execute();
     assertNotNull(response);
     ZoneList responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-
-    // Check query
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listZonesPath);
+    // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
-    // Get query params
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("name"), "testString");
     assertEquals(query.get("sort"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listZonesPath);
   }
 
-  // Test the listZones operation with null options model parameter
+  // Test the listZones operation with and without retries enabled
+  @Test
+  public void testListZonesWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testListZonesWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testListZonesWOptions();
+  }
+
+  // Test the listZones operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testListZonesNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
     server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
     contextBasedRestrictionsService.listZones(null).execute();
   }
 
+  // Test the getZone operation with a valid options model parameter
   @Test
   public void testGetZoneWOptions() throws Throwable {
-    // Schedule some responses.
+    // Register a mock response
     String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"address_count\": 12, \"excluded_count\": 13, \"name\": \"name\", \"account_id\": \"accountId\", \"description\": \"description\", \"addresses\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"excluded\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getZonePath = "/v1/zones/testString";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the GetZoneOptions model
     GetZoneOptions getZoneOptionsModel = new GetZoneOptions.Builder()
-    .zoneId("testString")
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .build();
+      .zoneId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke getZone() with a valid options model and verify the result
     Response<Zone> response = contextBasedRestrictionsService.getZone(getZoneOptionsModel).execute();
     assertNotNull(response);
     Zone responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getZonePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
   }
 
-  // Test the getZone operation with null options model parameter
+  // Test the getZone operation with and without retries enabled
+  @Test
+  public void testGetZoneWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testGetZoneWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testGetZoneWOptions();
+  }
+
+  // Test the getZone operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetZoneNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
     server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
     contextBasedRestrictionsService.getZone(null).execute();
   }
 
+  // Test the replaceZone operation with a valid options model parameter
   @Test
   public void testReplaceZoneWOptions() throws Throwable {
-    // Schedule some responses.
+    // Register a mock response
     String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"address_count\": 12, \"excluded_count\": 13, \"name\": \"name\", \"account_id\": \"accountId\", \"description\": \"description\", \"addresses\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"excluded\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String replaceZonePath = "/v1/zones/testString";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the AddressIPAddress model
     AddressIPAddress addressModel = new AddressIPAddress.Builder()
-    .type("ipAddress")
-    .value("169.23.56.234")
-    .build();
+      .type("ipAddress")
+      .value("169.23.56.234")
+      .build();
 
     // Construct an instance of the ReplaceZoneOptions model
     ReplaceZoneOptions replaceZoneOptionsModel = new ReplaceZoneOptions.Builder()
-    .zoneId("testString")
-    .ifMatch("testString")
-    .name("an example of zone")
-    .accountId("12ab34cd56ef78ab90cd12ef34ab56cd")
-    .description("this is an example of zone")
-    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-    .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .build();
+      .zoneId("testString")
+      .ifMatch("testString")
+      .name("an example of zone")
+      .accountId("12ab34cd56ef78ab90cd12ef34ab56cd")
+      .description("this is an example of zone")
+      .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke replaceZone() with a valid options model and verify the result
     Response<Zone> response = contextBasedRestrictionsService.replaceZone(replaceZoneOptionsModel).execute();
     assertNotNull(response);
     Zone responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "PUT");
-    assertEquals(request.getHeader("If-Match"), "testString");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, replaceZonePath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
   }
 
-  // Test the replaceZone operation with null options model parameter
+  // Test the replaceZone operation with and without retries enabled
+  @Test
+  public void testReplaceZoneWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testReplaceZoneWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testReplaceZoneWOptions();
+  }
+
+  // Test the replaceZone operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testReplaceZoneNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
     server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
     contextBasedRestrictionsService.replaceZone(null).execute();
   }
 
+  // Test the deleteZone operation with a valid options model parameter
   @Test
   public void testDeleteZoneWOptions() throws Throwable {
-    // Schedule some responses.
+    // Register a mock response
     String mockResponseBody = "";
     String deleteZonePath = "/v1/zones/testString";
-
     server.enqueue(new MockResponse()
-    .setResponseCode(204)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the DeleteZoneOptions model
     DeleteZoneOptions deleteZoneOptionsModel = new DeleteZoneOptions.Builder()
-    .zoneId("testString")
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .build();
+      .zoneId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke deleteZone() with a valid options model and verify the result
     Response<Void> response = contextBasedRestrictionsService.deleteZone(deleteZoneOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
     assertNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "DELETE");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteZonePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
   }
 
-  // Test the deleteZone operation with null options model parameter
+  // Test the deleteZone operation with and without retries enabled
+  @Test
+  public void testDeleteZoneWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testDeleteZoneWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testDeleteZoneWOptions();
+  }
+
+  // Test the deleteZone operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testDeleteZoneNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
     server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
     contextBasedRestrictionsService.deleteZone(null).execute();
   }
 
+  // Test the listAvailableServicerefTargets operation with a valid options model parameter
   @Test
   public void testListAvailableServicerefTargetsWOptions() throws Throwable {
-    // Schedule some responses.
+    // Register a mock response
     String mockResponseBody = "{\"count\": 5, \"targets\": [{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\"}]}";
     String listAvailableServicerefTargetsPath = "/v1/zones/serviceref_targets";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the ListAvailableServicerefTargetsOptions model
     ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptionsModel = new ListAvailableServicerefTargetsOptions.Builder()
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .type("all")
-    .build();
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .type("all")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke listAvailableServicerefTargets() with a valid options model and verify the result
     Response<ServiceRefTargetList> response = contextBasedRestrictionsService.listAvailableServicerefTargets(listAvailableServicerefTargetsOptionsModel).execute();
     assertNotNull(response);
     ServiceRefTargetList responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    // Get query params
-    assertEquals(query.get("type"), "all");
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listAvailableServicerefTargetsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("type"), "all");
   }
 
+  // Test the listAvailableServicerefTargets operation with and without retries enabled
+  @Test
+  public void testListAvailableServicerefTargetsWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testListAvailableServicerefTargetsWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testListAvailableServicerefTargetsWOptions();
+  }
+
+  // Test the createRule operation with a valid options model parameter
   @Test
   public void testCreateRuleWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createRulePath = "/v1/rules";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(201)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the RuleContextAttribute model
     RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
-    .name("networkZoneId")
-    .value("65810ac762004f22ac19f8f8edf70a34")
-    .build();
+      .name("networkZoneId")
+      .value("65810ac762004f22ac19f8f8edf70a34")
+      .build();
 
     // Construct an instance of the RuleContext model
     RuleContext ruleContextModel = new RuleContext.Builder()
-    .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
-    .build();
+      .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+      .build();
 
     // Construct an instance of the ResourceAttribute model
     ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
-    .name("accountId")
-    .value("12ab34cd56ef78ab90cd12ef34ab56cd")
-    .operator("testString")
-    .build();
+      .name("accountId")
+      .value("12ab34cd56ef78ab90cd12ef34ab56cd")
+      .operator("testString")
+      .build();
 
     // Construct an instance of the ResourceTagAttribute model
     ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
-    .name("testString")
-    .value("testString")
-    .operator("testString")
-    .build();
+      .name("testString")
+      .value("testString")
+      .operator("testString")
+      .build();
 
     // Construct an instance of the Resource model
     Resource resourceModel = new Resource.Builder()
-    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
-    .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
-    .build();
+      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+      .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+      .build();
 
     // Construct an instance of the CreateRuleOptions model
     CreateRuleOptions createRuleOptionsModel = new CreateRuleOptions.Builder()
-    .description("this is an example of rule")
-    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .build();
+      .description("this is an example of rule")
+      .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
+      .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .enforcementMode("enabled")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke createRule() with a valid options model and verify the result
     Response<Rule> response = contextBasedRestrictionsService.createRule(createRuleOptionsModel).execute();
     assertNotNull(response);
     Rule responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "POST");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createRulePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
   }
 
+  // Test the createRule operation with and without retries enabled
+  @Test
+  public void testCreateRuleWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testCreateRuleWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testCreateRuleWOptions();
+  }
+
+  // Test the listRules operation with a valid options model parameter
   @Test
   public void testListRulesWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"count\": 5, \"rules\": [{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    // Register a mock response
+    String mockResponseBody = "{\"count\": 5, \"rules\": [{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listRulesPath = "/v1/rules";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the ListRulesOptions model
     ListRulesOptions listRulesOptionsModel = new ListRulesOptions.Builder()
-    .accountId("testString")
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .region("testString")
-    .resource("testString")
-    .resourceType("testString")
-    .serviceInstance("testString")
-    .serviceName("testString")
-    .serviceType("testString")
-    .zoneId("testString")
-    .sort("testString")
-    .build();
+      .accountId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .region("testString")
+      .resource("testString")
+      .resourceType("testString")
+      .serviceInstance("testString")
+      .serviceName("testString")
+      .serviceType("testString")
+      .zoneId("testString")
+      .sort("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke listRules() with a valid options model and verify the result
     Response<RuleList> response = contextBasedRestrictionsService.listRules(listRulesOptionsModel).execute();
     assertNotNull(response);
     RuleList responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-
-    // Check query
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listRulesPath);
+    // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
-    // Get query params
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("region"), "testString");
     assertEquals(query.get("resource"), "testString");
@@ -553,283 +555,311 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     assertEquals(query.get("service_type"), "testString");
     assertEquals(query.get("zone_id"), "testString");
     assertEquals(query.get("sort"), "testString");
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listRulesPath);
   }
 
-  // Test the listRules operation with null options model parameter
+  // Test the listRules operation with and without retries enabled
+  @Test
+  public void testListRulesWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testListRulesWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testListRulesWOptions();
+  }
+
+  // Test the listRules operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testListRulesNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
     server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
     contextBasedRestrictionsService.listRules(null).execute();
   }
 
+  // Test the getRule operation with a valid options model parameter
   @Test
   public void testGetRuleWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getRulePath = "/v1/rules/testString";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the GetRuleOptions model
     GetRuleOptions getRuleOptionsModel = new GetRuleOptions.Builder()
-    .ruleId("testString")
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .build();
+      .ruleId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke getRule() with a valid options model and verify the result
     Response<Rule> response = contextBasedRestrictionsService.getRule(getRuleOptionsModel).execute();
     assertNotNull(response);
     Rule responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getRulePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
   }
 
-  // Test the getRule operation with null options model parameter
+  // Test the getRule operation with and without retries enabled
+  @Test
+  public void testGetRuleWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testGetRuleWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testGetRuleWOptions();
+  }
+
+  // Test the getRule operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetRuleNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
     server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
     contextBasedRestrictionsService.getRule(null).execute();
   }
 
+  // Test the replaceRule operation with a valid options model parameter
   @Test
   public void testReplaceRuleWOptions() throws Throwable {
-    // Schedule some responses.
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String replaceRulePath = "/v1/rules/testString";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the RuleContextAttribute model
     RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
-    .name("networkZoneId")
-    .value("76921bd873115033bd2a0909fe081b45")
-    .build();
+      .name("networkZoneId")
+      .value("76921bd873115033bd2a0909fe081b45")
+      .build();
 
     // Construct an instance of the RuleContext model
     RuleContext ruleContextModel = new RuleContext.Builder()
-    .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
-    .build();
+      .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+      .build();
 
     // Construct an instance of the ResourceAttribute model
     ResourceAttribute resourceAttributeModel = new ResourceAttribute.Builder()
-    .name("accountId")
-    .value("12ab34cd56ef78ab90cd12ef34ab56cd")
-    .operator("testString")
-    .build();
+      .name("accountId")
+      .value("12ab34cd56ef78ab90cd12ef34ab56cd")
+      .operator("testString")
+      .build();
 
     // Construct an instance of the ResourceTagAttribute model
     ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
-    .name("testString")
-    .value("testString")
-    .operator("testString")
-    .build();
+      .name("testString")
+      .value("testString")
+      .operator("testString")
+      .build();
 
     // Construct an instance of the Resource model
     Resource resourceModel = new Resource.Builder()
-    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
-    .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
-    .build();
+      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
+      .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+      .build();
 
     // Construct an instance of the ReplaceRuleOptions model
     ReplaceRuleOptions replaceRuleOptionsModel = new ReplaceRuleOptions.Builder()
-    .ruleId("testString")
-    .ifMatch("testString")
-    .description("this is an example of rule")
-    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .build();
+      .ruleId("testString")
+      .ifMatch("testString")
+      .description("this is an example of rule")
+      .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
+      .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .enforcementMode("disabled")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke replaceRule() with a valid options model and verify the result
     Response<Rule> response = contextBasedRestrictionsService.replaceRule(replaceRuleOptionsModel).execute();
     assertNotNull(response);
     Rule responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "PUT");
-    assertEquals(request.getHeader("If-Match"), "testString");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, replaceRulePath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
   }
 
-  // Test the replaceRule operation with null options model parameter
+  // Test the replaceRule operation with and without retries enabled
+  @Test
+  public void testReplaceRuleWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testReplaceRuleWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testReplaceRuleWOptions();
+  }
+
+  // Test the replaceRule operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testReplaceRuleNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
     server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
     contextBasedRestrictionsService.replaceRule(null).execute();
   }
 
+  // Test the deleteRule operation with a valid options model parameter
   @Test
   public void testDeleteRuleWOptions() throws Throwable {
-    // Schedule some responses.
+    // Register a mock response
     String mockResponseBody = "";
     String deleteRulePath = "/v1/rules/testString";
-
     server.enqueue(new MockResponse()
-    .setResponseCode(204)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the DeleteRuleOptions model
     DeleteRuleOptions deleteRuleOptionsModel = new DeleteRuleOptions.Builder()
-    .ruleId("testString")
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .build();
+      .ruleId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke deleteRule() with a valid options model and verify the result
     Response<Void> response = contextBasedRestrictionsService.deleteRule(deleteRuleOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
-    // Response does not have a return type. Check that the result is null.
     assertNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "DELETE");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteRulePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
   }
 
-  // Test the deleteRule operation with null options model parameter
+  // Test the deleteRule operation with and without retries enabled
+  @Test
+  public void testDeleteRuleWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testDeleteRuleWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testDeleteRuleWOptions();
+  }
+
+  // Test the deleteRule operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testDeleteRuleNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
     server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
     contextBasedRestrictionsService.deleteRule(null).execute();
   }
 
+  // Test the getAccountSettings operation with a valid options model parameter
   @Test
   public void testGetAccountSettingsWOptions() throws Throwable {
-    // Schedule some responses.
+    // Register a mock response
     String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"rule_count_limit\": 14, \"zone_count_limit\": 14, \"current_rule_count\": 16, \"current_zone_count\": 16, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getAccountSettingsPath = "/v1/account_settings/testString";
-
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
-    constructClientService();
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
 
     // Construct an instance of the GetAccountSettingsOptions model
     GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
-    .accountId("testString")
-    .xCorrelationId("testString")
-    .transactionId("testString")
-    .build();
+      .accountId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
 
-    // Invoke operation with valid options model (positive test)
+    // Invoke getAccountSettings() with a valid options model and verify the result
     Response<AccountSettings> response = contextBasedRestrictionsService.getAccountSettings(getAccountSettingsOptionsModel).execute();
     assertNotNull(response);
     AccountSettings responseObj = response.getResult();
     assertNotNull(responseObj);
 
-    // Verify the contents of the request
+    // Verify the contents of the request sent to the mock server
     RecordedRequest request = server.takeRequest();
     assertNotNull(request);
     assertEquals(request.getMethod(), "GET");
-
-    // Check query
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-
-    // Check request path
+    // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getAccountSettingsPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
   }
 
-  // Test the getAccountSettings operation with null options model parameter
+  // Test the getAccountSettings operation with and without retries enabled
+  @Test
+  public void testGetAccountSettingsWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testGetAccountSettingsWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testGetAccountSettingsWOptions();
+  }
+
+  // Test the getAccountSettings operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testGetAccountSettingsNoOptions() throws Throwable {
-    // construct the service
-    constructClientService();
-
     server.enqueue(new MockResponse());
-
-    // Invoke operation with null options model (negative test)
     contextBasedRestrictionsService.getAccountSettings(null).execute();
   }
 
-  /** Initialize the server */
+  // Perform setup needed before each test method
   @BeforeMethod
-  public void setUpMockServer() {
+  public void beforeEachTest() {
+    // Start the mock server.
     try {
-        server = new MockWebServer();
-        // register handler
-        server.start();
-        }
-    catch (IOException err) {
-        fail("Failed to instantiate mock web server");
+      server = new MockWebServer();
+      server.start();
+    } catch (IOException err) {
+      fail("Failed to instantiate mock web server");
     }
+
+    // Construct an instance of the service
+    constructClientService();
   }
 
+  // Perform tear down after each test method
   @AfterMethod
-  public void tearDownMockServer() throws IOException {
+  public void afterEachTest() throws IOException {
     server.shutdown();
     contextBasedRestrictionsService = null;
+  }
+
+  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv()
+  private Map<String, String> getTestProcessEnvironment() {
+    Map<String, String> env = new HashMap<>();
+    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
+    return env;
+  }
+
+  // Constructs an instance of the service to be used by the tests
+  public void constructClientService() {
+    PowerMockito.spy(EnvironmentUtils.class);
+    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    final String serviceName = "testService";
+
+    contextBasedRestrictionsService = ContextBasedRestrictions.newInstance(serviceName);
+    String url = server.url("/").toString();
+    contextBasedRestrictionsService.setServiceUrl(url);
   }
 }

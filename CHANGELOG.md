@@ -1,3 +1,10 @@
+# [0.25.0](https://github.com/IBM/platform-services-java-sdk/compare/0.24.4...0.25.0) (2022-06-23)
+
+
+### Features
+
+* add support for Enforcement Mode ([#149](https://github.com/IBM/platform-services-java-sdk/issues/149)) ([b48f1d8](https://github.com/IBM/platform-services-java-sdk/commit/b48f1d8522c6a79d7d1c9f625022b8a3574a4e19))
+
 ## [0.24.4](https://github.com/IBM/platform-services-java-sdk/compare/0.24.3...0.24.4) (2022-06-14)
 
 

@@ -13,7 +13,9 @@
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.ContextBasedRestrictions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.APIType;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Action;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddressRange;
@@ -27,9 +29,13 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Delet
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OperationsList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
@@ -428,7 +434,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   @Test
   public void testCreateRuleWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createRulePath = "/v1/rules";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -466,11 +472,22 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
       .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
       .build();
 
+    // Construct an instance of the NewRuleOperationsApiTypesItem model
+    NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
+      .apiTypeId("testString")
+      .build();
+
+    // Construct an instance of the NewRuleOperations model
+    NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
+      .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)))
+      .build();
+
     // Construct an instance of the CreateRuleOptions model
     CreateRuleOptions createRuleOptionsModel = new CreateRuleOptions.Builder()
       .description("this is an example of rule")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .operations(newRuleOperationsModel)
       .enforcementMode("enabled")
       .xCorrelationId("testString")
       .transactionId("testString")
@@ -508,7 +525,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   @Test
   public void testListRulesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"count\": 5, \"rules\": [{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"count\": 5, \"rules\": [{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listRulesPath = "/v1/rules";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -580,7 +597,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   @Test
   public void testGetRuleWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getRulePath = "/v1/rules/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -633,7 +650,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   @Test
   public void testReplaceRuleWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String replaceRulePath = "/v1/rules/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -671,6 +688,16 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
       .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
       .build();
 
+    // Construct an instance of the NewRuleOperationsApiTypesItem model
+    NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
+      .apiTypeId("testString")
+      .build();
+
+    // Construct an instance of the NewRuleOperations model
+    NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
+      .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)))
+      .build();
+
     // Construct an instance of the ReplaceRuleOptions model
     ReplaceRuleOptions replaceRuleOptionsModel = new ReplaceRuleOptions.Builder()
       .ruleId("testString")
@@ -678,6 +705,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
       .description("this is an example of rule")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .operations(newRuleOperationsModel)
       .enforcementMode("disabled")
       .xCorrelationId("testString")
       .transactionId("testString")
@@ -823,6 +851,60 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   public void testGetAccountSettingsNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     contextBasedRestrictionsService.getAccountSettings(null).execute();
+  }
+
+  // Test the listAvailableServiceOperations operation with a valid options model parameter
+  @Test
+  public void testListAvailableServiceOperationsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"api_types\": [{\"api_type_id\": \"apiTypeId\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [{\"action_id\": \"actionId\", \"description\": \"description\"}]}]}";
+    String listAvailableServiceOperationsPath = "/v1/operations";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListAvailableServiceOperationsOptions model
+    ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptionsModel = new ListAvailableServiceOperationsOptions.Builder()
+      .serviceName("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
+
+    // Invoke listAvailableServiceOperations() with a valid options model and verify the result
+    Response<OperationsList> response = contextBasedRestrictionsService.listAvailableServiceOperations(listAvailableServiceOperationsOptionsModel).execute();
+    assertNotNull(response);
+    OperationsList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listAvailableServiceOperationsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("service_name"), "testString");
+  }
+
+  // Test the listAvailableServiceOperations operation with and without retries enabled
+  @Test
+  public void testListAvailableServiceOperationsWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testListAvailableServiceOperationsWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testListAvailableServiceOperationsWOptions();
+  }
+
+  // Test the listAvailableServiceOperations operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListAvailableServiceOperationsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    contextBasedRestrictionsService.listAvailableServiceOperations(null).execute();
   }
 
   // Perform setup needed before each test method

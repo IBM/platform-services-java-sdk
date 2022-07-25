@@ -13,18 +13,10 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceAttribute;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceTagAttribute;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.APIType;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Action;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -32,16 +24,18 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the RuleList model.
+ * Unit test class for the APIType model.
  */
-public class RuleListTest {
+public class APITypeTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testRuleList() throws Throwable {
-    RuleList ruleListModel = new RuleList();
-    assertNull(ruleListModel.getCount());
-    assertNull(ruleListModel.getRules());
+  public void testAPIType() throws Throwable {
+    APIType apiTypeModel = new APIType();
+    assertNull(apiTypeModel.getApiTypeId());
+    assertNull(apiTypeModel.getDisplayName());
+    assertNull(apiTypeModel.getDescription());
+    assertNull(apiTypeModel.getActions());
   }
 }

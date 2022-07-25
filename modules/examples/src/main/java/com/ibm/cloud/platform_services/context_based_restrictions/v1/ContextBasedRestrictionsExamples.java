@@ -23,9 +23,11 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Delet
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OperationsList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
@@ -327,6 +329,23 @@ public class ContextBasedRestrictionsExamples {
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
                 e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listAvailableServiceOperations() result:");
+            // begin-list_available_service_operations
+            ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions = new ListAvailableServiceOperationsOptions.Builder()
+                .serviceName("containers-kubernetes")
+                .build();
+
+            Response<OperationsList> response = contextBasedRestrictionsService.listAvailableServiceOperations(listAvailableServiceOperationsOptions).execute();
+            OperationsList operationsList = response.getResult();
+
+            System.out.println(operationsList);
+            // end-list_available_service_operations
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {

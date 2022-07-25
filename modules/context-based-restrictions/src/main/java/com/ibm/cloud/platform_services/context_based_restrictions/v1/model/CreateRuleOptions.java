@@ -40,6 +40,7 @@ public class CreateRuleOptions extends GenericModel {
   protected String description;
   protected List<RuleContext> contexts;
   protected List<Resource> resources;
+  protected NewRuleOperations operations;
   protected String enforcementMode;
   protected String xCorrelationId;
   protected String transactionId;
@@ -51,6 +52,7 @@ public class CreateRuleOptions extends GenericModel {
     private String description;
     private List<RuleContext> contexts;
     private List<Resource> resources;
+    private NewRuleOperations operations;
     private String enforcementMode;
     private String xCorrelationId;
     private String transactionId;
@@ -59,6 +61,7 @@ public class CreateRuleOptions extends GenericModel {
       this.description = createRuleOptions.description;
       this.contexts = createRuleOptions.contexts;
       this.resources = createRuleOptions.resources;
+      this.operations = createRuleOptions.operations;
       this.enforcementMode = createRuleOptions.enforcementMode;
       this.xCorrelationId = createRuleOptions.xCorrelationId;
       this.transactionId = createRuleOptions.transactionId;
@@ -147,6 +150,17 @@ public class CreateRuleOptions extends GenericModel {
     }
 
     /**
+     * Set the operations.
+     *
+     * @param operations the operations
+     * @return the CreateRuleOptions builder
+     */
+    public Builder operations(NewRuleOperations operations) {
+      this.operations = operations;
+      return this;
+    }
+
+    /**
      * Set the enforcementMode.
      *
      * @param enforcementMode the enforcementMode
@@ -186,6 +200,7 @@ public class CreateRuleOptions extends GenericModel {
     description = builder.description;
     contexts = builder.contexts;
     resources = builder.resources;
+    operations = builder.operations;
     enforcementMode = builder.enforcementMode;
     xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
@@ -231,6 +246,17 @@ public class CreateRuleOptions extends GenericModel {
    */
   public List<Resource> resources() {
     return resources;
+  }
+
+  /**
+   * Gets the operations.
+   *
+   * The operations this rule applies to.
+   *
+   * @return the operations
+   */
+  public NewRuleOperations operations() {
+    return operations;
   }
 
   /**

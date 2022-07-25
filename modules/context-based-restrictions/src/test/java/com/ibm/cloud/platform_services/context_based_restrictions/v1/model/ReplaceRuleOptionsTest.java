@@ -13,6 +13,8 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceAttribute;
@@ -75,12 +77,23 @@ public class ReplaceRuleOptionsTest {
     assertEquals(resourceModel.attributes(), new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)));
     assertEquals(resourceModel.tags(), new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)));
 
+    NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
+      .apiTypeId("testString")
+      .build();
+    assertEquals(newRuleOperationsApiTypesItemModel.apiTypeId(), "testString");
+
+    NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
+      .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)))
+      .build();
+    assertEquals(newRuleOperationsModel.apiTypes(), new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)));
+
     ReplaceRuleOptions replaceRuleOptionsModel = new ReplaceRuleOptions.Builder()
       .ruleId("testString")
       .ifMatch("testString")
       .description("testString")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .operations(newRuleOperationsModel)
       .enforcementMode("enabled")
       .xCorrelationId("testString")
       .transactionId("testString")
@@ -90,6 +103,7 @@ public class ReplaceRuleOptionsTest {
     assertEquals(replaceRuleOptionsModel.description(), "testString");
     assertEquals(replaceRuleOptionsModel.contexts(), new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)));
     assertEquals(replaceRuleOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
+    assertEquals(replaceRuleOptionsModel.operations(), newRuleOperationsModel);
     assertEquals(replaceRuleOptionsModel.enforcementMode(), "enabled");
     assertEquals(replaceRuleOptionsModel.xCorrelationId(), "testString");
     assertEquals(replaceRuleOptionsModel.transactionId(), "testString");

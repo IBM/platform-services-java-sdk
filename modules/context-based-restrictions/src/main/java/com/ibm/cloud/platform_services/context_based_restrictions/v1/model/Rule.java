@@ -43,6 +43,7 @@ public class Rule extends GenericModel {
   protected String description;
   protected List<RuleContext> contexts;
   protected List<Resource> resources;
+  protected NewRuleOperations operations;
   @SerializedName("enforcement_mode")
   protected String enforcementMode;
   protected String href;
@@ -108,6 +109,17 @@ public class Rule extends GenericModel {
    */
   public List<Resource> getResources() {
     return resources;
+  }
+
+  /**
+   * Gets the operations.
+   *
+   * The operations this rule applies to.
+   *
+   * @return the operations
+   */
+  public NewRuleOperations getOperations() {
+    return operations;
   }
 
   /**

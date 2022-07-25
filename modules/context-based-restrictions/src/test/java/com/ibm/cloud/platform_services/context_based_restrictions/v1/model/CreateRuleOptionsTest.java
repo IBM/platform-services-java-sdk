@@ -14,6 +14,8 @@
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceTagAttribute;
@@ -75,10 +77,21 @@ public class CreateRuleOptionsTest {
     assertEquals(resourceModel.attributes(), new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)));
     assertEquals(resourceModel.tags(), new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)));
 
+    NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
+      .apiTypeId("testString")
+      .build();
+    assertEquals(newRuleOperationsApiTypesItemModel.apiTypeId(), "testString");
+
+    NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
+      .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)))
+      .build();
+    assertEquals(newRuleOperationsModel.apiTypes(), new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)));
+
     CreateRuleOptions createRuleOptionsModel = new CreateRuleOptions.Builder()
       .description("testString")
       .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
       .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .operations(newRuleOperationsModel)
       .enforcementMode("enabled")
       .xCorrelationId("testString")
       .transactionId("testString")
@@ -86,6 +99,7 @@ public class CreateRuleOptionsTest {
     assertEquals(createRuleOptionsModel.description(), "testString");
     assertEquals(createRuleOptionsModel.contexts(), new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)));
     assertEquals(createRuleOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
+    assertEquals(createRuleOptionsModel.operations(), newRuleOperationsModel);
     assertEquals(createRuleOptionsModel.enforcementMode(), "enabled");
     assertEquals(createRuleOptionsModel.xCorrelationId(), "testString");
     assertEquals(createRuleOptionsModel.transactionId(), "testString");

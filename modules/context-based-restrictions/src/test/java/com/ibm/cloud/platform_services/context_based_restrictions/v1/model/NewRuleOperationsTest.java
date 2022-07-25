@@ -15,16 +15,8 @@ package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceAttribute;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceTagAttribute;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -32,16 +24,33 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the RuleList model.
+ * Unit test class for the NewRuleOperations model.
  */
-public class RuleListTest {
+public class NewRuleOperationsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testRuleList() throws Throwable {
-    RuleList ruleListModel = new RuleList();
-    assertNull(ruleListModel.getCount());
-    assertNull(ruleListModel.getRules());
+  public void testNewRuleOperations() throws Throwable {
+    NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
+      .apiTypeId("testString")
+      .build();
+    assertEquals(newRuleOperationsApiTypesItemModel.apiTypeId(), "testString");
+
+    NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
+      .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)))
+      .build();
+    assertEquals(newRuleOperationsModel.apiTypes(), new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)));
+
+    String json = TestUtilities.serialize(newRuleOperationsModel);
+
+    NewRuleOperations newRuleOperationsModelNew = TestUtilities.deserialize(json, NewRuleOperations.class);
+    assertTrue(newRuleOperationsModelNew instanceof NewRuleOperations);
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testNewRuleOperationsError() throws Throwable {
+    new NewRuleOperations.Builder().build();
+  }
+
 }

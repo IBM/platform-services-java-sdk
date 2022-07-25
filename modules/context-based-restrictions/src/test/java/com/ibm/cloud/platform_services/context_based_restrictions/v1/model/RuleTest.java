@@ -13,6 +13,8 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ResourceTagAttribute;
@@ -42,6 +44,7 @@ public class RuleTest {
     assertNull(ruleModel.getDescription());
     assertNull(ruleModel.getContexts());
     assertNull(ruleModel.getResources());
+    assertNull(ruleModel.getOperations());
     assertNull(ruleModel.getEnforcementMode());
     assertNull(ruleModel.getHref());
     assertNull(ruleModel.getCreatedAt());

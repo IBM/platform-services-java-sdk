@@ -28,6 +28,7 @@ public class ServiceRefValue extends GenericModel {
   protected String serviceName;
   @SerializedName("service_instance")
   protected String serviceInstance;
+  protected String location;
 
   /**
    * Builder.
@@ -37,12 +38,14 @@ public class ServiceRefValue extends GenericModel {
     private String serviceType;
     private String serviceName;
     private String serviceInstance;
+    private String location;
 
     private Builder(ServiceRefValue serviceRefValue) {
       this.accountId = serviceRefValue.accountId;
       this.serviceType = serviceRefValue.serviceType;
       this.serviceName = serviceRefValue.serviceName;
       this.serviceInstance = serviceRefValue.serviceInstance;
+      this.location = serviceRefValue.location;
     }
 
     /**
@@ -112,6 +115,17 @@ public class ServiceRefValue extends GenericModel {
       this.serviceInstance = serviceInstance;
       return this;
     }
+
+    /**
+     * Set the location.
+     *
+     * @param location the location
+     * @return the ServiceRefValue builder
+     */
+    public Builder location(String location) {
+      this.location = location;
+      return this;
+    }
   }
 
   protected ServiceRefValue() { }
@@ -123,6 +137,7 @@ public class ServiceRefValue extends GenericModel {
     serviceType = builder.serviceType;
     serviceName = builder.serviceName;
     serviceInstance = builder.serviceInstance;
+    location = builder.location;
   }
 
   /**
@@ -176,6 +191,17 @@ public class ServiceRefValue extends GenericModel {
    */
   public String serviceInstance() {
     return serviceInstance;
+  }
+
+  /**
+   * Gets the location.
+   *
+   * The location.
+   *
+   * @return the location
+   */
+  public String location() {
+    return location;
   }
 }
 

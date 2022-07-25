@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.51.0-5b8b699d-20220613-200818
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
@@ -450,6 +450,9 @@ public class ContextBasedRestrictions extends BaseService {
     }
     if (listRulesOptions.sort() != null) {
       builder.query("sort", String.valueOf(listRulesOptions.sort()));
+    }
+    if (listRulesOptions.enforcementMode() != null) {
+      builder.query("enforcement_mode", String.valueOf(listRulesOptions.enforcementMode()));
     }
     ResponseConverter<RuleList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RuleList>() { }.getType());

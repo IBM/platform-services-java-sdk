@@ -528,6 +528,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
       .serviceType("testString")
       .zoneId("testString")
       .sort("testString")
+      .enforcementMode("enabled")
       .build();
 
     // Invoke listRules() with a valid options model and verify the result
@@ -555,6 +556,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     assertEquals(query.get("service_type"), "testString");
     assertEquals(query.get("zone_id"), "testString");
     assertEquals(query.get("sort"), "testString");
+    assertEquals(query.get("enforcement_mode"), "enabled");
   }
 
   // Test the listRules operation with and without retries enabled

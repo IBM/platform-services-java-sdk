@@ -387,7 +387,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
   @Test
   public void testListAvailableServicerefTargetsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"count\": 5, \"targets\": [{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\"}]}";
+    String mockResponseBody = "{\"count\": 5, \"targets\": [{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\", \"locations\": [{\"name\": \"name\"}]}]}";
     String listAvailableServicerefTargetsPath = "/v1/zones/serviceref_targets";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

@@ -12,6 +12,8 @@
  */
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
+import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
@@ -24,6 +26,7 @@ public class ServiceRefTarget extends GenericModel {
   protected String serviceName;
   @SerializedName("service_type")
   protected String serviceType;
+  protected List<ServiceRefTargetLocationsItem> locations;
 
   /**
    * Gets the serviceName.
@@ -45,6 +48,17 @@ public class ServiceRefTarget extends GenericModel {
    */
   public String getServiceType() {
     return serviceType;
+  }
+
+  /**
+   * Gets the locations.
+   *
+   * The locations the service is available.
+   *
+   * @return the locations
+   */
+  public List<ServiceRefTargetLocationsItem> getLocations() {
+    return locations;
   }
 }
 

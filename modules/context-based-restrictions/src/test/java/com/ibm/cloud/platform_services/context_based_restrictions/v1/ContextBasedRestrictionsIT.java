@@ -16,6 +16,7 @@ package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressServiceRef;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
@@ -23,9 +24,13 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Delet
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OperationsList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
@@ -36,6 +41,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleC
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefValue;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
@@ -111,11 +117,21 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .value("169.23.56.234")
                     .build();
 
+            ServiceRefValue serviceRefValueModel = new ServiceRefValue.Builder()
+                    .accountId(testAccountID)
+                    .serviceName("containers-kubernetes")
+                    .location("us-south")
+                    .build();
+            AddressServiceRef serviceRefAddressModel = new AddressServiceRef.Builder()
+                    .type("serviceRef")
+                    .ref(serviceRefValueModel)
+                    .build();
+
             CreateZoneOptions createZoneOptions = new CreateZoneOptions.Builder()
                     .name("SDK TEST - an example of zone")
                     .accountId(testAccountID)
                     .description("SDK TEST - this is an example of zone")
-                    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+                    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel, serviceRefAddressModel)))
                     .transactionId(getTransactionID())
                     .build();
 
@@ -451,6 +467,81 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Test(groups = "createRule", dependsOnGroups = "serviceRef")
+    public void testCreateRuleWithAPITypes() throws Exception {
+        try {
+            RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
+                    .name("networkZoneId")
+                    .value(zoneID)
+                    .build();
+
+            RuleContext ruleContextModel = new RuleContext.Builder()
+                    .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+                    .build();
+
+            ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
+                    .name("accountId")
+                    .value(testAccountID)
+                    .build();
+
+            ResourceAttribute resourceAttributeModelServiceName = new ResourceAttribute.Builder()
+                    .name("serviceName")
+                    .value("containers-kubernetes")
+                    .build();
+
+            ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
+                    .name("tagName")
+                    .value("tagValue")
+                    .build();
+
+            Resource resourceModel = new Resource.Builder()
+                    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName)))
+                    .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+                    .build();
+
+            NewRuleOperationsApiTypesItem apiTypeModel = new NewRuleOperationsApiTypesItem.Builder()
+                    .apiTypeId("crn:v1:bluemix:public:containers-kubernetes::::api-type:management")
+                    .build();
+            NewRuleOperations operationsModel = new NewRuleOperations.Builder()
+                    .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(apiTypeModel)))
+                    .build();
+
+            CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
+                    .description("SDK TEST - this is an example of rule")
+                    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
+                    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .operations(operationsModel)
+                    .enforcementMode("enabled")
+                    .transactionId(getTransactionID())
+                    .build();
+
+            // Invoke operation
+            Response<Rule> response = service.createRule(createRuleOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
+
+            Rule ruleResult = response.getResult();
+
+            assertNotNull(ruleResult);
+
+            // cleanup
+            DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
+                    .ruleId(ruleResult.getId())
+                    .transactionId(getTransactionID())
+                    .build();
+
+            // Invoke operation
+            Response<Void> deleteResponse = service.deleteRule(deleteRuleOptions).execute();
+            // Validate response
+            assertNotNull(deleteResponse);
+            assertEquals(deleteResponse.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s%nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
     @Test(groups = "createRule", dependsOnMethods = "testCreateRule")
     public void testCreateRuleNotCBREnabled() throws Exception {
         try {
@@ -729,6 +820,29 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
+
+    @Test
+  public void testListAvailableServiceOperations() throws Exception {
+    try {
+      ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions = new ListAvailableServiceOperationsOptions.Builder()
+        .serviceName("containers-kubernetes")
+        .transactionId(getTransactionID())
+        .build();
+
+      // Invoke operation
+      Response<OperationsList> response = service.listAvailableServiceOperations(listAvailableServiceOperationsOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      OperationsList operationsListResult = response.getResult();
+
+      assertNotNull(operationsListResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
 
     @Test(groups = "deleteRule", dependsOnGroups = "accountSettings")
     public void testDeleteRule() throws Exception {

@@ -38,9 +38,9 @@ public class NewRuleOperationsTest {
     assertEquals(newRuleOperationsApiTypesItemModel.apiTypeId(), "testString");
 
     NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
-      .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)))
+      .apiTypes(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel))
       .build();
-    assertEquals(newRuleOperationsModel.apiTypes(), new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)));
+    assertEquals(newRuleOperationsModel.apiTypes(), java.util.Arrays.asList(newRuleOperationsApiTypesItemModel));
 
     String json = TestUtilities.serialize(newRuleOperationsModel);
 

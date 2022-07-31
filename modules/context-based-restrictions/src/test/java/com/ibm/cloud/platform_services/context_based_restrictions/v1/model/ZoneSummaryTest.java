@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressVPC;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneSummary;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;

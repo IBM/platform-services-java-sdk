@@ -47,6 +47,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleC
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetLocationsItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefValue;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
@@ -60,8 +61,6 @@ import com.ibm.cloud.sdk.core.util.DateUtils;
 import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,8 +118,8 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
       .name("an example of zone")
       .accountId("12ab34cd56ef78ab90cd12ef34ab56cd")
       .description("this is an example of zone")
-      .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-      .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .addresses(java.util.Arrays.asList(addressModel))
+      .excluded(java.util.Arrays.asList(addressModel))
       .xCorrelationId("testString")
       .transactionId("testString")
       .build();
@@ -288,8 +287,8 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
       .name("an example of zone")
       .accountId("12ab34cd56ef78ab90cd12ef34ab56cd")
       .description("this is an example of zone")
-      .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-      .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .addresses(java.util.Arrays.asList(addressModel))
+      .excluded(java.util.Arrays.asList(addressModel))
       .xCorrelationId("testString")
       .transactionId("testString")
       .build();
@@ -449,7 +448,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
 
     // Construct an instance of the RuleContext model
     RuleContext ruleContextModel = new RuleContext.Builder()
-      .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+      .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
       .build();
 
     // Construct an instance of the ResourceAttribute model
@@ -468,8 +467,8 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
 
     // Construct an instance of the Resource model
     Resource resourceModel = new Resource.Builder()
-      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
-      .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+      .attributes(java.util.Arrays.asList(resourceAttributeModel))
+      .tags(java.util.Arrays.asList(resourceTagAttributeModel))
       .build();
 
     // Construct an instance of the NewRuleOperationsApiTypesItem model
@@ -479,14 +478,14 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
 
     // Construct an instance of the NewRuleOperations model
     NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
-      .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)))
+      .apiTypes(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel))
       .build();
 
     // Construct an instance of the CreateRuleOptions model
     CreateRuleOptions createRuleOptionsModel = new CreateRuleOptions.Builder()
       .description("this is an example of rule")
-      .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-      .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .contexts(java.util.Arrays.asList(ruleContextModel))
+      .resources(java.util.Arrays.asList(resourceModel))
       .operations(newRuleOperationsModel)
       .enforcementMode("enabled")
       .xCorrelationId("testString")
@@ -665,7 +664,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
 
     // Construct an instance of the RuleContext model
     RuleContext ruleContextModel = new RuleContext.Builder()
-      .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+      .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
       .build();
 
     // Construct an instance of the ResourceAttribute model
@@ -684,8 +683,8 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
 
     // Construct an instance of the Resource model
     Resource resourceModel = new Resource.Builder()
-      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
-      .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+      .attributes(java.util.Arrays.asList(resourceAttributeModel))
+      .tags(java.util.Arrays.asList(resourceTagAttributeModel))
       .build();
 
     // Construct an instance of the NewRuleOperationsApiTypesItem model
@@ -695,7 +694,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
 
     // Construct an instance of the NewRuleOperations model
     NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
-      .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel)))
+      .apiTypes(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel))
       .build();
 
     // Construct an instance of the ReplaceRuleOptions model
@@ -703,8 +702,8 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
       .ruleId("testString")
       .ifMatch("testString")
       .description("this is an example of rule")
-      .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-      .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .contexts(java.util.Arrays.asList(ruleContextModel))
+      .resources(java.util.Arrays.asList(resourceModel))
       .operations(newRuleOperationsModel)
       .enforcementMode("disabled")
       .xCorrelationId("testString")

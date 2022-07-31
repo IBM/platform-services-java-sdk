@@ -14,7 +14,6 @@
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
@@ -97,7 +96,7 @@ public class ContextBasedRestrictionsExamples {
                 .name("an example of zone")
                 .accountId(accountID)
                 .description("this is an example of zone")
-                .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+                .addresses(java.util.Arrays.asList(addressModel))
                 .build();
 
             Response<Zone> response = contextBasedRestrictionsService.createZone(createZoneOptions).execute();
@@ -159,7 +158,7 @@ public class ContextBasedRestrictionsExamples {
                 .name("an example of zone")
                 .accountId(accountID)
                 .description("this is an example of updated zone")
-                .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+                .addresses(java.util.Arrays.asList(addressModel))
                 .build();
 
             Response<Zone> response = contextBasedRestrictionsService.replaceZone(replaceZoneOptions).execute();
@@ -196,7 +195,7 @@ public class ContextBasedRestrictionsExamples {
                 .value(zoneID)
                 .build();
             RuleContext ruleContextModel = new RuleContext.Builder()
-                .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+                .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
                 .build();
             ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
                 .name("accountId")
@@ -213,7 +212,7 @@ public class ContextBasedRestrictionsExamples {
             Resource resourceModel = new Resource.Builder()
                 .addAttributes(resourceAttributeModelAccountID)
                 .addAttributes(resourceAttributeModelServiceName)
-                .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+                .tags(java.util.Arrays.asList(resourceTagAttributeModel))
                 .build();
             CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
                 .description("this is an example of rule")
@@ -276,7 +275,7 @@ public class ContextBasedRestrictionsExamples {
                 .value(zoneID)
                 .build();
             RuleContext ruleContextModel = new RuleContext.Builder()
-                .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+                .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
                 .build();
             ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
                 .name("accountId")

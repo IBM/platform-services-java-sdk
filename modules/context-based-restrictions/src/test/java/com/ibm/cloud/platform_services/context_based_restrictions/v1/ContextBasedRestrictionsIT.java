@@ -131,7 +131,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .name("SDK TEST - an example of zone")
                     .accountId(testAccountID)
                     .description("SDK TEST - this is an example of zone")
-                    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel, serviceRefAddressModel)))
+                    .addresses(java.util.Arrays.asList(addressModel, serviceRefAddressModel))
                     .transactionId(getTransactionID())
                     .build();
 
@@ -164,7 +164,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .name("SDK TEST - an example of zone")
                     .accountId(testAccountID)
                     .description("SDK TEST - this is an example of zone")
-                    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+                    .addresses(java.util.Arrays.asList(addressModel))
                     .transactionId(getTransactionID())
                     .build();
 
@@ -189,7 +189,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .name("SDK TEST - an example of zone")
                     .accountId(testAccountID)
                     .description("SDK TEST - this is an example of zone")
-                    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+                    .addresses(java.util.Arrays.asList(addressModel))
                     .transactionId(getTransactionID())
                     .build();
 
@@ -297,7 +297,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .name("SDK TEST - an example of updated zone")
                     .accountId(testAccountID)
                     .description("SDK TEST - this is an example of updated zone")
-                    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+                    .addresses(java.util.Arrays.asList(addressModel))
                     .transactionId(getTransactionID())
                     .build();
 
@@ -331,7 +331,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .name("SDK TEST - an example of zone")
                     .accountId(testAccountID)
                     .description("SDK TEST - this is an example of zone")
-                    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+                    .addresses(java.util.Arrays.asList(addressModel))
                     .transactionId(getTransactionID())
                     .build();
 
@@ -358,7 +358,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .name("SDK TEST - an example of zone")
                     .accountId(testAccountID)
                     .description("SDK TEST - this is an example of zone")
-                    .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+                    .addresses(java.util.Arrays.asList(addressModel))
                     .transactionId(getTransactionID())
                     .build();
 
@@ -418,7 +418,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             RuleContext ruleContextModel = new RuleContext.Builder()
-                    .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+                    .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
                     .build();
 
             ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
@@ -437,14 +437,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             Resource resourceModel = new Resource.Builder()
-                    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName)))
-                    .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+                    .attributes(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName))
+                    .tags(java.util.Arrays.asList(resourceTagAttributeModel))
                     .build();
 
             CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
                     .description("SDK TEST - this is an example of rule")
-                    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-                    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .contexts(java.util.Arrays.asList(ruleContextModel))
+                    .resources(java.util.Arrays.asList(resourceModel))
                     .enforcementMode("enabled")
                     .transactionId(getTransactionID())
                     .build();
@@ -476,7 +476,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             RuleContext ruleContextModel = new RuleContext.Builder()
-                    .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+                    .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
                     .build();
 
             ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
@@ -495,21 +495,21 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             Resource resourceModel = new Resource.Builder()
-                    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName)))
-                    .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+                    .attributes(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName))
+                    .tags(java.util.Arrays.asList(resourceTagAttributeModel))
                     .build();
 
             NewRuleOperationsApiTypesItem apiTypeModel = new NewRuleOperationsApiTypesItem.Builder()
                     .apiTypeId("crn:v1:bluemix:public:containers-kubernetes::::api-type:management")
                     .build();
             NewRuleOperations operationsModel = new NewRuleOperations.Builder()
-                    .apiTypes(new java.util.ArrayList<NewRuleOperationsApiTypesItem>(java.util.Arrays.asList(apiTypeModel)))
+                    .apiTypes(java.util.Arrays.asList(apiTypeModel))
                     .build();
 
             CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
                     .description("SDK TEST - this is an example of rule")
-                    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-                    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .contexts(java.util.Arrays.asList(ruleContextModel))
+                    .resources(java.util.Arrays.asList(resourceModel))
                     .operations(operationsModel)
                     .enforcementMode("enabled")
                     .transactionId(getTransactionID())
@@ -551,7 +551,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             RuleContext ruleContextModel = new RuleContext.Builder()
-                    .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+                    .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
                     .build();
 
             ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
@@ -570,14 +570,14 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             Resource resourceModel = new Resource.Builder()
-                    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName)))
-                    .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+                    .attributes(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName))
+                    .tags(java.util.Arrays.asList(resourceTagAttributeModel))
                     .build();
 
             CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
                     .description("SDK TEST - this is an example of rule")
-                    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-                    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .contexts(java.util.Arrays.asList(ruleContextModel))
+                    .resources(java.util.Arrays.asList(resourceModel))
                     .enforcementMode("enabled")
                     .transactionId(getTransactionID())
                     .build();
@@ -682,7 +682,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             RuleContext ruleContextModel = new RuleContext.Builder()
-                    .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+                    .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
                     .build();
 
             ResourceAttribute resourceAttributeModelAccountName = new ResourceAttribute.Builder()
@@ -701,16 +701,16 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             Resource resourceModel = new Resource.Builder()
-                    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountName, resourceAttributeModelServiceName)))
-                    .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+                    .attributes(java.util.Arrays.asList(resourceAttributeModelAccountName, resourceAttributeModelServiceName))
+                    .tags(java.util.Arrays.asList(resourceTagAttributeModel))
                     .build();
 
             ReplaceRuleOptions replaceRuleOptions = new ReplaceRuleOptions.Builder()
                     .ruleId(ruleID)
                     .ifMatch(ruleRev)
                     .description("SDK TEST - this is an example of updated rule")
-                    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-                    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .contexts(java.util.Arrays.asList(ruleContextModel))
+                    .resources(java.util.Arrays.asList(resourceModel))
                     .enforcementMode("disabled")
                     .transactionId(getTransactionID())
                     .build();
@@ -739,7 +739,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             RuleContext ruleContextModel = new RuleContext.Builder()
-                    .attributes(new java.util.ArrayList<RuleContextAttribute>(java.util.Arrays.asList(ruleContextAttributeModel)))
+                    .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
                     .build();
 
             ResourceAttribute resourceAttributeModelAccountName = new ResourceAttribute.Builder()
@@ -758,16 +758,16 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             Resource resourceModel = new Resource.Builder()
-                    .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModelAccountName, resourceAttributeModelServiceName)))
-                    .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+                    .attributes(java.util.Arrays.asList(resourceAttributeModelAccountName, resourceAttributeModelServiceName))
+                    .tags(java.util.Arrays.asList(resourceTagAttributeModel))
                     .build();
 
             ReplaceRuleOptions replaceRuleOptions = new ReplaceRuleOptions.Builder()
                     .ruleId(NonExistentID)
                     .ifMatch("abc")
                     .description("SDK TEST - this is an example of rule")
-                    .contexts(new java.util.ArrayList<RuleContext>(java.util.Arrays.asList(ruleContextModel)))
-                    .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+                    .contexts(java.util.Arrays.asList(ruleContextModel))
+                    .resources(java.util.Arrays.asList(resourceModel))
                     .enforcementMode("disabled")
                     .transactionId(getTransactionID())
                     .build();

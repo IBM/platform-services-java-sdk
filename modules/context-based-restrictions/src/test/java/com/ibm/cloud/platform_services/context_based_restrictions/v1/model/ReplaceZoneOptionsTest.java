@@ -13,13 +13,11 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressVPC;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -34,11 +32,11 @@ public class ReplaceZoneOptionsTest {
 
   @Test
   public void testReplaceZoneOptions() throws Throwable {
-    AddressIPAddress addressModel = new AddressIPAddress.Builder()
-      .type("ipAddress")
+    AddressVPC addressModel = new AddressVPC.Builder()
+      .type("vpc")
       .value("testString")
       .build();
-    assertEquals(addressModel.type(), "ipAddress");
+    assertEquals(addressModel.type(), "vpc");
     assertEquals(addressModel.value(), "testString");
 
     ReplaceZoneOptions replaceZoneOptionsModel = new ReplaceZoneOptions.Builder()
@@ -47,8 +45,8 @@ public class ReplaceZoneOptionsTest {
       .name("testString")
       .accountId("testString")
       .description("testString")
-      .addresses(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
-      .excluded(new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)))
+      .addresses(java.util.Arrays.asList(addressModel))
+      .excluded(java.util.Arrays.asList(addressModel))
       .xCorrelationId("testString")
       .transactionId("testString")
       .build();
@@ -57,8 +55,8 @@ public class ReplaceZoneOptionsTest {
     assertEquals(replaceZoneOptionsModel.name(), "testString");
     assertEquals(replaceZoneOptionsModel.accountId(), "testString");
     assertEquals(replaceZoneOptionsModel.description(), "testString");
-    assertEquals(replaceZoneOptionsModel.addresses(), new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)));
-    assertEquals(replaceZoneOptionsModel.excluded(), new java.util.ArrayList<Address>(java.util.Arrays.asList(addressModel)));
+    assertEquals(replaceZoneOptionsModel.addresses(), java.util.Arrays.asList(addressModel));
+    assertEquals(replaceZoneOptionsModel.excluded(), java.util.Arrays.asList(addressModel));
     assertEquals(replaceZoneOptionsModel.xCorrelationId(), "testString");
     assertEquals(replaceZoneOptionsModel.transactionId(), "testString");
   }

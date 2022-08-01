@@ -36,11 +36,13 @@ public class ServiceRefValueTest {
       .serviceType("testString")
       .serviceName("testString")
       .serviceInstance("testString")
+      .location("testString")
       .build();
     assertEquals(serviceRefValueModel.accountId(), "testString");
     assertEquals(serviceRefValueModel.serviceType(), "testString");
     assertEquals(serviceRefValueModel.serviceName(), "testString");
     assertEquals(serviceRefValueModel.serviceInstance(), "testString");
+    assertEquals(serviceRefValueModel.location(), "testString");
 
     String json = TestUtilities.serialize(serviceRefValueModel);
 
@@ -50,6 +52,7 @@ public class ServiceRefValueTest {
     assertEquals(serviceRefValueModelNew.serviceType(), "testString");
     assertEquals(serviceRefValueModelNew.serviceName(), "testString");
     assertEquals(serviceRefValueModelNew.serviceInstance(), "testString");
+    assertEquals(serviceRefValueModelNew.location(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

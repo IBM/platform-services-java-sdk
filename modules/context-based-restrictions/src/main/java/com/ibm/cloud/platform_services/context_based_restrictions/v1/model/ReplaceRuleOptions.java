@@ -24,7 +24,6 @@ public class ReplaceRuleOptions extends GenericModel {
 
   /**
    * The rule enforcement mode:
-   *
    *  * `enabled` - The restrictions are enforced and reported. This is the default.
    *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
    *  * `report` - The restrictions are evaluated and reported, but not enforced.
@@ -43,6 +42,7 @@ public class ReplaceRuleOptions extends GenericModel {
   protected String description;
   protected List<RuleContext> contexts;
   protected List<Resource> resources;
+  protected NewRuleOperations operations;
   protected String enforcementMode;
   protected String xCorrelationId;
   protected String transactionId;
@@ -56,6 +56,7 @@ public class ReplaceRuleOptions extends GenericModel {
     private String description;
     private List<RuleContext> contexts;
     private List<Resource> resources;
+    private NewRuleOperations operations;
     private String enforcementMode;
     private String xCorrelationId;
     private String transactionId;
@@ -66,6 +67,7 @@ public class ReplaceRuleOptions extends GenericModel {
       this.description = replaceRuleOptions.description;
       this.contexts = replaceRuleOptions.contexts;
       this.resources = replaceRuleOptions.resources;
+      this.operations = replaceRuleOptions.operations;
       this.enforcementMode = replaceRuleOptions.enforcementMode;
       this.xCorrelationId = replaceRuleOptions.xCorrelationId;
       this.transactionId = replaceRuleOptions.transactionId;
@@ -187,6 +189,17 @@ public class ReplaceRuleOptions extends GenericModel {
     }
 
     /**
+     * Set the operations.
+     *
+     * @param operations the operations
+     * @return the ReplaceRuleOptions builder
+     */
+    public Builder operations(NewRuleOperations operations) {
+      this.operations = operations;
+      return this;
+    }
+
+    /**
      * Set the enforcementMode.
      *
      * @param enforcementMode the enforcementMode
@@ -232,6 +245,7 @@ public class ReplaceRuleOptions extends GenericModel {
     description = builder.description;
     contexts = builder.contexts;
     resources = builder.resources;
+    operations = builder.operations;
     enforcementMode = builder.enforcementMode;
     xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
@@ -303,10 +317,20 @@ public class ReplaceRuleOptions extends GenericModel {
   }
 
   /**
+   * Gets the operations.
+   *
+   * The operations this rule applies to.
+   *
+   * @return the operations
+   */
+  public NewRuleOperations operations() {
+    return operations;
+  }
+
+  /**
    * Gets the enforcementMode.
    *
    * The rule enforcement mode:
-   *
    *  * `enabled` - The restrictions are enforced and reported. This is the default.
    *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
    *  * `report` - The restrictions are evaluated and reported, but not enforced.

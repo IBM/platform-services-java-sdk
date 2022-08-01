@@ -13,8 +13,7 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetLocationsItem;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -24,17 +23,29 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ServiceRefTarget model.
+ * Unit test class for the NewRuleOperationsApiTypesItem model.
  */
-public class ServiceRefTargetTest {
+public class NewRuleOperationsApiTypesItemTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testServiceRefTarget() throws Throwable {
-    ServiceRefTarget serviceRefTargetModel = new ServiceRefTarget();
-    assertNull(serviceRefTargetModel.getServiceName());
-    assertNull(serviceRefTargetModel.getServiceType());
-    assertNull(serviceRefTargetModel.getLocations());
+  public void testNewRuleOperationsApiTypesItem() throws Throwable {
+    NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
+      .apiTypeId("testString")
+      .build();
+    assertEquals(newRuleOperationsApiTypesItemModel.apiTypeId(), "testString");
+
+    String json = TestUtilities.serialize(newRuleOperationsApiTypesItemModel);
+
+    NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModelNew = TestUtilities.deserialize(json, NewRuleOperationsApiTypesItem.class);
+    assertTrue(newRuleOperationsApiTypesItemModelNew instanceof NewRuleOperationsApiTypesItem);
+    assertEquals(newRuleOperationsApiTypesItemModelNew.apiTypeId(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testNewRuleOperationsApiTypesItemError() throws Throwable {
+    new NewRuleOperationsApiTypesItem.Builder().build();
+  }
+
 }

@@ -15,6 +15,7 @@ package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetLocationsItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;

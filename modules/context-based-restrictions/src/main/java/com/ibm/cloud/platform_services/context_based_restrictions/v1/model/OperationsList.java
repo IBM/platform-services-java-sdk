@@ -18,47 +18,22 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Summary information about a service reference target.
+ * The response object of the `list_available_service_operations` operation.
  */
-public class ServiceRefTarget extends GenericModel {
+public class OperationsList extends GenericModel {
 
-  @SerializedName("service_name")
-  protected String serviceName;
-  @SerializedName("service_type")
-  protected String serviceType;
-  protected List<ServiceRefTargetLocationsItem> locations;
+  @SerializedName("api_types")
+  protected List<APIType> apiTypes;
 
   /**
-   * Gets the serviceName.
+   * Gets the apiTypes.
    *
-   * The name of the service.
+   * The returned API types.
    *
-   * @return the serviceName
+   * @return the apiTypes
    */
-  public String getServiceName() {
-    return serviceName;
-  }
-
-  /**
-   * Gets the serviceType.
-   *
-   * The type of the service.
-   *
-   * @return the serviceType
-   */
-  public String getServiceType() {
-    return serviceType;
-  }
-
-  /**
-   * Gets the locations.
-   *
-   * The locations the service is available.
-   *
-   * @return the locations
-   */
-  public List<ServiceRefTargetLocationsItem> getLocations() {
-    return locations;
+  public List<APIType> getApiTypes() {
+    return apiTypes;
   }
 }
 

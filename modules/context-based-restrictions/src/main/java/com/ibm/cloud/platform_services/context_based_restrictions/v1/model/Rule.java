@@ -25,7 +25,6 @@ public class Rule extends GenericModel {
 
   /**
    * The rule enforcement mode:
-   *
    *  * `enabled` - The restrictions are enforced and reported. This is the default.
    *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
    *  * `report` - The restrictions are evaluated and reported, but not enforced.
@@ -44,6 +43,7 @@ public class Rule extends GenericModel {
   protected String description;
   protected List<RuleContext> contexts;
   protected List<Resource> resources;
+  protected NewRuleOperations operations;
   @SerializedName("enforcement_mode")
   protected String enforcementMode;
   protected String href;
@@ -112,10 +112,20 @@ public class Rule extends GenericModel {
   }
 
   /**
+   * Gets the operations.
+   *
+   * The operations this rule applies to.
+   *
+   * @return the operations
+   */
+  public NewRuleOperations getOperations() {
+    return operations;
+  }
+
+  /**
    * Gets the enforcementMode.
    *
    * The rule enforcement mode:
-   *
    *  * `enabled` - The restrictions are enforced and reported. This is the default.
    *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
    *  * `report` - The restrictions are evaluated and reported, but not enforced.

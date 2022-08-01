@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.51.0-5b8b699d-20220613-200818
+ * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
  */
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
@@ -27,9 +27,11 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Delet
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OperationsList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
@@ -382,6 +384,9 @@ public class ContextBasedRestrictions extends BaseService {
       if (createRuleOptions.resources() != null) {
         contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRuleOptions.resources()));
       }
+      if (createRuleOptions.operations() != null) {
+        contentJson.add("operations", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRuleOptions.operations()));
+      }
       if (createRuleOptions.enforcementMode() != null) {
         contentJson.addProperty("enforcement_mode", createRuleOptions.enforcementMode());
       }
@@ -450,6 +455,9 @@ public class ContextBasedRestrictions extends BaseService {
     }
     if (listRulesOptions.sort() != null) {
       builder.query("sort", String.valueOf(listRulesOptions.sort()));
+    }
+    if (listRulesOptions.enforcementMode() != null) {
+      builder.query("enforcement_mode", String.valueOf(listRulesOptions.enforcementMode()));
     }
     ResponseConverter<RuleList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RuleList>() { }.getType());
@@ -523,6 +531,9 @@ public class ContextBasedRestrictions extends BaseService {
     if (replaceRuleOptions.resources() != null) {
       contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceRuleOptions.resources()));
     }
+    if (replaceRuleOptions.operations() != null) {
+      contentJson.add("operations", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceRuleOptions.operations()));
+    }
     if (replaceRuleOptions.enforcementMode() != null) {
       contentJson.addProperty("enforcement_mode", replaceRuleOptions.enforcementMode());
     }
@@ -587,6 +598,35 @@ public class ContextBasedRestrictions extends BaseService {
     }
     ResponseConverter<AccountSettings> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettings>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List available service operations.
+   *
+   * This operation lists all available service operations.
+   *
+   * @param listAvailableServiceOperationsOptions the {@link ListAvailableServiceOperationsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link OperationsList}
+   */
+  public ServiceCall<OperationsList> listAvailableServiceOperations(ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listAvailableServiceOperationsOptions,
+      "listAvailableServiceOperationsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/operations"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("context_based_restrictions", "v1", "listAvailableServiceOperations");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listAvailableServiceOperationsOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", listAvailableServiceOperationsOptions.xCorrelationId());
+    }
+    if (listAvailableServiceOperationsOptions.transactionId() != null) {
+      builder.header("Transaction-Id", listAvailableServiceOperationsOptions.transactionId());
+    }
+    builder.query("service_name", String.valueOf(listAvailableServiceOperationsOptions.serviceName()));
+    ResponseConverter<OperationsList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OperationsList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

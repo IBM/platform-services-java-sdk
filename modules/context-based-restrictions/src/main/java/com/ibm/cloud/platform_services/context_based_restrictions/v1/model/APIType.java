@@ -18,47 +18,59 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Summary information about a service reference target.
+ * Service API Type details.
  */
-public class ServiceRefTarget extends GenericModel {
+public class APIType extends GenericModel {
 
-  @SerializedName("service_name")
-  protected String serviceName;
-  @SerializedName("service_type")
-  protected String serviceType;
-  protected List<ServiceRefTargetLocationsItem> locations;
+  @SerializedName("api_type_id")
+  protected String apiTypeId;
+  @SerializedName("display_name")
+  protected String displayName;
+  protected String description;
+  protected List<Action> actions;
 
   /**
-   * Gets the serviceName.
+   * Gets the apiTypeId.
    *
-   * The name of the service.
+   * The id of the API type.
    *
-   * @return the serviceName
+   * @return the apiTypeId
    */
-  public String getServiceName() {
-    return serviceName;
+  public String getApiTypeId() {
+    return apiTypeId;
   }
 
   /**
-   * Gets the serviceType.
+   * Gets the displayName.
    *
-   * The type of the service.
+   * The displayed name of the API type.
    *
-   * @return the serviceType
+   * @return the displayName
    */
-  public String getServiceType() {
-    return serviceType;
+  public String getDisplayName() {
+    return displayName;
   }
 
   /**
-   * Gets the locations.
+   * Gets the description.
    *
-   * The locations the service is available.
+   * The description of the API type.
    *
-   * @return the locations
+   * @return the description
    */
-  public List<ServiceRefTargetLocationsItem> getLocations() {
-    return locations;
+  public String getDescription() {
+    return description;
+  }
+
+  /**
+   * Gets the actions.
+   *
+   * The actions available for the API type.
+   *
+   * @return the actions
+   */
+  public List<Action> getActions() {
+    return actions;
   }
 }
 

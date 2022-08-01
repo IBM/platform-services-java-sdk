@@ -19,6 +19,18 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListRulesOptions extends GenericModel {
 
+  /**
+   * The rule's `enforcement_mode` attribute.
+   */
+  public interface EnforcementMode {
+    /** enabled. */
+    String ENABLED = "enabled";
+    /** disabled. */
+    String DISABLED = "disabled";
+    /** report. */
+    String REPORT = "report";
+  }
+
   protected String accountId;
   protected String xCorrelationId;
   protected String transactionId;
@@ -30,6 +42,7 @@ public class ListRulesOptions extends GenericModel {
   protected String serviceType;
   protected String zoneId;
   protected String sort;
+  protected String enforcementMode;
 
   /**
    * Builder.
@@ -46,6 +59,7 @@ public class ListRulesOptions extends GenericModel {
     private String serviceType;
     private String zoneId;
     private String sort;
+    private String enforcementMode;
 
     private Builder(ListRulesOptions listRulesOptions) {
       this.accountId = listRulesOptions.accountId;
@@ -59,6 +73,7 @@ public class ListRulesOptions extends GenericModel {
       this.serviceType = listRulesOptions.serviceType;
       this.zoneId = listRulesOptions.zoneId;
       this.sort = listRulesOptions.sort;
+      this.enforcementMode = listRulesOptions.enforcementMode;
     }
 
     /**
@@ -205,6 +220,17 @@ public class ListRulesOptions extends GenericModel {
       this.sort = sort;
       return this;
     }
+
+    /**
+     * Set the enforcementMode.
+     *
+     * @param enforcementMode the enforcementMode
+     * @return the ListRulesOptions builder
+     */
+    public Builder enforcementMode(String enforcementMode) {
+      this.enforcementMode = enforcementMode;
+      return this;
+    }
   }
 
   protected ListRulesOptions() { }
@@ -223,6 +249,7 @@ public class ListRulesOptions extends GenericModel {
     serviceType = builder.serviceType;
     zoneId = builder.zoneId;
     sort = builder.sort;
+    enforcementMode = builder.enforcementMode;
   }
 
   /**
@@ -358,6 +385,17 @@ public class ListRulesOptions extends GenericModel {
    */
   public String sort() {
     return sort;
+  }
+
+  /**
+   * Gets the enforcementMode.
+   *
+   * The rule's `enforcement_mode` attribute.
+   *
+   * @return the enforcementMode
+   */
+  public String enforcementMode() {
+    return enforcementMode;
   }
 }
 

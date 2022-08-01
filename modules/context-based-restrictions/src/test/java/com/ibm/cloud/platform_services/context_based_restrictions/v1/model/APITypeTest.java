@@ -13,8 +13,8 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetLocationsItem;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.APIType;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Action;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -24,17 +24,18 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ServiceRefTarget model.
+ * Unit test class for the APIType model.
  */
-public class ServiceRefTargetTest {
+public class APITypeTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testServiceRefTarget() throws Throwable {
-    ServiceRefTarget serviceRefTargetModel = new ServiceRefTarget();
-    assertNull(serviceRefTargetModel.getServiceName());
-    assertNull(serviceRefTargetModel.getServiceType());
-    assertNull(serviceRefTargetModel.getLocations());
+  public void testAPIType() throws Throwable {
+    APIType apiTypeModel = new APIType();
+    assertNull(apiTypeModel.getApiTypeId());
+    assertNull(apiTypeModel.getDisplayName());
+    assertNull(apiTypeModel.getDescription());
+    assertNull(apiTypeModel.getActions());
   }
 }

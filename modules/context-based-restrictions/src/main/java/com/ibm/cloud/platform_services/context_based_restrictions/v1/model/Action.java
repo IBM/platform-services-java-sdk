@@ -12,53 +12,38 @@
  */
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Summary information about a service reference target.
+ * Service API Type actions.
  */
-public class ServiceRefTarget extends GenericModel {
+public class Action extends GenericModel {
 
-  @SerializedName("service_name")
-  protected String serviceName;
-  @SerializedName("service_type")
-  protected String serviceType;
-  protected List<ServiceRefTargetLocationsItem> locations;
+  @SerializedName("action_id")
+  protected String actionId;
+  protected String description;
 
   /**
-   * Gets the serviceName.
+   * Gets the actionId.
    *
-   * The name of the service.
+   * The id of the action.
    *
-   * @return the serviceName
+   * @return the actionId
    */
-  public String getServiceName() {
-    return serviceName;
+  public String getActionId() {
+    return actionId;
   }
 
   /**
-   * Gets the serviceType.
+   * Gets the description.
    *
-   * The type of the service.
+   * The description of the action.
    *
-   * @return the serviceType
+   * @return the description
    */
-  public String getServiceType() {
-    return serviceType;
-  }
-
-  /**
-   * Gets the locations.
-   *
-   * The locations the service is available.
-   *
-   * @return the locations
-   */
-  public List<ServiceRefTargetLocationsItem> getLocations() {
-    return locations;
+  public String getDescription() {
+    return description;
   }
 }
 

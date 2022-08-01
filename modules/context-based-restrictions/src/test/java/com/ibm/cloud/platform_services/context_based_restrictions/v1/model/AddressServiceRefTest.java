@@ -37,11 +37,13 @@ public class AddressServiceRefTest {
       .serviceType("testString")
       .serviceName("testString")
       .serviceInstance("testString")
+      .location("testString")
       .build();
     assertEquals(serviceRefValueModel.accountId(), "testString");
     assertEquals(serviceRefValueModel.serviceType(), "testString");
     assertEquals(serviceRefValueModel.serviceName(), "testString");
     assertEquals(serviceRefValueModel.serviceInstance(), "testString");
+    assertEquals(serviceRefValueModel.location(), "testString");
 
     AddressServiceRef addressServiceRefModel = new AddressServiceRef.Builder()
       .type("serviceRef")

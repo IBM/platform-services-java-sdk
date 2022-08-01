@@ -19,8 +19,6 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resou
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -54,11 +52,11 @@ public class ResourceTest {
     assertEquals(resourceTagAttributeModel.operator(), "testString");
 
     Resource resourceModel = new Resource.Builder()
-      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
-      .tags(new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)))
+      .attributes(java.util.Arrays.asList(resourceAttributeModel))
+      .tags(java.util.Arrays.asList(resourceTagAttributeModel))
       .build();
-    assertEquals(resourceModel.attributes(), new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)));
-    assertEquals(resourceModel.tags(), new java.util.ArrayList<ResourceTagAttribute>(java.util.Arrays.asList(resourceTagAttributeModel)));
+    assertEquals(resourceModel.attributes(), java.util.Arrays.asList(resourceAttributeModel));
+    assertEquals(resourceModel.tags(), java.util.Arrays.asList(resourceTagAttributeModel));
 
     String json = TestUtilities.serialize(resourceModel);
 

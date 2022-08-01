@@ -13,8 +13,8 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -24,35 +24,33 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the RuleContext model.
+ * Unit test class for the NewRuleOperations model.
  */
-public class RuleContextTest {
+public class NewRuleOperationsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testRuleContext() throws Throwable {
-    RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
-      .name("testString")
-      .value("testString")
+  public void testNewRuleOperations() throws Throwable {
+    NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
+      .apiTypeId("testString")
       .build();
-    assertEquals(ruleContextAttributeModel.name(), "testString");
-    assertEquals(ruleContextAttributeModel.value(), "testString");
+    assertEquals(newRuleOperationsApiTypesItemModel.apiTypeId(), "testString");
 
-    RuleContext ruleContextModel = new RuleContext.Builder()
-      .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
+    NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
+      .apiTypes(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel))
       .build();
-    assertEquals(ruleContextModel.attributes(), java.util.Arrays.asList(ruleContextAttributeModel));
+    assertEquals(newRuleOperationsModel.apiTypes(), java.util.Arrays.asList(newRuleOperationsApiTypesItemModel));
 
-    String json = TestUtilities.serialize(ruleContextModel);
+    String json = TestUtilities.serialize(newRuleOperationsModel);
 
-    RuleContext ruleContextModelNew = TestUtilities.deserialize(json, RuleContext.class);
-    assertTrue(ruleContextModelNew instanceof RuleContext);
+    NewRuleOperations newRuleOperationsModelNew = TestUtilities.deserialize(json, NewRuleOperations.class);
+    assertTrue(newRuleOperationsModelNew instanceof NewRuleOperations);
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testRuleContextError() throws Throwable {
-    new RuleContext.Builder().build();
+  public void testNewRuleOperationsError() throws Throwable {
+    new NewRuleOperations.Builder().build();
   }
 
 }

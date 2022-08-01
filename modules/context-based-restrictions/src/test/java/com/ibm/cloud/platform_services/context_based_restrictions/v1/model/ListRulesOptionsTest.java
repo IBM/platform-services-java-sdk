@@ -43,6 +43,7 @@ public class ListRulesOptionsTest {
       .serviceType("testString")
       .zoneId("testString")
       .sort("testString")
+      .enforcementMode("enabled")
       .build();
     assertEquals(listRulesOptionsModel.accountId(), "testString");
     assertEquals(listRulesOptionsModel.xCorrelationId(), "testString");
@@ -55,6 +56,7 @@ public class ListRulesOptionsTest {
     assertEquals(listRulesOptionsModel.serviceType(), "testString");
     assertEquals(listRulesOptionsModel.zoneId(), "testString");
     assertEquals(listRulesOptionsModel.sort(), "testString");
+    assertEquals(listRulesOptionsModel.enforcementMode(), "enabled");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

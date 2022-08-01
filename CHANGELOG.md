@@ -1,3 +1,10 @@
+# [0.26.0](https://github.com/IBM/platform-services-java-sdk/compare/0.25.0...0.26.0) (2022-08-01)
+
+
+### Features
+
+* **Context-based Restrictions:** update service after recent API changes ([#150](https://github.com/IBM/platform-services-java-sdk/issues/150)) ([bd04ef3](https://github.com/IBM/platform-services-java-sdk/commit/bd04ef35eff056afc18b3a10e3f320ae9e3b0cd0))
+
 # [0.25.0](https://github.com/IBM/platform-services-java-sdk/compare/0.24.4...0.25.0) (2022-06-23)
 
 

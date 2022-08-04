@@ -15,6 +15,10 @@ package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddressRange;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressServiceRef;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressSubnet;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressVPC;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
@@ -37,6 +41,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleC
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefValue;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
 import com.ibm.cloud.sdk.core.http.Response;
@@ -57,6 +62,7 @@ import java.util.Map;
 // CONTEXT_BASED_RESTRICTIONS_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
 // CONTEXT_BASED_RESTRICTIONS_TEST_ACCOUNT_ID=<the id of the account under which test CBR zones and rules are created>
 // CONTEXT_BASED_RESTRICTIONS_TEST_SERVICE_NAME=<the name of the service to be associated with the test CBR rules>
+// CONTEXT_BASED_RESTRICTIONS_TEST_VPC_CRN=<the CRN of the vpc instance to be associated with the test CBR rules>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
@@ -68,12 +74,16 @@ public class ContextBasedRestrictionsExamples {
     protected ContextBasedRestrictionsExamples() {
     }
 
+    static {
+      System.setProperty("IBM_CREDENTIALS_FILE", "../../context_based_restrictions_v1.env");
+    }
+
     @SuppressWarnings("checkstyle:methodlength")
     public static void main(String[] args) throws Exception {
         ContextBasedRestrictions contextBasedRestrictionsService = ContextBasedRestrictions.newInstance();
-        String serviceURL = null;
         String accountID = null;
         String serviceName = null;
+        String vpcCRN = null;
         String zoneID = null;
         String zoneRev = null;
         String ruleID = null;
@@ -81,22 +91,47 @@ public class ContextBasedRestrictionsExamples {
         // Load up our test-specific config properties.
         Map<String, String> config = CredentialUtils.getServiceProperties(ContextBasedRestrictions.DEFAULT_SERVICE_NAME);
 
-        serviceURL = config.get("URL");
         accountID = config.get("TEST_ACCOUNT_ID");
         serviceName = config.get("TEST_SERVICE_NAME");
+        vpcCRN = config.get("TEST_VPC_CRN");
 
         try {
             System.out.println("createZone() result:");
             // begin-create_zone
-            AddressIPAddress addressModel = new AddressIPAddress.Builder()
+            AddressIPAddress ipAddressModel = new AddressIPAddress.Builder()
                 .type("ipAddress")
                 .value("169.23.56.234")
+                .build();
+            AddressIPAddressRange ipRangeAddressModel = new AddressIPAddressRange.Builder()
+                .type("ipRange")
+                .value("169.23.22.0-169.23.22.255")
+                .build();
+            AddressSubnet subnetAddressModel = new AddressSubnet.Builder()
+                .type("subnet")
+                .value("192.0.2.0/24")
+                .build();
+            AddressVPC vpcAddressModel = new AddressVPC.Builder()
+                .type("vpc")
+                .value(vpcCRN)
+                .build();
+            ServiceRefValue serviceRefValueModel = new ServiceRefValue.Builder()
+                .accountId(accountID)
+                .serviceName("cloud-object-storage")
+                .build();
+            AddressServiceRef serviceRefAddressModel = new AddressServiceRef.Builder()
+                .type("serviceRef")
+                .ref(serviceRefValueModel)
+                .build();
+            AddressIPAddress excludedIPAddressModel = new AddressIPAddress.Builder()
+                .type("ipAddress")
+                .value("169.23.22.127")
                 .build();
             CreateZoneOptions createZoneOptions = new CreateZoneOptions.Builder()
                 .name("an example of zone")
                 .accountId(accountID)
                 .description("this is an example of zone")
-                .addresses(java.util.Arrays.asList(addressModel))
+                .addresses(java.util.Arrays.asList(ipAddressModel, ipRangeAddressModel, subnetAddressModel, vpcAddressModel, serviceRefAddressModel))
+                .excluded(java.util.Arrays.asList(excludedIPAddressModel))
                 .build();
 
             Response<Zone> response = contextBasedRestrictionsService.createZone(createZoneOptions).execute();

@@ -443,6 +443,26 @@
     </developers>
 
     <profiles>
+        <profile>
+            <!-- When using java 9+ we need to use the "add-opens" jvm option to allow powermock to do its thing -->
+            <id>java9plus</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire-version}</version>
+                        <configuration>
+                            <skipTests>${skip.unit.tests}</skipTests>
+                            <argLine>--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED</argLine>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
         <!-- "central" is used to deploy artifacts on maven central -->
         <profile>

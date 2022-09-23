@@ -46,6 +46,11 @@ jobs:
       script:
         - mvn verify -fae -DskipITs $MVN_ARGS
 
+    - jdk: openjdk17
+      install: true
+      script:
+        - mvn verify -fae -DskipITs $MVN_ARGS
+
     - stage: Semantic-Release
       install:
         - nvm install 14

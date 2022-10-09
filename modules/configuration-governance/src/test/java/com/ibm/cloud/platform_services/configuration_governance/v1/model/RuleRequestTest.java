@@ -13,6 +13,7 @@
 
 package com.ibm.cloud.platform_services.configuration_governance.v1.model;
 
+import com.google.gson.JsonParser;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.EnforcementAction;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequest;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequiredConfigSingleProperty;
@@ -99,7 +100,7 @@ public class RuleRequestTest {
     assertEquals(ruleRequestModelNew.description(), "testString");
     assertEquals(ruleRequestModelNew.ruleType(), "user_defined");
     assertEquals(ruleRequestModelNew.target().toString(), targetResourceModel.toString());
-    assertEquals(ruleRequestModelNew.requiredConfig().toString(), ruleRequiredConfigModel.toString());
+    assertEquals(JsonParser.parseString(ruleRequestModelNew.requiredConfig().toString()), JsonParser.parseString(ruleRequiredConfigModel.toString()));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

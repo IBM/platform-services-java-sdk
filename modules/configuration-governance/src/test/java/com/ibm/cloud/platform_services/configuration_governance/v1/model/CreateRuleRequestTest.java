@@ -13,6 +13,7 @@
 
 package com.ibm.cloud.platform_services.configuration_governance.v1.model;
 
+import com.google.gson.JsonParser;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.CreateRuleRequest;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.EnforcementAction;
 import com.ibm.cloud.platform_services.configuration_governance.v1.model.RuleRequest;
@@ -103,7 +104,7 @@ public class CreateRuleRequestTest {
     CreateRuleRequest createRuleRequestModelNew = TestUtilities.deserialize(json, CreateRuleRequest.class);
     assertTrue(createRuleRequestModelNew instanceof CreateRuleRequest);
     assertEquals(createRuleRequestModelNew.requestId(), "3cebc877-58e7-44a5-a292-32114fa73558");
-    assertEquals(createRuleRequestModelNew.rule().toString(), ruleRequestModel.toString());
+    assertEquals(JsonParser.parseString(createRuleRequestModelNew.rule().toString()), JsonParser.parseString(ruleRequestModel.toString()));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

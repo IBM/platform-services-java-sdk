@@ -13,10 +13,15 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.APIType;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Action;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddressRange;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressServiceRef;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressSubnet;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressVPC;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
@@ -40,14 +45,24 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetLocationsItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefValue;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneSummary;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -614,6 +629,86 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Test(groups = "listRules", dependsOnGroups = "createRule")
+    public void testListRulesWithServiceGroupID() throws Exception {
+        try {
+          //create rule with service group id
+            RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
+                    .name("networkZoneId")
+                    .value(zoneID)
+                    .build();
+
+            RuleContext ruleContextModel = new RuleContext.Builder()
+                    .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
+                    .build();
+
+            ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
+                    .name("accountId")
+                    .value(testAccountID)
+                    .build();
+
+            ResourceAttribute resourceAttributeModelServiceGroupID = new ResourceAttribute.Builder()
+                    .name("service_group_id")
+                    .value("IAM")
+                    .build();
+
+            Resource resourceModel = new Resource.Builder()
+                    .attributes(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName))
+                    .tags(java.util.Arrays.asList(resourceTagAttributeModel))
+                    .build();
+
+            CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
+                    .description("SDK TEST - this is an example of rule with a service group")
+                    .contexts(java.util.Arrays.asList(ruleContextModel))
+                    .resources(java.util.Arrays.asList(resourceModel))
+                    .enforcementMode("enabled")
+                    .transactionId(getTransactionID())
+                    .build();
+
+            // Invoke operation
+            Response<Rule> response = service.createRule(createRuleOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
+
+            Rule ruleResult = response.getResult();
+
+            assertNotNull(ruleResult);
+            
+            //List rule with service group ID
+             ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
+                    .accountId(testAccountID)
+                    .serviceGroupId("IAM")
+                    .transactionId(getTransactionID())
+                    .build();
+
+            // Invoke operation
+            Response<RuleList> listResponse = service.listRules(listRulesOptions).execute();
+            // Validate response
+            assertNotNull(listResponse);
+            assertEquals(listResponse.getStatusCode(), 200);
+
+            RuleList ruleListResult = listResponse.getResult();
+
+            assertNotNull(ruleListResult);
+            assertEquals(ruleListResult.getTotalCount(), 1)
+
+            // cleanup
+            DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
+                    .ruleId(ruleResult.getId())
+                    .transactionId(getTransactionID())
+                    .build();
+
+            // Invoke operation
+            Response<Void> deleteResponse = service.deleteRule(deleteRuleOptions).execute();
+            // Validate response
+            assertNotNull(deleteResponse);
+            assertEquals(deleteResponse.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s%nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
 
     @Test(groups = "listRules", dependsOnMethods = "testListRules")
     public void testListRulesInvalidAccountID() throws Exception {

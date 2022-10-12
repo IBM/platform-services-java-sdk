@@ -542,6 +542,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
       .serviceInstance("testString")
       .serviceName("testString")
       .serviceType("testString")
+      .serviceGroupId("testString")
       .zoneId("testString")
       .sort("testString")
       .enforcementMode("enabled")
@@ -570,6 +571,7 @@ public class ContextBasedRestrictionsTest extends PowerMockTestCase {
     assertEquals(query.get("service_instance"), "testString");
     assertEquals(query.get("service_name"), "testString");
     assertEquals(query.get("service_type"), "testString");
+    assertEquals(query.get("service_group_id"), "testString");
     assertEquals(query.get("zone_id"), "testString");
     assertEquals(query.get("sort"), "testString");
     assertEquals(query.get("enforcement_mode"), "enabled");

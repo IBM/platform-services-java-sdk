@@ -41,6 +41,7 @@ public class ListRulesOptionsTest {
       .serviceInstance("testString")
       .serviceName("testString")
       .serviceType("testString")
+      .serviceGroupId("testString")
       .zoneId("testString")
       .sort("testString")
       .enforcementMode("enabled")
@@ -54,6 +55,7 @@ public class ListRulesOptionsTest {
     assertEquals(listRulesOptionsModel.serviceInstance(), "testString");
     assertEquals(listRulesOptionsModel.serviceName(), "testString");
     assertEquals(listRulesOptionsModel.serviceType(), "testString");
+    assertEquals(listRulesOptionsModel.serviceGroupId(), "testString");
     assertEquals(listRulesOptionsModel.zoneId(), "testString");
     assertEquals(listRulesOptionsModel.sort(), "testString");
     assertEquals(listRulesOptionsModel.enforcementMode(), "enabled");

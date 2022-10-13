@@ -691,7 +691,8 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
             RuleList ruleListResult = listResponse.getResult();
 
             assertNotNull(ruleListResult);
-            assertEquals(ruleListResult.getTotalCount(), 1)
+            assertEquals(ruleListResult.getCount(), 1);
+            assertEquals(ruleListResult.getRules().get(0).rule_id, ruleResult.rule_id);
 
             // cleanup
             DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()

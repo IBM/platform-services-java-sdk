@@ -653,8 +653,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
                     .build();
 
             Resource resourceModel = new Resource.Builder()
-                    .attributes(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceName))
-                    .tags(java.util.Arrays.asList(resourceTagAttributeModel))
+                    .attributes(java.util.Arrays.asList(resourceAttributeModelAccountID, resourceAttributeModelServiceGroupID))
                     .build();
 
             CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
@@ -692,7 +691,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
 
             assertNotNull(ruleListResult);
             assertEquals(ruleListResult.getCount(), 1);
-            assertEquals(ruleListResult.getRules().get(0).rule_id, ruleResult.rule_id);
+            assertEquals(ruleListResult.getRules().get(0).id, ruleResult.rule_id);
 
             // cleanup
             DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()

@@ -690,7 +690,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
             RuleList ruleListResult = listResponse.getResult();
 
             assertNotNull(ruleListResult);
-            assertEquals((double)ruleListResult.getTotalCount(), (double)1);
+            assertEquals((double)ruleListResult.getCount(), (double)1);
             assertEquals(ruleListResult.getRules().get(0).getId(), ruleResult.getId());
 
             // cleanup

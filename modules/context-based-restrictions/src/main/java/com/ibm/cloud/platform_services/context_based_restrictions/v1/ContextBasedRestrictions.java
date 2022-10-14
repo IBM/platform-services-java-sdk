@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ * IBM OpenAPI SDK Code Generator Version: 3.57.1-4c556507-20220928-143422
  */
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
@@ -449,6 +449,9 @@ public class ContextBasedRestrictions extends BaseService {
     }
     if (listRulesOptions.serviceType() != null) {
       builder.query("service_type", String.valueOf(listRulesOptions.serviceType()));
+    }
+    if (listRulesOptions.serviceGroupId() != null) {
+      builder.query("service_group_id", String.valueOf(listRulesOptions.serviceGroupId()));
     }
     if (listRulesOptions.zoneId() != null) {
       builder.query("zone_id", String.valueOf(listRulesOptions.zoneId()));

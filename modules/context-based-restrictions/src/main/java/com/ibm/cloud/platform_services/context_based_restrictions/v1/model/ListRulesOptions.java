@@ -40,6 +40,7 @@ public class ListRulesOptions extends GenericModel {
   protected String serviceInstance;
   protected String serviceName;
   protected String serviceType;
+  protected String serviceGroupId;
   protected String zoneId;
   protected String sort;
   protected String enforcementMode;
@@ -57,6 +58,7 @@ public class ListRulesOptions extends GenericModel {
     private String serviceInstance;
     private String serviceName;
     private String serviceType;
+    private String serviceGroupId;
     private String zoneId;
     private String sort;
     private String enforcementMode;
@@ -71,6 +73,7 @@ public class ListRulesOptions extends GenericModel {
       this.serviceInstance = listRulesOptions.serviceInstance;
       this.serviceName = listRulesOptions.serviceName;
       this.serviceType = listRulesOptions.serviceType;
+      this.serviceGroupId = listRulesOptions.serviceGroupId;
       this.zoneId = listRulesOptions.zoneId;
       this.sort = listRulesOptions.sort;
       this.enforcementMode = listRulesOptions.enforcementMode;
@@ -200,6 +203,17 @@ public class ListRulesOptions extends GenericModel {
     }
 
     /**
+     * Set the serviceGroupId.
+     *
+     * @param serviceGroupId the serviceGroupId
+     * @return the ListRulesOptions builder
+     */
+    public Builder serviceGroupId(String serviceGroupId) {
+      this.serviceGroupId = serviceGroupId;
+      return this;
+    }
+
+    /**
      * Set the zoneId.
      *
      * @param zoneId the zoneId
@@ -247,6 +261,7 @@ public class ListRulesOptions extends GenericModel {
     serviceInstance = builder.serviceInstance;
     serviceName = builder.serviceName;
     serviceType = builder.serviceType;
+    serviceGroupId = builder.serviceGroupId;
     zoneId = builder.zoneId;
     sort = builder.sort;
     enforcementMode = builder.enforcementMode;
@@ -362,6 +377,17 @@ public class ListRulesOptions extends GenericModel {
    */
   public String serviceType() {
     return serviceType;
+  }
+
+  /**
+   * Gets the serviceGroupId.
+   *
+   * The rule's `service_group_id` resource attribute.
+   *
+   * @return the serviceGroupId
+   */
+  public String serviceGroupId() {
+    return serviceGroupId;
   }
 
   /**

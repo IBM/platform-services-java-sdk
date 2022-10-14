@@ -1,3 +1,10 @@
+## [0.26.1](https://github.com/IBM/platform-services-java-sdk/compare/0.26.0...0.26.1) (2022-10-14)
+
+
+### Bug Fixes
+
+* **Context Based Restrictions:** add list rule with service_group_id test ([#157](https://github.com/IBM/platform-services-java-sdk/issues/157)) ([f39e42e](https://github.com/IBM/platform-services-java-sdk/commit/f39e42e6e3f7d7400a51a02c009c54246b4b90fa))
+
 # [0.26.0](https://github.com/IBM/platform-services-java-sdk/compare/0.25.0...0.26.0) (2022-08-01)
 
 

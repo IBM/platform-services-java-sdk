@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,6 +33,11 @@ public class ResourcePayload extends GenericModel {
     private Double id;
     private String note;
 
+    /**
+     * Instantiates a new Builder from an existing ResourcePayload instance.
+     *
+     * @param resourcePayload the instance to initialize the Builder with
+     */
     private Builder(ResourcePayload resourcePayload) {
       this.crn = resourcePayload.crn;
       this.type = resourcePayload.type;
@@ -82,7 +87,9 @@ public class ResourcePayload extends GenericModel {
      *
      * @param id the id
      * @return the ResourcePayload builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder id(Double id) {
       this.id = id;
       return this;
@@ -99,6 +106,8 @@ public class ResourcePayload extends GenericModel {
       return this;
     }
   }
+
+  protected ResourcePayload() { }
 
   protected ResourcePayload(Builder builder) {
     crn = builder.crn;
@@ -130,7 +139,7 @@ public class ResourcePayload extends GenericModel {
   /**
    * Gets the type.
    *
-   * Only used to attach Classic IaaS devices which have no CRN.
+   * Only used to attach Classic IaaS devices that have no CRN.
    *
    * @return the type
    */
@@ -141,11 +150,13 @@ public class ResourcePayload extends GenericModel {
   /**
    * Gets the id.
    *
-   * Only used to attach Classic IaaS devices which have no CRN. Id of Classic IaaS device. This is deprecated in favor
+   * Only used to attach Classic IaaS devices that have no CRN. Id of Classic IaaS device. This is deprecated in favor
    * of the crn field.
    *
    * @return the id
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Double id() {
     return id;
   }

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,8 +22,6 @@ import com.ibm.cloud.platform_services.case_management.v1.model.User;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -88,10 +86,10 @@ public class CreateCaseOptionsTest {
       .severity(Long.valueOf("1"))
       .eu(casePayloadEuModel)
       .offering(offeringModel)
-      .resources(new java.util.ArrayList<ResourcePayload>(java.util.Arrays.asList(resourcePayloadModel)))
-      .watchlist(new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)))
+      .resources(java.util.Arrays.asList(resourcePayloadModel))
+      .watchlist(java.util.Arrays.asList(userModel))
       .invoiceNumber("testString")
-      .slaCreditRequest(true)
+      .slaCreditRequest(false)
       .build();
     assertEquals(createCaseOptionsModel.type(), "technical");
     assertEquals(createCaseOptionsModel.subject(), "testString");
@@ -99,10 +97,10 @@ public class CreateCaseOptionsTest {
     assertEquals(createCaseOptionsModel.severity(), Long.valueOf("1"));
     assertEquals(createCaseOptionsModel.eu(), casePayloadEuModel);
     assertEquals(createCaseOptionsModel.offering(), offeringModel);
-    assertEquals(createCaseOptionsModel.resources(), new java.util.ArrayList<ResourcePayload>(java.util.Arrays.asList(resourcePayloadModel)));
-    assertEquals(createCaseOptionsModel.watchlist(), new java.util.ArrayList<User>(java.util.Arrays.asList(userModel)));
+    assertEquals(createCaseOptionsModel.resources(), java.util.Arrays.asList(resourcePayloadModel));
+    assertEquals(createCaseOptionsModel.watchlist(), java.util.Arrays.asList(userModel));
     assertEquals(createCaseOptionsModel.invoiceNumber(), "testString");
-    assertEquals(createCaseOptionsModel.slaCreditRequest(), Boolean.valueOf(true));
+    assertEquals(createCaseOptionsModel.slaCreditRequest(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

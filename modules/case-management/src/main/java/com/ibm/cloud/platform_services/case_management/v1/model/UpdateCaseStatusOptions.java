@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +29,11 @@ public class UpdateCaseStatusOptions extends GenericModel {
     private String caseNumber;
     private StatusPayload statusPayload;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateCaseStatusOptions instance.
+     *
+     * @param updateCaseStatusOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateCaseStatusOptions updateCaseStatusOptions) {
       this.caseNumber = updateCaseStatusOptions.caseNumber;
       this.statusPayload = updateCaseStatusOptions.statusPayload;
@@ -82,6 +87,8 @@ public class UpdateCaseStatusOptions extends GenericModel {
       return this;
     }
   }
+
+  protected UpdateCaseStatusOptions() { }
 
   protected UpdateCaseStatusOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.caseNumber,

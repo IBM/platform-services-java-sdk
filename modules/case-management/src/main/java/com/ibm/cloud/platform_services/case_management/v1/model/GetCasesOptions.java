@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -102,6 +102,11 @@ public class GetCasesOptions extends GenericModel {
     private List<String> status;
     private List<String> fields;
 
+    /**
+     * Instantiates a new Builder from an existing GetCasesOptions instance.
+     *
+     * @param getCasesOptions the instance to initialize the Builder with
+     */
     private Builder(GetCasesOptions getCasesOptions) {
       this.offset = getCasesOptions.offset;
       this.limit = getCasesOptions.limit;
@@ -227,6 +232,8 @@ public class GetCasesOptions extends GenericModel {
     }
   }
 
+  protected GetCasesOptions() { }
+
   protected GetCasesOptions(Builder builder) {
     offset = builder.offset;
     limit = builder.limit;
@@ -248,7 +255,7 @@ public class GetCasesOptions extends GenericModel {
   /**
    * Gets the offset.
    *
-   * Number of cases should be skipped.
+   * Number of cases that are skipped.
    *
    * @return the offset
    */
@@ -259,7 +266,7 @@ public class GetCasesOptions extends GenericModel {
   /**
    * Gets the limit.
    *
-   * Number of cases should be returned.
+   * Number of cases that are returned.
    *
    * @return the limit
    */
@@ -304,7 +311,7 @@ public class GetCasesOptions extends GenericModel {
   /**
    * Gets the fields.
    *
-   * Seleted fields of interest instead of the entire case information.
+   * Selected fields of interest instead of all of the case information.
    *
    * @return the fields
    */

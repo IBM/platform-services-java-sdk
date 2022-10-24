@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -37,6 +37,11 @@ public class AcceptPayload extends StatusPayload {
     private String action;
     private String comment;
 
+    /**
+     * Instantiates a new Builder from an existing AcceptPayload instance.
+     *
+     * @param acceptPayload the instance to initialize the Builder with
+     */
     public Builder(StatusPayload acceptPayload) {
       this.action = acceptPayload.action;
       this.comment = acceptPayload.comment;
@@ -46,6 +51,15 @@ public class AcceptPayload extends StatusPayload {
      * Instantiates a new builder.
      */
     public Builder() {
+    }
+
+    /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param action the action
+     */
+    public Builder(String action) {
+      this.action = action;
     }
 
     /**
@@ -79,6 +93,8 @@ public class AcceptPayload extends StatusPayload {
       return this;
     }
   }
+
+  protected AcceptPayload() { }
 
   protected AcceptPayload(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.action,

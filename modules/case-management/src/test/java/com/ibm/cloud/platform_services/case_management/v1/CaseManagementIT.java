@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,9 +12,11 @@
  */
 package com.ibm.cloud.platform_services.case_management.v1;
 
+import static org.junit.Assert.assertFalse;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -39,6 +41,7 @@ import com.ibm.cloud.platform_services.case_management.v1.model.DeleteFileOption
 import com.ibm.cloud.platform_services.case_management.v1.model.DownloadFileOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.GetCaseOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesOptions;
+import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesPager;
 import com.ibm.cloud.platform_services.case_management.v1.model.Offering;
 import com.ibm.cloud.platform_services.case_management.v1.model.OfferingType;
 import com.ibm.cloud.platform_services.case_management.v1.model.ResolvePayload;
@@ -51,6 +54,7 @@ import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.BadRequestException;
 import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
+import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
@@ -145,14 +149,13 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
     @Test
     public void testCreateCase() {
 
-        String caseSubject = "Java - Integration test";
-        String description = "Please -ignore this is a test case.";
+        String caseSubject = "Test case for Java SDK";
+        String description = "Test case for Java SDK";
 
         // Offering info can be retrieved via /case-management/utilities/v1/offerings/technical
         OfferingType offeringTypeModel = new OfferingType.Builder()
             .group("crn_service_name")
             .key("cloud-object-storage")
-            .id("dff97f5c-bc5e-4455-b470-411c3edbe49c")
             .build();
 
         Offering offeringModel = new Offering.Builder()
@@ -184,15 +187,10 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
 
     @Test (dependsOnMethods = {"testCreateCase"})
     public void testGetCases() {
-
-        String[] fields = new String[] {"number", "description"};
-
         GetCasesOptions getCasesOptionsModel = new GetCasesOptions.Builder()
-            .offset(Long.valueOf("0"))
-            .limit(Long.valueOf("2"))
-            .sort("number")
-            .status(new ArrayList<String>(Arrays.asList("new")))
-            .fields(new ArrayList<String>(Arrays.asList(fields)))
+            .offset(0L)
+            .limit(100L)
+            .search("Java SDK")
             .build();
 
         Response<CaseList> response = service.getCases(getCasesOptionsModel).execute();
@@ -202,6 +200,38 @@ public class CaseManagementIT extends SdkIntegrationTestBase {
 
         assertTrue(0 < responseObj.getTotalCount());
         assertTrue(0 < responseObj.getCases().size());
+    }
+
+    @Test(dependsOnMethods = { "testGetCases" })
+    public void testGetCasesWithPager() throws Exception {
+      try {
+        GetCasesOptions options = new GetCasesOptions.Builder()
+          .limit(1L)
+          .search("Java SDK")
+          .build();
+
+        // Test getNext().
+        List<Case> allResults = new ArrayList<>();
+        GetCasesPager pager = new GetCasesPager(service, options);
+        while (pager.hasNext()) {
+          List<Case> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new GetCasesPager(service, options);
+        List<Case> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
 
     @Test (dependsOnMethods = {"testCreateCase"})

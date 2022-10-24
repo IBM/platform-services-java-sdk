@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,6 +33,11 @@ public class UploadFileOptions extends GenericModel {
     private String caseNumber;
     private List<FileWithMetadata> file;
 
+    /**
+     * Instantiates a new Builder from an existing UploadFileOptions instance.
+     *
+     * @param uploadFileOptions the instance to initialize the Builder with
+     */
     private Builder(UploadFileOptions uploadFileOptions) {
       this.caseNumber = uploadFileOptions.caseNumber;
       this.file = uploadFileOptions.file;
@@ -103,6 +108,8 @@ public class UploadFileOptions extends GenericModel {
       return this;
     }
   }
+
+  protected UploadFileOptions() { }
 
   protected UploadFileOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.caseNumber,

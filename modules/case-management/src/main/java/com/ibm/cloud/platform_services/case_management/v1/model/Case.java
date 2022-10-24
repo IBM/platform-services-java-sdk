@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -75,10 +75,12 @@ public class Case extends GenericModel {
   protected List<Resource> resources;
   protected List<Comment> comments;
 
+  protected Case() { }
+
   /**
    * Gets the number.
    *
-   * Number/ID of the case.
+   * Identifying number of a created case.
    *
    * @return the number
    */
@@ -89,7 +91,7 @@ public class Case extends GenericModel {
   /**
    * Gets the shortDescription.
    *
-   * A short description of what the case is about.
+   * Short description of what the case is about.
    *
    * @return the shortDescription
    */
@@ -100,7 +102,7 @@ public class Case extends GenericModel {
   /**
    * Gets the description.
    *
-   * A full description of what the case is about.
+   * Full description of what the case is about.
    *
    * @return the description
    */
@@ -111,7 +113,7 @@ public class Case extends GenericModel {
   /**
    * Gets the createdAt.
    *
-   * Date time of case creation in UTC.
+   * Date and time of case creation in UTC.
    *
    * @return the createdAt
    */
@@ -133,7 +135,7 @@ public class Case extends GenericModel {
   /**
    * Gets the updatedAt.
    *
-   * Date time of the last update on the case in UTC.
+   * Date and time of the last update on the case in UTC.
    *
    * @return the updatedAt
    */
@@ -177,7 +179,7 @@ public class Case extends GenericModel {
   /**
    * Gets the status.
    *
-   * Status of the case.
+   * Status type of the case.
    *
    * @return the status
    */
@@ -188,7 +190,7 @@ public class Case extends GenericModel {
   /**
    * Gets the severity.
    *
-   * The severity of the case.
+   * Severity level of the case.
    *
    * @return the severity
    */
@@ -254,7 +256,7 @@ public class Case extends GenericModel {
   /**
    * Gets the attachments.
    *
-   * List of attachments/files of the case.
+   * List of files that are attached to the case.
    *
    * @return the attachments
    */
@@ -287,7 +289,7 @@ public class Case extends GenericModel {
   /**
    * Gets the comments.
    *
-   * List of comments/updates sorted in chronological order.
+   * List of comments and updates that are sorted in chronological order.
    *
    * @return the comments
    */

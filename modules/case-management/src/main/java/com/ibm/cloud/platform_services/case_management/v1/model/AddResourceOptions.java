@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -35,6 +35,11 @@ public class AddResourceOptions extends GenericModel {
     private Double id;
     private String note;
 
+    /**
+     * Instantiates a new Builder from an existing AddResourceOptions instance.
+     *
+     * @param addResourceOptions the instance to initialize the Builder with
+     */
     private Builder(AddResourceOptions addResourceOptions) {
       this.caseNumber = addResourceOptions.caseNumber;
       this.crn = addResourceOptions.crn;
@@ -105,7 +110,9 @@ public class AddResourceOptions extends GenericModel {
      *
      * @param id the id
      * @return the AddResourceOptions builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder id(Double id) {
       this.id = id;
       return this;
@@ -122,6 +129,8 @@ public class AddResourceOptions extends GenericModel {
       return this;
     }
   }
+
+  protected AddResourceOptions() { }
 
   protected AddResourceOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.caseNumber,
@@ -167,7 +176,7 @@ public class AddResourceOptions extends GenericModel {
   /**
    * Gets the type.
    *
-   * Only used to attach Classic IaaS devices which have no CRN.
+   * Only used to attach Classic IaaS devices that have no CRN.
    *
    * @return the type
    */
@@ -178,11 +187,13 @@ public class AddResourceOptions extends GenericModel {
   /**
    * Gets the id.
    *
-   * Only used to attach Classic IaaS devices which have no CRN. Id of Classic IaaS device. This is deprecated in favor
+   * Only used to attach Classic IaaS devices that have no CRN. Id of Classic IaaS device. This is deprecated in favor
    * of the crn field.
    *
    * @return the id
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Double id() {
     return id;
   }

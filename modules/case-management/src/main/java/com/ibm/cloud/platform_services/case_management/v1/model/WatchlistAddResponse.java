@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,12 +17,14 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Response of a request adding to watchlist.
+ * Response of a request when adding to watchlist.
  */
 public class WatchlistAddResponse extends GenericModel {
 
   protected List<User> added;
   protected List<User> failed;
+
+  protected WatchlistAddResponse() { }
 
   /**
    * Gets the added.

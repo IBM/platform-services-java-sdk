@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -30,10 +30,12 @@ public class CaseList extends GenericModel {
   protected PaginationLink last;
   protected List<Case> cases;
 
+  protected CaseList() { }
+
   /**
    * Gets the totalCount.
    *
-   * Total number of cases satisfying the query.
+   * Total number of cases that satisfy the query.
    *
    * @return the totalCount
    */

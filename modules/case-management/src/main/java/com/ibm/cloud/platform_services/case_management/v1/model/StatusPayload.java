@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -51,8 +51,7 @@ public class StatusPayload extends GenericModel {
   @SerializedName("resolution_code")
   protected Long resolutionCode;
 
-  protected StatusPayload() {
-  }
+  protected StatusPayload() { }
 
   /**
    * Gets the action.
@@ -82,7 +81,7 @@ public class StatusPayload extends GenericModel {
    * * 1: Client error
    * * 2: Defect found with Component/Service
    * * 3: Documentation Error
-   * * 4: Sollution found in forums
+   * * 4: Solution found in forums
    * * 5: Solution found in public Documentation
    * * 6: Solution no longer required
    * * 7: Solution provided by IBM outside of support case

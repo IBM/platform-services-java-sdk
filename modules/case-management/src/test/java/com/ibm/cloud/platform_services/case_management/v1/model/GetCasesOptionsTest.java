@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,8 +17,6 @@ import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesOptions;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -38,14 +36,14 @@ public class GetCasesOptionsTest {
       .limit(Long.valueOf("26"))
       .search("testString")
       .sort("number")
-      .status(new java.util.ArrayList<String>(java.util.Arrays.asList("new")))
-      .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("number")))
+      .status(java.util.Arrays.asList("new"))
+      .fields(java.util.Arrays.asList("number"))
       .build();
     assertEquals(getCasesOptionsModel.offset(), Long.valueOf("26"));
     assertEquals(getCasesOptionsModel.limit(), Long.valueOf("26"));
     assertEquals(getCasesOptionsModel.search(), "testString");
     assertEquals(getCasesOptionsModel.sort(), "number");
-    assertEquals(getCasesOptionsModel.status(), new java.util.ArrayList<String>(java.util.Arrays.asList("new")));
-    assertEquals(getCasesOptionsModel.fields(), new java.util.ArrayList<String>(java.util.Arrays.asList("number")));
+    assertEquals(getCasesOptionsModel.status(), java.util.Arrays.asList("new"));
+    assertEquals(getCasesOptionsModel.fields(), java.util.Arrays.asList("number"));
   }
 }

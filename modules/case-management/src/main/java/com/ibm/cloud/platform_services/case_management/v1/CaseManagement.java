@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-7b3ab37f-20210215-130941
+ * IBM OpenAPI SDK Code Generator Version: 3.60.0-13f6e1ba-20221019-164457
  */
 
 package com.ibm.cloud.platform_services.case_management.v1;
@@ -57,12 +57,18 @@ import okhttp3.MultipartBody;
  * Case management API for creating cases, getting case statuses, adding comments to a case, adding and removing users
  * from a case watchlist, downloading and adding attachments, and more.
  *
- * @version v1
+ * API Version: 1.0.0
  */
 public class CaseManagement extends BaseService {
 
+  /**
+   * Default service name used when configuring the `CaseManagement` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "case_management";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://support-center.cloud.ibm.com/case-management/v1";
 
  /**
@@ -104,7 +110,7 @@ public class CaseManagement extends BaseService {
   /**
    * Get cases in account.
    *
-   * Get cases in the account which is specified by the content of the IAM token.
+   * Get cases in the account that are specified by the content of the IAM token.
    *
    * @param getCasesOptions the {@link GetCasesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link CaseList}
@@ -145,7 +151,7 @@ public class CaseManagement extends BaseService {
   /**
    * Get cases in account.
    *
-   * Get cases in the account which is specified by the content of the IAM token.
+   * Get cases in the account that are specified by the content of the IAM token.
    *
    * @return a {@link ServiceCall} with a result of type {@link CaseList}
    */
@@ -156,7 +162,7 @@ public class CaseManagement extends BaseService {
   /**
    * Create a case.
    *
-   * Create a case in the account.
+   * Create a support case to resolve issues in your account.
    *
    * @param createCaseOptions the {@link CreateCaseOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Case}
@@ -204,7 +210,7 @@ public class CaseManagement extends BaseService {
   /**
    * Get a case in account.
    *
-   * Get a case in the account that is specified by the case number.
+   * View a case in the account that is specified by the case number.
    *
    * @param getCaseOptions the {@link GetCaseOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Case}
@@ -256,7 +262,7 @@ public class CaseManagement extends BaseService {
   /**
    * Add comment to case.
    *
-   * Add a comment to a case.
+   * Add a comment to a case to be viewed by a support engineer.
    *
    * @param addCommentOptions the {@link AddCommentOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Comment}
@@ -314,7 +320,8 @@ public class CaseManagement extends BaseService {
   /**
    * Remove users from watchlist of case.
    *
-   * Remove users from the watchlist of a case.
+   * Remove users from the watchlist of a case if you don't want them to view the case, receive updates, or make updates
+   * to the case.
    *
    * @param removeWatchlistOptions the {@link RemoveWatchlistOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Watchlist}
@@ -380,7 +387,7 @@ public class CaseManagement extends BaseService {
   }
 
   /**
-   * Add attachment(s) to case.
+   * Add attachments to a support case.
    *
    * You can add attachments to a case to provide more information for the support team about the issue that you're
    * experiencing.

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,8 +17,6 @@ import com.ibm.cloud.platform_services.case_management.v1.model.GetCaseOptions;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -35,10 +33,10 @@ public class GetCaseOptionsTest {
   public void testGetCaseOptions() throws Throwable {
     GetCaseOptions getCaseOptionsModel = new GetCaseOptions.Builder()
       .caseNumber("testString")
-      .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("number")))
+      .fields(java.util.Arrays.asList("number"))
       .build();
     assertEquals(getCaseOptionsModel.caseNumber(), "testString");
-    assertEquals(getCaseOptionsModel.fields(), new java.util.ArrayList<String>(java.util.Arrays.asList("number")));
+    assertEquals(getCaseOptionsModel.fields(), java.util.Arrays.asList("number"));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

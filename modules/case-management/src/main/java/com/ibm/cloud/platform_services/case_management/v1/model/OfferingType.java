@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,8 +20,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class OfferingType extends GenericModel {
 
   /**
-   * Offering type group. "crn_service_name" is strongly prefered over "category" as the latter is legacy and will be
-   * deprecated in the future.
+   * Offering type group. "crn_service_name" is preferred over "category" as the latter is legacy and will be deprecated
+   * in the future.
    */
   public interface Group {
     /** crn_service_name. */
@@ -44,6 +44,11 @@ public class OfferingType extends GenericModel {
     private String kind;
     private String id;
 
+    /**
+     * Instantiates a new Builder from an existing OfferingType instance.
+     *
+     * @param offeringType the instance to initialize the Builder with
+     */
     private Builder(OfferingType offeringType) {
       this.group = offeringType.group;
       this.key = offeringType.key;
@@ -122,6 +127,8 @@ public class OfferingType extends GenericModel {
     }
   }
 
+  protected OfferingType() { }
+
   protected OfferingType(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.group,
       "group cannot be null");
@@ -145,8 +152,8 @@ public class OfferingType extends GenericModel {
   /**
    * Gets the group.
    *
-   * Offering type group. "crn_service_name" is strongly prefered over "category" as the latter is legacy and will be
-   * deprecated in the future.
+   * Offering type group. "crn_service_name" is preferred over "category" as the latter is legacy and will be deprecated
+   * in the future.
    *
    * @return the group
    */

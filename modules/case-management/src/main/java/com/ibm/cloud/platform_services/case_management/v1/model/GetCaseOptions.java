@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -79,6 +79,11 @@ public class GetCaseOptions extends GenericModel {
     private String caseNumber;
     private List<String> fields;
 
+    /**
+     * Instantiates a new Builder from an existing GetCaseOptions instance.
+     *
+     * @param getCaseOptions the instance to initialize the Builder with
+     */
     private Builder(GetCaseOptions getCaseOptions) {
       this.caseNumber = getCaseOptions.caseNumber;
       this.fields = getCaseOptions.fields;
@@ -148,6 +153,8 @@ public class GetCaseOptions extends GenericModel {
     }
   }
 
+  protected GetCaseOptions() { }
+
   protected GetCaseOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.caseNumber,
       "caseNumber cannot be empty");
@@ -178,7 +185,7 @@ public class GetCaseOptions extends GenericModel {
   /**
    * Gets the fields.
    *
-   * Seleted fields of interest instead of the entire case information.
+   * Selected fields of interest instead of all of the case information.
    *
    * @return the fields
    */

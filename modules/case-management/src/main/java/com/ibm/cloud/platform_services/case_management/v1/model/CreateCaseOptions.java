@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -62,6 +62,11 @@ public class CreateCaseOptions extends GenericModel {
     private String invoiceNumber;
     private Boolean slaCreditRequest;
 
+    /**
+     * Instantiates a new Builder from an existing CreateCaseOptions instance.
+     *
+     * @param createCaseOptions the instance to initialize the Builder with
+     */
     private Builder(CreateCaseOptions createCaseOptions) {
       this.type = createCaseOptions.type;
       this.subject = createCaseOptions.subject;
@@ -248,6 +253,8 @@ public class CreateCaseOptions extends GenericModel {
     }
   }
 
+  protected CreateCaseOptions() { }
+
   protected CreateCaseOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
@@ -290,7 +297,7 @@ public class CreateCaseOptions extends GenericModel {
   /**
    * Gets the subject.
    *
-   * Subject of the case.
+   * Short description used to identify the case.
    *
    * @return the subject
    */
@@ -346,9 +353,9 @@ public class CreateCaseOptions extends GenericModel {
   /**
    * Gets the resources.
    *
-   * List of resources to attach to case. If attaching Classic IaaS devices use type and id fields if Cloud Resource
-   * Name (CRN) is unavialable. Otherwise pass the resource CRN. The resource list must be consistent with the value
-   * selected for the resource offering.
+   * List of resources to attach to case. If you attach Classic IaaS devices, use the type and id fields if the Cloud
+   * Resource Name (CRN) is unavailable. Otherwise, pass the resource CRN. The resource list must be consistent with the
+   * value that is selected for the resource offering.
    *
    * @return the resources
    */

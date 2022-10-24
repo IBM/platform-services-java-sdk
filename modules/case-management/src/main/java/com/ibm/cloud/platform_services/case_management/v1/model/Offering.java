@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +29,11 @@ public class Offering extends GenericModel {
     private String name;
     private OfferingType type;
 
+    /**
+     * Instantiates a new Builder from an existing Offering instance.
+     *
+     * @param offering the instance to initialize the Builder with
+     */
     private Builder(Offering offering) {
       this.name = offering.name;
       this.type = offering.type;
@@ -82,6 +87,8 @@ public class Offering extends GenericModel {
       return this;
     }
   }
+
+  protected Offering() { }
 
   protected Offering(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,

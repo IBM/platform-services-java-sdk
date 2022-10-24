@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -32,6 +32,11 @@ public class CasePayloadEu extends GenericModel {
     private Boolean supported;
     private Long dataCenter;
 
+    /**
+     * Instantiates a new Builder from an existing CasePayloadEu instance.
+     *
+     * @param casePayloadEu the instance to initialize the Builder with
+     */
     private Builder(CasePayloadEu casePayloadEu) {
       this.supported = casePayloadEu.supported;
       this.dataCenter = casePayloadEu.dataCenter;
@@ -75,6 +80,8 @@ public class CasePayloadEu extends GenericModel {
     }
   }
 
+  protected CasePayloadEu() { }
+
   protected CasePayloadEu(Builder builder) {
     supported = builder.supported;
     dataCenter = builder.dataCenter;
@@ -103,7 +110,8 @@ public class CasePayloadEu extends GenericModel {
   /**
    * Gets the dataCenter.
    *
-   * If EU supported utility endpoint specifies datacenter then pass the datacenter id to mark a case as EU supported.
+   * If EU supported utility endpoint specifies data center, then pass the data center id to mark a case as EU
+   * supported.
    *
    * @return the dataCenter
    */

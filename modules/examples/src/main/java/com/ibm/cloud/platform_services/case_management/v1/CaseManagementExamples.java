@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2021, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -16,6 +16,8 @@ package com.ibm.cloud.platform_services.case_management.v1;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
@@ -28,13 +30,13 @@ import com.ibm.cloud.platform_services.case_management.v1.model.AddWatchlistOpti
 import com.ibm.cloud.platform_services.case_management.v1.model.Attachment;
 import com.ibm.cloud.platform_services.case_management.v1.model.AttachmentList;
 import com.ibm.cloud.platform_services.case_management.v1.model.Case;
-import com.ibm.cloud.platform_services.case_management.v1.model.CaseList;
 import com.ibm.cloud.platform_services.case_management.v1.model.Comment;
 import com.ibm.cloud.platform_services.case_management.v1.model.CreateCaseOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.DeleteFileOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.DownloadFileOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.GetCaseOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesOptions;
+import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesPager;
 import com.ibm.cloud.platform_services.case_management.v1.model.Offering;
 import com.ibm.cloud.platform_services.case_management.v1.model.OfferingType;
 import com.ibm.cloud.platform_services.case_management.v1.model.RemoveWatchlistOptions;
@@ -49,6 +51,7 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.GsonSingleton;
 
 //
 // This file provides an example of how to use the Case Management service.
@@ -145,25 +148,22 @@ public class CaseManagementExamples {
 
     try {
       System.out.println("getCases() result:");
-
       // begin-getCases
-
       GetCasesOptions getCasesOptions = new GetCasesOptions.Builder()
-        .offset(0)
-        .limit(100)
-        .search("blocker")
-        .sort(GetCasesOptions.Fields.UPDATED_AT)
+        .search("Example")
         .build();
 
-      Response<CaseList> response = service.getCases(getCasesOptions).execute();
-      CaseList caseList = response.getResult();
+      GetCasesPager pager = new GetCasesPager(service, getCasesOptions);
+      List<Case> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<Case> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(caseList);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-getCases
-
     } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 

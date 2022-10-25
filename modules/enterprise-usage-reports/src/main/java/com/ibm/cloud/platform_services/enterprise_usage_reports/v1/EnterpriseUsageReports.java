@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+ * IBM OpenAPI SDK Code Generator Version: 3.60.0-13f6e1ba-20221019-164457
  */
 
 package com.ibm.cloud.platform_services.enterprise_usage_reports.v1;
@@ -33,12 +33,18 @@ import java.util.Map.Entry;
 /**
  * Usage reports for IBM Cloud enterprise entities.
  *
- * @version v1
+ * API Version: 1.0.0-beta.1
  */
 public class EnterpriseUsageReports extends BaseService {
 
+  /**
+   * Default service name used when configuring the `EnterpriseUsageReports` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "enterprise_usage_reports";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://enterprise.cloud.ibm.com";
 
  /**

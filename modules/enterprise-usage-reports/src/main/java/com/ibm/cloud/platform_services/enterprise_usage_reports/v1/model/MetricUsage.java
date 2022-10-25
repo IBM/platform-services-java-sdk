@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,6 +13,7 @@
 package com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -30,7 +31,9 @@ public class MetricUsage extends GenericModel {
   protected Double cost;
   @SerializedName("rated_cost")
   protected Double ratedCost;
-  protected List<Object> price;
+  protected List<Map<String, Object>> price;
+
+  protected MetricUsage() { }
 
   /**
    * Gets the metric.
@@ -105,7 +108,7 @@ public class MetricUsage extends GenericModel {
    *
    * @return the price
    */
-  public List<Object> getPrice() {
+  public List<Map<String, Object>> getPrice() {
     return price;
   }
 }

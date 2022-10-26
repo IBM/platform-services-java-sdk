@@ -38,6 +38,11 @@ public class AddMemberToMultipleAccessGroupsOptions extends GenericModel {
     private List<String> groups;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing AddMemberToMultipleAccessGroupsOptions instance.
+     *
+     * @param addMemberToMultipleAccessGroupsOptions the instance to initialize the Builder with
+     */
     private Builder(AddMemberToMultipleAccessGroupsOptions addMemberToMultipleAccessGroupsOptions) {
       this.accountId = addMemberToMultipleAccessGroupsOptions.accountId;
       this.iamId = addMemberToMultipleAccessGroupsOptions.iamId;
@@ -145,6 +150,8 @@ public class AddMemberToMultipleAccessGroupsOptions extends GenericModel {
     }
   }
 
+  protected AddMemberToMultipleAccessGroupsOptions() { }
+
   protected AddMemberToMultipleAccessGroupsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,
       "accountId cannot be null");
@@ -193,7 +200,7 @@ public class AddMemberToMultipleAccessGroupsOptions extends GenericModel {
   /**
    * Gets the type.
    *
-   * The type of the member, must be either "user", "service" or "trusted profile".
+   * The type of the member, must be either "user", "service" or "profile".
    *
    * @return the type
    */

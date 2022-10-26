@@ -34,6 +34,11 @@ public class AddMembersToAccessGroupOptions extends GenericModel {
     private List<AddGroupMembersRequestMembersItem> members;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing AddMembersToAccessGroupOptions instance.
+     *
+     * @param addMembersToAccessGroupOptions the instance to initialize the Builder with
+     */
     private Builder(AddMembersToAccessGroupOptions addMembersToAccessGroupOptions) {
       this.accessGroupId = addMembersToAccessGroupOptions.accessGroupId;
       this.members = addMembersToAccessGroupOptions.members;
@@ -114,6 +119,8 @@ public class AddMembersToAccessGroupOptions extends GenericModel {
       return this;
     }
   }
+
+  protected AddMembersToAccessGroupOptions() { }
 
   protected AddMembersToAccessGroupOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accessGroupId,

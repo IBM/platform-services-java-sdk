@@ -23,6 +23,8 @@ public class RulesList extends GenericModel {
 
   protected List<Rule> rules;
 
+  protected RulesList() { }
+
   /**
    * Gets the rules.
    *

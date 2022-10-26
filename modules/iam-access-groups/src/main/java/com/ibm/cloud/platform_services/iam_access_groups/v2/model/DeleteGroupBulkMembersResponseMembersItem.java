@@ -29,6 +29,8 @@ public class DeleteGroupBulkMembersResponseMembersItem extends GenericModel {
   protected Long statusCode;
   protected List<Error> errors;
 
+  protected DeleteGroupBulkMembersResponseMembersItem() { }
+
   /**
    * Gets the iamId.
    *

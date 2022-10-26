@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,11 +13,15 @@
 
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupMembersPager;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupsPager;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccountSettings;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddAccessGroupRuleOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersRequestMembersItem;
@@ -33,12 +37,11 @@ import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroup
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupRuleOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Group;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupMembersList;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupsList;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.IsMemberOfAccessGroupOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupMembersOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupRulesOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListGroupMembersResponseMember;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveAccessGroupRuleOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAccessGroupOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAllAccessGroupsOptions;
@@ -52,6 +55,7 @@ import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccountS
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.GsonSingleton;
 
 //
 // This file provides an example of how to use the IAM Access Groups service.
@@ -85,7 +89,7 @@ public class IamAccessGroupsExamples {
   }
 
   public static void main(String[] args) throws Exception {
-    IamAccessGroups service = IamAccessGroups.newInstance();
+    IamAccessGroups iamAccessGroupsService = IamAccessGroups.newInstance();
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(IamAccessGroups.DEFAULT_SERVICE_NAME);
@@ -103,7 +107,7 @@ public class IamAccessGroupsExamples {
         .description("Group for managers")
         .build();
 
-      Response<Group> response = service.createAccessGroup(createAccessGroupOptions).execute();
+      Response<Group> response = iamAccessGroupsService.createAccessGroup(createAccessGroupOptions).execute();
       Group group = response.getResult();
 
       System.out.println(group);
@@ -125,7 +129,7 @@ public class IamAccessGroupsExamples {
         .accessGroupId(testGroupId)
         .build();
 
-      Response<Group> response = service.getAccessGroup(getAccessGroupOptions).execute();
+      Response<Group> response = iamAccessGroupsService.getAccessGroup(getAccessGroupOptions).execute();
       Group group = response.getResult();
 
       System.out.println(group);
@@ -150,7 +154,7 @@ public class IamAccessGroupsExamples {
         .description("Group for awesome managers")
         .build();
 
-      Response<Group> response = service.updateAccessGroup(updateAccessGroupOptions).execute();
+      Response<Group> response = iamAccessGroupsService.updateAccessGroup(updateAccessGroupOptions).execute();
       Group group = response.getResult();
 
       System.out.println(group);
@@ -164,22 +168,22 @@ public class IamAccessGroupsExamples {
 
     try {
       System.out.println("listAccessGroups() result:");
-
       // begin-list_access_groups
-
       ListAccessGroupsOptions listAccessGroupsOptions = new ListAccessGroupsOptions.Builder()
-        .accountId(testAccountId)
+          .accountId(testAccountId)
         .build();
 
-      Response<GroupsList> response = service.listAccessGroups(listAccessGroupsOptions).execute();
-      GroupsList groupsList = response.getResult();
+      AccessGroupsPager pager = new AccessGroupsPager(iamAccessGroupsService, listAccessGroupsOptions);
+      List<Group> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<Group> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(groupsList);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-list_access_groups
-
     } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
@@ -206,7 +210,7 @@ public class IamAccessGroupsExamples {
         .addMembers(member2)
         .addMembers(member3)
         .build();
-      Response<AddGroupMembersResponse> response = service.addMembersToAccessGroup(addMembersToAccessGroupOptions).execute();
+      Response<AddGroupMembersResponse> response = iamAccessGroupsService.addMembersToAccessGroup(addMembersToAccessGroupOptions).execute();
       AddGroupMembersResponse addGroupMembersResponse = response.getResult();
 
       System.out.println(addGroupMembersResponse);
@@ -227,7 +231,7 @@ public class IamAccessGroupsExamples {
         .iamId("IBMid-user1")
         .build();
 
-      Response<Void> response = service.isMemberOfAccessGroup(isMemberOfAccessGroupOptions).execute();
+      Response<Void> response = iamAccessGroupsService.isMemberOfAccessGroup(isMemberOfAccessGroupOptions).execute();
 
       // end-is_member_of_access_group
 
@@ -239,23 +243,23 @@ public class IamAccessGroupsExamples {
 
     try {
       System.out.println("listAccessGroupMembers() result:");
-
       // begin-list_access_group_members
-
       ListAccessGroupMembersOptions listAccessGroupMembersOptions = new ListAccessGroupMembersOptions.Builder()
-        .accessGroupId(testGroupId)
-        .build();
+          .accessGroupId(testGroupId).build();
 
-      Response<GroupMembersList> response = service.listAccessGroupMembers(listAccessGroupMembersOptions).execute();
-      GroupMembersList groupMembersList = response.getResult();
+      AccessGroupMembersPager pager = new AccessGroupMembersPager(iamAccessGroupsService,
+          listAccessGroupMembersOptions);
+      List<ListGroupMembersResponseMember> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<ListGroupMembersResponseMember> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(groupMembersList);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-list_access_group_members
-
     } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
+          e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
@@ -267,7 +271,7 @@ public class IamAccessGroupsExamples {
         .iamId("IBMid-user1")
         .build();
 
-      Response<Void> response = service.removeMemberFromAccessGroup(removeMemberFromAccessGroupOptions).execute();
+      Response<Void> response = iamAccessGroupsService.removeMemberFromAccessGroup(removeMemberFromAccessGroupOptions).execute();
 
       // end-remove_member_from_access_group
 
@@ -287,7 +291,7 @@ public class IamAccessGroupsExamples {
         .addMembers("iam-ServiceId-123")
         .build();
 
-      Response<DeleteGroupBulkMembersResponse> response = service.removeMembersFromAccessGroup(removeMembersFromAccessGroupOptions).execute();
+      Response<DeleteGroupBulkMembersResponse> response = iamAccessGroupsService.removeMembersFromAccessGroup(removeMembersFromAccessGroupOptions).execute();
       DeleteGroupBulkMembersResponse deleteGroupBulkMembersResponse = response.getResult();
 
       System.out.println(deleteGroupBulkMembersResponse);
@@ -309,10 +313,10 @@ public class IamAccessGroupsExamples {
         .addMembers(testProfileId)
         .build();
 
-      Response<DeleteGroupBulkMembersResponse> response = service.removeMembersFromAccessGroup(removeMembersFromAccessGroupOptions).execute();
-      // DeleteGroupBulkMembersResponse deleteGroupBulkMembersResponse = response.getResult();
+      Response<DeleteGroupBulkMembersResponse> response = iamAccessGroupsService.removeMembersFromAccessGroup(removeMembersFromAccessGroupOptions).execute();
+      DeleteGroupBulkMembersResponse deleteGroupBulkMembersResponse = response.getResult();
 
-      // System.out.println(deleteGroupBulkMembersResponse);
+      System.out.println(deleteGroupBulkMembersResponse);
 
       // end-remove_members_from_access_group
 
@@ -333,7 +337,7 @@ public class IamAccessGroupsExamples {
         .addGroups(testGroupId)
         .build();
 
-      Response<AddMembershipMultipleGroupsResponse> response = service.addMemberToMultipleAccessGroups(addMemberToMultipleAccessGroupsOptions).execute();
+      Response<AddMembershipMultipleGroupsResponse> response = iamAccessGroupsService.addMemberToMultipleAccessGroups(addMemberToMultipleAccessGroupsOptions).execute();
       AddMembershipMultipleGroupsResponse addMembershipMultipleGroupsResponse = response.getResult();
 
       System.out.println(addMembershipMultipleGroupsResponse);
@@ -355,7 +359,7 @@ public class IamAccessGroupsExamples {
         .iamId("IBMid-user1")
         .build();
 
-      Response<DeleteFromAllGroupsResponse> response = service.removeMemberFromAllAccessGroups(removeMemberFromAllAccessGroupsOptions).execute();
+      Response<DeleteFromAllGroupsResponse> response = iamAccessGroupsService.removeMemberFromAllAccessGroups(removeMemberFromAllAccessGroupsOptions).execute();
       DeleteFromAllGroupsResponse deleteFromAllGroupsResponse = response.getResult();
 
       System.out.println(deleteFromAllGroupsResponse);
@@ -381,11 +385,11 @@ public class IamAccessGroupsExamples {
         .accessGroupId(testGroupId)
         .name("Manager group rule")
         .expiration(12)
-        .realmName("https://idp.example.org/SAML5")
+        .realmName("https://idp.example.org/SAML2a")
         .addConditions(ruleConditionsModel)
         .build();
 
-      Response<Rule> response = service.addAccessGroupRule(addAccessGroupRuleOptions).execute();
+      Response<Rule> response = iamAccessGroupsService.addAccessGroupRule(addAccessGroupRuleOptions).execute();
       Rule rule = response.getResult();
 
       System.out.println(rule);
@@ -408,7 +412,7 @@ public class IamAccessGroupsExamples {
         .ruleId(testClaimRuleId)
         .build();
 
-      Response<Rule> response = service.getAccessGroupRule(getAccessGroupRuleOptions).execute();
+      Response<Rule> response = iamAccessGroupsService.getAccessGroupRule(getAccessGroupRuleOptions).execute();
       Rule rule = response.getResult();
 
       System.out.println(rule);
@@ -441,7 +445,7 @@ public class IamAccessGroupsExamples {
         .addConditions(ruleConditionsModel)
         .build();
 
-      Response<Rule> response = service.replaceAccessGroupRule(replaceAccessGroupRuleOptions).execute();
+      Response<Rule> response = iamAccessGroupsService.replaceAccessGroupRule(replaceAccessGroupRuleOptions).execute();
       Rule rule = response.getResult();
 
       System.out.println(rule);
@@ -462,7 +466,7 @@ public class IamAccessGroupsExamples {
         .accessGroupId(testGroupId)
         .build();
 
-      Response<RulesList> response = service.listAccessGroupRules(listAccessGroupRulesOptions).execute();
+      Response<RulesList> response = iamAccessGroupsService.listAccessGroupRules(listAccessGroupRulesOptions).execute();
       RulesList rulesList = response.getResult();
 
       System.out.println(rulesList);
@@ -483,7 +487,7 @@ public class IamAccessGroupsExamples {
         .ruleId(testClaimRuleId)
         .build();
 
-      Response<Void> response = service.removeAccessGroupRule(removeAccessGroupRuleOptions).execute();
+      Response<Void> response = iamAccessGroupsService.removeAccessGroupRule(removeAccessGroupRuleOptions).execute();
 
       // end-remove_access_group_rule
 
@@ -502,7 +506,7 @@ public class IamAccessGroupsExamples {
         .accountId(testAccountId)
         .build();
 
-      Response<AccountSettings> response = service.getAccountSettings(getAccountSettingsOptions).execute();
+      Response<AccountSettings> response = iamAccessGroupsService.getAccountSettings(getAccountSettingsOptions).execute();
       AccountSettings accountSettings = response.getResult();
 
       System.out.println(accountSettings);
@@ -524,7 +528,7 @@ public class IamAccessGroupsExamples {
         .publicAccessEnabled(true)
         .build();
 
-      Response<AccountSettings> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();
+      Response<AccountSettings> response = iamAccessGroupsService.updateAccountSettings(updateAccountSettingsOptions).execute();
       AccountSettings accountSettings = response.getResult();
 
       System.out.println(accountSettings);
@@ -544,7 +548,7 @@ public class IamAccessGroupsExamples {
         .accessGroupId(testGroupId)
         .build();
 
-      Response<Void> response = service.deleteAccessGroup(deleteAccessGroupOptions).execute();
+      Response<Void> response = iamAccessGroupsService.deleteAccessGroup(deleteAccessGroupOptions).execute();
 
       // end-delete_access_group
 

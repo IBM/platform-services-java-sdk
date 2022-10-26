@@ -49,6 +49,11 @@ public class RuleConditions extends GenericModel {
     private String operator;
     private String value;
 
+    /**
+     * Instantiates a new Builder from an existing RuleConditions instance.
+     *
+     * @param ruleConditions the instance to initialize the Builder with
+     */
     private Builder(RuleConditions ruleConditions) {
       this.claim = ruleConditions.claim;
       this.operator = ruleConditions.operator;
@@ -116,6 +121,8 @@ public class RuleConditions extends GenericModel {
       return this;
     }
   }
+
+  protected RuleConditions() { }
 
   protected RuleConditions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.claim,

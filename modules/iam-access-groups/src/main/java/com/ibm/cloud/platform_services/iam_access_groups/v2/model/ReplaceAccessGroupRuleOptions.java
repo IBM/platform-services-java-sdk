@@ -44,6 +44,11 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
     private String name;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing ReplaceAccessGroupRuleOptions instance.
+     *
+     * @param replaceAccessGroupRuleOptions the instance to initialize the Builder with
+     */
     private Builder(ReplaceAccessGroupRuleOptions replaceAccessGroupRuleOptions) {
       this.accessGroupId = replaceAccessGroupRuleOptions.accessGroupId;
       this.ruleId = replaceAccessGroupRuleOptions.ruleId;
@@ -194,6 +199,8 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
       return this;
     }
   }
+
+  protected ReplaceAccessGroupRuleOptions() { }
 
   protected ReplaceAccessGroupRuleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accessGroupId,

@@ -36,6 +36,8 @@ public class ListGroupMembersResponseMember extends GenericModel {
   @SerializedName("created_by_id")
   protected String createdById;
 
+  protected ListGroupMembersResponseMember() { }
+
   /**
    * Gets the iamId.
    *

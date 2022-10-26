@@ -40,6 +40,11 @@ public class AddAccessGroupRuleOptions extends GenericModel {
     private String name;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing AddAccessGroupRuleOptions instance.
+     *
+     * @param addAccessGroupRuleOptions the instance to initialize the Builder with
+     */
     private Builder(AddAccessGroupRuleOptions addAccessGroupRuleOptions) {
       this.accessGroupId = addAccessGroupRuleOptions.accessGroupId;
       this.expiration = addAccessGroupRuleOptions.expiration;
@@ -162,6 +167,8 @@ public class AddAccessGroupRuleOptions extends GenericModel {
       return this;
     }
   }
+
+  protected AddAccessGroupRuleOptions() { }
 
   protected AddAccessGroupRuleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accessGroupId,

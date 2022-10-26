@@ -13,6 +13,8 @@
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
 
 import com.ibm.cloud.platform_services.iam_access_groups.v2.IamAccessGroups;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupMembersPager;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupsPager;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccountSettings;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddAccessGroupRuleOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersRequestMembersItem;
@@ -61,7 +63,6 @@ import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +102,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testCreateAccessGroupWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false, \"membership_type\": \"membershipType\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
     String createAccessGroupPath = "/v2/groups";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -156,7 +157,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testListAccessGroupsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"groups\": [{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false, \"membership_type\": \"membershipType\"}]}";
+    String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"groups\": [{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}]}";
     String listAccessGroupsPath = "/v2/groups";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -169,7 +170,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
       .transactionId("testString")
       .iamId("testString")
       .membershipType("static")
-      .limit(Long.valueOf("26"))
+      .limit(Long.valueOf("10"))
       .offset(Long.valueOf("26"))
       .sort("name")
       .showFederated(false)
@@ -195,7 +196,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("iam_id"), "testString");
     assertEquals(query.get("membership_type"), "static");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
     assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
     assertEquals(query.get("sort"), "name");
     assertEquals(Boolean.valueOf(query.get("show_federated")), Boolean.valueOf(false));
@@ -219,11 +220,87 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     iamAccessGroupsService.listAccessGroups(null).execute();
   }
 
+  // Test the listAccessGroups operation using the AccessGroupsPager.getNext() method
+  @Test
+  public void testListAccessGroupsWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"href\":\"https://myhost.com/somePath?offset=1\"},\"total_count\":2,\"limit\":1,\"groups\":[{\"id\":\"id\",\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"href\":\"href\",\"is_federated\":false}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"groups\":[{\"id\":\"id\",\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"href\":\"href\",\"is_federated\":false}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListAccessGroupsOptions listAccessGroupsOptions = new ListAccessGroupsOptions.Builder()
+      .accountId("testString")
+      .transactionId("testString")
+      .iamId("testString")
+      .membershipType("static")
+      .limit(Long.valueOf("10"))
+      .sort("name")
+      .showFederated(false)
+      .hidePublicAccess(false)
+      .build();
+
+    List<Group> allResults = new ArrayList<>();
+    AccessGroupsPager pager = new AccessGroupsPager(iamAccessGroupsService, listAccessGroupsOptions);
+    while (pager.hasNext()) {
+      List<Group> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listAccessGroups operation using the AccessGroupsPager.getAll() method
+  @Test
+  public void testListAccessGroupsWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"href\":\"https://myhost.com/somePath?offset=1\"},\"total_count\":2,\"limit\":1,\"groups\":[{\"id\":\"id\",\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"href\":\"href\",\"is_federated\":false}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"groups\":[{\"id\":\"id\",\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"href\":\"href\",\"is_federated\":false}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListAccessGroupsOptions listAccessGroupsOptions = new ListAccessGroupsOptions.Builder()
+      .accountId("testString")
+      .transactionId("testString")
+      .iamId("testString")
+      .membershipType("static")
+      .limit(Long.valueOf("10"))
+      .sort("name")
+      .showFederated(false)
+      .hidePublicAccess(false)
+      .build();
+
+    AccessGroupsPager pager = new AccessGroupsPager(iamAccessGroupsService, listAccessGroupsOptions);
+    List<Group> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
   // Test the getAccessGroup operation with a valid options model parameter
   @Test
   public void testGetAccessGroupWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false, \"membership_type\": \"membershipType\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
     String getAccessGroupPath = "/v2/groups/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -277,7 +354,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
   @Test
   public void testUpdateAccessGroupWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false, \"membership_type\": \"membershipType\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\", \"is_federated\": false}";
     String updateAccessGroupPath = "/v2/groups/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -455,7 +532,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     // Construct an instance of the AddMembersToAccessGroupOptions model
     AddMembersToAccessGroupOptions addMembersToAccessGroupOptionsModel = new AddMembersToAccessGroupOptions.Builder()
       .accessGroupId("testString")
-      .members(new java.util.ArrayList<AddGroupMembersRequestMembersItem>(java.util.Arrays.asList(addGroupMembersRequestMembersItemModel)))
+      .members(java.util.Arrays.asList(addGroupMembersRequestMembersItemModel))
       .transactionId("testString")
       .build();
 
@@ -510,7 +587,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
       .accessGroupId("testString")
       .transactionId("testString")
       .membershipType("static")
-      .limit(Long.valueOf("26"))
+      .limit(Long.valueOf("10"))
       .offset(Long.valueOf("26"))
       .type("testString")
       .verbose(false)
@@ -534,7 +611,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(query.get("membership_type"), "static");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
     assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
     assertEquals(query.get("type"), "testString");
     assertEquals(Boolean.valueOf(query.get("verbose")), Boolean.valueOf(false));
@@ -558,6 +635,80 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     iamAccessGroupsService.listAccessGroupMembers(null).execute();
   }
 
+  // Test the listAccessGroupMembers operation using the AccessGroupMembersPager.getNext() method
+  @Test
+  public void testListAccessGroupMembersWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"href\":\"https://myhost.com/somePath?offset=1\"},\"total_count\":2,\"members\":[{\"iam_id\":\"iamId\",\"type\":\"type\",\"membership_type\":\"membershipType\",\"name\":\"name\",\"email\":\"email\",\"description\":\"description\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\"}],\"limit\":1}";
+    String mockResponsePage2 = "{\"total_count\":2,\"members\":[{\"iam_id\":\"iamId\",\"type\":\"type\",\"membership_type\":\"membershipType\",\"name\":\"name\",\"email\":\"email\",\"description\":\"description\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\"}],\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListAccessGroupMembersOptions listAccessGroupMembersOptions = new ListAccessGroupMembersOptions.Builder()
+      .accessGroupId("testString")
+      .transactionId("testString")
+      .membershipType("static")
+      .limit(Long.valueOf("10"))
+      .type("testString")
+      .verbose(false)
+      .sort("testString")
+      .build();
+
+    List<ListGroupMembersResponseMember> allResults = new ArrayList<>();
+    AccessGroupMembersPager pager = new AccessGroupMembersPager(iamAccessGroupsService, listAccessGroupMembersOptions);
+    while (pager.hasNext()) {
+      List<ListGroupMembersResponseMember> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listAccessGroupMembers operation using the AccessGroupMembersPager.getAll() method
+  @Test
+  public void testListAccessGroupMembersWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"href\":\"https://myhost.com/somePath?offset=1\"},\"total_count\":2,\"members\":[{\"iam_id\":\"iamId\",\"type\":\"type\",\"membership_type\":\"membershipType\",\"name\":\"name\",\"email\":\"email\",\"description\":\"description\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\"}],\"limit\":1}";
+    String mockResponsePage2 = "{\"total_count\":2,\"members\":[{\"iam_id\":\"iamId\",\"type\":\"type\",\"membership_type\":\"membershipType\",\"name\":\"name\",\"email\":\"email\",\"description\":\"description\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\"}],\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListAccessGroupMembersOptions listAccessGroupMembersOptions = new ListAccessGroupMembersOptions.Builder()
+      .accessGroupId("testString")
+      .transactionId("testString")
+      .membershipType("static")
+      .limit(Long.valueOf("10"))
+      .type("testString")
+      .verbose(false)
+      .sort("testString")
+      .build();
+
+    AccessGroupMembersPager pager = new AccessGroupMembersPager(iamAccessGroupsService, listAccessGroupMembersOptions);
+    List<ListGroupMembersResponseMember> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
   // Test the removeMemberFromAccessGroup operation with a valid options model parameter
   @Test
   public void testRemoveMemberFromAccessGroupWOptions() throws Throwable {
@@ -624,7 +775,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
     // Construct an instance of the RemoveMembersFromAccessGroupOptions model
     RemoveMembersFromAccessGroupOptions removeMembersFromAccessGroupOptionsModel = new RemoveMembersFromAccessGroupOptions.Builder()
       .accessGroupId("testString")
-      .members(new java.util.ArrayList<String>(java.util.Arrays.asList("IBMId-user1", "iam-ServiceId-123", "iam-Profile-123")))
+      .members(java.util.Arrays.asList("IBMId-user1", "iam-ServiceId-123", "iam-Profile-123"))
       .transactionId("testString")
       .build();
 
@@ -733,7 +884,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
       .accountId("testString")
       .iamId("testString")
       .type("user")
-      .groups(new java.util.ArrayList<String>(java.util.Arrays.asList("access-group-id-1")))
+      .groups(java.util.Arrays.asList("access-group-id-1"))
       .transactionId("testString")
       .build();
 
@@ -796,7 +947,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
       .accessGroupId("testString")
       .expiration(Long.valueOf("12"))
       .realmName("https://idp.example.org/SAML2")
-      .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
+      .conditions(java.util.Arrays.asList(ruleConditionsModel))
       .name("Manager group rule")
       .transactionId("testString")
       .build();
@@ -966,7 +1117,7 @@ public class IamAccessGroupsTest extends PowerMockTestCase {
       .ifMatch("testString")
       .expiration(Long.valueOf("12"))
       .realmName("https://idp.example.org/SAML2")
-      .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
+      .conditions(java.util.Arrays.asList(ruleConditionsModel))
       .name("Manager group rule")
       .transactionId("testString")
       .build();

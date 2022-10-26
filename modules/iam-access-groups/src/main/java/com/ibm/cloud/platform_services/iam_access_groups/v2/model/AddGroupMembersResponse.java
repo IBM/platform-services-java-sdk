@@ -23,6 +23,8 @@ public class AddGroupMembersResponse extends GenericModel {
 
   protected List<AddGroupMembersResponseMembersItem> members;
 
+  protected AddGroupMembersResponse() { }
+
   /**
    * Gets the members.
    *

@@ -31,6 +31,11 @@ public class RemoveMemberFromAllAccessGroupsOptions extends GenericModel {
     private String iamId;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing RemoveMemberFromAllAccessGroupsOptions instance.
+     *
+     * @param removeMemberFromAllAccessGroupsOptions the instance to initialize the Builder with
+     */
     private Builder(RemoveMemberFromAllAccessGroupsOptions removeMemberFromAllAccessGroupsOptions) {
       this.accountId = removeMemberFromAllAccessGroupsOptions.accountId;
       this.iamId = removeMemberFromAllAccessGroupsOptions.iamId;
@@ -96,6 +101,8 @@ public class RemoveMemberFromAllAccessGroupsOptions extends GenericModel {
       return this;
     }
   }
+
+  protected RemoveMemberFromAllAccessGroupsOptions() { }
 
   protected RemoveMemberFromAllAccessGroupsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,

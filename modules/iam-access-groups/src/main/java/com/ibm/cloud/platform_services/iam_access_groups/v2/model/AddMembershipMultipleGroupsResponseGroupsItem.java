@@ -29,6 +29,8 @@ public class AddMembershipMultipleGroupsResponseGroupsItem extends GenericModel 
   protected String trace;
   protected List<Error> errors;
 
+  protected AddMembershipMultipleGroupsResponseGroupsItem() { }
+
   /**
    * Gets the accessGroupId.
    *

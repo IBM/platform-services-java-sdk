@@ -26,6 +26,8 @@ public class DeleteGroupBulkMembersResponse extends GenericModel {
   protected String accessGroupId;
   protected List<DeleteGroupBulkMembersResponseMembersItem> members;
 
+  protected DeleteGroupBulkMembersResponse() { }
+
   /**
    * Gets the accessGroupId.
    *

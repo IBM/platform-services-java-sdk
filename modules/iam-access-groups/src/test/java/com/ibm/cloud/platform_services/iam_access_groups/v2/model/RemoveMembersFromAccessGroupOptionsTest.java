@@ -17,8 +17,6 @@ import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMembersF
 import com.ibm.cloud.platform_services.iam_access_groups.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -35,11 +33,11 @@ public class RemoveMembersFromAccessGroupOptionsTest {
   public void testRemoveMembersFromAccessGroupOptions() throws Throwable {
     RemoveMembersFromAccessGroupOptions removeMembersFromAccessGroupOptionsModel = new RemoveMembersFromAccessGroupOptions.Builder()
       .accessGroupId("testString")
-      .members(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .members(java.util.Arrays.asList("testString"))
       .transactionId("testString")
       .build();
     assertEquals(removeMembersFromAccessGroupOptionsModel.accessGroupId(), "testString");
-    assertEquals(removeMembersFromAccessGroupOptionsModel.members(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(removeMembersFromAccessGroupOptionsModel.members(), java.util.Arrays.asList("testString"));
     assertEquals(removeMembersFromAccessGroupOptionsModel.transactionId(), "testString");
   }
 

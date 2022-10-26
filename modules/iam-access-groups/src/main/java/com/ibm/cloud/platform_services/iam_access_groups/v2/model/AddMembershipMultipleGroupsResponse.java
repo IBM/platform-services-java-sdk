@@ -26,6 +26,8 @@ public class AddMembershipMultipleGroupsResponse extends GenericModel {
   protected String iamId;
   protected List<AddMembershipMultipleGroupsResponseGroupsItem> groups;
 
+  protected AddMembershipMultipleGroupsResponse() { }
+
   /**
    * Gets the iamId.
    *

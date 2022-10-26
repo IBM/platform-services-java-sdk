@@ -31,6 +31,8 @@ public class AccountSettings extends GenericModel {
   @SerializedName("public_access_enabled")
   protected Boolean publicAccessEnabled;
 
+  protected AccountSettings() { }
+
   /**
    * Gets the accountId.
    *

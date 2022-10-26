@@ -18,8 +18,6 @@ import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembersToAc
 import com.ibm.cloud.platform_services.iam_access_groups.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -43,11 +41,11 @@ public class AddMembersToAccessGroupOptionsTest {
 
     AddMembersToAccessGroupOptions addMembersToAccessGroupOptionsModel = new AddMembersToAccessGroupOptions.Builder()
       .accessGroupId("testString")
-      .members(new java.util.ArrayList<AddGroupMembersRequestMembersItem>(java.util.Arrays.asList(addGroupMembersRequestMembersItemModel)))
+      .members(java.util.Arrays.asList(addGroupMembersRequestMembersItemModel))
       .transactionId("testString")
       .build();
     assertEquals(addMembersToAccessGroupOptionsModel.accessGroupId(), "testString");
-    assertEquals(addMembersToAccessGroupOptionsModel.members(), new java.util.ArrayList<AddGroupMembersRequestMembersItem>(java.util.Arrays.asList(addGroupMembersRequestMembersItemModel)));
+    assertEquals(addMembersToAccessGroupOptionsModel.members(), java.util.Arrays.asList(addGroupMembersRequestMembersItemModel));
     assertEquals(addMembersToAccessGroupOptionsModel.transactionId(), "testString");
   }
 

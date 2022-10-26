@@ -31,6 +31,11 @@ public class AddGroupMembersRequestMembersItem extends GenericModel {
     private String iamId;
     private String type;
 
+    /**
+     * Instantiates a new Builder from an existing AddGroupMembersRequestMembersItem instance.
+     *
+     * @param addGroupMembersRequestMembersItem the instance to initialize the Builder with
+     */
     private Builder(AddGroupMembersRequestMembersItem addGroupMembersRequestMembersItem) {
       this.iamId = addGroupMembersRequestMembersItem.iamId;
       this.type = addGroupMembersRequestMembersItem.type;
@@ -85,6 +90,8 @@ public class AddGroupMembersRequestMembersItem extends GenericModel {
     }
   }
 
+  protected AddGroupMembersRequestMembersItem() { }
+
   protected AddGroupMembersRequestMembersItem(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.iamId,
       "iamId cannot be null");
@@ -117,7 +124,7 @@ public class AddGroupMembersRequestMembersItem extends GenericModel {
   /**
    * Gets the type.
    *
-   * The type of the member, must be either "user", "service" or "trusted profile".
+   * The type of the member, must be either "user", "service" or "profile".
    *
    * @return the type
    */

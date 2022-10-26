@@ -1,3 +1,10 @@
+## [0.26.3](https://github.com/IBM/platform-services-java-sdk/compare/0.26.2...0.26.3) (2022-10-26)
+
+
+### Bug Fixes
+
+* **Enterprise Usage Reports:** regen service to get Pager ([#159](https://github.com/IBM/platform-services-java-sdk/issues/159)) ([b7fadbd](https://github.com/IBM/platform-services-java-sdk/commit/b7fadbdd25ec069d4e0aec26c27b16c68e3bc8a6))
+
 ## [0.26.2](https://github.com/IBM/platform-services-java-sdk/compare/0.26.1...0.26.2) (2022-10-24)
 
 

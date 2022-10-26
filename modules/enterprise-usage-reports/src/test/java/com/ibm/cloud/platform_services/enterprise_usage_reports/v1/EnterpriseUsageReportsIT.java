@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,10 +19,8 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.fail;
 
 import java.io.InputStream;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +28,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportOptions;
+import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportPager;
 import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.Reports;
 import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.ResourceUsageReport;
 import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.utils.TestUtilities;
@@ -38,6 +37,7 @@ import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.UrlHelper;
 
 /**
  * Integration test class for the EnterpriseUsageReports service.
@@ -120,7 +120,7 @@ public class EnterpriseUsageReportsIT extends SdkIntegrationTestBase {
 
                 // Get the offset of the next page.
                 if (result.getNext() != null) {
-                    offset = getOffsetFromURL(result.getNext().getHref());
+                    offset = UrlHelper.getQueryParam(result.getNext().getHref(), "offset");
                 } else {
                     offset = null;
                 }
@@ -161,7 +161,7 @@ public class EnterpriseUsageReportsIT extends SdkIntegrationTestBase {
 
                 // Get the offset of the next page.
                 if (result.getNext() != null) {
-                    offset = getOffsetFromURL(result.getNext().getHref());
+                    offset = UrlHelper.getQueryParam(result.getNext().getHref(), "offset");
                 } else {
                     offset = null;
                 }
@@ -202,7 +202,7 @@ public class EnterpriseUsageReportsIT extends SdkIntegrationTestBase {
 
                 // Get the offset of the next page.
                 if (result.getNext() != null) {
-                    offset = getOffsetFromURL(result.getNext().getHref());
+                    offset = UrlHelper.getQueryParam(result.getNext().getHref(), "offset");
                 } else {
                     offset = null;
                 }
@@ -216,34 +216,33 @@ public class EnterpriseUsageReportsIT extends SdkIntegrationTestBase {
         }
     }
 
-    private String getOffsetFromURL(String s) {
-        try {
-            if (s == null) {
-                return null;
-            }
+    @Test
+    public void testGetResourceUsageReportWithPager() throws Exception {
+      try {
+        GetResourceUsageReportOptions options = new GetResourceUsageReportOptions.Builder()
+            .accountGroupId(ACCOUNT_GROUP_ID).month(BILLING_MONTH).build();
 
-            // Parse "s" as a URI and retrieve its decoded query string.
-            URI uri = new URI(s);
-            String query = uri.getQuery();
-            if (query == null || query.isEmpty()) {
-                return null;
-            }
-
-            // Parse the query string into a map of key/value pairs.
-            Map<String, String> params = new LinkedHashMap<>();
-            for (String param : query.split("&")) {
-                String[] keyValue = param.split("=", 2);
-                String value = keyValue.length > 1 ? keyValue[1] : null;
-                if (!keyValue[0].isEmpty()) {
-                    params.put(keyValue[0], value);
-                }
-            }
-
-            return params.get("offset");
-        } catch (Throwable t) {
-
+        // Test getNext().
+        List<ResourceUsageReport> allResults = new ArrayList<>();
+        GetResourceUsageReportPager pager = new GetResourceUsageReportPager(service, options);
+        while (pager.hasNext()) {
+          List<ResourceUsageReport> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
         }
+        assertFalse(allResults.isEmpty());
 
-        return null;
+        // Test getAll();
+        pager = new GetResourceUsageReportPager(service, options);
+        List<ResourceUsageReport> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
+            e.getDebuggingInfo()));
+      }
     }
-}
+  }

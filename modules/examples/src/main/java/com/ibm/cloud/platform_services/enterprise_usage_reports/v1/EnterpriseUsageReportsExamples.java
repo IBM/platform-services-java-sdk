@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,14 +13,19 @@
 
 package com.ibm.cloud.platform_services.enterprise_usage_reports.v1;
 
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportOptions;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.Reports;
-import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
-import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportOptions;
+import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportPager;
+import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.ResourceUsageReport;
+import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
+import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.GsonSingleton;
 
 //
 // This file provides an example of how to use the Enterprise Usage Reports service.
@@ -62,27 +67,25 @@ public class EnterpriseUsageReportsExamples {
         billingMonth = config.get("BILLING_MONTH");
 
         try {
-            System.out.println("getResourceUsageReport() result:");
+          System.out.println("getResourceUsageReport() result:");
+          // begin-get_resource_usage_report
+          GetResourceUsageReportOptions getResourceUsageReportOptions = new GetResourceUsageReportOptions.Builder()
+              .enterpriseId(enterpriseId)
+              .month(billingMonth)
+            .build();
 
-            // begin-get_resource_usage_report
+          GetResourceUsageReportPager pager = new GetResourceUsageReportPager(service, getResourceUsageReportOptions);
+          List<ResourceUsageReport> allResults = new ArrayList<>();
+          while (pager.hasNext()) {
+            List<ResourceUsageReport> nextPage = pager.getNext();
+            allResults.addAll(nextPage);
+          }
 
-            GetResourceUsageReportOptions getResourceUsageReportOptions = new GetResourceUsageReportOptions.Builder()
-                    .enterpriseId(enterpriseId)
-                    .month(billingMonth)
-                    .limit(10L)
-                    .build();
-
-            Response<Reports> response = service.getResourceUsageReport(getResourceUsageReportOptions).execute();
-            Reports reports = response.getResult();
-
-            System.out.println(reports);
-
-            // end-get_resource_usage_report
-
+          System.out.println(GsonSingleton.getGson().toJson(allResults));
+          // end-get_resource_usage_report
         } catch (ServiceResponseException e) {
-            logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
-                    e.getMessage(), e.getDebuggingInfo()), e);
+            logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
-
     }
 }

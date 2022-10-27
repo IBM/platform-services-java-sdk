@@ -98,8 +98,13 @@ public class RuleRequestTest {
     assertEquals(ruleRequestModelNew.name(), "testString");
     assertEquals(ruleRequestModelNew.description(), "testString");
     assertEquals(ruleRequestModelNew.ruleType(), "user_defined");
-    assertEquals(ruleRequestModelNew.target().toString(), targetResourceModel.toString());
-    assertEquals(ruleRequestModelNew.requiredConfig().toString(), ruleRequiredConfigModel.toString());
+    assertEquals(ruleRequestModelNew.target().serviceName(), targetResourceModel.serviceName());
+    assertEquals(ruleRequestModelNew.target().resourceKind(), targetResourceModel.resourceKind());
+    assertEquals(ruleRequestModelNew.target().additionalTargetAttributes(), targetResourceModel.additionalTargetAttributes());
+    assertEquals(ruleRequestModelNew.requiredConfig().description(), ruleRequiredConfigModel.description());
+    assertEquals(ruleRequestModelNew.requiredConfig().property(), ruleRequiredConfigModel.property());
+    assertEquals(ruleRequestModelNew.requiredConfig().operator(), ruleRequiredConfigModel.operator());
+    assertEquals(ruleRequestModelNew.requiredConfig().value(), ruleRequiredConfigModel.value());
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

@@ -103,7 +103,17 @@ public class CreateRuleRequestTest {
     CreateRuleRequest createRuleRequestModelNew = TestUtilities.deserialize(json, CreateRuleRequest.class);
     assertTrue(createRuleRequestModelNew instanceof CreateRuleRequest);
     assertEquals(createRuleRequestModelNew.requestId(), "3cebc877-58e7-44a5-a292-32114fa73558");
-    assertEquals(createRuleRequestModelNew.rule().toString(), ruleRequestModel.toString());
+    assertEquals(createRuleRequestModelNew.rule().accountId(), ruleRequestModel.accountId());
+    assertEquals(createRuleRequestModelNew.rule().name(), ruleRequestModel.name());
+    assertEquals(createRuleRequestModelNew.rule().description(), ruleRequestModel.description());
+    assertEquals(createRuleRequestModelNew.rule().ruleType(), ruleRequestModel.ruleType());
+    assertEquals(createRuleRequestModelNew.rule().target(), ruleRequestModel.target());
+    assertEquals(createRuleRequestModelNew.rule().requiredConfig().description(), ruleRequestModel.requiredConfig().description());
+    assertEquals(createRuleRequestModelNew.rule().requiredConfig().property(), ruleRequestModel.requiredConfig().property());
+    assertEquals(createRuleRequestModelNew.rule().requiredConfig().operator(), ruleRequestModel.requiredConfig().operator());
+    assertEquals(createRuleRequestModelNew.rule().requiredConfig().value(), ruleRequestModel.requiredConfig().value());
+    assertEquals(createRuleRequestModelNew.rule().enforcementActions(), ruleRequestModel.enforcementActions());
+    assertEquals(createRuleRequestModelNew.rule().labels(), ruleRequestModel.labels());
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

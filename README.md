@@ -48,7 +48,6 @@ Service Name | Artifact Coordinates
 --- | --- 
 [Case Management](https://cloud.ibm.com/apidocs/case-management?code=java) | com.ibm.cloud:case-management:0.26.3
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog?code=java) | com.ibm.cloud:catalog-management:0.26.3
-[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config?code=java) | com.ibm.cloud:configuration-governance:0.26.3
 [Context Based Restrictions](https://cloud.ibm.com/apidocs/context-based-restrictions?code=java) | com.ibm.cloud:context-based-restrictions:0.26.3
 [Enterprise Billing Units](https://cloud.ibm.com/apidocs/enterprise-apis/billing-unit?code=java) | com.ibm.cloud:enterprise-billing-units:0.26.3
 [Enterprise Management](https://cloud.ibm.com/apidocs/enterprise-apis/enterprise?code=java) | com.ibm.cloud:enterprise-management:0.26.3
@@ -61,12 +60,19 @@ Service Name | Artifact Coordinates
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management?code=java) | com.ibm.cloud:iam-policy-management:0.26.3
 [IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=java) | com.ibm.cloud:ibm-cloud-shell:0.26.3
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=java) | com.ibm.cloud:open-service-broker:0.26.3
-[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture?code=java) | com.ibm.cloud:posture_management:0.26.3
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=java) | com.ibm.cloud:resource-controller:0.26.3
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=java) | com.ibm.cloud:resource-manager:0.26.3
 [Usage Metering](https://cloud.ibm.com/apidocs/usage-metering?code=java) | com.ibm.cloud:usage-metering:0.26.3
 [Usage Reports](https://cloud.ibm.com/apidocs/metering-reporting?code=java) | com.ibm.cloud:usage-reports:0.26.3
 [User Management](https://cloud.ibm.com/apidocs/user-management?code=java) | com.ibm.cloud:user-management:0.26.3
+
+The following services have been relocated to a different SDK project.
+Please consult the documentation for each service to determine the new location:
+
+Service Name | Artifact Coordinates
+--- | --- 
+[Configuration Governance](https://cloud.ibm.com/apidocs/security-compliance/config?code=java) | com.ibm.cloud:configuration-governance:0.26.3
+[Posture Management](https://cloud.ibm.com/apidocs/security-compliance/posture?code=java) | com.ibm.cloud:posture_management:0.26.3
 
 ## Prerequisites
 

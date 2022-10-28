@@ -1,3 +1,10 @@
+# [0.27.0](https://github.com/IBM/platform-services-java-sdk/compare/0.26.3...0.27.0) (2022-10-28)
+
+
+### Features
+
+* remove scc-related services from project ([#162](https://github.com/IBM/platform-services-java-sdk/issues/162)) ([20064c4](https://github.com/IBM/platform-services-java-sdk/commit/20064c4120764bae9e0fce5afd688f54e2032d40))
+
 ## [0.26.3](https://github.com/IBM/platform-services-java-sdk/compare/0.26.2...0.26.3) (2022-10-26)
 
 

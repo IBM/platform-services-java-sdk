@@ -40,11 +40,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>configuration-governance</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>context-based-restrictions</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -101,11 +96,6 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>open-service-broker</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>posture-management</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

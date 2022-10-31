@@ -33,6 +33,11 @@ public class CreateAccessGroupOptions extends GenericModel {
     private String description;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing CreateAccessGroupOptions instance.
+     *
+     * @param createAccessGroupOptions the instance to initialize the Builder with
+     */
     private Builder(CreateAccessGroupOptions createAccessGroupOptions) {
       this.accountId = createAccessGroupOptions.accountId;
       this.name = createAccessGroupOptions.name;
@@ -110,6 +115,8 @@ public class CreateAccessGroupOptions extends GenericModel {
       return this;
     }
   }
+
+  protected CreateAccessGroupOptions() { }
 
   protected CreateAccessGroupOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,

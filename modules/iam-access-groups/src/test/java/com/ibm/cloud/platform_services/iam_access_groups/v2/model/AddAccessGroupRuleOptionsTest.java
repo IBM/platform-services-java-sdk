@@ -18,8 +18,6 @@ import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RuleConditions
 import com.ibm.cloud.platform_services.iam_access_groups.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -47,14 +45,14 @@ public class AddAccessGroupRuleOptionsTest {
       .accessGroupId("testString")
       .expiration(Long.valueOf("1"))
       .realmName("testString")
-      .conditions(new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)))
+      .conditions(java.util.Arrays.asList(ruleConditionsModel))
       .name("testString")
       .transactionId("testString")
       .build();
     assertEquals(addAccessGroupRuleOptionsModel.accessGroupId(), "testString");
     assertEquals(addAccessGroupRuleOptionsModel.expiration(), Long.valueOf("1"));
     assertEquals(addAccessGroupRuleOptionsModel.realmName(), "testString");
-    assertEquals(addAccessGroupRuleOptionsModel.conditions(), new java.util.ArrayList<RuleConditions>(java.util.Arrays.asList(ruleConditionsModel)));
+    assertEquals(addAccessGroupRuleOptionsModel.conditions(), java.util.Arrays.asList(ruleConditionsModel));
     assertEquals(addAccessGroupRuleOptionsModel.name(), "testString");
     assertEquals(addAccessGroupRuleOptionsModel.transactionId(), "testString");
   }

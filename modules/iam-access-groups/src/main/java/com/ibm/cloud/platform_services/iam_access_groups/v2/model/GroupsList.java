@@ -32,6 +32,8 @@ public class GroupsList extends GenericModel {
   protected HrefStruct last;
   protected List<Group> groups;
 
+  protected GroupsList() { }
+
   /**
    * Gets the limit.
    *

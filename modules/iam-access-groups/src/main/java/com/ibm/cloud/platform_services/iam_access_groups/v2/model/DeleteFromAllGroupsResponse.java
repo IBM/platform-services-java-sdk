@@ -26,6 +26,8 @@ public class DeleteFromAllGroupsResponse extends GenericModel {
   protected String iamId;
   protected List<DeleteFromAllGroupsResponseGroupsItem> groups;
 
+  protected DeleteFromAllGroupsResponse() { }
+
   /**
    * Gets the iamId.
    *

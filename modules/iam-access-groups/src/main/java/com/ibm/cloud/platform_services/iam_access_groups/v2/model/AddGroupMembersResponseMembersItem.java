@@ -35,6 +35,8 @@ public class AddGroupMembersResponseMembersItem extends GenericModel {
   protected String trace;
   protected List<Error> errors;
 
+  protected AddGroupMembersResponseMembersItem() { }
+
   /**
    * Gets the iamId.
    *
@@ -49,7 +51,7 @@ public class AddGroupMembersResponseMembersItem extends GenericModel {
   /**
    * Gets the type.
    *
-   * The member type - either `user` or `service`.
+   * The member type - either `user`, `service` or `profile`.
    *
    * @return the type
    */

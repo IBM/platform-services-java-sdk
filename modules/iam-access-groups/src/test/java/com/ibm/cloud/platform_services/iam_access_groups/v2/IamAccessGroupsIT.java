@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,9 +14,12 @@
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 import static org.testng.AssertJUnit.assertNotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +30,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupMembersPager;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupsPager;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccountSettings;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddAccessGroupRuleOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersRequestMembersItem;
@@ -62,6 +67,7 @@ import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccountS
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
+import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 /**
@@ -220,6 +226,38 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
     }
 
     @Test(dependsOnMethods = { "testListAccessGroups" })
+    public void testListAccessGroupsWithPager() throws Exception {
+      try {
+        ListAccessGroupsOptions options = new ListAccessGroupsOptions.Builder()
+          .accountId(testAccountId)
+          .hidePublicAccess(true)
+         .build();
+
+        // Test getNext().
+        List<Group> allResults = new ArrayList<>();
+        AccessGroupsPager pager = new AccessGroupsPager(service, options);
+        while (pager.hasNext()) {
+          List<Group> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new AccessGroupsPager(service, options);
+        List<Group> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
+    }
+
+    @Test(dependsOnMethods = { "testListAccessGroupsWithPager" })
     public void testAddMembersToAccessGroup() {
         assertNotNull(testGroupId);
 
@@ -290,7 +328,7 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
     }
 
     @Test(dependsOnMethods = { "testCheckMembership" })
-    public void testListGroupMembers() {
+    public void testListAccessGroupMembers() {
         assertNotNull(testGroupId);
 
         ListAccessGroupMembersOptions options = new ListAccessGroupMembersOptions.Builder()
@@ -313,7 +351,40 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
         assertTrue(foundTestUser);
     }
 
-    @Test(dependsOnMethods = { "testListGroupMembers" })
+    @Test(dependsOnMethods = { "testListAccessGroupMembers" })
+    public void testListAccessGroupMembersWithPager() throws Exception {
+      assertNotNull(testGroupId);
+
+      try {
+        ListAccessGroupMembersOptions options = new ListAccessGroupMembersOptions.Builder()
+          .accessGroupId(testGroupId)
+          .build();
+
+        // Test getNext().
+        List<ListGroupMembersResponseMember> allResults = new ArrayList<>();
+        AccessGroupMembersPager pager = new AccessGroupMembersPager(service, options);
+        while (pager.hasNext()) {
+          List<ListGroupMembersResponseMember> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new AccessGroupMembersPager(service, options);
+        List<ListGroupMembersResponseMember> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
+    }
+
+    @Test(dependsOnMethods = { "testListAccessGroupMembersWithPager" })
     public void testDeleteGroupMembership() {
         assertNotNull(testGroupId);
 

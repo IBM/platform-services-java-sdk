@@ -36,7 +36,7 @@ public class ListAccessGroupsOptionsTest {
       .transactionId("testString")
       .iamId("testString")
       .membershipType("static")
-      .limit(Long.valueOf("26"))
+      .limit(Long.valueOf("100"))
       .offset(Long.valueOf("26"))
       .sort("name")
       .showFederated(false)
@@ -46,7 +46,7 @@ public class ListAccessGroupsOptionsTest {
     assertEquals(listAccessGroupsOptionsModel.transactionId(), "testString");
     assertEquals(listAccessGroupsOptionsModel.iamId(), "testString");
     assertEquals(listAccessGroupsOptionsModel.membershipType(), "static");
-    assertEquals(listAccessGroupsOptionsModel.limit(), Long.valueOf("26"));
+    assertEquals(listAccessGroupsOptionsModel.limit(), Long.valueOf("100"));
     assertEquals(listAccessGroupsOptionsModel.offset(), Long.valueOf("26"));
     assertEquals(listAccessGroupsOptionsModel.sort(), "name");
     assertEquals(listAccessGroupsOptionsModel.showFederated(), Boolean.valueOf(false));

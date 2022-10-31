@@ -29,6 +29,8 @@ public class DeleteFromAllGroupsResponseGroupsItem extends GenericModel {
   protected String trace;
   protected List<Error> errors;
 
+  protected DeleteFromAllGroupsResponseGroupsItem() { }
+
   /**
    * Gets the accessGroupId.
    *

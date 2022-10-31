@@ -38,6 +38,5 @@ public class GroupTest {
     assertNull(groupModel.getAccountId());
     assertNull(groupModel.getHref());
     assertNull(groupModel.isIsFederated());
-    assertNull(groupModel.getMembershipType());
   }
 }

@@ -43,6 +43,11 @@ public class ListAccessGroupsOptions extends GenericModel {
     private Boolean showFederated;
     private Boolean hidePublicAccess;
 
+    /**
+     * Instantiates a new Builder from an existing ListAccessGroupsOptions instance.
+     *
+     * @param listAccessGroupsOptions the instance to initialize the Builder with
+     */
     private Builder(ListAccessGroupsOptions listAccessGroupsOptions) {
       this.accountId = listAccessGroupsOptions.accountId;
       this.transactionId = listAccessGroupsOptions.transactionId;
@@ -178,6 +183,8 @@ public class ListAccessGroupsOptions extends GenericModel {
       return this;
     }
   }
+
+  protected ListAccessGroupsOptions() { }
 
   protected ListAccessGroupsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,

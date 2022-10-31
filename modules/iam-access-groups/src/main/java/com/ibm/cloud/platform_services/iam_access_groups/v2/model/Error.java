@@ -24,6 +24,8 @@ public class Error extends GenericModel {
   protected String code;
   protected String message;
 
+  protected Error() { }
+
   /**
    * Gets the code.
    *

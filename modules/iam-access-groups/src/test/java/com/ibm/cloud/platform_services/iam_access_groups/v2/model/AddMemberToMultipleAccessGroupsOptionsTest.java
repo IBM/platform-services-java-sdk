@@ -17,8 +17,6 @@ import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMemberToMul
 import com.ibm.cloud.platform_services.iam_access_groups.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -37,13 +35,13 @@ public class AddMemberToMultipleAccessGroupsOptionsTest {
       .accountId("testString")
       .iamId("testString")
       .type("testString")
-      .groups(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .groups(java.util.Arrays.asList("testString"))
       .transactionId("testString")
       .build();
     assertEquals(addMemberToMultipleAccessGroupsOptionsModel.accountId(), "testString");
     assertEquals(addMemberToMultipleAccessGroupsOptionsModel.iamId(), "testString");
     assertEquals(addMemberToMultipleAccessGroupsOptionsModel.type(), "testString");
-    assertEquals(addMemberToMultipleAccessGroupsOptionsModel.groups(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(addMemberToMultipleAccessGroupsOptionsModel.groups(), java.util.Arrays.asList("testString"));
     assertEquals(addMemberToMultipleAccessGroupsOptionsModel.transactionId(), "testString");
   }
 

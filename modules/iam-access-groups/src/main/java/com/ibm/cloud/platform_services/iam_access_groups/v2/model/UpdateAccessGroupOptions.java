@@ -35,6 +35,11 @@ public class UpdateAccessGroupOptions extends GenericModel {
     private String description;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateAccessGroupOptions instance.
+     *
+     * @param updateAccessGroupOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateAccessGroupOptions updateAccessGroupOptions) {
       this.accessGroupId = updateAccessGroupOptions.accessGroupId;
       this.ifMatch = updateAccessGroupOptions.ifMatch;
@@ -124,6 +129,8 @@ public class UpdateAccessGroupOptions extends GenericModel {
       return this;
     }
   }
+
+  protected UpdateAccessGroupOptions() { }
 
   protected UpdateAccessGroupOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accessGroupId,

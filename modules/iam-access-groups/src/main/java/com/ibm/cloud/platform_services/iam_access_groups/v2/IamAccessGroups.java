@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
+ * IBM OpenAPI SDK Code Generator Version: 3.60.0-13f6e1ba-20221019-164457
  */
 
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
@@ -67,8 +67,14 @@ import java.util.Map.Entry;
  */
 public class IamAccessGroups extends BaseService {
 
+  /**
+   * Default service name used when configuring the `IamAccessGroups` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "iam_access_groups";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://iam.cloud.ibm.com";
 
  /**
@@ -541,7 +547,7 @@ public class IamAccessGroups extends BaseService {
    * conditions during login, the user will be dynamically added to the group. The duration of the user's access to the
    * group is determined by the `expiration` field. After access expires, the user will need to log in again to regain
    * access. Note that the condition's value field must be a stringified JSON value. [Consult this documentation for
-   * further explanation of dynamic rules.](/docs/iam/accessgroup_rules.html#rules).
+   * further explanation of dynamic rules.](/docs/account?topic=account-rules).
    *
    * @param addAccessGroupRuleOptions the {@link AddAccessGroupRuleOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Rule}

@@ -31,6 +31,11 @@ public class RemoveAccessGroupRuleOptions extends GenericModel {
     private String ruleId;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing RemoveAccessGroupRuleOptions instance.
+     *
+     * @param removeAccessGroupRuleOptions the instance to initialize the Builder with
+     */
     private Builder(RemoveAccessGroupRuleOptions removeAccessGroupRuleOptions) {
       this.accessGroupId = removeAccessGroupRuleOptions.accessGroupId;
       this.ruleId = removeAccessGroupRuleOptions.ruleId;
@@ -96,6 +101,8 @@ public class RemoveAccessGroupRuleOptions extends GenericModel {
       return this;
     }
   }
+
+  protected RemoveAccessGroupRuleOptions() { }
 
   protected RemoveAccessGroupRuleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accessGroupId,

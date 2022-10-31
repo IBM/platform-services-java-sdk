@@ -31,6 +31,11 @@ public class IsMemberOfAccessGroupOptions extends GenericModel {
     private String iamId;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing IsMemberOfAccessGroupOptions instance.
+     *
+     * @param isMemberOfAccessGroupOptions the instance to initialize the Builder with
+     */
     private Builder(IsMemberOfAccessGroupOptions isMemberOfAccessGroupOptions) {
       this.accessGroupId = isMemberOfAccessGroupOptions.accessGroupId;
       this.iamId = isMemberOfAccessGroupOptions.iamId;
@@ -96,6 +101,8 @@ public class IsMemberOfAccessGroupOptions extends GenericModel {
       return this;
     }
   }
+
+  protected IsMemberOfAccessGroupOptions() { }
 
   protected IsMemberOfAccessGroupOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accessGroupId,

@@ -31,6 +31,11 @@ public class GetAccessGroupOptions extends GenericModel {
     private String transactionId;
     private Boolean showFederated;
 
+    /**
+     * Instantiates a new Builder from an existing GetAccessGroupOptions instance.
+     *
+     * @param getAccessGroupOptions the instance to initialize the Builder with
+     */
     private Builder(GetAccessGroupOptions getAccessGroupOptions) {
       this.accessGroupId = getAccessGroupOptions.accessGroupId;
       this.transactionId = getAccessGroupOptions.transactionId;
@@ -94,6 +99,8 @@ public class GetAccessGroupOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetAccessGroupOptions() { }
 
   protected GetAccessGroupOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accessGroupId,

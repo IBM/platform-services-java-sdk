@@ -21,6 +21,8 @@ public class HrefStruct extends GenericModel {
 
   protected String href;
 
+  protected HrefStruct() { }
+
   /**
    * Gets the href.
    *

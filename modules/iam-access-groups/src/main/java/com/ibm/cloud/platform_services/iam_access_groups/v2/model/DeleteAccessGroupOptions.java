@@ -31,6 +31,11 @@ public class DeleteAccessGroupOptions extends GenericModel {
     private String transactionId;
     private Boolean force;
 
+    /**
+     * Instantiates a new Builder from an existing DeleteAccessGroupOptions instance.
+     *
+     * @param deleteAccessGroupOptions the instance to initialize the Builder with
+     */
     private Builder(DeleteAccessGroupOptions deleteAccessGroupOptions) {
       this.accessGroupId = deleteAccessGroupOptions.accessGroupId;
       this.transactionId = deleteAccessGroupOptions.transactionId;
@@ -94,6 +99,8 @@ public class DeleteAccessGroupOptions extends GenericModel {
       return this;
     }
   }
+
+  protected DeleteAccessGroupOptions() { }
 
   protected DeleteAccessGroupOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accessGroupId,

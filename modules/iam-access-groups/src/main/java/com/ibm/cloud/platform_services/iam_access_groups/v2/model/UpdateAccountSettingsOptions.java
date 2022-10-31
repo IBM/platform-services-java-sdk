@@ -31,6 +31,11 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     private Boolean publicAccessEnabled;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateAccountSettingsOptions instance.
+     *
+     * @param updateAccountSettingsOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateAccountSettingsOptions updateAccountSettingsOptions) {
       this.accountId = updateAccountSettingsOptions.accountId;
       this.publicAccessEnabled = updateAccountSettingsOptions.publicAccessEnabled;
@@ -94,6 +99,8 @@ public class UpdateAccountSettingsOptions extends GenericModel {
       return this;
     }
   }
+
+  protected UpdateAccountSettingsOptions() { }
 
   protected UpdateAccountSettingsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,

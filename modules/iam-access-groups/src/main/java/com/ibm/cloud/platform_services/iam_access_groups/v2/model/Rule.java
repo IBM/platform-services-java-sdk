@@ -42,6 +42,8 @@ public class Rule extends GenericModel {
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
 
+  protected Rule() { }
+
   /**
    * Gets the id.
    *

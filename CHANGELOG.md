@@ -1,3 +1,10 @@
+## [0.27.1](https://github.com/IBM/platform-services-java-sdk/compare/0.27.0...0.27.1) (2022-10-31)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** regen service to get Pagers ([#160](https://github.com/IBM/platform-services-java-sdk/issues/160)) ([e9e7909](https://github.com/IBM/platform-services-java-sdk/commit/e9e79092aa22575c3eb178ce9c4b8c13cc879997))
+
 # [0.27.0](https://github.com/IBM/platform-services-java-sdk/compare/0.26.3...0.27.0) (2022-10-28)
 
 

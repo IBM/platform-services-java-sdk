@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -15,6 +15,7 @@ package com.ibm.cloud.platform_services.resource_controller.v2.model;
 
 import com.ibm.cloud.platform_services.resource_controller.v2.model.PlanHistoryItem;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstance;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstanceLastOperation;
 import com.ibm.cloud.platform_services.resource_controller.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.DateUtils;

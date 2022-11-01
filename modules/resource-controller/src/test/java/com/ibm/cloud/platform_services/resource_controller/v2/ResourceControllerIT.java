@@ -1,24 +1,5 @@
-package com.ibm.cloud.platform_services.resource_controller.v2;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
-import static org.testng.AssertJUnit.assertNotNull;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +10,27 @@ import org.testng.annotations.Test;
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
+package com.ibm.cloud.platform_services.resource_controller.v2;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertNotEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
+import static org.testng.AssertJUnit.assertNotNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceAliasOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceBindingOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceInstanceOptions;
@@ -53,15 +55,22 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.LockResource
 import com.ibm.cloud.platform_services.resource_controller.v2.model.Reclamation;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ReclamationsList;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceAlias;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceAliasesForInstancePager;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceAliasesList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceAliasesPager;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBinding;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBindingPostParameters;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBindingsForAliasPager;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBindingsList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBindingsPager;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstance;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstancesList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstancesPager;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKey;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKeyPostParameters;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKeysForInstancePager;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKeysList;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKeysPager;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.RunReclamationActionOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.UnlockResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.UpdateResourceAliasOptions;
@@ -212,9 +221,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(result.getResourcePlanId(), TEST_PLAN_ID1);
         assertEquals(result.getState(), "active");
         assertFalse(result.isLocked());
-        assertEquals(result.getLastOperation().get("type").toString(), "create");
-        assertFalse((Boolean) result.getLastOperation().get("async"));
-        assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+        assertEquals(result.getLastOperation().getType(), "create");
+        assertFalse(result.getLastOperation().isAsync());
+        assertEquals(result.getLastOperation().getState(), "succeeded");
 
         testInstanceCrn = result.getId();
         testInstanceGuid = result.getGuid();
@@ -242,9 +251,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(result.getResourcePlanId(), TEST_PLAN_ID1);
         assertEquals(result.getState(), "active");
         assertFalse(result.isLocked());
-        assertEquals(result.getLastOperation().get("type").toString(), "create");
-        assertFalse((Boolean) result.getLastOperation().get("async"));
-        assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+        assertEquals(result.getLastOperation().getType(), "create");
+        assertFalse(result.getLastOperation().isAsync());
+        assertEquals(result.getLastOperation().getState(), "succeeded");
     }
 
     @Test
@@ -269,10 +278,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(result.getId(), testInstanceCrn);
         assertEquals(result.getName(), instanceNames.get("update"));
         assertEquals(result.getState(), "active");
-        assertEquals(result.getLastOperation().get("type").toString(), "update");
-        assertEquals(result.getLastOperation().get("sub_type").toString(), "config");
-        assertFalse((Boolean) result.getLastOperation().get("async"));
-        assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+        assertEquals(result.getLastOperation().getType(), "update");
+        assertFalse(result.getLastOperation().isAsync());
+        assertEquals(result.getLastOperation().getState(), "succeeded");
     }
 
     @Test
@@ -320,10 +328,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(instance.getGuid(), testInstanceGuid);
         assertEquals(instance.getName(), instanceNames.get("update"));
         assertEquals(instance.getState(), "active");
-        assertEquals(instance.getLastOperation().get("type").toString(), "update");
-        assertEquals(instance.getLastOperation().get("sub_type").toString(), "config");
-        assertFalse((Boolean) instance.getLastOperation().get("async"));
-        assertEquals(instance.getLastOperation().get("state").toString(), "succeeded");
+        assertEquals(instance.getLastOperation().getType(), "update");
+        assertFalse(instance.getLastOperation().isAsync());
+        assertEquals(instance.getLastOperation().getState(), "succeeded");
     }
 
     @Test
@@ -341,6 +348,36 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         ResourceInstancesList result = response.getResult();
         assertEquals(result.getResources().size(), 1);
         assertEquals(result.getRowsCount(), Long.valueOf(1));
+    }
+
+    @Test
+    public void test05aListResourceInstancesWithPager() throws Exception {
+      try {
+        ListResourceInstancesOptions options = new ListResourceInstancesOptions.Builder()
+          .build();
+
+        // Test getNext().
+        List<ResourceInstance> allResults = new ArrayList<>();
+        ResourceInstancesPager pager = new ResourceInstancesPager(service, options);
+        while (pager.hasNext()) {
+          List<ResourceInstance> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new ResourceInstancesPager(service, options);
+        List<ResourceInstance> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
 
     @Test
@@ -489,7 +526,37 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     }
 
     @Test
-    public void test11aListResourceAliasesForInstance() throws Exception {
+    public void test11aListResourceAliasesWithPager() throws Exception {
+      try {
+        ListResourceAliasesOptions options = new ListResourceAliasesOptions.Builder()
+          .build();
+
+        // Test getNext().
+        List<ResourceAlias> allResults = new ArrayList<>();
+        ResourceAliasesPager pager = new ResourceAliasesPager(service, options);
+        while (pager.hasNext()) {
+          List<ResourceAlias> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new ResourceAliasesPager(service, options);
+        List<ResourceAlias> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
+    }
+
+    @Test
+    public void test11bListResourceAliasesForInstance() throws Exception {
         try {
             assertNotNull(testInstanceGuid);
 
@@ -520,6 +587,37 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                 e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
+    }
+    @Test
+    public void test11cListResourceAliasesForInstanceWithPager() throws Exception {
+      try {
+        ListResourceAliasesForInstanceOptions options = new ListResourceAliasesForInstanceOptions.Builder()
+          .id(testInstanceGuid)
+          .limit(Long.valueOf("10"))
+          .build();
+
+        // Test getNext().
+        List<ResourceAlias> allResults = new ArrayList<>();
+        ResourceAliasesForInstancePager pager = new ResourceAliasesForInstancePager(service, options);
+        while (pager.hasNext()) {
+          List<ResourceAlias> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new ResourceAliasesForInstancePager(service, options);
+        List<ResourceAlias> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
 
     @Test
@@ -674,7 +772,37 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     }
 
     @Test
-    public void test17aListResourceBindingsForAlias() throws Exception {
+    public void test17aListResourceBindingsWithPager() throws Exception {
+      try {
+        ListResourceBindingsOptions options = new ListResourceBindingsOptions.Builder()
+          .build();
+
+        // Test getNext().
+        List<ResourceBinding> allResults = new ArrayList<>();
+        ResourceBindingsPager pager = new ResourceBindingsPager(service, options);
+        while (pager.hasNext()) {
+          List<ResourceBinding> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new ResourceBindingsPager(service, options);
+        List<ResourceBinding> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
+    }
+
+    @Test
+    public void test17bListResourceBindingsForAlias() throws Exception {
         try {
             assertNotNull(testAliasGuid);
 
@@ -705,6 +833,38 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                 e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
+    }
+
+    @Test
+    public void test17cListResourceBindingsForAliasWithPager() throws Exception {
+      try {
+        ListResourceBindingsForAliasOptions options = new ListResourceBindingsForAliasOptions.Builder()
+          .id(testAliasGuid)
+          .limit(Long.valueOf("10"))
+          .build();
+
+        // Test getNext().
+        List<ResourceBinding> allResults = new ArrayList<>();
+        ResourceBindingsForAliasPager pager = new ResourceBindingsForAliasPager(service, options);
+        while (pager.hasNext()) {
+          List<ResourceBinding> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new ResourceBindingsForAliasPager(service, options);
+        List<ResourceBinding> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
 
     @Test
@@ -853,7 +1013,37 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     }
 
     @Test
-    public void test23aListResourceKeysForInstance() throws Exception {
+    public void test23aListResourceKeysWithPager() throws Exception {
+      try {
+        ListResourceKeysOptions options = new ListResourceKeysOptions.Builder()
+          .build();
+
+        // Test getNext().
+        List<ResourceKey> allResults = new ArrayList<>();
+        ResourceKeysPager pager = new ResourceKeysPager(service, options);
+        while (pager.hasNext()) {
+          List<ResourceKey> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new ResourceKeysPager(service, options);
+        List<ResourceKey> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
+    }
+
+    @Test
+    public void test23bListResourceKeysForInstance() throws Exception {
         try {
             assertNotNull(testInstanceGuid);
 
@@ -885,6 +1075,37 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                 e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
+    }
+
+    @Test
+    public void test23cListResourceKeysForInstanceWithPager() throws Exception {
+      try {
+        ListResourceKeysForInstanceOptions options = new ListResourceKeysForInstanceOptions.Builder()
+          .id(testInstanceGuid)
+          .build();
+
+        // Test getNext().
+        List<ResourceKey> allResults = new ArrayList<>();
+        ResourceKeysForInstancePager pager = new ResourceKeysForInstancePager(service, options);
+        while (pager.hasNext()) {
+          List<ResourceKey> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new ResourceKeysForInstancePager(service, options);
+        List<ResourceKey> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
 
     @Test
@@ -1179,9 +1400,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(result);
         assertEquals(result.getId(), testInstanceCrn);
         assertTrue(result.isLocked());
-        assertEquals(result.getLastOperation().get("type").toString(), "lock");
-        assertFalse((Boolean) result.getLastOperation().get("async"));
-        assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+        assertEquals(result.getLastOperation().getType(), "lock");
+        assertFalse(result.getLastOperation().isAsync());
+        assertEquals(result.getLastOperation().getState(), "succeeded");
     }
 
     @Test
@@ -1197,7 +1418,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .execute();
         } catch (ServiceResponseException e) {
             assertNotNull(e);
-            assertEquals(e.getStatusCode(), 400);
+            assertEquals(e.getStatusCode(), 422);
         }
     }
 
@@ -1213,7 +1434,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
                 .execute();
         } catch (ServiceResponseException e) {
             assertNotNull(e);
-            assertEquals(e.getStatusCode(), 400);
+            assertEquals(e.getStatusCode(), 422);
         }
     }
 
@@ -1233,9 +1454,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(result);
         assertEquals(result.getId(), testInstanceCrn);
         assertFalse(result.isLocked());
-        assertEquals(result.getLastOperation().get("type").toString(), "unlock");
-        assertFalse((Boolean) result.getLastOperation().get("async"));
-        assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+        assertEquals(result.getLastOperation().getType(), "unlock");
+        assertFalse(result.getLastOperation().isAsync());
+        assertEquals(result.getLastOperation().getState(), "succeeded");
     }
 
     @Test
@@ -1267,9 +1488,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertNotNull(result);
         assertEquals(result.getId(), testInstanceCrn);
         assertEquals(result.getState(), "removed");
-        assertEquals(result.getLastOperation().get("type").toString(), "delete");
-        assertFalse((Boolean) result.getLastOperation().get("async"));
-        assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+        assertEquals(result.getLastOperation().getType(), "delete");
+        assertFalse(result.getLastOperation().isAsync());
+        assertEquals(result.getLastOperation().getState(), "succeeded");
     }
 
     @Test
@@ -1299,9 +1520,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
         assertEquals(result.getResourcePlanId(), TEST_PLAN_ID2);
         assertEquals(result.getState(), "active");
         assertFalse(result.isLocked());
-        assertEquals(result.getLastOperation().get("type").toString(), "create");
-        assertFalse((Boolean) result.getLastOperation().get("async"));
-        assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+        assertEquals(result.getLastOperation().getType(), "create");
+        assertFalse(result.getLastOperation().isAsync());
+        assertEquals(result.getLastOperation().getState(), "succeeded");
 
         testReclaimInstanceCrn = result.getId();
         testReclaimInstanceGuid = result.getGuid();
@@ -1344,10 +1565,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     //     assertNotNull(result);
     //     assertEquals(result.getId(), testReclaimInstanceCrn);
     //     assertEquals(result.getState(), "pending_reclamation");
-    //     assertEquals(result.getLastOperation().get("type").toString(), "reclamation");
-    //     assertEquals(result.getLastOperation().get("sub_type").toString(), "pending");
-    //     assertFalse((Boolean) result.getLastOperation().get("async"));
-    //     assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+    //     assertEquals(result.getLastOperation().getType(), "reclamation");
+    //     assertFalse((Boolean) result.getLastOperation().isAsync());
+    //     assertEquals(result.getLastOperation().getState(), "succeeded");
     // }
 
     @Test
@@ -1427,10 +1647,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     //     assertNotNull(result);
     //     assertEquals(result.getId(), testReclaimInstanceCrn);
     //     assertEquals(result.getState(), "active");
-    //     assertEquals(result.getLastOperation().get("type").toString(), "reclamation");
-    //     assertEquals(result.getLastOperation().get("sub_type").toString(), "restore");
-    //     assertFalse((Boolean) result.getLastOperation().get("async"));
-    //     assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+    //     assertEquals(result.getLastOperation().getType(), "reclamation");
+    //     assertFalse((Boolean) result.getLastOperation().isAsync());
+    //     assertEquals(result.getLastOperation().getState(), "succeeded");
     // }
 
     @Test
@@ -1522,10 +1741,9 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
     //     assertNotNull(result);
     //     assertEquals(result.getId(), testReclaimInstanceCrn);
     //     assertEquals(result.getState(), "removed");
-    //     assertEquals(result.getLastOperation().get("type").toString(), "reclamation");
-    //     assertEquals(result.getLastOperation().get("sub_type").toString(), "delete");
-    //     assertFalse((Boolean) result.getLastOperation().get("async"));
-    //     assertEquals(result.getLastOperation().get("state").toString(), "succeeded");
+    //     assertEquals(result.getLastOperation().getType(), "reclamation");
+    //     assertFalse((Boolean) result.getLastOperation().isAsync());
+    //     assertEquals(result.getLastOperation().getState(), "succeeded");
     // }
 
     public void cleanupResources() {

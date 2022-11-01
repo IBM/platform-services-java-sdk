@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -39,8 +39,8 @@ public class ListResourceBindingsOptionsTest {
       .regionBindingId("testString")
       .limit(Long.valueOf("100"))
       .start("testString")
-      .updatedFrom("2019-01-08T00:00:00.000Z")
-      .updatedTo("2019-01-08T00:00:00.000Z")
+      .updatedFrom("2021-01-01")
+      .updatedTo("2021-01-01")
       .build();
     assertEquals(listResourceBindingsOptionsModel.guid(), "testString");
     assertEquals(listResourceBindingsOptionsModel.name(), "testString");
@@ -49,7 +49,7 @@ public class ListResourceBindingsOptionsTest {
     assertEquals(listResourceBindingsOptionsModel.regionBindingId(), "testString");
     assertEquals(listResourceBindingsOptionsModel.limit(), Long.valueOf("100"));
     assertEquals(listResourceBindingsOptionsModel.start(), "testString");
-    assertEquals(listResourceBindingsOptionsModel.updatedFrom(), "2019-01-08T00:00:00.000Z");
-    assertEquals(listResourceBindingsOptionsModel.updatedTo(), "2019-01-08T00:00:00.000Z");
+    assertEquals(listResourceBindingsOptionsModel.updatedFrom(), "2021-01-01");
+    assertEquals(listResourceBindingsOptionsModel.updatedTo(), "2021-01-01");
   }
 }

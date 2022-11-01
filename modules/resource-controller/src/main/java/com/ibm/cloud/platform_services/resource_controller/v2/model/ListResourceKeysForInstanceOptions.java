@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -31,6 +31,11 @@ public class ListResourceKeysForInstanceOptions extends GenericModel {
     private Long limit;
     private String start;
 
+    /**
+     * Instantiates a new Builder from an existing ListResourceKeysForInstanceOptions instance.
+     *
+     * @param listResourceKeysForInstanceOptions the instance to initialize the Builder with
+     */
     private Builder(ListResourceKeysForInstanceOptions listResourceKeysForInstanceOptions) {
       this.id = listResourceKeysForInstanceOptions.id;
       this.limit = listResourceKeysForInstanceOptions.limit;
@@ -95,6 +100,8 @@ public class ListResourceKeysForInstanceOptions extends GenericModel {
     }
   }
 
+  protected ListResourceKeysForInstanceOptions() { }
+
   protected ListResourceKeysForInstanceOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
@@ -115,7 +122,7 @@ public class ListResourceKeysForInstanceOptions extends GenericModel {
   /**
    * Gets the id.
    *
-   * The short or long ID of the instance.
+   * The resource instance URL-encoded CRN or GUID.
    *
    * @return the id
    */
@@ -139,7 +146,7 @@ public class ListResourceKeysForInstanceOptions extends GenericModel {
    *
    * An optional token that indicates the beginning of the page of results to be returned. Any additional query
    * parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value is
-   * obtained from the 'next_url' field of the operation response.
+   * obtained from the 'start' query parameter in the 'next_url' field of the operation response.
    *
    * @return the start
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -45,6 +45,11 @@ public class ListResourceAliasesOptions extends GenericModel {
     private String updatedFrom;
     private String updatedTo;
 
+    /**
+     * Instantiates a new Builder from an existing ListResourceAliasesOptions instance.
+     *
+     * @param listResourceAliasesOptions the instance to initialize the Builder with
+     */
     private Builder(ListResourceAliasesOptions listResourceAliasesOptions) {
       this.guid = listResourceAliasesOptions.guid;
       this.name = listResourceAliasesOptions.name;
@@ -184,6 +189,8 @@ public class ListResourceAliasesOptions extends GenericModel {
     }
   }
 
+  protected ListResourceAliasesOptions() { }
+
   protected ListResourceAliasesOptions(Builder builder) {
     guid = builder.guid;
     name = builder.name;
@@ -209,7 +216,7 @@ public class ListResourceAliasesOptions extends GenericModel {
   /**
    * Gets the guid.
    *
-   * Short ID of the alias.
+   * The GUID of the alias.
    *
    * @return the guid
    */
@@ -231,7 +238,7 @@ public class ListResourceAliasesOptions extends GenericModel {
   /**
    * Gets the resourceInstanceId.
    *
-   * Resource instance short ID.
+   * The ID of the resource instance.
    *
    * @return the resourceInstanceId
    */
@@ -242,8 +249,8 @@ public class ListResourceAliasesOptions extends GenericModel {
   /**
    * Gets the regionInstanceId.
    *
-   * Short ID of the instance in a specific targeted environment. For example, `service_instance_id` in a given IBM
-   * Cloud environment.
+   * The ID of the instance in the target environment. For example, `service_instance_id` in a given IBM Cloud
+   * environment.
    *
    * @return the regionInstanceId
    */
@@ -265,7 +272,7 @@ public class ListResourceAliasesOptions extends GenericModel {
   /**
    * Gets the resourceGroupId.
    *
-   * Short ID of Resource group.
+   * The ID of the resource group.
    *
    * @return the resourceGroupId
    */
@@ -289,7 +296,7 @@ public class ListResourceAliasesOptions extends GenericModel {
    *
    * An optional token that indicates the beginning of the page of results to be returned. Any additional query
    * parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value is
-   * obtained from the 'next_url' field of the operation response.
+   * obtained from the 'start' query parameter in the 'next_url' field of the operation response.
    *
    * @return the start
    */

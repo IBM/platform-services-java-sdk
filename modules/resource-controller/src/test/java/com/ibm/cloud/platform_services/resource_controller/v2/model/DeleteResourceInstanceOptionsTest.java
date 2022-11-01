@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,10 +33,10 @@ public class DeleteResourceInstanceOptionsTest {
   public void testDeleteResourceInstanceOptions() throws Throwable {
     DeleteResourceInstanceOptions deleteResourceInstanceOptionsModel = new DeleteResourceInstanceOptions.Builder()
       .id("testString")
-      .recursive(true)
+      .recursive(false)
       .build();
     assertEquals(deleteResourceInstanceOptionsModel.id(), "testString");
-    assertEquals(deleteResourceInstanceOptionsModel.recursive(), Boolean.valueOf(true));
+    assertEquals(deleteResourceInstanceOptionsModel.recursive(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

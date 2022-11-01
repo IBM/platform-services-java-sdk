@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +29,11 @@ public class UpdateResourceBindingOptions extends GenericModel {
     private String id;
     private String name;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateResourceBindingOptions instance.
+     *
+     * @param updateResourceBindingOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateResourceBindingOptions updateResourceBindingOptions) {
       this.id = updateResourceBindingOptions.id;
       this.name = updateResourceBindingOptions.name;
@@ -83,6 +88,8 @@ public class UpdateResourceBindingOptions extends GenericModel {
     }
   }
 
+  protected UpdateResourceBindingOptions() { }
+
   protected UpdateResourceBindingOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
@@ -104,7 +111,7 @@ public class UpdateResourceBindingOptions extends GenericModel {
   /**
    * Gets the id.
    *
-   * The short or long ID of the binding.
+   * The resource binding URL-encoded CRN or GUID.
    *
    * @return the id
    */

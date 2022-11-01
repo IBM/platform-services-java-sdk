@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -61,6 +61,8 @@ public class ResourceBinding extends GenericModel {
   @SerializedName("resource_alias_url")
   protected String resourceAliasUrl;
 
+  protected ResourceBinding() { }
+
   /**
    * Gets the id.
    *
@@ -75,8 +77,7 @@ public class ResourceBinding extends GenericModel {
   /**
    * Gets the guid.
    *
-   * When you create a new binding, a globally unique identifier (GUID) is assigned. This GUID is a unique internal
-   * identifier managed by the resource controller that corresponds to the binding.
+   * The GUID of the binding.
    *
    * @return the guid
    */
@@ -198,7 +199,7 @@ public class ResourceBinding extends GenericModel {
   /**
    * Gets the regionBindingId.
    *
-   * The ID of the binding in the specific target environment, for example, `service_binding_id` in a given IBM Cloud
+   * The ID of the binding in the target environment. For example, `service_binding_id` in a given IBM Cloud
    * environment.
    *
    * @return the regionBindingId
@@ -210,7 +211,7 @@ public class ResourceBinding extends GenericModel {
   /**
    * Gets the regionBindingCrn.
    *
-   * The CRN of the binding in the specific target environment.
+   * The CRN of the binding in the target environment.
    *
    * @return the regionBindingCrn
    */
@@ -265,8 +266,12 @@ public class ResourceBinding extends GenericModel {
   /**
    * Gets the credentials.
    *
-   * The credentials for the binding. Additional key-value pairs are passed through from the resource brokers.  For
-   * additional details, see the service’s documentation.
+   * The credentials for the binding. Additional key-value pairs are passed through from the resource brokers. After a
+   * credential is created for a service, it can be viewed at any time for users that need the API key value. However,
+   * all users must have the correct level of access to see the details of a credential that includes the API key value.
+   * For additional details, see [viewing a
+   * credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&amp;interface=ui#viewing-credentials-ui)
+   * or the service’s documentation.
    *
    * @return the credentials
    */

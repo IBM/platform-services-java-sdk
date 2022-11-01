@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,6 +21,21 @@ import com.ibm.cloud.sdk.core.service.model.DynamicModel;
  */
 public class Credentials extends DynamicModel<Object> {
 
+  /**
+   * If present, the user doesn't have the correct access to view the credentials and the details are redacted.  The
+   * string value identifies the level of access that's required to view the credential. For additional information, see
+   * [viewing a
+   * credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&amp;interface=ui#viewing-credentials-ui).
+   */
+  public interface Redacted {
+    /** REDACTED. */
+    String REDACTED = "REDACTED";
+    /** REDACTED_EXPLICIT. */
+    String REDACTED_EXPLICIT = "REDACTED_EXPLICIT";
+  }
+
+  @SerializedName("REDACTED")
+  protected String redacted;
   @SerializedName("apikey")
   protected String apikey;
   @SerializedName("iam_apikey_description")
@@ -34,6 +49,20 @@ public class Credentials extends DynamicModel<Object> {
 
   public Credentials() {
     super(new TypeToken<Object>() { });
+  }
+
+  /**
+   * Gets the redacted.
+   *
+   * If present, the user doesn't have the correct access to view the credentials and the details are redacted.  The
+   * string value identifies the level of access that's required to view the credential. For additional information, see
+   * [viewing a
+   * credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&amp;interface=ui#viewing-credentials-ui).
+   *
+   * @return the redacted
+   */
+  public String getRedacted() {
+    return this.redacted;
   }
 
   /**

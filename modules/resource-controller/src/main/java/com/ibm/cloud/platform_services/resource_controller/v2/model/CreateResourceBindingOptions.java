@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -35,6 +35,11 @@ public class CreateResourceBindingOptions extends GenericModel {
     private ResourceBindingPostParameters parameters;
     private String role;
 
+    /**
+     * Instantiates a new Builder from an existing CreateResourceBindingOptions instance.
+     *
+     * @param createResourceBindingOptions the instance to initialize the Builder with
+     */
     private Builder(CreateResourceBindingOptions createResourceBindingOptions) {
       this.source = createResourceBindingOptions.source;
       this.target = createResourceBindingOptions.target;
@@ -125,6 +130,8 @@ public class CreateResourceBindingOptions extends GenericModel {
     }
   }
 
+  protected CreateResourceBindingOptions() { }
+
   protected CreateResourceBindingOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.source,
       "source cannot be null");
@@ -149,7 +156,7 @@ public class CreateResourceBindingOptions extends GenericModel {
   /**
    * Gets the source.
    *
-   * The short or long ID of resource alias.
+   * The ID of resource alias.
    *
    * @return the source
    */
@@ -195,7 +202,8 @@ public class CreateResourceBindingOptions extends GenericModel {
   /**
    * Gets the role.
    *
-   * The role name or it's CRN.
+   * The base IAM service role name (Reader, Writer, or Manager), or the service or custom role CRN. Refer to service’s
+   * documentation for supported roles.
    *
    * @return the role
    */

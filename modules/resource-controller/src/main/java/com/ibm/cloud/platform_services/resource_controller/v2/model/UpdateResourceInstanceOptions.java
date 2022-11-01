@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -37,6 +37,11 @@ public class UpdateResourceInstanceOptions extends GenericModel {
     private String resourcePlanId;
     private Boolean allowCleanup;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateResourceInstanceOptions instance.
+     *
+     * @param updateResourceInstanceOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateResourceInstanceOptions updateResourceInstanceOptions) {
       this.id = updateResourceInstanceOptions.id;
       this.name = updateResourceInstanceOptions.name;
@@ -125,6 +130,8 @@ public class UpdateResourceInstanceOptions extends GenericModel {
     }
   }
 
+  protected UpdateResourceInstanceOptions() { }
+
   protected UpdateResourceInstanceOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
@@ -147,7 +154,7 @@ public class UpdateResourceInstanceOptions extends GenericModel {
   /**
    * Gets the id.
    *
-   * The short or long ID of the instance.
+   * The resource instance URL-encoded CRN or GUID.
    *
    * @return the id
    */

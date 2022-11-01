@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -43,6 +43,11 @@ public class ListResourceBindingsOptions extends GenericModel {
     private String updatedFrom;
     private String updatedTo;
 
+    /**
+     * Instantiates a new Builder from an existing ListResourceBindingsOptions instance.
+     *
+     * @param listResourceBindingsOptions the instance to initialize the Builder with
+     */
     private Builder(ListResourceBindingsOptions listResourceBindingsOptions) {
       this.guid = listResourceBindingsOptions.guid;
       this.name = listResourceBindingsOptions.name;
@@ -170,6 +175,8 @@ public class ListResourceBindingsOptions extends GenericModel {
     }
   }
 
+  protected ListResourceBindingsOptions() { }
+
   protected ListResourceBindingsOptions(Builder builder) {
     guid = builder.guid;
     name = builder.name;
@@ -194,7 +201,7 @@ public class ListResourceBindingsOptions extends GenericModel {
   /**
    * Gets the guid.
    *
-   * The short ID of the binding.
+   * The GUID of the binding.
    *
    * @return the guid
    */
@@ -216,7 +223,7 @@ public class ListResourceBindingsOptions extends GenericModel {
   /**
    * Gets the resourceGroupId.
    *
-   * Short ID of the resource group.
+   * The ID of the resource group.
    *
    * @return the resourceGroupId
    */
@@ -238,7 +245,7 @@ public class ListResourceBindingsOptions extends GenericModel {
   /**
    * Gets the regionBindingId.
    *
-   * Short ID of the binding in the specific targeted environment, for example, service_binding_id in a given IBM Cloud
+   * The ID of the binding in the target environment. For example, `service_binding_id` in a given IBM Cloud
    * environment.
    *
    * @return the regionBindingId
@@ -263,7 +270,7 @@ public class ListResourceBindingsOptions extends GenericModel {
    *
    * An optional token that indicates the beginning of the page of results to be returned. Any additional query
    * parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value is
-   * obtained from the 'next_url' field of the operation response.
+   * obtained from the 'start' query parameter in the 'next_url' field of the operation response.
    *
    * @return the start
    */

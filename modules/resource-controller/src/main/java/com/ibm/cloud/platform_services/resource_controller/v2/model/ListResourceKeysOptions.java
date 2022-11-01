@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -41,6 +41,11 @@ public class ListResourceKeysOptions extends GenericModel {
     private String updatedFrom;
     private String updatedTo;
 
+    /**
+     * Instantiates a new Builder from an existing ListResourceKeysOptions instance.
+     *
+     * @param listResourceKeysOptions the instance to initialize the Builder with
+     */
     private Builder(ListResourceKeysOptions listResourceKeysOptions) {
       this.guid = listResourceKeysOptions.guid;
       this.name = listResourceKeysOptions.name;
@@ -156,6 +161,8 @@ public class ListResourceKeysOptions extends GenericModel {
     }
   }
 
+  protected ListResourceKeysOptions() { }
+
   protected ListResourceKeysOptions(Builder builder) {
     guid = builder.guid;
     name = builder.name;
@@ -179,8 +186,7 @@ public class ListResourceKeysOptions extends GenericModel {
   /**
    * Gets the guid.
    *
-   * When you create a new key, a GUID (globally unique identifier) is assigned. This is a unique internal GUID managed
-   * by Resource controller that corresponds to the key.
+   * The GUID of the key.
    *
    * @return the guid
    */
@@ -202,7 +208,7 @@ public class ListResourceKeysOptions extends GenericModel {
   /**
    * Gets the resourceGroupId.
    *
-   * The short ID of the resource group.
+   * The ID of the resource group.
    *
    * @return the resourceGroupId
    */
@@ -237,7 +243,7 @@ public class ListResourceKeysOptions extends GenericModel {
    *
    * An optional token that indicates the beginning of the page of results to be returned. Any additional query
    * parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value is
-   * obtained from the 'next_url' field of the operation response.
+   * obtained from the 'start' query parameter in the 'next_url' field of the operation response.
    *
    * @return the start
    */

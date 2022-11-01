@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,13 +12,14 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.32.0-4c6a3129-20210514-210323
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-f381b8c9-20221101-115055
  */
 
 package com.ibm.cloud.platform_services.resource_controller.v2;
 
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
+import com.ibm.cloud.platform_services.resource_controller.v2.model.CancelLastopResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceAliasOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceBindingOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceInstanceOptions;
@@ -72,12 +73,18 @@ import java.util.Map.Entry;
  * account scope. Supports asynchronous provisioning of resources. Enables consumption of a global resource through a
  * Cloud Foundry space in any region.
  *
- * @version v2
+ * API Version: 2.0
  */
 public class ResourceController extends BaseService {
 
+  /**
+   * Default service name used when configuring the `ResourceController` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "resource_controller";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://resource-controller.cloud.ibm.com";
 
  /**
@@ -232,8 +239,8 @@ public class ResourceController extends BaseService {
   /**
    * Get a resource instance.
    *
-   * Retrieve a resource instance by ID. Find more details on a particular instance, like when it was provisioned and
-   * who provisioned it.
+   * Retrieve a resource instance by URL-encoded CRN or GUID. Find more details on a particular instance, like when it
+   * was provisioned and who provisioned it.
    *
    * @param getResourceInstanceOptions the {@link GetResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstance}
@@ -257,8 +264,8 @@ public class ResourceController extends BaseService {
   /**
    * Delete a resource instance.
    *
-   * Delete a resource instance by ID. If the resource instance has any resource keys or aliases associated with it, use
-   * the `recursive=true parameter` to delete it.
+   * Delete a resource instance by URL-encoded CRN or GUID. If the resource instance has any resource keys or aliases
+   * associated with it, use the `recursive=true` parameter to delete it.
    *
    * @param deleteResourceInstanceOptions the {@link DeleteResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -283,7 +290,8 @@ public class ResourceController extends BaseService {
   /**
    * Update a resource instance.
    *
-   * You can use the ID to make updates to the resource instance, like changing the name or plan.
+   * Use the resource instance URL-encoded CRN or GUID to make updates to the resource instance, like changing the name
+   * or plan.
    *
    * @param updateResourceInstanceOptions the {@link UpdateResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstance}
@@ -382,8 +390,8 @@ public class ResourceController extends BaseService {
   /**
    * Lock a resource instance.
    *
-   * Locks a resource instance by ID. A locked instance can not be updated or deleted. It does not affect actions
-   * performed on child resources like aliases, bindings or keys.
+   * Locks a resource instance. A locked instance can not be updated or deleted. It does not affect actions performed on
+   * child resources like aliases, bindings, or keys.
    *
    * @param lockResourceInstanceOptions the {@link LockResourceInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceInstance}
@@ -420,6 +428,31 @@ public class ResourceController extends BaseService {
     pathParamsMap.put("id", unlockResourceInstanceOptions.id());
     RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances/{id}/lock", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "unlockResourceInstance");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ResourceInstance> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ResourceInstance>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Cancel the in progress last operation of the resource instance.
+   *
+   * Cancel the in progress last operation of the resource instance. After successful cancellation, the resource
+   * instance is removed.
+   *
+   * @param cancelLastopResourceInstanceOptions the {@link CancelLastopResourceInstanceOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ResourceInstance}
+   */
+  public ServiceCall<ResourceInstance> cancelLastopResourceInstance(CancelLastopResourceInstanceOptions cancelLastopResourceInstanceOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(cancelLastopResourceInstanceOptions,
+      "cancelLastopResourceInstanceOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", cancelLastopResourceInstanceOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_instances/{id}/last_operation", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("resource_controller", "v2", "cancelLastopResourceInstance");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
@@ -520,9 +553,9 @@ public class ResourceController extends BaseService {
   }
 
   /**
-   * Get resource key by ID.
+   * Get resource key.
    *
-   * View a resource key and all of its details, like the credentials for the key and who created it.
+   * View the details of a resource key by URL-encoded CRN or GUID, like the credentials for the key and who created it.
    *
    * @param getResourceKeyOptions the {@link GetResourceKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceKey}
@@ -544,7 +577,7 @@ public class ResourceController extends BaseService {
   }
 
   /**
-   * Delete a resource key by ID.
+   * Delete a resource key.
    *
    * Deleting a resource key does not affect any resource instance or resource alias associated with the key.
    *
@@ -568,7 +601,7 @@ public class ResourceController extends BaseService {
   /**
    * Update a resource key.
    *
-   * Use the resource key ID to update the name of the resource key.
+   * Use the resource key URL-encoded CRN or GUID to update the resource key.
    *
    * @param updateResourceKeyOptions the {@link UpdateResourceKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceKey}
@@ -738,7 +771,7 @@ public class ResourceController extends BaseService {
   /**
    * Update a resource binding.
    *
-   * Use the resource binding ID to update the name of the resource binding.
+   * Use the resource binding URL-encoded CRN or GUID to update the resource binding.
    *
    * @param updateResourceBindingOptions the {@link UpdateResourceBindingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBinding}
@@ -881,8 +914,8 @@ public class ResourceController extends BaseService {
   /**
    * Delete a resource alias.
    *
-   * If the resource alias has any resource keys or bindings associated with it, you must delete those child resources
-   * before deleting the resource alias.
+   * Delete a resource alias by URL-encoded CRN or GUID. If the resource alias has any resource keys or bindings
+   * associated with it, use the `recursive=true` parameter to delete it.
    *
    * @param deleteResourceAliasOptions the {@link DeleteResourceAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -897,6 +930,9 @@ public class ResourceController extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
+    if (deleteResourceAliasOptions.recursive() != null) {
+      builder.query("recursive", String.valueOf(deleteResourceAliasOptions.recursive()));
+    }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
@@ -904,7 +940,7 @@ public class ResourceController extends BaseService {
   /**
    * Update a resource alias.
    *
-   * Use the resource alias ID to update the name of the resource alias.
+   * Use the resource alias URL-encoded CRN or GUID to update the resource alias.
    *
    * @param updateResourceAliasOptions the {@link UpdateResourceAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAlias}

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,13 +34,13 @@ public class UpdateResourceInstanceOptionsTest {
     UpdateResourceInstanceOptions updateResourceInstanceOptionsModel = new UpdateResourceInstanceOptions.Builder()
       .id("testString")
       .name("my-new-instance-name")
-      .parameters(new java.util.HashMap<String, Object>() { { put("foo", "testString"); } })
+      .parameters(java.util.Collections.singletonMap("anyKey", "anyValue"))
       .resourcePlanId("a8dff6d3-d287-4668-a81d-c87c55c2656d")
       .allowCleanup(true)
       .build();
     assertEquals(updateResourceInstanceOptionsModel.id(), "testString");
     assertEquals(updateResourceInstanceOptionsModel.name(), "my-new-instance-name");
-    assertEquals(updateResourceInstanceOptionsModel.parameters(), new java.util.HashMap<String, Object>() { { put("foo", "testString"); } });
+    assertEquals(updateResourceInstanceOptionsModel.parameters(), java.util.Collections.singletonMap("anyKey", "anyValue"));
     assertEquals(updateResourceInstanceOptionsModel.resourcePlanId(), "a8dff6d3-d287-4668-a81d-c87c55c2656d");
     assertEquals(updateResourceInstanceOptionsModel.allowCleanup(), Boolean.valueOf(true));
   }

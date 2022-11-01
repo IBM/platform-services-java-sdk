@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,8 +33,10 @@ public class DeleteResourceAliasOptionsTest {
   public void testDeleteResourceAliasOptions() throws Throwable {
     DeleteResourceAliasOptions deleteResourceAliasOptionsModel = new DeleteResourceAliasOptions.Builder()
       .id("testString")
+      .recursive(false)
       .build();
     assertEquals(deleteResourceAliasOptionsModel.id(), "testString");
+    assertEquals(deleteResourceAliasOptionsModel.recursive(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

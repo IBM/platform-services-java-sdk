@@ -13,13 +13,9 @@
 
 package com.ibm.cloud.platform_services.resource_controller.v2.model;
 
-import com.ibm.cloud.platform_services.resource_controller.v2.model.PlanHistoryItem;
-import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstance;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstanceLastOperation;
-import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstancesList;
 import com.ibm.cloud.platform_services.resource_controller.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -27,17 +23,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ResourceInstancesList model.
+ * Unit test class for the ResourceInstanceLastOperation model.
  */
-public class ResourceInstancesListTest {
+public class ResourceInstanceLastOperationTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testResourceInstancesList() throws Throwable {
-    ResourceInstancesList resourceInstancesListModel = new ResourceInstancesList();
-    assertNull(resourceInstancesListModel.getRowsCount());
-    assertNull(resourceInstancesListModel.getNextUrl());
-    assertNull(resourceInstancesListModel.getResources());
+  public void testResourceInstanceLastOperation() throws Throwable {
+    ResourceInstanceLastOperation resourceInstanceLastOperationModel = new ResourceInstanceLastOperation();
+    assertNull(resourceInstanceLastOperationModel.getType());
+    assertNull(resourceInstanceLastOperationModel.getState());
+    assertNull(resourceInstanceLastOperationModel.getSubType());
+    assertNull(resourceInstanceLastOperationModel.isAsync());
+    assertNull(resourceInstanceLastOperationModel.getDescription());
+    assertNull(resourceInstanceLastOperationModel.getReasonCode());
+    assertNull(resourceInstanceLastOperationModel.getPollAfter());
+    assertNull(resourceInstanceLastOperationModel.isCancelable());
+    assertNull(resourceInstanceLastOperationModel.isPoll());
   }
 }

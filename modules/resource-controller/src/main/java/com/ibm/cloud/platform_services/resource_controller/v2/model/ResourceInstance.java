@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,6 +23,28 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  * A resource instance.
  */
 public class ResourceInstance extends GenericModel {
+
+  /**
+   * The current state of the instance. For example, if the instance is deleted, it will return removed.
+   */
+  public interface State {
+    /** active. */
+    String ACTIVE = "active";
+    /** inactive. */
+    String INACTIVE = "inactive";
+    /** removed. */
+    String REMOVED = "removed";
+    /** pending_removal. */
+    String PENDING_REMOVAL = "pending_removal";
+    /** pending_reclamation. */
+    String PENDING_RECLAMATION = "pending_reclamation";
+    /** failed. */
+    String FAILED = "failed";
+    /** provisioning. */
+    String PROVISIONING = "provisioning";
+    /** pre_provisioning. */
+    String PRE_PROVISIONING = "pre_provisioning";
+  }
 
   protected String id;
   protected String guid;
@@ -75,7 +97,7 @@ public class ResourceInstance extends GenericModel {
   @SerializedName("dashboard_url")
   protected String dashboardUrl;
   @SerializedName("last_operation")
-  protected Map<String, Object> lastOperation;
+  protected ResourceInstanceLastOperation lastOperation;
   @SerializedName("resource_aliases_url")
   protected String resourceAliasesUrl;
   @SerializedName("resource_bindings_url")
@@ -89,6 +111,8 @@ public class ResourceInstance extends GenericModel {
   @SerializedName("controlled_by")
   protected String controlledBy;
   protected Boolean locked;
+
+  protected ResourceInstance() { }
 
   /**
    * Gets the id.
@@ -104,8 +128,7 @@ public class ResourceInstance extends GenericModel {
   /**
    * Gets the guid.
    *
-   * When you create a new resource, a globally unique identifier (GUID) is assigned. This GUID is a unique internal
-   * identifier managed by the resource controller that corresponds to the instance.
+   * The GUID of the instance.
    *
    * @return the guid
    */
@@ -420,7 +443,7 @@ public class ResourceInstance extends GenericModel {
    *
    * @return the lastOperation
    */
-  public Map<String, Object> getLastOperation() {
+  public ResourceInstanceLastOperation getLastOperation() {
     return lastOperation;
   }
 

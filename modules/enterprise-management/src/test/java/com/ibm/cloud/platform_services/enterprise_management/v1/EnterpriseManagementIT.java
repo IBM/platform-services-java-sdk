@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2021, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -27,11 +27,14 @@ import org.testng.annotations.Test;
 
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroupsPager;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountsPager;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.EnterprisesPager;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterpriseOptions;
@@ -215,6 +218,37 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
+  @Test(dependsOnMethods = { "testListAccountGroups" })
+  public void testListAccountGroupsWithPager() throws Exception {
+    try {
+      ListAccountGroupsOptions options = new ListAccountGroupsOptions.Builder()
+          .enterpriseId(enterpriseId)
+          .build();
+
+      // Test getNext().
+      List<AccountGroup> allResults = new ArrayList<>();
+      AccountGroupsPager pager = new AccountGroupsPager(service, options);
+      while (pager.hasNext()) {
+        List<AccountGroup> nextPage = pager.getNext();
+        assertNotNull(nextPage);
+        allResults.addAll(nextPage);
+      }
+      assertFalse(allResults.isEmpty());
+
+      // Test getAll();
+      pager = new AccountGroupsPager(service, options);
+      List<AccountGroup> allItems = pager.getAll();
+      assertNotNull(allItems);
+      assertFalse(allItems.isEmpty());
+
+      assertEquals(allItems.size(), allResults.size());
+      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
   @Test(dependsOnMethods = {"testCreateAccountGroup"})
   public void testGetAccountGroup() throws Exception {
     try {
@@ -332,6 +366,37 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     }
   }
 
+  @Test(dependsOnMethods = { "testListAccounts" })
+  public void testListAccountsWithPager() throws Exception {
+    try {
+      ListAccountsOptions options = new ListAccountsOptions.Builder()
+          .accountGroupId(firstExampleAccountGroupId)
+          .build();
+
+      // Test getNext().
+      List<Account> allResults = new ArrayList<>();
+      AccountsPager pager = new AccountsPager(service, options);
+      while (pager.hasNext()) {
+        List<Account> nextPage = pager.getNext();
+        assertNotNull(nextPage);
+        allResults.addAll(nextPage);
+      }
+      assertFalse(allResults.isEmpty());
+
+      // Test getAll();
+      pager = new AccountsPager(service, options);
+      List<Account> allItems = pager.getAll();
+      assertNotNull(allItems);
+      assertFalse(allItems.isEmpty());
+
+      assertEquals(allItems.size(), allResults.size());
+      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
   @Test(dependsOnMethods = {"testCreateAccount"})
   public void testGetAccount() throws Exception {
     try {
@@ -417,6 +482,37 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s", e.getStatusCode(), e.getMessage(),
           e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testListEnterprises" })
+  public void testListEnterprisesWithPager() throws Exception {
+    try {
+      ListEnterprisesOptions options = new ListEnterprisesOptions.Builder()
+        .accountId(accountId)
+        .build();
+
+      // Test getNext().
+      List<Enterprise> allResults = new ArrayList<>();
+      EnterprisesPager pager = new EnterprisesPager(service, options);
+      while (pager.hasNext()) {
+        List<Enterprise> nextPage = pager.getNext();
+        assertNotNull(nextPage);
+        allResults.addAll(nextPage);
+      }
+      assertFalse(allResults.isEmpty());
+
+      // Test getAll();
+      pager = new EnterprisesPager(service, options);
+      List<Enterprise> allItems = pager.getAll();
+      assertNotNull(allItems);
+      assertFalse(allItems.isEmpty());
+
+      assertEquals(allItems.size(), allResults.size());
+      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
 

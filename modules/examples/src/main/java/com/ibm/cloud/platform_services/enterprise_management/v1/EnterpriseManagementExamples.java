@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2021, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,8 +13,17 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroupsPager;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountsPager;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
@@ -22,27 +31,21 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAcco
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.EnterprisesPager;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ImportAccountToEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountGroupsResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListAccountsResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesOptions;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
-
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.ibm.cloud.sdk.core.util.GsonSingleton;
 
 //
 // This file provides an example of how to use the Enterprise Management service.
@@ -73,7 +76,7 @@ public class EnterpriseManagementExamples {
 
   @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
-    EnterpriseManagement service = EnterpriseManagement.newInstance();
+    EnterpriseManagement enterpriseManagementService = EnterpriseManagement.newInstance();
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(EnterpriseManagement.DEFAULT_SERVICE_NAME);
@@ -99,7 +102,7 @@ public class EnterpriseManagementExamples {
           .primaryContactIamId(enterpriseAccountIamId)
           .build();
 
-      Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptions).execute();
+      Response<CreateAccountGroupResponse> response = enterpriseManagementService.createAccountGroup(createAccountGroupOptions).execute();
       CreateAccountGroupResponse createAccountGroupResponse = response.getResult();
 
       System.out.println(createAccountGroupResponse);
@@ -124,7 +127,7 @@ public class EnterpriseManagementExamples {
           .primaryContactIamId(enterpriseAccountIamId)
           .build();
 
-      Response<CreateAccountGroupResponse> response = service.createAccountGroup(createAccountGroupOptions).execute();
+      Response<CreateAccountGroupResponse> response = enterpriseManagementService.createAccountGroup(createAccountGroupOptions).execute();
       CreateAccountGroupResponse createAccountGroupResponse = response.getResult();
       System.out.println(createAccountGroupResponse);
 
@@ -137,23 +140,23 @@ public class EnterpriseManagementExamples {
 
     try {
       System.out.println("listAccountGroups() result:");
-
       // begin-list_account_groups
-
       ListAccountGroupsOptions listAccountGroupsOptions = new ListAccountGroupsOptions.Builder()
-          .enterpriseId(enterpriseId)
-          .build();
+        .enterpriseId(enterpriseId)
+        .build();
 
-      Response<ListAccountGroupsResponse> response = service.listAccountGroups(listAccountGroupsOptions).execute();
-      ListAccountGroupsResponse listAccountGroupsResponse = response.getResult();
+      AccountGroupsPager pager = new AccountGroupsPager(enterpriseManagementService, listAccountGroupsOptions);
+      List<AccountGroup> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<AccountGroup> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(listAccountGroupsResponse);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-list_account_groups
-
     } catch (ServiceResponseException e) {
-      logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
-          e.getMessage(), e.getDebuggingInfo()), e);
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
@@ -165,7 +168,7 @@ public class EnterpriseManagementExamples {
           .accountGroupId(accountGroupId)
           .build();
 
-      Response<AccountGroup> response = service.getAccountGroup(getAccountGroupOptions).execute();
+      Response<AccountGroup> response = enterpriseManagementService.getAccountGroup(getAccountGroupOptions).execute();
       AccountGroup accountGroup = response.getResult();
 
       System.out.println(accountGroup);
@@ -185,7 +188,7 @@ public class EnterpriseManagementExamples {
           .name("Updated Example Account Group")
           .build();
 
-      Response<Void> response = service.updateAccountGroup(updateAccountGroupOptions).execute();
+      Response<Void> response = enterpriseManagementService.updateAccountGroup(updateAccountGroupOptions).execute();
 
       // end-update_account_group
 
@@ -205,7 +208,7 @@ public class EnterpriseManagementExamples {
           .accountId(importAccountId)
           .build();
 
-      Response<Void> response = service.importAccountToEnterprise(importAccountToEnterpriseOptions).execute();
+      Response<Void> response = enterpriseManagementService.importAccountToEnterprise(importAccountToEnterpriseOptions).execute();
 
       // end-import_account_to_enterprise
 
@@ -229,7 +232,7 @@ public class EnterpriseManagementExamples {
           .ownerIamId(enterpriseAccountIamId)
           .build();
 
-      Response<CreateAccountResponse> response = service.createAccount(createAccountOptions).execute();
+      Response<CreateAccountResponse> response = enterpriseManagementService.createAccount(createAccountOptions).execute();
       CreateAccountResponse createAccountResponse = response.getResult();
 
       System.out.println(createAccountResponse);
@@ -244,23 +247,23 @@ public class EnterpriseManagementExamples {
 
     try {
       System.out.println("listAccounts() result:");
-
       // begin-list_accounts
-
       ListAccountsOptions listAccountsOptions = new ListAccountsOptions.Builder()
-          .enterpriseId(enterpriseId)
-          .build();
+        .enterpriseId(enterpriseId)
+        .build();
 
-      Response<ListAccountsResponse> response = service.listAccounts(listAccountsOptions).execute();
-      ListAccountsResponse listAccountsResponse = response.getResult();
+      AccountsPager pager = new AccountsPager(enterpriseManagementService, listAccountsOptions);
+      List<Account> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<Account> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(listAccountsResponse);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-list_accounts
-
     } catch (ServiceResponseException e) {
-      logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
-          e.getMessage(), e.getDebuggingInfo()), e);
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
@@ -272,7 +275,7 @@ public class EnterpriseManagementExamples {
           .accountId(accountId)
           .build();
 
-      Response<Account> response = service.getAccount(getAccountOptions).execute();
+      Response<Account> response = enterpriseManagementService.getAccount(getAccountOptions).execute();
       Account account = response.getResult();
 
       System.out.println(account);
@@ -295,7 +298,7 @@ public class EnterpriseManagementExamples {
           .parent(newParentCRN)
           .build();
 
-      Response<Void> response = service.updateAccount(updateAccountOptions).execute();
+      Response<Void> response = enterpriseManagementService.updateAccount(updateAccountOptions).execute();
 
       // end-update_account
 
@@ -319,7 +322,7 @@ public class EnterpriseManagementExamples {
           .primaryContactIamId(contactIamId)
           .build();
 
-      Response<CreateEnterpriseResponse> response = service.createEnterprise(createEnterpriseOptions).execute();
+      Response<CreateEnterpriseResponse> response = enterpriseManagementService.createEnterprise(createEnterpriseOptions).execute();
       CreateEnterpriseResponse createEnterpriseResponse = response.getResult();
 
       System.out.println(createEnterpriseResponse);
@@ -333,25 +336,23 @@ public class EnterpriseManagementExamples {
 
     try {
       System.out.println("listEnterprises() result:");
-
       // begin-list_enterprises
-
       ListEnterprisesOptions listEnterprisesOptions = new ListEnterprisesOptions.Builder()
-          .enterpriseAccountId(enterpriseAccountId)
-          .build();
+        .enterpriseAccountId(enterpriseAccountId)
+        .build();
 
-      Response<ListEnterprisesResponse> response = service
-          .listEnterprises(listEnterprisesOptions)
-          .execute();
-      ListEnterprisesResponse listEnterprisesResponse = response.getResult();
+      EnterprisesPager pager = new EnterprisesPager(enterpriseManagementService, listEnterprisesOptions);
+      List<Enterprise> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<Enterprise> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(listEnterprisesResponse);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-list_enterprises
-
     } catch (ServiceResponseException e) {
-      logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
-          e.getMessage(), e.getDebuggingInfo()), e);
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
@@ -363,7 +364,7 @@ public class EnterpriseManagementExamples {
           .enterpriseId(enterpriseId)
           .build();
 
-      Response<Enterprise> response = service
+      Response<Enterprise> response = enterpriseManagementService
           .getEnterprise(getEnterpriseOptions)
           .execute();
       Enterprise enterprise = response.getResult();
@@ -385,7 +386,7 @@ public class EnterpriseManagementExamples {
           .name("Updated Example Enterprise")
           .build();
 
-      Response<Void> response = service.updateEnterprise(updateEnterpriseOptions)
+      Response<Void> response = enterpriseManagementService.updateEnterprise(updateEnterpriseOptions)
           .execute();
 
       // end-update_enterprise

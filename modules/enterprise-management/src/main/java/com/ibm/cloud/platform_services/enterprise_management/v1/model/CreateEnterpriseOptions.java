@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,6 +33,11 @@ public class CreateEnterpriseOptions extends GenericModel {
     private String primaryContactIamId;
     private String domain;
 
+    /**
+     * Instantiates a new Builder from an existing CreateEnterpriseOptions instance.
+     *
+     * @param createEnterpriseOptions the instance to initialize the Builder with
+     */
     private Builder(CreateEnterpriseOptions createEnterpriseOptions) {
       this.sourceAccountId = createEnterpriseOptions.sourceAccountId;
       this.name = createEnterpriseOptions.name;
@@ -112,6 +117,8 @@ public class CreateEnterpriseOptions extends GenericModel {
       return this;
     }
   }
+
+  protected CreateEnterpriseOptions() { }
 
   protected CreateEnterpriseOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.sourceAccountId,

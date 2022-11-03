@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +29,11 @@ public class ListReclamationsOptions extends GenericModel {
     private String accountId;
     private String resourceInstanceId;
 
+    /**
+     * Instantiates a new Builder from an existing ListReclamationsOptions instance.
+     *
+     * @param listReclamationsOptions the instance to initialize the Builder with
+     */
     private Builder(ListReclamationsOptions listReclamationsOptions) {
       this.accountId = listReclamationsOptions.accountId;
       this.resourceInstanceId = listReclamationsOptions.resourceInstanceId;
@@ -72,6 +77,8 @@ public class ListReclamationsOptions extends GenericModel {
     }
   }
 
+  protected ListReclamationsOptions() { }
+
   protected ListReclamationsOptions(Builder builder) {
     accountId = builder.accountId;
     resourceInstanceId = builder.resourceInstanceId;
@@ -100,7 +107,7 @@ public class ListReclamationsOptions extends GenericModel {
   /**
    * Gets the resourceInstanceId.
    *
-   * The short ID of the resource instance.
+   * The GUID of the resource instance.
    *
    * @return the resourceInstanceId
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -62,6 +62,8 @@ public class ResourceAlias extends GenericModel {
   @SerializedName("resource_keys_url")
   protected String resourceKeysUrl;
 
+  protected ResourceAlias() { }
+
   /**
    * Gets the id.
    *
@@ -76,8 +78,7 @@ public class ResourceAlias extends GenericModel {
   /**
    * Gets the guid.
    *
-   * When you create a new alias, a globally unique identifier (GUID) is assigned. This GUID is a unique internal
-   * indentifier managed by the resource controller that corresponds to the alias.
+   * The GUID of the alias.
    *
    * @return the guid
    */
@@ -243,7 +244,7 @@ public class ResourceAlias extends GenericModel {
   /**
    * Gets the regionInstanceId.
    *
-   * The ID of the instance in the specific target environment, for example, `service_instance_id` in a given IBM Cloud
+   * The ID of the instance in the target environment. For example, `service_instance_id` in a given IBM Cloud
    * environment.
    *
    * @return the regionInstanceId
@@ -255,7 +256,7 @@ public class ResourceAlias extends GenericModel {
   /**
    * Gets the regionInstanceCrn.
    *
-   * The CRN of the instance in the specific target environment.
+   * The CRN of the instance in the target environment.
    *
    * @return the regionInstanceCrn
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -57,6 +57,8 @@ public class ResourceKey extends GenericModel {
   @SerializedName("resource_alias_url")
   protected String resourceAliasUrl;
 
+  protected ResourceKey() { }
+
   /**
    * Gets the id.
    *
@@ -71,8 +73,7 @@ public class ResourceKey extends GenericModel {
   /**
    * Gets the guid.
    *
-   * When you create a new key, a globally unique identifier (GUID) is assigned. This GUID is a unique internal
-   * identifier managed by the resource controller that corresponds to the key.
+   * The GUID of the key.
    *
    * @return the guid
    */
@@ -238,8 +239,12 @@ public class ResourceKey extends GenericModel {
   /**
    * Gets the credentials.
    *
-   * The credentials for the key. Additional key-value pairs are passed through from the resource brokers.  Refer to
-   * service’s documentation for additional details.
+   * The credentials for the key. Additional key-value pairs are passed through from the resource brokers. After a
+   * credential is created for a service, it can be viewed at any time for users that need the API key value. However,
+   * all users must have the correct level of access to see the details of a credential that includes the API key value.
+   * For additional details, see [viewing a
+   * credential](https://cloud.ibm.com/docs/account?topic=account-service_credentials&amp;interface=ui#viewing-credentials-ui)
+   * or the service’s documentation.
    *
    * @return the credentials
    */

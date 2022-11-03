@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -52,6 +52,8 @@ public class Reclamation extends GenericModel {
   @SerializedName("updated_by")
   protected String updatedBy;
 
+  protected Reclamation() { }
+
   /**
    * Gets the id.
    *
@@ -66,7 +68,7 @@ public class Reclamation extends GenericModel {
   /**
    * Gets the entityId.
    *
-   * The short ID of the entity for the reclamation.
+   * The ID of the entity for the reclamation.
    *
    * @return the entityId
    */
@@ -77,7 +79,7 @@ public class Reclamation extends GenericModel {
   /**
    * Gets the entityTypeId.
    *
-   * The short ID of the entity type for the reclamation.
+   * The ID of the entity type for the reclamation.
    *
    * @return the entityTypeId
    */
@@ -100,7 +102,7 @@ public class Reclamation extends GenericModel {
   /**
    * Gets the resourceInstanceId.
    *
-   * The short ID of the resource instance.
+   * The ID of the resource instance.
    *
    * @return the resourceInstanceId
    */
@@ -111,7 +113,7 @@ public class Reclamation extends GenericModel {
   /**
    * Gets the resourceGroupId.
    *
-   * The short ID of the resource group.
+   * The ID of the resource group.
    *
    * @return the resourceGroupId
    */
@@ -133,7 +135,7 @@ public class Reclamation extends GenericModel {
   /**
    * Gets the policyId.
    *
-   * The short ID of policy for the reclamation.
+   * The ID of policy for the reclamation.
    *
    * @return the policyId
    */

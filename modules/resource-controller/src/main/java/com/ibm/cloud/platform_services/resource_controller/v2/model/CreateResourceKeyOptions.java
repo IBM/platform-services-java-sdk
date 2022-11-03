@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,6 +33,11 @@ public class CreateResourceKeyOptions extends GenericModel {
     private ResourceKeyPostParameters parameters;
     private String role;
 
+    /**
+     * Instantiates a new Builder from an existing CreateResourceKeyOptions instance.
+     *
+     * @param createResourceKeyOptions the instance to initialize the Builder with
+     */
     private Builder(CreateResourceKeyOptions createResourceKeyOptions) {
       this.name = createResourceKeyOptions.name;
       this.source = createResourceKeyOptions.source;
@@ -111,6 +116,8 @@ public class CreateResourceKeyOptions extends GenericModel {
     }
   }
 
+  protected CreateResourceKeyOptions() { }
+
   protected CreateResourceKeyOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,
       "name cannot be null");
@@ -145,7 +152,7 @@ public class CreateResourceKeyOptions extends GenericModel {
   /**
    * Gets the source.
    *
-   * The short or long ID of resource instance or alias.
+   * The ID of resource instance or alias.
    *
    * @return the source
    */
@@ -168,7 +175,8 @@ public class CreateResourceKeyOptions extends GenericModel {
   /**
    * Gets the role.
    *
-   * The role name or it's CRN.
+   * The base IAM service role name (Reader, Writer, or Manager), or the service or custom role CRN. Refer to service’s
+   * documentation for supported roles.
    *
    * @return the role
    */

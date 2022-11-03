@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -39,6 +39,11 @@ public class ResourceBindingPostParameters extends DynamicModel<Object> {
     private String serviceidCrn;
     private Map<String, Object> dynamicProperties;
 
+    /**
+     * Instantiates a new Builder from an existing ResourceBindingPostParameters instance.
+     *
+     * @param resourceBindingPostParameters the instance to initialize the Builder with
+     */
     private Builder(ResourceBindingPostParameters resourceBindingPostParameters) {
       this.serviceidCrn = resourceBindingPostParameters.serviceidCrn;
       this.dynamicProperties = resourceBindingPostParameters.getProperties();

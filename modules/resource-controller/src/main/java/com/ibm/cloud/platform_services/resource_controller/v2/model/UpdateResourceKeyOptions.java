@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +29,11 @@ public class UpdateResourceKeyOptions extends GenericModel {
     private String id;
     private String name;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateResourceKeyOptions instance.
+     *
+     * @param updateResourceKeyOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateResourceKeyOptions updateResourceKeyOptions) {
       this.id = updateResourceKeyOptions.id;
       this.name = updateResourceKeyOptions.name;
@@ -83,6 +88,8 @@ public class UpdateResourceKeyOptions extends GenericModel {
     }
   }
 
+  protected UpdateResourceKeyOptions() { }
+
   protected UpdateResourceKeyOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
@@ -104,7 +111,7 @@ public class UpdateResourceKeyOptions extends GenericModel {
   /**
    * Gets the id.
    *
-   * The short or long ID of the key.
+   * The resource key URL-encoded CRN or GUID.
    *
    * @return the id
    */

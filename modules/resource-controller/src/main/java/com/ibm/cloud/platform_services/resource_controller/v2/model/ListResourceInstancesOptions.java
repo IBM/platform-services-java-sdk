@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -25,8 +25,16 @@ public class ListResourceInstancesOptions extends GenericModel {
   public interface State {
     /** active. */
     String ACTIVE = "active";
+    /** inactive. */
+    String INACTIVE = "inactive";
+    /** failed. */
+    String FAILED = "failed";
+    /** pending_reclamation. */
+    String PENDING_RECLAMATION = "pending_reclamation";
     /** provisioning. */
     String PROVISIONING = "provisioning";
+    /** pre_provisioning. */
+    String PRE_PROVISIONING = "pre_provisioning";
     /** removed. */
     String REMOVED = "removed";
   }
@@ -61,6 +69,11 @@ public class ListResourceInstancesOptions extends GenericModel {
     private String updatedFrom;
     private String updatedTo;
 
+    /**
+     * Instantiates a new Builder from an existing ListResourceInstancesOptions instance.
+     *
+     * @param listResourceInstancesOptions the instance to initialize the Builder with
+     */
     private Builder(ListResourceInstancesOptions listResourceInstancesOptions) {
       this.guid = listResourceInstancesOptions.guid;
       this.name = listResourceInstancesOptions.name;
@@ -224,6 +237,8 @@ public class ListResourceInstancesOptions extends GenericModel {
     }
   }
 
+  protected ListResourceInstancesOptions() { }
+
   protected ListResourceInstancesOptions(Builder builder) {
     guid = builder.guid;
     name = builder.name;
@@ -251,9 +266,7 @@ public class ListResourceInstancesOptions extends GenericModel {
   /**
    * Gets the guid.
    *
-   * When you provision a new resource in the specified location for the selected plan, a GUID (globally unique
-   * identifier) is created. This is a unique internal GUID managed by Resource controller that corresponds to the
-   * instance.
+   * The GUID of the instance.
    *
    * @return the guid
    */
@@ -275,7 +288,7 @@ public class ListResourceInstancesOptions extends GenericModel {
   /**
    * Gets the resourceGroupId.
    *
-   * Short ID of a resource group.
+   * The ID of the resource group.
    *
    * @return the resourceGroupId
    */
@@ -319,7 +332,7 @@ public class ListResourceInstancesOptions extends GenericModel {
   /**
    * Gets the subType.
    *
-   * The sub-type of instance, for example, `cfaas`.
+   * The sub-type of instance, for example, `kms`.
    *
    * @return the subType
    */
@@ -343,7 +356,7 @@ public class ListResourceInstancesOptions extends GenericModel {
    *
    * An optional token that indicates the beginning of the page of results to be returned. Any additional query
    * parameters are ignored if a page token is present. If omitted, the first page of results is returned. This value is
-   * obtained from the 'next_url' field of the operation response.
+   * obtained from the 'start' query parameter in the 'next_url' field of the operation response.
    *
    * @return the start
    */

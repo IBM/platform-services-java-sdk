@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -38,8 +38,8 @@ public class ListResourceKeysOptionsTest {
       .resourceId("testString")
       .limit(Long.valueOf("100"))
       .start("testString")
-      .updatedFrom("2019-01-08T00:00:00.000Z")
-      .updatedTo("2019-01-08T00:00:00.000Z")
+      .updatedFrom("2021-01-01")
+      .updatedTo("2021-01-01")
       .build();
     assertEquals(listResourceKeysOptionsModel.guid(), "testString");
     assertEquals(listResourceKeysOptionsModel.name(), "testString");
@@ -47,7 +47,7 @@ public class ListResourceKeysOptionsTest {
     assertEquals(listResourceKeysOptionsModel.resourceId(), "testString");
     assertEquals(listResourceKeysOptionsModel.limit(), Long.valueOf("100"));
     assertEquals(listResourceKeysOptionsModel.start(), "testString");
-    assertEquals(listResourceKeysOptionsModel.updatedFrom(), "2019-01-08T00:00:00.000Z");
-    assertEquals(listResourceKeysOptionsModel.updatedTo(), "2019-01-08T00:00:00.000Z");
+    assertEquals(listResourceKeysOptionsModel.updatedFrom(), "2021-01-01");
+    assertEquals(listResourceKeysOptionsModel.updatedTo(), "2021-01-01");
   }
 }

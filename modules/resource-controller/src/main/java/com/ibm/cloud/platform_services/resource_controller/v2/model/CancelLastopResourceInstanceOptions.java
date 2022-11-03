@@ -15,28 +15,25 @@ package com.ibm.cloud.platform_services.resource_controller.v2.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The deleteResourceAlias options.
+ * The cancelLastopResourceInstance options.
  */
-public class DeleteResourceAliasOptions extends GenericModel {
+public class CancelLastopResourceInstanceOptions extends GenericModel {
 
   protected String id;
-  protected Boolean recursive;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String id;
-    private Boolean recursive;
 
     /**
-     * Instantiates a new Builder from an existing DeleteResourceAliasOptions instance.
+     * Instantiates a new Builder from an existing CancelLastopResourceInstanceOptions instance.
      *
-     * @param deleteResourceAliasOptions the instance to initialize the Builder with
+     * @param cancelLastopResourceInstanceOptions the instance to initialize the Builder with
      */
-    private Builder(DeleteResourceAliasOptions deleteResourceAliasOptions) {
-      this.id = deleteResourceAliasOptions.id;
-      this.recursive = deleteResourceAliasOptions.recursive;
+    private Builder(CancelLastopResourceInstanceOptions cancelLastopResourceInstanceOptions) {
+      this.id = cancelLastopResourceInstanceOptions.id;
     }
 
     /**
@@ -55,50 +52,38 @@ public class DeleteResourceAliasOptions extends GenericModel {
     }
 
     /**
-     * Builds a DeleteResourceAliasOptions.
+     * Builds a CancelLastopResourceInstanceOptions.
      *
-     * @return the new DeleteResourceAliasOptions instance
+     * @return the new CancelLastopResourceInstanceOptions instance
      */
-    public DeleteResourceAliasOptions build() {
-      return new DeleteResourceAliasOptions(this);
+    public CancelLastopResourceInstanceOptions build() {
+      return new CancelLastopResourceInstanceOptions(this);
     }
 
     /**
      * Set the id.
      *
      * @param id the id
-     * @return the DeleteResourceAliasOptions builder
+     * @return the CancelLastopResourceInstanceOptions builder
      */
     public Builder id(String id) {
       this.id = id;
       return this;
     }
-
-    /**
-     * Set the recursive.
-     *
-     * @param recursive the recursive
-     * @return the DeleteResourceAliasOptions builder
-     */
-    public Builder recursive(Boolean recursive) {
-      this.recursive = recursive;
-      return this;
-    }
   }
 
-  protected DeleteResourceAliasOptions() { }
+  protected CancelLastopResourceInstanceOptions() { }
 
-  protected DeleteResourceAliasOptions(Builder builder) {
+  protected CancelLastopResourceInstanceOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
     id = builder.id;
-    recursive = builder.recursive;
   }
 
   /**
    * New builder.
    *
-   * @return a DeleteResourceAliasOptions builder
+   * @return a CancelLastopResourceInstanceOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -107,23 +92,12 @@ public class DeleteResourceAliasOptions extends GenericModel {
   /**
    * Gets the id.
    *
-   * The resource alias URL-encoded CRN or GUID.
+   * The resource instance URL-encoded CRN or GUID.
    *
    * @return the id
    */
   public String id() {
     return id;
-  }
-
-  /**
-   * Gets the recursive.
-   *
-   * Deletes the resource bindings and keys associated with the alias.
-   *
-   * @return the recursive
-   */
-  public Boolean recursive() {
-    return recursive;
   }
 }
 

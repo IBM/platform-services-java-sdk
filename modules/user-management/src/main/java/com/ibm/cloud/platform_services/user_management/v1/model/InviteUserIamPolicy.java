@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,6 +34,11 @@ public class InviteUserIamPolicy extends GenericModel {
     private List<Role> roles;
     private List<Resource> resources;
 
+    /**
+     * Instantiates a new Builder from an existing InviteUserIamPolicy instance.
+     *
+     * @param inviteUserIamPolicy the instance to initialize the Builder with
+     */
     private Builder(InviteUserIamPolicy inviteUserIamPolicy) {
       this.type = inviteUserIamPolicy.type;
       this.roles = inviteUserIamPolicy.roles;
@@ -131,6 +136,8 @@ public class InviteUserIamPolicy extends GenericModel {
       return this;
     }
   }
+
+  protected InviteUserIamPolicy() { }
 
   protected InviteUserIamPolicy(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,

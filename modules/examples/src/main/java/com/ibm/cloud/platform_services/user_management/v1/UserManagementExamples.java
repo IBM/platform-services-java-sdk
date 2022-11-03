@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2021, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,6 +12,13 @@
  */
 
 package com.ibm.cloud.platform_services.user_management.v1;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ibm.cloud.platform_services.user_management.v1.model.Attribute;
 import com.ibm.cloud.platform_services.user_management.v1.model.GetUserProfileOptions;
@@ -26,15 +33,13 @@ import com.ibm.cloud.platform_services.user_management.v1.model.Resource;
 import com.ibm.cloud.platform_services.user_management.v1.model.Role;
 import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserProfileOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserSettingsOptions;
-import com.ibm.cloud.platform_services.user_management.v1.model.UserList;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserProfile;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserSettings;
+import com.ibm.cloud.platform_services.user_management.v1.model.UsersPager;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.ibm.cloud.sdk.core.util.GsonSingleton;
 
 //
 // This file provides an example of how to use the User Management service.
@@ -78,8 +83,8 @@ public class UserManagementExamples {
 
   @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
-    UserManagement service = UserManagement.newInstance(UserManagement.DEFAULT_SERVICE_NAME);
-    UserManagement adminService = UserManagement.newInstance("USER_MANAGEMENT_ADMIN");
+    UserManagement userManagementService = UserManagement.newInstance(UserManagement.DEFAULT_SERVICE_NAME);
+    UserManagement userManagementServiceAdmin = UserManagement.newInstance("USER_MANAGEMENT_ADMIN");
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(UserManagement.DEFAULT_SERVICE_NAME);
@@ -131,7 +136,7 @@ public class UserManagementExamples {
               .addAccessGroups(accessGroupId)
               .build();
 
-      Response<InvitedUserList> response = adminService.inviteUsers(inviteUsersOptions).execute();
+      Response<InvitedUserList> response = userManagementServiceAdmin.inviteUsers(inviteUsersOptions).execute();
       InvitedUserList invitedUserList = response.getResult();
 
       System.out.println(invitedUserList);
@@ -146,24 +151,22 @@ public class UserManagementExamples {
 
     try {
       System.out.println("listUsers() result:");
-
       // begin-list_users
-
       ListUsersOptions listUsersOptions = new ListUsersOptions.Builder()
         .accountId(accountId)
-        .state("ACTIVE")
-        .limit(100)
         .build();
 
-      Response<UserList> response = service.listUsers(listUsersOptions).execute();
-      UserList userList = response.getResult();
+      UsersPager pager = new UsersPager(userManagementService, listUsersOptions);
+      List<UserProfile> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<UserProfile> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(userList);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-list_users
-
     } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
@@ -176,7 +179,7 @@ public class UserManagementExamples {
         .iamId(deleteUserId)
         .build();
 
-      Response<Void> response = service.removeUser(removeUserOptions).execute();
+      Response<Void> response = userManagementService.removeUser(removeUserOptions).execute();
 
       // end-remove_user
 
@@ -196,7 +199,7 @@ public class UserManagementExamples {
         .iamId(userId)
         .build();
 
-      Response<UserProfile> response = service.getUserProfile(getUserProfileOptions).execute();
+      Response<UserProfile> response = userManagementService.getUserProfile(getUserProfileOptions).execute();
       UserProfile userProfile = response.getResult();
 
       System.out.println(userProfile);
@@ -218,7 +221,7 @@ public class UserManagementExamples {
         .phonenumber("123456789")
         .build();
 
-      Response<Void> response = service.updateUserProfile(updateUserProfileOptions).execute();
+      Response<Void> response = userManagementService.updateUserProfile(updateUserProfileOptions).execute();
 
       // end-update_user_profile
 
@@ -238,7 +241,7 @@ public class UserManagementExamples {
         .iamId(userId)
         .build();
 
-      Response<UserSettings> response = service.getUserSettings(getUserSettingsOptions).execute();
+      Response<UserSettings> response = userManagementService.getUserSettings(getUserSettingsOptions).execute();
       UserSettings userSettings = response.getResult();
 
       System.out.println(userSettings);
@@ -261,7 +264,7 @@ public class UserManagementExamples {
         .allowedIpAddresses("192.168.0.2,192.168.0.3")
         .build();
 
-      Response<Void> response = service.updateUserSettings(updateUserSettingsOptions).execute();
+      Response<Void> response = userManagementService.updateUserSettings(updateUserSettingsOptions).execute();
 
       // end-update_user_settings
 

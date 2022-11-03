@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +29,11 @@ public class Attribute extends GenericModel {
     private String name;
     private String value;
 
+    /**
+     * Instantiates a new Builder from an existing Attribute instance.
+     *
+     * @param attribute the instance to initialize the Builder with
+     */
     private Builder(Attribute attribute) {
       this.name = attribute.name;
       this.value = attribute.value;
@@ -71,6 +76,8 @@ public class Attribute extends GenericModel {
       return this;
     }
   }
+
+  protected Attribute() { }
 
   protected Attribute(Builder builder) {
     name = builder.name;

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,8 +20,6 @@ import com.ibm.cloud.platform_services.user_management.v1.model.Role;
 import com.ibm.cloud.platform_services.user_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -49,18 +47,18 @@ public class InviteUserIamPolicyTest {
     assertEquals(attributeModel.value(), "testString");
 
     Resource resourceModel = new Resource.Builder()
-      .attributes(new java.util.ArrayList<Attribute>(java.util.Arrays.asList(attributeModel)))
+      .attributes(java.util.Arrays.asList(attributeModel))
       .build();
-    assertEquals(resourceModel.attributes(), new java.util.ArrayList<Attribute>(java.util.Arrays.asList(attributeModel)));
+    assertEquals(resourceModel.attributes(), java.util.Arrays.asList(attributeModel));
 
     InviteUserIamPolicy inviteUserIamPolicyModel = new InviteUserIamPolicy.Builder()
       .type("testString")
-      .roles(new java.util.ArrayList<Role>(java.util.Arrays.asList(roleModel)))
-      .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .roles(java.util.Arrays.asList(roleModel))
+      .resources(java.util.Arrays.asList(resourceModel))
       .build();
     assertEquals(inviteUserIamPolicyModel.type(), "testString");
-    assertEquals(inviteUserIamPolicyModel.roles(), new java.util.ArrayList<Role>(java.util.Arrays.asList(roleModel)));
-    assertEquals(inviteUserIamPolicyModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
+    assertEquals(inviteUserIamPolicyModel.roles(), java.util.Arrays.asList(roleModel));
+    assertEquals(inviteUserIamPolicyModel.resources(), java.util.Arrays.asList(resourceModel));
 
     String json = TestUtilities.serialize(inviteUserIamPolicyModel);
 

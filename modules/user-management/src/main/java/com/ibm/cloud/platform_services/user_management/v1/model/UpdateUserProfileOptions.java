@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -28,6 +28,7 @@ public class UpdateUserProfileOptions extends GenericModel {
   protected String phonenumber;
   protected String altphonenumber;
   protected String photo;
+  protected String includeActivity;
 
   /**
    * Builder.
@@ -42,7 +43,13 @@ public class UpdateUserProfileOptions extends GenericModel {
     private String phonenumber;
     private String altphonenumber;
     private String photo;
+    private String includeActivity;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateUserProfileOptions instance.
+     *
+     * @param updateUserProfileOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateUserProfileOptions updateUserProfileOptions) {
       this.accountId = updateUserProfileOptions.accountId;
       this.iamId = updateUserProfileOptions.iamId;
@@ -53,6 +60,7 @@ public class UpdateUserProfileOptions extends GenericModel {
       this.phonenumber = updateUserProfileOptions.phonenumber;
       this.altphonenumber = updateUserProfileOptions.altphonenumber;
       this.photo = updateUserProfileOptions.photo;
+      this.includeActivity = updateUserProfileOptions.includeActivity;
     }
 
     /**
@@ -179,7 +187,20 @@ public class UpdateUserProfileOptions extends GenericModel {
       this.photo = photo;
       return this;
     }
+
+    /**
+     * Set the includeActivity.
+     *
+     * @param includeActivity the includeActivity
+     * @return the UpdateUserProfileOptions builder
+     */
+    public Builder includeActivity(String includeActivity) {
+      this.includeActivity = includeActivity;
+      return this;
+    }
   }
+
+  protected UpdateUserProfileOptions() { }
 
   protected UpdateUserProfileOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
@@ -195,6 +216,7 @@ public class UpdateUserProfileOptions extends GenericModel {
     phonenumber = builder.phonenumber;
     altphonenumber = builder.altphonenumber;
     photo = builder.photo;
+    includeActivity = builder.includeActivity;
   }
 
   /**
@@ -209,7 +231,7 @@ public class UpdateUserProfileOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account ID.
+   * The account ID of the specified user.
    *
    * @return the accountId
    */
@@ -304,6 +326,17 @@ public class UpdateUserProfileOptions extends GenericModel {
    */
   public String photo() {
     return photo;
+  }
+
+  /**
+   * Gets the includeActivity.
+   *
+   * Include activity information of the user, such as the last authentication timestamp.
+   *
+   * @return the includeActivity
+   */
+  public String includeActivity() {
+    return includeActivity;
   }
 }
 

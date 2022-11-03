@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,6 +21,7 @@ public class RemoveUserOptions extends GenericModel {
 
   protected String accountId;
   protected String iamId;
+  protected String includeActivity;
 
   /**
    * Builder.
@@ -28,10 +29,17 @@ public class RemoveUserOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private String iamId;
+    private String includeActivity;
 
+    /**
+     * Instantiates a new Builder from an existing RemoveUserOptions instance.
+     *
+     * @param removeUserOptions the instance to initialize the Builder with
+     */
     private Builder(RemoveUserOptions removeUserOptions) {
       this.accountId = removeUserOptions.accountId;
       this.iamId = removeUserOptions.iamId;
+      this.includeActivity = removeUserOptions.includeActivity;
     }
 
     /**
@@ -81,7 +89,20 @@ public class RemoveUserOptions extends GenericModel {
       this.iamId = iamId;
       return this;
     }
+
+    /**
+     * Set the includeActivity.
+     *
+     * @param includeActivity the includeActivity
+     * @return the RemoveUserOptions builder
+     */
+    public Builder includeActivity(String includeActivity) {
+      this.includeActivity = includeActivity;
+      return this;
+    }
   }
+
+  protected RemoveUserOptions() { }
 
   protected RemoveUserOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
@@ -90,6 +111,7 @@ public class RemoveUserOptions extends GenericModel {
       "iamId cannot be empty");
     accountId = builder.accountId;
     iamId = builder.iamId;
+    includeActivity = builder.includeActivity;
   }
 
   /**
@@ -104,7 +126,7 @@ public class RemoveUserOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account ID.
+   * The account ID of the specified user.
    *
    * @return the accountId
    */
@@ -121,6 +143,17 @@ public class RemoveUserOptions extends GenericModel {
    */
   public String iamId() {
     return iamId;
+  }
+
+  /**
+   * Gets the includeActivity.
+   *
+   * Include activity information of the user, such as the last authentication timestamp.
+   *
+   * @return the includeActivity
+   */
+  public String includeActivity() {
+    return includeActivity;
   }
 }
 

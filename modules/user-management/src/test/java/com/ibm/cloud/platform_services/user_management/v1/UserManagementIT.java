@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,10 +19,8 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.fail;
 
 import java.io.InputStream;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,11 +45,13 @@ import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserSettin
 import com.ibm.cloud.platform_services.user_management.v1.model.UserList;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserProfile;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserSettings;
+import com.ibm.cloud.platform_services.user_management.v1.model.UsersPager;
 import com.ibm.cloud.platform_services.user_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.UrlHelper;
 
 /**
  * Integration test class for the UserManagement service.
@@ -77,7 +77,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
 
     @Override
     public boolean loggingEnabled() {
-        return false;
+        return true;
     }
 
     @BeforeClass
@@ -91,9 +91,16 @@ public class UserManagementIT extends SdkIntegrationTestBase {
         assertNotNull(service);
         assertNotNull(service.getServiceUrl());
 
+//        HttpConfigOptions options =
+//            new HttpConfigOptions.Builder()
+//                .loggingLevel(HttpConfigOptions.LoggingLevel.BODY)
+//            .build();
+//        service.configureClient(options);
+
         adminService = UserManagement.newInstance("USER_MANAGEMENT_ADMIN");
         assertNotNull(adminService);
         assertNotNull(adminService.getServiceUrl());
+//        adminService.configureClient(options);
 
         // Load up our test-specific config properties.
         config = CredentialUtils.getServiceProperties(UserManagement.DEFAULT_SERVICE_NAME);
@@ -140,14 +147,12 @@ public class UserManagementIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods={ "testGetUserSettings" })
     public void testUpdateUserSettings() throws Exception {
         try {
             UpdateUserSettingsOptions updateUserSettingsOptions = new UpdateUserSettingsOptions.Builder()
                     .accountId(ACCOUNT_ID)
                     .iamId(IAM_USERID)
-                    .language("French")
-                    .notificationLanguage("English")
                     .allowedIpAddresses("32.96.110.50,172.16.254.1")
                     .selfManage(true)
                     .build();
@@ -163,7 +168,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods={ "testUpdateUserSettings" })
     public void testListUsers() throws Exception {
         try {
             List<UserProfile> userProfiles = new ArrayList<>();
@@ -193,7 +198,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
                 }
 
                 // Get "start" value for next page.
-                start = getStartTokenFromURL(userListResult.getNextUrl());
+                start = UrlHelper.getQueryParam(userListResult.getNextUrl(), "_start");
             } while (start != null);
 
             log(String.format("Received a total of %d user profiles.\n", userProfiles.size()));
@@ -203,7 +208,38 @@ public class UserManagementIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testListUsers" })
+    public void testListUsersWithPager() throws Exception {
+      try {
+        ListUsersOptions options = new ListUsersOptions.Builder()
+          .accountId(ACCOUNT_ID)
+          .build();
+
+        // Test getNext().
+        List<UserProfile> allResults = new ArrayList<>();
+        UsersPager pager = new UsersPager(service, options);
+        while (pager.hasNext()) {
+          List<UserProfile> nextPage = pager.getNext();
+          assertNotNull(nextPage);
+          allResults.addAll(nextPage);
+        }
+        assertFalse(allResults.isEmpty());
+
+        // Test getAll();
+        pager = new UsersPager(service, options);
+        List<UserProfile> allItems = pager.getAll();
+        assertNotNull(allItems);
+        assertFalse(allItems.isEmpty());
+
+        assertEquals(allItems.size(), allResults.size());
+        System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
+    }
+
+    @Test(dependsOnMethods={ "testListUsersWithPager" })
     public void testInviteUsers() throws Exception {
         try {
             InviteUser inviteUserModel = new InviteUser.Builder()
@@ -264,7 +300,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods={ "testInviteUsers" })
     public void testGetUserProfile() throws Exception {
         try {
             GetUserProfileOptions getUserProfileOptions = new GetUserProfileOptions.Builder()
@@ -288,7 +324,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods={ "testGetUserProfile" })
     public void testUpdateUserProfile() throws Exception {
         try {
             UpdateUserProfileOptions updateUserProfileOptions = new UpdateUserProfileOptions.Builder()
@@ -311,7 +347,7 @@ public class UserManagementIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods={ "testUpdateUserProfile" })
     public void testRemoveUser() throws Exception {
         try {
             RemoveUserOptions removeUsersOptions = new RemoveUserOptions.Builder()
@@ -328,36 +364,5 @@ public class UserManagementIT extends SdkIntegrationTestBase {
             fail(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()));
         }
-    }
-
-    private String getStartTokenFromURL(String s) {
-        try {
-            if (s == null) {
-                return null;
-            }
-
-            // Parse "s" as a URI and retrieve its decoded query string.
-            URI uri = new URI(s);
-            String query = uri.getQuery();
-            if (query == null || query.isEmpty()) {
-                return null;
-            }
-
-            // Parse the query string into a map of key/value pairs.
-            Map<String, String> params = new LinkedHashMap<>();
-            for (String param : query.split("&")) {
-                String[] keyValue = param.split("=", 2);
-                String value = keyValue.length > 1 ? keyValue[1] : null;
-                if (!keyValue[0].isEmpty()) {
-                    params.put(keyValue[0], value);
-                }
-            }
-
-            return params.get("_start");
-        } catch (Throwable t) {
-
-        }
-
-        return null;
     }
 }

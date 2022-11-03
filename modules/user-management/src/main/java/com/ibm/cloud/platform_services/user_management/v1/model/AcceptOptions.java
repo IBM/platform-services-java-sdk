@@ -12,30 +12,28 @@
  */
 package com.ibm.cloud.platform_services.user_management.v1.model;
 
-import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The role of an IAM policy.
+ * The accept options.
  */
-public class Role extends GenericModel {
+public class AcceptOptions extends GenericModel {
 
-  @SerializedName("role_id")
-  protected String roleId;
+  protected String accountId;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private String roleId;
+    private String accountId;
 
     /**
-     * Instantiates a new Builder from an existing Role instance.
+     * Instantiates a new Builder from an existing AcceptOptions instance.
      *
-     * @param role the instance to initialize the Builder with
+     * @param acceptOptions the instance to initialize the Builder with
      */
-    private Builder(Role role) {
-      this.roleId = role.roleId;
+    private Builder(AcceptOptions acceptOptions) {
+      this.accountId = acceptOptions.accountId;
     }
 
     /**
@@ -45,50 +43,50 @@ public class Role extends GenericModel {
     }
 
     /**
-     * Builds a Role.
+     * Builds a AcceptOptions.
      *
-     * @return the new Role instance
+     * @return the new AcceptOptions instance
      */
-    public Role build() {
-      return new Role(this);
+    public AcceptOptions build() {
+      return new AcceptOptions(this);
     }
 
     /**
-     * Set the roleId.
+     * Set the accountId.
      *
-     * @param roleId the roleId
-     * @return the Role builder
+     * @param accountId the accountId
+     * @return the AcceptOptions builder
      */
-    public Builder roleId(String roleId) {
-      this.roleId = roleId;
+    public Builder accountId(String accountId) {
+      this.accountId = accountId;
       return this;
     }
   }
 
-  protected Role() { }
+  protected AcceptOptions() { }
 
-  protected Role(Builder builder) {
-    roleId = builder.roleId;
+  protected AcceptOptions(Builder builder) {
+    accountId = builder.accountId;
   }
 
   /**
    * New builder.
    *
-   * @return a Role builder
+   * @return a AcceptOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);
   }
 
   /**
-   * Gets the roleId.
+   * Gets the accountId.
    *
-   * An alphanumeric value identifying the origin.
+   * The account ID.
    *
-   * @return the roleId
+   * @return the accountId
    */
-  public String roleId() {
-    return roleId;
+  public String accountId() {
+    return accountId;
   }
 }
 

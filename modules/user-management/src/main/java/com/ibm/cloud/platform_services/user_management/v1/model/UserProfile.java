@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -35,6 +35,10 @@ public class UserProfile extends GenericModel {
   protected String photo;
   @SerializedName("account_id")
   protected String accountId;
+  @SerializedName("added_on")
+  protected String addedOn;
+
+  protected UserProfile() { }
 
   /**
    * Gets the id.
@@ -167,6 +171,17 @@ public class UserProfile extends GenericModel {
    */
   public String getAccountId() {
     return accountId;
+  }
+
+  /**
+   * Gets the addedOn.
+   *
+   * The timestamp for when the user was added to the account.
+   *
+   * @return the addedOn
+   */
+  public String getAddedOn() {
+    return addedOn;
   }
 }
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -35,6 +35,11 @@ public class ListAccountsOptions extends GenericModel {
     private String parent;
     private Long limit;
 
+    /**
+     * Instantiates a new Builder from an existing ListAccountsOptions instance.
+     *
+     * @param listAccountsOptions the instance to initialize the Builder with
+     */
     private Builder(ListAccountsOptions listAccountsOptions) {
       this.enterpriseId = listAccountsOptions.enterpriseId;
       this.accountGroupId = listAccountsOptions.accountGroupId;
@@ -113,6 +118,8 @@ public class ListAccountsOptions extends GenericModel {
       return this;
     }
   }
+
+  protected ListAccountsOptions() { }
 
   protected ListAccountsOptions(Builder builder) {
     enterpriseId = builder.enterpriseId;

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -31,6 +31,11 @@ public class CreateAccountOptions extends GenericModel {
     private String name;
     private String ownerIamId;
 
+    /**
+     * Instantiates a new Builder from an existing CreateAccountOptions instance.
+     *
+     * @param createAccountOptions the instance to initialize the Builder with
+     */
     private Builder(CreateAccountOptions createAccountOptions) {
       this.parent = createAccountOptions.parent;
       this.name = createAccountOptions.name;
@@ -98,6 +103,8 @@ public class CreateAccountOptions extends GenericModel {
       return this;
     }
   }
+
+  protected CreateAccountOptions() { }
 
   protected CreateAccountOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.parent,

@@ -1,3 +1,10 @@
+## [0.27.3](https://github.com/IBM/platform-services-java-sdk/compare/0.27.2...0.27.3) (2022-11-04)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** re-gen service to get new Pagers ([#164](https://github.com/IBM/platform-services-java-sdk/issues/164)) ([4f207d7](https://github.com/IBM/platform-services-java-sdk/commit/4f207d77f16d9cbbd31aa239c037f462a10a4a5c))
+
 ## [0.27.2](https://github.com/IBM/platform-services-java-sdk/compare/0.27.1...0.27.2) (2022-11-03)
 
 

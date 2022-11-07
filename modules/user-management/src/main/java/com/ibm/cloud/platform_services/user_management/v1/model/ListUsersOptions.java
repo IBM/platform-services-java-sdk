@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,24 +20,29 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class ListUsersOptions extends GenericModel {
 
   protected String accountId;
-  protected String state;
   protected Long limit;
   protected String start;
+  protected String userId;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String accountId;
-    private String state;
     private Long limit;
     private String start;
+    private String userId;
 
+    /**
+     * Instantiates a new Builder from an existing ListUsersOptions instance.
+     *
+     * @param listUsersOptions the instance to initialize the Builder with
+     */
     private Builder(ListUsersOptions listUsersOptions) {
       this.accountId = listUsersOptions.accountId;
-      this.state = listUsersOptions.state;
       this.limit = listUsersOptions.limit;
       this.start = listUsersOptions.start;
+      this.userId = listUsersOptions.userId;
     }
 
     /**
@@ -76,17 +81,6 @@ public class ListUsersOptions extends GenericModel {
     }
 
     /**
-     * Set the state.
-     *
-     * @param state the state
-     * @return the ListUsersOptions builder
-     */
-    public Builder state(String state) {
-      this.state = state;
-      return this;
-    }
-
-    /**
      * Set the limit.
      *
      * @param limit the limit
@@ -107,15 +101,28 @@ public class ListUsersOptions extends GenericModel {
       this.start = start;
       return this;
     }
+
+    /**
+     * Set the userId.
+     *
+     * @param userId the userId
+     * @return the ListUsersOptions builder
+     */
+    public Builder userId(String userId) {
+      this.userId = userId;
+      return this;
+    }
   }
+
+  protected ListUsersOptions() { }
 
   protected ListUsersOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
     accountId = builder.accountId;
-    state = builder.state;
     limit = builder.limit;
     start = builder.start;
+    userId = builder.userId;
   }
 
   /**
@@ -130,23 +137,12 @@ public class ListUsersOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account ID.
+   * The account ID of the specified user.
    *
    * @return the accountId
    */
   public String accountId() {
     return accountId;
-  }
-
-  /**
-   * Gets the state.
-   *
-   * The state of the user.
-   *
-   * @return the state
-   */
-  public String state() {
-    return state;
   }
 
   /**
@@ -170,6 +166,17 @@ public class ListUsersOptions extends GenericModel {
    */
   public String start() {
     return start;
+  }
+
+  /**
+   * Gets the userId.
+   *
+   * Filter users based on their user ID.
+   *
+   * @return the userId
+   */
+  public String userId() {
+    return userId;
   }
 }
 

@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.user_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The getUserSettings options.
+ * The v3RemoveUser options.
  */
-public class GetUserSettingsOptions extends GenericModel {
+public class V3RemoveUserOptions extends GenericModel {
 
   protected String accountId;
   protected String iamId;
@@ -30,13 +30,13 @@ public class GetUserSettingsOptions extends GenericModel {
     private String iamId;
 
     /**
-     * Instantiates a new Builder from an existing GetUserSettingsOptions instance.
+     * Instantiates a new Builder from an existing V3RemoveUserOptions instance.
      *
-     * @param getUserSettingsOptions the instance to initialize the Builder with
+     * @param v3RemoveUserOptions the instance to initialize the Builder with
      */
-    private Builder(GetUserSettingsOptions getUserSettingsOptions) {
-      this.accountId = getUserSettingsOptions.accountId;
-      this.iamId = getUserSettingsOptions.iamId;
+    private Builder(V3RemoveUserOptions v3RemoveUserOptions) {
+      this.accountId = v3RemoveUserOptions.accountId;
+      this.iamId = v3RemoveUserOptions.iamId;
     }
 
     /**
@@ -57,19 +57,19 @@ public class GetUserSettingsOptions extends GenericModel {
     }
 
     /**
-     * Builds a GetUserSettingsOptions.
+     * Builds a V3RemoveUserOptions.
      *
-     * @return the new GetUserSettingsOptions instance
+     * @return the new V3RemoveUserOptions instance
      */
-    public GetUserSettingsOptions build() {
-      return new GetUserSettingsOptions(this);
+    public V3RemoveUserOptions build() {
+      return new V3RemoveUserOptions(this);
     }
 
     /**
      * Set the accountId.
      *
      * @param accountId the accountId
-     * @return the GetUserSettingsOptions builder
+     * @return the V3RemoveUserOptions builder
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
@@ -80,7 +80,7 @@ public class GetUserSettingsOptions extends GenericModel {
      * Set the iamId.
      *
      * @param iamId the iamId
-     * @return the GetUserSettingsOptions builder
+     * @return the V3RemoveUserOptions builder
      */
     public Builder iamId(String iamId) {
       this.iamId = iamId;
@@ -88,9 +88,9 @@ public class GetUserSettingsOptions extends GenericModel {
     }
   }
 
-  protected GetUserSettingsOptions() { }
+  protected V3RemoveUserOptions() { }
 
-  protected GetUserSettingsOptions(Builder builder) {
+  protected V3RemoveUserOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.iamId,
@@ -102,7 +102,7 @@ public class GetUserSettingsOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a GetUserSettingsOptions builder
+   * @return a V3RemoveUserOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

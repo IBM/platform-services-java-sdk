@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -36,6 +36,11 @@ public class InviteUsersOptions extends GenericModel {
     private List<InviteUserIamPolicy> iamPolicy;
     private List<String> accessGroups;
 
+    /**
+     * Instantiates a new Builder from an existing InviteUsersOptions instance.
+     *
+     * @param inviteUsersOptions the instance to initialize the Builder with
+     */
     private Builder(InviteUsersOptions inviteUsersOptions) {
       this.accountId = inviteUsersOptions.accountId;
       this.users = inviteUsersOptions.users;
@@ -163,6 +168,8 @@ public class InviteUsersOptions extends GenericModel {
     }
   }
 
+  protected InviteUsersOptions() { }
+
   protected InviteUsersOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
@@ -184,7 +191,7 @@ public class InviteUsersOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account ID.
+   * The account ID of the specified user.
    *
    * @return the accountId
    */

@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.user_management.v1.model;
 
-import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserSettingsOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.V3RemoveUserOptions;
 import com.ibm.cloud.platform_services.user_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,33 +23,25 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the UpdateUserSettingsOptions model.
+ * Unit test class for the V3RemoveUserOptions model.
  */
-public class UpdateUserSettingsOptionsTest {
+public class V3RemoveUserOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testUpdateUserSettingsOptions() throws Throwable {
-    UpdateUserSettingsOptions updateUserSettingsOptionsModel = new UpdateUserSettingsOptions.Builder()
+  public void testV3RemoveUserOptions() throws Throwable {
+    V3RemoveUserOptions v3RemoveUserOptionsModel = new V3RemoveUserOptions.Builder()
       .accountId("testString")
       .iamId("testString")
-      .language("testString")
-      .notificationLanguage("testString")
-      .allowedIpAddresses("32.96.110.50,172.16.254.1")
-      .selfManage(true)
       .build();
-    assertEquals(updateUserSettingsOptionsModel.accountId(), "testString");
-    assertEquals(updateUserSettingsOptionsModel.iamId(), "testString");
-    assertEquals(updateUserSettingsOptionsModel.language(), "testString");
-    assertEquals(updateUserSettingsOptionsModel.notificationLanguage(), "testString");
-    assertEquals(updateUserSettingsOptionsModel.allowedIpAddresses(), "32.96.110.50,172.16.254.1");
-    assertEquals(updateUserSettingsOptionsModel.selfManage(), Boolean.valueOf(true));
+    assertEquals(v3RemoveUserOptionsModel.accountId(), "testString");
+    assertEquals(v3RemoveUserOptionsModel.iamId(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateUserSettingsOptionsError() throws Throwable {
-    new UpdateUserSettingsOptions.Builder().build();
+  public void testV3RemoveUserOptionsError() throws Throwable {
+    new V3RemoveUserOptions.Builder().build();
   }
 
 }

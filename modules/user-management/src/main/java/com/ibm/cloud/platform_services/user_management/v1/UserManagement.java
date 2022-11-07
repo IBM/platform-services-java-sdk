@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,13 +12,18 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 3.60.2-95dc7721-20221102-203229
  */
 
 package com.ibm.cloud.platform_services.user_management.v1;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
+import com.ibm.cloud.platform_services.user_management.v1.model.AcceptOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.GetUserProfileOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.GetUserSettingsOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.InviteUsersOptions;
@@ -30,6 +35,7 @@ import com.ibm.cloud.platform_services.user_management.v1.model.UpdateUserSettin
 import com.ibm.cloud.platform_services.user_management.v1.model.UserList;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserProfile;
 import com.ibm.cloud.platform_services.user_management.v1.model.UserSettings;
+import com.ibm.cloud.platform_services.user_management.v1.model.V3RemoveUserOptions;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
 import com.ibm.cloud.sdk.core.http.ServiceCall;
@@ -37,19 +43,22 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Manage the lifecycle of your users using User Management APIs.
  *
- * @version v1
+ * API Version: 1.0
  */
 public class UserManagement extends BaseService {
 
+  /**
+   * Default service name used when configuring the `UserManagement` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "user_management";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://user-management.cloud.ibm.com";
 
  /**
@@ -113,14 +122,14 @@ public class UserManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    if (listUsersOptions.state() != null) {
-      builder.query("state", String.valueOf(listUsersOptions.state()));
-    }
     if (listUsersOptions.limit() != null) {
       builder.query("limit", String.valueOf(listUsersOptions.limit()));
     }
     if (listUsersOptions.start() != null) {
       builder.query("_start", String.valueOf(listUsersOptions.start()));
+    }
+    if (listUsersOptions.userId() != null) {
+      builder.query("user_id", String.valueOf(listUsersOptions.userId()));
     }
     ResponseConverter<UserList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<UserList>() { }.getType());
@@ -192,6 +201,9 @@ public class UserManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (getUserProfileOptions.includeActivity() != null) {
+      builder.query("include_activity", String.valueOf(getUserProfileOptions.includeActivity()));
+    }
     ResponseConverter<UserProfile> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<UserProfile>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -220,6 +232,9 @@ public class UserManagement extends BaseService {
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "updateUserProfile");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
+    }
+    if (updateUserProfileOptions.includeActivity() != null) {
+      builder.query("include_activity", String.valueOf(updateUserProfileOptions.includeActivity()));
     }
     final JsonObject contentJson = new JsonObject();
     if (updateUserProfileOptions.firstname() != null) {
@@ -267,6 +282,81 @@ public class UserManagement extends BaseService {
     pathParamsMap.put("iam_id", removeUserOptions.iamId());
     RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/accounts/{account_id}/users/{iam_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "removeUser");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    if (removeUserOptions.includeActivity() != null) {
+      builder.query("include_activity", String.valueOf(removeUserOptions.includeActivity()));
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Accept an invitation.
+   *
+   * Accept a user invitation to an account. You can use the user's token for authorization. To use this method, the
+   * requesting user must provide the account ID for the account that they are accepting an invitation for. If the user
+   * already accepted the invitation request, it returns 204 with no response body.
+   *
+   * @param acceptOptions the {@link AcceptOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> accept(AcceptOptions acceptOptions) {
+    boolean skipBody = false;
+    if (acceptOptions == null) {
+      acceptOptions = new AcceptOptions.Builder().build();
+      skipBody = true;
+    }
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/users/accept"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "accept");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    if (!skipBody) {
+      final JsonObject contentJson = new JsonObject();
+      if (acceptOptions.accountId() != null) {
+        contentJson.addProperty("account_id", acceptOptions.accountId());
+      }
+      builder.bodyJson(contentJson);
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Accept an invitation.
+   *
+   * Accept a user invitation to an account. You can use the user's token for authorization. To use this method, the
+   * requesting user must provide the account ID for the account that they are accepting an invitation for. If the user
+   * already accepted the invitation request, it returns 204 with no response body.
+   *
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> accept() {
+    return accept(null);
+  }
+
+  /**
+   * Remove user from account (Asynchronous).
+   *
+   * Remove users from an account by using the user's IAM ID. You must use a user token for authorization. Service IDs
+   * can't remove users from an account. If removing the user fails it will set the user's state to
+   * ERROR_WHILE_DELETING. To use this method, the requesting user must have the editor or administrator role on the
+   * User Management service. For more information, see the [Removing
+   * users](https://cloud.ibm.com/docs/account?topic=account-remove) documentation.
+   *
+   * @param v3RemoveUserOptions the {@link V3RemoveUserOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> v3RemoveUser(V3RemoveUserOptions v3RemoveUserOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(v3RemoveUserOptions,
+      "v3RemoveUserOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", v3RemoveUserOptions.accountId());
+    pathParamsMap.put("iam_id", v3RemoveUserOptions.iamId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v3/accounts/{account_id}/users/{iam_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("user_management", "v1", "v3RemoveUser");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }

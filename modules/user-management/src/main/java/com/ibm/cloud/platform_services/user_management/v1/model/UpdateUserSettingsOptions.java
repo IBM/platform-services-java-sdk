@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -37,6 +37,11 @@ public class UpdateUserSettingsOptions extends GenericModel {
     private String allowedIpAddresses;
     private Boolean selfManage;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateUserSettingsOptions instance.
+     *
+     * @param updateUserSettingsOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateUserSettingsOptions updateUserSettingsOptions) {
       this.accountId = updateUserSettingsOptions.accountId;
       this.iamId = updateUserSettingsOptions.iamId;
@@ -153,6 +158,8 @@ public class UpdateUserSettingsOptions extends GenericModel {
     }
   }
 
+  protected UpdateUserSettingsOptions() { }
+
   protected UpdateUserSettingsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
@@ -178,7 +185,7 @@ public class UpdateUserSettingsOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account ID.
+   * The account ID of the specified user.
    *
    * @return the accountId
    */

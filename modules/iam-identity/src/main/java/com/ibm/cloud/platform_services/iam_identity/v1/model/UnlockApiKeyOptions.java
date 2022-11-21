@@ -27,6 +27,11 @@ public class UnlockApiKeyOptions extends GenericModel {
   public static class Builder {
     private String id;
 
+    /**
+     * Instantiates a new Builder from an existing UnlockApiKeyOptions instance.
+     *
+     * @param unlockApiKeyOptions the instance to initialize the Builder with
+     */
     private Builder(UnlockApiKeyOptions unlockApiKeyOptions) {
       this.id = unlockApiKeyOptions.id;
     }
@@ -66,6 +71,8 @@ public class UnlockApiKeyOptions extends GenericModel {
       return this;
     }
   }
+
+  protected UnlockApiKeyOptions() { }
 
   protected UnlockApiKeyOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,

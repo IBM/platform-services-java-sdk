@@ -34,6 +34,8 @@ public class ProfileLink extends GenericModel {
   protected String crType;
   protected ProfileLinkLink link;
 
+  protected ProfileLink() { }
+
   /**
    * Gets the id.
    *

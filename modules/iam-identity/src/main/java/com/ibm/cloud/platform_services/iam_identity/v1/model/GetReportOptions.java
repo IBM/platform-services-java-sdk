@@ -29,6 +29,11 @@ public class GetReportOptions extends GenericModel {
     private String accountId;
     private String reference;
 
+    /**
+     * Instantiates a new Builder from an existing GetReportOptions instance.
+     *
+     * @param getReportOptions the instance to initialize the Builder with
+     */
     private Builder(GetReportOptions getReportOptions) {
       this.accountId = getReportOptions.accountId;
       this.reference = getReportOptions.reference;
@@ -82,6 +87,8 @@ public class GetReportOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetReportOptions() { }
 
   protected GetReportOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,

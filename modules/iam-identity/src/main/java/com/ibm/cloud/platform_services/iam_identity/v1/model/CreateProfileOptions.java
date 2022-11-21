@@ -31,6 +31,11 @@ public class CreateProfileOptions extends GenericModel {
     private String accountId;
     private String description;
 
+    /**
+     * Instantiates a new Builder from an existing CreateProfileOptions instance.
+     *
+     * @param createProfileOptions the instance to initialize the Builder with
+     */
     private Builder(CreateProfileOptions createProfileOptions) {
       this.name = createProfileOptions.name;
       this.accountId = createProfileOptions.accountId;
@@ -96,6 +101,8 @@ public class CreateProfileOptions extends GenericModel {
       return this;
     }
   }
+
+  protected CreateProfileOptions() { }
 
   protected CreateProfileOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,

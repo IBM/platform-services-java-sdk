@@ -45,6 +45,8 @@ public class TrustedProfile extends GenericModel {
   protected List<EnityHistoryRecord> history;
   protected Activity activity;
 
+  protected TrustedProfile() { }
+
   /**
    * Gets the context.
    *

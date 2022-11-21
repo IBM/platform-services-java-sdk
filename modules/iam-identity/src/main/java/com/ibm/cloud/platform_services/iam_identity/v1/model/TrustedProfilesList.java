@@ -29,6 +29,8 @@ public class TrustedProfilesList extends GenericModel {
   protected String next;
   protected List<TrustedProfile> profiles;
 
+  protected TrustedProfilesList() { }
+
   /**
    * Gets the context.
    *

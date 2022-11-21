@@ -88,6 +88,8 @@ public class AccountSettingsResponse extends GenericModel {
   @SerializedName("entity_tag")
   protected String entityTag;
   protected String mfa;
+  @SerializedName("user_mfa")
+  protected List<AccountSettingsUserMFA> userMfa;
   protected List<EnityHistoryRecord> history;
   @SerializedName("session_expiration_in_seconds")
   protected String sessionExpirationInSeconds;
@@ -95,6 +97,12 @@ public class AccountSettingsResponse extends GenericModel {
   protected String sessionInvalidationInSeconds;
   @SerializedName("max_sessions_per_identity")
   protected String maxSessionsPerIdentity;
+  @SerializedName("system_access_token_expiration_in_seconds")
+  protected String systemAccessTokenExpirationInSeconds;
+  @SerializedName("system_refresh_token_expiration_in_seconds")
+  protected String systemRefreshTokenExpirationInSeconds;
+
+  protected AccountSettingsResponse() { }
 
   /**
    * Gets the context.
@@ -186,6 +194,17 @@ public class AccountSettingsResponse extends GenericModel {
   }
 
   /**
+   * Gets the userMfa.
+   *
+   * List of users that are exempted from the MFA requirement of the account.
+   *
+   * @return the userMfa
+   */
+  public List<AccountSettingsUserMFA> getUserMfa() {
+    return userMfa;
+  }
+
+  /**
    * Gets the history.
    *
    * History of the Account Settings.
@@ -212,7 +231,7 @@ public class AccountSettingsResponse extends GenericModel {
   /**
    * Gets the sessionInvalidationInSeconds.
    *
-   * Defines the period of time in seconds in which a session will be invalidated due  to inactivity. Valid values:
+   * Defines the period of time in seconds in which a session will be invalidated due to inactivity. Valid values:
    *   * Any whole number between '900' and '7200'
    *   * NOT_SET - To unset account setting and use service default.
    *
@@ -233,6 +252,32 @@ public class AccountSettingsResponse extends GenericModel {
    */
   public String getMaxSessionsPerIdentity() {
     return maxSessionsPerIdentity;
+  }
+
+  /**
+   * Gets the systemAccessTokenExpirationInSeconds.
+   *
+   * Defines the access token expiration in seconds. Valid values:
+   *   * Any whole number between '900' and '3600'
+   *   * NOT_SET - To unset account setting and use service default.
+   *
+   * @return the systemAccessTokenExpirationInSeconds
+   */
+  public String getSystemAccessTokenExpirationInSeconds() {
+    return systemAccessTokenExpirationInSeconds;
+  }
+
+  /**
+   * Gets the systemRefreshTokenExpirationInSeconds.
+   *
+   * Defines the refresh token expiration in seconds. Valid values:
+   *   * Any whole number between '900' and '2592000'
+   *   * NOT_SET - To unset account setting and use service default.
+   *
+   * @return the systemRefreshTokenExpirationInSeconds
+   */
+  public String getSystemRefreshTokenExpirationInSeconds() {
+    return systemRefreshTokenExpirationInSeconds;
   }
 }
 

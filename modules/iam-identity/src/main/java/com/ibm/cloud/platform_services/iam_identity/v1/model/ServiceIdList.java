@@ -29,6 +29,8 @@ public class ServiceIdList extends GenericModel {
   protected String next;
   protected List<ServiceId> serviceids;
 
+  protected ServiceIdList() { }
+
   /**
    * Gets the context.
    *

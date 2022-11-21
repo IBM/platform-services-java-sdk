@@ -12,6 +12,9 @@
  */
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
@@ -79,9 +82,12 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   protected String restrictCreatePlatformApikey;
   protected String allowedIpAddresses;
   protected String mfa;
+  protected List<AccountSettingsUserMFA> userMfa;
   protected String sessionExpirationInSeconds;
   protected String sessionInvalidationInSeconds;
   protected String maxSessionsPerIdentity;
+  protected String systemAccessTokenExpirationInSeconds;
+  protected String systemRefreshTokenExpirationInSeconds;
 
   /**
    * Builder.
@@ -93,10 +99,18 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     private String restrictCreatePlatformApikey;
     private String allowedIpAddresses;
     private String mfa;
+    private List<AccountSettingsUserMFA> userMfa;
     private String sessionExpirationInSeconds;
     private String sessionInvalidationInSeconds;
     private String maxSessionsPerIdentity;
+    private String systemAccessTokenExpirationInSeconds;
+    private String systemRefreshTokenExpirationInSeconds;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateAccountSettingsOptions instance.
+     *
+     * @param updateAccountSettingsOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateAccountSettingsOptions updateAccountSettingsOptions) {
       this.ifMatch = updateAccountSettingsOptions.ifMatch;
       this.accountId = updateAccountSettingsOptions.accountId;
@@ -104,9 +118,12 @@ public class UpdateAccountSettingsOptions extends GenericModel {
       this.restrictCreatePlatformApikey = updateAccountSettingsOptions.restrictCreatePlatformApikey;
       this.allowedIpAddresses = updateAccountSettingsOptions.allowedIpAddresses;
       this.mfa = updateAccountSettingsOptions.mfa;
+      this.userMfa = updateAccountSettingsOptions.userMfa;
       this.sessionExpirationInSeconds = updateAccountSettingsOptions.sessionExpirationInSeconds;
       this.sessionInvalidationInSeconds = updateAccountSettingsOptions.sessionInvalidationInSeconds;
       this.maxSessionsPerIdentity = updateAccountSettingsOptions.maxSessionsPerIdentity;
+      this.systemAccessTokenExpirationInSeconds = updateAccountSettingsOptions.systemAccessTokenExpirationInSeconds;
+      this.systemRefreshTokenExpirationInSeconds = updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds;
     }
 
     /**
@@ -133,6 +150,22 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      */
     public UpdateAccountSettingsOptions build() {
       return new UpdateAccountSettingsOptions(this);
+    }
+
+    /**
+     * Adds an userMfa to userMfa.
+     *
+     * @param userMfa the new userMfa
+     * @return the UpdateAccountSettingsOptions builder
+     */
+    public Builder addUserMfa(AccountSettingsUserMFA userMfa) {
+      com.ibm.cloud.sdk.core.util.Validator.notNull(userMfa,
+        "userMfa cannot be null");
+      if (this.userMfa == null) {
+        this.userMfa = new ArrayList<AccountSettingsUserMFA>();
+      }
+      this.userMfa.add(userMfa);
+      return this;
     }
 
     /**
@@ -202,6 +235,18 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     }
 
     /**
+     * Set the userMfa.
+     * Existing userMfa will be replaced.
+     *
+     * @param userMfa the userMfa
+     * @return the UpdateAccountSettingsOptions builder
+     */
+    public Builder userMfa(List<AccountSettingsUserMFA> userMfa) {
+      this.userMfa = userMfa;
+      return this;
+    }
+
+    /**
      * Set the sessionExpirationInSeconds.
      *
      * @param sessionExpirationInSeconds the sessionExpirationInSeconds
@@ -233,7 +278,31 @@ public class UpdateAccountSettingsOptions extends GenericModel {
       this.maxSessionsPerIdentity = maxSessionsPerIdentity;
       return this;
     }
+
+    /**
+     * Set the systemAccessTokenExpirationInSeconds.
+     *
+     * @param systemAccessTokenExpirationInSeconds the systemAccessTokenExpirationInSeconds
+     * @return the UpdateAccountSettingsOptions builder
+     */
+    public Builder systemAccessTokenExpirationInSeconds(String systemAccessTokenExpirationInSeconds) {
+      this.systemAccessTokenExpirationInSeconds = systemAccessTokenExpirationInSeconds;
+      return this;
+    }
+
+    /**
+     * Set the systemRefreshTokenExpirationInSeconds.
+     *
+     * @param systemRefreshTokenExpirationInSeconds the systemRefreshTokenExpirationInSeconds
+     * @return the UpdateAccountSettingsOptions builder
+     */
+    public Builder systemRefreshTokenExpirationInSeconds(String systemRefreshTokenExpirationInSeconds) {
+      this.systemRefreshTokenExpirationInSeconds = systemRefreshTokenExpirationInSeconds;
+      return this;
+    }
   }
+
+  protected UpdateAccountSettingsOptions() { }
 
   protected UpdateAccountSettingsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ifMatch,
@@ -246,9 +315,12 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     restrictCreatePlatformApikey = builder.restrictCreatePlatformApikey;
     allowedIpAddresses = builder.allowedIpAddresses;
     mfa = builder.mfa;
+    userMfa = builder.userMfa;
     sessionExpirationInSeconds = builder.sessionExpirationInSeconds;
     sessionInvalidationInSeconds = builder.sessionInvalidationInSeconds;
     maxSessionsPerIdentity = builder.maxSessionsPerIdentity;
+    systemAccessTokenExpirationInSeconds = builder.systemAccessTokenExpirationInSeconds;
+    systemRefreshTokenExpirationInSeconds = builder.systemRefreshTokenExpirationInSeconds;
   }
 
   /**
@@ -263,9 +335,9 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * Version of the account settings to be updated. Specify the version that you  retrieved as entity_tag (ETag header)
-   * when reading the account. This value helps  identifying parallel usage of this API. Pass * to indicate to update
-   * any version  available. This might result in stale updates.
+   * Version of the account settings to be updated. Specify the version that you retrieved as entity_tag (ETag header)
+   * when reading the account. This value helps identifying parallel usage of this API. Pass * to indicate to update any
+   * version available. This might result in stale updates.
    *
    * @return the ifMatch
    */
@@ -341,6 +413,17 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   }
 
   /**
+   * Gets the userMfa.
+   *
+   * List of users that are exempted from the MFA requirement of the account.
+   *
+   * @return the userMfa
+   */
+  public List<AccountSettingsUserMFA> userMfa() {
+    return userMfa;
+  }
+
+  /**
    * Gets the sessionExpirationInSeconds.
    *
    * Defines the session expiration in seconds for the account. Valid values:
@@ -356,7 +439,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the sessionInvalidationInSeconds.
    *
-   * Defines the period of time in seconds in which a session will be invalidated due  to inactivity. Valid values:
+   * Defines the period of time in seconds in which a session will be invalidated due to inactivity. Valid values:
    *   * Any whole number between '900' and '7200'
    *   * NOT_SET - To unset account setting and use service default.
    *
@@ -377,6 +460,32 @@ public class UpdateAccountSettingsOptions extends GenericModel {
    */
   public String maxSessionsPerIdentity() {
     return maxSessionsPerIdentity;
+  }
+
+  /**
+   * Gets the systemAccessTokenExpirationInSeconds.
+   *
+   * Defines the access token expiration in seconds. Valid values:
+   *   * Any whole number between '900' and '3600'
+   *   * NOT_SET - To unset account setting and use service default.
+   *
+   * @return the systemAccessTokenExpirationInSeconds
+   */
+  public String systemAccessTokenExpirationInSeconds() {
+    return systemAccessTokenExpirationInSeconds;
+  }
+
+  /**
+   * Gets the systemRefreshTokenExpirationInSeconds.
+   *
+   * Defines the refresh token expiration in seconds. Valid values:
+   *   * Any whole number between '900' and '2592000'
+   *   * NOT_SET - To unset account setting and use service default.
+   *
+   * @return the systemRefreshTokenExpirationInSeconds
+   */
+  public String systemRefreshTokenExpirationInSeconds() {
+    return systemRefreshTokenExpirationInSeconds;
   }
 }
 

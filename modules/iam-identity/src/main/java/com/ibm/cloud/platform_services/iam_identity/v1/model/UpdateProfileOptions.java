@@ -33,6 +33,11 @@ public class UpdateProfileOptions extends GenericModel {
     private String name;
     private String description;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateProfileOptions instance.
+     *
+     * @param updateProfileOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateProfileOptions updateProfileOptions) {
       this.profileId = updateProfileOptions.profileId;
       this.ifMatch = updateProfileOptions.ifMatch;
@@ -111,6 +116,8 @@ public class UpdateProfileOptions extends GenericModel {
     }
   }
 
+  protected UpdateProfileOptions() { }
+
   protected UpdateProfileOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,
       "profileId cannot be empty");
@@ -145,7 +152,7 @@ public class UpdateProfileOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * Version of the trusted profile to be updated.  Specify the version that you retrived when reading list of trusted
+   * Version of the trusted profile to be updated. Specify the version that you retrived when reading list of trusted
    * profiles. This value helps to identify any parallel usage of trusted profile. Pass * to indicate to update any
    * version available. This might result in stale updates.
    *

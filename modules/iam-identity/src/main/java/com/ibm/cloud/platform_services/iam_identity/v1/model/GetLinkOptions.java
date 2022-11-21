@@ -29,6 +29,11 @@ public class GetLinkOptions extends GenericModel {
     private String profileId;
     private String linkId;
 
+    /**
+     * Instantiates a new Builder from an existing GetLinkOptions instance.
+     *
+     * @param getLinkOptions the instance to initialize the Builder with
+     */
     private Builder(GetLinkOptions getLinkOptions) {
       this.profileId = getLinkOptions.profileId;
       this.linkId = getLinkOptions.linkId;
@@ -82,6 +87,8 @@ public class GetLinkOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetLinkOptions() { }
 
   protected GetLinkOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,

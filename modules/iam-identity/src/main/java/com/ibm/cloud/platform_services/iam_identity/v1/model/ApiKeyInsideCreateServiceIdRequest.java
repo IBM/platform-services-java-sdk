@@ -35,6 +35,11 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
     private String apikey;
     private Boolean storeValue;
 
+    /**
+     * Instantiates a new Builder from an existing ApiKeyInsideCreateServiceIdRequest instance.
+     *
+     * @param apiKeyInsideCreateServiceIdRequest the instance to initialize the Builder with
+     */
     private Builder(ApiKeyInsideCreateServiceIdRequest apiKeyInsideCreateServiceIdRequest) {
       this.name = apiKeyInsideCreateServiceIdRequest.name;
       this.description = apiKeyInsideCreateServiceIdRequest.description;
@@ -110,6 +115,8 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
       return this;
     }
   }
+
+  protected ApiKeyInsideCreateServiceIdRequest() { }
 
   protected ApiKeyInsideCreateServiceIdRequest(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,

@@ -29,6 +29,11 @@ public class GetAccountSettingsOptions extends GenericModel {
     private String accountId;
     private Boolean includeHistory;
 
+    /**
+     * Instantiates a new Builder from an existing GetAccountSettingsOptions instance.
+     *
+     * @param getAccountSettingsOptions the instance to initialize the Builder with
+     */
     private Builder(GetAccountSettingsOptions getAccountSettingsOptions) {
       this.accountId = getAccountSettingsOptions.accountId;
       this.includeHistory = getAccountSettingsOptions.includeHistory;
@@ -80,6 +85,8 @@ public class GetAccountSettingsOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetAccountSettingsOptions() { }
 
   protected GetAccountSettingsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,

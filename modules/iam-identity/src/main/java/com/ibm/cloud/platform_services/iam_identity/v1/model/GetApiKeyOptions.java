@@ -31,6 +31,11 @@ public class GetApiKeyOptions extends GenericModel {
     private Boolean includeHistory;
     private Boolean includeActivity;
 
+    /**
+     * Instantiates a new Builder from an existing GetApiKeyOptions instance.
+     *
+     * @param getApiKeyOptions the instance to initialize the Builder with
+     */
     private Builder(GetApiKeyOptions getApiKeyOptions) {
       this.id = getApiKeyOptions.id;
       this.includeHistory = getApiKeyOptions.includeHistory;
@@ -94,6 +99,8 @@ public class GetApiKeyOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetApiKeyOptions() { }
 
   protected GetApiKeyOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,

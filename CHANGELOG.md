@@ -1,3 +1,10 @@
+# [0.28.0](https://github.com/IBM/platform-services-java-sdk/compare/0.27.4...0.28.0) (2022-11-23)
+
+
+### Features
+
+* **IAM Identity:** adding userExpm list and token lifetime ([#167](https://github.com/IBM/platform-services-java-sdk/issues/167)) ([3c87fdf](https://github.com/IBM/platform-services-java-sdk/commit/3c87fdf1c704380154556abf75d32df86bc96a26))
+
 ## [0.27.4](https://github.com/IBM/platform-services-java-sdk/compare/0.27.3...0.27.4) (2022-11-07)
 
 

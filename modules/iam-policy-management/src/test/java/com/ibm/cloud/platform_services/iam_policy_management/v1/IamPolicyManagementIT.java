@@ -339,11 +339,38 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .grant(policyGrantModel)
           .build();
 
+        V2PolicyAttribute weeklyConditionAttributeModel = new V2PolicyAttribute.Builder()
+          .key("{{environment.attributes.day_of_week}}")
+          .value(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5)))
+          .operator("dayOfWeekAnyOf")
+          .build();
+        
+
+        V2PolicyAttribute startConditionAttributeModel = new V2PolicyAttribute.Builder()
+          .key("{{environment.attributes.current_time}}")
+          .value("09:00:00+00:00")
+          .operator("timeGreaterThanOrEquals")
+          .build();
+
+        V2PolicyAttribute endConditionAttributeModel = new V2PolicyAttribute.Builder()
+          .key("{{environment.attributes.current_time}}")
+          .value("17:00:00+00:00")
+          .operator("timeLessThanOrEquals")
+          .build();
+
+        V2PolicyBaseRuleV2RuleWithConditions policyRuleModel = new V2PolicyBaseRuleV2RuleWithConditions.Builder()
+          .operator("and")
+          .conditions(new ArrayList<V2PolicyAttribute>(Arrays.asList(weeklyConditionAttributeModel,
+            startConditionAttributeModel, endConditionAttributeModel)))
+          .build();
+
         V2CreatePolicyOptions options = new V2CreatePolicyOptions.Builder()
           .type(POLICY_TYPE)
           .subject(policySubjectModel)
           .control(policyControlModel)
           .resource(policyResourceModel)
+          .rule(policyRuleModel)
+          .pattern("time-based-restrictions:weekly")
           .build();
 
         Response<V2Policy> response = service.v2CreatePolicy(options).execute();
@@ -356,6 +383,8 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(result.getSubject(), policySubjectModel);
         assertEquals(result.getResource(), policyResourceModel);
         assertEquals(result.getControl(), policyControlModel);
+        assertEquals(result.getRule().operator(), policyRuleModel.operator());
+        assertEquals(result.getPattern(), "time-based-restrictions:weekly");
 
         testV2PolicyId = result.getId();
     }
@@ -425,6 +454,30 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         V2PolicyBaseControl policyControlModel = new V2PolicyBaseControl.Builder()
           .grant(policyGrantModel)
           .build();
+        V2PolicyAttribute weeklyConditionAttributeModel = new V2PolicyAttribute.Builder()
+          .key("{{environment.attributes.day_of_week}}")
+          .value(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5)))
+          .operator("dayOfWeekAnyOf")
+          .build();
+        
+
+        V2PolicyAttribute startConditionAttributeModel = new V2PolicyAttribute.Builder()
+          .key("{{environment.attributes.current_time}}")
+          .value("09:00:00+00:00")
+          .operator("timeGreaterThanOrEquals")
+          .build();
+
+        V2PolicyAttribute endConditionAttributeModel = new V2PolicyAttribute.Builder()
+          .key("{{environment.attributes.current_time}}")
+          .value("17:00:00+00:00")
+          .operator("timeLessThanOrEquals")
+          .build();
+
+        V2PolicyBaseRuleV2RuleWithConditions policyRuleModel = new V2PolicyBaseRuleV2RuleWithConditions.Builder()
+          .operator("and")
+          .conditions(new ArrayList<V2PolicyAttribute>(Arrays.asList(weeklyConditionAttributeModel,
+            startConditionAttributeModel, endConditionAttributeModel)))
+          .build();
 
         V2UpdatePolicyOptions options = new V2UpdatePolicyOptions.Builder()
                 .policyId(testV2PolicyId)
@@ -433,6 +486,8 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .subject(policySubjectModel)
                 .control(policyControlModel)
                 .resource(policyResourceModel)
+                .rule(policyRuleModel)
+                .pattern("time-based-restrictions:weekly")
                 .build();
 
         Response<V2Policy> response = service.v2UpdatePolicy(options).execute();
@@ -446,6 +501,8 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(result.getSubject(), policySubjectModel);
         assertEquals(result.getResource(), policyResourceModel);
         assertEquals(result.getControl(), policyControlModel);
+        assertEquals(result.getRule().operator(), policyRuleModel.operator());
+        assertEquals(result.getPattern(), "time-based-restrictions:weekly");
 
         List<String> values = response.getHeaders().values(HEADER_ETAG);
         assertNotNull(values);

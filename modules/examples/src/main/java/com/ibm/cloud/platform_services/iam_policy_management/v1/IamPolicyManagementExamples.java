@@ -43,6 +43,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyAt
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControl;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControlGrant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseRuleV2RuleWithConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseSubject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyList;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2UpdatePolicyOptions;
@@ -353,11 +354,36 @@ public class IamPolicyManagementExamples {
               .grant(policyGrant)
               .build();
 
+      V2PolicyAttribute weeklyConditionAttribute = new V2PolicyAttribute.Builder()
+              .key("{{environment.attributes.day_of_week}}")
+              .value(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5)))
+              .operator("dayOfWeekAnyOf")
+              .build();
+
+      V2PolicyAttribute startConditionAttribute = new V2PolicyAttribute.Builder()
+              .key("{{environment.attributes.current_time}}")
+              .value("09:00:00+00:00")
+              .operator("timeGreaterThanOrEquals")
+              .build();
+
+      V2PolicyAttribute endConditionAttribute = new V2PolicyAttribute.Builder()
+              .key("{{environment.attributes.current_time}}")
+              .value("17:00:00+00:00")
+              .operator("timeLessThanOrEquals")
+              .build();
+
+      V2PolicyBaseRuleV2RuleWithConditions policyRule = new V2PolicyBaseRuleV2RuleWithConditions.Builder()
+              .operator("and")
+              .conditions(new ArrayList<V2PolicyAttribute>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
+              .build();
+
       V2CreatePolicyOptions options = new V2CreatePolicyOptions.Builder()
               .type("access")
               .subject(policySubject)
               .control(policyControl)
               .resource(policyResource)
+              .rule(policyRule)
+              .pattern("time-based-restrictions:weekly")
               .build();
 
       Response<V2Policy> response = service.v2CreatePolicy(options).execute();
@@ -438,6 +464,29 @@ public class IamPolicyManagementExamples {
               .grant(policyGrant)
               .build();
 
+      V2PolicyAttribute weeklyConditionAttribute = new V2PolicyAttribute.Builder()
+              .key("{{environment.attributes.day_of_week}}")
+              .value(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5)))
+              .operator("dayOfWeekAnyOf")
+              .build();
+
+      V2PolicyAttribute startConditionAttribute = new V2PolicyAttribute.Builder()
+              .key("{{environment.attributes.current_time}}")
+              .value("09:00:00+00:00")
+              .operator("timeGreaterThanOrEquals")
+              .build();
+
+      V2PolicyAttribute endConditionAttribute = new V2PolicyAttribute.Builder()
+              .key("{{environment.attributes.current_time}}")
+              .value("17:00:00+00:00")
+              .operator("timeLessThanOrEquals")
+              .build();
+
+      V2PolicyBaseRuleV2RuleWithConditions policyRule = new V2PolicyBaseRuleV2RuleWithConditions.Builder()
+              .operator("and")
+              .conditions(new ArrayList<V2PolicyAttribute>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
+              .build();
+
       V2UpdatePolicyOptions options = new V2UpdatePolicyOptions.Builder()
               .type("access")
               .policyId(exampleV2PolicyId)
@@ -445,6 +494,8 @@ public class IamPolicyManagementExamples {
               .subject(policySubject)
               .control(policyControl)
               .resource(policyResource)
+              .rule(policyRule)
+              .pattern("time-based-restrictions:weekly")
               .build();
 
       Response<V2Policy> response = service.v2UpdatePolicy(options).execute();

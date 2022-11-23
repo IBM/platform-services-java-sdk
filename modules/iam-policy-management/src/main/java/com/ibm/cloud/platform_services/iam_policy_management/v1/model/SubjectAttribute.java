@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +29,11 @@ public class SubjectAttribute extends GenericModel {
     private String name;
     private String value;
 
+    /**
+     * Instantiates a new Builder from an existing SubjectAttribute instance.
+     *
+     * @param subjectAttribute the instance to initialize the Builder with
+     */
     private Builder(SubjectAttribute subjectAttribute) {
       this.name = subjectAttribute.name;
       this.value = subjectAttribute.value;
@@ -82,6 +87,8 @@ public class SubjectAttribute extends GenericModel {
       return this;
     }
   }
+
+  protected SubjectAttribute() { }
 
   protected SubjectAttribute(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -37,6 +37,11 @@ public class Role extends GenericModel {
     private String description;
     private List<String> actions;
 
+    /**
+     * Instantiates a new Builder from an existing Role instance.
+     *
+     * @param role the instance to initialize the Builder with
+     */
     private Builder(Role role) {
       this.displayName = role.displayName;
       this.description = role.description;
@@ -108,6 +113,8 @@ public class Role extends GenericModel {
       return this;
     }
   }
+
+  protected Role() { }
 
   protected Role(Builder builder) {
     displayName = builder.displayName;

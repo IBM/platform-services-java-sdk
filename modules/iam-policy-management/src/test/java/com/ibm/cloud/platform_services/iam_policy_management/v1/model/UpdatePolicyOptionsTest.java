@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,8 +23,6 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePoli
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -47,9 +45,9 @@ public class UpdatePolicyOptionsTest {
     assertEquals(subjectAttributeModel.value(), "testString");
 
     PolicySubject policySubjectModel = new PolicySubject.Builder()
-      .attributes(new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)))
+      .attributes(java.util.Arrays.asList(subjectAttributeModel))
       .build();
-    assertEquals(policySubjectModel.attributes(), new java.util.ArrayList<SubjectAttribute>(java.util.Arrays.asList(subjectAttributeModel)));
+    assertEquals(policySubjectModel.attributes(), java.util.Arrays.asList(subjectAttributeModel));
 
     PolicyRole policyRoleModel = new PolicyRole.Builder()
       .roleId("testString")
@@ -75,27 +73,27 @@ public class UpdatePolicyOptionsTest {
     assertEquals(resourceTagModel.operator(), "testString");
 
     PolicyResource policyResourceModel = new PolicyResource.Builder()
-      .attributes(new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)))
-      .tags(new java.util.ArrayList<ResourceTag>(java.util.Arrays.asList(resourceTagModel)))
+      .attributes(java.util.Arrays.asList(resourceAttributeModel))
+      .tags(java.util.Arrays.asList(resourceTagModel))
       .build();
-    assertEquals(policyResourceModel.attributes(), new java.util.ArrayList<ResourceAttribute>(java.util.Arrays.asList(resourceAttributeModel)));
-    assertEquals(policyResourceModel.tags(), new java.util.ArrayList<ResourceTag>(java.util.Arrays.asList(resourceTagModel)));
+    assertEquals(policyResourceModel.attributes(), java.util.Arrays.asList(resourceAttributeModel));
+    assertEquals(policyResourceModel.tags(), java.util.Arrays.asList(resourceTagModel));
 
     UpdatePolicyOptions updatePolicyOptionsModel = new UpdatePolicyOptions.Builder()
       .policyId("testString")
       .ifMatch("testString")
       .type("testString")
-      .subjects(new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)))
-      .roles(new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)))
-      .resources(new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)))
+      .subjects(java.util.Arrays.asList(policySubjectModel))
+      .roles(java.util.Arrays.asList(policyRoleModel))
+      .resources(java.util.Arrays.asList(policyResourceModel))
       .description("testString")
       .build();
     assertEquals(updatePolicyOptionsModel.policyId(), "testString");
     assertEquals(updatePolicyOptionsModel.ifMatch(), "testString");
     assertEquals(updatePolicyOptionsModel.type(), "testString");
-    assertEquals(updatePolicyOptionsModel.subjects(), new java.util.ArrayList<PolicySubject>(java.util.Arrays.asList(policySubjectModel)));
-    assertEquals(updatePolicyOptionsModel.roles(), new java.util.ArrayList<PolicyRole>(java.util.Arrays.asList(policyRoleModel)));
-    assertEquals(updatePolicyOptionsModel.resources(), new java.util.ArrayList<PolicyResource>(java.util.Arrays.asList(policyResourceModel)));
+    assertEquals(updatePolicyOptionsModel.subjects(), java.util.Arrays.asList(policySubjectModel));
+    assertEquals(updatePolicyOptionsModel.roles(), java.util.Arrays.asList(policyRoleModel));
+    assertEquals(updatePolicyOptionsModel.resources(), java.util.Arrays.asList(policyResourceModel));
     assertEquals(updatePolicyOptionsModel.description(), "testString");
   }
 

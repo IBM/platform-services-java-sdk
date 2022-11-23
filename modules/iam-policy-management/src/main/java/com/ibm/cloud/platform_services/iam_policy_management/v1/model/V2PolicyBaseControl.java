@@ -1,0 +1,103 @@
+/*
+ * (C) Copyright IBM Corp. 2022.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
+
+import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
+/**
+ * Specifies the type of access granted by the policy.
+ */
+public class V2PolicyBaseControl extends GenericModel {
+
+  protected V2PolicyBaseControlGrant grant;
+
+  /**
+   * Builder.
+   */
+  public static class Builder {
+    private V2PolicyBaseControlGrant grant;
+
+    /**
+     * Instantiates a new Builder from an existing V2PolicyBaseControl instance.
+     *
+     * @param v2PolicyBaseControl the instance to initialize the Builder with
+     */
+    private Builder(V2PolicyBaseControl v2PolicyBaseControl) {
+      this.grant = v2PolicyBaseControl.grant;
+    }
+
+    /**
+     * Instantiates a new builder.
+     */
+    public Builder() {
+    }
+
+    /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param grant the grant
+     */
+    public Builder(V2PolicyBaseControlGrant grant) {
+      this.grant = grant;
+    }
+
+    /**
+     * Builds a V2PolicyBaseControl.
+     *
+     * @return the new V2PolicyBaseControl instance
+     */
+    public V2PolicyBaseControl build() {
+      return new V2PolicyBaseControl(this);
+    }
+
+    /**
+     * Set the grant.
+     *
+     * @param grant the grant
+     * @return the V2PolicyBaseControl builder
+     */
+    public Builder grant(V2PolicyBaseControlGrant grant) {
+      this.grant = grant;
+      return this;
+    }
+  }
+
+  protected V2PolicyBaseControl() { }
+
+  protected V2PolicyBaseControl(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.grant,
+      "grant cannot be null");
+    grant = builder.grant;
+  }
+
+  /**
+   * New builder.
+   *
+   * @return a V2PolicyBaseControl builder
+   */
+  public Builder newBuilder() {
+    return new Builder(this);
+  }
+
+  /**
+   * Gets the grant.
+   *
+   * Permission granted by the policy.
+   *
+   * @return the grant
+   */
+  public V2PolicyBaseControlGrant grant() {
+    return grant;
+  }
+}
+

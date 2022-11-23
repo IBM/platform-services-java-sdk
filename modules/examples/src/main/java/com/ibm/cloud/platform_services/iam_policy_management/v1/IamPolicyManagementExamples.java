@@ -34,6 +34,18 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTa
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2CreatePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2DeletePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2GetPolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2ListPoliciesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControl;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControlGrant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseSubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2UpdatePolicyOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -69,6 +81,8 @@ public class IamPolicyManagementExamples {
   private static String exampleAccountId = null;
   private static String examplePolicyId = null;
   private static String examplePolicyEtag = null;
+  private static String exampleV2PolicyId = null;
+  private static String exampleV2PolicyEtag = null;
   private static String exampleCustomRoleId = null;
   private static String exampleCustomRoleEtag = null;
 
@@ -288,6 +302,197 @@ public class IamPolicyManagementExamples {
       Response<Void> response = service.deletePolicy(options).execute();
 
       // end-delete_policy
+
+      System.out.printf("deletePolicy() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("v2CreatePolicy() result:");
+
+      // begin-v2_create_policy
+
+      V2PolicyAttribute subjectAttribute = new V2PolicyAttribute.Builder()
+              .key("iam_id")
+              .value(EXAMPLE_USER_ID)
+              .operator("stringEquals")
+              .build();
+
+      V2PolicyBaseSubject policySubject = new V2PolicyBaseSubject.Builder()
+              .addAttributes(subjectAttribute)
+              .build();
+
+      V2PolicyAttribute accountIdResourceAttribute = new V2PolicyAttribute.Builder()
+              .key("accountId")
+              .value(exampleAccountId)
+              .operator("stringEquals")
+              .build();
+
+      V2PolicyAttribute serviceNameResourceAttribute = new V2PolicyAttribute.Builder()
+              .key("serviceType")
+              .value("service")
+              .operator("stringEquals")
+              .build();
+
+      V2PolicyBaseResource policyResource = new V2PolicyBaseResource.Builder()
+              .addAttributes(accountIdResourceAttribute)
+              .addAttributes(serviceNameResourceAttribute)
+              .build();
+
+      PolicyRole policyRoles = new PolicyRole.Builder()
+              .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
+              .build();
+
+      V2PolicyBaseControlGrant policyGrant = new V2PolicyBaseControlGrant.Builder()
+              .roles(Arrays.asList(policyRoles))
+              .build();
+
+      V2PolicyBaseControl policyControl = new V2PolicyBaseControl.Builder()
+              .grant(policyGrant)
+              .build();
+
+      V2CreatePolicyOptions options = new V2CreatePolicyOptions.Builder()
+              .type("access")
+              .subject(policySubject)
+              .control(policyControl)
+              .resource(policyResource)
+              .build();
+
+      Response<V2Policy> response = service.v2CreatePolicy(options).execute();
+      V2Policy policy = response.getResult();
+
+      System.out.println(policy);
+
+      // end-v2_create_policy
+
+      exampleV2PolicyId = policy.getId();
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("v2GetPolicy() result:");
+
+      // begin-v2_get_policy
+
+      V2GetPolicyOptions options = new V2GetPolicyOptions.Builder()
+              .policyId(exampleV2PolicyId)
+              .build();
+
+      Response<V2Policy> response = service.v2GetPolicy(options).execute();
+      V2Policy policy = response.getResult();
+
+      System.out.println(policy);
+
+      // end-v2_get_policy
+
+      exampleV2PolicyEtag = response.getHeaders().values("Etag").get(0);
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("v2UpdatePolicy() result:");
+
+      // begin-v2_update_policy
+
+      V2PolicyAttribute subjectAttribute = new V2PolicyAttribute.Builder()
+              .key("iam_id")
+              .value(EXAMPLE_USER_ID)
+              .operator("stringEquals")
+              .build();
+
+      V2PolicyBaseSubject policySubject = new V2PolicyBaseSubject.Builder()
+              .addAttributes(subjectAttribute)
+              .build();
+
+      V2PolicyAttribute accountIdResourceAttribute = new V2PolicyAttribute.Builder()
+              .key("accountId")
+              .value(exampleAccountId)
+              .operator("stringEquals")
+              .build();
+
+      V2PolicyAttribute serviceNameResourceAttribute = new V2PolicyAttribute.Builder()
+              .key("serviceType")
+              .value("service")
+              .operator("stringEquals")
+              .build();
+
+      V2PolicyBaseResource policyResource = new V2PolicyBaseResource.Builder()
+              .addAttributes(accountIdResourceAttribute)
+              .addAttributes(serviceNameResourceAttribute)
+              .build();
+
+      PolicyRole updatedPolicyRole = new PolicyRole.Builder()
+              .roleId("crn:v1:bluemix:public:iam::::role:Editor")
+              .build();
+      V2PolicyBaseControlGrant policyGrant = new V2PolicyBaseControlGrant.Builder()
+              .roles(Arrays.asList(updatedPolicyRole))
+              .build();
+
+      V2PolicyBaseControl policyControl = new V2PolicyBaseControl.Builder()
+              .grant(policyGrant)
+              .build();
+
+      V2UpdatePolicyOptions options = new V2UpdatePolicyOptions.Builder()
+              .type("access")
+              .policyId(exampleV2PolicyId)
+              .ifMatch(exampleV2PolicyEtag)
+              .subject(policySubject)
+              .control(policyControl)
+              .resource(policyResource)
+              .build();
+
+      Response<V2Policy> response = service.v2UpdatePolicy(options).execute();
+      V2Policy policy = response.getResult();
+
+      System.out.println(policy);
+
+      // end-v2_update_policy
+
+      exampleV2PolicyEtag = response.getHeaders().values("Etag").get(0);
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("v2ListPolicies() result:");
+
+      // begin-v2_list_policies
+
+      V2ListPoliciesOptions options = new V2ListPoliciesOptions.Builder()
+              .accountId(exampleAccountId)
+              .iamId(EXAMPLE_USER_ID)
+              .format("include_last_permit")
+              .build();
+
+      Response<V2PolicyList> response = service.v2ListPolicies(options).execute();
+      V2PolicyList policyList = response.getResult();
+
+      System.out.println(policyList);
+
+      // end-v2_list_policies
+
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-v2_delete_policy
+
+      V2DeletePolicyOptions options = new V2DeletePolicyOptions.Builder()
+              .policyId(examplePolicyId)
+              .build();
+
+      Response<Void> response = service.v2DeletePolicy(options).execute();
+
+      // end-v2_delete_policy
 
       System.out.printf("deletePolicy() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {

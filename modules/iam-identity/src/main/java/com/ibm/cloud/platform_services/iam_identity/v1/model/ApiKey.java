@@ -45,6 +45,8 @@ public class ApiKey extends GenericModel {
   protected List<EnityHistoryRecord> history;
   protected Activity activity;
 
+  protected ApiKey() { }
+
   /**
    * Gets the context.
    *

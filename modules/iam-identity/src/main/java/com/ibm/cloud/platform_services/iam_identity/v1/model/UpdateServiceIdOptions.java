@@ -38,6 +38,11 @@ public class UpdateServiceIdOptions extends GenericModel {
     private String description;
     private List<String> uniqueInstanceCrns;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateServiceIdOptions instance.
+     *
+     * @param updateServiceIdOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateServiceIdOptions updateServiceIdOptions) {
       this.id = updateServiceIdOptions.id;
       this.ifMatch = updateServiceIdOptions.ifMatch;
@@ -144,6 +149,8 @@ public class UpdateServiceIdOptions extends GenericModel {
       return this;
     }
   }
+
+  protected UpdateServiceIdOptions() { }
 
   protected UpdateServiceIdOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,

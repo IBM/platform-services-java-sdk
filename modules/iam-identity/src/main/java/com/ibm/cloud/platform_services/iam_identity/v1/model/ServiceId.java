@@ -45,6 +45,8 @@ public class ServiceId extends GenericModel {
   protected ApiKey apikey;
   protected Activity activity;
 
+  protected ServiceId() { }
+
   /**
    * Gets the context.
    *

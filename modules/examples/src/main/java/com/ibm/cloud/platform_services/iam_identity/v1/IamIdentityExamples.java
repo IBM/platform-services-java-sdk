@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
@@ -103,6 +104,7 @@ public class IamIdentityExamples {
     //values to be read from the env file
     private static String accountId;
     private static String iamId;
+    private static String iamIdMember;
     private static String iamApiKey;
 
     // Variables used to hold various values shared between operations.
@@ -131,6 +133,7 @@ public class IamIdentityExamples {
         accountId = config.get("ACCOUNT_ID");
         iamApiKey = config.get("APIKEY");
         iamId = config.get("IAM_ID");
+        iamIdMember = config.get("IAM_ID_MEMBER");
 
         try {
             System.out.println("createApiKey() result:");
@@ -819,6 +822,14 @@ public class IamIdentityExamples {
 
             // begin-updateAccountSettings
 
+            AccountSettingsUserMFA userMFA = new AccountSettingsUserMFA.Builder()
+                    .iamId(iamIdMember)
+                    .mfa("NONE")
+                    .build();
+
+            List<AccountSettingsUserMFA> userMFAExpList = new ArrayList<>();
+            userMFAExpList.add(userMFA);
+
             UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
                     .ifMatch(accountSettingsEtag)
                     .accountId(accountId)
@@ -827,6 +838,9 @@ public class IamIdentityExamples {
                     .restrictCreatePlatformApikey("NOT_RESTRICTED")
                     .restrictCreateServiceId("NOT_RESTRICTED")
                     .mfa("NONE")
+                    .userMfa(userMFAExpList)
+                    .systemAccessTokenExpirationInSeconds("3600")
+                    .systemRefreshTokenExpirationInSeconds("2592000")
                     .build();
 
             Response<AccountSettingsResponse> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();

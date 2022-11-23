@@ -49,6 +49,11 @@ public class ListProfilesOptions extends GenericModel {
     private Boolean includeHistory;
     private String pagetoken;
 
+    /**
+     * Instantiates a new Builder from an existing ListProfilesOptions instance.
+     *
+     * @param listProfilesOptions the instance to initialize the Builder with
+     */
     private Builder(ListProfilesOptions listProfilesOptions) {
       this.accountId = listProfilesOptions.accountId;
       this.name = listProfilesOptions.name;
@@ -160,6 +165,8 @@ public class ListProfilesOptions extends GenericModel {
       return this;
     }
   }
+
+  protected ListProfilesOptions() { }
 
   protected ListProfilesOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,

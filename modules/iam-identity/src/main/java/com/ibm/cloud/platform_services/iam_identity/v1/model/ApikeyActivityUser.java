@@ -26,6 +26,8 @@ public class ApikeyActivityUser extends GenericModel {
   protected String username;
   protected String email;
 
+  protected ApikeyActivityUser() { }
+
   /**
    * Gets the iamId.
    *

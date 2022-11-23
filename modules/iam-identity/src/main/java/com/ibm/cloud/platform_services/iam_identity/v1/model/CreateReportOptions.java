@@ -31,6 +31,11 @@ public class CreateReportOptions extends GenericModel {
     private String type;
     private String duration;
 
+    /**
+     * Instantiates a new Builder from an existing CreateReportOptions instance.
+     *
+     * @param createReportOptions the instance to initialize the Builder with
+     */
     private Builder(CreateReportOptions createReportOptions) {
       this.accountId = createReportOptions.accountId;
       this.type = createReportOptions.type;
@@ -95,6 +100,8 @@ public class CreateReportOptions extends GenericModel {
     }
   }
 
+  protected CreateReportOptions() { }
+
   protected CreateReportOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
@@ -126,7 +133,7 @@ public class CreateReportOptions extends GenericModel {
   /**
    * Gets the type.
    *
-   * Optional report type, supported value is 'inactive' - List all identities that have not authenticated within the
+   * Optional report type. The supported value is 'inactive'. List all identities that have not authenticated within the
    * time indicated by duration.
    *
    * @return the type
@@ -138,7 +145,7 @@ public class CreateReportOptions extends GenericModel {
   /**
    * Gets the duration.
    *
-   * Optional duration of the report, supported unit of duration is hours.
+   * Optional duration of the report. The supported unit of duration is hours.
    *
    * @return the duration
    */

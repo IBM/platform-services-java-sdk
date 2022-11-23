@@ -39,6 +39,11 @@ public class CreateApiKeyOptions extends GenericModel {
     private Boolean storeValue;
     private String entityLock;
 
+    /**
+     * Instantiates a new Builder from an existing CreateApiKeyOptions instance.
+     *
+     * @param createApiKeyOptions the instance to initialize the Builder with
+     */
     private Builder(CreateApiKeyOptions createApiKeyOptions) {
       this.name = createApiKeyOptions.name;
       this.iamId = createApiKeyOptions.iamId;
@@ -152,6 +157,8 @@ public class CreateApiKeyOptions extends GenericModel {
       return this;
     }
   }
+
+  protected CreateApiKeyOptions() { }
 
   protected CreateApiKeyOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,

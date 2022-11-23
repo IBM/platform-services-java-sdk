@@ -28,6 +28,8 @@ public class ApikeyActivity extends GenericModel {
   @SerializedName("last_authn")
   protected String lastAuthn;
 
+  protected ApikeyActivity() { }
+
   /**
    * Gets the id.
    *

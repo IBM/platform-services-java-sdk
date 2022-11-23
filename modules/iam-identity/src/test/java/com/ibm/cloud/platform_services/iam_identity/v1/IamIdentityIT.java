@@ -31,6 +31,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
@@ -103,6 +104,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private static String ACCOUNT_ID;
     private static String IAM_ID;
+    private static String IAM_ID_MEMBER;
     private static String IAM_APIKEY;
 
     private static String IAM_ID_INVALID = "IAM-InvalidId";
@@ -154,10 +156,12 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
         ACCOUNT_ID = config.get("ACCOUNT_ID");
         IAM_ID = config.get("IAM_ID");
+        IAM_ID_MEMBER = config.get("IAM_ID_MEMBER");
         IAM_APIKEY = config.get("APIKEY");
 
         assertNotNull(ACCOUNT_ID);
         assertNotNull(IAM_ID);
+        assertNotNull(IAM_ID_MEMBER);
         assertNotNull(IAM_APIKEY);
 
         // Make sure we start with a clean slate.
@@ -1483,8 +1487,11 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertNotNull(accountSettingsResponseResult.getRestrictCreatePlatformApikey());
             assertNotNull(accountSettingsResponseResult.getRestrictCreateServiceId());
             assertNotNull(accountSettingsResponseResult.getMfa());
+            assertNotNull(accountSettingsResponseResult.getUserMfa());
             assertNotNull(accountSettingsResponseResult.getSessionExpirationInSeconds());
             assertNotNull(accountSettingsResponseResult.getSessionInvalidationInSeconds());
+            assertNotNull(accountSettingsResponseResult.getSystemAccessTokenExpirationInSeconds());
+            assertNotNull(accountSettingsResponseResult.getSystemRefreshTokenExpirationInSeconds());
 
             // Grab the Etag value from the response for use in the update operation.
             assertNotNull(response.getHeaders().values("Etag"));
@@ -1501,6 +1508,14 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     public void testUpdateAccountSettings() throws Exception {
         assertNotNull(accountSettingsEtag);
         try {
+            AccountSettingsUserMFA userMFA = new AccountSettingsUserMFA.Builder()
+                    .iamId(IAM_ID_MEMBER)
+                    .mfa("NONE")
+                    .build();
+            
+            List<AccountSettingsUserMFA> userMFAExpList = new ArrayList<>(); 
+            userMFAExpList.add(userMFA);
+
             UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
                     .ifMatch(accountSettingsEtag)
                     .accountId(ACCOUNT_ID)
@@ -1508,9 +1523,12 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .restrictCreatePlatformApikey("NOT_RESTRICTED")
 //                    .allowedIpAddresses("testString")
                     .mfa("NONE")
+                    .userMfa(userMFAExpList)
                     .sessionExpirationInSeconds("86400")
                     .sessionInvalidationInSeconds("7200")
                     .maxSessionsPerIdentity("10")
+                    .systemAccessTokenExpirationInSeconds("3600")
+                    .systemRefreshTokenExpirationInSeconds("2592000")
                     .build();
 
             // Invoke operation
@@ -1525,10 +1543,13 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertNull(accountSettingsResponseResult.getAllowedIpAddresses());
             assertEquals(accountSettingsResponseResult.getAccountId(), updateAccountSettingsOptions.accountId());
             assertEquals(accountSettingsResponseResult.getMfa(), updateAccountSettingsOptions.mfa());
+            assertEquals(accountSettingsResponseResult.getUserMfa(), updateAccountSettingsOptions.userMfa());
             assertEquals(accountSettingsResponseResult.getRestrictCreatePlatformApikey(), updateAccountSettingsOptions.restrictCreatePlatformApikey());
             assertEquals(accountSettingsResponseResult.getRestrictCreateServiceId(), updateAccountSettingsOptions.restrictCreateServiceId());
             assertEquals(accountSettingsResponseResult.getSessionExpirationInSeconds(), updateAccountSettingsOptions.sessionExpirationInSeconds());
             assertEquals(accountSettingsResponseResult.getSessionInvalidationInSeconds(), updateAccountSettingsOptions.sessionInvalidationInSeconds());
+            assertEquals(accountSettingsResponseResult.getSystemAccessTokenExpirationInSeconds(), updateAccountSettingsOptions.systemAccessTokenExpirationInSeconds());
+            assertEquals(accountSettingsResponseResult.getSystemRefreshTokenExpirationInSeconds(), updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds());
             assertNotEquals(accountSettingsResponseResult.getEntityTag(), accountSettingsEtag);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",

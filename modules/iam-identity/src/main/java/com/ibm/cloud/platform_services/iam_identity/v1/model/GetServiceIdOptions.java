@@ -31,6 +31,11 @@ public class GetServiceIdOptions extends GenericModel {
     private Boolean includeHistory;
     private Boolean includeActivity;
 
+    /**
+     * Instantiates a new Builder from an existing GetServiceIdOptions instance.
+     *
+     * @param getServiceIdOptions the instance to initialize the Builder with
+     */
     private Builder(GetServiceIdOptions getServiceIdOptions) {
       this.id = getServiceIdOptions.id;
       this.includeHistory = getServiceIdOptions.includeHistory;
@@ -94,6 +99,8 @@ public class GetServiceIdOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetServiceIdOptions() { }
 
   protected GetServiceIdOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,

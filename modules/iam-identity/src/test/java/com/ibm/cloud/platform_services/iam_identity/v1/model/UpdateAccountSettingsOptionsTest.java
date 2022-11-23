@@ -13,6 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -31,6 +32,13 @@ public class UpdateAccountSettingsOptionsTest {
 
   @Test
   public void testUpdateAccountSettingsOptions() throws Throwable {
+    AccountSettingsUserMFA accountSettingsUserMfaModel = new AccountSettingsUserMFA.Builder()
+      .iamId("testString")
+      .mfa("NONE")
+      .build();
+    assertEquals(accountSettingsUserMfaModel.iamId(), "testString");
+    assertEquals(accountSettingsUserMfaModel.mfa(), "NONE");
+
     UpdateAccountSettingsOptions updateAccountSettingsOptionsModel = new UpdateAccountSettingsOptions.Builder()
       .ifMatch("testString")
       .accountId("testString")
@@ -38,9 +46,12 @@ public class UpdateAccountSettingsOptionsTest {
       .restrictCreatePlatformApikey("RESTRICTED")
       .allowedIpAddresses("testString")
       .mfa("NONE")
+      .userMfa(java.util.Arrays.asList(accountSettingsUserMfaModel))
       .sessionExpirationInSeconds("86400")
       .sessionInvalidationInSeconds("7200")
       .maxSessionsPerIdentity("testString")
+      .systemAccessTokenExpirationInSeconds("3600")
+      .systemRefreshTokenExpirationInSeconds("2592000")
       .build();
     assertEquals(updateAccountSettingsOptionsModel.ifMatch(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.accountId(), "testString");
@@ -48,9 +59,12 @@ public class UpdateAccountSettingsOptionsTest {
     assertEquals(updateAccountSettingsOptionsModel.restrictCreatePlatformApikey(), "RESTRICTED");
     assertEquals(updateAccountSettingsOptionsModel.allowedIpAddresses(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.mfa(), "NONE");
+    assertEquals(updateAccountSettingsOptionsModel.userMfa(), java.util.Arrays.asList(accountSettingsUserMfaModel));
     assertEquals(updateAccountSettingsOptionsModel.sessionExpirationInSeconds(), "86400");
     assertEquals(updateAccountSettingsOptionsModel.sessionInvalidationInSeconds(), "7200");
     assertEquals(updateAccountSettingsOptionsModel.maxSessionsPerIdentity(), "testString");
+    assertEquals(updateAccountSettingsOptionsModel.systemAccessTokenExpirationInSeconds(), "3600");
+    assertEquals(updateAccountSettingsOptionsModel.systemRefreshTokenExpirationInSeconds(), "2592000");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

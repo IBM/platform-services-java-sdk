@@ -27,6 +27,11 @@ public class UnlockServiceIdOptions extends GenericModel {
   public static class Builder {
     private String id;
 
+    /**
+     * Instantiates a new Builder from an existing UnlockServiceIdOptions instance.
+     *
+     * @param unlockServiceIdOptions the instance to initialize the Builder with
+     */
     private Builder(UnlockServiceIdOptions unlockServiceIdOptions) {
       this.id = unlockServiceIdOptions.id;
     }
@@ -66,6 +71,8 @@ public class UnlockServiceIdOptions extends GenericModel {
       return this;
     }
   }
+
+  protected UnlockServiceIdOptions() { }
 
   protected UnlockServiceIdOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,

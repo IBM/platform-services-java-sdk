@@ -24,6 +24,8 @@ public class ProfileClaimRuleList extends GenericModel {
   protected ResponseContext context;
   protected List<ProfileClaimRule> rules;
 
+  protected ProfileClaimRuleList() { }
+
   /**
    * Gets the context.
    *

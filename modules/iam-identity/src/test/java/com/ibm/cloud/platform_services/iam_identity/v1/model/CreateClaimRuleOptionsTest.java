@@ -19,8 +19,6 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ResponseContext;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -72,7 +70,7 @@ public class CreateClaimRuleOptionsTest {
     CreateClaimRuleOptions createClaimRuleOptionsModel = new CreateClaimRuleOptions.Builder()
       .profileId("testString")
       .type("testString")
-      .conditions(new java.util.ArrayList<ProfileClaimRuleConditions>(java.util.Arrays.asList(profileClaimRuleConditionsModel)))
+      .conditions(java.util.Arrays.asList(profileClaimRuleConditionsModel))
       .context(responseContextModel)
       .name("testString")
       .realmName("testString")
@@ -81,7 +79,7 @@ public class CreateClaimRuleOptionsTest {
       .build();
     assertEquals(createClaimRuleOptionsModel.profileId(), "testString");
     assertEquals(createClaimRuleOptionsModel.type(), "testString");
-    assertEquals(createClaimRuleOptionsModel.conditions(), new java.util.ArrayList<ProfileClaimRuleConditions>(java.util.Arrays.asList(profileClaimRuleConditionsModel)));
+    assertEquals(createClaimRuleOptionsModel.conditions(), java.util.Arrays.asList(profileClaimRuleConditionsModel));
     assertEquals(createClaimRuleOptionsModel.context(), responseContextModel);
     assertEquals(createClaimRuleOptionsModel.name(), "testString");
     assertEquals(createClaimRuleOptionsModel.realmName(), "testString");

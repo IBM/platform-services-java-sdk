@@ -27,6 +27,11 @@ public class ListClaimRulesOptions extends GenericModel {
   public static class Builder {
     private String profileId;
 
+    /**
+     * Instantiates a new Builder from an existing ListClaimRulesOptions instance.
+     *
+     * @param listClaimRulesOptions the instance to initialize the Builder with
+     */
     private Builder(ListClaimRulesOptions listClaimRulesOptions) {
       this.profileId = listClaimRulesOptions.profileId;
     }
@@ -66,6 +71,8 @@ public class ListClaimRulesOptions extends GenericModel {
       return this;
     }
   }
+
+  protected ListClaimRulesOptions() { }
 
   protected ListClaimRulesOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,

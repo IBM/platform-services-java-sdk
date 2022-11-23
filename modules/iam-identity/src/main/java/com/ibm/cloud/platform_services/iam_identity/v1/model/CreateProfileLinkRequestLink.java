@@ -31,6 +31,11 @@ public class CreateProfileLinkRequestLink extends GenericModel {
     private String namespace;
     private String name;
 
+    /**
+     * Instantiates a new Builder from an existing CreateProfileLinkRequestLink instance.
+     *
+     * @param createProfileLinkRequestLink the instance to initialize the Builder with
+     */
     private Builder(CreateProfileLinkRequestLink createProfileLinkRequestLink) {
       this.crn = createProfileLinkRequestLink.crn;
       this.namespace = createProfileLinkRequestLink.namespace;
@@ -96,6 +101,8 @@ public class CreateProfileLinkRequestLink extends GenericModel {
       return this;
     }
   }
+
+  protected CreateProfileLinkRequestLink() { }
 
   protected CreateProfileLinkRequestLink(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.crn,

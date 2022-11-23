@@ -22,6 +22,8 @@ public class ApikeyActivityServiceid extends GenericModel {
   protected String id;
   protected String name;
 
+  protected ApikeyActivityServiceid() { }
+
   /**
    * Gets the id.
    *

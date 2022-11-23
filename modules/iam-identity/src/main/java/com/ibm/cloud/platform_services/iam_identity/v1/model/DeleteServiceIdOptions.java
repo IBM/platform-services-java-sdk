@@ -27,6 +27,11 @@ public class DeleteServiceIdOptions extends GenericModel {
   public static class Builder {
     private String id;
 
+    /**
+     * Instantiates a new Builder from an existing DeleteServiceIdOptions instance.
+     *
+     * @param deleteServiceIdOptions the instance to initialize the Builder with
+     */
     private Builder(DeleteServiceIdOptions deleteServiceIdOptions) {
       this.id = deleteServiceIdOptions.id;
     }
@@ -66,6 +71,8 @@ public class DeleteServiceIdOptions extends GenericModel {
       return this;
     }
   }
+
+  protected DeleteServiceIdOptions() { }
 
   protected DeleteServiceIdOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,

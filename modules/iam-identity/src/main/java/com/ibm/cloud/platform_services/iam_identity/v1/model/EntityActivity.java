@@ -25,6 +25,8 @@ public class EntityActivity extends GenericModel {
   @SerializedName("last_authn")
   protected String lastAuthn;
 
+  protected EntityActivity() { }
+
   /**
    * Gets the id.
    *

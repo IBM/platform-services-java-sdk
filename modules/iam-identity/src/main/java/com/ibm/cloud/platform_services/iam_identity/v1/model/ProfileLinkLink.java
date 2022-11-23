@@ -23,6 +23,8 @@ public class ProfileLinkLink extends GenericModel {
   protected String namespace;
   protected String name;
 
+  protected ProfileLinkLink() { }
+
   /**
    * Gets the crn.
    *

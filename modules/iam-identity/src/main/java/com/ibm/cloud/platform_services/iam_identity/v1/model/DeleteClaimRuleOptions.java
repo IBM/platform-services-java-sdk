@@ -29,6 +29,11 @@ public class DeleteClaimRuleOptions extends GenericModel {
     private String profileId;
     private String ruleId;
 
+    /**
+     * Instantiates a new Builder from an existing DeleteClaimRuleOptions instance.
+     *
+     * @param deleteClaimRuleOptions the instance to initialize the Builder with
+     */
     private Builder(DeleteClaimRuleOptions deleteClaimRuleOptions) {
       this.profileId = deleteClaimRuleOptions.profileId;
       this.ruleId = deleteClaimRuleOptions.ruleId;
@@ -82,6 +87,8 @@ public class DeleteClaimRuleOptions extends GenericModel {
       return this;
     }
   }
+
+  protected DeleteClaimRuleOptions() { }
 
   protected DeleteClaimRuleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,

@@ -25,6 +25,8 @@ public class Activity extends GenericModel {
   @SerializedName("authn_count")
   protected Long authnCount;
 
+  protected Activity() { }
+
   /**
    * Gets the lastAuthn.
    *

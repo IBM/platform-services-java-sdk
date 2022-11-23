@@ -27,6 +27,11 @@ public class ListLinksOptions extends GenericModel {
   public static class Builder {
     private String profileId;
 
+    /**
+     * Instantiates a new Builder from an existing ListLinksOptions instance.
+     *
+     * @param listLinksOptions the instance to initialize the Builder with
+     */
     private Builder(ListLinksOptions listLinksOptions) {
       this.profileId = listLinksOptions.profileId;
     }
@@ -66,6 +71,8 @@ public class ListLinksOptions extends GenericModel {
       return this;
     }
   }
+
+  protected ListLinksOptions() { }
 
   protected ListLinksOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,

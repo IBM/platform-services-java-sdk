@@ -36,6 +36,8 @@ public class Report extends GenericModel {
   protected List<EntityActivity> serviceids;
   protected List<EntityActivity> profiles;
 
+  protected Report() { }
+
   /**
    * Gets the createdBy.
    *

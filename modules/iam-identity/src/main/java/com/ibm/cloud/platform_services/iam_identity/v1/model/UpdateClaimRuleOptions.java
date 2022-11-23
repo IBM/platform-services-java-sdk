@@ -48,6 +48,11 @@ public class UpdateClaimRuleOptions extends GenericModel {
     private String crType;
     private Long expiration;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateClaimRuleOptions instance.
+     *
+     * @param updateClaimRuleOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateClaimRuleOptions updateClaimRuleOptions) {
       this.profileId = updateClaimRuleOptions.profileId;
       this.ruleId = updateClaimRuleOptions.ruleId;
@@ -221,6 +226,8 @@ public class UpdateClaimRuleOptions extends GenericModel {
     }
   }
 
+  protected UpdateClaimRuleOptions() { }
+
   protected UpdateClaimRuleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,
       "profileId cannot be empty");
@@ -278,7 +285,7 @@ public class UpdateClaimRuleOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * Version of the claim rule to be updated.  Specify the version that you retrived when reading list of claim rules.
+   * Version of the claim rule to be updated. Specify the version that you retrived when reading list of claim rules.
    * This value helps to identify any parallel usage of claim rule. Pass * to indicate to update any version available.
    * This might result in stale updates.
    *
@@ -291,7 +298,7 @@ public class UpdateClaimRuleOptions extends GenericModel {
   /**
    * Gets the type.
    *
-   * Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
+   * Type of the claim rule, either 'Profile-SAML' or 'Profile-CR'.
    *
    * @return the type
    */

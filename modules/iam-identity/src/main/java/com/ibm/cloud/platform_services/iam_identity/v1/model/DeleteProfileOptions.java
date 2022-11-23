@@ -27,6 +27,11 @@ public class DeleteProfileOptions extends GenericModel {
   public static class Builder {
     private String profileId;
 
+    /**
+     * Instantiates a new Builder from an existing DeleteProfileOptions instance.
+     *
+     * @param deleteProfileOptions the instance to initialize the Builder with
+     */
     private Builder(DeleteProfileOptions deleteProfileOptions) {
       this.profileId = deleteProfileOptions.profileId;
     }
@@ -66,6 +71,8 @@ public class DeleteProfileOptions extends GenericModel {
       return this;
     }
   }
+
+  protected DeleteProfileOptions() { }
 
   protected DeleteProfileOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,

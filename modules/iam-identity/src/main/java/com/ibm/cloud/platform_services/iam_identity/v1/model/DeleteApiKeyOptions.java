@@ -27,6 +27,11 @@ public class DeleteApiKeyOptions extends GenericModel {
   public static class Builder {
     private String id;
 
+    /**
+     * Instantiates a new Builder from an existing DeleteApiKeyOptions instance.
+     *
+     * @param deleteApiKeyOptions the instance to initialize the Builder with
+     */
     private Builder(DeleteApiKeyOptions deleteApiKeyOptions) {
       this.id = deleteApiKeyOptions.id;
     }
@@ -66,6 +71,8 @@ public class DeleteApiKeyOptions extends GenericModel {
       return this;
     }
   }
+
+  protected DeleteApiKeyOptions() { }
 
   protected DeleteApiKeyOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,

@@ -39,6 +39,8 @@ public class ProfileClaimRule extends GenericModel {
   protected String crType;
   protected List<ProfileClaimRuleConditions> conditions;
 
+  protected ProfileClaimRule() { }
+
   /**
    * Gets the id.
    *
@@ -97,7 +99,7 @@ public class ProfileClaimRule extends GenericModel {
   /**
    * Gets the type.
    *
-   * Type of the Calim rule, either 'Profile-SAML' or 'Profile-CR'.
+   * Type of the claim rule, either 'Profile-SAML' or 'Profile-CR'.
    *
    * @return the type
    */

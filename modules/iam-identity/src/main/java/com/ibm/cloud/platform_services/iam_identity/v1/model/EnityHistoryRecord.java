@@ -31,6 +31,8 @@ public class EnityHistoryRecord extends GenericModel {
   protected List<String> params;
   protected String message;
 
+  protected EnityHistoryRecord() { }
+
   /**
    * Gets the timestamp.
    *

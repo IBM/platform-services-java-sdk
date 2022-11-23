@@ -29,6 +29,11 @@ public class DeleteLinkOptions extends GenericModel {
     private String profileId;
     private String linkId;
 
+    /**
+     * Instantiates a new Builder from an existing DeleteLinkOptions instance.
+     *
+     * @param deleteLinkOptions the instance to initialize the Builder with
+     */
     private Builder(DeleteLinkOptions deleteLinkOptions) {
       this.profileId = deleteLinkOptions.profileId;
       this.linkId = deleteLinkOptions.linkId;
@@ -82,6 +87,8 @@ public class DeleteLinkOptions extends GenericModel {
       return this;
     }
   }
+
+  protected DeleteLinkOptions() { }
 
   protected DeleteLinkOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,

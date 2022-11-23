@@ -49,6 +49,11 @@ public class ListServiceIdsOptions extends GenericModel {
     private String order;
     private Boolean includeHistory;
 
+    /**
+     * Instantiates a new Builder from an existing ListServiceIdsOptions instance.
+     *
+     * @param listServiceIdsOptions the instance to initialize the Builder with
+     */
     private Builder(ListServiceIdsOptions listServiceIdsOptions) {
       this.accountId = listServiceIdsOptions.accountId;
       this.name = listServiceIdsOptions.name;
@@ -151,6 +156,8 @@ public class ListServiceIdsOptions extends GenericModel {
       return this;
     }
   }
+
+  protected ListServiceIdsOptions() { }
 
   protected ListServiceIdsOptions(Builder builder) {
     accountId = builder.accountId;

@@ -31,6 +31,11 @@ public class ProfileClaimRuleConditions extends GenericModel {
     private String operator;
     private String value;
 
+    /**
+     * Instantiates a new Builder from an existing ProfileClaimRuleConditions instance.
+     *
+     * @param profileClaimRuleConditions the instance to initialize the Builder with
+     */
     private Builder(ProfileClaimRuleConditions profileClaimRuleConditions) {
       this.claim = profileClaimRuleConditions.claim;
       this.operator = profileClaimRuleConditions.operator;
@@ -99,6 +104,8 @@ public class ProfileClaimRuleConditions extends GenericModel {
     }
   }
 
+  protected ProfileClaimRuleConditions() { }
+
   protected ProfileClaimRuleConditions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.claim,
       "claim cannot be null");
@@ -123,7 +130,8 @@ public class ProfileClaimRuleConditions extends GenericModel {
   /**
    * Gets the claim.
    *
-   * The claim to evaluate against.
+   * The claim to evaluate against. [Learn
+   * more](/docs/account?topic=account-iam-condition-properties&amp;interface=ui#cr-attribute-names).
    *
    * @return the claim
    */

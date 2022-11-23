@@ -23,6 +23,8 @@ public class ProfileLinkList extends GenericModel {
 
   protected List<ProfileLink> links;
 
+  protected ProfileLinkList() { }
+
   /**
    * Gets the links.
    *

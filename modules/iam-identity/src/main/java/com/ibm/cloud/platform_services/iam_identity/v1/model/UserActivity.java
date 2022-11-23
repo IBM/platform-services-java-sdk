@@ -28,6 +28,8 @@ public class UserActivity extends GenericModel {
   @SerializedName("last_authn")
   protected String lastAuthn;
 
+  protected UserActivity() { }
+
   /**
    * Gets the iamId.
    *

@@ -56,6 +56,11 @@ public class ResponseContext extends GenericModel {
     private String elapsedTime;
     private String clusterName;
 
+    /**
+     * Instantiates a new Builder from an existing ResponseContext instance.
+     *
+     * @param responseContext the instance to initialize the Builder with
+     */
     private Builder(ResponseContext responseContext) {
       this.transactionId = responseContext.transactionId;
       this.operation = responseContext.operation;
@@ -206,6 +211,8 @@ public class ResponseContext extends GenericModel {
       return this;
     }
   }
+
+  protected ResponseContext() { }
 
   protected ResponseContext(Builder builder) {
     transactionId = builder.transactionId;

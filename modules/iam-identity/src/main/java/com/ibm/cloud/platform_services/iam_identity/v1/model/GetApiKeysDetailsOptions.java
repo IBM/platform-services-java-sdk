@@ -29,6 +29,11 @@ public class GetApiKeysDetailsOptions extends GenericModel {
     private String iamApiKey;
     private Boolean includeHistory;
 
+    /**
+     * Instantiates a new Builder from an existing GetApiKeysDetailsOptions instance.
+     *
+     * @param getApiKeysDetailsOptions the instance to initialize the Builder with
+     */
     private Builder(GetApiKeysDetailsOptions getApiKeysDetailsOptions) {
       this.iamApiKey = getApiKeysDetailsOptions.iamApiKey;
       this.includeHistory = getApiKeysDetailsOptions.includeHistory;
@@ -71,6 +76,8 @@ public class GetApiKeysDetailsOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetApiKeysDetailsOptions() { }
 
   protected GetApiKeysDetailsOptions(Builder builder) {
     iamApiKey = builder.iamApiKey;

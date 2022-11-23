@@ -40,6 +40,11 @@ public class CreateServiceIdOptions extends GenericModel {
     private ApiKeyInsideCreateServiceIdRequest apikey;
     private String entityLock;
 
+    /**
+     * Instantiates a new Builder from an existing CreateServiceIdOptions instance.
+     *
+     * @param createServiceIdOptions the instance to initialize the Builder with
+     */
     private Builder(CreateServiceIdOptions createServiceIdOptions) {
       this.accountId = createServiceIdOptions.accountId;
       this.name = createServiceIdOptions.name;
@@ -158,6 +163,8 @@ public class CreateServiceIdOptions extends GenericModel {
       return this;
     }
   }
+
+  protected CreateServiceIdOptions() { }
 
   protected CreateServiceIdOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,

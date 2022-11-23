@@ -33,6 +33,11 @@ public class UpdateApiKeyOptions extends GenericModel {
     private String name;
     private String description;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateApiKeyOptions instance.
+     *
+     * @param updateApiKeyOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateApiKeyOptions updateApiKeyOptions) {
       this.id = updateApiKeyOptions.id;
       this.ifMatch = updateApiKeyOptions.ifMatch;
@@ -110,6 +115,8 @@ public class UpdateApiKeyOptions extends GenericModel {
       return this;
     }
   }
+
+  protected UpdateApiKeyOptions() { }
 
   protected UpdateApiKeyOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,

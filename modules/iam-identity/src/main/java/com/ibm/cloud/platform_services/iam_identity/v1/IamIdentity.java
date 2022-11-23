@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.47.0-60650593-20220330-200002
+ * IBM OpenAPI SDK Code Generator Version: 3.62.0-a2a22f95-20221115-162524
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -83,8 +83,14 @@ import java.util.Map.Entry;
  */
 public class IamIdentity extends BaseService {
 
+  /**
+   * Default service name used when configuring the `IamIdentity` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "iam_identity";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://iam.cloud.ibm.com";
 
  /**
@@ -127,9 +133,9 @@ public class IamIdentity extends BaseService {
    * Get API keys for a given service or user IAM ID and account ID.
    *
    * Returns the list of API key details for a given service or user IAM ID and account ID. Users can manage user API
-   * keys for themself, or service ID API keys for  service IDs that are bound to an entity they have access to. In case
-   * of  service IDs and their API keys, a user must be either an account owner,  a IBM Cloud org manager or IBM Cloud
-   * space developer in order to manage  service IDs of the entity.
+   * keys for themself, or service ID API keys for service IDs that are bound to an entity they have access to. In case
+   * of service IDs and their API keys, a user must be either an account owner, a IBM Cloud org manager or IBM Cloud
+   * space developer in order to manage service IDs of the entity.
    *
    * @param listApiKeysOptions the {@link ListApiKeysOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApiKeyList}
@@ -180,9 +186,9 @@ public class IamIdentity extends BaseService {
    * Get API keys for a given service or user IAM ID and account ID.
    *
    * Returns the list of API key details for a given service or user IAM ID and account ID. Users can manage user API
-   * keys for themself, or service ID API keys for  service IDs that are bound to an entity they have access to. In case
-   * of  service IDs and their API keys, a user must be either an account owner,  a IBM Cloud org manager or IBM Cloud
-   * space developer in order to manage  service IDs of the entity.
+   * keys for themself, or service ID API keys for service IDs that are bound to an entity they have access to. In case
+   * of service IDs and their API keys, a user must be either an account owner, a IBM Cloud org manager or IBM Cloud
+   * space developer in order to manage service IDs of the entity.
    *
    * @return a {@link ServiceCall} with a result of type {@link ApiKeyList}
    */
@@ -194,7 +200,7 @@ public class IamIdentity extends BaseService {
    * Create an API key.
    *
    * Creates an API key for a UserID or service ID. Users can manage user API keys for themself, or service ID API keys
-   * for  service IDs that are bound to an entity they have access to.
+   * for service IDs that are bound to an entity they have access to.
    *
    * @param createApiKeyOptions the {@link CreateApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApiKey}
@@ -236,7 +242,7 @@ public class IamIdentity extends BaseService {
    * Get details of an API key by its value.
    *
    * Returns the details of an API key by its value. Users can manage user API keys for themself, or service ID API keys
-   *  for service IDs that are bound to an entity they have access to.
+   * for service IDs that are bound to an entity they have access to.
    *
    * @param getApiKeysDetailsOptions the {@link GetApiKeysDetailsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApiKey}
@@ -266,7 +272,7 @@ public class IamIdentity extends BaseService {
    * Get details of an API key by its value.
    *
    * Returns the details of an API key by its value. Users can manage user API keys for themself, or service ID API keys
-   *  for service IDs that are bound to an entity they have access to.
+   * for service IDs that are bound to an entity they have access to.
    *
    * @return a {@link ServiceCall} with a result of type {@link ApiKey}
    */
@@ -277,10 +283,10 @@ public class IamIdentity extends BaseService {
   /**
    * Get details of an API key.
    *
-   * Returns the details of an API key. Users can manage user API keys for themself, or service ID API keys for  service
-   * IDs that are bound to an entity they have access to. In case of  service IDs and their API keys, a user must be
-   * either an account owner,  a IBM Cloud org manager or IBM Cloud space developer in order to manage  service IDs of
-   * the entity.
+   * Returns the details of an API key. Users can manage user API keys for themself, or service ID API keys for service
+   * IDs that are bound to an entity they have access to. In case of service IDs and their API keys, a user must be
+   * either an account owner, a IBM Cloud org manager or IBM Cloud space developer in order to manage service IDs of the
+   * entity.
    *
    * @param getApiKeyOptions the {@link GetApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApiKey}
@@ -347,7 +353,7 @@ public class IamIdentity extends BaseService {
    * Deletes an API key.
    *
    * Deletes an API key. Existing tokens will remain valid until expired. Users can manage user API keys for themself,
-   * or service ID API  keys for service IDs that are bound to an entity they have access  to.
+   * or service ID API keys for service IDs that are bound to an entity they have access to.
    *
    * @param deleteApiKeyOptions the {@link DeleteApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -517,7 +523,7 @@ public class IamIdentity extends BaseService {
    *
    * Returns the details of a service ID. Users can manage user API keys for themself, or service ID API keys for
    * service IDs that are bound to an entity they have access to. Note: apikey details are only included in the response
-   * when  creating a Service ID with an api key.
+   * when creating a Service ID with an api key.
    *
    * @param getServiceIdOptions the {@link GetServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceId}
@@ -550,8 +556,8 @@ public class IamIdentity extends BaseService {
    * Updates properties of a service ID. This does NOT affect existing access tokens. Their token content will stay
    * unchanged until the access token is refreshed. To update a service ID, pass the property to be modified. To delete
    * one property's value, pass the property with an empty value "".Users can manage user API keys for themself, or
-   * service ID API keys for service IDs that are bound to an entity they have access to.   Note: apikey details are
-   * only included in the response when creating a  Service ID with an apikey.
+   * service ID API keys for service IDs that are bound to an entity they have access to. Note: apikey details are only
+   * included in the response when creating a Service ID with an apikey.
    *
    * @param updateServiceIdOptions the {@link UpdateServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceId}
@@ -1109,8 +1115,8 @@ public class IamIdentity extends BaseService {
   /**
    * Update account configurations.
    *
-   * Allows a user to configure settings on their account with regards to MFA, session lifetimes,  access control for
-   * creating new identities, and enforcing IP restrictions on  token creation.
+   * Allows a user to configure settings on their account with regards to MFA, session lifetimes, access control for
+   * creating new identities, and enforcing IP restrictions on token creation.
    *
    * @param updateAccountSettingsOptions the {@link UpdateAccountSettingsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link AccountSettingsResponse}
@@ -1140,6 +1146,9 @@ public class IamIdentity extends BaseService {
     if (updateAccountSettingsOptions.mfa() != null) {
       contentJson.addProperty("mfa", updateAccountSettingsOptions.mfa());
     }
+    if (updateAccountSettingsOptions.userMfa() != null) {
+      contentJson.add("user_mfa", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateAccountSettingsOptions.userMfa()));
+    }
     if (updateAccountSettingsOptions.sessionExpirationInSeconds() != null) {
       contentJson.addProperty("session_expiration_in_seconds", updateAccountSettingsOptions.sessionExpirationInSeconds());
     }
@@ -1149,6 +1158,12 @@ public class IamIdentity extends BaseService {
     if (updateAccountSettingsOptions.maxSessionsPerIdentity() != null) {
       contentJson.addProperty("max_sessions_per_identity", updateAccountSettingsOptions.maxSessionsPerIdentity());
     }
+    if (updateAccountSettingsOptions.systemAccessTokenExpirationInSeconds() != null) {
+      contentJson.addProperty("system_access_token_expiration_in_seconds", updateAccountSettingsOptions.systemAccessTokenExpirationInSeconds());
+    }
+    if (updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds() != null) {
+      contentJson.addProperty("system_refresh_token_expiration_in_seconds", updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds());
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<AccountSettingsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsResponse>() { }.getType());
@@ -1156,9 +1171,10 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Trigger activity report across on account scope.
+   * Trigger activity report for the account.
    *
-   * Trigger activity report across on account scope for a given accountid.
+   * Trigger activity report for the account by specifying the account ID. It can take a few minutes to generate the
+   * report for retrieval.
    *
    * @param createReportOptions the {@link CreateReportOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ReportReference}
@@ -1186,9 +1202,10 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Get activity report across on account scope.
+   * Get activity report for the account.
    *
-   * Get activity report across on account scope for a given accountid.
+   * Get activity report for the account by specifying the account ID and the reference that is generated by triggering
+   * the report. Reports older than a day are deleted when generating a new report.
    *
    * @param getReportOptions the {@link GetReportOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link Report}

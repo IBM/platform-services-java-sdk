@@ -29,6 +29,8 @@ public class ApiKeyList extends GenericModel {
   protected String next;
   protected List<ApiKey> apikeys;
 
+  protected ApiKeyList() { }
+
   /**
    * Gets the context.
    *

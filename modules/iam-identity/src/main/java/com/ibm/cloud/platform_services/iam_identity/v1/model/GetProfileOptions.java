@@ -29,6 +29,11 @@ public class GetProfileOptions extends GenericModel {
     private String profileId;
     private Boolean includeActivity;
 
+    /**
+     * Instantiates a new Builder from an existing GetProfileOptions instance.
+     *
+     * @param getProfileOptions the instance to initialize the Builder with
+     */
     private Builder(GetProfileOptions getProfileOptions) {
       this.profileId = getProfileOptions.profileId;
       this.includeActivity = getProfileOptions.includeActivity;
@@ -80,6 +85,8 @@ public class GetProfileOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetProfileOptions() { }
 
   protected GetProfileOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,

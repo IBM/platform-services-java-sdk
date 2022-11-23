@@ -44,6 +44,11 @@ public class CreateClaimRuleOptions extends GenericModel {
     private String crType;
     private Long expiration;
 
+    /**
+     * Instantiates a new Builder from an existing CreateClaimRuleOptions instance.
+     *
+     * @param createClaimRuleOptions the instance to initialize the Builder with
+     */
     private Builder(CreateClaimRuleOptions createClaimRuleOptions) {
       this.profileId = createClaimRuleOptions.profileId;
       this.type = createClaimRuleOptions.type;
@@ -189,6 +194,8 @@ public class CreateClaimRuleOptions extends GenericModel {
     }
   }
 
+  protected CreateClaimRuleOptions() { }
+
   protected CreateClaimRuleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,
       "profileId cannot be empty");
@@ -229,7 +236,7 @@ public class CreateClaimRuleOptions extends GenericModel {
   /**
    * Gets the type.
    *
-   * Type of the calim rule, either 'Profile-SAML' or 'Profile-CR'.
+   * Type of the claim rule, either 'Profile-SAML' or 'Profile-CR'.
    *
    * @return the type
    */

@@ -21,6 +21,8 @@ public class ReportReference extends GenericModel {
 
   protected String reference;
 
+  protected ReportReference() { }
+
   /**
    * Gets the reference.
    *

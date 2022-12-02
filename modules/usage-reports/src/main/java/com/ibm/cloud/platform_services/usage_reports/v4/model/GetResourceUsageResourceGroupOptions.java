@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -47,6 +47,11 @@ public class GetResourceUsageResourceGroupOptions extends GenericModel {
     private String planId;
     private String region;
 
+    /**
+     * Instantiates a new Builder from an existing GetResourceUsageResourceGroupOptions instance.
+     *
+     * @param getResourceUsageResourceGroupOptions the instance to initialize the Builder with
+     */
     private Builder(GetResourceUsageResourceGroupOptions getResourceUsageResourceGroupOptions) {
       this.accountId = getResourceUsageResourceGroupOptions.accountId;
       this.resourceGroupId = getResourceUsageResourceGroupOptions.resourceGroupId;
@@ -211,6 +216,8 @@ public class GetResourceUsageResourceGroupOptions extends GenericModel {
     }
   }
 
+  protected GetResourceUsageResourceGroupOptions() { }
+
   protected GetResourceUsageResourceGroupOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
@@ -298,7 +305,7 @@ public class GetResourceUsageResourceGroupOptions extends GenericModel {
   /**
    * Gets the limit.
    *
-   * Number of usage records returned. The default value is 10. Maximum value is 20.
+   * Number of usage records returned. The default value is 30. Maximum value is 200.
    *
    * @return the limit
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.36.0-6f5b0381-20210716-180747
+ * IBM OpenAPI SDK Code Generator Version: 3.62.0-a2a22f95-20221115-162524
  */
 
 package com.ibm.cloud.platform_services.usage_reports.v4;
@@ -44,12 +44,18 @@ import java.util.Map.Entry;
 /**
  * Usage reports for IBM Cloud accounts.
  *
- * @version v4
+ * API Version: 4.0.6
  */
 public class UsageReports extends BaseService {
 
+  /**
+   * Default service name used when configuring the `UsageReports` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "usage_reports";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://billing.cloud.ibm.com";
 
  /**

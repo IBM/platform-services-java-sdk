@@ -1,3 +1,10 @@
+## [0.29.1](https://github.com/IBM/platform-services-java-sdk/compare/0.29.0...0.29.1) (2022-12-05)
+
+
+### Bug Fixes
+
+* **Usage Reports:** rename Account_Summary billing_month property ([#169](https://github.com/IBM/platform-services-java-sdk/issues/169)) ([af628b7](https://github.com/IBM/platform-services-java-sdk/commit/af628b759af55c7189ac3d483fcbf2db8d646782))
+
 # [0.29.0](https://github.com/IBM/platform-services-java-sdk/compare/0.28.0...0.29.0) (2022-12-05)
 
 

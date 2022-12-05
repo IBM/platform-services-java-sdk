@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -35,6 +35,11 @@ public class ListRolesOptions extends GenericModel {
     private String sourceServiceName;
     private String policyType;
 
+    /**
+     * Instantiates a new Builder from an existing ListRolesOptions instance.
+     *
+     * @param listRolesOptions the instance to initialize the Builder with
+     */
     private Builder(ListRolesOptions listRolesOptions) {
       this.acceptLanguage = listRolesOptions.acceptLanguage;
       this.accountId = listRolesOptions.accountId;
@@ -113,6 +118,8 @@ public class ListRolesOptions extends GenericModel {
       return this;
     }
   }
+
+  protected ListRolesOptions() { }
 
   protected ListRolesOptions(Builder builder) {
     acceptLanguage = builder.acceptLanguage;

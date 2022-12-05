@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -31,6 +31,11 @@ public class ResourceTag extends GenericModel {
     private String value;
     private String operator;
 
+    /**
+     * Instantiates a new Builder from an existing ResourceTag instance.
+     *
+     * @param resourceTag the instance to initialize the Builder with
+     */
     private Builder(ResourceTag resourceTag) {
       this.name = resourceTag.name;
       this.value = resourceTag.value;
@@ -96,6 +101,8 @@ public class ResourceTag extends GenericModel {
       return this;
     }
   }
+
+  protected ResourceTag() { }
 
   protected ResourceTag(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,

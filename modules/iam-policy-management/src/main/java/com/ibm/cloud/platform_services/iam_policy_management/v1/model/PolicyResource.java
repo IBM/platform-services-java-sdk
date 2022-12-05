@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -32,6 +32,11 @@ public class PolicyResource extends GenericModel {
     private List<ResourceAttribute> attributes;
     private List<ResourceTag> tags;
 
+    /**
+     * Instantiates a new Builder from an existing PolicyResource instance.
+     *
+     * @param policyResource the instance to initialize the Builder with
+     */
     private Builder(PolicyResource policyResource) {
       this.attributes = policyResource.attributes;
       this.tags = policyResource.tags;
@@ -108,6 +113,8 @@ public class PolicyResource extends GenericModel {
       return this;
     }
   }
+
+  protected PolicyResource() { }
 
   protected PolicyResource(Builder builder) {
     attributes = builder.attributes;

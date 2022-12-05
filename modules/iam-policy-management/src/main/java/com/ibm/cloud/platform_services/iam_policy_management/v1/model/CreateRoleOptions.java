@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -42,6 +42,11 @@ public class CreateRoleOptions extends GenericModel {
     private String description;
     private String acceptLanguage;
 
+    /**
+     * Instantiates a new Builder from an existing CreateRoleOptions instance.
+     *
+     * @param createRoleOptions the instance to initialize the Builder with
+     */
     private Builder(CreateRoleOptions createRoleOptions) {
       this.displayName = createRoleOptions.displayName;
       this.actions = createRoleOptions.actions;
@@ -178,6 +183,8 @@ public class CreateRoleOptions extends GenericModel {
       return this;
     }
   }
+
+  protected CreateRoleOptions() { }
 
   protected CreateRoleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.displayName,

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -38,6 +38,11 @@ public class UpdateRoleOptions extends GenericModel {
     private String description;
     private List<String> actions;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateRoleOptions instance.
+     *
+     * @param updateRoleOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateRoleOptions updateRoleOptions) {
       this.roleId = updateRoleOptions.roleId;
       this.ifMatch = updateRoleOptions.ifMatch;
@@ -157,6 +162,8 @@ public class UpdateRoleOptions extends GenericModel {
       return this;
     }
   }
+
+  protected UpdateRoleOptions() { }
 
   protected UpdateRoleOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.roleId,

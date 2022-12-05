@@ -1,3 +1,10 @@
+# [0.29.0](https://github.com/IBM/platform-services-java-sdk/compare/0.28.0...0.29.0) (2022-12-05)
+
+
+### Features
+
+* **IAM Policy Management:** add support for v2/policies ([#168](https://github.com/IBM/platform-services-java-sdk/issues/168)) ([56eef31](https://github.com/IBM/platform-services-java-sdk/commit/56eef31cc2823e6e4c5956a086071c0f70e1307b))
+
 # [0.28.0](https://github.com/IBM/platform-services-java-sdk/compare/0.27.4...0.28.0) (2022-11-23)
 
 

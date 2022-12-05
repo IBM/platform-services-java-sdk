@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -27,6 +27,11 @@ public class GetPolicyOptions extends GenericModel {
   public static class Builder {
     private String policyId;
 
+    /**
+     * Instantiates a new Builder from an existing GetPolicyOptions instance.
+     *
+     * @param getPolicyOptions the instance to initialize the Builder with
+     */
     private Builder(GetPolicyOptions getPolicyOptions) {
       this.policyId = getPolicyOptions.policyId;
     }
@@ -66,6 +71,8 @@ public class GetPolicyOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetPolicyOptions() { }
 
   protected GetPolicyOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.policyId,

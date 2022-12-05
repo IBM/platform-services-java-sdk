@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,8 +17,6 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRole
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -38,13 +36,13 @@ public class UpdateRoleOptionsTest {
       .ifMatch("testString")
       .displayName("testString")
       .description("testString")
-      .actions(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .actions(java.util.Arrays.asList("testString"))
       .build();
     assertEquals(updateRoleOptionsModel.roleId(), "testString");
     assertEquals(updateRoleOptionsModel.ifMatch(), "testString");
     assertEquals(updateRoleOptionsModel.displayName(), "testString");
     assertEquals(updateRoleOptionsModel.description(), "testString");
-    assertEquals(updateRoleOptionsModel.actions(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(updateRoleOptionsModel.actions(), java.util.Arrays.asList("testString"));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

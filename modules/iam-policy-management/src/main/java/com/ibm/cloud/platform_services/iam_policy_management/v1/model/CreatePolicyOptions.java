@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -40,6 +40,11 @@ public class CreatePolicyOptions extends GenericModel {
     private String description;
     private String acceptLanguage;
 
+    /**
+     * Instantiates a new Builder from an existing CreatePolicyOptions instance.
+     *
+     * @param createPolicyOptions the instance to initialize the Builder with
+     */
     private Builder(CreatePolicyOptions createPolicyOptions) {
       this.type = createPolicyOptions.type;
       this.subjects = createPolicyOptions.subjects;
@@ -196,6 +201,8 @@ public class CreatePolicyOptions extends GenericModel {
       return this;
     }
   }
+
+  protected CreatePolicyOptions() { }
 
   protected CreatePolicyOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,

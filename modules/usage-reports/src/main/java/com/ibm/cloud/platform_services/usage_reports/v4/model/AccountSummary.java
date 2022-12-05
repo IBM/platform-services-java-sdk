@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -24,8 +24,7 @@ public class AccountSummary extends GenericModel {
 
   @SerializedName("account_id")
   protected String accountId;
-  @SerializedName("billing_month")
-  protected String billingMonth;
+  protected String month;
   @SerializedName("billing_country_code")
   protected String billingCountryCode;
   @SerializedName("billing_currency_code")
@@ -34,6 +33,8 @@ public class AccountSummary extends GenericModel {
   protected List<Offer> offers;
   protected List<SupportSummary> support;
   protected SubscriptionSummary subscription;
+
+  protected AccountSummary() { }
 
   /**
    * Gets the accountId.
@@ -47,14 +48,14 @@ public class AccountSummary extends GenericModel {
   }
 
   /**
-   * Gets the billingMonth.
+   * Gets the month.
    *
    * The month in which usages were incurred. Represented in yyyy-mm format.
    *
-   * @return the billingMonth
+   * @return the month
    */
-  public String getBillingMonth() {
-    return billingMonth;
+  public String getMonth() {
+    return month;
   }
 
   /**

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,6 +33,11 @@ public class GetAccountUsageOptions extends GenericModel {
     private Boolean names;
     private String acceptLanguage;
 
+    /**
+     * Instantiates a new Builder from an existing GetAccountUsageOptions instance.
+     *
+     * @param getAccountUsageOptions the instance to initialize the Builder with
+     */
     private Builder(GetAccountUsageOptions getAccountUsageOptions) {
       this.accountId = getAccountUsageOptions.accountId;
       this.billingmonth = getAccountUsageOptions.billingmonth;
@@ -110,6 +115,8 @@ public class GetAccountUsageOptions extends GenericModel {
       return this;
     }
   }
+
+  protected GetAccountUsageOptions() { }
 
   protected GetAccountUsageOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,

@@ -34,6 +34,13 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2CreatePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2DeletePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2GetPolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2ListPoliciesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2UpdatePolicyOptions;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
 import com.ibm.cloud.sdk.core.http.ServiceCall;
@@ -543,6 +550,307 @@ public class IamPolicyManagement extends BaseService {
     pathParamsMap.put("role_id", deleteRoleOptions.roleId());
     RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/roles/{role_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deleteRole");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get policies by attributes.
+   *
+   * Get policies and filter by attributes. While managing policies, you may want to retrieve policies in the account
+   * and filter by attribute values. This can be done through query parameters. Currently, only the following attributes
+   * are supported: account_id, iam_id, access_group_id, type, service_type, sort, format and state. account_id is a
+   * required query parameter. Only policies that have the specified attributes and that the caller has read access to
+   * are returned. If the caller does not have read access to any policies an empty array is returned.
+   *
+   * @param v2ListPoliciesOptions the {@link V2ListPoliciesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link V2PolicyList}
+   */
+  public ServiceCall<V2PolicyList> v2ListPolicies(V2ListPoliciesOptions v2ListPoliciesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(v2ListPoliciesOptions,
+      "v2ListPoliciesOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/policies"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "v2ListPolicies");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (v2ListPoliciesOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", v2ListPoliciesOptions.acceptLanguage());
+    }
+    builder.query("account_id", String.valueOf(v2ListPoliciesOptions.accountId()));
+    if (v2ListPoliciesOptions.iamId() != null) {
+      builder.query("iam_id", String.valueOf(v2ListPoliciesOptions.iamId()));
+    }
+    if (v2ListPoliciesOptions.accessGroupId() != null) {
+      builder.query("access_group_id", String.valueOf(v2ListPoliciesOptions.accessGroupId()));
+    }
+    if (v2ListPoliciesOptions.type() != null) {
+      builder.query("type", String.valueOf(v2ListPoliciesOptions.type()));
+    }
+    if (v2ListPoliciesOptions.serviceType() != null) {
+      builder.query("service_type", String.valueOf(v2ListPoliciesOptions.serviceType()));
+    }
+    if (v2ListPoliciesOptions.serviceName() != null) {
+      builder.query("service_name", String.valueOf(v2ListPoliciesOptions.serviceName()));
+    }
+    if (v2ListPoliciesOptions.serviceGroupId() != null) {
+      builder.query("service_group_id", String.valueOf(v2ListPoliciesOptions.serviceGroupId()));
+    }
+    if (v2ListPoliciesOptions.format() != null) {
+      builder.query("format", String.valueOf(v2ListPoliciesOptions.format()));
+    }
+    if (v2ListPoliciesOptions.state() != null) {
+      builder.query("state", String.valueOf(v2ListPoliciesOptions.state()));
+    }
+    ResponseConverter<V2PolicyList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<V2PolicyList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create a policy.
+   *
+   * Creates a policy to grant access between a subject and a resource. Currently, there is one type of a v2/policy:
+   * **access**. A policy administrator might want to create an access policy which grants access to a user, service-id,
+   * or an access group.
+   *
+   * ### Access
+   *
+   * To create an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
+   * **`iam_id`** and **`access_group_id`**. Use the **`iam_id`** subject attribute for assigning access for a user or
+   * service-id. Use the **`access_group_id`** subject attribute for assigning access for an access group. The roles
+   * must be a subset of a service's or the platform's supported roles. The resource attributes must be a subset of a
+   * service's or the platform's supported attributes. The policy resource must include either the **`serviceType`**,
+   * **`serviceName`**, **`resourceGroupId`** or **`service_group_id`** attribute and the **`accountId`** attribute.`
+   * The rule field can either specify single **`key`**, **`value`**, and **`operator`** or be set of **`conditions`**
+   * with a combination **`operator`**.  The possible combination operator are **`and`** and **`or`**. The rule field
+   * has a maximum of 2 levels of nested **`conditions`**. The operator for a rule can be used to specify a time based
+   * restriction (e.g., access only during business hours, during the Monday-Friday work week). For example, a policy
+   * can grant access Monday-Friday, 9:00am-5:00pm using the following rule:
+   * ```json
+   *   "rule": {
+   *     "operator": "and",
+   *     "conditions": [{
+   *       "key": "{{environment.attributes.day_of_week}}",
+   *       "operator": "dayOfWeekAnyOf",
+   *       "value": [1, 2, 3, 4, 5]
+   *     },
+   *       "key": "{{environment.attributes.current_time}}",
+   *       "operator": "timeGreaterThanOrEquals",
+   *       "value": "09:00:00+00:00"
+   *     },
+   *       "key": "{{environment.attributes.current_time}}",
+   *       "operator": "timeLessThanOrEquals",
+   *       "value": "17:00:00+00:00"
+   *     }]
+   *   }
+   * ``` Rules and conditions allow the following operators with **`key`**, **`value`** :
+   * ```
+   *   'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan', 'timeGreaterThanOrEquals',
+   *   'dateLessThan', 'dateLessThanOrEquals', 'dateGreaterThan', 'dateGreaterThanOrEquals',
+   *   'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan', 'dateTimeGreaterThanOrEquals',
+   *   'dayOfWeekEquals', 'dayOfWeekAnyOf',
+   *   'monthEquals', 'monthAnyOf',
+   *   'dayOfMonthEquals', 'dayOfMonthAnyOf'
+   * ``` The pattern field can be coupled with a rule that matches the pattern. For the business hour rule example
+   * above, the **`pattern`** is **`"time-based-restrictions:weekly"`**. The IAM Services group (`IAM`) is a subset of
+   * account management services that includes the IAM platform services IAM Identity, IAM Access Management, IAM Users
+   * Management, IAM Groups, and future IAM services. If the subject is a locked service-id, the request will fail.
+   *
+   * ### Attribute Operators
+   *
+   * Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators are available. For more
+   * information, see [how to assign access by using wildcards
+   * policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
+   *
+   * ### Attribute Validations
+   *
+   * Policy attribute values must be between 1 and 1,000 characters in length. If location related attributes like
+   * geography, country, metro, region, satellite, and locationvalues are supported by the service, they are validated
+   * against Global Catalog locations.
+   *
+   * @param v2CreatePolicyOptions the {@link V2CreatePolicyOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link V2Policy}
+   */
+  public ServiceCall<V2Policy> v2CreatePolicy(V2CreatePolicyOptions v2CreatePolicyOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(v2CreatePolicyOptions,
+      "v2CreatePolicyOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/policies"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "v2CreatePolicy");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (v2CreatePolicyOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", v2CreatePolicyOptions.acceptLanguage());
+    }
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("type", v2CreatePolicyOptions.type());
+    contentJson.add("control", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(v2CreatePolicyOptions.control()));
+    if (v2CreatePolicyOptions.description() != null) {
+      contentJson.addProperty("description", v2CreatePolicyOptions.description());
+    }
+    if (v2CreatePolicyOptions.subject() != null) {
+      contentJson.add("subject", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(v2CreatePolicyOptions.subject()));
+    }
+    if (v2CreatePolicyOptions.resource() != null) {
+      contentJson.add("resource", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(v2CreatePolicyOptions.resource()));
+    }
+    if (v2CreatePolicyOptions.pattern() != null) {
+      contentJson.addProperty("pattern", v2CreatePolicyOptions.pattern());
+    }
+    if (v2CreatePolicyOptions.rule() != null) {
+      contentJson.add("rule", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(v2CreatePolicyOptions.rule()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<V2Policy> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<V2Policy>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update a policy.
+   *
+   * Update a policy to grant access between a subject and a resource. A policy administrator might want to update an
+   * existing policy.
+   *
+   * ### Access
+   *
+   * To update an access policy, use **`"type": "access"`** in the body. The possible subject attributes are
+   * **`iam_id`** and **`access_group_id`**. Use the **`iam_id`** subject attribute for assigning access for a user or
+   * service-id. Use the **`access_group_id`** subject attribute for assigning access for an access group. The roles
+   * must be a subset of a service's or the platform's supported roles. The resource attributes must be a subset of a
+   * service's or the platform's supported attributes. The policy resource must include either the **`serviceType`**,
+   * **`serviceName`**,  or **`resourceGroupId`** attribute and the **`accountId`** attribute.` The rule field can
+   * either specify single **`key`**, **`value`**, and **`operator`** or be set of **`conditions`** with a combination
+   * **`operator`**.  The possible combination operator are **`and`** and **`or`**. The rule field has a maximum of 2
+   * levels of nested **`conditions`**. The operator for a rule can be used to specify a time based restriction (e.g.,
+   * access only during business hours, during the Monday-Friday work week). For example, a policy can grant access
+   * Monday-Friday, 9:00am-5:00pm using the following rule:
+   * ```json
+   *   "rule": {
+   *     "operator": "and",
+   *     "conditions": [{
+   *       "key": "{{environment.attributes.day_of_week}}",
+   *       "operator": "dayOfWeekAnyOf",
+   *       "value": [1, 2, 3, 4, 5]
+   *     },
+   *       "key": "{{environment.attributes.current_time}}",
+   *       "operator": "timeGreaterThanOrEquals",
+   *       "value": "09:00:00+00:00"
+   *     },
+   *       "key": "{{environment.attributes.current_time}}",
+   *       "operator": "timeLessThanOrEquals",
+   *       "value": "17:00:00+00:00"
+   *     }]
+   *   }
+   * ``` Rules and conditions allow the following operators with **`key`**, **`value`** :
+   * ```
+   *   'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan', 'timeGreaterThanOrEquals',
+   *   'dateLessThan', 'dateLessThanOrEquals', 'dateGreaterThan', 'dateGreaterThanOrEquals',
+   *   'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan', 'dateTimeGreaterThanOrEquals',
+   *   'dayOfWeekEquals', 'dayOfWeekAnyOf',
+   *   'monthEquals', 'monthAnyOf',
+   *   'dayOfMonthEquals', 'dayOfMonthAnyOf'
+   * ``` The pattern field can be coupled with a rule that matches the pattern. For the business hour rule example
+   * above, the **`pattern`** is **`"time-based-restrictions:weekly"`**. If the subject is a locked service-id, the
+   * request will fail.
+   *
+   * ### Attribute Operators
+   *
+   * Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators are available. For more
+   * information, see [how to assign access by using wildcards
+   * policies](https://cloud.ibm.com/docs/account?topic=account-wildcard).
+   *
+   * ### Attribute Validations
+   *
+   * Policy attribute values must be between 1 and 1,000 characters in length. If location related attributes like
+   * geography, country, metro, region, satellite, and locationvalues are supported by the service, they are validated
+   * against Global Catalog locations.
+   *
+   * @param v2UpdatePolicyOptions the {@link V2UpdatePolicyOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link V2Policy}
+   */
+  public ServiceCall<V2Policy> v2UpdatePolicy(V2UpdatePolicyOptions v2UpdatePolicyOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(v2UpdatePolicyOptions,
+      "v2UpdatePolicyOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("policy_id", v2UpdatePolicyOptions.policyId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/policies/{policy_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "v2UpdatePolicy");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", v2UpdatePolicyOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("type", v2UpdatePolicyOptions.type());
+    contentJson.add("control", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(v2UpdatePolicyOptions.control()));
+    if (v2UpdatePolicyOptions.description() != null) {
+      contentJson.addProperty("description", v2UpdatePolicyOptions.description());
+    }
+    if (v2UpdatePolicyOptions.subject() != null) {
+      contentJson.add("subject", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(v2UpdatePolicyOptions.subject()));
+    }
+    if (v2UpdatePolicyOptions.resource() != null) {
+      contentJson.add("resource", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(v2UpdatePolicyOptions.resource()));
+    }
+    if (v2UpdatePolicyOptions.pattern() != null) {
+      contentJson.addProperty("pattern", v2UpdatePolicyOptions.pattern());
+    }
+    if (v2UpdatePolicyOptions.rule() != null) {
+      contentJson.add("rule", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(v2UpdatePolicyOptions.rule()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<V2Policy> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<V2Policy>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve a policy by ID.
+   *
+   * Retrieve a policy by providing a policy ID.
+   *
+   * @param v2GetPolicyOptions the {@link V2GetPolicyOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link V2Policy}
+   */
+  public ServiceCall<V2Policy> v2GetPolicy(V2GetPolicyOptions v2GetPolicyOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(v2GetPolicyOptions,
+      "v2GetPolicyOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("policy_id", v2GetPolicyOptions.policyId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/policies/{policy_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "v2GetPolicy");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<V2Policy> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<V2Policy>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete a policy by ID.
+   *
+   * Delete a policy by providing a policy ID. A policy cannot be deleted if the subject ID contains a locked service
+   * ID. If the subject of the policy is a locked service-id, the request will fail.
+   *
+   * @param v2DeletePolicyOptions the {@link V2DeletePolicyOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> v2DeletePolicy(V2DeletePolicyOptions v2DeletePolicyOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(v2DeletePolicyOptions,
+      "v2DeletePolicyOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("policy_id", v2DeletePolicyOptions.policyId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/policies/{policy_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "v2DeletePolicy");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }

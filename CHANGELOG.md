@@ -1,3 +1,10 @@
+## [0.29.2](https://github.com/IBM/platform-services-java-sdk/compare/0.29.1...0.29.2) (2022-12-07)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** remove support for v2/polices until GA ([#170](https://github.com/IBM/platform-services-java-sdk/issues/170)) ([620bbbe](https://github.com/IBM/platform-services-java-sdk/commit/620bbbe3d7464858a3fa664651c18ae330aa56a3))
+
 ## [0.29.1](https://github.com/IBM/platform-services-java-sdk/compare/0.29.0...0.29.1) (2022-12-05)
 
 

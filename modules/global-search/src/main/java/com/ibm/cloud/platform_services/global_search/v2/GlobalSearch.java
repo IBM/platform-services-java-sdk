@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+ * IBM OpenAPI SDK Code Generator Version: 3.62.2-e5d4c32b-20221214-193750
  */
 
 package com.ibm.cloud.platform_services.global_search.v2;
@@ -33,23 +33,26 @@ import com.ibm.cloud.sdk.core.util.RequestUtils;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 /**
- * Search for resources with the global and shared resource properties repository integrated in the IBM Cloud platform.
- * The search repository stores and searches cloud resources attributes, which categorize or classify resources. A
- * resource is a physical or logical component that can be created or reserved for an application or service instance
- * and is owned by resource providers, such as Cloud Foundry, IBM Kubernetes Service, or resource controller in IBM
- * Cloud. Resources are uniquely identified by a Cloud Resource Name (CRN)  or by an IMS ID. The properties of a
- * resource include tags and system properties. Both properties are defined in an IBM Cloud billing account, and span
- * across many regions.
+ * Search for resources with the global and shared resource properties repository that is integrated in the IBM Cloud
+ * platform. The search repository stores and searches cloud resources attributes, which categorize or classify
+ * resources. A resource is a physical or logical component that can be created or reserved for an application or
+ * service instance. They are owned by resource providers, such as Cloud Foundry, IBM Kubernetes Service, or resource
+ * controller in IBM Cloud. Resources are uniquely identified by a Cloud Resource Name (CRN)  or by an IMS ID. The
+ * properties of a resource include tags and system properties. Both properties are defined in an IBM Cloud billing
+ * account, and span across many regions.
  *
- * @version v2
+ * API Version: 2.0.1
  */
 public class GlobalSearch extends BaseService {
+  private static final Logger LOGGER = Logger.getLogger(GlobalSearch.class.getName());
 
+  /**
+   * Default service name used when configuring the `GlobalSearch` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "global_search";
-
-  public static final String DEFAULT_SERVICE_URL = "https://api.global-search-tagging.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `GlobalSearch` client.
@@ -84,26 +87,24 @@ public class GlobalSearch extends BaseService {
    */
   public GlobalSearch(String serviceName, Authenticator authenticator) {
     super(serviceName, authenticator);
-    setServiceUrl(DEFAULT_SERVICE_URL);
   }
 
   /**
    * Find instances of resources (v3).
    *
-   * Find Cloud Foundry resources, IAM-enabled resources, or  storage and network resources running on classic
-   * infrastructure in a  specific account ID. You can apply query strings if necessary.
+   * Find Cloud Foundry resources, IAM-enabled resources, or storage and network resources that run on classic
+   * infrastructure in a specific account ID. You can apply query strings if necessary.
    *
-   * To filter results, you can insert a string using the Lucene syntax and the  query string is parsed into a series of
-   * terms and operators. A term can be  a single word or a phrase, in which case the search is performed for all  the
-   * words, in the same order. To filter for a specific value regardless of  the property that contains it, type the
-   * search term without specifying a  field. Only resources that belong to the account ID and that are accessible  by
-   * the client are returned.
+   * To filter results, you can insert a string by using the Lucene syntax and the query string is parsed into a series
+   * of terms and operators. A term can be a single word or a phrase, in which case the search is performed for all the
+   * words, in the same order. To filter for a specific value regardless of the property that contains it, type the
+   * search term without specifying a field. Only resources that belong to the account ID and that are accessible by the
+   * client are returned.
    *
-   * You must use `/v3/resources/search` when you need to fetch more than `10000`  resource items. The
-   * `/v2/resources/search` prohibits paginating through such  a big number. On the first call, the operation returns a
-   * live cursor on the  data that you must use on all the subsequent calls to get the next batch of  results until you
-   * get the empty result set. By default, the fields returned  for every resource are "crn", "name", "family", "type",
-   * and "account_id". You  can specify the subset of the fields you want in your request.
+   * You must use `/v3/resources/search` when you need to fetch more than `10000` resource items. On the first call, the
+   * operation returns a live cursor on the data that you must use on all the subsequent calls to get the next batch of
+   * results until you get the empty result set. By default, the fields that are returned for every resource are "crn",
+   * "name", "family", "type", and "account_id". You can specify the subset of the fields you want in your request.
    *
    * @param searchOptions the {@link SearchOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
@@ -123,6 +124,9 @@ public class GlobalSearch extends BaseService {
     if (searchOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(searchOptions.accountId()));
     }
+    if (searchOptions.boundary() != null) {
+      builder.query("boundary", String.valueOf(searchOptions.boundary()));
+    }
     if (searchOptions.limit() != null) {
       builder.query("limit", String.valueOf(searchOptions.limit()));
     }
@@ -131,6 +135,24 @@ public class GlobalSearch extends BaseService {
     }
     if (searchOptions.sort() != null) {
       builder.query("sort", RequestUtils.join(searchOptions.sort(), ","));
+    }
+    if (searchOptions.isDeleted() != null) {
+      builder.query("is_deleted", String.valueOf(searchOptions.isDeleted()));
+    }
+    if (searchOptions.isReclaimed() != null) {
+      builder.query("is_reclaimed", String.valueOf(searchOptions.isReclaimed()));
+    }
+    if (searchOptions.isPublic() != null) {
+      builder.query("is_public", String.valueOf(searchOptions.isPublic()));
+    }
+    if (searchOptions.impersonateUser() != null) {
+      builder.query("impersonate_user", String.valueOf(searchOptions.impersonateUser()));
+    }
+    if (searchOptions.canTag() != null) {
+      builder.query("can_tag", String.valueOf(searchOptions.canTag()));
+    }
+    if (searchOptions.isHidden() != null) {
+      builder.query("is_hidden", String.valueOf(searchOptions.isHidden()));
     }
     final JsonObject contentJson = new JsonObject();
     if (searchOptions.query() != null) {
@@ -151,20 +173,19 @@ public class GlobalSearch extends BaseService {
   /**
    * Find instances of resources (v3).
    *
-   * Find Cloud Foundry resources, IAM-enabled resources, or  storage and network resources running on classic
-   * infrastructure in a  specific account ID. You can apply query strings if necessary.
+   * Find Cloud Foundry resources, IAM-enabled resources, or storage and network resources that run on classic
+   * infrastructure in a specific account ID. You can apply query strings if necessary.
    *
-   * To filter results, you can insert a string using the Lucene syntax and the  query string is parsed into a series of
-   * terms and operators. A term can be  a single word or a phrase, in which case the search is performed for all  the
-   * words, in the same order. To filter for a specific value regardless of  the property that contains it, type the
-   * search term without specifying a  field. Only resources that belong to the account ID and that are accessible  by
-   * the client are returned.
+   * To filter results, you can insert a string by using the Lucene syntax and the query string is parsed into a series
+   * of terms and operators. A term can be a single word or a phrase, in which case the search is performed for all the
+   * words, in the same order. To filter for a specific value regardless of the property that contains it, type the
+   * search term without specifying a field. Only resources that belong to the account ID and that are accessible by the
+   * client are returned.
    *
-   * You must use `/v3/resources/search` when you need to fetch more than `10000`  resource items. The
-   * `/v2/resources/search` prohibits paginating through such  a big number. On the first call, the operation returns a
-   * live cursor on the  data that you must use on all the subsequent calls to get the next batch of  results until you
-   * get the empty result set. By default, the fields returned  for every resource are "crn", "name", "family", "type",
-   * and "account_id". You  can specify the subset of the fields you want in your request.
+   * You must use `/v3/resources/search` when you need to fetch more than `10000` resource items. On the first call, the
+   * operation returns a live cursor on the data that you must use on all the subsequent calls to get the next batch of
+   * results until you get the empty result set. By default, the fields that are returned for every resource are "crn",
+   * "name", "family", "type", and "account_id". You can specify the subset of the fields you want in your request.
    *
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
    */
@@ -173,14 +194,17 @@ public class GlobalSearch extends BaseService {
   }
 
   /**
-   * DEPRECATED. Get all GhoST indices.
+   * DEPRECATED. Get all GhoST indexes.
    *
-   * Retrieves a list of all GhoST indices.
+   * Retrieves a list of all GhoST indexes.
    *
    * @param getSupportedTypesOptions the {@link GetSupportedTypesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link SupportedTypesList}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<SupportedTypesList> getSupportedTypes(GetSupportedTypesOptions getSupportedTypesOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: getSupportedTypes");
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resources/supported_types"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_search", "v2", "getSupportedTypes");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
@@ -193,12 +217,14 @@ public class GlobalSearch extends BaseService {
   }
 
   /**
-   * DEPRECATED. Get all GhoST indices.
+   * DEPRECATED. Get all GhoST indexes.
    *
-   * Retrieves a list of all GhoST indices.
+   * Retrieves a list of all GhoST indexes.
    *
    * @return a {@link ServiceCall} with a result of type {@link SupportedTypesList}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public ServiceCall<SupportedTypesList> getSupportedTypes() {
     return getSupportedTypes(null);
   }

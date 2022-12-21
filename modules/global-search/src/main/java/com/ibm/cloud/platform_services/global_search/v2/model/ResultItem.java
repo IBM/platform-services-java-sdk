@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,7 +17,8 @@ import com.google.gson.reflect.TypeToken;
 import com.ibm.cloud.sdk.core.service.model.DynamicModel;
 
 /**
- * A resource returned in a search result.
+ * A resource returned in a search result, which is identified by its `crn`. It contains other properties that depend on
+ * the resource type.
  */
 public class ResultItem extends DynamicModel<Object> {
 

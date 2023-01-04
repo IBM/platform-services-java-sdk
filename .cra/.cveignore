@@ -1,7 +1,7 @@
 [
     {
-        "cve": "SNYK-JAVA-ORGJETBRAINSKOTLIN-2393744",
+        "cve": "SNYK-JAVA-ORGTESTNG-3040285",
         "alwaysOmit": true,
-        "comment": "The dependencies of this project that use kotlin-stdlib (the okhttp-related dependencies) do not invoke the two kotlin-stdlib vulnerable methods"
+        "comment": "The 'Zip Slip' vulnerability does not apply to this project because we merely use TestNG to execute testcases during our maven build, and we do not deliver a jar containing test classes."
     }
 ]

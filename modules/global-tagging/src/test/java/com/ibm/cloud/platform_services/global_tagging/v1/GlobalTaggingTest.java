@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2021, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,56 +12,45 @@
  */
 package com.ibm.cloud.platform_services.global_tagging.v1;
 
-import com.ibm.cloud.platform_services.global_tagging.v1.GlobalTagging;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.AttachTagOptions;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagOptions;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagResults;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagResultsResultsItem;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagAllOptions;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagOptions;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagResults;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagResultsItem;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagsResult;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagsResultItem;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.DetachTagOptions;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.ListTagsOptions;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.Resource;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.Tag;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.TagList;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.TagResults;
-import com.ibm.cloud.platform_services.global_tagging.v1.model.TagResultsItem;
-import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
-import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
-import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import com.ibm.cloud.sdk.core.util.RequestUtils;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
+
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import com.ibm.cloud.platform_services.global_tagging.v1.model.AttachTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagResults;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagAllOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagResults;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagsResult;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.DetachTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.ListTagsOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.Resource;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.TagList;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.TagResults;
+import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
+import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.RequestUtils;
+
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 /**
  * Unit test class for the GlobalTagging service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class GlobalTaggingTest extends PowerMockTestCase {
+public class GlobalTaggingTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -69,16 +58,8 @@ public class GlobalTaggingTest extends PowerMockTestCase {
   protected MockWebServer server;
   protected GlobalTagging globalTaggingService;
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   public void constructClientService() throws Throwable {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     globalTaggingService = GlobalTagging.newInstance(serviceName);

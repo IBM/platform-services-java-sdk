@@ -34,7 +34,6 @@
         <maven-reports-plugin-version>3.4.1</maven-reports-plugin-version>
         <maven-failsafe-plugin-version>3.0.0-M7</maven-failsafe-plugin-version>
         <maven-buildnumber-plugin-version>3.0.0</maven-buildnumber-plugin-version>
-        <powermock-version>2.0.9</powermock-version>
         <slf4j-version>2.0.0</slf4j-version>
         
         <!-- versions of transitive dependencies we need to override to avoid vulnerability alerts -->
@@ -153,18 +152,6 @@
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>mockwebserver</artifactId>
                 <version>${okhttp3-version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-api-mockito2</artifactId>
-                <version>${powermock-version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-module-testng</artifactId>
-                <version>${powermock-version}</version>
                 <scope>test</scope>
             </dependency>
             <!-- Depedency needed to build examples -->
@@ -441,27 +428,6 @@
     </developers>
 
     <profiles>
-        <profile>
-            <!-- When using java 9+ we need to use the "add-opens" jvm option to allow powermock to do its thing -->
-            <id>java9plus</id>
-            <activation>
-                <jdk>[9,)</jdk>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire-version}</version>
-                        <configuration>
-                            <skipTests>${skip.unit.tests}</skipTests>
-                            <argLine>--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED</argLine>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
         <!-- "central" is used to deploy artifacts on maven central -->
         <profile>
             <id>central</id>

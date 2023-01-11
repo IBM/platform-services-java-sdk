@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2021, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,21 @@
  */
 package com.ibm.cloud.platform_services.resource_manager.v2;
 
-import com.ibm.cloud.platform_services.resource_manager.v2.ResourceManager;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.resource_manager.v2.model.CreateResourceGroupOptions;
 import com.ibm.cloud.platform_services.resource_manager.v2.model.DeleteResourceGroupOptions;
 import com.ibm.cloud.platform_services.resource_manager.v2.model.GetQuotaDefinitionOptions;
@@ -24,40 +38,19 @@ import com.ibm.cloud.platform_services.resource_manager.v2.model.QuotaDefinition
 import com.ibm.cloud.platform_services.resource_manager.v2.model.ResCreateResourceGroup;
 import com.ibm.cloud.platform_services.resource_manager.v2.model.ResourceGroup;
 import com.ibm.cloud.platform_services.resource_manager.v2.model.ResourceGroupList;
-import com.ibm.cloud.platform_services.resource_manager.v2.model.ResourceQuota;
 import com.ibm.cloud.platform_services.resource_manager.v2.model.UpdateResourceGroupOptions;
 import com.ibm.cloud.platform_services.resource_manager.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Unit test class for the ResourceManager service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class ResourceManagerTest extends PowerMockTestCase {
+public class ResourceManagerTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -65,16 +58,8 @@ public class ResourceManagerTest extends PowerMockTestCase {
   protected MockWebServer server;
   protected ResourceManager resourceManagerService;
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   public void constructClientService() throws Throwable {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     resourceManagerService = ResourceManager.newInstance(serviceName);
@@ -138,7 +123,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listResourceGroupsPath);
   }
-  
+
   public void testListResourceGroupsWOptionsWRetries() throws Throwable {
     // Enable retries and run testListResourceGroupsWOptions.
     resourceManagerService.enableRetries(4, 30);
@@ -147,7 +132,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     // Disable retries and run testListResourceGroupsWOptions.
     resourceManagerService.disableRetries();
     testListResourceGroupsWOptions();
-  }  
+  }
 
   @Test
   public void testCreateResourceGroupWOptions() throws Throwable {
@@ -187,7 +172,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createResourceGroupPath);
   }
-  
+
   public void testCreateResourceGroupWOptionsWRetries() throws Throwable {
     // Enable retries and run testCreateResourceGroupWOptions.
     resourceManagerService.enableRetries(4, 30);
@@ -196,7 +181,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     // Disable retries and run testCreateResourceGroupWOptions.
     resourceManagerService.disableRetries();
     testCreateResourceGroupWOptions();
-  }  
+  }
 
   @Test
   public void testGetResourceGroupWOptions() throws Throwable {
@@ -235,7 +220,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getResourceGroupPath);
   }
-  
+
   public void testGetResourceGroupWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetResourceGroupWOptions.
     resourceManagerService.enableRetries(4, 30);
@@ -244,7 +229,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     // Disable retries and run testGetResourceGroupWOptions.
     resourceManagerService.disableRetries();
     testGetResourceGroupWOptions();
-  }  
+  }
 
   // Test the getResourceGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -297,7 +282,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateResourceGroupPath);
   }
-  
+
   public void testUpdateResourceGroupWOptionsWRetries() throws Throwable {
     // Enable retries and run testUpdateResourceGroupWOptions.
     resourceManagerService.enableRetries(4, 30);
@@ -306,7 +291,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     // Disable retries and run testUpdateResourceGroupWOptions.
     resourceManagerService.disableRetries();
     testUpdateResourceGroupWOptions();
-  }  
+  }
 
   // Test the updateResourceGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -357,7 +342,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteResourceGroupPath);
   }
-  
+
   public void testDeleteResourceGroupWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeleteResourceGroupWOptions.
     resourceManagerService.enableRetries(4, 30);
@@ -366,7 +351,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     // Disable retries and run testDeleteResourceGroupWOptions.
     resourceManagerService.disableRetries();
     testDeleteResourceGroupWOptions();
-  }  
+  }
 
   // Test the deleteResourceGroup operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -415,7 +400,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listQuotaDefinitionsPath);
   }
-  
+
   public void testListQuotaDefinitionsWOptionsWRetries() throws Throwable {
     // Enable retries and run testListQuotaDefinitionsWOptions.
     resourceManagerService.enableRetries(4, 30);
@@ -424,7 +409,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     // Disable retries and run testListQuotaDefinitionsWOptions.
     resourceManagerService.disableRetries();
     testListQuotaDefinitionsWOptions();
-  }  
+  }
 
   @Test
   public void testGetQuotaDefinitionWOptions() throws Throwable {
@@ -463,7 +448,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getQuotaDefinitionPath);
   }
-  
+
   public void testGetQuotaDefinitionWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetQuotaDefinitionWOptions.
     resourceManagerService.enableRetries(4, 30);
@@ -472,7 +457,7 @@ public class ResourceManagerTest extends PowerMockTestCase {
     // Disable retries and run testGetQuotaDefinitionWOptions.
     resourceManagerService.disableRetries();
     testGetQuotaDefinitionWOptions();
-  }  
+  }
 
   // Test the getQuotaDefinition operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)

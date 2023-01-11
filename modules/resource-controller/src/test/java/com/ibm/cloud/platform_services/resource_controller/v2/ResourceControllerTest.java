@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2022, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,13 +12,27 @@
  */
 package com.ibm.cloud.platform_services.resource_controller.v2;
 
-import com.ibm.cloud.platform_services.resource_controller.v2.ResourceController;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CancelLastopResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceAliasOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceBindingOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.CreateResourceKeyOptions;
-import com.ibm.cloud.platform_services.resource_controller.v2.model.Credentials;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.DeleteResourceAliasOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.DeleteResourceBindingOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.DeleteResourceInstanceOptions;
@@ -36,7 +50,6 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResource
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysForInstanceOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ListResourceKeysOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.LockResourceInstanceOptions;
-import com.ibm.cloud.platform_services.resource_controller.v2.model.PlanHistoryItem;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.Reclamation;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ReclamationsList;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceAlias;
@@ -49,7 +62,6 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBind
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBindingsList;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceBindingsPager;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstance;
-import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstanceLastOperation;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstancesList;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceInstancesPager;
 import com.ibm.cloud.platform_services.resource_controller.v2.model.ResourceKey;
@@ -65,35 +77,16 @@ import com.ibm.cloud.platform_services.resource_controller.v2.model.UpdateResour
 import com.ibm.cloud.platform_services.resource_controller.v2.model.UpdateResourceKeyOptions;
 import com.ibm.cloud.platform_services.resource_controller.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Unit test class for the ResourceController service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class ResourceControllerTest extends PowerMockTestCase {
+public class ResourceControllerTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -217,7 +210,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listResourceInstances operation using the ResourceInstancesPager.getAll() method
   @Test
   public void testListResourceInstancesWithPagerGetAll() throws Throwable {
@@ -256,7 +249,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the createResourceInstance operation with a valid options model parameter
   @Test
   public void testCreateResourceInstanceWOptions() throws Throwable {
@@ -561,7 +554,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listResourceAliasesForInstance operation using the ResourceAliasesForInstancePager.getAll() method
   @Test
   public void testListResourceAliasesForInstanceWithPagerGetAll() throws Throwable {
@@ -591,7 +584,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listResourceKeysForInstance operation with a valid options model parameter
   @Test
   public void testListResourceKeysForInstanceWOptions() throws Throwable {
@@ -680,7 +673,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listResourceKeysForInstance operation using the ResourceKeysForInstancePager.getAll() method
   @Test
   public void testListResourceKeysForInstanceWithPagerGetAll() throws Throwable {
@@ -710,7 +703,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the lockResourceInstance operation with a valid options model parameter
   @Test
   public void testLockResourceInstanceWOptions() throws Throwable {
@@ -961,7 +954,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listResourceKeys operation using the ResourceKeysPager.getAll() method
   @Test
   public void testListResourceKeysWithPagerGetAll() throws Throwable {
@@ -996,7 +989,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the createResourceKey operation with a valid options model parameter
   @Test
   public void testCreateResourceKeyWOptions() throws Throwable {
@@ -1310,7 +1303,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listResourceBindings operation using the ResourceBindingsPager.getAll() method
   @Test
   public void testListResourceBindingsWithPagerGetAll() throws Throwable {
@@ -1346,7 +1339,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the createResourceBinding operation with a valid options model parameter
   @Test
   public void testCreateResourceBindingWOptions() throws Throwable {
@@ -1664,7 +1657,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listResourceAliases operation using the ResourceAliasesPager.getAll() method
   @Test
   public void testListResourceAliasesWithPagerGetAll() throws Throwable {
@@ -1701,7 +1694,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the createResourceAlias operation with a valid options model parameter
   @Test
   public void testCreateResourceAliasWOptions() throws Throwable {
@@ -1998,7 +1991,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listResourceBindingsForAlias operation using the ResourceBindingsForAliasPager.getAll() method
   @Test
   public void testListResourceBindingsForAliasWithPagerGetAll() throws Throwable {
@@ -2028,7 +2021,7 @@ public class ResourceControllerTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listReclamations operation with a valid options model parameter
   @Test
   public void testListReclamationsWOptions() throws Throwable {
@@ -2152,17 +2145,9 @@ public class ResourceControllerTest extends PowerMockTestCase {
     resourceControllerService = null;
   }
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv()
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   // Constructs an instance of the service to be used by the tests
   public void constructClientService() {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     resourceControllerService = ResourceController.newInstance(serviceName);

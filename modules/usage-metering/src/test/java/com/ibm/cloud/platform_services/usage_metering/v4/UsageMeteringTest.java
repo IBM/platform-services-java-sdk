@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,43 +12,37 @@
  */
 package com.ibm.cloud.platform_services.usage_metering.v4;
 
-import com.ibm.cloud.platform_services.usage_metering.v4.UsageMetering;
-import com.ibm.cloud.platform_services.usage_metering.v4.model.MeasureAndQuantity;
-import com.ibm.cloud.platform_services.usage_metering.v4.model.ReportResourceUsageOptions;
-import com.ibm.cloud.platform_services.usage_metering.v4.model.ResourceInstanceUsage;
-import com.ibm.cloud.platform_services.usage_metering.v4.model.ResourceUsageDetails;
-import com.ibm.cloud.platform_services.usage_metering.v4.model.ResponseAccepted;
-import com.ibm.cloud.platform_services.usage_metering.v4.utils.TestUtilities;
-import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
-import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
+
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import com.ibm.cloud.platform_services.usage_metering.v4.model.MeasureAndQuantity;
+import com.ibm.cloud.platform_services.usage_metering.v4.model.ReportResourceUsageOptions;
+import com.ibm.cloud.platform_services.usage_metering.v4.model.ResourceInstanceUsage;
+import com.ibm.cloud.platform_services.usage_metering.v4.model.ResponseAccepted;
+import com.ibm.cloud.platform_services.usage_metering.v4.utils.TestUtilities;
+import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 /**
  * Unit test class for the UsageMetering service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class UsageMeteringTest extends PowerMockTestCase {
+public class UsageMeteringTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -56,16 +50,8 @@ public class UsageMeteringTest extends PowerMockTestCase {
   protected MockWebServer server;
   protected UsageMetering usageMeteringService;
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   public void constructClientService() throws Throwable {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     usageMeteringService = UsageMetering.newInstance(serviceName);

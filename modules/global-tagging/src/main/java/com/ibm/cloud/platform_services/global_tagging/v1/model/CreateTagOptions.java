@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -32,6 +32,7 @@ public class CreateTagOptions extends GenericModel {
 
   protected List<String> tagNames;
   protected String impersonateUser;
+  protected String transactionId;
   protected String accountId;
   protected String tagType;
 
@@ -41,12 +42,19 @@ public class CreateTagOptions extends GenericModel {
   public static class Builder {
     private List<String> tagNames;
     private String impersonateUser;
+    private String transactionId;
     private String accountId;
     private String tagType;
 
+    /**
+     * Instantiates a new Builder from an existing CreateTagOptions instance.
+     *
+     * @param createTagOptions the instance to initialize the Builder with
+     */
     private Builder(CreateTagOptions createTagOptions) {
       this.tagNames = createTagOptions.tagNames;
       this.impersonateUser = createTagOptions.impersonateUser;
+      this.transactionId = createTagOptions.transactionId;
       this.accountId = createTagOptions.accountId;
       this.tagType = createTagOptions.tagType;
     }
@@ -115,6 +123,17 @@ public class CreateTagOptions extends GenericModel {
     }
 
     /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the CreateTagOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
      * Set the accountId.
      *
      * @param accountId the accountId
@@ -137,11 +156,14 @@ public class CreateTagOptions extends GenericModel {
     }
   }
 
+  protected CreateTagOptions() { }
+
   protected CreateTagOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.tagNames,
       "tagNames cannot be null");
     tagNames = builder.tagNames;
     impersonateUser = builder.impersonateUser;
+    transactionId = builder.transactionId;
     accountId = builder.accountId;
     tagType = builder.tagType;
   }
@@ -175,6 +197,18 @@ public class CreateTagOptions extends GenericModel {
    */
   public String impersonateUser() {
     return impersonateUser;
+  }
+
+  /**
+   * Gets the transactionId.
+   *
+   * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
+   * generated with the prefix "gst-".
+   *
+   * @return the transactionId
+   */
+  public String transactionId() {
+    return transactionId;
   }
 
   /**

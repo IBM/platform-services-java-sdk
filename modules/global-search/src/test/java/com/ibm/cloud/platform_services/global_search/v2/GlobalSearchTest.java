@@ -12,48 +12,51 @@
  */
 package com.ibm.cloud.platform_services.global_search.v2;
 
-import com.ibm.cloud.platform_services.global_search.v2.GlobalSearch;
-import com.ibm.cloud.platform_services.global_search.v2.model.GetSupportedTypesOptions;
-import com.ibm.cloud.platform_services.global_search.v2.model.ResultItem;
-import com.ibm.cloud.platform_services.global_search.v2.model.ScanResult;
-import com.ibm.cloud.platform_services.global_search.v2.model.SearchOptions;
-import com.ibm.cloud.platform_services.global_search.v2.model.SupportedTypesList;
-import com.ibm.cloud.platform_services.global_search.v2.utils.TestUtilities;
-import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
-import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import com.ibm.cloud.sdk.core.util.RequestUtils;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
+
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import com.ibm.cloud.platform_services.global_search.v2.model.GetSupportedTypesOptions;
+import com.ibm.cloud.platform_services.global_search.v2.model.ScanResult;
+import com.ibm.cloud.platform_services.global_search.v2.model.SearchOptions;
+import com.ibm.cloud.platform_services.global_search.v2.model.SupportedTypesList;
+import com.ibm.cloud.platform_services.global_search.v2.utils.TestUtilities;
+import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.RequestUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 /**
  * Unit test class for the GlobalSearch service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class GlobalSearchTest extends PowerMockTestCase {
+public class GlobalSearchTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   protected MockWebServer server;
   protected GlobalSearch globalSearchService;
+
 
   // Construct the service with a null authenticator (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2022, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,15 +12,28 @@
  */
 package com.ibm.cloud.platform_services.case_management.v1;
 
-import com.ibm.cloud.platform_services.case_management.v1.CaseManagement;
-import com.ibm.cloud.platform_services.case_management.v1.model.AcceptPayload;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.case_management.v1.model.AddCommentOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.AddResourceOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.AddWatchlistOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.Attachment;
 import com.ibm.cloud.platform_services.case_management.v1.model.AttachmentList;
 import com.ibm.cloud.platform_services.case_management.v1.model.Case;
-import com.ibm.cloud.platform_services.case_management.v1.model.CaseEu;
 import com.ibm.cloud.platform_services.case_management.v1.model.CaseList;
 import com.ibm.cloud.platform_services.case_management.v1.model.CasePayloadEu;
 import com.ibm.cloud.platform_services.case_management.v1.model.Comment;
@@ -32,13 +45,10 @@ import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.GetCasesPager;
 import com.ibm.cloud.platform_services.case_management.v1.model.Offering;
 import com.ibm.cloud.platform_services.case_management.v1.model.OfferingType;
-import com.ibm.cloud.platform_services.case_management.v1.model.PaginationLink;
 import com.ibm.cloud.platform_services.case_management.v1.model.RemoveWatchlistOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.ResolvePayload;
 import com.ibm.cloud.platform_services.case_management.v1.model.Resource;
 import com.ibm.cloud.platform_services.case_management.v1.model.ResourcePayload;
-import com.ibm.cloud.platform_services.case_management.v1.model.StatusPayload;
-import com.ibm.cloud.platform_services.case_management.v1.model.UnresolvePayload;
 import com.ibm.cloud.platform_services.case_management.v1.model.UpdateCaseStatusOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.UploadFileOptions;
 import com.ibm.cloud.platform_services.case_management.v1.model.User;
@@ -46,35 +56,17 @@ import com.ibm.cloud.platform_services.case_management.v1.model.Watchlist;
 import com.ibm.cloud.platform_services.case_management.v1.model.WatchlistAddResponse;
 import com.ibm.cloud.platform_services.case_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
 import com.ibm.cloud.sdk.core.util.RequestUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Unit test class for the CaseManagement service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class CaseManagementTest extends PowerMockTestCase {
+public class CaseManagementTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -180,7 +172,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getCases operation using the GetCasesPager.getAll() method
   @Test
   public void testGetCasesWithPagerGetAll() throws Throwable {
@@ -213,7 +205,7 @@ public class CaseManagementTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the createCase operation with a valid options model parameter
   @Test
   public void testCreateCaseWOptions() throws Throwable {
@@ -822,17 +814,9 @@ public class CaseManagementTest extends PowerMockTestCase {
     caseManagementService = null;
   }
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv()
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   // Constructs an instance of the service to be used by the tests
   public void constructClientService() {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     caseManagementService = CaseManagement.newInstance(serviceName);

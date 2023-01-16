@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,50 +12,41 @@
  */
 package com.ibm.cloud.platform_services.enterprise_billing_units.v1;
 
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.EnterpriseBillingUnits;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingOption;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingOptionsList;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingUnit;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingUnitsList;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditPool;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditPoolOverage;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditPoolsList;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetBillingUnitOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetCreditPoolsOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingOptionsOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingUnitsOptions;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.TermCredits;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Unit test class for the EnterpriseBillingUnits service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class EnterpriseBillingUnitsTest extends PowerMockTestCase {
+public class EnterpriseBillingUnitsTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -63,16 +54,8 @@ public class EnterpriseBillingUnitsTest extends PowerMockTestCase {
   protected MockWebServer server;
   protected EnterpriseBillingUnits enterpriseBillingUnitsService;
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   public void constructClientService() throws Throwable {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     enterpriseBillingUnitsService = EnterpriseBillingUnits.newInstance(serviceName);

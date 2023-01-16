@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2022, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,16 +12,26 @@
  */
 package com.ibm.cloud.platform_services.iam_identity.v1;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.IamIdentity;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.Activity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyInsideCreateServiceIdRequest;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivity;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityServiceid;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityUser;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
@@ -34,8 +44,6 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOpti
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.EntityActivity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
@@ -55,7 +63,6 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
@@ -71,37 +78,18 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UserActivity;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Unit test class for the IamIdentity service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class IamIdentityTest extends PowerMockTestCase {
+public class IamIdentityTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -1985,17 +1973,9 @@ public class IamIdentityTest extends PowerMockTestCase {
     iamIdentityService = null;
   }
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv()
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   // Constructs an instance of the service to be used by the tests
   public void constructClientService() {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     iamIdentityService = IamIdentity.newInstance(serviceName);

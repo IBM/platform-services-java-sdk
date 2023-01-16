@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2021, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,169 +12,36 @@
  */
 package com.ibm.cloud.platform_services.catalog_management.v1;
 
-import com.ibm.cloud.platform_services.catalog_management.v1.CatalogManagement;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccessListBulkResponse;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Account;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishObjectOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccountPublishVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFilters;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFiltersCatalogFiltersItem;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AccumulatedFiltersCatalogFiltersItemCatalog;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AddObjectAccessListOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ApprovalResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AuditLog;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.AuditRecord;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Catalog;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogObject;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CatalogSearchResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CategoryFilter;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ClusterInfo;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CommitVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Configuration;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CopyVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateObjectAccessOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateObjectOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingInstanceOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.CreateOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectAccessListOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectAccessOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteObjectOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingInstanceOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteOperatorsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeleteVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployOperatorsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeployRequestBodySchematics;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Deployment;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeprecateOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.DeprecateVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Feature;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.FilterTerms;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Filters;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountAuditOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountFiltersOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAccountOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogAuditOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetClusterOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetConsumptionOfferingsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetNamespacesOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAccessListOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAccessOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectAuditOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetObjectOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingAboutOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingAuditOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingContainerImagesOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingInstanceOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingLicenseOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingSourceOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingUpdatesOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOfferingWorkingCopyOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetOverrideValuesOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetPreinstallOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetValidationStatusOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.GetVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.IDFilter;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishObjectOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.IbmPublishVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Image;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ImageManifest;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ImportOfferingVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatus;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatusContentMgmt;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatusMetadata;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallStatusRelease;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.InstallVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.JsonPatchOperation;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Kind;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.License;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListCatalogsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListObjectsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOfferingsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ListOperatorsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.MediaItem;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.NamespaceSearchResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccess;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectAccessListResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectListResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ObjectSearchResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Offering;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstance;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingInstanceLastOperation;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.OfferingSearchResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.OperatorDeployResult;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Plan;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.PreinstallVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ProviderInfo;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.PublicPublishObjectOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.PublicPublishVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.PublishObject;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.PutOfferingInstanceOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Rating;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReloadOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceCatalogOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceObjectOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingIconOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ReplaceOperatorsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.RepoInfo;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Resource;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Script;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SearchObjectsOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SetDeprecateVersionOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SharedPublishObjectOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.State;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Support;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationAuthorization;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationCluster;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationHistory;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.SyndicationResource;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateCatalogAccountOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateOfferingIbmOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.UpdateOfferingOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.ValidateInstallOptions;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Validation;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.Version;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionEntitlement;
-import com.ibm.cloud.platform_services.catalog_management.v1.model.VersionUpdateDescriptor;
-import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
-import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
-import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import com.ibm.cloud.sdk.core.util.RequestUtils;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
+
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import com.ibm.cloud.platform_services.catalog_management.v1.model.*;
+import com.ibm.cloud.platform_services.catalog_management.v1.utils.TestUtilities;
+import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import com.ibm.cloud.sdk.core.util.RequestUtils;
+
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 /**
  * Unit test class for the CatalogManagement service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class CatalogManagementTest extends PowerMockTestCase {
+public class CatalogManagementTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -182,16 +49,8 @@ public class CatalogManagementTest extends PowerMockTestCase {
   protected MockWebServer server;
   protected CatalogManagement catalogManagementService;
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   public void constructClientService() throws Throwable {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     catalogManagementService = CatalogManagement.newInstance(serviceName);
@@ -244,7 +103,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getCatalogAccountPath);
   }
-  
+
   public void testGetCatalogAccountWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetCatalogAccountWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -253,7 +112,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetCatalogAccountWOptions.
     catalogManagementService.disableRetries();
     testGetCatalogAccountWOptions();
-  }  
+  }
 
   @Test
   public void testUpdateCatalogAccountWOptions() throws Throwable {
@@ -318,7 +177,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateCatalogAccountPath);
   }
-  
+
   public void testUpdateCatalogAccountWOptionsWRetries() throws Throwable {
     // Enable retries and run testUpdateCatalogAccountWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -327,7 +186,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testUpdateCatalogAccountWOptions.
     catalogManagementService.disableRetries();
     testUpdateCatalogAccountWOptions();
-  }  
+  }
 
   @Test
   public void testGetCatalogAccountAuditWOptions() throws Throwable {
@@ -364,7 +223,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getCatalogAccountAuditPath);
   }
-  
+
   public void testGetCatalogAccountAuditWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetCatalogAccountAuditWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -373,7 +232,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetCatalogAccountAuditWOptions.
     catalogManagementService.disableRetries();
     testGetCatalogAccountAuditWOptions();
-  }  
+  }
 
   @Test
   public void testGetCatalogAccountFiltersWOptions() throws Throwable {
@@ -413,7 +272,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getCatalogAccountFiltersPath);
   }
-  
+
   public void testGetCatalogAccountFiltersWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetCatalogAccountFiltersWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -422,7 +281,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetCatalogAccountFiltersWOptions.
     catalogManagementService.disableRetries();
     testGetCatalogAccountFiltersWOptions();
-  }  
+  }
 
   @Test
   public void testListCatalogsWOptions() throws Throwable {
@@ -459,7 +318,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listCatalogsPath);
   }
-  
+
   public void testListCatalogsWOptionsWRetries() throws Throwable {
     // Enable retries and run testListCatalogsWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -468,7 +327,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testListCatalogsWOptions.
     catalogManagementService.disableRetries();
     testListCatalogsWOptions();
-  }  
+  }
 
   @Test
   public void testCreateCatalogWOptions() throws Throwable {
@@ -581,7 +440,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createCatalogPath);
   }
-  
+
   public void testCreateCatalogWOptionsWRetries() throws Throwable {
     // Enable retries and run testCreateCatalogWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -590,7 +449,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testCreateCatalogWOptions.
     catalogManagementService.disableRetries();
     testCreateCatalogWOptions();
-  }  
+  }
 
   @Test
   public void testGetCatalogWOptions() throws Throwable {
@@ -629,7 +488,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getCatalogPath);
   }
-  
+
   public void testGetCatalogWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetCatalogWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -638,7 +497,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetCatalogWOptions.
     catalogManagementService.disableRetries();
     testGetCatalogWOptions();
-  }  
+  }
 
   // Test the getCatalog operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -764,7 +623,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, replaceCatalogPath);
   }
-  
+
   public void testReplaceCatalogWOptionsWRetries() throws Throwable {
     // Enable retries and run testReplaceCatalogWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -773,7 +632,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testReplaceCatalogWOptions.
     catalogManagementService.disableRetries();
     testReplaceCatalogWOptions();
-  }  
+  }
 
   // Test the replaceCatalog operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -824,7 +683,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteCatalogPath);
   }
-  
+
   public void testDeleteCatalogWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeleteCatalogWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -833,7 +692,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeleteCatalogWOptions.
     catalogManagementService.disableRetries();
     testDeleteCatalogWOptions();
-  }  
+  }
 
   // Test the deleteCatalog operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -884,7 +743,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getCatalogAuditPath);
   }
-  
+
   public void testGetCatalogAuditWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetCatalogAuditWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -893,7 +752,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetCatalogAuditWOptions.
     catalogManagementService.disableRetries();
     testGetCatalogAuditWOptions();
-  }  
+  }
 
   // Test the getCatalogAudit operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -955,7 +814,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getConsumptionOfferingsPath);
   }
-  
+
   public void testGetConsumptionOfferingsWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetConsumptionOfferingsWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -964,7 +823,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetConsumptionOfferingsWOptions.
     catalogManagementService.disableRetries();
     testGetConsumptionOfferingsWOptions();
-  }  
+  }
 
   @Test
   public void testListOfferingsWOptions() throws Throwable {
@@ -1013,7 +872,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listOfferingsPath);
   }
-  
+
   public void testListOfferingsWOptionsWRetries() throws Throwable {
     // Enable retries and run testListOfferingsWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -1022,7 +881,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testListOfferingsWOptions.
     catalogManagementService.disableRetries();
     testListOfferingsWOptions();
-  }  
+  }
 
   // Test the listOfferings operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1290,7 +1149,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createOfferingPath);
   }
-  
+
   public void testCreateOfferingWOptionsWRetries() throws Throwable {
     // Enable retries and run testCreateOfferingWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -1299,7 +1158,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testCreateOfferingWOptions.
     catalogManagementService.disableRetries();
     testCreateOfferingWOptions();
-  }  
+  }
 
   // Test the createOffering operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1364,7 +1223,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, importOfferingVersionPath);
   }
-  
+
   public void testImportOfferingVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testImportOfferingVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -1373,7 +1232,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testImportOfferingVersionWOptions.
     catalogManagementService.disableRetries();
     testImportOfferingVersionWOptions();
-  }  
+  }
 
   // Test the importOfferingVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1440,7 +1299,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, importOfferingPath);
   }
-  
+
   public void testImportOfferingWOptionsWRetries() throws Throwable {
     // Enable retries and run testImportOfferingWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -1449,7 +1308,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testImportOfferingWOptions.
     catalogManagementService.disableRetries();
     testImportOfferingWOptions();
-  }  
+  }
 
   // Test the importOffering operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1510,7 +1369,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, reloadOfferingPath);
   }
-  
+
   public void testReloadOfferingWOptionsWRetries() throws Throwable {
     // Enable retries and run testReloadOfferingWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -1519,7 +1378,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testReloadOfferingWOptions.
     catalogManagementService.disableRetries();
     testReloadOfferingWOptions();
-  }  
+  }
 
   // Test the reloadOffering operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1575,7 +1434,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOfferingPath);
   }
-  
+
   public void testGetOfferingWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOfferingWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -1584,7 +1443,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOfferingWOptions.
     catalogManagementService.disableRetries();
     testGetOfferingWOptions();
-  }  
+  }
 
   // Test the getOffering operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1853,7 +1712,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, replaceOfferingPath);
   }
-  
+
   public void testReplaceOfferingWOptionsWRetries() throws Throwable {
     // Enable retries and run testReplaceOfferingWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -1862,7 +1721,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testReplaceOfferingWOptions.
     catalogManagementService.disableRetries();
     testReplaceOfferingWOptions();
-  }  
+  }
 
   // Test the replaceOffering operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1925,7 +1784,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateOfferingPath);
   }
-  
+
   public void testUpdateOfferingWOptionsWRetries() throws Throwable {
     // Enable retries and run testUpdateOfferingWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -1934,7 +1793,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testUpdateOfferingWOptions.
     catalogManagementService.disableRetries();
     testUpdateOfferingWOptions();
-  }  
+  }
 
   // Test the updateOffering operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -1986,7 +1845,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteOfferingPath);
   }
-  
+
   public void testDeleteOfferingWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeleteOfferingWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -1995,7 +1854,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeleteOfferingWOptions.
     catalogManagementService.disableRetries();
     testDeleteOfferingWOptions();
-  }  
+  }
 
   // Test the deleteOffering operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2047,7 +1906,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOfferingAuditPath);
   }
-  
+
   public void testGetOfferingAuditWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOfferingAuditWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2056,7 +1915,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOfferingAuditWOptions.
     catalogManagementService.disableRetries();
     testGetOfferingAuditWOptions();
-  }  
+  }
 
   // Test the getOfferingAudit operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2109,7 +1968,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, replaceOfferingIconPath);
   }
-  
+
   public void testReplaceOfferingIconWOptionsWRetries() throws Throwable {
     // Enable retries and run testReplaceOfferingIconWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2118,7 +1977,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testReplaceOfferingIconWOptions.
     catalogManagementService.disableRetries();
     testReplaceOfferingIconWOptions();
-  }  
+  }
 
   // Test the replaceOfferingIcon operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2172,7 +2031,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, updateOfferingIbmPath);
   }
-  
+
   public void testUpdateOfferingIbmWOptionsWRetries() throws Throwable {
     // Enable retries and run testUpdateOfferingIbmWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2181,7 +2040,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testUpdateOfferingIbmWOptions.
     catalogManagementService.disableRetries();
     testUpdateOfferingIbmWOptions();
-  }  
+  }
 
   // Test the updateOfferingIbm operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2236,7 +2095,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deprecateOfferingPath);
   }
-  
+
   public void testDeprecateOfferingWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeprecateOfferingWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2245,7 +2104,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeprecateOfferingWOptions.
     catalogManagementService.disableRetries();
     testDeprecateOfferingWOptions();
-  }  
+  }
 
   // Test the deprecateOffering operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2321,7 +2180,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOfferingUpdatesPath);
   }
-  
+
   public void testGetOfferingUpdatesWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOfferingUpdatesWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2330,7 +2189,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOfferingUpdatesWOptions.
     catalogManagementService.disableRetries();
     testGetOfferingUpdatesWOptions();
-  }  
+  }
 
   // Test the getOfferingUpdates operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2393,7 +2252,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOfferingSourcePath);
   }
-  
+
   public void testGetOfferingSourceWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOfferingSourceWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2402,7 +2261,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOfferingSourceWOptions.
     catalogManagementService.disableRetries();
     testGetOfferingSourceWOptions();
-  }  
+  }
 
   // Test the getOfferingSource operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2453,7 +2312,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOfferingAboutPath);
   }
-  
+
   public void testGetOfferingAboutWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOfferingAboutWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2462,7 +2321,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOfferingAboutWOptions.
     catalogManagementService.disableRetries();
     testGetOfferingAboutWOptions();
-  }  
+  }
 
   // Test the getOfferingAbout operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2514,7 +2373,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOfferingLicensePath);
   }
-  
+
   public void testGetOfferingLicenseWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOfferingLicenseWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2523,7 +2382,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOfferingLicenseWOptions.
     catalogManagementService.disableRetries();
     testGetOfferingLicenseWOptions();
-  }  
+  }
 
   // Test the getOfferingLicense operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2574,7 +2433,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOfferingContainerImagesPath);
   }
-  
+
   public void testGetOfferingContainerImagesWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOfferingContainerImagesWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2583,7 +2442,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOfferingContainerImagesWOptions.
     catalogManagementService.disableRetries();
     testGetOfferingContainerImagesWOptions();
-  }  
+  }
 
   // Test the getOfferingContainerImages operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2634,7 +2493,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deprecateVersionPath);
   }
-  
+
   public void testDeprecateVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeprecateVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2643,7 +2502,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeprecateVersionWOptions.
     catalogManagementService.disableRetries();
     testDeprecateVersionWOptions();
-  }  
+  }
 
   // Test the deprecateVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2697,7 +2556,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, setDeprecateVersionPath);
   }
-  
+
   public void testSetDeprecateVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testSetDeprecateVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2706,7 +2565,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testSetDeprecateVersionWOptions.
     catalogManagementService.disableRetries();
     testSetDeprecateVersionWOptions();
-  }  
+  }
 
   // Test the setDeprecateVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2757,7 +2616,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, accountPublishVersionPath);
   }
-  
+
   public void testAccountPublishVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testAccountPublishVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2766,7 +2625,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testAccountPublishVersionWOptions.
     catalogManagementService.disableRetries();
     testAccountPublishVersionWOptions();
-  }  
+  }
 
   // Test the accountPublishVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2817,7 +2676,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, ibmPublishVersionPath);
   }
-  
+
   public void testIbmPublishVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testIbmPublishVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2826,7 +2685,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testIbmPublishVersionWOptions.
     catalogManagementService.disableRetries();
     testIbmPublishVersionWOptions();
-  }  
+  }
 
   // Test the ibmPublishVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2877,7 +2736,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, publicPublishVersionPath);
   }
-  
+
   public void testPublicPublishVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testPublicPublishVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2886,7 +2745,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testPublicPublishVersionWOptions.
     catalogManagementService.disableRetries();
     testPublicPublishVersionWOptions();
-  }  
+  }
 
   // Test the publicPublishVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -2937,7 +2796,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, commitVersionPath);
   }
-  
+
   public void testCommitVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testCommitVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -2946,7 +2805,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testCommitVersionWOptions.
     catalogManagementService.disableRetries();
     testCommitVersionWOptions();
-  }  
+  }
 
   // Test the commitVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3000,7 +2859,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, copyVersionPath);
   }
-  
+
   public void testCopyVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testCopyVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3009,7 +2868,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testCopyVersionWOptions.
     catalogManagementService.disableRetries();
     testCopyVersionWOptions();
-  }  
+  }
 
   // Test the copyVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3060,7 +2919,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOfferingWorkingCopyPath);
   }
-  
+
   public void testGetOfferingWorkingCopyWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOfferingWorkingCopyWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3069,7 +2928,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOfferingWorkingCopyWOptions.
     catalogManagementService.disableRetries();
     testGetOfferingWorkingCopyWOptions();
-  }  
+  }
 
   // Test the getOfferingWorkingCopy operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3120,7 +2979,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getVersionPath);
   }
-  
+
   public void testGetVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3129,7 +2988,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetVersionWOptions.
     catalogManagementService.disableRetries();
     testGetVersionWOptions();
-  }  
+  }
 
   // Test the getVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3180,7 +3039,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteVersionPath);
   }
-  
+
   public void testDeleteVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeleteVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3189,7 +3048,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeleteVersionWOptions.
     catalogManagementService.disableRetries();
     testDeleteVersionWOptions();
-  }  
+  }
 
   // Test the deleteVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3244,7 +3103,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getClusterPath);
   }
-  
+
   public void testGetClusterWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetClusterWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3253,7 +3112,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetClusterWOptions.
     catalogManagementService.disableRetries();
     testGetClusterWOptions();
-  }  
+  }
 
   // Test the getCluster operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3312,7 +3171,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getNamespacesPath);
   }
-  
+
   public void testGetNamespacesWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetNamespacesWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3321,7 +3180,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetNamespacesWOptions.
     catalogManagementService.disableRetries();
     testGetNamespacesWOptions();
-  }  
+  }
 
   // Test the getNamespaces operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3378,7 +3237,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deployOperatorsPath);
   }
-  
+
   public void testDeployOperatorsWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeployOperatorsWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3387,7 +3246,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeployOperatorsWOptions.
     catalogManagementService.disableRetries();
     testDeployOperatorsWOptions();
-  }  
+  }
 
   // Test the deployOperators operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3445,7 +3304,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listOperatorsPath);
   }
-  
+
   public void testListOperatorsWOptionsWRetries() throws Throwable {
     // Enable retries and run testListOperatorsWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3454,7 +3313,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testListOperatorsWOptions.
     catalogManagementService.disableRetries();
     testListOperatorsWOptions();
-  }  
+  }
 
   // Test the listOperators operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3511,7 +3370,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, replaceOperatorsPath);
   }
-  
+
   public void testReplaceOperatorsWOptionsWRetries() throws Throwable {
     // Enable retries and run testReplaceOperatorsWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3520,7 +3379,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testReplaceOperatorsWOptions.
     catalogManagementService.disableRetries();
     testReplaceOperatorsWOptions();
-  }  
+  }
 
   // Test the replaceOperators operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3578,7 +3437,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteOperatorsPath);
   }
-  
+
   public void testDeleteOperatorsWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeleteOperatorsWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3587,7 +3446,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeleteOperatorsWOptions.
     catalogManagementService.disableRetries();
     testDeleteOperatorsWOptions();
-  }  
+  }
 
   // Test the deleteOperators operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3662,7 +3521,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, installVersionPath);
   }
-  
+
   public void testInstallVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testInstallVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3671,7 +3530,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testInstallVersionWOptions.
     catalogManagementService.disableRetries();
     testInstallVersionWOptions();
-  }  
+  }
 
   // Test the installVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3746,7 +3605,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, preinstallVersionPath);
   }
-  
+
   public void testPreinstallVersionWOptionsWRetries() throws Throwable {
     // Enable retries and run testPreinstallVersionWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3755,7 +3614,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testPreinstallVersionWOptions.
     catalogManagementService.disableRetries();
     testPreinstallVersionWOptions();
-  }  
+  }
 
   // Test the preinstallVersion operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3814,7 +3673,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getPreinstallPath);
   }
-  
+
   public void testGetPreinstallWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetPreinstallWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3823,7 +3682,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetPreinstallWOptions.
     catalogManagementService.disableRetries();
     testGetPreinstallWOptions();
-  }  
+  }
 
   // Test the getPreinstall operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3898,7 +3757,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, validateInstallPath);
   }
-  
+
   public void testValidateInstallWOptionsWRetries() throws Throwable {
     // Enable retries and run testValidateInstallWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3907,7 +3766,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testValidateInstallWOptions.
     catalogManagementService.disableRetries();
     testValidateInstallWOptions();
-  }  
+  }
 
   // Test the validateInstall operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -3960,7 +3819,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getValidationStatusPath);
   }
-  
+
   public void testGetValidationStatusWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetValidationStatusWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -3969,7 +3828,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetValidationStatusWOptions.
     catalogManagementService.disableRetries();
     testGetValidationStatusWOptions();
-  }  
+  }
 
   // Test the getValidationStatus operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4020,7 +3879,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOverrideValuesPath);
   }
-  
+
   public void testGetOverrideValuesWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOverrideValuesWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4029,7 +3888,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOverrideValuesWOptions.
     catalogManagementService.disableRetries();
     testGetOverrideValuesWOptions();
-  }  
+  }
 
   // Test the getOverrideValues operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4089,7 +3948,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, searchObjectsPath);
   }
-  
+
   public void testSearchObjectsWOptionsWRetries() throws Throwable {
     // Enable retries and run testSearchObjectsWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4098,7 +3957,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testSearchObjectsWOptions.
     catalogManagementService.disableRetries();
     testSearchObjectsWOptions();
-  }  
+  }
 
   // Test the searchObjects operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4157,7 +4016,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, listObjectsPath);
   }
-  
+
   public void testListObjectsWOptionsWRetries() throws Throwable {
     // Enable retries and run testListObjectsWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4166,7 +4025,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testListObjectsWOptions.
     catalogManagementService.disableRetries();
     testListObjectsWOptions();
-  }  
+  }
 
   // Test the listObjects operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4254,7 +4113,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createObjectPath);
   }
-  
+
   public void testCreateObjectWOptionsWRetries() throws Throwable {
     // Enable retries and run testCreateObjectWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4263,7 +4122,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testCreateObjectWOptions.
     catalogManagementService.disableRetries();
     testCreateObjectWOptions();
-  }  
+  }
 
   // Test the createObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4315,7 +4174,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getObjectPath);
   }
-  
+
   public void testGetObjectWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetObjectWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4324,7 +4183,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetObjectWOptions.
     catalogManagementService.disableRetries();
     testGetObjectWOptions();
-  }  
+  }
 
   // Test the getObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4413,7 +4272,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, replaceObjectPath);
   }
-  
+
   public void testReplaceObjectWOptionsWRetries() throws Throwable {
     // Enable retries and run testReplaceObjectWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4422,7 +4281,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testReplaceObjectWOptions.
     catalogManagementService.disableRetries();
     testReplaceObjectWOptions();
-  }  
+  }
 
   // Test the replaceObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4474,7 +4333,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteObjectPath);
   }
-  
+
   public void testDeleteObjectWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeleteObjectWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4483,7 +4342,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeleteObjectWOptions.
     catalogManagementService.disableRetries();
     testDeleteObjectWOptions();
-  }  
+  }
 
   // Test the deleteObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4535,7 +4394,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getObjectAuditPath);
   }
-  
+
   public void testGetObjectAuditWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetObjectAuditWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4544,7 +4403,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetObjectAuditWOptions.
     catalogManagementService.disableRetries();
     testGetObjectAuditWOptions();
-  }  
+  }
 
   // Test the getObjectAudit operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4596,7 +4455,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, accountPublishObjectPath);
   }
-  
+
   public void testAccountPublishObjectWOptionsWRetries() throws Throwable {
     // Enable retries and run testAccountPublishObjectWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4605,7 +4464,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testAccountPublishObjectWOptions.
     catalogManagementService.disableRetries();
     testAccountPublishObjectWOptions();
-  }  
+  }
 
   // Test the accountPublishObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4657,7 +4516,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, sharedPublishObjectPath);
   }
-  
+
   public void testSharedPublishObjectWOptionsWRetries() throws Throwable {
     // Enable retries and run testSharedPublishObjectWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4666,7 +4525,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testSharedPublishObjectWOptions.
     catalogManagementService.disableRetries();
     testSharedPublishObjectWOptions();
-  }  
+  }
 
   // Test the sharedPublishObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4718,7 +4577,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, ibmPublishObjectPath);
   }
-  
+
   public void testIbmPublishObjectWOptionsWRetries() throws Throwable {
     // Enable retries and run testIbmPublishObjectWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4727,7 +4586,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testIbmPublishObjectWOptions.
     catalogManagementService.disableRetries();
     testIbmPublishObjectWOptions();
-  }  
+  }
 
   // Test the ibmPublishObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4779,7 +4638,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, publicPublishObjectPath);
   }
-  
+
   public void testPublicPublishObjectWOptionsWRetries() throws Throwable {
     // Enable retries and run testPublicPublishObjectWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4788,7 +4647,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testPublicPublishObjectWOptions.
     catalogManagementService.disableRetries();
     testPublicPublishObjectWOptions();
-  }  
+  }
 
   // Test the publicPublishObject operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4841,7 +4700,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createObjectAccessPath);
   }
-  
+
   public void testCreateObjectAccessWOptionsWRetries() throws Throwable {
     // Enable retries and run testCreateObjectAccessWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4850,7 +4709,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testCreateObjectAccessWOptions.
     catalogManagementService.disableRetries();
     testCreateObjectAccessWOptions();
-  }  
+  }
 
   // Test the createObjectAccess operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4903,7 +4762,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getObjectAccessPath);
   }
-  
+
   public void testGetObjectAccessWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetObjectAccessWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4912,7 +4771,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetObjectAccessWOptions.
     catalogManagementService.disableRetries();
     testGetObjectAccessWOptions();
-  }  
+  }
 
   // Test the getObjectAccess operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -4965,7 +4824,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteObjectAccessPath);
   }
-  
+
   public void testDeleteObjectAccessWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeleteObjectAccessWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -4974,7 +4833,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeleteObjectAccessWOptions.
     catalogManagementService.disableRetries();
     testDeleteObjectAccessWOptions();
-  }  
+  }
 
   // Test the deleteObjectAccess operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -5030,7 +4889,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getObjectAccessListPath);
   }
-  
+
   public void testGetObjectAccessListWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetObjectAccessListWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -5039,7 +4898,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetObjectAccessListWOptions.
     catalogManagementService.disableRetries();
     testGetObjectAccessListWOptions();
-  }  
+  }
 
   // Test the getObjectAccessList operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -5092,7 +4951,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteObjectAccessListPath);
   }
-  
+
   public void testDeleteObjectAccessListWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeleteObjectAccessListWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -5101,7 +4960,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeleteObjectAccessListWOptions.
     catalogManagementService.disableRetries();
     testDeleteObjectAccessListWOptions();
-  }  
+  }
 
   // Test the deleteObjectAccessList operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -5154,7 +5013,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, addObjectAccessListPath);
   }
-  
+
   public void testAddObjectAccessListWOptionsWRetries() throws Throwable {
     // Enable retries and run testAddObjectAccessListWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -5163,7 +5022,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testAddObjectAccessListWOptions.
     catalogManagementService.disableRetries();
     testAddObjectAccessListWOptions();
-  }  
+  }
 
   // Test the addObjectAccessList operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -5243,7 +5102,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, createOfferingInstancePath);
   }
-  
+
   public void testCreateOfferingInstanceWOptionsWRetries() throws Throwable {
     // Enable retries and run testCreateOfferingInstanceWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -5252,7 +5111,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testCreateOfferingInstanceWOptions.
     catalogManagementService.disableRetries();
     testCreateOfferingInstanceWOptions();
-  }  
+  }
 
   // Test the createOfferingInstance operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -5303,7 +5162,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getOfferingInstancePath);
   }
-  
+
   public void testGetOfferingInstanceWOptionsWRetries() throws Throwable {
     // Enable retries and run testGetOfferingInstanceWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -5312,7 +5171,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testGetOfferingInstanceWOptions.
     catalogManagementService.disableRetries();
     testGetOfferingInstanceWOptions();
-  }  
+  }
 
   // Test the getOfferingInstance operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -5393,7 +5252,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, putOfferingInstancePath);
   }
-  
+
   public void testPutOfferingInstanceWOptionsWRetries() throws Throwable {
     // Enable retries and run testPutOfferingInstanceWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -5402,7 +5261,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testPutOfferingInstanceWOptions.
     catalogManagementService.disableRetries();
     testPutOfferingInstanceWOptions();
-  }  
+  }
 
   // Test the putOfferingInstance operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)
@@ -5455,7 +5314,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, deleteOfferingInstancePath);
   }
-  
+
   public void testDeleteOfferingInstanceWOptionsWRetries() throws Throwable {
     // Enable retries and run testDeleteOfferingInstanceWOptions.
     catalogManagementService.enableRetries(4, 30);
@@ -5464,7 +5323,7 @@ public class CatalogManagementTest extends PowerMockTestCase {
     // Disable retries and run testDeleteOfferingInstanceWOptions.
     catalogManagementService.disableRetries();
     testDeleteOfferingInstanceWOptions();
-  }  
+  }
 
   // Test the deleteOfferingInstance operation with null options model parameter
   @Test(expectedExceptions = IllegalArgumentException.class)

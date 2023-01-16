@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2022, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,22 @@
  */
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.EnterpriseManagement;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroupsPager;
@@ -40,35 +55,16 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAcco
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Unit test class for the EnterpriseManagement service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class EnterpriseManagementTest extends PowerMockTestCase {
+public class EnterpriseManagementTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -225,7 +221,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listEnterprises operation using the EnterprisesPager.getAll() method
   @Test
   public void testListEnterprisesWithPagerGetAll() throws Throwable {
@@ -257,7 +253,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getEnterprise operation with a valid options model parameter
   @Test
   public void testGetEnterpriseWOptions() throws Throwable {
@@ -556,7 +552,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listAccounts operation using the AccountsPager.getAll() method
   @Test
   public void testListAccountsWithPagerGetAll() throws Throwable {
@@ -588,7 +584,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getAccount operation with a valid options model parameter
   @Test
   public void testGetAccountWOptions() throws Throwable {
@@ -832,7 +828,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listAccountGroups operation using the AccountGroupsPager.getAll() method
   @Test
   public void testListAccountGroupsWithPagerGetAll() throws Throwable {
@@ -864,7 +860,7 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getAccountGroup operation with a valid options model parameter
   @Test
   public void testGetAccountGroupWOptions() throws Throwable {
@@ -990,17 +986,9 @@ public class EnterpriseManagementTest extends PowerMockTestCase {
     enterpriseManagementService = null;
   }
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv()
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   // Constructs an instance of the service to be used by the tests
   public void constructClientService() {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     enterpriseManagementService = EnterpriseManagement.newInstance(serviceName);

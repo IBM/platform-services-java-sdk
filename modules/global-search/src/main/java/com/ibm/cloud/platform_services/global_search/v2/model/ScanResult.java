@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -27,6 +27,8 @@ public class ScanResult extends GenericModel {
   protected Long limit;
   protected List<ResultItem> items;
 
+  protected ScanResult() { }
+
   /**
    * Gets the searchCursor.
    *
@@ -52,8 +54,8 @@ public class ScanResult extends GenericModel {
   /**
    * Gets the items.
    *
-   * The array of results. Each item represents a resource. An empty array signals the end of the result set, there are
-   * no more hits to fetch.
+   * The array of results. Each item represents a resource. An empty array signals the end of the result set, which
+   * means there are no more results to fetch.
    *
    * @return the items
    */

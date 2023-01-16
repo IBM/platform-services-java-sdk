@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -38,6 +38,7 @@ public class AttachTagOptions extends GenericModel {
   protected List<Resource> resources;
   protected String tagName;
   protected List<String> tagNames;
+  protected String transactionId;
   protected String impersonateUser;
   protected String accountId;
   protected String tagType;
@@ -49,14 +50,21 @@ public class AttachTagOptions extends GenericModel {
     private List<Resource> resources;
     private String tagName;
     private List<String> tagNames;
+    private String transactionId;
     private String impersonateUser;
     private String accountId;
     private String tagType;
 
+    /**
+     * Instantiates a new Builder from an existing AttachTagOptions instance.
+     *
+     * @param attachTagOptions the instance to initialize the Builder with
+     */
     private Builder(AttachTagOptions attachTagOptions) {
       this.resources = attachTagOptions.resources;
       this.tagName = attachTagOptions.tagName;
       this.tagNames = attachTagOptions.tagNames;
+      this.transactionId = attachTagOptions.transactionId;
       this.impersonateUser = attachTagOptions.impersonateUser;
       this.accountId = attachTagOptions.accountId;
       this.tagType = attachTagOptions.tagType;
@@ -154,6 +162,17 @@ public class AttachTagOptions extends GenericModel {
     }
 
     /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the AttachTagOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
      * Set the impersonateUser.
      *
      * @param impersonateUser the impersonateUser
@@ -187,12 +206,15 @@ public class AttachTagOptions extends GenericModel {
     }
   }
 
+  protected AttachTagOptions() { }
+
   protected AttachTagOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.resources,
       "resources cannot be null");
     resources = builder.resources;
     tagName = builder.tagName;
     tagNames = builder.tagNames;
+    transactionId = builder.transactionId;
     impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
     tagType = builder.tagType;
@@ -210,7 +232,7 @@ public class AttachTagOptions extends GenericModel {
   /**
    * Gets the resources.
    *
-   * List of resources on which the tag or tags should be attached.
+   * List of resources on which the tag or tags are attached.
    *
    * @return the resources
    */
@@ -241,6 +263,18 @@ public class AttachTagOptions extends GenericModel {
   }
 
   /**
+   * Gets the transactionId.
+   *
+   * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
+   * generated with the prefix "gst-".
+   *
+   * @return the transactionId
+   */
+  public String transactionId() {
+    return transactionId;
+  }
+
+  /**
    * Gets the impersonateUser.
    *
    * The user on whose behalf the attach operation must be performed (_for administrators only_).
@@ -254,8 +288,8 @@ public class AttachTagOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The ID of the billing account where the resources to be tagged lives. It is a required parameter if `tag_type` is
-   * set to `service`. Otherwise, it is inferred from the authorization IAM token.
+   * The ID of the billing account of the tagged resource. It is a required parameter if `tag_type` is set to `service`.
+   * Otherwise, it is inferred from the authorization IAM token.
    *
    * @return the accountId
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -51,6 +51,7 @@ public class ListTagsOptions extends GenericModel {
     String DESC = "desc";
   }
 
+  protected String transactionId;
   protected String impersonateUser;
   protected String accountId;
   protected String tagType;
@@ -67,6 +68,7 @@ public class ListTagsOptions extends GenericModel {
    * Builder.
    */
   public static class Builder {
+    private String transactionId;
     private String impersonateUser;
     private String accountId;
     private String tagType;
@@ -79,7 +81,13 @@ public class ListTagsOptions extends GenericModel {
     private String orderByName;
     private Boolean attachedOnly;
 
+    /**
+     * Instantiates a new Builder from an existing ListTagsOptions instance.
+     *
+     * @param listTagsOptions the instance to initialize the Builder with
+     */
     private Builder(ListTagsOptions listTagsOptions) {
+      this.transactionId = listTagsOptions.transactionId;
       this.impersonateUser = listTagsOptions.impersonateUser;
       this.accountId = listTagsOptions.accountId;
       this.tagType = listTagsOptions.tagType;
@@ -121,6 +129,17 @@ public class ListTagsOptions extends GenericModel {
         this.providers = new ArrayList<String>();
       }
       this.providers.add(providers);
+      return this;
+    }
+
+    /**
+     * Set the transactionId.
+     *
+     * @param transactionId the transactionId
+     * @return the ListTagsOptions builder
+     */
+    public Builder transactionId(String transactionId) {
+      this.transactionId = transactionId;
       return this;
     }
 
@@ -247,7 +266,10 @@ public class ListTagsOptions extends GenericModel {
     }
   }
 
+  protected ListTagsOptions() { }
+
   protected ListTagsOptions(Builder builder) {
+    transactionId = builder.transactionId;
     impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
     tagType = builder.tagType;
@@ -268,6 +290,18 @@ public class ListTagsOptions extends GenericModel {
    */
   public Builder newBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Gets the transactionId.
+   *
+   * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
+   * generated with the prefix "gst-".
+   *
+   * @return the transactionId
+   */
+  public String transactionId() {
+    return transactionId;
   }
 
   /**
@@ -321,7 +355,7 @@ public class ListTagsOptions extends GenericModel {
    *
    * Select a provider. Supported values are `ghost` and `ims`. To list both Global Search and Tagging tags and
    * infrastructure tags, use `ghost,ims`. `service` and `access` tags can only be attached to resources that are
-   * onboarded to Global Search and Tagging, so you should not set this parameter when listing them.
+   * onboarded to Global Search and Tagging, so you should not set this parameter to list them.
    *
    * @return the providers
    */
@@ -332,9 +366,9 @@ public class ListTagsOptions extends GenericModel {
   /**
    * Gets the attachedTo.
    *
-   * If you want to return only the list of tags attached to a specified resource, pass the ID of the resource on this
-   * parameter. For resources that are onboarded to Global Search and Tagging, the resource ID is the CRN; for IMS
-   * resources, it is the IMS ID. When using this parameter, you must specify the appropriate provider (`ims` or
+   * If you want to return only the list of tags that are attached to a specified resource, pass the ID of the resource
+   * on this parameter. For resources that are onboarded to Global Search and Tagging, the resource ID is the CRN; for
+   * IMS resources, it is the IMS ID. When using this parameter, you must specify the appropriate provider (`ims` or
    * `ghost`).
    *
    * @return the attachedTo
@@ -368,8 +402,8 @@ public class ListTagsOptions extends GenericModel {
   /**
    * Gets the timeout.
    *
-   * The search timeout bounds the search request to be executed within the specified time value. It returns the hits
-   * accumulated until time runs out.
+   * The timeout in milliseconds, bounds the request to run within the specified time value. It returns the accumulated
+   * results until time runs out.
    *
    * @return the timeout
    */

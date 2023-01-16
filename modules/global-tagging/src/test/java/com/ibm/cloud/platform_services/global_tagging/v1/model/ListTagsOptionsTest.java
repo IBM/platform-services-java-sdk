@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,8 +17,6 @@ import com.ibm.cloud.platform_services.global_tagging.v1.model.ListTagsOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -34,28 +32,30 @@ public class ListTagsOptionsTest {
   @Test
   public void testListTagsOptions() throws Throwable {
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
+      .transactionId("testString")
       .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
-      .fullData(true)
-      .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
+      .fullData(false)
+      .providers(java.util.Arrays.asList("ghost"))
       .attachedTo("testString")
       .offset(Long.valueOf("0"))
       .limit(Long.valueOf("1"))
       .timeout(Long.valueOf("0"))
       .orderByName("asc")
-      .attachedOnly(true)
+      .attachedOnly(false)
       .build();
+    assertEquals(listTagsOptionsModel.transactionId(), "testString");
     assertEquals(listTagsOptionsModel.impersonateUser(), "testString");
     assertEquals(listTagsOptionsModel.accountId(), "testString");
     assertEquals(listTagsOptionsModel.tagType(), "user");
-    assertEquals(listTagsOptionsModel.fullData(), Boolean.valueOf(true));
-    assertEquals(listTagsOptionsModel.providers(), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
+    assertEquals(listTagsOptionsModel.fullData(), Boolean.valueOf(false));
+    assertEquals(listTagsOptionsModel.providers(), java.util.Arrays.asList("ghost"));
     assertEquals(listTagsOptionsModel.attachedTo(), "testString");
     assertEquals(listTagsOptionsModel.offset(), Long.valueOf("0"));
     assertEquals(listTagsOptionsModel.limit(), Long.valueOf("1"));
     assertEquals(listTagsOptionsModel.timeout(), Long.valueOf("0"));
     assertEquals(listTagsOptionsModel.orderByName(), "asc");
-    assertEquals(listTagsOptionsModel.attachedOnly(), Boolean.valueOf(true));
+    assertEquals(listTagsOptionsModel.attachedOnly(), Boolean.valueOf(false));
   }
 }

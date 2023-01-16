@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -28,10 +28,12 @@ public class TagList extends GenericModel {
   protected Long limit;
   protected List<Tag> items;
 
+  protected TagList() { }
+
   /**
    * Gets the totalCount.
    *
-   * Set the occurrencies of the total tags associated to this account.
+   * Set the occurrences of the total tags that are associated with this account.
    *
    * @return the totalCount
    */

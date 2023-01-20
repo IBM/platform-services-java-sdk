@@ -96,7 +96,7 @@ public class IamIdentity extends BaseService {
   /**
    * Default service endpoint URL.
    */
-  public static final String DEFAULT_SERVICE_URL = "https://iam.cloud.ibm.com";
+  public static final String DEFAULT_SERVICE_URL = "https://iam.test.cloud.ibm.com";
 
  /**
    * Class method which constructs an instance of the `IamIdentity` client.

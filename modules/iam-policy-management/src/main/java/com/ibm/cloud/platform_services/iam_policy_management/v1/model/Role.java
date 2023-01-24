@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -52,6 +52,17 @@ public class Role extends GenericModel {
      * Instantiates a new builder.
      */
     public Builder() {
+    }
+
+    /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param displayName the displayName
+     * @param actions the actions
+     */
+    public Builder(String displayName, List<String> actions) {
+      this.displayName = displayName;
+      this.actions = actions;
     }
 
     /**
@@ -117,6 +128,10 @@ public class Role extends GenericModel {
   protected Role() { }
 
   protected Role(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.displayName,
+      "displayName cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.actions,
+      "actions cannot be null");
     displayName = builder.displayName;
     description = builder.description;
     actions = builder.actions;

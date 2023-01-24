@@ -21,7 +21,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRole
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PatchPolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
@@ -32,21 +32,24 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2CreatePolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2DeletePolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2GetPolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2ListPoliciesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateV2PolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteV2PolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2PolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControl;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControlGrant;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseResource;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseRuleV2RuleWithConditions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseSubject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyList;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2UpdatePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubjectAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyGrant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleWithConditions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -186,7 +189,7 @@ public class IamPolicyManagementExamples {
     try {
       System.out.println("updatePolicy() result:");
 
-      // begin-update_policy
+      // begin-replace_policy
 
       SubjectAttribute subjectAttribute = new SubjectAttribute.Builder()
               .name("iam_id")
@@ -225,7 +228,7 @@ public class IamPolicyManagementExamples {
               .roleId("crn:v1:bluemix:public:iam::::role:Editor")
               .build();
 
-      UpdatePolicyOptions options = new UpdatePolicyOptions.Builder()
+      ReplacePolicyOptions options = new ReplacePolicyOptions.Builder()
               .type("access")
               .policyId(examplePolicyId)
               .ifMatch(examplePolicyEtag)
@@ -234,12 +237,12 @@ public class IamPolicyManagementExamples {
               .resources(new ArrayList<PolicyResource>(Arrays.asList(policyResources)))
               .build();
 
-      Response<Policy> response = service.updatePolicy(options).execute();
+      Response<Policy> response = service.replacePolicy(options).execute();
       Policy policy = response.getResult();
 
       System.out.println(policy);
 
-      // end-update_policy
+      // end-replace_policy
 
       examplePolicyEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
@@ -250,20 +253,20 @@ public class IamPolicyManagementExamples {
     try {
       System.out.println("patchPolicy() result:");
 
-      // begin-patch_policy
+      // begin-update_policy_state
 
-      PatchPolicyOptions patchPolicyOptions = new PatchPolicyOptions.Builder()
+      UpdatePolicyStateOptions updatePolicyStateOptions = new UpdatePolicyStateOptions.Builder()
               .policyId(examplePolicyId)
               .ifMatch(examplePolicyEtag)
               .state("active")
               .build();
 
-      Response<Policy> response = service.patchPolicy(patchPolicyOptions).execute();
+      Response<Policy> response = service.updatePolicyState(updatePolicyStateOptions).execute();
       Policy policy = response.getResult();
 
       System.out.println(policy);
 
-      // end-patch_policy
+      // end-update_policy_state
 
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -311,87 +314,94 @@ public class IamPolicyManagementExamples {
     }
 
     try {
-      System.out.println("v2CreatePolicy() result:");
+      System.out.println("createV2Policy() result:");
 
-      // begin-v2_create_policy
+      // begin-create_v2_policy
 
-      V2PolicyAttribute subjectAttribute = new V2PolicyAttribute.Builder()
+      V2PolicySubjectAttribute subjectAttribute = new V2PolicySubjectAttribute.Builder()
               .key("iam_id")
               .value(EXAMPLE_USER_ID)
               .operator("stringEquals")
               .build();
 
-      V2PolicyBaseSubject policySubject = new V2PolicyBaseSubject.Builder()
+      V2PolicySubject policySubject = new V2PolicySubject.Builder()
               .addAttributes(subjectAttribute)
               .build();
 
-      V2PolicyAttribute accountIdResourceAttribute = new V2PolicyAttribute.Builder()
+      V2PolicyResourceAttribute accountIdResourceAttribute = new V2PolicyResourceAttribute.Builder()
               .key("accountId")
               .value(exampleAccountId)
               .operator("stringEquals")
               .build();
 
-      V2PolicyAttribute serviceNameResourceAttribute = new V2PolicyAttribute.Builder()
+      V2PolicyResourceAttribute serviceNameResourceAttribute = new V2PolicyResourceAttribute.Builder()
               .key("serviceType")
               .value("service")
               .operator("stringEquals")
               .build();
 
-      V2PolicyBaseResource policyResource = new V2PolicyBaseResource.Builder()
+      V2PolicyResourceTag policyResourceTag = new V2PolicyResourceTag.Builder()
+              .key("project")
+              .value("prototype")
+              .operator("stringEquals")
+              .build();
+
+      V2PolicyResource policyResource = new V2PolicyResource.Builder()
               .addAttributes(accountIdResourceAttribute)
               .addAttributes(serviceNameResourceAttribute)
+              .addTags(policyResourceTag)
               .build();
 
       PolicyRole policyRoles = new PolicyRole.Builder()
               .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
               .build();
 
-      V2PolicyBaseControlGrant policyGrant = new V2PolicyBaseControlGrant.Builder()
+      V2PolicyGrant policyGrant = new V2PolicyGrant.Builder()
               .roles(Arrays.asList(policyRoles))
               .build();
 
-      V2PolicyBaseControl policyControl = new V2PolicyBaseControl.Builder()
+      Control control = new Control.Builder()
               .grant(policyGrant)
               .build();
 
-      V2PolicyAttribute weeklyConditionAttribute = new V2PolicyAttribute.Builder()
+      RuleAttribute weeklyConditionAttribute = new RuleAttribute.Builder()
               .key("{{environment.attributes.day_of_week}}")
-              .value(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5)))
+              .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
               .operator("dayOfWeekAnyOf")
               .build();
 
-      V2PolicyAttribute startConditionAttribute = new V2PolicyAttribute.Builder()
+      RuleAttribute startConditionAttribute = new RuleAttribute.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("09:00:00+00:00")
               .operator("timeGreaterThanOrEquals")
               .build();
 
-      V2PolicyAttribute endConditionAttribute = new V2PolicyAttribute.Builder()
+      RuleAttribute endConditionAttribute = new RuleAttribute.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("17:00:00+00:00")
               .operator("timeLessThanOrEquals")
               .build();
 
-      V2PolicyBaseRuleV2RuleWithConditions policyRule = new V2PolicyBaseRuleV2RuleWithConditions.Builder()
+      V2PolicyRuleRuleWithConditions policyRule = new V2PolicyRuleRuleWithConditions.Builder()
               .operator("and")
-              .conditions(new ArrayList<V2PolicyAttribute>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
+              .conditions(new ArrayList<RuleAttribute>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
               .build();
 
-      V2CreatePolicyOptions options = new V2CreatePolicyOptions.Builder()
+      CreateV2PolicyOptions options = new CreateV2PolicyOptions.Builder()
               .type("access")
               .subject(policySubject)
-              .control(policyControl)
+              .control(control)
               .resource(policyResource)
               .rule(policyRule)
-              .pattern("time-based-restrictions:weekly")
+              .pattern("time-based-conditions:weekly:custom-hours")
               .build();
 
-      Response<V2Policy> response = service.v2CreatePolicy(options).execute();
+      Response<V2Policy> response = service.createV2Policy(options).execute();
       V2Policy policy = response.getResult();
 
       System.out.println(policy);
 
-      // end-v2_create_policy
+      // end-create_v2_policy
 
       exampleV2PolicyId = policy.getId();
     } catch (ServiceResponseException e) {
@@ -400,20 +410,20 @@ public class IamPolicyManagementExamples {
     }
 
     try {
-      System.out.println("v2GetPolicy() result:");
+      System.out.println("getV2Policy() result:");
 
-      // begin-v2_get_policy
+      // begin-get_v2_policy
 
-      V2GetPolicyOptions options = new V2GetPolicyOptions.Builder()
-              .policyId(exampleV2PolicyId)
+      GetV2PolicyOptions options = new GetV2PolicyOptions.Builder()
+              .id(exampleV2PolicyId)
               .build();
 
-      Response<V2Policy> response = service.v2GetPolicy(options).execute();
+      Response<V2Policy> response = service.getV2Policy(options).execute();
       V2Policy policy = response.getResult();
 
       System.out.println(policy);
 
-      // end-v2_get_policy
+      // end-get_v2_policy
 
       exampleV2PolicyEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
@@ -422,88 +432,95 @@ public class IamPolicyManagementExamples {
     }
 
     try {
-      System.out.println("v2UpdatePolicy() result:");
+      System.out.println("replaceV2Policy() result:");
 
-      // begin-v2_update_policy
+      // begin-replace_v2_policy
 
-      V2PolicyAttribute subjectAttribute = new V2PolicyAttribute.Builder()
+      V2PolicySubjectAttribute subjectAttribute = new V2PolicySubjectAttribute.Builder()
               .key("iam_id")
               .value(EXAMPLE_USER_ID)
               .operator("stringEquals")
               .build();
 
-      V2PolicyBaseSubject policySubject = new V2PolicyBaseSubject.Builder()
+      V2PolicySubject policySubject = new V2PolicySubject.Builder()
               .addAttributes(subjectAttribute)
               .build();
 
-      V2PolicyAttribute accountIdResourceAttribute = new V2PolicyAttribute.Builder()
+      V2PolicyResourceAttribute accountIdResourceAttribute = new V2PolicyResourceAttribute.Builder()
               .key("accountId")
               .value(exampleAccountId)
               .operator("stringEquals")
               .build();
 
-      V2PolicyAttribute serviceNameResourceAttribute = new V2PolicyAttribute.Builder()
+      V2PolicyResourceAttribute serviceNameResourceAttribute = new V2PolicyResourceAttribute.Builder()
               .key("serviceType")
               .value("service")
               .operator("stringEquals")
               .build();
 
-      V2PolicyBaseResource policyResource = new V2PolicyBaseResource.Builder()
+      V2PolicyResourceTag policyResourceTag = new V2PolicyResourceTag.Builder()
+              .key("project")
+              .value("prototype")
+              .operator("stringEquals")
+              .build();
+
+      V2PolicyResource policyResource = new V2PolicyResource.Builder()
               .addAttributes(accountIdResourceAttribute)
               .addAttributes(serviceNameResourceAttribute)
+              .addTags(policyResourceTag)
               .build();
 
       PolicyRole updatedPolicyRole = new PolicyRole.Builder()
               .roleId("crn:v1:bluemix:public:iam::::role:Editor")
               .build();
-      V2PolicyBaseControlGrant policyGrant = new V2PolicyBaseControlGrant.Builder()
+      V2PolicyGrant policyGrant = new V2PolicyGrant.Builder()
               .roles(Arrays.asList(updatedPolicyRole))
               .build();
 
-      V2PolicyBaseControl policyControl = new V2PolicyBaseControl.Builder()
+      Control policyControl = new Control.Builder()
               .grant(policyGrant)
               .build();
 
-      V2PolicyAttribute weeklyConditionAttribute = new V2PolicyAttribute.Builder()
+      RuleAttribute weeklyConditionAttribute = new RuleAttribute.Builder()
               .key("{{environment.attributes.day_of_week}}")
-              .value(new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5)))
+              .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
               .operator("dayOfWeekAnyOf")
               .build();
 
-      V2PolicyAttribute startConditionAttribute = new V2PolicyAttribute.Builder()
+      RuleAttribute startConditionAttribute = new RuleAttribute.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("09:00:00+00:00")
               .operator("timeGreaterThanOrEquals")
               .build();
 
-      V2PolicyAttribute endConditionAttribute = new V2PolicyAttribute.Builder()
+      RuleAttribute endConditionAttribute = new RuleAttribute.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("17:00:00+00:00")
               .operator("timeLessThanOrEquals")
               .build();
 
-      V2PolicyBaseRuleV2RuleWithConditions policyRule = new V2PolicyBaseRuleV2RuleWithConditions.Builder()
+      V2PolicyRuleRuleWithConditions policyRule = new V2PolicyRuleRuleWithConditions.Builder()
               .operator("and")
-              .conditions(new ArrayList<V2PolicyAttribute>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
+              .conditions(new ArrayList<RuleAttribute>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
               .build();
 
-      V2UpdatePolicyOptions options = new V2UpdatePolicyOptions.Builder()
+      ReplaceV2PolicyOptions options = new ReplaceV2PolicyOptions.Builder()
               .type("access")
-              .policyId(exampleV2PolicyId)
+              .id(exampleV2PolicyId)
               .ifMatch(exampleV2PolicyEtag)
               .subject(policySubject)
               .control(policyControl)
               .resource(policyResource)
               .rule(policyRule)
-              .pattern("time-based-restrictions:weekly")
+              .pattern("time-based-conditions:weekly:custom-hours")
               .build();
 
-      Response<V2Policy> response = service.v2UpdatePolicy(options).execute();
+      Response<V2Policy> response = service.replaceV2Policy(options).execute();
       V2Policy policy = response.getResult();
 
       System.out.println(policy);
 
-      // end-v2_update_policy
+      // end-replace_v2_policy
 
       exampleV2PolicyEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
@@ -512,22 +529,22 @@ public class IamPolicyManagementExamples {
     }
 
     try {
-      System.out.println("v2ListPolicies() result:");
+      System.out.println("listV2Policies() result:");
 
-      // begin-v2_list_policies
+      // begin-list_v2_policies
 
-      V2ListPoliciesOptions options = new V2ListPoliciesOptions.Builder()
+      ListV2PoliciesOptions options = new ListV2PoliciesOptions.Builder()
               .accountId(exampleAccountId)
               .iamId(EXAMPLE_USER_ID)
               .format("include_last_permit")
               .build();
 
-      Response<V2PolicyList> response = service.v2ListPolicies(options).execute();
-      V2PolicyList policyList = response.getResult();
+      Response<V2PolicyCollection> response = service.listV2Policies(options).execute();
+      V2PolicyCollection policyCollection = response.getResult();
 
-      System.out.println(policyList);
+      System.out.println(policyCollection);
 
-      // end-v2_list_policies
+      // end-list_v2_policies
 
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -537,15 +554,15 @@ public class IamPolicyManagementExamples {
     try {
       // begin-v2_delete_policy
 
-      V2DeletePolicyOptions options = new V2DeletePolicyOptions.Builder()
-              .policyId(examplePolicyId)
+      DeleteV2PolicyOptions options = new DeleteV2PolicyOptions.Builder()
+              .id(examplePolicyId)
               .build();
 
-      Response<Void> response = service.v2DeletePolicy(options).execute();
+      Response<Void> response = service.deleteV2Policy(options).execute();
 
       // end-v2_delete_policy
 
-      System.out.printf("deletePolicy() response status code: %d%n", response.getStatusCode());
+      System.out.printf("deleteV2Policy() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -602,21 +619,21 @@ public class IamPolicyManagementExamples {
     try {
       System.out.println("updateRole() result:");
 
-      // begin-update_role
+      // begin-replace_role
 
       List<String> updatedRoleActions = Arrays.asList("iam-groups.groups.read", "iam-groups.groups.list");
-      UpdateRoleOptions options = new UpdateRoleOptions.Builder()
+      ReplaceRoleOptions options = new ReplaceRoleOptions.Builder()
               .roleId(exampleCustomRoleId)
               .ifMatch(exampleCustomRoleEtag)
               .actions(updatedRoleActions)
               .build();
 
-      Response<CustomRole> response = service.updateRole(options).execute();
+      Response<CustomRole> response = service.replaceRole(options).execute();
       CustomRole customRole = response.getResult();
 
       System.out.println(customRole);
 
-      // end-update_role
+      // end-replace_role
 
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022, 2023.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,64 +12,70 @@
  */
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.fail;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
+import com.ibm.cloud.platform_services.iam_policy_management.v1.IamPolicyManagement;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponse;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControl;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControlWithTranslatedRoles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2PolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GrantWithTranslatedRoles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PatchPolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Role;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAction;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleInDisplayFormat;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2CreatePolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2DeletePolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2GetPolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2ListPoliciesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControl;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControlGrant;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseResource;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseRule;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseRuleV2PolicyAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseRuleV2RuleWithConditions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseSubject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyList;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2UpdatePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyGrant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRule;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleWithConditions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.security.Authenticator;
+import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * Unit test class for the IamPolicyManagement service.
@@ -252,12 +258,12 @@ public class IamPolicyManagementTest {
     iamPolicyManagementService.createPolicy(null).execute();
   }
 
-  // Test the updatePolicy operation with a valid options model parameter
+  // Test the replacePolicy operation with a valid options model parameter
   @Test
-  public void testUpdatePolicyWOptions() throws Throwable {
+  public void testReplacePolicyWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}";
-    String updatePolicyPath = "/v1/policies/testString";
+    String replacePolicyPath = "/v1/policies/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -299,8 +305,8 @@ public class IamPolicyManagementTest {
       .tags(java.util.Arrays.asList(resourceTagModel))
       .build();
 
-    // Construct an instance of the UpdatePolicyOptions model
-    UpdatePolicyOptions updatePolicyOptionsModel = new UpdatePolicyOptions.Builder()
+    // Construct an instance of the ReplacePolicyOptions model
+    ReplacePolicyOptions replacePolicyOptionsModel = new ReplacePolicyOptions.Builder()
       .policyId("testString")
       .ifMatch("testString")
       .type("testString")
@@ -310,8 +316,8 @@ public class IamPolicyManagementTest {
       .description("testString")
       .build();
 
-    // Invoke updatePolicy() with a valid options model and verify the result
-    Response<Policy> response = iamPolicyManagementService.updatePolicy(updatePolicyOptionsModel).execute();
+    // Invoke replacePolicy() with a valid options model and verify the result
+    Response<Policy> response = iamPolicyManagementService.replacePolicy(replacePolicyOptionsModel).execute();
     assertNotNull(response);
     Policy responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -322,7 +328,7 @@ public class IamPolicyManagementTest {
     assertEquals(request.getMethod(), "PUT");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updatePolicyPath);
+    assertEquals(parsedPath, replacePolicyPath);
     // Verify header parameters
     assertEquals(request.getHeader("If-Match"), "testString");
     // Verify that there is no query string
@@ -330,21 +336,21 @@ public class IamPolicyManagementTest {
     assertNull(query);
   }
 
-  // Test the updatePolicy operation with and without retries enabled
+  // Test the replacePolicy operation with and without retries enabled
   @Test
-  public void testUpdatePolicyWRetries() throws Throwable {
+  public void testReplacePolicyWRetries() throws Throwable {
     iamPolicyManagementService.enableRetries(4, 30);
-    testUpdatePolicyWOptions();
+    testReplacePolicyWOptions();
 
     iamPolicyManagementService.disableRetries();
-    testUpdatePolicyWOptions();
+    testReplacePolicyWOptions();
   }
 
-  // Test the updatePolicy operation with a null options model (negative test)
+  // Test the replacePolicy operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdatePolicyNoOptions() throws Throwable {
+  public void testReplacePolicyNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamPolicyManagementService.updatePolicy(null).execute();
+    iamPolicyManagementService.replacePolicy(null).execute();
   }
 
   // Test the getPolicy operation with a valid options model parameter
@@ -448,26 +454,26 @@ public class IamPolicyManagementTest {
     iamPolicyManagementService.deletePolicy(null).execute();
   }
 
-  // Test the patchPolicy operation with a valid options model parameter
+  // Test the updatePolicyState operation with a valid options model parameter
   @Test
-  public void testPatchPolicyWOptions() throws Throwable {
+  public void testUpdatePolicyStateWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}";
-    String patchPolicyPath = "/v1/policies/testString";
+    String updatePolicyStatePath = "/v1/policies/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the PatchPolicyOptions model
-    PatchPolicyOptions patchPolicyOptionsModel = new PatchPolicyOptions.Builder()
+    // Construct an instance of the UpdatePolicyStateOptions model
+    UpdatePolicyStateOptions updatePolicyStateOptionsModel = new UpdatePolicyStateOptions.Builder()
       .policyId("testString")
       .ifMatch("testString")
       .state("active")
       .build();
 
-    // Invoke patchPolicy() with a valid options model and verify the result
-    Response<Policy> response = iamPolicyManagementService.patchPolicy(patchPolicyOptionsModel).execute();
+    // Invoke updatePolicyState() with a valid options model and verify the result
+    Response<Policy> response = iamPolicyManagementService.updatePolicyState(updatePolicyStateOptionsModel).execute();
     assertNotNull(response);
     Policy responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -478,7 +484,7 @@ public class IamPolicyManagementTest {
     assertEquals(request.getMethod(), "PATCH");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, patchPolicyPath);
+    assertEquals(parsedPath, updatePolicyStatePath);
     // Verify header parameters
     assertEquals(request.getHeader("If-Match"), "testString");
     // Verify that there is no query string
@@ -486,21 +492,21 @@ public class IamPolicyManagementTest {
     assertNull(query);
   }
 
-  // Test the patchPolicy operation with and without retries enabled
+  // Test the updatePolicyState operation with and without retries enabled
   @Test
-  public void testPatchPolicyWRetries() throws Throwable {
+  public void testUpdatePolicyStateWRetries() throws Throwable {
     iamPolicyManagementService.enableRetries(4, 30);
-    testPatchPolicyWOptions();
+    testUpdatePolicyStateWOptions();
 
     iamPolicyManagementService.disableRetries();
-    testPatchPolicyWOptions();
+    testUpdatePolicyStateWOptions();
   }
 
-  // Test the patchPolicy operation with a null options model (negative test)
+  // Test the updatePolicyState operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testPatchPolicyNoOptions() throws Throwable {
+  public void testUpdatePolicyStateNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamPolicyManagementService.patchPolicy(null).execute();
+    iamPolicyManagementService.updatePolicyState(null).execute();
   }
 
   // Test the listRoles operation with a valid options model parameter
@@ -612,28 +618,28 @@ public class IamPolicyManagementTest {
     iamPolicyManagementService.createRole(null).execute();
   }
 
-  // Test the updateRole operation with a valid options model parameter
+  // Test the replaceRole operation with a valid options model parameter
   @Test
-  public void testUpdateRoleWOptions() throws Throwable {
+  public void testReplaceRoleWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"id\": \"id\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [\"actions\"], \"crn\": \"crn\", \"name\": \"Developer\", \"account_id\": \"accountId\", \"service_name\": \"iam-groups\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"href\": \"href\"}";
-    String updateRolePath = "/v2/roles/testString";
+    String replaceRolePath = "/v2/roles/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the UpdateRoleOptions model
-    UpdateRoleOptions updateRoleOptionsModel = new UpdateRoleOptions.Builder()
+    // Construct an instance of the ReplaceRoleOptions model
+    ReplaceRoleOptions replaceRoleOptionsModel = new ReplaceRoleOptions.Builder()
       .roleId("testString")
       .ifMatch("testString")
       .displayName("testString")
-      .description("testString")
       .actions(java.util.Arrays.asList("testString"))
+      .description("testString")
       .build();
 
-    // Invoke updateRole() with a valid options model and verify the result
-    Response<CustomRole> response = iamPolicyManagementService.updateRole(updateRoleOptionsModel).execute();
+    // Invoke replaceRole() with a valid options model and verify the result
+    Response<CustomRole> response = iamPolicyManagementService.replaceRole(replaceRoleOptionsModel).execute();
     assertNotNull(response);
     CustomRole responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -644,7 +650,7 @@ public class IamPolicyManagementTest {
     assertEquals(request.getMethod(), "PUT");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateRolePath);
+    assertEquals(parsedPath, replaceRolePath);
     // Verify header parameters
     assertEquals(request.getHeader("If-Match"), "testString");
     // Verify that there is no query string
@@ -652,21 +658,21 @@ public class IamPolicyManagementTest {
     assertNull(query);
   }
 
-  // Test the updateRole operation with and without retries enabled
+  // Test the replaceRole operation with and without retries enabled
   @Test
-  public void testUpdateRoleWRetries() throws Throwable {
+  public void testReplaceRoleWRetries() throws Throwable {
     iamPolicyManagementService.enableRetries(4, 30);
-    testUpdateRoleWOptions();
+    testReplaceRoleWOptions();
 
     iamPolicyManagementService.disableRetries();
-    testUpdateRoleWOptions();
+    testReplaceRoleWOptions();
   }
 
-  // Test the updateRole operation with a null options model (negative test)
+  // Test the replaceRole operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateRoleNoOptions() throws Throwable {
+  public void testReplaceRoleNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamPolicyManagementService.updateRole(null).execute();
+    iamPolicyManagementService.replaceRole(null).execute();
   }
 
   // Test the getRole operation with a valid options model parameter
@@ -770,19 +776,19 @@ public class IamPolicyManagementTest {
     iamPolicyManagementService.deleteRole(null).execute();
   }
 
-  // Test the v2ListPolicies operation with a valid options model parameter
+  // Test the listV2Policies operation with a valid options model parameter
   @Test
-  public void testV2ListPoliciesWOptions() throws Throwable {
+  public void testListV2PoliciesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"policies\": [{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}]}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}]}";
-    String v2ListPoliciesPath = "/v2/policies";
+    String mockResponseBody = "{\"policies\": [{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}]}";
+    String listV2PoliciesPath = "/v2/policies";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the V2ListPoliciesOptions model
-    V2ListPoliciesOptions v2ListPoliciesOptionsModel = new V2ListPoliciesOptions.Builder()
+    // Construct an instance of the ListV2PoliciesOptions model
+    ListV2PoliciesOptions listV2PoliciesOptionsModel = new ListV2PoliciesOptions.Builder()
       .accountId("testString")
       .acceptLanguage("default")
       .iamId("testString")
@@ -795,10 +801,10 @@ public class IamPolicyManagementTest {
       .state("active")
       .build();
 
-    // Invoke v2ListPolicies() with a valid options model and verify the result
-    Response<V2PolicyList> response = iamPolicyManagementService.v2ListPolicies(v2ListPoliciesOptionsModel).execute();
+    // Invoke listV2Policies() with a valid options model and verify the result
+    Response<V2PolicyCollection> response = iamPolicyManagementService.listV2Policies(listV2PoliciesOptionsModel).execute();
     assertNotNull(response);
-    V2PolicyList responseObj = response.getResult();
+    V2PolicyCollection responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request sent to the mock server
@@ -807,7 +813,7 @@ public class IamPolicyManagementTest {
     assertEquals(request.getMethod(), "GET");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, v2ListPoliciesPath);
+    assertEquals(parsedPath, listV2PoliciesPath);
     // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
@@ -822,29 +828,29 @@ public class IamPolicyManagementTest {
     assertEquals(query.get("state"), "active");
   }
 
-  // Test the v2ListPolicies operation with and without retries enabled
+  // Test the listV2Policies operation with and without retries enabled
   @Test
-  public void testV2ListPoliciesWRetries() throws Throwable {
+  public void testListV2PoliciesWRetries() throws Throwable {
     iamPolicyManagementService.enableRetries(4, 30);
-    testV2ListPoliciesWOptions();
+    testListV2PoliciesWOptions();
 
     iamPolicyManagementService.disableRetries();
-    testV2ListPoliciesWOptions();
+    testListV2PoliciesWOptions();
   }
 
-  // Test the v2ListPolicies operation with a null options model (negative test)
+  // Test the listV2Policies operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testV2ListPoliciesNoOptions() throws Throwable {
+  public void testListV2PoliciesNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamPolicyManagementService.v2ListPolicies(null).execute();
+    iamPolicyManagementService.listV2Policies(null).execute();
   }
 
-  // Test the v2CreatePolicy operation with a valid options model parameter
+  // Test the createV2Policy operation with a valid options model parameter
   @Test
-  public void testV2CreatePolicyWOptions() throws Throwable {
+  public void testCreateV2PolicyWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}]}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}";
-    String v2CreatePolicyPath = "/v2/policies";
+    String mockResponseBody = "{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}";
+    String createV2PolicyPath = "/v2/policies";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(201)
@@ -855,54 +861,69 @@ public class IamPolicyManagementTest {
       .roleId("testString")
       .build();
 
-    // Construct an instance of the V2PolicyBaseControlGrant model
-    V2PolicyBaseControlGrant v2PolicyBaseControlGrantModel = new V2PolicyBaseControlGrant.Builder()
+    // Construct an instance of the V2PolicyGrant model
+    V2PolicyGrant v2PolicyGrantModel = new V2PolicyGrant.Builder()
       .roles(java.util.Arrays.asList(policyRoleModel))
       .build();
 
-    // Construct an instance of the V2PolicyBaseControl model
-    V2PolicyBaseControl v2PolicyBaseControlModel = new V2PolicyBaseControl.Builder()
-      .grant(v2PolicyBaseControlGrantModel)
+    // Construct an instance of the Control model
+    Control controlModel = new Control.Builder()
+      .grant(v2PolicyGrantModel)
       .build();
 
-    // Construct an instance of the V2PolicyAttribute model
-    V2PolicyAttribute v2PolicyAttributeModel = new V2PolicyAttribute.Builder()
+    // Construct an instance of the V2PolicySubjectAttribute model
+    V2PolicySubjectAttribute v2PolicySubjectAttributeModel = new V2PolicySubjectAttribute.Builder()
       .key("testString")
-      .operator("testString")
+      .operator("stringEquals")
       .value("testString")
       .build();
 
-    // Construct an instance of the V2PolicyBaseSubject model
-    V2PolicyBaseSubject v2PolicyBaseSubjectModel = new V2PolicyBaseSubject.Builder()
-      .attributes(java.util.Arrays.asList(v2PolicyAttributeModel))
+    // Construct an instance of the V2PolicySubject model
+    V2PolicySubject v2PolicySubjectModel = new V2PolicySubject.Builder()
+      .attributes(java.util.Arrays.asList(v2PolicySubjectAttributeModel))
       .build();
 
-    // Construct an instance of the V2PolicyBaseResource model
-    V2PolicyBaseResource v2PolicyBaseResourceModel = new V2PolicyBaseResource.Builder()
-      .attributes(java.util.Arrays.asList(v2PolicyAttributeModel))
-      .build();
-
-    // Construct an instance of the V2PolicyBaseRuleV2PolicyAttribute model
-    V2PolicyBaseRuleV2PolicyAttribute v2PolicyBaseRuleModel = new V2PolicyBaseRuleV2PolicyAttribute.Builder()
+    // Construct an instance of the V2PolicyResourceAttribute model
+    V2PolicyResourceAttribute v2PolicyResourceAttributeModel = new V2PolicyResourceAttribute.Builder()
       .key("testString")
-      .operator("testString")
+      .operator("stringEquals")
       .value("testString")
       .build();
 
-    // Construct an instance of the V2CreatePolicyOptions model
-    V2CreatePolicyOptions v2CreatePolicyOptionsModel = new V2CreatePolicyOptions.Builder()
-      .type("testString")
-      .control(v2PolicyBaseControlModel)
+    // Construct an instance of the V2PolicyResourceTag model
+    V2PolicyResourceTag v2PolicyResourceTagModel = new V2PolicyResourceTag.Builder()
+      .key("testString")
+      .value("testString")
+      .operator("stringEquals")
+      .build();
+
+    // Construct an instance of the V2PolicyResource model
+    V2PolicyResource v2PolicyResourceModel = new V2PolicyResource.Builder()
+      .attributes(java.util.Arrays.asList(v2PolicyResourceAttributeModel))
+      .tags(java.util.Arrays.asList(v2PolicyResourceTagModel))
+      .build();
+
+    // Construct an instance of the V2PolicyRuleRuleAttribute model
+    V2PolicyRuleRuleAttribute v2PolicyRuleModel = new V2PolicyRuleRuleAttribute.Builder()
+      .key("testString")
+      .operator("timeLessThan")
+      .value("testString")
+      .build();
+
+    // Construct an instance of the CreateV2PolicyOptions model
+    CreateV2PolicyOptions createV2PolicyOptionsModel = new CreateV2PolicyOptions.Builder()
+      .control(controlModel)
+      .type("access")
       .description("testString")
-      .subject(v2PolicyBaseSubjectModel)
-      .resource(v2PolicyBaseResourceModel)
+      .subject(v2PolicySubjectModel)
+      .resource(v2PolicyResourceModel)
       .pattern("testString")
-      .rule(v2PolicyBaseRuleModel)
+      .rule(v2PolicyRuleModel)
       .acceptLanguage("default")
       .build();
 
-    // Invoke v2CreatePolicy() with a valid options model and verify the result
-    Response<V2Policy> response = iamPolicyManagementService.v2CreatePolicy(v2CreatePolicyOptionsModel).execute();
+    // Invoke createV2Policy() with a valid options model and verify the result
+    Response<V2Policy> response = iamPolicyManagementService.createV2Policy(createV2PolicyOptionsModel).execute();
     assertNotNull(response);
     V2Policy responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -913,35 +934,35 @@ public class IamPolicyManagementTest {
     assertEquals(request.getMethod(), "POST");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, v2CreatePolicyPath);
+    assertEquals(parsedPath, createV2PolicyPath);
     // Verify that there is no query string
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNull(query);
   }
 
-  // Test the v2CreatePolicy operation with and without retries enabled
+  // Test the createV2Policy operation with and without retries enabled
   @Test
-  public void testV2CreatePolicyWRetries() throws Throwable {
+  public void testCreateV2PolicyWRetries() throws Throwable {
     iamPolicyManagementService.enableRetries(4, 30);
-    testV2CreatePolicyWOptions();
+    testCreateV2PolicyWOptions();
 
     iamPolicyManagementService.disableRetries();
-    testV2CreatePolicyWOptions();
+    testCreateV2PolicyWOptions();
   }
 
-  // Test the v2CreatePolicy operation with a null options model (negative test)
+  // Test the createV2Policy operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testV2CreatePolicyNoOptions() throws Throwable {
+  public void testCreateV2PolicyNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamPolicyManagementService.v2CreatePolicy(null).execute();
+    iamPolicyManagementService.createV2Policy(null).execute();
   }
 
-  // Test the v2UpdatePolicy operation with a valid options model parameter
+  // Test the replaceV2Policy operation with a valid options model parameter
   @Test
-  public void testV2UpdatePolicyWOptions() throws Throwable {
+  public void testReplaceV2PolicyWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}]}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}";
-    String v2UpdatePolicyPath = "/v2/policies/testString";
+    String mockResponseBody = "{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}";
+    String replaceV2PolicyPath = "/v2/policies/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -952,55 +973,70 @@ public class IamPolicyManagementTest {
       .roleId("testString")
       .build();
 
-    // Construct an instance of the V2PolicyBaseControlGrant model
-    V2PolicyBaseControlGrant v2PolicyBaseControlGrantModel = new V2PolicyBaseControlGrant.Builder()
+    // Construct an instance of the V2PolicyGrant model
+    V2PolicyGrant v2PolicyGrantModel = new V2PolicyGrant.Builder()
       .roles(java.util.Arrays.asList(policyRoleModel))
       .build();
 
-    // Construct an instance of the V2PolicyBaseControl model
-    V2PolicyBaseControl v2PolicyBaseControlModel = new V2PolicyBaseControl.Builder()
-      .grant(v2PolicyBaseControlGrantModel)
+    // Construct an instance of the Control model
+    Control controlModel = new Control.Builder()
+      .grant(v2PolicyGrantModel)
       .build();
 
-    // Construct an instance of the V2PolicyAttribute model
-    V2PolicyAttribute v2PolicyAttributeModel = new V2PolicyAttribute.Builder()
+    // Construct an instance of the V2PolicySubjectAttribute model
+    V2PolicySubjectAttribute v2PolicySubjectAttributeModel = new V2PolicySubjectAttribute.Builder()
       .key("testString")
-      .operator("testString")
+      .operator("stringEquals")
       .value("testString")
       .build();
 
-    // Construct an instance of the V2PolicyBaseSubject model
-    V2PolicyBaseSubject v2PolicyBaseSubjectModel = new V2PolicyBaseSubject.Builder()
-      .attributes(java.util.Arrays.asList(v2PolicyAttributeModel))
+    // Construct an instance of the V2PolicySubject model
+    V2PolicySubject v2PolicySubjectModel = new V2PolicySubject.Builder()
+      .attributes(java.util.Arrays.asList(v2PolicySubjectAttributeModel))
       .build();
 
-    // Construct an instance of the V2PolicyBaseResource model
-    V2PolicyBaseResource v2PolicyBaseResourceModel = new V2PolicyBaseResource.Builder()
-      .attributes(java.util.Arrays.asList(v2PolicyAttributeModel))
-      .build();
-
-    // Construct an instance of the V2PolicyBaseRuleV2PolicyAttribute model
-    V2PolicyBaseRuleV2PolicyAttribute v2PolicyBaseRuleModel = new V2PolicyBaseRuleV2PolicyAttribute.Builder()
+    // Construct an instance of the V2PolicyResourceAttribute model
+    V2PolicyResourceAttribute v2PolicyResourceAttributeModel = new V2PolicyResourceAttribute.Builder()
       .key("testString")
-      .operator("testString")
+      .operator("stringEquals")
       .value("testString")
       .build();
 
-    // Construct an instance of the V2UpdatePolicyOptions model
-    V2UpdatePolicyOptions v2UpdatePolicyOptionsModel = new V2UpdatePolicyOptions.Builder()
-      .policyId("testString")
+    // Construct an instance of the V2PolicyResourceTag model
+    V2PolicyResourceTag v2PolicyResourceTagModel = new V2PolicyResourceTag.Builder()
+      .key("testString")
+      .value("testString")
+      .operator("stringEquals")
+      .build();
+
+    // Construct an instance of the V2PolicyResource model
+    V2PolicyResource v2PolicyResourceModel = new V2PolicyResource.Builder()
+      .attributes(java.util.Arrays.asList(v2PolicyResourceAttributeModel))
+      .tags(java.util.Arrays.asList(v2PolicyResourceTagModel))
+      .build();
+
+    // Construct an instance of the V2PolicyRuleRuleAttribute model
+    V2PolicyRuleRuleAttribute v2PolicyRuleModel = new V2PolicyRuleRuleAttribute.Builder()
+      .key("testString")
+      .operator("timeLessThan")
+      .value("testString")
+      .build();
+
+    // Construct an instance of the ReplaceV2PolicyOptions model
+    ReplaceV2PolicyOptions replaceV2PolicyOptionsModel = new ReplaceV2PolicyOptions.Builder()
+      .id("testString")
       .ifMatch("testString")
-      .type("testString")
-      .control(v2PolicyBaseControlModel)
+      .control(controlModel)
+      .type("access")
       .description("testString")
-      .subject(v2PolicyBaseSubjectModel)
-      .resource(v2PolicyBaseResourceModel)
+      .subject(v2PolicySubjectModel)
+      .resource(v2PolicyResourceModel)
       .pattern("testString")
-      .rule(v2PolicyBaseRuleModel)
+      .rule(v2PolicyRuleModel)
       .build();
 
-    // Invoke v2UpdatePolicy() with a valid options model and verify the result
-    Response<V2Policy> response = iamPolicyManagementService.v2UpdatePolicy(v2UpdatePolicyOptionsModel).execute();
+    // Invoke replaceV2Policy() with a valid options model and verify the result
+    Response<V2Policy> response = iamPolicyManagementService.replaceV2Policy(replaceV2PolicyOptionsModel).execute();
     assertNotNull(response);
     V2Policy responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1011,7 +1047,7 @@ public class IamPolicyManagementTest {
     assertEquals(request.getMethod(), "PUT");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, v2UpdatePolicyPath);
+    assertEquals(parsedPath, replaceV2PolicyPath);
     // Verify header parameters
     assertEquals(request.getHeader("If-Match"), "testString");
     // Verify that there is no query string
@@ -1019,41 +1055,41 @@ public class IamPolicyManagementTest {
     assertNull(query);
   }
 
-  // Test the v2UpdatePolicy operation with and without retries enabled
+  // Test the replaceV2Policy operation with and without retries enabled
   @Test
-  public void testV2UpdatePolicyWRetries() throws Throwable {
+  public void testReplaceV2PolicyWRetries() throws Throwable {
     iamPolicyManagementService.enableRetries(4, 30);
-    testV2UpdatePolicyWOptions();
+    testReplaceV2PolicyWOptions();
 
     iamPolicyManagementService.disableRetries();
-    testV2UpdatePolicyWOptions();
+    testReplaceV2PolicyWOptions();
   }
 
-  // Test the v2UpdatePolicy operation with a null options model (negative test)
+  // Test the replaceV2Policy operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testV2UpdatePolicyNoOptions() throws Throwable {
+  public void testReplaceV2PolicyNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamPolicyManagementService.v2UpdatePolicy(null).execute();
+    iamPolicyManagementService.replaceV2Policy(null).execute();
   }
 
-  // Test the v2GetPolicy operation with a valid options model parameter
+  // Test the getV2Policy operation with a valid options model parameter
   @Test
-  public void testV2GetPolicyWOptions() throws Throwable {
+  public void testGetV2PolicyWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}]}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"operator\", \"value\": \"anyValue\"}, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\"}";
-    String v2GetPolicyPath = "/v2/policies/testString";
+    String mockResponseBody = "{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}";
+    String getV2PolicyPath = "/v2/policies/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the V2GetPolicyOptions model
-    V2GetPolicyOptions v2GetPolicyOptionsModel = new V2GetPolicyOptions.Builder()
-      .policyId("testString")
+    // Construct an instance of the GetV2PolicyOptions model
+    GetV2PolicyOptions getV2PolicyOptionsModel = new GetV2PolicyOptions.Builder()
+      .id("testString")
       .build();
 
-    // Invoke v2GetPolicy() with a valid options model and verify the result
-    Response<V2Policy> response = iamPolicyManagementService.v2GetPolicy(v2GetPolicyOptionsModel).execute();
+    // Invoke getV2Policy() with a valid options model and verify the result
+    Response<V2Policy> response = iamPolicyManagementService.getV2Policy(getV2PolicyOptionsModel).execute();
     assertNotNull(response);
     V2Policy responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -1064,46 +1100,46 @@ public class IamPolicyManagementTest {
     assertEquals(request.getMethod(), "GET");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, v2GetPolicyPath);
+    assertEquals(parsedPath, getV2PolicyPath);
     // Verify that there is no query string
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNull(query);
   }
 
-  // Test the v2GetPolicy operation with and without retries enabled
+  // Test the getV2Policy operation with and without retries enabled
   @Test
-  public void testV2GetPolicyWRetries() throws Throwable {
+  public void testGetV2PolicyWRetries() throws Throwable {
     iamPolicyManagementService.enableRetries(4, 30);
-    testV2GetPolicyWOptions();
+    testGetV2PolicyWOptions();
 
     iamPolicyManagementService.disableRetries();
-    testV2GetPolicyWOptions();
+    testGetV2PolicyWOptions();
   }
 
-  // Test the v2GetPolicy operation with a null options model (negative test)
+  // Test the getV2Policy operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testV2GetPolicyNoOptions() throws Throwable {
+  public void testGetV2PolicyNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamPolicyManagementService.v2GetPolicy(null).execute();
+    iamPolicyManagementService.getV2Policy(null).execute();
   }
 
-  // Test the v2DeletePolicy operation with a valid options model parameter
+  // Test the deleteV2Policy operation with a valid options model parameter
   @Test
-  public void testV2DeletePolicyWOptions() throws Throwable {
+  public void testDeleteV2PolicyWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "";
-    String v2DeletePolicyPath = "/v2/policies/testString";
+    String deleteV2PolicyPath = "/v2/policies/testString";
     server.enqueue(new MockResponse()
       .setResponseCode(204)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the V2DeletePolicyOptions model
-    V2DeletePolicyOptions v2DeletePolicyOptionsModel = new V2DeletePolicyOptions.Builder()
-      .policyId("testString")
+    // Construct an instance of the DeleteV2PolicyOptions model
+    DeleteV2PolicyOptions deleteV2PolicyOptionsModel = new DeleteV2PolicyOptions.Builder()
+      .id("testString")
       .build();
 
-    // Invoke v2DeletePolicy() with a valid options model and verify the result
-    Response<Void> response = iamPolicyManagementService.v2DeletePolicy(v2DeletePolicyOptionsModel).execute();
+    // Invoke deleteV2Policy() with a valid options model and verify the result
+    Response<Void> response = iamPolicyManagementService.deleteV2Policy(deleteV2PolicyOptionsModel).execute();
     assertNotNull(response);
     Void responseObj = response.getResult();
     assertNull(responseObj);
@@ -1114,27 +1150,27 @@ public class IamPolicyManagementTest {
     assertEquals(request.getMethod(), "DELETE");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, v2DeletePolicyPath);
+    assertEquals(parsedPath, deleteV2PolicyPath);
     // Verify that there is no query string
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNull(query);
   }
 
-  // Test the v2DeletePolicy operation with and without retries enabled
+  // Test the deleteV2Policy operation with and without retries enabled
   @Test
-  public void testV2DeletePolicyWRetries() throws Throwable {
+  public void testDeleteV2PolicyWRetries() throws Throwable {
     iamPolicyManagementService.enableRetries(4, 30);
-    testV2DeletePolicyWOptions();
+    testDeleteV2PolicyWOptions();
 
     iamPolicyManagementService.disableRetries();
-    testV2DeletePolicyWOptions();
+    testDeleteV2PolicyWOptions();
   }
 
-  // Test the v2DeletePolicy operation with a null options model (negative test)
+  // Test the deleteV2Policy operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testV2DeletePolicyNoOptions() throws Throwable {
+  public void testDeleteV2PolicyNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamPolicyManagementService.v2DeletePolicy(null).execute();
+    iamPolicyManagementService.deleteV2Policy(null).execute();
   }
 
   // Perform setup needed before each test method

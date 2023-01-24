@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,10 +23,12 @@ public class CreateTagResults extends GenericModel {
 
   protected List<CreateTagResultsResultsItem> results;
 
+  protected CreateTagResults() { }
+
   /**
    * Gets the results.
    *
-   * Array of results of an set_tags request.
+   * Array of results of a create_tag request.
    *
    * @return the results
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2022, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,45 +12,37 @@
  */
 package com.ibm.cloud.platform_services.enterprise_usage_reports.v1;
 
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.EnterpriseUsageReports;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportOptions;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportPager;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.Link;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.MetricUsage;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.PlanUsage;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.Reports;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.ResourceUsage;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.ResourceUsageReport;
-import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.utils.TestUtilities;
-import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
-import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import okhttp3.mockwebserver.MockResponse;
-import okhttp3.mockwebserver.MockWebServer;
-import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
+
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.testng.Assert.*;
+
+import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportOptions;
+import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.GetResourceUsageReportPager;
+import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.Reports;
+import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.model.ResourceUsageReport;
+import com.ibm.cloud.platform_services.enterprise_usage_reports.v1.utils.TestUtilities;
+import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
 
 /**
  * Unit test class for the EnterpriseUsageReports service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class EnterpriseUsageReportsTest extends PowerMockTestCase {
+public class EnterpriseUsageReportsTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -162,7 +154,7 @@ public class EnterpriseUsageReportsTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getResourceUsageReport operation using the GetResourceUsageReportPager.getAll() method
   @Test
   public void testGetResourceUsageReportWithPagerGetAll() throws Throwable {
@@ -197,7 +189,7 @@ public class EnterpriseUsageReportsTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Perform setup needed before each test method
   @BeforeMethod
   public void beforeEachTest() {
@@ -220,17 +212,9 @@ public class EnterpriseUsageReportsTest extends PowerMockTestCase {
     enterpriseUsageReportsService = null;
   }
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv()
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   // Constructs an instance of the service to be used by the tests
   public void constructClientService() {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     enterpriseUsageReportsService = EnterpriseUsageReports.newInstance(serviceName);

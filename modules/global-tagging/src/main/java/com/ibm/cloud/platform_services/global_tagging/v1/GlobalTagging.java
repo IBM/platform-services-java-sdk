@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.33.0-caf29bd0-20210603-225214
+ * IBM OpenAPI SDK Code Generator Version: 3.64.0-959a5845-20230112-195144
  */
 
 package com.ibm.cloud.platform_services.global_tagging.v1;
@@ -43,19 +43,25 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete a tag or list all tags in your
+ * Manage your tags with the Tagging API in IBM Cloud. You can attach, detach, delete, or list all of the tags in your
  * billing account with the Tagging API. The tag name must be unique within a billing account. You can create tags in
  * two formats: `key:value` or `label`. The tagging API supports three types of tag: `user` `service`, and `access`
  * tags. `service` tags cannot be attached to IMS resources. `service` tags must be in the form
  * `service_prefix:tag_label` where `service_prefix` identifies the Service owning the tag. `access` tags cannot be
  * attached to IMS and Cloud Foundry resources. They must be in the form `key:value`.
  *
- * @version v1
+ * API Version: 1.2.0
  */
 public class GlobalTagging extends BaseService {
 
+  /**
+   * Default service name used when configuring the `GlobalTagging` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "global_tagging";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://tags.global-search-tagging.cloud.ibm.com";
 
  /**
@@ -97,8 +103,8 @@ public class GlobalTagging extends BaseService {
   /**
    * Get all tags.
    *
-   * Lists all tags in a billing account. Use the `attached_to` parameter to return the list of tags attached to the
-   * specified resource.
+   * Lists all tags that are in a billing account. Use the `attached_to` parameter to return the list of tags that are
+   * attached to the specified resource.
    *
    * @param listTagsOptions the {@link ListTagsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TagList}
@@ -113,6 +119,9 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listTagsOptions.transactionId() != null) {
+      builder.header("transaction-id", listTagsOptions.transactionId());
+    }
     if (listTagsOptions.impersonateUser() != null) {
       builder.query("impersonate_user", String.valueOf(listTagsOptions.impersonateUser()));
     }
@@ -154,8 +163,8 @@ public class GlobalTagging extends BaseService {
   /**
    * Get all tags.
    *
-   * Lists all tags in a billing account. Use the `attached_to` parameter to return the list of tags attached to the
-   * specified resource.
+   * Lists all tags that are in a billing account. Use the `attached_to` parameter to return the list of tags that are
+   * attached to the specified resource.
    *
    * @return a {@link ServiceCall} with a result of type {@link TagList}
    */
@@ -164,11 +173,11 @@ public class GlobalTagging extends BaseService {
   }
 
   /**
-   * Create an access tag.
+   * Create an access management tag.
    *
-   * Create an access tag. To create an `access` tag, you must have the access listed in the [Granting users access to
-   * tag resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation. `service` and `user` tags
-   * cannot be created upfront. They are created when they are attached for the first time to a resource.
+   * Create an access management tag. To create an `access` tag, you must have the access listed in the [Granting users
+   * access to tag resources](https://cloud.ibm.com/docs/account?topic=account-access) documentation. `service` and
+   * `user` tags cannot be created upfront. They are created when they are attached for the first time to a resource.
    *
    * @param createTagOptions the {@link CreateTagOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link CreateTagResults}
@@ -182,6 +191,9 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (createTagOptions.transactionId() != null) {
+      builder.header("transaction-id", createTagOptions.transactionId());
+    }
     if (createTagOptions.impersonateUser() != null) {
       builder.query("impersonate_user", String.valueOf(createTagOptions.impersonateUser()));
     }
@@ -217,6 +229,9 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (deleteTagAllOptions.transactionId() != null) {
+      builder.header("transaction-id", deleteTagAllOptions.transactionId());
+    }
     if (deleteTagAllOptions.providers() != null) {
       builder.query("providers", String.valueOf(deleteTagAllOptions.providers()));
     }
@@ -264,6 +279,9 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (deleteTagOptions.transactionId() != null) {
+      builder.header("transaction-id", deleteTagOptions.transactionId());
+    }
     if (deleteTagOptions.providers() != null) {
       builder.query("providers", RequestUtils.join(deleteTagOptions.providers(), ","));
     }
@@ -284,7 +302,8 @@ public class GlobalTagging extends BaseService {
   /**
    * Attach tags.
    *
-   * Attaches one or more tags to one or more resources.
+   * Attaches one or more tags to one or more resources. Each resource can have no more than 1000 tags per each 'user'
+   * and 'service' type, and no more than 250 'access' tags (which is the account limit).
    *
    * @param attachTagOptions the {@link AttachTagOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link TagResults}
@@ -298,6 +317,9 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (attachTagOptions.transactionId() != null) {
+      builder.header("transaction-id", attachTagOptions.transactionId());
+    }
     if (attachTagOptions.impersonateUser() != null) {
       builder.query("impersonate_user", String.valueOf(attachTagOptions.impersonateUser()));
     }
@@ -338,6 +360,9 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (detachTagOptions.transactionId() != null) {
+      builder.header("transaction-id", detachTagOptions.transactionId());
+    }
     if (detachTagOptions.impersonateUser() != null) {
       builder.query("impersonate_user", String.valueOf(detachTagOptions.impersonateUser()));
     }

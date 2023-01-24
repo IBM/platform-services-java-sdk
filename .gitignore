@@ -40,9 +40,10 @@ hs_err_pid*
 .openapi-generator-ignore
 
 # files produced by "npm install" commands during build
-package.json
 package-lock.json
 node_modules/
 
 # MacOS specific .DS_Store file
 .DS_Store 
+
+.vscode/

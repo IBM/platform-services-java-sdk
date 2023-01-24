@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -18,8 +18,6 @@ import com.ibm.cloud.platform_services.global_tagging.v1.model.Resource;
 import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -42,16 +40,18 @@ public class DetachTagOptionsTest {
     assertEquals(resourceModel.resourceType(), "testString");
 
     DetachTagOptions detachTagOptionsModel = new DetachTagOptions.Builder()
-      .resources(new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)))
+      .resources(java.util.Arrays.asList(resourceModel))
       .tagName("testString")
-      .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .tagNames(java.util.Arrays.asList("testString"))
+      .transactionId("testString")
       .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
-    assertEquals(detachTagOptionsModel.resources(), new java.util.ArrayList<Resource>(java.util.Arrays.asList(resourceModel)));
+    assertEquals(detachTagOptionsModel.resources(), java.util.Arrays.asList(resourceModel));
     assertEquals(detachTagOptionsModel.tagName(), "testString");
-    assertEquals(detachTagOptionsModel.tagNames(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(detachTagOptionsModel.tagNames(), java.util.Arrays.asList("testString"));
+    assertEquals(detachTagOptionsModel.transactionId(), "testString");
     assertEquals(detachTagOptionsModel.impersonateUser(), "testString");
     assertEquals(detachTagOptionsModel.accountId(), "testString");
     assertEquals(detachTagOptionsModel.tagType(), "user");

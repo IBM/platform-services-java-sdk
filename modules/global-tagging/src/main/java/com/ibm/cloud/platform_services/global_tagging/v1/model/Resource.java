@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -16,7 +16,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * A resource that may have attached tags.
+ * A resource that might have tags that are attached.
  */
 public class Resource extends GenericModel {
 
@@ -32,6 +32,11 @@ public class Resource extends GenericModel {
     private String resourceId;
     private String resourceType;
 
+    /**
+     * Instantiates a new Builder from an existing Resource instance.
+     *
+     * @param resource the instance to initialize the Builder with
+     */
     private Builder(Resource resource) {
       this.resourceId = resource.resourceId;
       this.resourceType = resource.resourceType;
@@ -83,6 +88,8 @@ public class Resource extends GenericModel {
       return this;
     }
   }
+
+  protected Resource() { }
 
   protected Resource(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.resourceId,

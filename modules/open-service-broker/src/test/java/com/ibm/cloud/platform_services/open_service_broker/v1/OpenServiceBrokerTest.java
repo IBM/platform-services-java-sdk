@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2020, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,21 @@
  */
 package com.ibm.cloud.platform_services.open_service_broker.v1;
 
-import com.ibm.cloud.platform_services.open_service_broker.v1.OpenServiceBroker;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.BindResource;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Context;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.DeleteServiceBindingOptions;
@@ -20,7 +34,6 @@ import com.ibm.cloud.platform_services.open_service_broker.v1.model.DeleteServic
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.GetLastOperationOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.GetServiceInstanceStateOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ListCatalogOptions;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.Plans;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceBindingOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceInstanceOptions;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.ReplaceServiceInstanceStateOptions;
@@ -31,40 +44,19 @@ import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079874R
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079876Root;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2079894Root;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.Resp2448145Root;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.Services;
 import com.ibm.cloud.platform_services.open_service_broker.v1.model.UpdateServiceInstanceOptions;
-import com.ibm.cloud.platform_services.open_service_broker.v1.model.VolumeMount;
 import com.ibm.cloud.platform_services.open_service_broker.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Unit test class for the OpenServiceBroker service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class OpenServiceBrokerTest extends PowerMockTestCase {
+public class OpenServiceBrokerTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -72,16 +64,8 @@ public class OpenServiceBrokerTest extends PowerMockTestCase {
   protected MockWebServer server;
   protected OpenServiceBroker openServiceBrokerService;
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv().
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   public void constructClientService() throws Throwable {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     openServiceBrokerService = OpenServiceBroker.newInstance(serviceName);

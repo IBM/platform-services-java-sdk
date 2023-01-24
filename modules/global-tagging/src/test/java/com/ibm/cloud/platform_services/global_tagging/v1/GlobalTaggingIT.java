@@ -489,7 +489,7 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
         } catch (ServiceResponseException e) {
             // absorb any errors with the operation
         }
-        return null;
+        return new ArrayList<>();
     }
 
     private void deleteTag(GlobalTagging service, String tag, String tagType) {

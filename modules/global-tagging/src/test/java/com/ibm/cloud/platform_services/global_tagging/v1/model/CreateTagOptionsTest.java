@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,8 +17,6 @@ import com.ibm.cloud.platform_services.global_tagging.v1.model.CreateTagOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -34,13 +32,15 @@ public class CreateTagOptionsTest {
   @Test
   public void testCreateTagOptions() throws Throwable {
     CreateTagOptions createTagOptionsModel = new CreateTagOptions.Builder()
-      .tagNames(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .tagNames(java.util.Arrays.asList("testString"))
       .impersonateUser("testString")
+      .transactionId("testString")
       .accountId("testString")
       .tagType("access")
       .build();
-    assertEquals(createTagOptionsModel.tagNames(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(createTagOptionsModel.tagNames(), java.util.Arrays.asList("testString"));
     assertEquals(createTagOptionsModel.impersonateUser(), "testString");
+    assertEquals(createTagOptionsModel.transactionId(), "testString");
     assertEquals(createTagOptionsModel.accountId(), "testString");
     assertEquals(createTagOptionsModel.tagType(), "access");
   }

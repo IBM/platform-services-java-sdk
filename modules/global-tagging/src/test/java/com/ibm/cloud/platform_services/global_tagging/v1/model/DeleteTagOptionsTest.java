@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,8 +17,6 @@ import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -35,13 +33,15 @@ public class DeleteTagOptionsTest {
   public void testDeleteTagOptions() throws Throwable {
     DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
       .tagName("testString")
-      .providers(new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")))
+      .transactionId("testString")
+      .providers(java.util.Arrays.asList("ghost"))
       .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
     assertEquals(deleteTagOptionsModel.tagName(), "testString");
-    assertEquals(deleteTagOptionsModel.providers(), new java.util.ArrayList<String>(java.util.Arrays.asList("ghost")));
+    assertEquals(deleteTagOptionsModel.transactionId(), "testString");
+    assertEquals(deleteTagOptionsModel.providers(), java.util.Arrays.asList("ghost"));
     assertEquals(deleteTagOptionsModel.impersonateUser(), "testString");
     assertEquals(deleteTagOptionsModel.accountId(), "testString");
     assertEquals(deleteTagOptionsModel.tagType(), "user");

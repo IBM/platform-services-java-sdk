@@ -46,6 +46,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20180130</version>
@@ -54,16 +59,6 @@
             <groupId>com.cloudant</groupId>
             <artifactId>cloudant-client</artifactId>
             <version>2.19.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-api-mockito2</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-testng</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2022, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,10 +12,24 @@
  */
 package com.ibm.cloud.platform_services.usage_reports.v4;
 
-import com.ibm.cloud.platform_services.usage_reports.v4.UsageReports;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
+import static org.testng.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountSummary;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountUsage;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Discount;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountSummaryOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetOrgUsageOptions;
@@ -28,52 +42,20 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageRe
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageResourceGroupPager;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.InstanceUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsage;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsageFirst;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsageNext;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Metric;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Offer;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.OfferCredits;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Plan;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Resource;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourcesSummary;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Subscription;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.SubscriptionSummary;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.SubscriptionTerm;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.SubscriptionTermCredits;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.SupportSummary;
 import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.security.Authenticator;
-import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
-import com.ibm.cloud.sdk.core.util.EnvironmentUtils;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.testng.PowerMockTestCase;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import static org.testng.Assert.*;
 
 /**
  * Unit test class for the UsageReports service.
  */
-@PrepareForTest({ EnvironmentUtils.class })
-@PowerMockIgnore({"javax.net.ssl.*", "org.mockito.*"})
-public class UsageReportsTest extends PowerMockTestCase {
+public class UsageReportsTest {
 
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
@@ -364,7 +346,7 @@ public class UsageReportsTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getResourceUsageAccount operation using the GetResourceUsageAccountPager.getAll() method
   @Test
   public void testGetResourceUsageAccountWithPagerGetAll() throws Throwable {
@@ -403,7 +385,7 @@ public class UsageReportsTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getResourceUsageResourceGroup operation with a valid options model parameter
   @Test
   public void testGetResourceUsageResourceGroupWOptions() throws Throwable {
@@ -513,7 +495,7 @@ public class UsageReportsTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getResourceUsageResourceGroup operation using the GetResourceUsageResourceGroupPager.getAll() method
   @Test
   public void testGetResourceUsageResourceGroupWithPagerGetAll() throws Throwable {
@@ -551,7 +533,7 @@ public class UsageReportsTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getResourceUsageOrg operation with a valid options model parameter
   @Test
   public void testGetResourceUsageOrgWOptions() throws Throwable {
@@ -661,7 +643,7 @@ public class UsageReportsTest extends PowerMockTestCase {
     }
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getResourceUsageOrg operation using the GetResourceUsageOrgPager.getAll() method
   @Test
   public void testGetResourceUsageOrgWithPagerGetAll() throws Throwable {
@@ -699,7 +681,7 @@ public class UsageReportsTest extends PowerMockTestCase {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getOrgUsage operation with a valid options model parameter
   @Test
   public void testGetOrgUsageWOptions() throws Throwable {
@@ -778,17 +760,9 @@ public class UsageReportsTest extends PowerMockTestCase {
     usageReportsService = null;
   }
 
-  // Creates a mock set of environment variables that are returned by EnvironmentUtils.getenv()
-  private Map<String, String> getTestProcessEnvironment() {
-    Map<String, String> env = new HashMap<>();
-    env.put("TESTSERVICE_AUTH_TYPE", "noAuth");
-    return env;
-  }
-
   // Constructs an instance of the service to be used by the tests
   public void constructClientService() {
-    PowerMockito.spy(EnvironmentUtils.class);
-    PowerMockito.when(EnvironmentUtils.getenv()).thenReturn(getTestProcessEnvironment());
+    System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
     usageReportsService = UsageReports.newInstance(serviceName);

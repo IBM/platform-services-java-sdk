@@ -944,7 +944,7 @@ public class IamIdentityExamples {
 
             System.out.println(fetchedReport);
 
-            // end-get_report
+            // end-get_mfa_report
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -954,8 +954,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("getMfaStatus() result:");
 
-            // begin-get_mfa_report
-
+            // begin-get_mfa_status
             GetMfaStatusOptions getMfaStatusOptions = new GetMfaStatusOptions.Builder()
                     .accountId(accountId)
                     .iamId(iamId)
@@ -966,7 +965,7 @@ public class IamIdentityExamples {
 
             System.out.println(userMfaEnrollmentsResponse);
 
-            // end-get_report
+            // end-get_mfa_status
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

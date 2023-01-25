@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,14 +13,16 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControl;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControl;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseControlGrant;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseResource;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseRuleV2PolicyAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyBaseSubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyGrant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -42,10 +44,12 @@ public class V2PolicyTest {
     assertNull(v2PolicyModel.getType());
     assertNull(v2PolicyModel.getDescription());
     assertNull(v2PolicyModel.getSubject());
-    assertNull(v2PolicyModel.getControl());
     assertNull(v2PolicyModel.getResource());
     assertNull(v2PolicyModel.getPattern());
     assertNull(v2PolicyModel.getRule());
+    assertNull(v2PolicyModel.getControl());
     assertNull(v2PolicyModel.getState());
+    assertNull(v2PolicyModel.getLastPermitAt());
+    assertNull(v2PolicyModel.getLastPermitFrequency());
   }
 }

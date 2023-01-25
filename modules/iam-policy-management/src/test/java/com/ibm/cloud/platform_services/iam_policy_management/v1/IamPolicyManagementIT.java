@@ -46,6 +46,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     private final String TEST_UNIQUE_ID = String.valueOf(random.nextInt(100000));
     private static final String TEST_USER_PREFIX = "IBMid-SDKJava";
     private final String TEST_USER_ID = TEST_USER_PREFIX + TEST_UNIQUE_ID;
+    private final String TEST_USER_ID_TWO = TEST_USER_ID + "2";
     private static final String HEADER_ETAG = "ETag";
     private static final String TEST_VIEW_ROLE_CRN = "crn:v1:bluemix:public:iam::::role:Viewer";
     private static final String TEST_EDITOR_ROLE_CRN = "crn:v1:bluemix:public:iam::::role:Editor";
@@ -223,7 +224,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .attributes(new ArrayList<SubjectAttribute>(Arrays.asList(subjectAttributeModel)))
           .build();
 
-        UpdatePolicyOptions options = new UpdatePolicyOptions.Builder()
+        ReplacePolicyOptions options = new ReplacePolicyOptions.Builder()
                 .policyId(testPolicyId)
                 .ifMatch(testPolicyEtag)
                 .type(POLICY_TYPE)
@@ -232,7 +233,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .resources(new ArrayList<PolicyResource>(Arrays.asList(policyResourceModel)))
                 .build();
 
-        Response<Policy> response = service.updatePolicy(options).execute();
+        Response<Policy> response = service.replacePolicy(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
@@ -254,13 +255,13 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertNotNull(testPolicyId);
         assertNotNull(testPolicyEtag);
 
-        PatchPolicyOptions patchPolicyOptions = new PatchPolicyOptions.Builder()
+        UpdatePolicyStateOptions updatePolicyStateOptions = new UpdatePolicyStateOptions.Builder()
                 .policyId(testPolicyId)
                 .ifMatch(testPolicyEtag)
                 .state("active")
                 .build();
 
-        Response<Policy> response = service.patchPolicy(patchPolicyOptions).execute();
+        Response<Policy> response = service.updatePolicyState(updatePolicyStateOptions).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
@@ -290,6 +291,252 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         boolean foundTestPolicy = false;
         for (Policy policy : result.getPolicies()) {
             if (testPolicyId.equals(policy.getId())) {
+                foundTestPolicy = true;
+                break;
+            }
+        }
+        assertTrue(foundTestPolicy);
+    }
+
+    @Test
+    public void testCreateV2AccessPolicy() {
+
+        V2PolicyResourceAttribute resourceAttributeAccount = new V2PolicyResourceAttribute.Builder()
+          .key("accountId")
+          .value(testAccountId)
+          .operator("stringEquals")
+          .build();
+
+        V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
+          .key("serviceType")
+          .value("service")
+          .operator("stringEquals")
+          .build();
+        
+        V2PolicyResourceTag resourceAttributeTag = new V2PolicyResourceTag.Builder()
+          .key("project")
+          .value("prototype")
+          .operator("stringEquals")
+          .build();
+
+
+        V2PolicySubjectAttribute subjectAttributeModel = new V2PolicySubjectAttribute.Builder()
+          .key("iam_id")
+          .value(TEST_USER_ID_TWO)
+          .operator("stringEquals")
+          .build();
+
+        V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
+          .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeAccount,
+            resourceAttributeService)))
+          .tags(new ArrayList<V2PolicyResourceTag>(Arrays.asList(resourceAttributeTag)))
+          .build();
+
+        V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
+          .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeModel)))
+          .build();
+
+        PolicyRole policyRoleModel = new PolicyRole.Builder()
+          .roleId(TEST_VIEW_ROLE_CRN)
+          .build();
+        
+        V2PolicyGrant policyGrantModel = new V2PolicyGrant.Builder()
+          .roles(Arrays.asList(policyRoleModel))
+          .build();
+
+        Control controlModel = new Control.Builder()
+          .grant(policyGrantModel)
+          .build();
+
+        RuleAttribute weeklyConditionAttributeModel = new RuleAttribute.Builder()
+          .key("{{environment.attributes.day_of_week}}")
+          .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
+          .operator("dayOfWeekAnyOf")
+          .build();
+        
+
+        RuleAttribute startConditionAttributeModel = new RuleAttribute.Builder()
+          .key("{{environment.attributes.current_time}}")
+          .value("09:00:00+00:00")
+          .operator("timeGreaterThanOrEquals")
+          .build();
+
+        RuleAttribute endConditionAttributeModel = new RuleAttribute.Builder()
+          .key("{{environment.attributes.current_time}}")
+          .value("17:00:00+00:00")
+          .operator("timeLessThanOrEquals")
+          .build();
+
+        V2PolicyRuleRuleWithConditions policyRuleModel = new V2PolicyRuleRuleWithConditions.Builder()
+          .operator("and")
+          .conditions(new ArrayList<RuleAttribute>(Arrays.asList(weeklyConditionAttributeModel,
+            startConditionAttributeModel, endConditionAttributeModel)))
+          .build();
+
+        CreateV2PolicyOptions options = new CreateV2PolicyOptions.Builder()
+          .type(POLICY_TYPE)
+          .subject(policySubjectModel)
+          .control(controlModel)
+          .resource(policyResourceModel)
+          .rule(policyRuleModel)
+          .pattern("time-based-conditions:weekly:custom-hours")
+          .build();
+
+        Response<V2Policy> response = service.createV2Policy(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 201);
+
+        V2Policy result = response.getResult();
+        assertNotNull(result);
+        assertEquals(result.getType(), POLICY_TYPE);
+        assertEquals(result.getSubject(), policySubjectModel);
+        assertEquals(result.getResource(), policyResourceModel);
+        assertEquals(result.getControl().getGrant(), policyGrantModel);
+        assertEquals(result.getRule().operator(), policyRuleModel.operator());
+        assertEquals(result.getPattern(), "time-based-conditions:weekly:custom-hours");
+
+        testV2PolicyId = result.getId();
+    }
+
+    @Test(dependsOnMethods = {"testCreateV2AccessPolicy"})
+    public void testGetV2AccessPolicy() {
+        assertNotNull(testV2PolicyId);
+
+        GetV2PolicyOptions options = new GetV2PolicyOptions.Builder()
+                .id(testV2PolicyId)
+                .build();
+
+        Response<V2Policy> response = service.getV2Policy(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        V2Policy result = response.getResult();
+        assertNotNull(result);
+        assertEquals(result.getId(), testV2PolicyId);
+
+
+        List<String> values = response.getHeaders().values(HEADER_ETAG);
+        assertNotNull(values);
+        testV2PolicyEtag = values.get(0);
+    }
+
+    @Test(dependsOnMethods = {"testGetV2AccessPolicy"})
+    public void testUpdateV2AccessPolicy() {
+        assertNotNull(testV2PolicyId);
+        assertNotNull(testV2PolicyEtag);
+
+        V2PolicyResourceAttribute resourceAttributeAccount = new V2PolicyResourceAttribute.Builder()
+          .key("accountId")
+          .value(testAccountId)
+          .operator("stringEquals")
+          .build();
+
+        V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
+          .key("serviceName")
+          .value(TEST_SERVICE_NAME)
+          .operator("stringEquals")
+          .build();
+
+        V2PolicySubjectAttribute subjectAttributeModel = new V2PolicySubjectAttribute.Builder()
+          .key("iam_id")
+          .value(TEST_USER_ID_TWO)
+          .operator("stringEquals")
+          .build();
+
+        V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
+          .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeAccount,
+            resourceAttributeService)))
+          .build();
+
+        V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
+          .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeModel)))
+          .build();
+        
+        PolicyRole policyRoleModel = new PolicyRole.Builder()
+          .roleId(TEST_EDITOR_ROLE_CRN)
+          .build();
+
+        V2PolicyGrant policyGrantModel = new V2PolicyGrant.Builder()
+          .roles(Arrays.asList(policyRoleModel))
+          .build();
+
+        Control controlModel = new Control.Builder()
+          .grant(policyGrantModel)
+          .build();
+        RuleAttribute weeklyConditionAttributeModel = new RuleAttribute.Builder()
+          .key("{{environment.attributes.day_of_week}}")
+          .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
+          .operator("dayOfWeekAnyOf")
+          .build();
+        
+
+        RuleAttribute startConditionAttributeModel = new RuleAttribute.Builder()
+          .key("{{environment.attributes.current_time}}")
+          .value("09:00:00+00:00")
+          .operator("timeGreaterThanOrEquals")
+          .build();
+
+        RuleAttribute endConditionAttributeModel = new RuleAttribute.Builder()
+          .key("{{environment.attributes.current_time}}")
+          .value("17:00:00+00:00")
+          .operator("timeLessThanOrEquals")
+          .build();
+
+        V2PolicyRuleRuleWithConditions policyRuleModel = new V2PolicyRuleRuleWithConditions.Builder()
+          .operator("and")
+          .conditions(new ArrayList<RuleAttribute>(Arrays.asList(weeklyConditionAttributeModel,
+            startConditionAttributeModel, endConditionAttributeModel)))
+          .build();
+
+        ReplaceV2PolicyOptions options = new ReplaceV2PolicyOptions.Builder()
+                .id(testV2PolicyId)
+                .ifMatch(testV2PolicyEtag)
+                .type(POLICY_TYPE)
+                .subject(policySubjectModel)
+                .control(controlModel)
+                .resource(policyResourceModel)
+                .rule(policyRuleModel)
+                .pattern("time-based-conditions:weekly:custom-hours")
+                .build();
+
+        Response<V2Policy> response = service.replaceV2Policy(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        V2Policy result = response.getResult();
+        assertNotNull(result);
+        assertEquals(result.getId(), testV2PolicyId);
+        assertEquals(result.getType(), POLICY_TYPE);
+        assertEquals(result.getSubject(), policySubjectModel);
+        assertEquals(result.getResource(), policyResourceModel);
+        assertEquals(result.getControl().getGrant(), policyGrantModel);
+        assertEquals(result.getRule().operator(), policyRuleModel.operator());
+        assertEquals(result.getPattern(), "time-based-conditions:weekly:custom-hours");
+
+        List<String> values = response.getHeaders().values(HEADER_ETAG);
+        assertNotNull(values);
+        testV2PolicyEtag = values.get(0);
+    }
+
+    @Test(dependsOnMethods = {"testUpdateV2AccessPolicy"})
+    public void testListV2AccessPolicies() throws Exception, InterruptedException {
+        assertNotNull(testV2PolicyId);
+
+        ListV2PoliciesOptions options = new ListV2PoliciesOptions.Builder()
+                .accountId(testAccountId)
+                .build();
+
+        Response<V2PolicyCollection> response = service.listV2Policies(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        V2PolicyCollection result = response.getResult();
+        assertNotNull(result);
+
+        // Confirm the test policy is present
+        boolean foundTestPolicy = false;
+        for (V2Policy policy : result.getPolicies()) {
+            if (testV2PolicyId.equals(policy.getId())) {
                 foundTestPolicy = true;
                 break;
             }
@@ -359,7 +606,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertNotNull(testCustomRoleEtag);
 
         String updatedRoleDescription = "Updated description";
-        UpdateRoleOptions options = new UpdateRoleOptions.Builder()
+        ReplaceRoleOptions options = new ReplaceRoleOptions.Builder()
           .roleId(testCustomRoleId)
           .ifMatch(testCustomRoleEtag)
           .displayName(testCustomRoleDisplayName)
@@ -367,7 +614,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .actions(testCustomRoleActions)
           .build();
 
-        Response<CustomRole> response = service.updateRole(options).execute();
+        Response<CustomRole> response = service.replaceRole(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
@@ -433,13 +680,27 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
             // Delete the test policy or any test polcies older than 5 minutes
             if (policy.getSubjects().get(0).attributes().get(0).value().contains(TEST_USER_PREFIX)) {
                 long createdAt = policy.getCreatedAt().getTime();
-                if ((testPolicyId != null || testPolicyId.equals(policy.getId())) || createdAt < fiveMinutesAgo) {
-                    DeletePolicyOptions deleteOptions = new DeletePolicyOptions.Builder()
-                            .policyId(policy.getId()).build();
-                    Response<Void> deleteResponse = service.deletePolicy(deleteOptions).execute();
-                    assertNotNull(deleteResponse);
-                    assertEquals(deleteResponse.getStatusCode(), 204);
-                    log("Cleanup test policy id: " + policy.getId());
+
+                // Delete v2 policy
+                if (policy.getHref().contains("v2/policies")) {
+                  if ((testV2PolicyId != null || testV2PolicyId.equals(policy.getId())) || createdAt < fiveMinutesAgo) {
+                      DeleteV2PolicyOptions deleteOptions = new DeleteV2PolicyOptions.Builder()
+                              .id(policy.getId()).build();
+                      Response<Void> deleteResponse = service.deleteV2Policy(deleteOptions).execute();
+                      assertNotNull(deleteResponse);
+                      assertEquals(deleteResponse.getStatusCode(), 204);
+                      log("Cleanup test policy id: " + policy.getId());
+                  }
+                } else {
+                  // Delete v1 policy
+                  if ((testPolicyId != null || testPolicyId.equals(policy.getId())) || createdAt < fiveMinutesAgo) {
+                      DeletePolicyOptions deleteOptions = new DeletePolicyOptions.Builder()
+                              .policyId(policy.getId()).build();
+                      Response<Void> deleteResponse = service.deletePolicy(deleteOptions).execute();
+                      assertNotNull(deleteResponse);
+                      assertEquals(deleteResponse.getStatusCode(), 204);
+                      log("Cleanup test policy id: " + policy.getId());
+                  }
                 }
             }
         }

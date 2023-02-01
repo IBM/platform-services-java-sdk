@@ -45,3 +45,5 @@ node_modules/
 
 # MacOS specific .DS_Store file
 .DS_Store 
+
+.vscode/

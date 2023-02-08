@@ -57,23 +57,20 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
    * This method provides our config filename to the base class.
    */
 
+  private static String ENTERPRISE_ID;
+  private static String ACCOUNT_ID;
+  private static String ACCOUNT_GROUP_ID;
+  private static String BILLING_UNIT_ID;
+
+  @Override
   public String getConfigFilename() {
-    return "../../enterprise_billing_units_v1.env";
+    return "../../enterprise_billing_units.env";
   }
-      private static String ENTERPRISE_ID;
-    private static String ACCOUNT_ID;
-    private static String ACCOUNT_GROUP_ID;
-    private static String BILLING_UNIT_ID;
 
-    @Override
-    public String getConfigFilename() {
-        return "../../enterprise_billing_units.env";
-    }
-
-    @Override
-    public boolean loggingEnabled() {
-        return false;
-    }
+  @Override
+  public boolean loggingEnabled() {
+    return false;
+  }
 
   @BeforeClass
   public void constructService() {
@@ -93,17 +90,17 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
     assertEquals(service.getServiceUrl(), config.get("URL"));
 
     service.enableRetries(4, 30);
-            ENTERPRISE_ID = config.get("ENTERPRISE_ID");
-        ACCOUNT_ID = config.get("ACCOUNT_ID");
-        ACCOUNT_GROUP_ID = config.get("ACCOUNT_GROUP_ID");
-        BILLING_UNIT_ID = config.get("BILLING_UNIT_ID");
+    ENTERPRISE_ID = config.get("ENTERPRISE_ID");
+    ACCOUNT_ID = config.get("ACCOUNT_ID");
+    ACCOUNT_GROUP_ID = config.get("ACCOUNT_GROUP_ID");
+    BILLING_UNIT_ID = config.get("BILLING_UNIT_ID");
 
-        assertNotNull(ENTERPRISE_ID);
-        assertNotNull(ACCOUNT_ID);
-        assertNotNull(ACCOUNT_GROUP_ID);
-        assertNotNull(BILLING_UNIT_ID);
+    assertNotNull(ENTERPRISE_ID);
+    assertNotNull(ACCOUNT_ID);
+    assertNotNull(ACCOUNT_GROUP_ID);
+    assertNotNull(BILLING_UNIT_ID);
 
-        log("Service URL: " + service.getServiceUrl());
+    log("Service URL: " + service.getServiceUrl());
 
     System.out.println("Setup complete.");
   }
@@ -112,8 +109,8 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
   public void testGetBillingUnit() throws Exception {
     try {
       GetBillingUnitOptions getBillingUnitOptions = new GetBillingUnitOptions.Builder()
-        .billingUnitId(BILLING_UNIT_ID)
-        .build();
+          .billingUnitId(BILLING_UNIT_ID)
+          .build();
 
       // Invoke operation
       Response<BillingUnit> response = service.getBillingUnit(getBillingUnitOptions).execute();
@@ -123,9 +120,9 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
 
       BillingUnit billingUnitResult = response.getResult();
       assertNotNull(billingUnitResult);
-            log(String.format(">>> getBillingUnit response:\n%s", billingUnitResult.toString()));
+      log(String.format(">>> getBillingUnit response:\n%s", billingUnitResult.toString()));
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
@@ -134,8 +131,8 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
   public void testListBillingUnitsEnterpriseId() throws Exception {
     try {
       ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
-                    .enterpriseId(ENTERPRISE_ID)
-        .build();
+          .enterpriseId(ENTERPRISE_ID)
+          .build();
 
       // Invoke operation
       Response<BillingUnitsList> response = service.listBillingUnits(listBillingUnitsOptions).execute();
@@ -144,63 +141,65 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
       assertEquals(response.getStatusCode(), 200);
 
       BillingUnitsList billingUnitsListResult = response.getResult();
-            assertNotNull(billingUnitsListResult);
-            log(String.format(">>> listBillingUnits(enterprise id) response:\n%s", billingUnitsListResult.toString()));
+      assertNotNull(billingUnitsListResult);
+      log(String.format(">>> listBillingUnits(enterprise id) response:\n%s", billingUnitsListResult.toString()));
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
-    @Test
-    public void testListBillingUnitsAccountId() throws Exception {
-        try {
-            ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
-                    .accountId(ACCOUNT_ID)
-                    .build();
 
-            // Invoke operation
-            Response<BillingUnitsList> response = service.listBillingUnits(listBillingUnitsOptions).execute();
-            // Validate response
-            assertNotNull(response);
-            assertEquals(response.getStatusCode(), 200);
+  @Test
+  public void testListBillingUnitsAccountId() throws Exception {
+    try {
+      ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
+          .accountId(ACCOUNT_ID)
+          .build();
 
-            BillingUnitsList billingUnitsListResult = response.getResult();
-            assertNotNull(billingUnitsListResult);
-            log(String.format(">>> listBillingUnits(account id) response:\n%s", billingUnitsListResult.toString()));
-        } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-                    e.getMessage(), e.getDebuggingInfo()));
-        }
+      // Invoke operation
+      Response<BillingUnitsList> response = service.listBillingUnits(listBillingUnitsOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      BillingUnitsList billingUnitsListResult = response.getResult();
+      assertNotNull(billingUnitsListResult);
+      log(String.format(">>> listBillingUnits(account id) response:\n%s", billingUnitsListResult.toString()));
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
+          e.getMessage(), e.getDebuggingInfo()));
     }
+  }
 
-    @Test
-    public void testListBillingUnitsAccountGroupId() throws Exception {
-        try {
-            ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
-                    .accountGroupId(ACCOUNT_GROUP_ID)
-                    .build();
+  @Test
+  public void testListBillingUnitsAccountGroupId() throws Exception {
+    try {
+      ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
+          .accountGroupId(ACCOUNT_GROUP_ID)
+          .build();
 
-            // Invoke operation
-            Response<BillingUnitsList> response = service.listBillingUnits(listBillingUnitsOptions).execute();
-            // Validate response
-            assertNotNull(response);
-            assertEquals(response.getStatusCode(), 200);
+      // Invoke operation
+      Response<BillingUnitsList> response = service.listBillingUnits(listBillingUnitsOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
 
-            BillingUnitsList billingUnitsListResult = response.getResult();
-            assertNotNull(billingUnitsListResult);
-            log(String.format(">>> listBillingUnits(account group id) response:\n%s", billingUnitsListResult.toString()));
-        } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-                    e.getMessage(), e.getDebuggingInfo()));
-        }
+      BillingUnitsList billingUnitsListResult = response.getResult();
+      assertNotNull(billingUnitsListResult);
+      log(String.format(">>> listBillingUnits(account group id) response:\n%s", billingUnitsListResult.toString()));
+    } catch (ServiceResponseException e) {
+      fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
+          e.getMessage(), e.getDebuggingInfo()));
     }
+  }
+
   @Test(dependsOnMethods = { "testListBillingUnits" })
   public void testListBillingUnitsWithPager() throws Exception {
     try {
       ListBillingUnitsOptions options = new ListBillingUnitsOptions.Builder()
-                    .enterpriseId(ENTERPRISE_ID)
-        .limit(Long.valueOf("10"))
-        .build();
+          .enterpriseId(ENTERPRISE_ID)
+          .limit(Long.valueOf("10"))
+          .build();
 
       // Test getNext().
       List<BillingUnit> allResults = new ArrayList<>();
@@ -221,7 +220,7 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
       assertEquals(allItems.size(), allResults.size());
       System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
@@ -230,10 +229,10 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
   public void testListBillingOptions() throws Exception {
     try {
       ListBillingOptionsOptions listBillingOptionsOptions = new ListBillingOptionsOptions.Builder()
-        .billingUnitId(BILLING_UNIT_ID)
-        .limit(Long.valueOf("10"))
-        .start(Long.valueOf("26"))
-        .build();
+          .billingUnitId(BILLING_UNIT_ID)
+          .limit(Long.valueOf("10"))
+          .start(Long.valueOf("26"))
+          .build();
 
       // Invoke operation
       Response<BillingOptionsList> response = service.listBillingOptions(listBillingOptionsOptions).execute();
@@ -242,10 +241,10 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
       assertEquals(response.getStatusCode(), 200);
 
       BillingOptionsList billingOptionsListResult = response.getResult();
-            assertNotNull(billingOptionsListResult);
-            log(String.format(">>> listBillingOptions() response:\n%s", billingOptionsListResult.toString()));
+      assertNotNull(billingOptionsListResult);
+      log(String.format(">>> listBillingOptions() response:\n%s", billingOptionsListResult.toString()));
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
@@ -254,8 +253,8 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
   public void testListBillingOptionsWithPager() throws Exception {
     try {
       ListBillingOptionsOptions options = new ListBillingOptionsOptions.Builder()
-                    .billingUnitId(BILLING_UNIT_ID)
-        .build();
+          .billingUnitId(BILLING_UNIT_ID)
+          .build();
 
       // Test getNext().
       List<BillingOption> allResults = new ArrayList<>();
@@ -276,7 +275,7 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
       assertEquals(allItems.size(), allResults.size());
       System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
@@ -286,11 +285,11 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
     try {
 
       GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
-        .billingUnitId(BILLING_UNIT_ID)
-        .type("PLATFORM")
-        .limit(Long.valueOf("10"))
-        .start(Long.valueOf("26"))
-        .build();
+          .billingUnitId(BILLING_UNIT_ID)
+          .type("PLATFORM")
+          .limit(Long.valueOf("10"))
+          .start(Long.valueOf("26"))
+          .build();
 
       // Invoke operation
       Response<CreditPoolsList> response = service.getCreditPools(getCreditPoolsOptions).execute();
@@ -302,7 +301,7 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
       assertNotNull(creditPoolsListResult);
       log(String.format(">>> getCreditPools() response:\n%s", creditPoolsListResult.toString()));
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
@@ -311,10 +310,10 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
   public void testGetCreditPoolsWithPager() throws Exception {
     try {
       GetCreditPoolsOptions options = new GetCreditPoolsOptions.Builder()
-        .billingUnitId(BILLING_UNIT_ID)
-        .type("PLATFORM")
-        .limit(Long.valueOf("10"))
-        .build();
+          .billingUnitId(BILLING_UNIT_ID)
+          .type("PLATFORM")
+          .limit(Long.valueOf("10"))
+          .build();
 
       // Test getNext().
       List<CreditPool> allResults = new ArrayList<>();
@@ -335,7 +334,7 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
       assertEquals(allItems.size(), allResults.size());
       System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
+      fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
@@ -345,4 +344,4 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
     // Add any clean up logic here
     System.out.println("Clean up complete.");
   }
- }
+}

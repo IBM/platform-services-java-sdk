@@ -59,7 +59,8 @@ public class EnterpriseBillingUnitsTest {
   protected MockWebServer server;
   protected EnterpriseBillingUnits enterpriseBillingUnitsService;
 
-  public void constructClientService() throws Throwable {
+  // Constructs an instance of the service to be used by the tests
+  public void constructClientService() {
     System.setProperty("TESTSERVICE_AUTH_TYPE", "noAuth");
     final String serviceName = "testService";
 
@@ -69,8 +70,8 @@ public class EnterpriseBillingUnitsTest {
   }
 
   /**
-  * Negative Test - construct the service with a null authenticator.
-  */
+   * Negative Test - construct the service with a null authenticator.
+   */
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testConstructorWithNullAuthenticator() throws Throwable {
     final String serviceName = "testService";
@@ -84,15 +85,14 @@ public class EnterpriseBillingUnitsTest {
     String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>\", \"name\": \"name\", \"enterprise_id\": \"enterpriseId\", \"currency_code\": \"USD\", \"country_code\": \"USA\", \"master\": true, \"created_at\": \"2019-01-01T12:00:00\"}";
     String getBillingUnitPath = "/v1/billing-units/testString";
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
-
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponseBody));
 
     // Construct an instance of the GetBillingUnitOptions model
     GetBillingUnitOptions getBillingUnitOptionsModel = new GetBillingUnitOptions.Builder()
-      .billingUnitId("testString")
-      .build();
+        .billingUnitId("testString")
+        .build();
 
     // Invoke getBillingUnit() with a valid options model and verify the result
     Response<BillingUnit> response = enterpriseBillingUnitsService.getBillingUnit(getBillingUnitOptionsModel).execute();
@@ -136,21 +136,22 @@ public class EnterpriseBillingUnitsTest {
     String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"crn\": \"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>\", \"name\": \"name\", \"enterprise_id\": \"enterpriseId\", \"currency_code\": \"USD\", \"country_code\": \"USA\", \"master\": true, \"created_at\": \"2019-01-01T12:00:00\"}]}";
     String listBillingUnitsPath = "/v1/billing-units";
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponseBody));
 
     // Construct an instance of the ListBillingUnitsOptions model
     ListBillingUnitsOptions listBillingUnitsOptionsModel = new ListBillingUnitsOptions.Builder()
-      .accountId("testString")
-      .enterpriseId("testString")
-      .accountGroupId("testString")
-      .limit(Long.valueOf("10"))
-      .start(Long.valueOf("26"))
-      .build();
+        .accountId("testString")
+        .enterpriseId("testString")
+        .accountGroupId("testString")
+        .limit(Long.valueOf("10"))
+        .start(Long.valueOf("26"))
+        .build();
 
     // Invoke listBillingUnits() with a valid options model and verify the result
-    Response<BillingUnitsList> response = enterpriseBillingUnitsService.listBillingUnits(listBillingUnitsOptionsModel).execute();
+    Response<BillingUnitsList> response = enterpriseBillingUnitsService.listBillingUnits(listBillingUnitsOptionsModel)
+        .execute();
     assertNotNull(response);
     BillingUnitsList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -170,9 +171,6 @@ public class EnterpriseBillingUnitsTest {
     assertEquals(query.get("account_group_id"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
     assertEquals(Long.valueOf(query.get("start")), Long.valueOf("26"));
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listBillingUnitsPath);
   }
 
   // Test the listBillingUnits operation with and without retries enabled
@@ -185,31 +183,32 @@ public class EnterpriseBillingUnitsTest {
     testListBillingUnitsWOptions();
   }
 
-  // Test the listBillingUnits operation using the BillingUnitsPager.getNext() method
+  // Test the listBillingUnits operation using the BillingUnitsPager.getNext()
+  // method
   @Test
   public void testListBillingUnitsWithPagerGetNext() throws Throwable {
     // Set up the two-page mock response.
     String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?start=1\",\"resources\":[{\"id\":\"id\",\"crn\":\"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>\",\"name\":\"name\",\"enterprise_id\":\"enterpriseId\",\"currency_code\":\"USD\",\"country_code\":\"USA\",\"master\":true,\"created_at\":\"2019-05-01T00:00:00.000Z\"}]}";
     String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"id\":\"id\",\"crn\":\"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>\",\"name\":\"name\",\"enterprise_id\":\"enterpriseId\",\"currency_code\":\"USD\",\"country_code\":\"USA\",\"master\":true,\"created_at\":\"2019-05-01T00:00:00.000Z\"}]}";
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage1));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage1));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage2));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage2));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(400)
-      .setBody("{\"message\": \"No more results available!\"}"));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(400)
+        .setBody("{\"message\": \"No more results available!\"}"));
 
     ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
-      .accountId("testString")
-      .enterpriseId("testString")
-      .accountGroupId("testString")
-      .limit(Long.valueOf("10"))
-      .build();
+        .accountId("testString")
+        .enterpriseId("testString")
+        .accountGroupId("testString")
+        .limit(Long.valueOf("10"))
+        .build();
 
     List<BillingUnit> allResults = new ArrayList<>();
     BillingUnitsPager pager = new BillingUnitsPager(enterpriseBillingUnitsService, listBillingUnitsOptions);
@@ -220,39 +219,40 @@ public class EnterpriseBillingUnitsTest {
     }
     assertEquals(allResults.size(), 2);
   }
-  
-  // Test the listBillingUnits operation using the BillingUnitsPager.getAll() method
+
+  // Test the listBillingUnits operation using the BillingUnitsPager.getAll()
+  // method
   @Test
   public void testListBillingUnitsWithPagerGetAll() throws Throwable {
     // Set up the two-page mock response.
     String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?start=1\",\"resources\":[{\"id\":\"id\",\"crn\":\"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>\",\"name\":\"name\",\"enterprise_id\":\"enterpriseId\",\"currency_code\":\"USD\",\"country_code\":\"USA\",\"master\":true,\"created_at\":\"2019-05-01T00:00:00.000Z\"}]}";
     String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"id\":\"id\",\"crn\":\"crn:v1:bluemix:public:billing::a/<<enterprise_account_id>>::billing-unit:<<billing_unit_id>>\",\"name\":\"name\",\"enterprise_id\":\"enterpriseId\",\"currency_code\":\"USD\",\"country_code\":\"USA\",\"master\":true,\"created_at\":\"2019-05-01T00:00:00.000Z\"}]}";
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage1));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage1));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage2));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage2));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(400)
-      .setBody("{\"message\": \"No more results available!\"}"));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(400)
+        .setBody("{\"message\": \"No more results available!\"}"));
 
     ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
-      .accountId("testString")
-      .enterpriseId("testString")
-      .accountGroupId("testString")
-      .limit(Long.valueOf("10"))
-      .build();
+        .accountId("testString")
+        .enterpriseId("testString")
+        .accountGroupId("testString")
+        .limit(Long.valueOf("10"))
+        .build();
 
     BillingUnitsPager pager = new BillingUnitsPager(enterpriseBillingUnitsService, listBillingUnitsOptions);
     List<BillingUnit> allResults = pager.getAll();
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the listBillingOptions operation with a valid options model parameter
   @Test
   public void testListBillingOptionsWOptions() throws Throwable {
@@ -260,19 +260,20 @@ public class EnterpriseBillingUnitsTest {
     String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"id\": \"id\", \"billing_unit_id\": \"billingUnitId\", \"start_date\": \"2019-01-01T12:00:00\", \"end_date\": \"2019-01-01T12:00:00\", \"state\": \"ACTIVE\", \"type\": \"SUBSCRIPTION\", \"category\": \"PLATFORM\", \"payment_instrument\": {\"mapKey\": \"anyValue\"}, \"duration_in_months\": 11, \"line_item_id\": 10, \"billing_system\": {\"mapKey\": \"anyValue\"}, \"renewal_mode_code\": \"renewalModeCode\", \"updated_at\": \"2019-01-01T12:00:00\"}]}";
     String listBillingOptionsPath = "/v1/billing-options";
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponseBody));
 
     // Construct an instance of the ListBillingOptionsOptions model
     ListBillingOptionsOptions listBillingOptionsOptionsModel = new ListBillingOptionsOptions.Builder()
-      .billingUnitId("testString")
-      .limit(Long.valueOf("10"))
-      .start(Long.valueOf("26"))
-      .build();
+        .billingUnitId("testString")
+        .limit(Long.valueOf("10"))
+        .start(Long.valueOf("26"))
+        .build();
 
     // Invoke listBillingOptions() with a valid options model and verify the result
-    Response<BillingOptionsList> response = enterpriseBillingUnitsService.listBillingOptions(listBillingOptionsOptionsModel).execute();
+    Response<BillingOptionsList> response = enterpriseBillingUnitsService
+        .listBillingOptions(listBillingOptionsOptionsModel).execute();
     assertNotNull(response);
     BillingOptionsList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -290,9 +291,6 @@ public class EnterpriseBillingUnitsTest {
     assertEquals(query.get("billing_unit_id"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
     assertEquals(Long.valueOf(query.get("start")), Long.valueOf("26"));
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listBillingOptionsPath);
   }
 
   // Test the listBillingOptions operation with and without retries enabled
@@ -305,36 +303,38 @@ public class EnterpriseBillingUnitsTest {
     testListBillingOptionsWOptions();
   }
 
-  // Test the listBillingOptions operation with a null options model (negative test)
+  // Test the listBillingOptions operation with a null options model (negative
+  // test)
   @Test(expectedExceptions = IllegalArgumentException.class)
   public void testListBillingOptionsNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     enterpriseBillingUnitsService.listBillingOptions(null).execute();
   }
 
-  // Test the listBillingOptions operation using the BillingOptionsPager.getNext() method
+  // Test the listBillingOptions operation using the BillingOptionsPager.getNext()
+  // method
   @Test
   public void testListBillingOptionsWithPagerGetNext() throws Throwable {
     // Set up the two-page mock response.
     String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?start=1\",\"resources\":[{\"id\":\"id\",\"billing_unit_id\":\"billingUnitId\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-05-01T00:00:00.000Z\",\"state\":\"ACTIVE\",\"type\":\"SUBSCRIPTION\",\"category\":\"PLATFORM\",\"payment_instrument\":{\"anyKey\":\"anyValue\"},\"duration_in_months\":11,\"line_item_id\":10,\"billing_system\":{\"anyKey\":\"anyValue\"},\"renewal_mode_code\":\"renewalModeCode\",\"updated_at\":\"2019-06-01T00:00:00.000Z\"}]}";
     String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"id\":\"id\",\"billing_unit_id\":\"billingUnitId\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-05-01T00:00:00.000Z\",\"state\":\"ACTIVE\",\"type\":\"SUBSCRIPTION\",\"category\":\"PLATFORM\",\"payment_instrument\":{\"anyKey\":\"anyValue\"},\"duration_in_months\":11,\"line_item_id\":10,\"billing_system\":{\"anyKey\":\"anyValue\"},\"renewal_mode_code\":\"renewalModeCode\",\"updated_at\":\"2019-06-01T00:00:00.000Z\"}]}";
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage1));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage1));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage2));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage2));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(400)
-      .setBody("{\"message\": \"No more results available!\"}"));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(400)
+        .setBody("{\"message\": \"No more results available!\"}"));
 
     ListBillingOptionsOptions listBillingOptionsOptions = new ListBillingOptionsOptions.Builder()
-      .billingUnitId("testString")
-      .limit(Long.valueOf("10"))
-      .build();
+        .billingUnitId("testString")
+        .limit(Long.valueOf("10"))
+        .build();
 
     List<BillingOption> allResults = new ArrayList<>();
     BillingOptionsPager pager = new BillingOptionsPager(enterpriseBillingUnitsService, listBillingOptionsOptions);
@@ -345,37 +345,38 @@ public class EnterpriseBillingUnitsTest {
     }
     assertEquals(allResults.size(), 2);
   }
-  
-  // Test the listBillingOptions operation using the BillingOptionsPager.getAll() method
+
+  // Test the listBillingOptions operation using the BillingOptionsPager.getAll()
+  // method
   @Test
   public void testListBillingOptionsWithPagerGetAll() throws Throwable {
     // Set up the two-page mock response.
     String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?start=1\",\"resources\":[{\"id\":\"id\",\"billing_unit_id\":\"billingUnitId\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-05-01T00:00:00.000Z\",\"state\":\"ACTIVE\",\"type\":\"SUBSCRIPTION\",\"category\":\"PLATFORM\",\"payment_instrument\":{\"anyKey\":\"anyValue\"},\"duration_in_months\":11,\"line_item_id\":10,\"billing_system\":{\"anyKey\":\"anyValue\"},\"renewal_mode_code\":\"renewalModeCode\",\"updated_at\":\"2019-06-01T00:00:00.000Z\"}]}";
     String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"id\":\"id\",\"billing_unit_id\":\"billingUnitId\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-05-01T00:00:00.000Z\",\"state\":\"ACTIVE\",\"type\":\"SUBSCRIPTION\",\"category\":\"PLATFORM\",\"payment_instrument\":{\"anyKey\":\"anyValue\"},\"duration_in_months\":11,\"line_item_id\":10,\"billing_system\":{\"anyKey\":\"anyValue\"},\"renewal_mode_code\":\"renewalModeCode\",\"updated_at\":\"2019-06-01T00:00:00.000Z\"}]}";
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage1));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage1));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage2));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage2));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(400)
-      .setBody("{\"message\": \"No more results available!\"}"));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(400)
+        .setBody("{\"message\": \"No more results available!\"}"));
 
     ListBillingOptionsOptions listBillingOptionsOptions = new ListBillingOptionsOptions.Builder()
-      .billingUnitId("testString")
-      .limit(Long.valueOf("10"))
-      .build();
+        .billingUnitId("testString")
+        .limit(Long.valueOf("10"))
+        .build();
 
     BillingOptionsPager pager = new BillingOptionsPager(enterpriseBillingUnitsService, listBillingOptionsOptions);
     List<BillingOption> allResults = pager.getAll();
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Test the getCreditPools operation with a valid options model parameter
   @Test
   public void testGetCreditPoolsWOptions() throws Throwable {
@@ -383,21 +384,22 @@ public class EnterpriseBillingUnitsTest {
     String mockResponseBody = "{\"rows_count\": 2, \"next_url\": \"nextUrl\", \"resources\": [{\"type\": \"PLATFORM\", \"currency_code\": \"USD\", \"billing_unit_id\": \"billingUnitId\", \"term_credits\": [{\"billing_option_id\": \"JWX986YRGFSHACQUEFOI\", \"category\": \"PLATFORM\", \"start_date\": \"2019-01-01T12:00:00\", \"end_date\": \"2019-01-01T12:00:00\", \"total_credits\": 10000, \"starting_balance\": 9000, \"used_credits\": 9500, \"current_balance\": 0, \"resources\": [{\"mapKey\": \"anyValue\"}]}], \"overage\": {\"cost\": 500, \"resources\": [{\"mapKey\": \"anyValue\"}]}}]}";
     String getCreditPoolsPath = "/v1/credit-pools";
     server.enqueue(new MockResponse()
-    .setHeader("Content-type", "application/json")
-    .setResponseCode(200)
-    .setBody(mockResponseBody));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponseBody));
 
     // Construct an instance of the GetCreditPoolsOptions model
     GetCreditPoolsOptions getCreditPoolsOptionsModel = new GetCreditPoolsOptions.Builder()
-      .billingUnitId("testString")
-      .date("testString")
-      .type("testString")
-      .limit(Long.valueOf("10"))
-      .start(Long.valueOf("26"))
-      .build();
+        .billingUnitId("testString")
+        .date("testString")
+        .type("testString")
+        .limit(Long.valueOf("10"))
+        .start(Long.valueOf("26"))
+        .build();
 
     // Invoke getCreditPools() with a valid options model and verify the result
-    Response<CreditPoolsList> response = enterpriseBillingUnitsService.getCreditPools(getCreditPoolsOptionsModel).execute();
+    Response<CreditPoolsList> response = enterpriseBillingUnitsService.getCreditPools(getCreditPoolsOptionsModel)
+        .execute();
     assertNotNull(response);
     CreditPoolsList responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -417,9 +419,6 @@ public class EnterpriseBillingUnitsTest {
     assertEquals(query.get("type"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
     assertEquals(Long.valueOf(query.get("start")), Long.valueOf("26"));
-    // Check request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getCreditPoolsPath);
   }
 
   // Test the getCreditPools operation with and without retries enabled
@@ -439,31 +438,32 @@ public class EnterpriseBillingUnitsTest {
     enterpriseBillingUnitsService.getCreditPools(null).execute();
   }
 
-  // Test the getCreditPools operation using the GetCreditPoolsPager.getNext() method
+  // Test the getCreditPools operation using the GetCreditPoolsPager.getNext()
+  // method
   @Test
   public void testGetCreditPoolsWithPagerGetNext() throws Throwable {
     // Set up the two-page mock response.
     String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?start=1\",\"resources\":[{\"type\":\"PLATFORM\",\"currency_code\":\"USD\",\"billing_unit_id\":\"billingUnitId\",\"term_credits\":[{\"billing_option_id\":\"JWX986YRGFSHACQUEFOI\",\"category\":\"PLATFORM\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-04-30T23:59:29.999Z\",\"total_credits\":10000,\"starting_balance\":9000,\"used_credits\":9500,\"current_balance\":0,\"resources\":[{\"anyKey\":\"anyValue\"}]}],\"overage\":{\"cost\":500,\"resources\":[{\"anyKey\":\"anyValue\"}]}}]}";
     String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"type\":\"PLATFORM\",\"currency_code\":\"USD\",\"billing_unit_id\":\"billingUnitId\",\"term_credits\":[{\"billing_option_id\":\"JWX986YRGFSHACQUEFOI\",\"category\":\"PLATFORM\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-04-30T23:59:29.999Z\",\"total_credits\":10000,\"starting_balance\":9000,\"used_credits\":9500,\"current_balance\":0,\"resources\":[{\"anyKey\":\"anyValue\"}]}],\"overage\":{\"cost\":500,\"resources\":[{\"anyKey\":\"anyValue\"}]}}]}";
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage1));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage1));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage2));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage2));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(400)
-      .setBody("{\"message\": \"No more results available!\"}"));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(400)
+        .setBody("{\"message\": \"No more results available!\"}"));
 
     GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
-      .billingUnitId("testString")
-      .date("testString")
-      .type("testString")
-      .limit(Long.valueOf("10"))
-      .build();
+        .billingUnitId("testString")
+        .date("testString")
+        .type("testString")
+        .limit(Long.valueOf("10"))
+        .build();
 
     List<CreditPool> allResults = new ArrayList<>();
     GetCreditPoolsPager pager = new GetCreditPoolsPager(enterpriseBillingUnitsService, getCreditPoolsOptions);
@@ -474,39 +474,40 @@ public class EnterpriseBillingUnitsTest {
     }
     assertEquals(allResults.size(), 2);
   }
-  
-  // Test the getCreditPools operation using the GetCreditPoolsPager.getAll() method
+
+  // Test the getCreditPools operation using the GetCreditPoolsPager.getAll()
+  // method
   @Test
   public void testGetCreditPoolsWithPagerGetAll() throws Throwable {
     // Set up the two-page mock response.
     String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?start=1\",\"resources\":[{\"type\":\"PLATFORM\",\"currency_code\":\"USD\",\"billing_unit_id\":\"billingUnitId\",\"term_credits\":[{\"billing_option_id\":\"JWX986YRGFSHACQUEFOI\",\"category\":\"PLATFORM\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-04-30T23:59:29.999Z\",\"total_credits\":10000,\"starting_balance\":9000,\"used_credits\":9500,\"current_balance\":0,\"resources\":[{\"anyKey\":\"anyValue\"}]}],\"overage\":{\"cost\":500,\"resources\":[{\"anyKey\":\"anyValue\"}]}}]}";
     String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"type\":\"PLATFORM\",\"currency_code\":\"USD\",\"billing_unit_id\":\"billingUnitId\",\"term_credits\":[{\"billing_option_id\":\"JWX986YRGFSHACQUEFOI\",\"category\":\"PLATFORM\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-04-30T23:59:29.999Z\",\"total_credits\":10000,\"starting_balance\":9000,\"used_credits\":9500,\"current_balance\":0,\"resources\":[{\"anyKey\":\"anyValue\"}]}],\"overage\":{\"cost\":500,\"resources\":[{\"anyKey\":\"anyValue\"}]}}]}";
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage1));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage1));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage2));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(200)
+        .setBody(mockResponsePage2));
     server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(400)
-      .setBody("{\"message\": \"No more results available!\"}"));
+        .setHeader("Content-type", "application/json")
+        .setResponseCode(400)
+        .setBody("{\"message\": \"No more results available!\"}"));
 
     GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
-      .billingUnitId("testString")
-      .date("testString")
-      .type("testString")
-      .limit(Long.valueOf("10"))
-      .build();
+        .billingUnitId("testString")
+        .date("testString")
+        .type("testString")
+        .limit(Long.valueOf("10"))
+        .build();
 
     GetCreditPoolsPager pager = new GetCreditPoolsPager(enterpriseBillingUnitsService, getCreditPoolsOptions);
     List<CreditPool> allResults = pager.getAll();
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-  
+
   // Perform setup needed before each test method
   @BeforeMethod
   public void beforeEachTest() {

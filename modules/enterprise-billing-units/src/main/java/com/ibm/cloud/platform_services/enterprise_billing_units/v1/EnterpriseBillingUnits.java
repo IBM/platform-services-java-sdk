@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-629bbb97-20201207-171303
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 package com.ibm.cloud.platform_services.enterprise_billing_units.v1;
@@ -40,12 +40,18 @@ import java.util.Map.Entry;
 /**
  * Billing units for IBM Cloud enterprises.
  *
- * @version v1
+ * API Version: 1.0.0
  */
 public class EnterpriseBillingUnits extends BaseService {
 
+  /**
+   * Default service name used when configuring the `EnterpriseBillingUnits` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "enterprise_billing_units";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://billing.cloud.ibm.com";
 
  /**
@@ -136,6 +142,12 @@ public class EnterpriseBillingUnits extends BaseService {
     if (listBillingUnitsOptions.accountGroupId() != null) {
       builder.query("account_group_id", String.valueOf(listBillingUnitsOptions.accountGroupId()));
     }
+    if (listBillingUnitsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listBillingUnitsOptions.limit()));
+    }
+    if (listBillingUnitsOptions.start() != null) {
+      builder.query("start", String.valueOf(listBillingUnitsOptions.start()));
+    }
     ResponseConverter<BillingUnitsList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<BillingUnitsList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -172,6 +184,12 @@ public class EnterpriseBillingUnits extends BaseService {
     }
     builder.header("Accept", "application/json");
     builder.query("billing_unit_id", String.valueOf(listBillingOptionsOptions.billingUnitId()));
+    if (listBillingOptionsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listBillingOptionsOptions.limit()));
+    }
+    if (listBillingOptionsOptions.start() != null) {
+      builder.query("start", String.valueOf(listBillingOptionsOptions.start()));
+    }
     ResponseConverter<BillingOptionsList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<BillingOptionsList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -202,6 +220,12 @@ public class EnterpriseBillingUnits extends BaseService {
     }
     if (getCreditPoolsOptions.type() != null) {
       builder.query("type", String.valueOf(getCreditPoolsOptions.type()));
+    }
+    if (getCreditPoolsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(getCreditPoolsOptions.limit()));
+    }
+    if (getCreditPoolsOptions.start() != null) {
+      builder.query("start", String.valueOf(getCreditPoolsOptions.start()));
     }
     ResponseConverter<CreditPoolsList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CreditPoolsList>() { }.getType());

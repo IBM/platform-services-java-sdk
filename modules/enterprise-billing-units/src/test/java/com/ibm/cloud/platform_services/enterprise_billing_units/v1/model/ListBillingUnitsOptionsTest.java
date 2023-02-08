@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -35,9 +35,13 @@ public class ListBillingUnitsOptionsTest {
       .accountId("testString")
       .enterpriseId("testString")
       .accountGroupId("testString")
+      .limit(Long.valueOf("1"))
+      .start(Long.valueOf("26"))
       .build();
     assertEquals(listBillingUnitsOptionsModel.accountId(), "testString");
     assertEquals(listBillingUnitsOptionsModel.enterpriseId(), "testString");
     assertEquals(listBillingUnitsOptionsModel.accountGroupId(), "testString");
+    assertEquals(listBillingUnitsOptionsModel.limit(), Long.valueOf("1"));
+    assertEquals(listBillingUnitsOptionsModel.start(), Long.valueOf("26"));
   }
 }

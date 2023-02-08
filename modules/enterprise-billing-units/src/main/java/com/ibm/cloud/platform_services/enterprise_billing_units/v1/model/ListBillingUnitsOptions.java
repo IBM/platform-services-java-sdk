@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,6 +22,8 @@ public class ListBillingUnitsOptions extends GenericModel {
   protected String accountId;
   protected String enterpriseId;
   protected String accountGroupId;
+  protected Long limit;
+  protected Long start;
 
   /**
    * Builder.
@@ -30,11 +32,20 @@ public class ListBillingUnitsOptions extends GenericModel {
     private String accountId;
     private String enterpriseId;
     private String accountGroupId;
+    private Long limit;
+    private Long start;
 
+    /**
+     * Instantiates a new Builder from an existing ListBillingUnitsOptions instance.
+     *
+     * @param listBillingUnitsOptions the instance to initialize the Builder with
+     */
     private Builder(ListBillingUnitsOptions listBillingUnitsOptions) {
       this.accountId = listBillingUnitsOptions.accountId;
       this.enterpriseId = listBillingUnitsOptions.enterpriseId;
       this.accountGroupId = listBillingUnitsOptions.accountGroupId;
+      this.limit = listBillingUnitsOptions.limit;
+      this.start = listBillingUnitsOptions.start;
     }
 
     /**
@@ -84,12 +95,38 @@ public class ListBillingUnitsOptions extends GenericModel {
       this.accountGroupId = accountGroupId;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListBillingUnitsOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListBillingUnitsOptions builder
+     */
+    public Builder start(long start) {
+      this.start = start;
+      return this;
+    }
   }
+
+  protected ListBillingUnitsOptions() { }
 
   protected ListBillingUnitsOptions(Builder builder) {
     accountId = builder.accountId;
     enterpriseId = builder.enterpriseId;
     accountGroupId = builder.accountGroupId;
+    limit = builder.limit;
+    start = builder.start;
   }
 
   /**
@@ -132,6 +169,28 @@ public class ListBillingUnitsOptions extends GenericModel {
    */
   public String accountGroupId() {
     return accountGroupId;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * Return results up to this limit. Valid values are between 0 and 100.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * The pagination offset. This will be the index of the first returned result.
+   *
+   * @return the start
+   */
+  public Long start() {
+    return start;
   }
 }
 

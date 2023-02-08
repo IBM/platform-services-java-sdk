@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,17 +13,22 @@
 
 package com.ibm.cloud.platform_services.enterprise_billing_units.v1;
 
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingOptionsList;
+import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingOption;
+import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingOptionsPager;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingUnit;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingUnitsList;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditPoolsList;
+import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingUnitsPager;
+import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditPool;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetBillingUnitOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetCreditPoolsOptions;
+import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetCreditPoolsPager;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingOptionsOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingUnitsOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.GsonSingleton;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,11 +57,17 @@ public class EnterpriseBillingUnitsExamples {
   private static String billingUnitId;
 
   static {
-      System.setProperty("IBM_CREDENTIALS_FILE", "../../enterprise_billing_units.env");
+    System.setProperty("IBM_CREDENTIALS_FILE", "../../enterprise_billing_units.env");
   }
 
+  /**
+   * The main() function invokes operations of the Enterprise Billing Units service.
+   * @param args command-line arguments
+   * @throws Exception an error occurred
+   */
+  @SuppressWarnings("checkstyle:methodlength")
   public static void main(String[] args) throws Exception {
-    EnterpriseBillingUnits service = EnterpriseBillingUnits.newInstance();
+    EnterpriseBillingUnits enterpriseBillingUnitsService = EnterpriseBillingUnits.newInstance();
 
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(EnterpriseBillingUnits.DEFAULT_SERVICE_NAME);
@@ -65,87 +76,85 @@ public class EnterpriseBillingUnitsExamples {
 
     try {
       System.out.println("getBillingUnit() result:");
-
       // begin-get_billing_unit
-
       GetBillingUnitOptions getBillingUnitOptions = new GetBillingUnitOptions.Builder()
         .billingUnitId(billingUnitId)
         .build();
 
-      Response<BillingUnit> response = service.getBillingUnit(getBillingUnitOptions).execute();
+      Response<BillingUnit> response = enterpriseBillingUnitsService.getBillingUnit(getBillingUnitOptions).execute();
       BillingUnit billingUnit = response.getResult();
 
       System.out.println(billingUnit);
-
       // end-get_billing_unit
-
     } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
       System.out.println("listBillingUnits() result:");
-
       // begin-list_billing_units
-
       ListBillingUnitsOptions listBillingUnitsOptions = new ListBillingUnitsOptions.Builder()
         .enterpriseId(enterpriseId)
+        .limit(Long.valueOf("10"))
         .build();
 
-      Response<BillingUnitsList> response = service.listBillingUnits(listBillingUnitsOptions).execute();
-      BillingUnitsList billingUnitsList = response.getResult();
+      BillingUnitsPager pager = new BillingUnitsPager(enterpriseBillingUnitsService, listBillingUnitsOptions);
+      List<BillingUnit> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<BillingUnit> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(billingUnitsList);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-list_billing_units
-
     } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
       System.out.println("listBillingOptions() result:");
-
       // begin-list_billing_options
-
       ListBillingOptionsOptions listBillingOptionsOptions = new ListBillingOptionsOptions.Builder()
         .billingUnitId(billingUnitId)
+        .limit(Long.valueOf("10"))
         .build();
 
-      Response<BillingOptionsList> response = service.listBillingOptions(listBillingOptionsOptions).execute();
-      BillingOptionsList billingOptionsList = response.getResult();
+      BillingOptionsPager pager = new BillingOptionsPager(enterpriseBillingUnitsService, listBillingOptionsOptions);
+      List<BillingOption> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<BillingOption> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(billingOptionsList);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-list_billing_options
-
     } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {
       System.out.println("getCreditPools() result:");
-
       // begin-get_credit_pools
-
       GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
         .billingUnitId(billingUnitId)
+        .limit(Long.valueOf("10"))
         .build();
 
-      Response<CreditPoolsList> response = service.getCreditPools(getCreditPoolsOptions).execute();
-      CreditPoolsList creditPoolsList = response.getResult();
+      GetCreditPoolsPager pager = new GetCreditPoolsPager(enterpriseBillingUnitsService, getCreditPoolsOptions);
+      List<CreditPool> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<CreditPool> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(creditPoolsList);
-
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-get_credit_pools
-
     } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
-
   }
 }

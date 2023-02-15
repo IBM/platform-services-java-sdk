@@ -1,3 +1,10 @@
+## [0.30.1](https://github.com/IBM/platform-services-java-sdk/compare/0.30.0...0.30.1) (2023-02-15)
+
+
+### Bug Fixes
+
+* **IAM Identity:** re-gen with latest API definition ([#179](https://github.com/IBM/platform-services-java-sdk/issues/179)) ([0dd10d8](https://github.com/IBM/platform-services-java-sdk/commit/0dd10d861e7e9a96c2f1a530d4719cdc798a70e3))
+
 # [0.30.0](https://github.com/IBM/platform-services-java-sdk/compare/0.29.3...0.30.0) (2023-01-25)
 
 

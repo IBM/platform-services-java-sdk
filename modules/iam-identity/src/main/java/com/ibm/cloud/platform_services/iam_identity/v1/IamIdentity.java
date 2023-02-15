@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.62.0-a2a22f95-20221115-162524
+ * IBM OpenAPI SDK Code Generator Version: 3.64.0-959a5845-20230112-195144
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -25,6 +25,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
@@ -38,6 +39,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
@@ -53,6 +56,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleLis
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollmentStatus;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
@@ -65,6 +69,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfaEnrollments;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
 import com.ibm.cloud.sdk.core.http.ServiceCall;
@@ -1115,8 +1120,8 @@ public class IamIdentity extends BaseService {
   /**
    * Update account configurations.
    *
-   * Allows a user to configure settings on their account with regards to MFA, session lifetimes, access control for
-   * creating new identities, and enforcing IP restrictions on token creation.
+   * Allows a user to configure settings on their account with regards to MFA, MFA excemption list,  session lifetimes,
+   * access control for creating new identities, and enforcing IP restrictions on token creation.
    *
    * @param updateAccountSettingsOptions the {@link UpdateAccountSettingsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link AccountSettingsResponse}
@@ -1167,6 +1172,85 @@ public class IamIdentity extends BaseService {
     builder.bodyJson(contentJson);
     ResponseConverter<AccountSettingsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get MFA enrollment status for a single user in the account.
+   *
+   * Get MFA enrollment status for a single user in the account.
+   *
+   * @param getMfaStatusOptions the {@link GetMfaStatusOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link UserMfaEnrollments}
+   */
+  public ServiceCall<UserMfaEnrollments> getMfaStatus(GetMfaStatusOptions getMfaStatusOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getMfaStatusOptions,
+      "getMfaStatusOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getMfaStatusOptions.accountId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/mfa/accounts/{account_id}/status", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getMfaStatus");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.query("iam_id", String.valueOf(getMfaStatusOptions.iamId()));
+    ResponseConverter<UserMfaEnrollments> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<UserMfaEnrollments>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Trigger MFA enrollment status report for the account.
+   *
+   * Trigger MFA enrollment status report for the account by specifying the account ID. It can take a few minutes to
+   * generate the report for retrieval.
+   *
+   * @param createMfaReportOptions the {@link CreateMfaReportOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ReportReference}
+   */
+  public ServiceCall<ReportReference> createMfaReport(CreateMfaReportOptions createMfaReportOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createMfaReportOptions,
+      "createMfaReportOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", createMfaReportOptions.accountId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/mfa/accounts/{account_id}/report", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createMfaReport");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createMfaReportOptions.type() != null) {
+      builder.query("type", String.valueOf(createMfaReportOptions.type()));
+    }
+    ResponseConverter<ReportReference> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ReportReference>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get MFA enrollment status report for the account.
+   *
+   * Get MFA enrollment status report for the account by specifying the account ID and the reference that is generated
+   * by triggering the report. Reports older than a day are deleted when generating a new report.
+   *
+   * @param getMfaReportOptions the {@link GetMfaReportOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ReportMfaEnrollmentStatus}
+   */
+  public ServiceCall<ReportMfaEnrollmentStatus> getMfaReport(GetMfaReportOptions getMfaReportOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getMfaReportOptions,
+      "getMfaReportOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getMfaReportOptions.accountId());
+    pathParamsMap.put("reference", getMfaReportOptions.reference());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/mfa/accounts/{account_id}/report/{reference}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getMfaReport");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ReportMfaEnrollmentStatus> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ReportMfaEnrollmentStatus>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

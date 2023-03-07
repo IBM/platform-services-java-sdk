@@ -1,3 +1,10 @@
+## [0.30.2](https://github.com/IBM/platform-services-java-sdk/compare/0.30.1...0.30.2) (2023-03-07)
+
+
+### Bug Fixes
+
+* **Global Search:** remove is_hidden param from search operation ([#182](https://github.com/IBM/platform-services-java-sdk/issues/182)) ([e25daa9](https://github.com/IBM/platform-services-java-sdk/commit/e25daa97adf0753914c9032712c42588ca54254e))
+
 ## [0.30.1](https://github.com/IBM/platform-services-java-sdk/compare/0.30.0...0.30.1) (2023-02-15)
 
 

@@ -46,7 +46,6 @@ public class SearchOptionsTest {
       .isPublic("false")
       .impersonateUser("testString")
       .canTag("false")
-      .isHidden("false")
       .build();
     assertEquals(searchOptionsModel.query(), "testString");
     assertEquals(searchOptionsModel.fields(), java.util.Arrays.asList("testString"));
@@ -62,6 +61,5 @@ public class SearchOptionsTest {
     assertEquals(searchOptionsModel.isPublic(), "false");
     assertEquals(searchOptionsModel.impersonateUser(), "testString");
     assertEquals(searchOptionsModel.canTag(), "false");
-    assertEquals(searchOptionsModel.isHidden(), "false");
   }
 }

@@ -86,19 +86,6 @@ public class SearchOptions extends GenericModel {
     String X_FALSE = "false";
   }
 
-  /**
-   * Determines if the result set must return only the visible resources or not. If false (default), only visible
-   * resources are returned; if true, only hidden resources are returned; if any, all resources are returned.
-   */
-  public interface IsHidden {
-    /** true. */
-    String X_TRUE = "true";
-    /** false. */
-    String X_FALSE = "false";
-    /** any. */
-    String ANY = "any";
-  }
-
   protected String query;
   protected List<String> fields;
   protected String searchCursor;
@@ -113,7 +100,6 @@ public class SearchOptions extends GenericModel {
   protected String isPublic;
   protected String impersonateUser;
   protected String canTag;
-  protected String isHidden;
 
   /**
    * Builder.
@@ -133,7 +119,6 @@ public class SearchOptions extends GenericModel {
     private String isPublic;
     private String impersonateUser;
     private String canTag;
-    private String isHidden;
 
     /**
      * Instantiates a new Builder from an existing SearchOptions instance.
@@ -155,7 +140,6 @@ public class SearchOptions extends GenericModel {
       this.isPublic = searchOptions.isPublic;
       this.impersonateUser = searchOptions.impersonateUser;
       this.canTag = searchOptions.canTag;
-      this.isHidden = searchOptions.isHidden;
     }
 
     /**
@@ -360,17 +344,6 @@ public class SearchOptions extends GenericModel {
       this.canTag = canTag;
       return this;
     }
-
-    /**
-     * Set the isHidden.
-     *
-     * @param isHidden the isHidden
-     * @return the SearchOptions builder
-     */
-    public Builder isHidden(String isHidden) {
-      this.isHidden = isHidden;
-      return this;
-    }
   }
 
   protected SearchOptions() { }
@@ -390,7 +363,6 @@ public class SearchOptions extends GenericModel {
     isPublic = builder.isPublic;
     impersonateUser = builder.impersonateUser;
     canTag = builder.canTag;
-    isHidden = builder.isHidden;
   }
 
   /**
@@ -567,18 +539,6 @@ public class SearchOptions extends GenericModel {
    */
   public String canTag() {
     return canTag;
-  }
-
-  /**
-   * Gets the isHidden.
-   *
-   * Determines if the result set must return only the visible resources or not. If false (default), only visible
-   * resources are returned; if true, only hidden resources are returned; if any, all resources are returned.
-   *
-   * @return the isHidden
-   */
-  public String isHidden() {
-    return isHidden;
   }
 }
 

@@ -13,9 +13,9 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
 
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +27,9 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
@@ -41,6 +42,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
@@ -57,18 +60,20 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleLis
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollmentStatus;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfaEnrollments;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -505,9 +510,9 @@ public class IamIdentityExamples {
             // begin-list_profiles
 
             ListProfilesOptions listProfilesOptions = new ListProfilesOptions.Builder()
-                        .accountId(accountId)
-                        .includeHistory(false)
-                        .build();
+                    .accountId(accountId)
+                    .includeHistory(false)
+                    .build();
 
             Response<TrustedProfilesList> response = service.listProfiles(listProfilesOptions).execute();
             TrustedProfilesList profiles = response.getResult();
@@ -840,7 +845,7 @@ public class IamIdentityExamples {
                     .mfa("NONE")
                     .userMfa(userMFAExpList)
                     .systemAccessTokenExpirationInSeconds("3600")
-                    .systemRefreshTokenExpirationInSeconds("2592000")
+                    .systemRefreshTokenExpirationInSeconds("259200")
                     .build();
 
             Response<AccountSettingsResponse> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();
@@ -894,6 +899,73 @@ public class IamIdentityExamples {
             System.out.println(fetchedReport);
 
             // end-get_report
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createMfaReport() result:");
+
+            // begin-create_mfa_report
+
+            CreateMfaReportOptions createMfaReportOptions = new CreateMfaReportOptions.Builder()
+                    .accountId(accountId)
+                    .type("mfa_status")
+                    .build();
+
+            Response<ReportReference> response = service.createMfaReport(createMfaReportOptions).execute();
+            ReportReference reportReference = response.getResult();
+
+            reportReferenceValue = reportReference.getReference();
+
+            System.out.println(reportReferenceValue);
+
+            // end-create_mfa_report
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getMfaReport() result:");
+
+            // begin-get_mfa_report
+
+            GetMfaReportOptions getMfaReportOptions = new GetMfaReportOptions.Builder()
+                    .accountId(accountId)
+                    .reference(reportReferenceValue)
+                    .build();
+
+            Response<ReportMfaEnrollmentStatus> response = service.getMfaReport(getMfaReportOptions).execute();
+            ReportMfaEnrollmentStatus fetchedReport = response.getResult();
+
+            System.out.println(fetchedReport);
+
+            // end-get_mfa_report
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getMfaStatus() result:");
+
+            // begin-get_mfa_status
+            GetMfaStatusOptions getMfaStatusOptions = new GetMfaStatusOptions.Builder()
+                    .accountId(accountId)
+                    .iamId(iamId)
+                    .build();
+
+            Response<UserMfaEnrollments> response = service.getMfaStatus(getMfaStatusOptions).execute();
+            UserMfaEnrollments userMfaEnrollmentsResponse = response.getResult();
+
+            System.out.println(userMfaEnrollmentsResponse);
+
+            // end-get_mfa_status
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

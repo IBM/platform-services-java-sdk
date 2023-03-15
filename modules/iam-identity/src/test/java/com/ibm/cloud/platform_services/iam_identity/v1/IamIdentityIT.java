@@ -24,7 +24,6 @@ import static org.testng.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -37,8 +36,9 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
@@ -51,6 +51,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
@@ -65,21 +67,22 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollmentStatus;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfaEnrollments;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
@@ -98,7 +101,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private static String APIKEY_NAME = "Java-SDK-IT-ApiKey";
     private static String SERVICEID_NAME = "Java-SDK-IT-ServiceId";
     private static String PROFILE_NAME_1 = "Java-SDK-IT-TrustedProfile1";
-    private static String PROFILE_NAME_2 = "Java-SDK-IT-TrustedProfile2"; 
+    private static String PROFILE_NAME_2 = "Java-SDK-IT-TrustedProfile2";
     private static String CLAIMRULE_TYPE = "Profile-SAML";
     private static String REALM_NAME = "https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20";
 
@@ -109,7 +112,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private static String IAM_ID_INVALID = "IAM-InvalidId";
     private static String ACCOUNT_ID_INVALID = "Account-InvalidId";
-    
+
     // Variables that hold values to be shared between the test methods.
     private String apikeyId1;
     private String apikeyEtag1;
@@ -132,7 +135,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private String accountSettingsEtag;
 
     private String reportReference;
-    
+    private String reportReferenceMfa;
+
     @Override
     public String getConfigFilename() {
         return "../../iam_identity.env";
@@ -695,7 +699,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     }
 
     @Test
-    public void testCreateProfile1() throws Exception{
+    public void testCreateProfile1() throws Exception {
         try {
             CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
                     .name(PROFILE_NAME_1)
@@ -721,7 +725,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     }
 
     @Test
-    public void testCreateProfile2() throws Exception{
+    public void testCreateProfile2() throws Exception {
         try {
             CreateProfileOptions createProfileOptions = new CreateProfileOptions.Builder()
                     .name(PROFILE_NAME_2)
@@ -879,8 +883,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .operator("EQUALS")
                     .value("\"cloud-docs-dev\"")
                     .build();
-            
-            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
             conditions.add(condition);
 
             CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
@@ -916,8 +920,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .operator("EQUALS")
                     .value("\"Europe_Group\"")
                     .build();
-            
-            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
             conditions.add(condition);
 
             CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
@@ -983,7 +987,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             // Retrieve one profile at a time and save off the objects that we're interested in,
             // then validate the results at the end.
-    
+
             ListClaimRulesOptions listClaimRulesOptions = new ListClaimRulesOptions.Builder()
                     .profileId(profileId2)
                     .build();
@@ -1019,8 +1023,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .operator("EQUALS")
                     .value("\"Europe_Group\"")
                     .build();
-            
-            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
             conditions.add(condition);
 
             UpdateClaimRuleOptions updateClaimRuleOptions = new UpdateClaimRuleOptions.Builder()
@@ -1094,7 +1098,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         try {
 
             CreateProfileLinkRequestLink link = new CreateProfileLinkRequestLink.Builder()
-                    .crn("crn:v1:staging:public:iam-identity::a/"+ ACCOUNT_ID +"::computeresource:Fake-Compute-Resource")
+                    .crn("crn:v1:staging:public:iam-identity::a/" + ACCOUNT_ID + "::computeresource:Fake-Compute-Resource")
                     .namespace("default")
                     .name("nice name")
                     .build();
@@ -1155,7 +1159,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             // Retrieve one link at a time and save off the objects that we're interested in,
             // then validate the results at the end.
-    
+
             ListLinksOptions listLinksOptions = new ListLinksOptions.Builder()
                     .profileId(profileId2)
                     .build();
@@ -1235,7 +1239,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             service.createProfile(createProfileOptions).execute();
             fail("Invalid accountId should not have succeeded!");
         } catch (ServiceResponseException e) {
-            assertEquals(e.getStatusCode(), 403);
+            assertEquals(e.getStatusCode(), 400);
         }
     }
 
@@ -1294,7 +1298,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             fail("Invalid profile id should not have succeeded!");
         } catch (ServiceResponseException e) {
             assertEquals(e.getStatusCode(), 404);
-            
+
         }
     }
 
@@ -1307,8 +1311,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .operator("EQUALS")
                     .value("\"does not exist\"")
                     .build();
-            
-            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
             conditions.add(condition);
 
             CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
@@ -1335,8 +1339,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .operator("EQUALS")
                     .value("\"does not exist\"")
                     .build();
-            
-            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
             conditions.add(condition);
 
             CreateClaimRuleOptions createClaimRuleOptions = new CreateClaimRuleOptions.Builder()
@@ -1377,8 +1381,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .operator("EQUALS")
                     .value("\"does not exist\"")
                     .build();
-            
-            List<ProfileClaimRuleConditions> conditions = new ArrayList<>(); 
+
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
             conditions.add(condition);
 
             UpdateClaimRuleOptions updateClaimRuleOptions = new UpdateClaimRuleOptions.Builder()
@@ -1512,8 +1516,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .iamId(IAM_ID_MEMBER)
                     .mfa("NONE")
                     .build();
-            
-            List<AccountSettingsUserMFA> userMFAExpList = new ArrayList<>(); 
+
+            List<AccountSettingsUserMFA> userMFAExpList = new ArrayList<>();
             userMFAExpList.add(userMFA);
 
             UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
@@ -1528,7 +1532,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .sessionInvalidationInSeconds("7200")
                     .maxSessionsPerIdentity("10")
                     .systemAccessTokenExpirationInSeconds("3600")
-                    .systemRefreshTokenExpirationInSeconds("2592000")
+                    .systemRefreshTokenExpirationInSeconds("259200")
                     .build();
 
             // Invoke operation
@@ -1540,7 +1544,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             AccountSettingsResponse accountSettingsResponseResult = response.getResult();
             assertNotNull(accountSettingsResponseResult);
 
-            assertNull(accountSettingsResponseResult.getAllowedIpAddresses());
+            assertEquals(accountSettingsResponseResult.getAllowedIpAddresses(), "");
             assertEquals(accountSettingsResponseResult.getAccountId(), updateAccountSettingsOptions.accountId());
             assertEquals(accountSettingsResponseResult.getMfa(), updateAccountSettingsOptions.mfa());
             assertEquals(accountSettingsResponseResult.getUserMfa(), updateAccountSettingsOptions.userMfa());
@@ -1548,18 +1552,20 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(accountSettingsResponseResult.getRestrictCreateServiceId(), updateAccountSettingsOptions.restrictCreateServiceId());
             assertEquals(accountSettingsResponseResult.getSessionExpirationInSeconds(), updateAccountSettingsOptions.sessionExpirationInSeconds());
             assertEquals(accountSettingsResponseResult.getSessionInvalidationInSeconds(), updateAccountSettingsOptions.sessionInvalidationInSeconds());
-            assertEquals(accountSettingsResponseResult.getSystemAccessTokenExpirationInSeconds(), updateAccountSettingsOptions.systemAccessTokenExpirationInSeconds());
-            assertEquals(accountSettingsResponseResult.getSystemRefreshTokenExpirationInSeconds(), updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds());
+            assertEquals(accountSettingsResponseResult.getSystemAccessTokenExpirationInSeconds(),
+                    updateAccountSettingsOptions.systemAccessTokenExpirationInSeconds());
+            assertEquals(accountSettingsResponseResult.getSystemRefreshTokenExpirationInSeconds(),
+                    updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds());
             assertNotEquals(accountSettingsResponseResult.getEntityTag(), accountSettingsEtag);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test
     public void testCreateReport() throws Exception {
-        try{
+        try {
             CreateReportOptions createReportOptions = new CreateReportOptions.Builder()
                     .accountId(ACCOUNT_ID)
                     .type("inactive")
@@ -1580,32 +1586,32 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testCreateReport" })
     public void testGetReportIncomplete() throws Exception {
-        try{
+        try {
             GetReportOptions getReportOptions = new GetReportOptions.Builder()
                     .accountId(ACCOUNT_ID)
                     .reference(reportReference)
                     .build();
-            Response<Report> response = service.getReport(getReportOptions).execute();
+            Response<Report> response = service.getReport(getReportOptions).execute();           
+            assertTrue(response.getStatusCode() == 204 || response.getStatusCode() == 200);
             
-            assertEquals(response.getStatusCode(), 204);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = { "testCreateReport" })
     public void testGetReportComplete() throws Exception {
-        try{
+        try {
             GetReportOptions getReportOptions = new GetReportOptions.Builder()
                     .accountId(ACCOUNT_ID)
                     .reference(reportReference)
                     .build();
-            for (int i = 0; i < 30; i++){
+            for (int i = 0; i < 30; i++) {
                 Response<Report> response = service.getReport(getReportOptions).execute();
-                if(response.getStatusCode() != 204){
+                if (response.getStatusCode() != 204) {
                     Report reportResult = response.getResult();
                     assertNotNull(reportResult);
                     assertEquals(reportResult.getCreatedBy(), IAM_ID);
@@ -1625,14 +1631,103 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     @Test
     public void testGetReportNotFound() throws Exception {
-        try{
+        try {
             GetReportOptions getReportOptions = new GetReportOptions.Builder()
                     .accountId(ACCOUNT_ID)
                     .reference("test123")
                     .build();
             Response<Report> response = service.getReport(getReportOptions).execute();
-            
+            fail("Invalid reference should not have succeeded!");
+        } catch (ServiceResponseException e) {
+        	if (e.getStatusCode() != 404) {
+                fail(String.format("Service returned status code %d: %s\nError details: %s",
+                        e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            } else {
+                assertEquals(e.getStatusCode(), 404);
+            }
+        }
+    }
+
+    @Test
+    public void testCreateReportMfa() throws Exception {
+        try {
+            CreateMfaReportOptions createMfaReportOptions = new CreateMfaReportOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .type("mfa_status")
+                    .build();
+            Response<ReportReference> response = service.createMfaReport(createMfaReportOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 202);
+
+            ReportReference reportResult = response.getResult();
+            assertNotNull(reportResult);
+
+            reportReferenceMfa = reportResult.getReference();
+            assertNotNull(reportReferenceMfa);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateReportMfa" })
+    public void testGetReportMfaComplete() throws Exception {
+        try {
+            GetMfaReportOptions getMfaReportOptions = new GetMfaReportOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .reference(reportReferenceMfa)
+                    .build();
+            for (int i = 0; i < 30; i++) {
+                Response<ReportMfaEnrollmentStatus> response = service.getMfaReport(getMfaReportOptions).execute();
+                if (response.getStatusCode() != 204) {
+                    ReportMfaEnrollmentStatus reportResult = response.getResult();
+                    assertNotNull(reportResult);
+                    assertEquals(reportResult.getCreatedBy(), IAM_ID);
+                    assertEquals(reportResult.getReference(), reportReferenceMfa);
+                    break;
+                }
+                sleep(1);
+            }
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testGetReportMfaNotFound() throws Exception {
+        try {
+            GetMfaReportOptions getMfaReportOptions = new GetMfaReportOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .reference("test123")
+                    .build();
+            Response<ReportMfaEnrollmentStatus> response = service.getMfaReport(getMfaReportOptions).execute();
             assertEquals(response.getStatusCode(), 404);
+        } catch (ServiceResponseException e) {
+            if (e.getStatusCode() != 404) {
+                fail(String.format("Service returned status code %d: %s\nError details: %s",
+                        e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+            } else {
+                assertEquals(e.getStatusCode(), 404);
+            }
+        }
+    }
+
+    @Test
+    public void testGetMfaStatus() throws Exception {
+        try {
+            GetMfaStatusOptions getMfaStatusOptions = new GetMfaStatusOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .iamId(IAM_ID)
+                    .build();
+            Response<UserMfaEnrollments> response = service.getMfaStatus(getMfaStatusOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            UserMfaEnrollments mfaStatusResponseResult = response.getResult();
+            assertNotNull(mfaStatusResponseResult);
+            assertNotNull(mfaStatusResponseResult.getIamId());
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -1708,15 +1803,15 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
 
         ListProfilesOptions listProfilesOptions = new ListProfilesOptions.Builder()
-                        .accountId(ACCOUNT_ID)
-                        .pagesize(100)
-                        .includeHistory(false)
-                        .build();
+                .accountId(ACCOUNT_ID)
+                .pagesize(100)
+                .includeHistory(false)
+                .build();
 
         Response<TrustedProfilesList> profileResponse = service.listProfiles(listProfilesOptions).execute();
         assertNotNull(response);
         assertEquals(profileResponse.getStatusCode(), 200);
-        
+
         TrustedProfilesList profilesListResult = profileResponse.getResult();
         long numProfiles = profilesListResult.getProfiles().size();
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -51,7 +51,7 @@ public class UpdateAccountSettingsOptionsTest {
       .sessionInvalidationInSeconds("7200")
       .maxSessionsPerIdentity("testString")
       .systemAccessTokenExpirationInSeconds("3600")
-      .systemRefreshTokenExpirationInSeconds("2592000")
+      .systemRefreshTokenExpirationInSeconds("259200")
       .build();
     assertEquals(updateAccountSettingsOptionsModel.ifMatch(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.accountId(), "testString");
@@ -64,7 +64,7 @@ public class UpdateAccountSettingsOptionsTest {
     assertEquals(updateAccountSettingsOptionsModel.sessionInvalidationInSeconds(), "7200");
     assertEquals(updateAccountSettingsOptionsModel.maxSessionsPerIdentity(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.systemAccessTokenExpirationInSeconds(), "3600");
-    assertEquals(updateAccountSettingsOptionsModel.systemRefreshTokenExpirationInSeconds(), "2592000");
+    assertEquals(updateAccountSettingsOptionsModel.systemRefreshTokenExpirationInSeconds(), "259200");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

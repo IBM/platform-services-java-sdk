@@ -34,11 +34,11 @@ public class ListBillingOptionsOptionsTest {
     ListBillingOptionsOptions listBillingOptionsOptionsModel = new ListBillingOptionsOptions.Builder()
       .billingUnitId("testString")
       .limit(Long.valueOf("1"))
-      .start(Long.valueOf("26"))
+      .start("testString")
       .build();
     assertEquals(listBillingOptionsOptionsModel.billingUnitId(), "testString");
     assertEquals(listBillingOptionsOptionsModel.limit(), Long.valueOf("1"));
-    assertEquals(listBillingOptionsOptionsModel.start(), Long.valueOf("26"));
+    assertEquals(listBillingOptionsOptionsModel.start(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

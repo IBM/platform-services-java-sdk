@@ -24,7 +24,6 @@ import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditP
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditPoolsList;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetBillingUnitOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetCreditPoolsOptions;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetCreditPoolsPager;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingOptionsOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingUnitsOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.TermCredits;
@@ -146,7 +145,7 @@ public class EnterpriseBillingUnitsTest {
         .enterpriseId("testString")
         .accountGroupId("testString")
         .limit(Long.valueOf("10"))
-        .start(Long.valueOf("26"))
+        .start("testString")
         .build();
 
     // Invoke listBillingUnits() with a valid options model and verify the result
@@ -170,7 +169,7 @@ public class EnterpriseBillingUnitsTest {
     assertEquals(query.get("enterprise_id"), "testString");
     assertEquals(query.get("account_group_id"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
-    assertEquals(Long.valueOf(query.get("start")), Long.valueOf("26"));
+    assertEquals(query.get("start"), "testString");
   }
 
   // Test the listBillingUnits operation with and without retries enabled
@@ -268,7 +267,7 @@ public class EnterpriseBillingUnitsTest {
     ListBillingOptionsOptions listBillingOptionsOptionsModel = new ListBillingOptionsOptions.Builder()
         .billingUnitId("testString")
         .limit(Long.valueOf("10"))
-        .start(Long.valueOf("26"))
+        .start("testString")
         .build();
 
     // Invoke listBillingOptions() with a valid options model and verify the result
@@ -290,7 +289,7 @@ public class EnterpriseBillingUnitsTest {
     assertNotNull(query);
     assertEquals(query.get("billing_unit_id"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
-    assertEquals(Long.valueOf(query.get("start")), Long.valueOf("26"));
+    assertEquals(query.get("start"), "testString");
   }
 
   // Test the listBillingOptions operation with and without retries enabled
@@ -393,8 +392,6 @@ public class EnterpriseBillingUnitsTest {
         .billingUnitId("testString")
         .date("testString")
         .type("testString")
-        .limit(Long.valueOf("10"))
-        .start(Long.valueOf("26"))
         .build();
 
     // Invoke getCreditPools() with a valid options model and verify the result
@@ -417,8 +414,6 @@ public class EnterpriseBillingUnitsTest {
     assertEquals(query.get("billing_unit_id"), "testString");
     assertEquals(query.get("date"), "testString");
     assertEquals(query.get("type"), "testString");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
-    assertEquals(Long.valueOf(query.get("start")), Long.valueOf("26"));
   }
 
   // Test the getCreditPools operation with and without retries enabled
@@ -438,75 +433,6 @@ public class EnterpriseBillingUnitsTest {
     enterpriseBillingUnitsService.getCreditPools(null).execute();
   }
 
-  // Test the getCreditPools operation using the GetCreditPoolsPager.getNext()
-  // method
-  @Test
-  public void testGetCreditPoolsWithPagerGetNext() throws Throwable {
-    // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?start=1\",\"resources\":[{\"type\":\"PLATFORM\",\"currency_code\":\"USD\",\"billing_unit_id\":\"billingUnitId\",\"term_credits\":[{\"billing_option_id\":\"JWX986YRGFSHACQUEFOI\",\"category\":\"PLATFORM\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-04-30T23:59:29.999Z\",\"total_credits\":10000,\"starting_balance\":9000,\"used_credits\":9500,\"current_balance\":0,\"resources\":[{\"anyKey\":\"anyValue\"}]}],\"overage\":{\"cost\":500,\"resources\":[{\"anyKey\":\"anyValue\"}]}}]}";
-    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"type\":\"PLATFORM\",\"currency_code\":\"USD\",\"billing_unit_id\":\"billingUnitId\",\"term_credits\":[{\"billing_option_id\":\"JWX986YRGFSHACQUEFOI\",\"category\":\"PLATFORM\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-04-30T23:59:29.999Z\",\"total_credits\":10000,\"starting_balance\":9000,\"used_credits\":9500,\"current_balance\":0,\"resources\":[{\"anyKey\":\"anyValue\"}]}],\"overage\":{\"cost\":500,\"resources\":[{\"anyKey\":\"anyValue\"}]}}]}";
-    server.enqueue(new MockResponse()
-        .setHeader("Content-type", "application/json")
-        .setResponseCode(200)
-        .setBody(mockResponsePage1));
-    server.enqueue(new MockResponse()
-        .setHeader("Content-type", "application/json")
-        .setResponseCode(200)
-        .setBody(mockResponsePage2));
-    server.enqueue(new MockResponse()
-        .setHeader("Content-type", "application/json")
-        .setResponseCode(400)
-        .setBody("{\"message\": \"No more results available!\"}"));
-
-    GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
-        .billingUnitId("testString")
-        .date("testString")
-        .type("testString")
-        .limit(Long.valueOf("10"))
-        .build();
-
-    List<CreditPool> allResults = new ArrayList<>();
-    GetCreditPoolsPager pager = new GetCreditPoolsPager(enterpriseBillingUnitsService, getCreditPoolsOptions);
-    while (pager.hasNext()) {
-      List<CreditPool> nextPage = pager.getNext();
-      assertNotNull(nextPage);
-      allResults.addAll(nextPage);
-    }
-    assertEquals(allResults.size(), 2);
-  }
-
-  // Test the getCreditPools operation using the GetCreditPoolsPager.getAll()
-  // method
-  @Test
-  public void testGetCreditPoolsWithPagerGetAll() throws Throwable {
-    // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?start=1\",\"resources\":[{\"type\":\"PLATFORM\",\"currency_code\":\"USD\",\"billing_unit_id\":\"billingUnitId\",\"term_credits\":[{\"billing_option_id\":\"JWX986YRGFSHACQUEFOI\",\"category\":\"PLATFORM\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-04-30T23:59:29.999Z\",\"total_credits\":10000,\"starting_balance\":9000,\"used_credits\":9500,\"current_balance\":0,\"resources\":[{\"anyKey\":\"anyValue\"}]}],\"overage\":{\"cost\":500,\"resources\":[{\"anyKey\":\"anyValue\"}]}}]}";
-    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"type\":\"PLATFORM\",\"currency_code\":\"USD\",\"billing_unit_id\":\"billingUnitId\",\"term_credits\":[{\"billing_option_id\":\"JWX986YRGFSHACQUEFOI\",\"category\":\"PLATFORM\",\"start_date\":\"2019-05-01T00:00:00.000Z\",\"end_date\":\"2020-04-30T23:59:29.999Z\",\"total_credits\":10000,\"starting_balance\":9000,\"used_credits\":9500,\"current_balance\":0,\"resources\":[{\"anyKey\":\"anyValue\"}]}],\"overage\":{\"cost\":500,\"resources\":[{\"anyKey\":\"anyValue\"}]}}]}";
-    server.enqueue(new MockResponse()
-        .setHeader("Content-type", "application/json")
-        .setResponseCode(200)
-        .setBody(mockResponsePage1));
-    server.enqueue(new MockResponse()
-        .setHeader("Content-type", "application/json")
-        .setResponseCode(200)
-        .setBody(mockResponsePage2));
-    server.enqueue(new MockResponse()
-        .setHeader("Content-type", "application/json")
-        .setResponseCode(400)
-        .setBody("{\"message\": \"No more results available!\"}"));
-
-    GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
-        .billingUnitId("testString")
-        .date("testString")
-        .type("testString")
-        .limit(Long.valueOf("10"))
-        .build();
-
-    GetCreditPoolsPager pager = new GetCreditPoolsPager(enterpriseBillingUnitsService, getCreditPoolsOptions);
-    List<CreditPool> allResults = pager.getAll();
-    assertNotNull(allResults);
-    assertEquals(allResults.size(), 2);
-  }
 
   // Perform setup needed before each test method
   @BeforeMethod

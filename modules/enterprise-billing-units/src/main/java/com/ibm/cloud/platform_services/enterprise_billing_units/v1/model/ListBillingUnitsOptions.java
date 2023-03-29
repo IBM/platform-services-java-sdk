@@ -23,7 +23,7 @@ public class ListBillingUnitsOptions extends GenericModel {
   protected String enterpriseId;
   protected String accountGroupId;
   protected Long limit;
-  protected Long start;
+  protected String start;
 
   /**
    * Builder.
@@ -33,7 +33,7 @@ public class ListBillingUnitsOptions extends GenericModel {
     private String enterpriseId;
     private String accountGroupId;
     private Long limit;
-    private Long start;
+    private String start;
 
     /**
      * Instantiates a new Builder from an existing ListBillingUnitsOptions instance.
@@ -113,7 +113,7 @@ public class ListBillingUnitsOptions extends GenericModel {
      * @param start the start
      * @return the ListBillingUnitsOptions builder
      */
-    public Builder start(long start) {
+    public Builder start(String start) {
       this.start = start;
       return this;
     }
@@ -185,11 +185,11 @@ public class ListBillingUnitsOptions extends GenericModel {
   /**
    * Gets the start.
    *
-   * The pagination offset. This will be the index of the first returned result.
+   * The pagination offset. This represents the index of the first returned result.
    *
    * @return the start
    */
-  public Long start() {
+  public String start() {
     return start;
   }
 }

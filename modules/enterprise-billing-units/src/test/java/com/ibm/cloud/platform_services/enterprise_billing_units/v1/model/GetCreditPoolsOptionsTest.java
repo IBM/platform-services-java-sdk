@@ -36,13 +36,13 @@ public class GetCreditPoolsOptionsTest {
       .date("testString")
       .type("testString")
       .limit(Long.valueOf("1"))
-      .start(Long.valueOf("26"))
+      .start("testString")
       .build();
     assertEquals(getCreditPoolsOptionsModel.billingUnitId(), "testString");
     assertEquals(getCreditPoolsOptionsModel.date(), "testString");
     assertEquals(getCreditPoolsOptionsModel.type(), "testString");
     assertEquals(getCreditPoolsOptionsModel.limit(), Long.valueOf("1"));
-    assertEquals(getCreditPoolsOptionsModel.start(), Long.valueOf("26"));
+    assertEquals(getCreditPoolsOptionsModel.start(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

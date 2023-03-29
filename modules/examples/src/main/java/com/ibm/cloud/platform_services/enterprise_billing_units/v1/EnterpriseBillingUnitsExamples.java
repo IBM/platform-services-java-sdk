@@ -17,10 +17,9 @@ import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.Billing
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingOptionsPager;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingUnit;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.BillingUnitsPager;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditPool;
+import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditPoolsList;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetBillingUnitOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetCreditPoolsOptions;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetCreditPoolsPager;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingOptionsOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingUnitsOptions;
 import com.ibm.cloud.sdk.core.http.Response;
@@ -137,24 +136,24 @@ public class EnterpriseBillingUnitsExamples {
 
     try {
       System.out.println("getCreditPools() result:");
+
       // begin-get_credit_pools
+
       GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
         .billingUnitId(billingUnitId)
-        .limit(Long.valueOf("10"))
         .build();
 
-      GetCreditPoolsPager pager = new GetCreditPoolsPager(enterpriseBillingUnitsService, getCreditPoolsOptions);
-      List<CreditPool> allResults = new ArrayList<>();
-      while (pager.hasNext()) {
-        List<CreditPool> nextPage = pager.getNext();
-        allResults.addAll(nextPage);
-      }
+      Response<CreditPoolsList> response = enterpriseBillingUnitsService.getCreditPools(getCreditPoolsOptions).execute();
+      CreditPoolsList creditPoolsList = response.getResult();
 
-      System.out.println(GsonSingleton.getGson().toJson(allResults));
+      System.out.println(creditPoolsList);
+
       // end-get_credit_pools
+
     } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
+
   }
 }

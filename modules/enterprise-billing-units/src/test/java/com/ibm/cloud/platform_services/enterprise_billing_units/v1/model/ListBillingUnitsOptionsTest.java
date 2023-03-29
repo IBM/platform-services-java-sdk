@@ -36,12 +36,12 @@ public class ListBillingUnitsOptionsTest {
       .enterpriseId("testString")
       .accountGroupId("testString")
       .limit(Long.valueOf("1"))
-      .start(Long.valueOf("26"))
+      .start("testString")
       .build();
     assertEquals(listBillingUnitsOptionsModel.accountId(), "testString");
     assertEquals(listBillingUnitsOptionsModel.enterpriseId(), "testString");
     assertEquals(listBillingUnitsOptionsModel.accountGroupId(), "testString");
     assertEquals(listBillingUnitsOptionsModel.limit(), Long.valueOf("1"));
-    assertEquals(listBillingUnitsOptionsModel.start(), Long.valueOf("26"));
+    assertEquals(listBillingUnitsOptionsModel.start(), "testString");
   }
 }

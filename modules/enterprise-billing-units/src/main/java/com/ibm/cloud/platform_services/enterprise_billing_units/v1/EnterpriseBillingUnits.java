@@ -38,7 +38,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Billing units for IBM Cloud enterprises.
+ * Billing units for IBM Cloud Enterprise.
  *
  * API Version: 1.0.0
  */

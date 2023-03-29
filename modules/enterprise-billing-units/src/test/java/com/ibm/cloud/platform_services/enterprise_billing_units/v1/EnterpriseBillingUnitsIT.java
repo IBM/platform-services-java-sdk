@@ -24,7 +24,6 @@ import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditP
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.CreditPoolsList;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetBillingUnitOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetCreditPoolsOptions;
-import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.GetCreditPoolsPager;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingOptionsOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.ListBillingUnitsOptions;
 import com.ibm.cloud.platform_services.enterprise_billing_units.v1.model.TermCredits;
@@ -193,7 +192,7 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
     }
   }
 
-  @Test(dependsOnMethods = { "testListBillingUnits" })
+  @Test
   public void testListBillingUnitsWithPager() throws Exception {
     try {
       ListBillingUnitsOptions options = new ListBillingUnitsOptions.Builder()
@@ -225,13 +224,13 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
     }
   }
 
-  @Test(dependsOnMethods = { "testListBillingUnits" })
+  @Test
   public void testListBillingOptions() throws Exception {
     try {
       ListBillingOptionsOptions listBillingOptionsOptions = new ListBillingOptionsOptions.Builder()
           .billingUnitId(BILLING_UNIT_ID)
           .limit(Long.valueOf("10"))
-          .start(Long.valueOf("26"))
+          .start("testString")
           .build();
 
       // Invoke operation
@@ -287,8 +286,6 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
       GetCreditPoolsOptions getCreditPoolsOptions = new GetCreditPoolsOptions.Builder()
           .billingUnitId(BILLING_UNIT_ID)
           .type("PLATFORM")
-          .limit(Long.valueOf("10"))
-          .start(Long.valueOf("26"))
           .build();
 
       // Invoke operation
@@ -300,39 +297,6 @@ public class EnterpriseBillingUnitsIT extends SdkIntegrationTestBase {
       CreditPoolsList creditPoolsListResult = response.getResult();
       assertNotNull(creditPoolsListResult);
       log(String.format(">>> getCreditPools() response:\n%s", creditPoolsListResult.toString()));
-    } catch (ServiceResponseException e) {
-      fail(String.format("Service returned status code %d: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-    }
-  }
-
-  @Test(dependsOnMethods = { "testGetCreditPools" })
-  public void testGetCreditPoolsWithPager() throws Exception {
-    try {
-      GetCreditPoolsOptions options = new GetCreditPoolsOptions.Builder()
-          .billingUnitId(BILLING_UNIT_ID)
-          .type("PLATFORM")
-          .limit(Long.valueOf("10"))
-          .build();
-
-      // Test getNext().
-      List<CreditPool> allResults = new ArrayList<>();
-      GetCreditPoolsPager pager = new GetCreditPoolsPager(service, options);
-      while (pager.hasNext()) {
-        List<CreditPool> nextPage = pager.getNext();
-        assertNotNull(nextPage);
-        allResults.addAll(nextPage);
-      }
-      assertFalse(allResults.isEmpty());
-
-      // Test getAll();
-      pager = new GetCreditPoolsPager(service, options);
-      List<CreditPool> allItems = pager.getAll();
-      assertNotNull(allItems);
-      assertFalse(allItems.isEmpty());
-
-      assertEquals(allItems.size(), allResults.size());
-      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
     } catch (ServiceResponseException e) {
       fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

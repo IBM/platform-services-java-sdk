@@ -23,7 +23,7 @@ public class GetCreditPoolsOptions extends GenericModel {
   protected String date;
   protected String type;
   protected Long limit;
-  protected Long start;
+  protected String start;
 
   /**
    * Builder.
@@ -33,7 +33,7 @@ public class GetCreditPoolsOptions extends GenericModel {
     private String date;
     private String type;
     private Long limit;
-    private Long start;
+    private String start;
 
     /**
      * Instantiates a new Builder from an existing GetCreditPoolsOptions instance.
@@ -122,7 +122,7 @@ public class GetCreditPoolsOptions extends GenericModel {
      * @param start the start
      * @return the GetCreditPoolsOptions builder
      */
-    public Builder start(long start) {
+    public Builder start(String start) {
       this.start = start;
       return this;
     }
@@ -196,11 +196,11 @@ public class GetCreditPoolsOptions extends GenericModel {
   /**
    * Gets the start.
    *
-   * The pagination offset. This will be the index of the first returned result.
+   * The pagination offset. This represents the index of the first returned result.
    *
    * @return the start
    */
-  public Long start() {
+  public String start() {
     return start;
   }
 }

@@ -23,11 +23,11 @@ import java.util.NoSuchElementException;
  */
 public class BillingOptionsPager {
   private static class PageContext {
-    private Long next;
-    public Long getNext() {
+    private String next;
+    public String getNext() {
       return next;
     }
-    public void setNext(Long next) {
+    public void setNext(String next) {
       this.next = next;
     }
   }
@@ -46,7 +46,7 @@ public class BillingOptionsPager {
    * @param options the ListBillingOptionsOptions instance to be used to invoke the "listBillingOptions" method
    */
   public BillingOptionsPager(EnterpriseBillingUnits client, ListBillingOptionsOptions options) {
-    if (options.start() != null && options.start().longValue() != 0) {
+    if (options.start() != null) {
       throw new IllegalArgumentException("The options 'start' field should not be set");
     }
 
@@ -81,11 +81,11 @@ public class BillingOptionsPager {
 
     BillingOptionsList result = client.listBillingOptions(options).execute().getResult();
 
-    Long next = null;
+    String next = null;
     if (result.getNextUrl() != null) {
       String queryParam = UrlHelper.getQueryParam(result.getNextUrl(), "start");
       if (queryParam != null) {
-        next = Long.valueOf(queryParam);
+        next = queryParam;
       }
     }
     this.pageContext.setNext(next);

@@ -11,6 +11,6 @@
  * specific language governing permissions and limitations under the License.
  */
 /**
- * IBM Cloud Enterprise Billing Units API v1.
+ * Enterprise Billing Units v1.
  */
 package com.ibm.cloud.platform_services.enterprise_billing_units.v1;

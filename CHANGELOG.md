@@ -1,3 +1,10 @@
+# [0.31.0](https://github.com/IBM/platform-services-java-sdk/compare/0.30.2...0.31.0) (2023-03-29)
+
+
+### Features
+
+* **Enterprise Billing Units:** add start and limit parameters to billing unit list APIs ([#180](https://github.com/IBM/platform-services-java-sdk/issues/180)) ([1cb08b1](https://github.com/IBM/platform-services-java-sdk/commit/1cb08b184810028d85b56f235591bb0bccad9a6d))
+
 ## [0.30.2](https://github.com/IBM/platform-services-java-sdk/compare/0.30.1...0.30.2) (2023-03-07)
 
 

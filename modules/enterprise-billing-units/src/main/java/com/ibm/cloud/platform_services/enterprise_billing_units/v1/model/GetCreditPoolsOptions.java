@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,6 +22,8 @@ public class GetCreditPoolsOptions extends GenericModel {
   protected String billingUnitId;
   protected String date;
   protected String type;
+  protected Long limit;
+  protected String start;
 
   /**
    * Builder.
@@ -30,11 +32,20 @@ public class GetCreditPoolsOptions extends GenericModel {
     private String billingUnitId;
     private String date;
     private String type;
+    private Long limit;
+    private String start;
 
+    /**
+     * Instantiates a new Builder from an existing GetCreditPoolsOptions instance.
+     *
+     * @param getCreditPoolsOptions the instance to initialize the Builder with
+     */
     private Builder(GetCreditPoolsOptions getCreditPoolsOptions) {
       this.billingUnitId = getCreditPoolsOptions.billingUnitId;
       this.date = getCreditPoolsOptions.date;
       this.type = getCreditPoolsOptions.type;
+      this.limit = getCreditPoolsOptions.limit;
+      this.start = getCreditPoolsOptions.start;
     }
 
     /**
@@ -93,7 +104,31 @@ public class GetCreditPoolsOptions extends GenericModel {
       this.type = type;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the GetCreditPoolsOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the GetCreditPoolsOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
+      return this;
+    }
   }
+
+  protected GetCreditPoolsOptions() { }
 
   protected GetCreditPoolsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.billingUnitId,
@@ -101,6 +136,8 @@ public class GetCreditPoolsOptions extends GenericModel {
     billingUnitId = builder.billingUnitId;
     date = builder.date;
     type = builder.type;
+    limit = builder.limit;
+    start = builder.start;
   }
 
   /**
@@ -143,6 +180,28 @@ public class GetCreditPoolsOptions extends GenericModel {
    */
   public String type() {
     return type;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * Return results up to this limit. Valid values are between 0 and 100.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * The pagination offset. This represents the index of the first returned result.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 }
 

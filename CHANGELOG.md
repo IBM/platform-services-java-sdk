@@ -1,3 +1,10 @@
+## [0.31.1](https://github.com/IBM/platform-services-java-sdk/compare/0.31.0...0.31.1) (2023-04-05)
+
+
+### Bug Fixes
+
+* **Usage Reports:** regen usage reports with latest API def ([#185](https://github.com/IBM/platform-services-java-sdk/issues/185)) ([dc1788c](https://github.com/IBM/platform-services-java-sdk/commit/dc1788c10f9253e44b5e3df8f726d15231ea5d3a))
+
 # [0.31.0](https://github.com/IBM/platform-services-java-sdk/compare/0.30.2...0.31.0) (2023-03-29)
 
 

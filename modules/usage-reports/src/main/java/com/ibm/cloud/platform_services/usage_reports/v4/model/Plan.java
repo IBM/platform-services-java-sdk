@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,6 +34,7 @@ public class Plan extends GenericModel {
   protected Double ratedCost;
   protected List<Metric> usage;
   protected List<Discount> discounts;
+  protected Boolean pending;
 
   protected Plan() { }
 
@@ -123,6 +124,17 @@ public class Plan extends GenericModel {
    */
   public List<Discount> getDiscounts() {
     return discounts;
+  }
+
+  /**
+   * Gets the pending.
+   *
+   * Pending charge from classic infrastructure.
+   *
+   * @return the pending
+   */
+  public Boolean isPending() {
+    return pending;
   }
 }
 

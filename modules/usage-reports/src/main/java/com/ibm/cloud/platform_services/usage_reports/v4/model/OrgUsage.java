@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,6 +34,8 @@ public class OrgUsage extends GenericModel {
   protected String currencyCode;
   protected String month;
   protected List<Resource> resources;
+  @SerializedName("currency_rate")
+  protected Double currencyRate;
 
   protected OrgUsage() { }
 
@@ -112,6 +114,17 @@ public class OrgUsage extends GenericModel {
    */
   public List<Resource> getResources() {
     return resources;
+  }
+
+  /**
+   * Gets the currencyRate.
+   *
+   * The value of the account's currency in USD.
+   *
+   * @return the currencyRate
+   */
+  public Double getCurrencyRate() {
+    return currencyRate;
   }
 }
 

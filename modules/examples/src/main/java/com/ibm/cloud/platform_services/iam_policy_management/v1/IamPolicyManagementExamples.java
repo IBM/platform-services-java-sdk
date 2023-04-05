@@ -556,9 +556,8 @@ public class IamPolicyManagementExamples {
       // begin-v2_delete_policy
 
       DeleteV2PolicyOptions options = new DeleteV2PolicyOptions.Builder()
-              .id(examplePolicyId)
+              .id(exampleV2PolicyId)
               .build();
-
       Response<Void> response = service.deleteV2Policy(options).execute();
 
       // end-v2_delete_policy
@@ -626,6 +625,7 @@ public class IamPolicyManagementExamples {
       ReplaceRoleOptions options = new ReplaceRoleOptions.Builder()
               .roleId(exampleCustomRoleId)
               .ifMatch(exampleCustomRoleEtag)
+              .displayName("IAM Groups read access")
               .actions(updatedRoleActions)
               .build();
 

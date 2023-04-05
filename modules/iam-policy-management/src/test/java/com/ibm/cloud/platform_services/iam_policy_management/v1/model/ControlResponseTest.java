@@ -14,8 +14,8 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponse;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyGrant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;

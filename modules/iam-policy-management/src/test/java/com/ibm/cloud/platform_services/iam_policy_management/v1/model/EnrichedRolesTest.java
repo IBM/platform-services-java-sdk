@@ -13,7 +13,8 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.EnrichedRoles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAction;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,27 +24,16 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListRolesOptions model.
+ * Unit test class for the EnrichedRoles model.
  */
-public class ListRolesOptionsTest {
+public class EnrichedRolesTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListRolesOptions() throws Throwable {
-    ListRolesOptions listRolesOptionsModel = new ListRolesOptions.Builder()
-      .acceptLanguage("default")
-      .accountId("testString")
-      .serviceName("iam-groups")
-      .sourceServiceName("iam-groups")
-      .policyType("authorization")
-      .serviceGroupId("IAM")
-      .build();
-    assertEquals(listRolesOptionsModel.acceptLanguage(), "default");
-    assertEquals(listRolesOptionsModel.accountId(), "testString");
-    assertEquals(listRolesOptionsModel.serviceName(), "iam-groups");
-    assertEquals(listRolesOptionsModel.sourceServiceName(), "iam-groups");
-    assertEquals(listRolesOptionsModel.policyType(), "authorization");
-    assertEquals(listRolesOptionsModel.serviceGroupId(), "IAM");
+  public void testEnrichedRoles() throws Throwable {
+    EnrichedRoles enrichedRolesModel = new EnrichedRoles();
+    assertNull(enrichedRolesModel.getRoleId());
+    assertNull(enrichedRolesModel.getActions());
   }
 }

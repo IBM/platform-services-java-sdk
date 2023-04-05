@@ -12,28 +12,12 @@
  */
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import java.util.List;
-
-import com.ibm.cloud.sdk.core.service.model.GenericModel;
-
 /**
- * Permission granted by the policy with translated roles and additional role information.
+ * Specifies the type of access granted by the policy with additional role information.
  */
-public class GrantWithTranslatedRoles extends GenericModel {
+public class ControlResponseControlWithEnrichedRoles extends ControlResponse {
 
-  protected List<RoleInDisplayFormat> roles;
 
-  protected GrantWithTranslatedRoles() { }
-
-  /**
-   * Gets the roles.
-   *
-   * A set of roles granted by the policy.
-   *
-   * @return the roles
-   */
-  public List<RoleInDisplayFormat> getRoles() {
-    return roles;
-  }
+  protected ControlResponseControlWithEnrichedRoles() { }
 }
 

@@ -19,11 +19,11 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  *
  * Classes which extend this class:
  * - ControlResponseControl
- * - ControlResponseControlWithTranslatedRoles
+ * - ControlResponseControlWithEnrichedRoles
  */
 public class ControlResponse extends GenericModel {
 
-  protected V2PolicyGrant grant;
+  protected Grant grant;
 
   protected ControlResponse() { }
 
@@ -34,7 +34,7 @@ public class ControlResponse extends GenericModel {
    *
    * @return the grant
    */
-  public V2PolicyGrant getGrant() {
+  public Grant getGrant() {
     return grant;
   }
 }

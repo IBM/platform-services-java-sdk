@@ -40,6 +40,7 @@ public class ListV2PoliciesOptionsTest {
       .serviceType("service")
       .serviceName("testString")
       .serviceGroupId("testString")
+      .sort("testString")
       .format("include_last_permit")
       .state("active")
       .build();
@@ -51,6 +52,7 @@ public class ListV2PoliciesOptionsTest {
     assertEquals(listV2PoliciesOptionsModel.serviceType(), "service");
     assertEquals(listV2PoliciesOptionsModel.serviceName(), "testString");
     assertEquals(listV2PoliciesOptionsModel.serviceGroupId(), "testString");
+    assertEquals(listV2PoliciesOptionsModel.sort(), "testString");
     assertEquals(listV2PoliciesOptionsModel.format(), "include_last_permit");
     assertEquals(listV2PoliciesOptionsModel.state(), "active");
   }

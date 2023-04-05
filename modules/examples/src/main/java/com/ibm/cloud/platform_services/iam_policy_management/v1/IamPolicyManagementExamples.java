@@ -44,12 +44,13 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRe
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyGrant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleWithConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -352,11 +353,11 @@ public class IamPolicyManagementExamples {
               .addTags(policyResourceTag)
               .build();
 
-      PolicyRole policyRoles = new PolicyRole.Builder()
+      Roles policyRoles = new Roles.Builder()
               .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
               .build();
 
-      V2PolicyGrant policyGrant = new V2PolicyGrant.Builder()
+      Grant policyGrant = new Grant.Builder()
               .roles(Arrays.asList(policyRoles))
               .build();
 
@@ -470,10 +471,10 @@ public class IamPolicyManagementExamples {
               .addTags(policyResourceTag)
               .build();
 
-      PolicyRole updatedPolicyRole = new PolicyRole.Builder()
+      Roles updatedPolicyRole = new Roles.Builder()
               .roleId("crn:v1:bluemix:public:iam::::role:Editor")
               .build();
-      V2PolicyGrant policyGrant = new V2PolicyGrant.Builder()
+      Grant policyGrant = new Grant.Builder()
               .roles(Arrays.asList(updatedPolicyRole))
               .build();
 

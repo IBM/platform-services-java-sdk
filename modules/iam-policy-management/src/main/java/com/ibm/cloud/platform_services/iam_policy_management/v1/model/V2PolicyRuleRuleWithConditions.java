@@ -21,7 +21,7 @@ import java.util.List;
 public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
 
   /**
-   * Operator to evalute conditions.
+   * Operator to evaluate conditions.
    */
   public interface Operator {
     /** and. */

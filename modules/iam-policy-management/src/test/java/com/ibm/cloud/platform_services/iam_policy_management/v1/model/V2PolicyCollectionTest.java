@@ -14,10 +14,10 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControl;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyGrant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;

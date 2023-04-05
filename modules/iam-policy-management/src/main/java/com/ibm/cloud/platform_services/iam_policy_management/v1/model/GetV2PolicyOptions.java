@@ -19,13 +19,29 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class GetV2PolicyOptions extends GenericModel {
 
+  /**
+   * Include additional data for policy returned
+   * * `include_last_permit` - returns details of when the policy last granted a permit decision and the number of times
+   * it has done so
+   * * `display` - returns the list of all actions included in each of the policy roles and translations for all
+   * relevant fields.
+   */
+  public interface Format {
+    /** include_last_permit. */
+    String INCLUDE_LAST_PERMIT = "include_last_permit";
+    /** display. */
+    String DISPLAY = "display";
+  }
+
   protected String id;
+  protected String format;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String id;
+    private String format;
 
     /**
      * Instantiates a new Builder from an existing GetV2PolicyOptions instance.
@@ -34,6 +50,7 @@ public class GetV2PolicyOptions extends GenericModel {
      */
     private Builder(GetV2PolicyOptions getV2PolicyOptions) {
       this.id = getV2PolicyOptions.id;
+      this.format = getV2PolicyOptions.format;
     }
 
     /**
@@ -70,6 +87,17 @@ public class GetV2PolicyOptions extends GenericModel {
       this.id = id;
       return this;
     }
+
+    /**
+     * Set the format.
+     *
+     * @param format the format
+     * @return the GetV2PolicyOptions builder
+     */
+    public Builder format(String format) {
+      this.format = format;
+      return this;
+    }
   }
 
   protected GetV2PolicyOptions() { }
@@ -78,6 +106,7 @@ public class GetV2PolicyOptions extends GenericModel {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
     id = builder.id;
+    format = builder.format;
   }
 
   /**
@@ -98,6 +127,21 @@ public class GetV2PolicyOptions extends GenericModel {
    */
   public String id() {
     return id;
+  }
+
+  /**
+   * Gets the format.
+   *
+   * Include additional data for policy returned
+   * * `include_last_permit` - returns details of when the policy last granted a permit decision and the number of times
+   * it has done so
+   * * `display` - returns the list of all actions included in each of the policy roles and translations for all
+   * relevant fields.
+   *
+   * @return the format
+   */
+  public String format() {
+    return format;
   }
 }
 

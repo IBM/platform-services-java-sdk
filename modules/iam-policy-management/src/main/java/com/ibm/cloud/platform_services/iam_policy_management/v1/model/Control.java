@@ -19,13 +19,13 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class Control extends GenericModel {
 
-  protected V2PolicyGrant grant;
+  protected Grant grant;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private V2PolicyGrant grant;
+    private Grant grant;
 
     /**
      * Instantiates a new Builder from an existing Control instance.
@@ -47,7 +47,7 @@ public class Control extends GenericModel {
      *
      * @param grant the grant
      */
-    public Builder(V2PolicyGrant grant) {
+    public Builder(Grant grant) {
       this.grant = grant;
     }
 
@@ -66,7 +66,7 @@ public class Control extends GenericModel {
      * @param grant the grant
      * @return the Control builder
      */
-    public Builder grant(V2PolicyGrant grant) {
+    public Builder grant(Grant grant) {
       this.grant = grant;
       return this;
     }
@@ -96,7 +96,7 @@ public class Control extends GenericModel {
    *
    * @return the grant
    */
-  public V2PolicyGrant grant() {
+  public Grant grant() {
     return grant;
   }
 }

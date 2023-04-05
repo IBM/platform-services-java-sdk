@@ -33,8 +33,10 @@ public class GetV2PolicyOptionsTest {
   public void testGetV2PolicyOptions() throws Throwable {
     GetV2PolicyOptions getV2PolicyOptionsModel = new GetV2PolicyOptions.Builder()
       .id("testString")
+      .format("include_last_permit")
       .build();
     assertEquals(getV2PolicyOptionsModel.id(), "testString");
+    assertEquals(getV2PolicyOptionsModel.format(), "include_last_permit");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

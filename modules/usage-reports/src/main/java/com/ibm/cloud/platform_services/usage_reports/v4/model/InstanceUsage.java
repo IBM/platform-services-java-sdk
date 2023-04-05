@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -60,6 +60,9 @@ public class InstanceUsage extends GenericModel {
   protected String planName;
   protected String month;
   protected List<Metric> usage;
+  protected Boolean pending;
+  @SerializedName("currency_rate")
+  protected Double currencyRate;
 
   protected InstanceUsage() { }
 
@@ -292,6 +295,28 @@ public class InstanceUsage extends GenericModel {
    */
   public List<Metric> getUsage() {
     return usage;
+  }
+
+  /**
+   * Gets the pending.
+   *
+   * Pending charge from classic infrastructure.
+   *
+   * @return the pending
+   */
+  public Boolean isPending() {
+    return pending;
+  }
+
+  /**
+   * Gets the currencyRate.
+   *
+   * The value of the account's currency in USD.
+   *
+   * @return the currencyRate
+   */
+  public Double getCurrencyRate() {
+    return currencyRate;
   }
 }
 

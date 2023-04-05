@@ -13,10 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControlWithTranslatedRoles;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GrantWithTranslatedRoles;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAction;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleInDisplayFormat;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -26,15 +23,29 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ControlResponseControlWithTranslatedRoles model.
+ * Unit test class for the Roles model.
  */
-public class ControlResponseControlWithTranslatedRolesTest {
+public class RolesTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testControlResponseControlWithTranslatedRoles() throws Throwable {
-    ControlResponseControlWithTranslatedRoles controlResponseControlWithTranslatedRolesModel = new ControlResponseControlWithTranslatedRoles();
-    assertNull(controlResponseControlWithTranslatedRolesModel.getGrant());
+  public void testRoles() throws Throwable {
+    Roles rolesModel = new Roles.Builder()
+      .roleId("testString")
+      .build();
+    assertEquals(rolesModel.roleId(), "testString");
+
+    String json = TestUtilities.serialize(rolesModel);
+
+    Roles rolesModelNew = TestUtilities.deserialize(json, Roles.class);
+    assertTrue(rolesModelNew instanceof Roles);
+    assertEquals(rolesModelNew.roleId(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testRolesError() throws Throwable {
+    new Roles.Builder().build();
+  }
+
 }

@@ -15,8 +15,8 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateV2PolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyGrant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
@@ -40,20 +40,20 @@ public class CreateV2PolicyOptionsTest {
 
   @Test
   public void testCreateV2PolicyOptions() throws Throwable {
-    PolicyRole policyRoleModel = new PolicyRole.Builder()
+    Roles rolesModel = new Roles.Builder()
       .roleId("testString")
       .build();
-    assertEquals(policyRoleModel.roleId(), "testString");
+    assertEquals(rolesModel.roleId(), "testString");
 
-    V2PolicyGrant v2PolicyGrantModel = new V2PolicyGrant.Builder()
-      .roles(java.util.Arrays.asList(policyRoleModel))
+    Grant grantModel = new Grant.Builder()
+      .roles(java.util.Arrays.asList(rolesModel))
       .build();
-    assertEquals(v2PolicyGrantModel.roles(), java.util.Arrays.asList(policyRoleModel));
+    assertEquals(grantModel.roles(), java.util.Arrays.asList(rolesModel));
 
     Control controlModel = new Control.Builder()
-      .grant(v2PolicyGrantModel)
+      .grant(grantModel)
       .build();
-    assertEquals(controlModel.grant(), v2PolicyGrantModel);
+    assertEquals(controlModel.grant(), grantModel);
 
     V2PolicySubjectAttribute v2PolicySubjectAttributeModel = new V2PolicySubjectAttribute.Builder()
       .key("testString")

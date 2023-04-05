@@ -83,7 +83,7 @@ public class V2PolicyRule extends GenericModel {
   /**
    * Gets the value.
    *
-   * The value of an rule or resource attribute; can be boolean or string for resource attribute. Can be a string or an
+   * The value of a rule or resource attribute; can be boolean or string for resource attribute. Can be string or an
    * array of strings (e.g., array of days to permit access) for rule attribute.
    *
    * @return the value
@@ -95,7 +95,7 @@ public class V2PolicyRule extends GenericModel {
   /**
    * Gets the conditions.
    *
-   * List of conditions associated with a policy, e.g., time-based-conditions that grant access over a certain time
+   * List of conditions associated with a policy, e.g., time-based conditions that grant access over a certain time
    * period.
    *
    * @return the conditions

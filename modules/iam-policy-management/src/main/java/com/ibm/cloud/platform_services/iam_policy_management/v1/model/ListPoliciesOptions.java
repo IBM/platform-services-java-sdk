@@ -310,7 +310,7 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account GUID in which the policies belong to.
+   * The account GUID that the policies belong to.
    *
    * @return the accountId
    */
@@ -387,7 +387,7 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the tagName.
    *
-   * Optional name of the access management tag in the policy.
+   * Optional name of the access tag in the policy.
    *
    * @return the tagName
    */
@@ -398,7 +398,7 @@ public class ListPoliciesOptions extends GenericModel {
   /**
    * Gets the tagValue.
    *
-   * Optional value of the access management tag in the policy.
+   * Optional value of the access tag in the policy.
    *
    * @return the tagValue
    */

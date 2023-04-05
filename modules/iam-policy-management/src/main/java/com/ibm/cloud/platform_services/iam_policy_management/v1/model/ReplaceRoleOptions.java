@@ -231,7 +231,7 @@ public class ReplaceRoleOptions extends GenericModel {
   /**
    * Gets the actions.
    *
-   * The actions of the role. Please refer to [IAM roles and
+   * The actions of the role. For more information, see [IAM roles and
    * actions](https://cloud.ibm.com/docs/account?topic=account-iam-service-roles-actions).
    *
    * @return the actions

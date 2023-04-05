@@ -24,6 +24,7 @@ public class ListRolesOptions extends GenericModel {
   protected String serviceName;
   protected String sourceServiceName;
   protected String policyType;
+  protected String serviceGroupId;
 
   /**
    * Builder.
@@ -34,6 +35,7 @@ public class ListRolesOptions extends GenericModel {
     private String serviceName;
     private String sourceServiceName;
     private String policyType;
+    private String serviceGroupId;
 
     /**
      * Instantiates a new Builder from an existing ListRolesOptions instance.
@@ -46,6 +48,7 @@ public class ListRolesOptions extends GenericModel {
       this.serviceName = listRolesOptions.serviceName;
       this.sourceServiceName = listRolesOptions.sourceServiceName;
       this.policyType = listRolesOptions.policyType;
+      this.serviceGroupId = listRolesOptions.serviceGroupId;
     }
 
     /**
@@ -117,6 +120,17 @@ public class ListRolesOptions extends GenericModel {
       this.policyType = policyType;
       return this;
     }
+
+    /**
+     * Set the serviceGroupId.
+     *
+     * @param serviceGroupId the serviceGroupId
+     * @return the ListRolesOptions builder
+     */
+    public Builder serviceGroupId(String serviceGroupId) {
+      this.serviceGroupId = serviceGroupId;
+      return this;
+    }
   }
 
   protected ListRolesOptions() { }
@@ -127,6 +141,7 @@ public class ListRolesOptions extends GenericModel {
     serviceName = builder.serviceName;
     sourceServiceName = builder.sourceServiceName;
     policyType = builder.policyType;
+    serviceGroupId = builder.serviceGroupId;
   }
 
   /**
@@ -202,6 +217,17 @@ public class ListRolesOptions extends GenericModel {
    */
   public String policyType() {
     return policyType;
+  }
+
+  /**
+   * Gets the serviceGroupId.
+   *
+   * Optional id of service group.
+   *
+   * @return the serviceGroupId
+   */
+  public String serviceGroupId() {
+    return serviceGroupId;
   }
 }
 

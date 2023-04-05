@@ -20,23 +20,23 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * Permission granted by the policy.
  */
-public class V2PolicyGrant extends GenericModel {
+public class Grant extends GenericModel {
 
-  protected List<PolicyRole> roles;
+  protected List<Roles> roles;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private List<PolicyRole> roles;
+    private List<Roles> roles;
 
     /**
-     * Instantiates a new Builder from an existing V2PolicyGrant instance.
+     * Instantiates a new Builder from an existing Grant instance.
      *
-     * @param v2PolicyGrant the instance to initialize the Builder with
+     * @param grant the instance to initialize the Builder with
      */
-    private Builder(V2PolicyGrant v2PolicyGrant) {
-      this.roles = v2PolicyGrant.roles;
+    private Builder(Grant grant) {
+      this.roles = grant.roles;
     }
 
     /**
@@ -50,30 +50,30 @@ public class V2PolicyGrant extends GenericModel {
      *
      * @param roles the roles
      */
-    public Builder(List<PolicyRole> roles) {
+    public Builder(List<Roles> roles) {
       this.roles = roles;
     }
 
     /**
-     * Builds a V2PolicyGrant.
+     * Builds a Grant.
      *
-     * @return the new V2PolicyGrant instance
+     * @return the new Grant instance
      */
-    public V2PolicyGrant build() {
-      return new V2PolicyGrant(this);
+    public Grant build() {
+      return new Grant(this);
     }
 
     /**
      * Adds an roles to roles.
      *
      * @param roles the new roles
-     * @return the V2PolicyGrant builder
+     * @return the Grant builder
      */
-    public Builder addRoles(PolicyRole roles) {
+    public Builder addRoles(Roles roles) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(roles,
         "roles cannot be null");
       if (this.roles == null) {
-        this.roles = new ArrayList<PolicyRole>();
+        this.roles = new ArrayList<Roles>();
       }
       this.roles.add(roles);
       return this;
@@ -84,17 +84,17 @@ public class V2PolicyGrant extends GenericModel {
      * Existing roles will be replaced.
      *
      * @param roles the roles
-     * @return the V2PolicyGrant builder
+     * @return the Grant builder
      */
-    public Builder roles(List<PolicyRole> roles) {
+    public Builder roles(List<Roles> roles) {
       this.roles = roles;
       return this;
     }
   }
 
-  protected V2PolicyGrant() { }
+  protected Grant() { }
 
-  protected V2PolicyGrant(Builder builder) {
+  protected Grant(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.roles,
       "roles cannot be null");
     roles = builder.roles;
@@ -103,7 +103,7 @@ public class V2PolicyGrant extends GenericModel {
   /**
    * New builder.
    *
-   * @return a V2PolicyGrant builder
+   * @return a Grant builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -116,7 +116,7 @@ public class V2PolicyGrant extends GenericModel {
    *
    * @return the roles
    */
-  public List<PolicyRole> roles() {
+  public List<Roles> roles() {
     return roles;
   }
 }

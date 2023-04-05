@@ -178,7 +178,7 @@ public class RuleAttribute extends GenericModel {
   /**
    * Gets the value.
    *
-   * The value of an rule or resource attribute; can be boolean or string for resource attribute. Can be a string or an
+   * The value of a rule or resource attribute; can be boolean or string for resource attribute. Can be string or an
    * array of strings (e.g., array of days to permit access) for rule attribute.
    *
    * @return the value

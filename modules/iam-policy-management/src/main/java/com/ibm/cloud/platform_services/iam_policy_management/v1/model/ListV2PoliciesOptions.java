@@ -73,6 +73,7 @@ public class ListV2PoliciesOptions extends GenericModel {
   protected String serviceType;
   protected String serviceName;
   protected String serviceGroupId;
+  protected String sort;
   protected String format;
   protected String state;
 
@@ -88,6 +89,7 @@ public class ListV2PoliciesOptions extends GenericModel {
     private String serviceType;
     private String serviceName;
     private String serviceGroupId;
+    private String sort;
     private String format;
     private String state;
 
@@ -105,6 +107,7 @@ public class ListV2PoliciesOptions extends GenericModel {
       this.serviceType = listV2PoliciesOptions.serviceType;
       this.serviceName = listV2PoliciesOptions.serviceName;
       this.serviceGroupId = listV2PoliciesOptions.serviceGroupId;
+      this.sort = listV2PoliciesOptions.sort;
       this.format = listV2PoliciesOptions.format;
       this.state = listV2PoliciesOptions.state;
     }
@@ -222,6 +225,17 @@ public class ListV2PoliciesOptions extends GenericModel {
     }
 
     /**
+     * Set the sort.
+     *
+     * @param sort the sort
+     * @return the ListV2PoliciesOptions builder
+     */
+    public Builder sort(String sort) {
+      this.sort = sort;
+      return this;
+    }
+
+    /**
      * Set the format.
      *
      * @param format the format
@@ -257,6 +271,7 @@ public class ListV2PoliciesOptions extends GenericModel {
     serviceType = builder.serviceType;
     serviceName = builder.serviceName;
     serviceGroupId = builder.serviceGroupId;
+    sort = builder.sort;
     format = builder.format;
     state = builder.state;
   }
@@ -367,6 +382,30 @@ public class ListV2PoliciesOptions extends GenericModel {
    */
   public String serviceGroupId() {
     return serviceGroupId;
+  }
+
+  /**
+   * Gets the sort.
+   *
+   * Optional top level policy field to sort results. Ascending sort is default. Descending sort available by prepending
+   * '-' to field, for example, '-last_modified_at'. Note that last permit information is only included when
+   * 'format=include_last_permit', for example, "format=include_last_permit&amp;sort=last_permit_at" Example fields that
+   * can be sorted on:
+   *   - 'id'
+   *   - 'type'
+   *   - 'href'
+   *   - 'created_at'
+   *   - 'created_by_id'
+   *   - 'last_modified_at'
+   *   - 'last_modified_by_id'
+   *   - 'state'
+   *   - 'last_permit_at'
+   *   - 'last_permit_frequency'.
+   *
+   * @return the sort
+   */
+  public String sort() {
+    return sort;
   }
 
   /**

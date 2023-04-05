@@ -16,7 +16,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.IamPolicyManagem
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponse;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControl;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControlWithTranslatedRoles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControlWithEnrichedRoles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateV2PolicyOptions;
@@ -24,10 +24,12 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteV2PolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.EnrichedRoles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2PolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GrantWithTranslatedRoles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GrantWithEnrichedRoles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
@@ -43,14 +45,13 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAt
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Role;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAction;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleInDisplayFormat;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyGrant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
@@ -527,6 +528,7 @@ public class IamPolicyManagementTest {
       .serviceName("iam-groups")
       .sourceServiceName("iam-groups")
       .policyType("authorization")
+      .serviceGroupId("IAM")
       .build();
 
     // Invoke listRoles() with a valid options model and verify the result
@@ -549,6 +551,7 @@ public class IamPolicyManagementTest {
     assertEquals(query.get("service_name"), "iam-groups");
     assertEquals(query.get("source_service_name"), "iam-groups");
     assertEquals(query.get("policy_type"), "authorization");
+    assertEquals(query.get("service_group_id"), "IAM");
   }
 
   // Test the listRoles operation with and without retries enabled
@@ -780,7 +783,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListV2PoliciesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"policies\": [{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}]}";
+    String mockResponseBody = "{\"policies\": [{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}]}";
     String listV2PoliciesPath = "/v2/policies";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -797,6 +800,7 @@ public class IamPolicyManagementTest {
       .serviceType("service")
       .serviceName("testString")
       .serviceGroupId("testString")
+      .sort("testString")
       .format("include_last_permit")
       .state("active")
       .build();
@@ -824,6 +828,7 @@ public class IamPolicyManagementTest {
     assertEquals(query.get("service_type"), "service");
     assertEquals(query.get("service_name"), "testString");
     assertEquals(query.get("service_group_id"), "testString");
+    assertEquals(query.get("sort"), "testString");
     assertEquals(query.get("format"), "include_last_permit");
     assertEquals(query.get("state"), "active");
   }
@@ -849,26 +854,26 @@ public class IamPolicyManagementTest {
   @Test
   public void testCreateV2PolicyWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}";
+    String mockResponseBody = "{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}";
     String createV2PolicyPath = "/v2/policies";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(201)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the PolicyRole model
-    PolicyRole policyRoleModel = new PolicyRole.Builder()
+    // Construct an instance of the Roles model
+    Roles rolesModel = new Roles.Builder()
       .roleId("testString")
       .build();
 
-    // Construct an instance of the V2PolicyGrant model
-    V2PolicyGrant v2PolicyGrantModel = new V2PolicyGrant.Builder()
-      .roles(java.util.Arrays.asList(policyRoleModel))
+    // Construct an instance of the Grant model
+    Grant grantModel = new Grant.Builder()
+      .roles(java.util.Arrays.asList(rolesModel))
       .build();
 
     // Construct an instance of the Control model
     Control controlModel = new Control.Builder()
-      .grant(v2PolicyGrantModel)
+      .grant(grantModel)
       .build();
 
     // Construct an instance of the V2PolicySubjectAttribute model
@@ -961,26 +966,26 @@ public class IamPolicyManagementTest {
   @Test
   public void testReplaceV2PolicyWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}";
+    String mockResponseBody = "{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}";
     String replaceV2PolicyPath = "/v2/policies/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the PolicyRole model
-    PolicyRole policyRoleModel = new PolicyRole.Builder()
+    // Construct an instance of the Roles model
+    Roles rolesModel = new Roles.Builder()
       .roleId("testString")
       .build();
 
-    // Construct an instance of the V2PolicyGrant model
-    V2PolicyGrant v2PolicyGrantModel = new V2PolicyGrant.Builder()
-      .roles(java.util.Arrays.asList(policyRoleModel))
+    // Construct an instance of the Grant model
+    Grant grantModel = new Grant.Builder()
+      .roles(java.util.Arrays.asList(rolesModel))
       .build();
 
     // Construct an instance of the Control model
     Control controlModel = new Control.Builder()
-      .grant(v2PolicyGrantModel)
+      .grant(grantModel)
       .build();
 
     // Construct an instance of the V2PolicySubjectAttribute model
@@ -1076,7 +1081,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testGetV2PolicyWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}";
+    String mockResponseBody = "{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"value\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19}";
     String getV2PolicyPath = "/v2/policies/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1086,6 +1091,7 @@ public class IamPolicyManagementTest {
     // Construct an instance of the GetV2PolicyOptions model
     GetV2PolicyOptions getV2PolicyOptionsModel = new GetV2PolicyOptions.Builder()
       .id("testString")
+      .format("include_last_permit")
       .build();
 
     // Invoke getV2Policy() with a valid options model and verify the result
@@ -1101,9 +1107,10 @@ public class IamPolicyManagementTest {
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
     assertEquals(parsedPath, getV2PolicyPath);
-    // Verify that there is no query string
+    // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
+    assertNotNull(query);
+    assertEquals(query.get("format"), "include_last_permit");
   }
 
   // Test the getV2Policy operation with and without retries enabled

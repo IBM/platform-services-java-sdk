@@ -52,6 +52,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     private static final String TEST_EDITOR_ROLE_CRN = "crn:v1:bluemix:public:iam::::role:Editor";
     private static final String TEST_SERVICE_NAME = "iam-groups";
     private static final String POLICY_TYPE = "access";
+    private static final	String TEST_SERVICE_ROLE_CRN = "crn:v1:bluemix:public:iam-identity::::serviceRole:ServiceIdCreator";
 
     String testAccountId = null;
     String testPolicyId = null;
@@ -336,12 +337,12 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeModel)))
           .build();
 
-        PolicyRole policyRoleModel = new PolicyRole.Builder()
+        Roles rolesModel = new Roles.Builder()
           .roleId(TEST_VIEW_ROLE_CRN)
           .build();
         
-        V2PolicyGrant policyGrantModel = new V2PolicyGrant.Builder()
-          .roles(Arrays.asList(policyRoleModel))
+        Grant policyGrantModel = new Grant.Builder()
+          .roles(Arrays.asList(rolesModel))
           .build();
 
         Control controlModel = new Control.Builder()
@@ -452,12 +453,12 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeModel)))
           .build();
         
-        PolicyRole policyRoleModel = new PolicyRole.Builder()
+        Roles rolesModel = new Roles.Builder()
           .roleId(TEST_EDITOR_ROLE_CRN)
           .build();
 
-        V2PolicyGrant policyGrantModel = new V2PolicyGrant.Builder()
-          .roles(Arrays.asList(policyRoleModel))
+        Grant policyGrantModel = new Grant.Builder()
+          .roles(Arrays.asList(rolesModel))
           .build();
 
         Control controlModel = new Control.Builder()
@@ -651,6 +652,39 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
             }
         }
         assertTrue(foundTestRole);
+    }
+
+     public void testListV2Roles() {
+
+        ListRolesOptions options = new ListRolesOptions.Builder()
+                .accountId(testAccountId)
+                .serviceGroupId("IAM")
+                .build();
+        
+        Response<RoleList> response = service.listRoles(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        RoleList result = response.getResult();
+        assertNotNull(result);
+
+        // Confirm the test role is present
+        boolean foundSystemRole = false;
+        boolean foundServiceRole = false;
+        for (Role role : result.getSystemRoles()) {
+            if (TEST_VIEW_ROLE_CRN.equals(role.crn())) {
+                foundSystemRole = true;
+                break;
+            }
+        }
+        for (Role role : result.getServiceRoles()) {
+            if (TEST_SERVICE_ROLE_CRN.equals(role.crn())) {
+                foundServiceRole = true;
+                break;
+            }
+        }
+        assertTrue(foundSystemRole);
+        assertTrue(foundServiceRole);
     }
 
     @AfterClass

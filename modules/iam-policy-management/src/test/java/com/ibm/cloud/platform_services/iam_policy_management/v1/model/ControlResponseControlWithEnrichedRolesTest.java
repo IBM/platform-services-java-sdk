@@ -13,8 +13,10 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyGrant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControlWithEnrichedRoles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.EnrichedRoles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GrantWithEnrichedRoles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAction;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -24,33 +26,15 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the V2PolicyGrant model.
+ * Unit test class for the ControlResponseControlWithEnrichedRoles model.
  */
-public class V2PolicyGrantTest {
+public class ControlResponseControlWithEnrichedRolesTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testV2PolicyGrant() throws Throwable {
-    PolicyRole policyRoleModel = new PolicyRole.Builder()
-      .roleId("testString")
-      .build();
-    assertEquals(policyRoleModel.roleId(), "testString");
-
-    V2PolicyGrant v2PolicyGrantModel = new V2PolicyGrant.Builder()
-      .roles(java.util.Arrays.asList(policyRoleModel))
-      .build();
-    assertEquals(v2PolicyGrantModel.roles(), java.util.Arrays.asList(policyRoleModel));
-
-    String json = TestUtilities.serialize(v2PolicyGrantModel);
-
-    V2PolicyGrant v2PolicyGrantModelNew = TestUtilities.deserialize(json, V2PolicyGrant.class);
-    assertTrue(v2PolicyGrantModelNew instanceof V2PolicyGrant);
+  public void testControlResponseControlWithEnrichedRoles() throws Throwable {
+    ControlResponseControlWithEnrichedRoles controlResponseControlWithEnrichedRolesModel = new ControlResponseControlWithEnrichedRoles();
+    assertNull(controlResponseControlWithEnrichedRolesModel.getGrant());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testV2PolicyGrantError() throws Throwable {
-    new V2PolicyGrant.Builder().build();
-  }
-
 }

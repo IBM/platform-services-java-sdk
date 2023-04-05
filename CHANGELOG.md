@@ -1,3 +1,10 @@
+# [0.32.0](https://github.com/IBM/platform-services-java-sdk/compare/0.31.1...0.32.0) (2023-04-05)
+
+
+### Features
+
+* **IAM Policy Management:** support of new query param source_group_id for v2/roles ([#184](https://github.com/IBM/platform-services-java-sdk/issues/184)) ([8353091](https://github.com/IBM/platform-services-java-sdk/commit/83530912ae6f6edc98ffbf9fd805c1ee569974d0))
+
 ## [0.31.1](https://github.com/IBM/platform-services-java-sdk/compare/0.31.0...0.31.1) (2023-04-05)
 
 

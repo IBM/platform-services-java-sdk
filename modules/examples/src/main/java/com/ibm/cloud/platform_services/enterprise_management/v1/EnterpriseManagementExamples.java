@@ -42,6 +42,8 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterp
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -198,25 +200,25 @@ public class EnterpriseManagementExamples {
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
-    try {
-      String importAccountId = "<accountid_to_be_imported>";
+    // try {
+    //   String importAccountId = "<accountid_to_be_imported>";
 
-      // begin-import_account_to_enterprise
+    //   // begin-import_account_to_enterprise
 
-      ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()
-          .enterpriseId(enterpriseId)
-          .accountId(importAccountId)
-          .build();
+    //   ImportAccountToEnterpriseOptions importAccountToEnterpriseOptions = new ImportAccountToEnterpriseOptions.Builder()
+    //       .enterpriseId(enterpriseId)
+    //       .accountId(importAccountId)
+    //       .build();
 
-      Response<Void> response = enterpriseManagementService.importAccountToEnterprise(importAccountToEnterpriseOptions).execute();
+    //   Response<Void> response = enterpriseManagementService.importAccountToEnterprise(importAccountToEnterpriseOptions).execute();
 
-      // end-import_account_to_enterprise
+    //   // end-import_account_to_enterprise
 
-      System.out.printf("importAccountToEnterprise() response status code: %d%n", response.getStatusCode());
-    } catch (ServiceResponseException e) {
-      logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
-          e.getMessage(), e.getDebuggingInfo()), e);
-    }
+    //   System.out.printf("importAccountToEnterprise() response status code: %d%n", response.getStatusCode());
+    // } catch (ServiceResponseException e) {
+    //   logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
+    //       e.getMessage(), e.getDebuggingInfo()), e);
+    // }
 
     try {
       System.out.println("createAccount() result:");
@@ -308,31 +310,31 @@ public class EnterpriseManagementExamples {
           e.getMessage(), e.getDebuggingInfo()), e);
     }
 
-    try {
-      String srcAccountId = "<standalone_account_id>";
-      String contactIamId = "<standalone_account_iam_id>";
+    // try {
+    //   String srcAccountId = "<standalone_account_id>";
+    //   String contactIamId = "<standalone_account_iam_id>";
 
-      System.out.println("createEnterprise() result:");
+    //   System.out.println("createEnterprise() result:");
 
-      // begin-create_enterprise
+    //   // begin-create_enterprise
 
-      CreateEnterpriseOptions createEnterpriseOptions = new CreateEnterpriseOptions.Builder()
-          .sourceAccountId(srcAccountId)
-          .name("Example Enterprise")
-          .primaryContactIamId(contactIamId)
-          .build();
+    //   CreateEnterpriseOptions createEnterpriseOptions = new CreateEnterpriseOptions.Builder()
+    //       .sourceAccountId(srcAccountId)
+    //       .name("Example Enterprise")
+    //       .primaryContactIamId(contactIamId)
+    //       .build();
 
-      Response<CreateEnterpriseResponse> response = enterpriseManagementService.createEnterprise(createEnterpriseOptions).execute();
-      CreateEnterpriseResponse createEnterpriseResponse = response.getResult();
+    //   Response<CreateEnterpriseResponse> response = enterpriseManagementService.createEnterprise(createEnterpriseOptions).execute();
+    //   CreateEnterpriseResponse createEnterpriseResponse = response.getResult();
 
-      System.out.println(createEnterpriseResponse);
+    //   System.out.println(createEnterpriseResponse);
 
-      // end-create_enterprise
+    //   // end-create_enterprise
 
-    } catch (ServiceResponseException e) {
-      logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
-          e.getMessage(), e.getDebuggingInfo()), e);
-    }
+    // } catch (ServiceResponseException e) {
+    //   logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
+    //       e.getMessage(), e.getDebuggingInfo()), e);
+    // }
 
     try {
       System.out.println("listEnterprises() result:");
@@ -395,6 +397,34 @@ public class EnterpriseManagementExamples {
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_account
+      DeleteAccountOptions deleteAccountOptions = new DeleteAccountOptions.Builder()
+        .accountId(accountId)
+        .build();
+
+      Response<Void> response = enterpriseManagementService.deleteAccount(deleteAccountOptions).execute();
+      // end-delete_account
+      System.out.printf("deleteAccount() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_account_group
+      DeleteAccountGroupOptions deleteAccountGroupOptions = new DeleteAccountGroupOptions.Builder()
+        .accountGroupId(accountGroupId)
+        .build();
+
+      Response<Void> response = enterpriseManagementService.deleteAccountGroup(deleteAccountGroupOptions).execute();
+      // end-delete_account_group
+      System.out.printf("deleteAccountGroup() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
   }
 }

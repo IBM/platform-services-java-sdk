@@ -47,6 +47,8 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterp
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountOptions;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
@@ -370,7 +372,7 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
   public void testListAccountsWithPager() throws Exception {
     try {
       ListAccountsOptions options = new ListAccountsOptions.Builder()
-          .accountGroupId(firstExampleAccountGroupId)
+          .enterpriseId(enterpriseId)
           .build();
 
       // Test getNext().
@@ -562,5 +564,42 @@ public class EnterpriseManagementIT extends SdkIntegrationTestBase {
           e.getDebuggingInfo()));
     }
   }
+
+  @Test(dependsOnMethods = { "testUpdateAccountGroup" })
+  public void testDeleteAccount() throws Exception {
+    try {
+      DeleteAccountOptions deleteAccountOptions = new DeleteAccountOptions.Builder()
+        .accountId(exampleAccountId)
+        .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteAccount(deleteAccountOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testDeleteAccount" })
+  public void testDeleteAccountGroup() throws Exception {
+    try {
+      DeleteAccountGroupOptions deleteAccountGroupOptions = new DeleteAccountGroupOptions.Builder()
+        .accountGroupId(firstExampleAccountGroupId)
+        .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteAccountGroup(deleteAccountGroupOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
 
 }

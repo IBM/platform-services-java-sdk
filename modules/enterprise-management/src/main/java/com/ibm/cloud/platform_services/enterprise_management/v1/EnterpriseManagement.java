@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.60.2-95dc7721-20221102-203229
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 package com.ibm.cloud.platform_services.enterprise_management.v1;
@@ -27,6 +27,8 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAcco
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountOptions;
@@ -326,6 +328,9 @@ public class EnterpriseManagement extends BaseService {
     contentJson.addProperty("parent", createAccountOptions.parent());
     contentJson.addProperty("name", createAccountOptions.name());
     contentJson.addProperty("owner_iam_id", createAccountOptions.ownerIamId());
+    if (createAccountOptions.traits() != null) {
+      contentJson.add("traits", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createAccountOptions.traits()));
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<CreateAccountResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<CreateAccountResponse>() { }.getType());
@@ -373,6 +378,9 @@ public class EnterpriseManagement extends BaseService {
     }
     if (listAccountsOptions.limit() != null) {
       builder.query("limit", String.valueOf(listAccountsOptions.limit()));
+    }
+    if (listAccountsOptions.includeDeleted() != null) {
+      builder.query("include_deleted", String.valueOf(listAccountsOptions.includeDeleted()));
     }
     ResponseConverter<ListAccountsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ListAccountsResponse>() { }.getType());
@@ -450,6 +458,29 @@ public class EnterpriseManagement extends BaseService {
   }
 
   /**
+   * Remove an account from its enterprise.
+   *
+   * Remove an account from the enterprise its currently in. After an account is removed, it will be canceled and cannot
+   * be reactivated.
+   *
+   * @param deleteAccountOptions the {@link DeleteAccountOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteAccount(DeleteAccountOptions deleteAccountOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAccountOptions,
+      "deleteAccountOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", deleteAccountOptions.accountId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/accounts/{account_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "deleteAccount");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
    * Create an account group.
    *
    * Create a new account group, which can be used to group together multiple accounts. To create an account group, you
@@ -519,6 +550,9 @@ public class EnterpriseManagement extends BaseService {
     }
     if (listAccountGroupsOptions.limit() != null) {
       builder.query("limit", String.valueOf(listAccountGroupsOptions.limit()));
+    }
+    if (listAccountGroupsOptions.includeDeleted() != null) {
+      builder.query("include_deleted", String.valueOf(listAccountGroupsOptions.includeDeleted()));
     }
     ResponseConverter<ListAccountGroupsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ListAccountGroupsResponse>() { }.getType());
@@ -597,6 +631,30 @@ public class EnterpriseManagement extends BaseService {
       contentJson.addProperty("primary_contact_iam_id", updateAccountGroupOptions.primaryContactIamId());
     }
     builder.bodyJson(contentJson);
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete an account group from the enterprise.
+   *
+   * Delete an existing account group from the enterprise. You can't delete an account group that has child account
+   * groups, the delete request will fail. This API doesn't perform a recursive delete on the child account groups, it
+   * only deletes the current account group.
+   *
+   * @param deleteAccountGroupOptions the {@link DeleteAccountGroupOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteAccountGroup(DeleteAccountGroupOptions deleteAccountGroupOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAccountGroupOptions,
+      "deleteAccountGroupOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_group_id", deleteAccountGroupOptions.accountGroupId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/account-groups/{account_group_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("enterprise_management", "v1", "deleteAccountGroup");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }

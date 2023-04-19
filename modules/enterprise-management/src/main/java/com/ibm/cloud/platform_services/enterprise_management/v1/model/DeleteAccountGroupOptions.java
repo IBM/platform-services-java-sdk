@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The getAccountGroup options.
+ * The deleteAccountGroup options.
  */
-public class GetAccountGroupOptions extends GenericModel {
+public class DeleteAccountGroupOptions extends GenericModel {
 
   protected String accountGroupId;
 
@@ -28,12 +28,12 @@ public class GetAccountGroupOptions extends GenericModel {
     private String accountGroupId;
 
     /**
-     * Instantiates a new Builder from an existing GetAccountGroupOptions instance.
+     * Instantiates a new Builder from an existing DeleteAccountGroupOptions instance.
      *
-     * @param getAccountGroupOptions the instance to initialize the Builder with
+     * @param deleteAccountGroupOptions the instance to initialize the Builder with
      */
-    private Builder(GetAccountGroupOptions getAccountGroupOptions) {
-      this.accountGroupId = getAccountGroupOptions.accountGroupId;
+    private Builder(DeleteAccountGroupOptions deleteAccountGroupOptions) {
+      this.accountGroupId = deleteAccountGroupOptions.accountGroupId;
     }
 
     /**
@@ -52,19 +52,19 @@ public class GetAccountGroupOptions extends GenericModel {
     }
 
     /**
-     * Builds a GetAccountGroupOptions.
+     * Builds a DeleteAccountGroupOptions.
      *
-     * @return the new GetAccountGroupOptions instance
+     * @return the new DeleteAccountGroupOptions instance
      */
-    public GetAccountGroupOptions build() {
-      return new GetAccountGroupOptions(this);
+    public DeleteAccountGroupOptions build() {
+      return new DeleteAccountGroupOptions(this);
     }
 
     /**
      * Set the accountGroupId.
      *
      * @param accountGroupId the accountGroupId
-     * @return the GetAccountGroupOptions builder
+     * @return the DeleteAccountGroupOptions builder
      */
     public Builder accountGroupId(String accountGroupId) {
       this.accountGroupId = accountGroupId;
@@ -72,9 +72,9 @@ public class GetAccountGroupOptions extends GenericModel {
     }
   }
 
-  protected GetAccountGroupOptions() { }
+  protected DeleteAccountGroupOptions() { }
 
-  protected GetAccountGroupOptions(Builder builder) {
+  protected DeleteAccountGroupOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountGroupId,
       "accountGroupId cannot be empty");
     accountGroupId = builder.accountGroupId;
@@ -83,7 +83,7 @@ public class GetAccountGroupOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a GetAccountGroupOptions builder
+   * @return a DeleteAccountGroupOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

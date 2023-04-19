@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,6 +12,8 @@
  */
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
+import java.util.Map;
+
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
@@ -22,6 +24,7 @@ public class CreateAccountOptions extends GenericModel {
   protected String parent;
   protected String name;
   protected String ownerIamId;
+  protected Map<String, Object> traits;
 
   /**
    * Builder.
@@ -30,6 +33,7 @@ public class CreateAccountOptions extends GenericModel {
     private String parent;
     private String name;
     private String ownerIamId;
+    private Map<String, Object> traits;
 
     /**
      * Instantiates a new Builder from an existing CreateAccountOptions instance.
@@ -40,6 +44,7 @@ public class CreateAccountOptions extends GenericModel {
       this.parent = createAccountOptions.parent;
       this.name = createAccountOptions.name;
       this.ownerIamId = createAccountOptions.ownerIamId;
+      this.traits = createAccountOptions.traits;
     }
 
     /**
@@ -102,6 +107,17 @@ public class CreateAccountOptions extends GenericModel {
       this.ownerIamId = ownerIamId;
       return this;
     }
+
+    /**
+     * Set the traits.
+     *
+     * @param traits the traits
+     * @return the CreateAccountOptions builder
+     */
+    public Builder traits(Map<String, Object> traits) {
+      this.traits = traits;
+      return this;
+    }
   }
 
   protected CreateAccountOptions() { }
@@ -116,6 +132,7 @@ public class CreateAccountOptions extends GenericModel {
     parent = builder.parent;
     name = builder.name;
     ownerIamId = builder.ownerIamId;
+    traits = builder.traits;
   }
 
   /**
@@ -159,6 +176,18 @@ public class CreateAccountOptions extends GenericModel {
    */
   public String ownerIamId() {
     return ownerIamId;
+  }
+
+  /**
+   * Gets the traits.
+   *
+   * The traits object can be used to opt-out of Multi-Factor Authentication setting when creating a child account in
+   * the enterprise. This is an optional field.
+   *
+   * @return the traits
+   */
+  public Map<String, Object> traits() {
+    return traits;
   }
 }
 

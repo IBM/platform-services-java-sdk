@@ -1,3 +1,10 @@
+# [0.33.0](https://github.com/IBM/platform-services-java-sdk/compare/0.32.0...0.33.0) (2023-04-21)
+
+
+### Features
+
+* **enterprise-management:** re-gen service after recent API changes ([#188](https://github.com/IBM/platform-services-java-sdk/issues/188)) ([80040cb](https://github.com/IBM/platform-services-java-sdk/commit/80040cbc149cb17ab99739680eaa1b9fa2318fdb))
+
 # [0.32.0](https://github.com/IBM/platform-services-java-sdk/compare/0.31.1...0.32.0) (2023-04-05)
 
 

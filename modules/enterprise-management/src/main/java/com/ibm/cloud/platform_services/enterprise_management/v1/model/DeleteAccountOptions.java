@@ -15,9 +15,9 @@ package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The getAccount options.
+ * The deleteAccount options.
  */
-public class GetAccountOptions extends GenericModel {
+public class DeleteAccountOptions extends GenericModel {
 
   protected String accountId;
 
@@ -28,12 +28,12 @@ public class GetAccountOptions extends GenericModel {
     private String accountId;
 
     /**
-     * Instantiates a new Builder from an existing GetAccountOptions instance.
+     * Instantiates a new Builder from an existing DeleteAccountOptions instance.
      *
-     * @param getAccountOptions the instance to initialize the Builder with
+     * @param deleteAccountOptions the instance to initialize the Builder with
      */
-    private Builder(GetAccountOptions getAccountOptions) {
-      this.accountId = getAccountOptions.accountId;
+    private Builder(DeleteAccountOptions deleteAccountOptions) {
+      this.accountId = deleteAccountOptions.accountId;
     }
 
     /**
@@ -52,19 +52,19 @@ public class GetAccountOptions extends GenericModel {
     }
 
     /**
-     * Builds a GetAccountOptions.
+     * Builds a DeleteAccountOptions.
      *
-     * @return the new GetAccountOptions instance
+     * @return the new DeleteAccountOptions instance
      */
-    public GetAccountOptions build() {
-      return new GetAccountOptions(this);
+    public DeleteAccountOptions build() {
+      return new DeleteAccountOptions(this);
     }
 
     /**
      * Set the accountId.
      *
      * @param accountId the accountId
-     * @return the GetAccountOptions builder
+     * @return the DeleteAccountOptions builder
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
@@ -72,9 +72,9 @@ public class GetAccountOptions extends GenericModel {
     }
   }
 
-  protected GetAccountOptions() { }
+  protected DeleteAccountOptions() { }
 
-  protected GetAccountOptions(Builder builder) {
+  protected DeleteAccountOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
       "accountId cannot be empty");
     accountId = builder.accountId;
@@ -83,7 +83,7 @@ public class GetAccountOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a GetAccountOptions builder
+   * @return a DeleteAccountOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

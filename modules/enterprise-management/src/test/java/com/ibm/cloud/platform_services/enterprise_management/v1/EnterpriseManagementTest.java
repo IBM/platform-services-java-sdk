@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022, 2023.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,22 +12,7 @@
  */
 package com.ibm.cloud.platform_services.enterprise_management.v1;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.fail;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
+import com.ibm.cloud.platform_services.enterprise_management.v1.EnterpriseManagement;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.Account;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroup;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountGroupsPager;
@@ -38,6 +23,8 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAcco
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.EnterprisesPager;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.GetAccountGroupOptions;
@@ -55,11 +42,23 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAcco
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.security.Authenticator;
+import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * Unit test class for the EnterpriseManagement service.
@@ -221,7 +220,7 @@ public class EnterpriseManagementTest {
     }
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the listEnterprises operation using the EnterprisesPager.getAll() method
   @Test
   public void testListEnterprisesWithPagerGetAll() throws Throwable {
@@ -253,7 +252,7 @@ public class EnterpriseManagementTest {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the getEnterprise operation with a valid options model parameter
   @Test
   public void testGetEnterpriseWOptions() throws Throwable {
@@ -427,6 +426,7 @@ public class EnterpriseManagementTest {
       .parent("testString")
       .name("testString")
       .ownerIamId("testString")
+      .traits(java.util.Collections.singletonMap("anyKey", "anyValue"))
       .build();
 
     // Invoke createAccount() with a valid options model and verify the result
@@ -482,6 +482,7 @@ public class EnterpriseManagementTest {
       .nextDocid("testString")
       .parent("testString")
       .limit(Long.valueOf("10"))
+      .includeDeleted(true)
       .build();
 
     // Invoke listAccounts() with a valid options model and verify the result
@@ -505,6 +506,7 @@ public class EnterpriseManagementTest {
     assertEquals(query.get("next_docid"), "testString");
     assertEquals(query.get("parent"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(Boolean.valueOf(query.get("include_deleted")), Boolean.valueOf(true));
   }
 
   // Test the listAccounts operation with and without retries enabled
@@ -541,6 +543,7 @@ public class EnterpriseManagementTest {
       .accountGroupId("testString")
       .parent("testString")
       .limit(Long.valueOf("10"))
+      .includeDeleted(true)
       .build();
 
     List<Account> allResults = new ArrayList<>();
@@ -552,7 +555,7 @@ public class EnterpriseManagementTest {
     }
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the listAccounts operation using the AccountsPager.getAll() method
   @Test
   public void testListAccountsWithPagerGetAll() throws Throwable {
@@ -577,6 +580,7 @@ public class EnterpriseManagementTest {
       .accountGroupId("testString")
       .parent("testString")
       .limit(Long.valueOf("10"))
+      .includeDeleted(true)
       .build();
 
     AccountsPager pager = new AccountsPager(enterpriseManagementService, listAccountsOptions);
@@ -584,7 +588,7 @@ public class EnterpriseManagementTest {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the getAccount operation with a valid options model parameter
   @Test
   public void testGetAccountWOptions() throws Throwable {
@@ -687,6 +691,56 @@ public class EnterpriseManagementTest {
     enterpriseManagementService.updateAccount(null).execute();
   }
 
+  // Test the deleteAccount operation with a valid options model parameter
+  @Test
+  public void testDeleteAccountWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteAccountPath = "/accounts/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteAccountOptions model
+    DeleteAccountOptions deleteAccountOptionsModel = new DeleteAccountOptions.Builder()
+      .accountId("testString")
+      .build();
+
+    // Invoke deleteAccount() with a valid options model and verify the result
+    Response<Void> response = enterpriseManagementService.deleteAccount(deleteAccountOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteAccountPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteAccount operation with and without retries enabled
+  @Test
+  public void testDeleteAccountWRetries() throws Throwable {
+    enterpriseManagementService.enableRetries(4, 30);
+    testDeleteAccountWOptions();
+
+    enterpriseManagementService.disableRetries();
+    testDeleteAccountWOptions();
+  }
+
+  // Test the deleteAccount operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteAccountNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    enterpriseManagementService.deleteAccount(null).execute();
+  }
+
   // Test the createAccountGroup operation with a valid options model parameter
   @Test
   public void testCreateAccountGroupWOptions() throws Throwable {
@@ -758,6 +812,7 @@ public class EnterpriseManagementTest {
       .nextDocid("testString")
       .parent("testString")
       .limit(Long.valueOf("10"))
+      .includeDeleted(true)
       .build();
 
     // Invoke listAccountGroups() with a valid options model and verify the result
@@ -781,6 +836,7 @@ public class EnterpriseManagementTest {
     assertEquals(query.get("next_docid"), "testString");
     assertEquals(query.get("parent"), "testString");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(Boolean.valueOf(query.get("include_deleted")), Boolean.valueOf(true));
   }
 
   // Test the listAccountGroups operation with and without retries enabled
@@ -817,6 +873,7 @@ public class EnterpriseManagementTest {
       .parentAccountGroupId("testString")
       .parent("testString")
       .limit(Long.valueOf("10"))
+      .includeDeleted(true)
       .build();
 
     List<AccountGroup> allResults = new ArrayList<>();
@@ -828,7 +885,7 @@ public class EnterpriseManagementTest {
     }
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the listAccountGroups operation using the AccountGroupsPager.getAll() method
   @Test
   public void testListAccountGroupsWithPagerGetAll() throws Throwable {
@@ -853,6 +910,7 @@ public class EnterpriseManagementTest {
       .parentAccountGroupId("testString")
       .parent("testString")
       .limit(Long.valueOf("10"))
+      .includeDeleted(true)
       .build();
 
     AccountGroupsPager pager = new AccountGroupsPager(enterpriseManagementService, listAccountGroupsOptions);
@@ -860,7 +918,7 @@ public class EnterpriseManagementTest {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the getAccountGroup operation with a valid options model parameter
   @Test
   public void testGetAccountGroupWOptions() throws Throwable {
@@ -962,6 +1020,56 @@ public class EnterpriseManagementTest {
   public void testUpdateAccountGroupNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     enterpriseManagementService.updateAccountGroup(null).execute();
+  }
+
+  // Test the deleteAccountGroup operation with a valid options model parameter
+  @Test
+  public void testDeleteAccountGroupWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteAccountGroupPath = "/account-groups/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteAccountGroupOptions model
+    DeleteAccountGroupOptions deleteAccountGroupOptionsModel = new DeleteAccountGroupOptions.Builder()
+      .accountGroupId("testString")
+      .build();
+
+    // Invoke deleteAccountGroup() with a valid options model and verify the result
+    Response<Void> response = enterpriseManagementService.deleteAccountGroup(deleteAccountGroupOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteAccountGroupPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteAccountGroup operation with and without retries enabled
+  @Test
+  public void testDeleteAccountGroupWRetries() throws Throwable {
+    enterpriseManagementService.enableRetries(4, 30);
+    testDeleteAccountGroupWOptions();
+
+    enterpriseManagementService.disableRetries();
+    testDeleteAccountGroupWOptions();
+  }
+
+  // Test the deleteAccountGroup operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteAccountGroupNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    enterpriseManagementService.deleteAccountGroup(null).execute();
   }
 
   // Perform setup needed before each test method

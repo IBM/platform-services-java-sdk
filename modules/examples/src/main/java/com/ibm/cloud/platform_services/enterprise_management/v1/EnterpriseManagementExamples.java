@@ -42,6 +42,8 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterp
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.UpdateEnterpriseOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountGroupOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -395,6 +397,34 @@ public class EnterpriseManagementExamples {
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s", e.getStatusCode(),
           e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_account
+      DeleteAccountOptions deleteAccountOptions = new DeleteAccountOptions.Builder()
+        .accountId(accountId)
+        .build();
+
+      Response<Void> response = enterpriseManagementService.deleteAccount(deleteAccountOptions).execute();
+      // end-delete_account
+      System.out.printf("deleteAccount() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_account_group
+      DeleteAccountGroupOptions deleteAccountGroupOptions = new DeleteAccountGroupOptions.Builder()
+        .accountGroupId(accountGroupId)
+        .build();
+
+      Response<Void> response = enterpriseManagementService.deleteAccountGroup(deleteAccountGroupOptions).execute();
+      // end-delete_account_group
+      System.out.printf("deleteAccountGroup() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
   }
 }

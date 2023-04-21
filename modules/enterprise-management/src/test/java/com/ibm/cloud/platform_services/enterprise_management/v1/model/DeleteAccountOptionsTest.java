@@ -13,11 +13,9 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.Enterprise;
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.ListEnterprisesResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.DeleteAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -25,17 +23,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListEnterprisesResponse model.
+ * Unit test class for the DeleteAccountOptions model.
  */
-public class ListEnterprisesResponseTest {
+public class DeleteAccountOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListEnterprisesResponse() throws Throwable {
-    ListEnterprisesResponse listEnterprisesResponseModel = new ListEnterprisesResponse();
-    assertNull(listEnterprisesResponseModel.getRowsCount());
-    assertNull(listEnterprisesResponseModel.getNextUrl());
-    assertNull(listEnterprisesResponseModel.getResources());
+  public void testDeleteAccountOptions() throws Throwable {
+    DeleteAccountOptions deleteAccountOptionsModel = new DeleteAccountOptions.Builder()
+      .accountId("testString")
+      .build();
+    assertEquals(deleteAccountOptionsModel.accountId(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteAccountOptionsError() throws Throwable {
+    new DeleteAccountOptions.Builder().build();
+  }
+
 }

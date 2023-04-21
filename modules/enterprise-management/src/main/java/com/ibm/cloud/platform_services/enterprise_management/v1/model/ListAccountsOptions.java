@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -24,6 +24,7 @@ public class ListAccountsOptions extends GenericModel {
   protected String nextDocid;
   protected String parent;
   protected Long limit;
+  protected Boolean includeDeleted;
 
   /**
    * Builder.
@@ -34,6 +35,7 @@ public class ListAccountsOptions extends GenericModel {
     private String nextDocid;
     private String parent;
     private Long limit;
+    private Boolean includeDeleted;
 
     /**
      * Instantiates a new Builder from an existing ListAccountsOptions instance.
@@ -46,6 +48,7 @@ public class ListAccountsOptions extends GenericModel {
       this.nextDocid = listAccountsOptions.nextDocid;
       this.parent = listAccountsOptions.parent;
       this.limit = listAccountsOptions.limit;
+      this.includeDeleted = listAccountsOptions.includeDeleted;
     }
 
     /**
@@ -117,6 +120,17 @@ public class ListAccountsOptions extends GenericModel {
       this.limit = limit;
       return this;
     }
+
+    /**
+     * Set the includeDeleted.
+     *
+     * @param includeDeleted the includeDeleted
+     * @return the ListAccountsOptions builder
+     */
+    public Builder includeDeleted(Boolean includeDeleted) {
+      this.includeDeleted = includeDeleted;
+      return this;
+    }
   }
 
   protected ListAccountsOptions() { }
@@ -127,6 +141,7 @@ public class ListAccountsOptions extends GenericModel {
     nextDocid = builder.nextDocid;
     parent = builder.parent;
     limit = builder.limit;
+    includeDeleted = builder.includeDeleted;
   }
 
   /**
@@ -192,6 +207,17 @@ public class ListAccountsOptions extends GenericModel {
    */
   public Long limit() {
     return limit;
+  }
+
+  /**
+   * Gets the includeDeleted.
+   *
+   * Include the deleted accounts from an enterprise when used in conjunction with enterprise_id.
+   *
+   * @return the includeDeleted
+   */
+  public Boolean includeDeleted() {
+    return includeDeleted;
   }
 }
 

@@ -154,6 +154,8 @@ public class UserManagementExamples {
       // begin-list_users
       ListUsersOptions listUsersOptions = new ListUsersOptions.Builder()
         .accountId(accountId)
+        .includeSettings(true)
+        .search("state:ACTIVE")
         .build();
 
       UsersPager pager = new UsersPager(userManagementService, listUsersOptions);

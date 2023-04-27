@@ -13,7 +13,6 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountRequestTraits;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -24,34 +23,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the CreateAccountOptions model.
+ * Unit test class for the CreateAccountRequestTraits model.
  */
-public class CreateAccountOptionsTest {
+public class CreateAccountRequestTraitsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testCreateAccountOptions() throws Throwable {
+  public void testCreateAccountRequestTraits() throws Throwable {
     CreateAccountRequestTraits createAccountRequestTraitsModel = new CreateAccountRequestTraits.Builder()
       .mfa("testString")
       .build();
     assertEquals(createAccountRequestTraitsModel.mfa(), "testString");
 
-    CreateAccountOptions createAccountOptionsModel = new CreateAccountOptions.Builder()
-      .parent("testString")
-      .name("testString")
-      .ownerIamId("testString")
-      .traits(createAccountRequestTraitsModel)
-      .build();
-    assertEquals(createAccountOptionsModel.parent(), "testString");
-    assertEquals(createAccountOptionsModel.name(), "testString");
-    assertEquals(createAccountOptionsModel.ownerIamId(), "testString");
-    assertEquals(createAccountOptionsModel.traits(), createAccountRequestTraitsModel);
-  }
+    String json = TestUtilities.serialize(createAccountRequestTraitsModel);
 
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateAccountOptionsError() throws Throwable {
-    new CreateAccountOptions.Builder().build();
+    CreateAccountRequestTraits createAccountRequestTraitsModelNew = TestUtilities.deserialize(json, CreateAccountRequestTraits.class);
+    assertTrue(createAccountRequestTraitsModelNew instanceof CreateAccountRequestTraits);
+    assertEquals(createAccountRequestTraitsModelNew.mfa(), "testString");
   }
-
 }

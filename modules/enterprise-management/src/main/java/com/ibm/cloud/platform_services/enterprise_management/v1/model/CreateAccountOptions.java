@@ -12,8 +12,6 @@
  */
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
-import java.util.Map;
-
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
@@ -24,7 +22,7 @@ public class CreateAccountOptions extends GenericModel {
   protected String parent;
   protected String name;
   protected String ownerIamId;
-  protected Map<String, Object> traits;
+  protected CreateAccountRequestTraits traits;
 
   /**
    * Builder.
@@ -33,7 +31,7 @@ public class CreateAccountOptions extends GenericModel {
     private String parent;
     private String name;
     private String ownerIamId;
-    private Map<String, Object> traits;
+    private CreateAccountRequestTraits traits;
 
     /**
      * Instantiates a new Builder from an existing CreateAccountOptions instance.
@@ -114,7 +112,7 @@ public class CreateAccountOptions extends GenericModel {
      * @param traits the traits
      * @return the CreateAccountOptions builder
      */
-    public Builder traits(Map<String, Object> traits) {
+    public Builder traits(CreateAccountRequestTraits traits) {
       this.traits = traits;
       return this;
     }
@@ -186,7 +184,7 @@ public class CreateAccountOptions extends GenericModel {
    *
    * @return the traits
    */
-  public Map<String, Object> traits() {
+  public CreateAccountRequestTraits traits() {
     return traits;
   }
 }

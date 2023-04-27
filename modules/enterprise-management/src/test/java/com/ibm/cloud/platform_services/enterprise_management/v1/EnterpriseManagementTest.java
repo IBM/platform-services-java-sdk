@@ -20,6 +20,7 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountsPa
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountRequestTraits;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
@@ -421,12 +422,17 @@ public class EnterpriseManagementTest {
       .setResponseCode(201)
       .setBody(mockResponseBody));
 
+    // Construct an instance of the CreateAccountRequestTraits model
+    CreateAccountRequestTraits createAccountRequestTraitsModel = new CreateAccountRequestTraits.Builder()
+      .mfa("testString")
+      .build();
+
     // Construct an instance of the CreateAccountOptions model
     CreateAccountOptions createAccountOptionsModel = new CreateAccountOptions.Builder()
       .parent("testString")
       .name("testString")
       .ownerIamId("testString")
-      .traits(java.util.Collections.singletonMap("anyKey", "anyValue"))
+      .traits(createAccountRequestTraitsModel)
       .build();
 
     // Invoke createAccount() with a valid options model and verify the result

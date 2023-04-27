@@ -1,3 +1,10 @@
+## [0.33.1](https://github.com/IBM/platform-services-java-sdk/compare/0.33.0...0.33.1) (2023-04-27)
+
+
+### Bug Fixes
+
+* **Enterprise management:** re-gen service after traits schema change ([#191](https://github.com/IBM/platform-services-java-sdk/issues/191)) ([75b68d6](https://github.com/IBM/platform-services-java-sdk/commit/75b68d67a5d0720fde78340e6e8e885dce4e211b))
+
 # [0.33.0](https://github.com/IBM/platform-services-java-sdk/compare/0.32.0...0.33.0) (2023-04-21)
 
 

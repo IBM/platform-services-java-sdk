@@ -13,11 +13,9 @@
 package com.ibm.cloud.platform_services.global_search.v2;
 
 import com.ibm.cloud.platform_services.global_search.v2.GlobalSearch;
-import com.ibm.cloud.platform_services.global_search.v2.model.GetSupportedTypesOptions;
 import com.ibm.cloud.platform_services.global_search.v2.model.ResultItem;
 import com.ibm.cloud.platform_services.global_search.v2.model.ScanResult;
 import com.ibm.cloud.platform_services.global_search.v2.model.SearchOptions;
-import com.ibm.cloud.platform_services.global_search.v2.model.SupportedTypesList;
 import com.ibm.cloud.platform_services.global_search.v2.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
@@ -73,7 +71,6 @@ public class GlobalSearchTest {
       .searchCursor("testString")
       .transactionId("testString")
       .accountId("testString")
-      .boundary("global")
       .limit(Long.valueOf("1"))
       .timeout(Long.valueOf("0"))
       .sort(java.util.Arrays.asList("testString"))
@@ -101,7 +98,6 @@ public class GlobalSearchTest {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(query.get("account_id"), "testString");
-    assertEquals(query.get("boundary"), "global");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1"));
     assertEquals(Long.valueOf(query.get("timeout")), Long.valueOf("0"));
     assertEquals(query.get("sort"), RequestUtils.join(java.util.Arrays.asList("testString"), ","));
@@ -120,48 +116,6 @@ public class GlobalSearchTest {
 
     globalSearchService.disableRetries();
     testSearchWOptions();
-  }
-
-  // Test the getSupportedTypes operation with a valid options model parameter
-  @Test
-  public void testGetSupportedTypesWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"supported_types\": [\"supportedTypes\"]}";
-    String getSupportedTypesPath = "/v2/resources/supported_types";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetSupportedTypesOptions model
-    GetSupportedTypesOptions getSupportedTypesOptionsModel = new GetSupportedTypesOptions();
-
-    // Invoke getSupportedTypes() with a valid options model and verify the result
-    Response<SupportedTypesList> response = globalSearchService.getSupportedTypes(getSupportedTypesOptionsModel).execute();
-    assertNotNull(response);
-    SupportedTypesList responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getSupportedTypesPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the getSupportedTypes operation with and without retries enabled
-  @Test
-  public void testGetSupportedTypesWRetries() throws Throwable {
-    globalSearchService.enableRetries(4, 30);
-    testGetSupportedTypesWOptions();
-
-    globalSearchService.disableRetries();
-    testGetSupportedTypesWOptions();
   }
 
   // Perform setup needed before each test method

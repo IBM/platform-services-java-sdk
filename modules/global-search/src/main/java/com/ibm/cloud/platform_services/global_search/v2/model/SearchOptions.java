@@ -23,16 +23,6 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class SearchOptions extends GenericModel {
 
   /**
-   * The boundary where the search performs. This parameter must be set only for the cross-account searches.
-   */
-  public interface Boundary {
-    /** global. */
-    String GLOBAL = "global";
-    /** us-regulated. */
-    String US_REGULATED = "us-regulated";
-  }
-
-  /**
    * Determines if deleted documents should be included in result set or not. Possible values are false (default), true
    * or any. If false, only existing documents are returned; if true, only deleted documents are returned; If any, both
    * existing and deleted documents are returned. (_for administrators only_).
@@ -91,7 +81,6 @@ public class SearchOptions extends GenericModel {
   protected String searchCursor;
   protected String transactionId;
   protected String accountId;
-  protected String boundary;
   protected Long limit;
   protected Long timeout;
   protected List<String> sort;
@@ -110,7 +99,6 @@ public class SearchOptions extends GenericModel {
     private String searchCursor;
     private String transactionId;
     private String accountId;
-    private String boundary;
     private Long limit;
     private Long timeout;
     private List<String> sort;
@@ -131,7 +119,6 @@ public class SearchOptions extends GenericModel {
       this.searchCursor = searchOptions.searchCursor;
       this.transactionId = searchOptions.transactionId;
       this.accountId = searchOptions.accountId;
-      this.boundary = searchOptions.boundary;
       this.limit = searchOptions.limit;
       this.timeout = searchOptions.timeout;
       this.sort = searchOptions.sort;
@@ -246,17 +233,6 @@ public class SearchOptions extends GenericModel {
     }
 
     /**
-     * Set the boundary.
-     *
-     * @param boundary the boundary
-     * @return the SearchOptions builder
-     */
-    public Builder boundary(String boundary) {
-      this.boundary = boundary;
-      return this;
-    }
-
-    /**
      * Set the limit.
      *
      * @param limit the limit
@@ -354,7 +330,6 @@ public class SearchOptions extends GenericModel {
     searchCursor = builder.searchCursor;
     transactionId = builder.transactionId;
     accountId = builder.accountId;
-    boundary = builder.boundary;
     limit = builder.limit;
     timeout = builder.timeout;
     sort = builder.sort;
@@ -430,17 +405,6 @@ public class SearchOptions extends GenericModel {
    */
   public String accountId() {
     return accountId;
-  }
-
-  /**
-   * Gets the boundary.
-   *
-   * The boundary where the search performs. This parameter must be set only for the cross-account searches.
-   *
-   * @return the boundary
-   */
-  public String boundary() {
-    return boundary;
   }
 
   /**

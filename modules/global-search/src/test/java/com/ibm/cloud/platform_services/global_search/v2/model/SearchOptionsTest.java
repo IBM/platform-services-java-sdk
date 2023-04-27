@@ -37,7 +37,6 @@ public class SearchOptionsTest {
       .searchCursor("testString")
       .transactionId("testString")
       .accountId("testString")
-      .boundary("global")
       .limit(Long.valueOf("1"))
       .timeout(Long.valueOf("0"))
       .sort(java.util.Arrays.asList("testString"))
@@ -52,7 +51,6 @@ public class SearchOptionsTest {
     assertEquals(searchOptionsModel.searchCursor(), "testString");
     assertEquals(searchOptionsModel.transactionId(), "testString");
     assertEquals(searchOptionsModel.accountId(), "testString");
-    assertEquals(searchOptionsModel.boundary(), "global");
     assertEquals(searchOptionsModel.limit(), Long.valueOf("1"));
     assertEquals(searchOptionsModel.timeout(), Long.valueOf("0"));
     assertEquals(searchOptionsModel.sort(), java.util.Arrays.asList("testString"));

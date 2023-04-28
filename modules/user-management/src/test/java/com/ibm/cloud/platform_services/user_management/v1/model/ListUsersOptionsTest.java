@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,11 +34,15 @@ public class ListUsersOptionsTest {
     ListUsersOptions listUsersOptionsModel = new ListUsersOptions.Builder()
       .accountId("testString")
       .limit(Long.valueOf("100"))
+      .includeSettings(true)
+      .search("testString")
       .start("testString")
       .userId("testString")
       .build();
     assertEquals(listUsersOptionsModel.accountId(), "testString");
     assertEquals(listUsersOptionsModel.limit(), Long.valueOf("100"));
+    assertEquals(listUsersOptionsModel.includeSettings(), Boolean.valueOf(true));
+    assertEquals(listUsersOptionsModel.search(), "testString");
     assertEquals(listUsersOptionsModel.start(), "testString");
     assertEquals(listUsersOptionsModel.userId(), "testString");
   }

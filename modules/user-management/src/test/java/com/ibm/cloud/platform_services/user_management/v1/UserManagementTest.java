@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022, 2023.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,22 +12,7 @@
  */
 package com.ibm.cloud.platform_services.user_management.v1;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.fail;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
+import com.ibm.cloud.platform_services.user_management.v1.UserManagement;
 import com.ibm.cloud.platform_services.user_management.v1.model.AcceptOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.Attribute;
 import com.ibm.cloud.platform_services.user_management.v1.model.GetUserProfileOptions;
@@ -35,6 +20,7 @@ import com.ibm.cloud.platform_services.user_management.v1.model.GetUserSettingsO
 import com.ibm.cloud.platform_services.user_management.v1.model.InviteUser;
 import com.ibm.cloud.platform_services.user_management.v1.model.InviteUserIamPolicy;
 import com.ibm.cloud.platform_services.user_management.v1.model.InviteUsersOptions;
+import com.ibm.cloud.platform_services.user_management.v1.model.InvitedUser;
 import com.ibm.cloud.platform_services.user_management.v1.model.InvitedUserList;
 import com.ibm.cloud.platform_services.user_management.v1.model.ListUsersOptions;
 import com.ibm.cloud.platform_services.user_management.v1.model.RemoveUserOptions;
@@ -49,11 +35,22 @@ import com.ibm.cloud.platform_services.user_management.v1.model.UsersPager;
 import com.ibm.cloud.platform_services.user_management.v1.model.V3RemoveUserOptions;
 import com.ibm.cloud.platform_services.user_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.security.Authenticator;
+import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * Unit test class for the UserManagement service.
@@ -88,6 +85,8 @@ public class UserManagementTest {
     ListUsersOptions listUsersOptionsModel = new ListUsersOptions.Builder()
       .accountId("testString")
       .limit(Long.valueOf("10"))
+      .includeSettings(true)
+      .search("testString")
       .start("testString")
       .userId("testString")
       .build();
@@ -109,6 +108,8 @@ public class UserManagementTest {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(Boolean.valueOf(query.get("include_settings")), Boolean.valueOf(true));
+    assertEquals(query.get("search"), "testString");
     assertEquals(query.get("_start"), "testString");
     assertEquals(query.get("user_id"), "testString");
   }
@@ -152,6 +153,8 @@ public class UserManagementTest {
     ListUsersOptions listUsersOptions = new ListUsersOptions.Builder()
       .accountId("testString")
       .limit(Long.valueOf("10"))
+      .includeSettings(true)
+      .search("testString")
       .userId("testString")
       .build();
 
@@ -164,7 +167,7 @@ public class UserManagementTest {
     }
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the listUsers operation using the UsersPager.getAll() method
   @Test
   public void testListUsersWithPagerGetAll() throws Throwable {
@@ -187,6 +190,8 @@ public class UserManagementTest {
     ListUsersOptions listUsersOptions = new ListUsersOptions.Builder()
       .accountId("testString")
       .limit(Long.valueOf("10"))
+      .includeSettings(true)
+      .search("testString")
       .userId("testString")
       .build();
 
@@ -195,7 +200,7 @@ public class UserManagementTest {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the inviteUsers operation with a valid options model parameter
   @Test
   public void testInviteUsersWOptions() throws Throwable {

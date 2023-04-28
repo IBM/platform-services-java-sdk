@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020, 2022.
+ * (C) Copyright IBM Corp. 2020, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -208,7 +208,89 @@ public class UserManagementIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test(dependsOnMethods = { "testListUsers" })
+    @Test(dependsOnMethods={ "testListUsers" })
+    public void testListUsersIncludeSettings() throws Exception {
+        try {
+            List<UserProfile> userProfiles = new ArrayList<>();
+
+            long pageSize = 10;
+            String start = null;
+            do {
+                ListUsersOptions listUsersOptions = new ListUsersOptions.Builder()
+                        .accountId(ACCOUNT_ID)
+                        .includeSettings(true)
+                        .limit(pageSize)
+                        .start(start)
+                        .build();
+
+                // Invoke operation
+                Response<UserList> response = service.listUsers(listUsersOptions).execute();
+                // Validate response
+                assertNotNull(response);
+                assertEquals(response.getStatusCode(), 200);
+
+                UserList userListResult = response.getResult();
+                assertNotNull(userListResult);
+                // log(String.format("listUsers() result:\n%s", userListResult.toString()));
+
+                // Add this page of results to our overall list.
+                for (UserProfile userProfile : userListResult.getResources()) {
+                    userProfiles.add(userProfile);
+                }
+
+                // Get "start" value for next page.
+                start = UrlHelper.getQueryParam(userListResult.getNextUrl(), "_start");
+            } while (start != null);
+
+            log(String.format("Received a total of %d user profiles.\n", userProfiles.size()));
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods={ "testListUsersIncludeSettings" })
+    public void testListUsersWithSearch() throws Exception {
+        try {
+            List<UserProfile> userProfiles = new ArrayList<>();
+
+            long pageSize = 10;
+            String start = null;
+            do {
+                ListUsersOptions listUsersOptions = new ListUsersOptions.Builder()
+                        .accountId(ACCOUNT_ID)
+                        .search("state:ACTIVE")
+                        .limit(pageSize)
+                        .start(start)
+                        .build();
+
+                // Invoke operation
+                Response<UserList> response = service.listUsers(listUsersOptions).execute();
+                // Validate response
+                assertNotNull(response);
+                assertEquals(response.getStatusCode(), 200);
+
+                UserList userListResult = response.getResult();
+                assertNotNull(userListResult);
+                // log(String.format("listUsers() result:\n%s", userListResult.toString()));
+
+                // Add this page of results to our overall list.
+                for (UserProfile userProfile : userListResult.getResources()) {
+                    userProfiles.add(userProfile);
+                }
+
+                // Get "start" value for next page.
+                start = UrlHelper.getQueryParam(userListResult.getNextUrl(), "_start");
+            } while (start != null);
+
+            log(String.format("Received a total of %d user profiles.\n", userProfiles.size()));
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testListUsersWithSearch" })
     public void testListUsersWithPager() throws Exception {
       try {
         ListUsersOptions options = new ListUsersOptions.Builder()

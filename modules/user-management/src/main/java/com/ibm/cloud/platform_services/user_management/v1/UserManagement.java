@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,14 +12,10 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.60.2-95dc7721-20221102-203229
+ * IBM OpenAPI SDK Code Generator Version: 3.70.0-7df966bf-20230419-195904
  */
 
 package com.ibm.cloud.platform_services.user_management.v1;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
@@ -43,6 +39,9 @@ import com.ibm.cloud.sdk.core.security.Authenticator;
 import com.ibm.cloud.sdk.core.security.ConfigBasedAuthenticatorFactory;
 import com.ibm.cloud.sdk.core.service.BaseService;
 import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Manage the lifecycle of your users using User Management APIs.
@@ -106,7 +105,8 @@ public class UserManagement extends BaseService {
    * role. If restricted view is enabled and user has the viewer, editor, or administrator role on the user management
    * service, the API returns all users in the account. If unrestricted view is enabled and the user does not have these
    * roles, the API returns only the current user. Users are returned in a paginated list with a default limit of 100
-   * users. You can iterate through all users by following the `next_url` field.
+   * users. You can iterate through all users by following the `next_url` field. Additional substring search fields are
+   * supported to filter the users.
    *
    * @param listUsersOptions the {@link ListUsersOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link UserList}
@@ -124,6 +124,12 @@ public class UserManagement extends BaseService {
     builder.header("Accept", "application/json");
     if (listUsersOptions.limit() != null) {
       builder.query("limit", String.valueOf(listUsersOptions.limit()));
+    }
+    if (listUsersOptions.includeSettings() != null) {
+      builder.query("include_settings", String.valueOf(listUsersOptions.includeSettings()));
+    }
+    if (listUsersOptions.search() != null) {
+      builder.query("search", String.valueOf(listUsersOptions.search()));
     }
     if (listUsersOptions.start() != null) {
       builder.query("_start", String.valueOf(listUsersOptions.start()));

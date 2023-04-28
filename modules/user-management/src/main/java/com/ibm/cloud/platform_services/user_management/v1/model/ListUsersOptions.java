@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,6 +21,8 @@ public class ListUsersOptions extends GenericModel {
 
   protected String accountId;
   protected Long limit;
+  protected Boolean includeSettings;
+  protected String search;
   protected String start;
   protected String userId;
 
@@ -30,6 +32,8 @@ public class ListUsersOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private Long limit;
+    private Boolean includeSettings;
+    private String search;
     private String start;
     private String userId;
 
@@ -41,6 +45,8 @@ public class ListUsersOptions extends GenericModel {
     private Builder(ListUsersOptions listUsersOptions) {
       this.accountId = listUsersOptions.accountId;
       this.limit = listUsersOptions.limit;
+      this.includeSettings = listUsersOptions.includeSettings;
+      this.search = listUsersOptions.search;
       this.start = listUsersOptions.start;
       this.userId = listUsersOptions.userId;
     }
@@ -92,6 +98,28 @@ public class ListUsersOptions extends GenericModel {
     }
 
     /**
+     * Set the includeSettings.
+     *
+     * @param includeSettings the includeSettings
+     * @return the ListUsersOptions builder
+     */
+    public Builder includeSettings(Boolean includeSettings) {
+      this.includeSettings = includeSettings;
+      return this;
+    }
+
+    /**
+     * Set the search.
+     *
+     * @param search the search
+     * @return the ListUsersOptions builder
+     */
+    public Builder search(String search) {
+      this.search = search;
+      return this;
+    }
+
+    /**
      * Set the start.
      *
      * @param start the start
@@ -121,6 +149,8 @@ public class ListUsersOptions extends GenericModel {
       "accountId cannot be empty");
     accountId = builder.accountId;
     limit = builder.limit;
+    includeSettings = builder.includeSettings;
+    search = builder.search;
     start = builder.start;
     userId = builder.userId;
   }
@@ -154,6 +184,32 @@ public class ListUsersOptions extends GenericModel {
    */
   public Long limit() {
     return limit;
+  }
+
+  /**
+   * Gets the includeSettings.
+   *
+   * The user settings to be returned. Set to true to view language, allowed IP address, and authentication settings.
+   *
+   * @return the includeSettings
+   */
+  public Boolean includeSettings() {
+    return includeSettings;
+  }
+
+  /**
+   * Gets the search.
+   *
+   * The desired search results to be returned. To view the list of users with the additional search filter, use the
+   * following query options: `firstname`, `lastname`, `email`, `state`, `substate`, `iam_id`, `realm`, and `userId`.
+   * HTML URL encoding for the search query and `:` must be used. For example, search=state%3AINVALID returns a list of
+   * invalid users. Multiple search queries can be combined to obtain `OR` results using `,` operator (not URL encoded).
+   * For example, search=state%3AINVALID,email%3Amail.test.ibm.com.
+   *
+   * @return the search
+   */
+  public String search() {
+    return search;
   }
 
   /**

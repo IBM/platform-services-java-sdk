@@ -1,3 +1,10 @@
+## [0.33.2](https://github.com/IBM/platform-services-java-sdk/compare/0.33.1...0.33.2) (2023-04-28)
+
+
+### Bug Fixes
+
+* **Global Search:** remove deprecated method getSupportedTypes ([#192](https://github.com/IBM/platform-services-java-sdk/issues/192)) ([d9802ed](https://github.com/IBM/platform-services-java-sdk/commit/d9802ed45c1e1c1b98274f014ef50eccadfccc33))
+
 ## [0.33.1](https://github.com/IBM/platform-services-java-sdk/compare/0.33.0...0.33.1) (2023-04-27)
 
 

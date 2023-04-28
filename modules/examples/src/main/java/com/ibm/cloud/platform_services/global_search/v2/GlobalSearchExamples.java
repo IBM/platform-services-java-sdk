@@ -16,10 +16,8 @@ package com.ibm.cloud.platform_services.global_search.v2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.cloud.platform_services.global_search.v2.model.GetSupportedTypesOptions;
 import com.ibm.cloud.platform_services.global_search.v2.model.ScanResult;
 import com.ibm.cloud.platform_services.global_search.v2.model.SearchOptions;
-import com.ibm.cloud.platform_services.global_search.v2.model.SupportedTypesList;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 
@@ -70,25 +68,5 @@ public class GlobalSearchExamples {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
-
-    try {
-      System.out.println("getSupportedTypes() result:");
-
-      // begin-get_supported_types
-
-      GetSupportedTypesOptions getSupportedTypesOptions = new GetSupportedTypesOptions();
-
-      Response<SupportedTypesList> response = service.getSupportedTypes(getSupportedTypesOptions).execute();
-      SupportedTypesList supportedTypesList = response.getResult();
-
-      System.out.println(supportedTypesList);
-
-      // end-get_supported_types
-
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
   }
 }

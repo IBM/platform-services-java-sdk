@@ -122,24 +122,6 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test
-    public void testGetSupportedTypes() throws Exception {
-        try {
-            GetSupportedTypesOptions getSupportedTypesOptions = new GetSupportedTypesOptions();
-
-            Response<SupportedTypesList> response = service.getSupportedTypes(getSupportedTypesOptions).execute();
-            assertNotNull(response);
-            assertEquals(response.getStatusCode(), 200);
-
-            SupportedTypesList supportedTypesListResult = response.getResult();
-            assertNotNull(supportedTypesListResult);
-            log(String.format("getSupportedTypes() result:\n%s\n", supportedTypesListResult.toString()));
-        } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-                    e.getMessage(), e.getDebuggingInfo()));
-        }
-    }
-
     @AfterClass
     public void tearDown() {
         // Add any clean up logic here

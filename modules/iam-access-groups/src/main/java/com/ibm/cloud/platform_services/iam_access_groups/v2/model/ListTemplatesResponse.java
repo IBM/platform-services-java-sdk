@@ -1,0 +1,126 @@
+/*
+ * (C) Copyright IBM Corp. 2023.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+package com.ibm.cloud.platform_services.iam_access_groups.v2.model;
+
+import java.util.List;
+
+import com.google.gson.annotations.SerializedName;
+import com.ibm.cloud.sdk.core.service.model.GenericModel;
+
+/**
+ * Response object for listing templates.
+ */
+public class ListTemplatesResponse extends GenericModel {
+
+  protected Long limit;
+  protected Long offset;
+  @SerializedName("total_count")
+  protected Long totalCount;
+  protected HrefStruct first;
+  protected HrefStruct previous;
+  protected HrefStruct next;
+  protected HrefStruct last;
+  @SerializedName("groups_templates")
+  protected List<TemplateItem> groupsTemplates;
+
+  protected ListTemplatesResponse() { }
+
+  /**
+   * Gets the limit.
+   *
+   * The maximum number of resources to return.
+   *
+   * @return the limit
+   */
+  public Long getLimit() {
+    return limit;
+  }
+
+  /**
+   * Gets the offset.
+   *
+   * The offset of the first resource in the list.
+   *
+   * @return the offset
+   */
+  public Long getOffset() {
+    return offset;
+  }
+
+  /**
+   * Gets the totalCount.
+   *
+   * The total number of resources in the list.
+   *
+   * @return the totalCount
+   */
+  public Long getTotalCount() {
+    return totalCount;
+  }
+
+  /**
+   * Gets the first.
+   *
+   * A link object.
+   *
+   * @return the first
+   */
+  public HrefStruct getFirst() {
+    return first;
+  }
+
+  /**
+   * Gets the previous.
+   *
+   * A link object.
+   *
+   * @return the previous
+   */
+  public HrefStruct getPrevious() {
+    return previous;
+  }
+
+  /**
+   * Gets the next.
+   *
+   * A link object.
+   *
+   * @return the next
+   */
+  public HrefStruct getNext() {
+    return next;
+  }
+
+  /**
+   * Gets the last.
+   *
+   * A link object.
+   *
+   * @return the last
+   */
+  public HrefStruct getLast() {
+    return last;
+  }
+
+  /**
+   * Gets the groupsTemplates.
+   *
+   * A list of templates.
+   *
+   * @return the groupsTemplates
+   */
+  public List<TemplateItem> getGroupsTemplates() {
+    return groupsTemplates;
+  }
+}
+

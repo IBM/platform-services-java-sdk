@@ -19,26 +19,28 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The core set of properties associated with a policy.
+ * The set of properties associated with the policy template assignment.
  */
-public class Policy extends GenericModel {
+public class PolicyAssignmentRecord extends GenericModel {
 
   /**
-   * The policy state.
+   * Assignment target type.
    */
-  public interface State {
-    /** active. */
-    String ACTIVE = "active";
-    /** deleted. */
-    String DELETED = "deleted";
+  public interface TargetType {
+    /** Account. */
+    String ACCOUNT = "Account";
   }
 
+  @SerializedName("template_id")
+  protected String templateId;
+  @SerializedName("template_version")
+  protected String templateVersion;
+  @SerializedName("assignment_id")
+  protected String assignmentId;
+  @SerializedName("target_type")
+  protected String targetType;
+  protected String target;
   protected String id;
-  protected String type;
-  protected String description;
-  protected List<PolicySubject> subjects;
-  protected List<PolicyRole> roles;
-  protected List<PolicyResource> resources;
   protected String href;
   @SerializedName("created_at")
   protected Date createdAt;
@@ -48,15 +50,69 @@ public class Policy extends GenericModel {
   protected Date lastModifiedAt;
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
-  protected String state;
-  protected TemplateMetada template;
+  protected List<PolicyAssignmentResources> resources;
 
-  protected Policy() { }
+  protected PolicyAssignmentRecord() { }
+
+  /**
+   * Gets the templateId.
+   *
+   * policy template id.
+   *
+   * @return the templateId
+   */
+  public String getTemplateId() {
+    return templateId;
+  }
+
+  /**
+   * Gets the templateVersion.
+   *
+   * policy template version.
+   *
+   * @return the templateVersion
+   */
+  public String getTemplateVersion() {
+    return templateVersion;
+  }
+
+  /**
+   * Gets the assignmentId.
+   *
+   * Passed in value to correlate with other assignments.
+   *
+   * @return the assignmentId
+   */
+  public String getAssignmentId() {
+    return assignmentId;
+  }
+
+  /**
+   * Gets the targetType.
+   *
+   * Assignment target type.
+   *
+   * @return the targetType
+   */
+  public String getTargetType() {
+    return targetType;
+  }
+
+  /**
+   * Gets the target.
+   *
+   * assignment target id.
+   *
+   * @return the target
+   */
+  public String getTarget() {
+    return target;
+  }
 
   /**
    * Gets the id.
    *
-   * The policy ID.
+   * Policy assignment ID.
    *
    * @return the id
    */
@@ -65,64 +121,9 @@ public class Policy extends GenericModel {
   }
 
   /**
-   * Gets the type.
-   *
-   * The policy type; either 'access' or 'authorization'.
-   *
-   * @return the type
-   */
-  public String getType() {
-    return type;
-  }
-
-  /**
-   * Gets the description.
-   *
-   * Customer-defined description.
-   *
-   * @return the description
-   */
-  public String getDescription() {
-    return description;
-  }
-
-  /**
-   * Gets the subjects.
-   *
-   * The subjects associated with a policy.
-   *
-   * @return the subjects
-   */
-  public List<PolicySubject> getSubjects() {
-    return subjects;
-  }
-
-  /**
-   * Gets the roles.
-   *
-   * A set of role cloud resource names (CRNs) granted by the policy.
-   *
-   * @return the roles
-   */
-  public List<PolicyRole> getRoles() {
-    return roles;
-  }
-
-  /**
-   * Gets the resources.
-   *
-   * The resources associated with a policy.
-   *
-   * @return the resources
-   */
-  public List<PolicyResource> getResources() {
-    return resources;
-  }
-
-  /**
    * Gets the href.
    *
-   * The href link back to the policy.
+   * The href URL that links to the policies assignments API by policy assignment ID.
    *
    * @return the href
    */
@@ -133,7 +134,7 @@ public class Policy extends GenericModel {
   /**
    * Gets the createdAt.
    *
-   * The UTC timestamp when the policy was created.
+   * The UTC timestamp when the policy assignment was created.
    *
    * @return the createdAt
    */
@@ -144,7 +145,7 @@ public class Policy extends GenericModel {
   /**
    * Gets the createdById.
    *
-   * The iam ID of the entity that created the policy.
+   * The iam ID of the entity that created the policy assignment.
    *
    * @return the createdById
    */
@@ -155,7 +156,7 @@ public class Policy extends GenericModel {
   /**
    * Gets the lastModifiedAt.
    *
-   * The UTC timestamp when the policy was last modified.
+   * The UTC timestamp when the policy assignment was last modified.
    *
    * @return the lastModifiedAt
    */
@@ -166,7 +167,7 @@ public class Policy extends GenericModel {
   /**
    * Gets the lastModifiedById.
    *
-   * The iam ID of the entity that last modified the policy.
+   * The iam ID of the entity that last modified the policy assignment.
    *
    * @return the lastModifiedById
    */
@@ -175,25 +176,14 @@ public class Policy extends GenericModel {
   }
 
   /**
-   * Gets the state.
+   * Gets the resources.
    *
-   * The policy state.
+   * Object for each account assigned.
    *
-   * @return the state
+   * @return the resources
    */
-  public String getState() {
-    return state;
-  }
-
-  /**
-   * Gets the template.
-   *
-   * Origin Template information.
-   *
-   * @return the template
-   */
-  public TemplateMetada getTemplate() {
-    return template;
+  public List<PolicyAssignmentResources> getResources() {
+    return resources;
   }
 }
 

@@ -64,6 +64,7 @@ public class V2Policy extends GenericModel {
   protected String lastPermitAt;
   @SerializedName("last_permit_frequency")
   protected Long lastPermitFrequency;
+  protected TemplateMetada template;
 
   protected V2Policy() { }
 
@@ -241,6 +242,17 @@ public class V2Policy extends GenericModel {
    */
   public Long getLastPermitFrequency() {
     return lastPermitFrequency;
+  }
+
+  /**
+   * Gets the template.
+   *
+   * Origin Template information.
+   *
+   * @return the template
+   */
+  public TemplateMetada getTemplate() {
+    return template;
   }
 }
 

@@ -21,6 +21,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubj
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetada;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;

@@ -20,25 +20,10 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class PolicyAssignmentResourcesPolicy extends GenericModel {
 
-  /**
-   * The policy assignment status.
-   */
-  public interface Status {
-    /** in_progress. */
-    String IN_PROGRESS = "in_progress";
-    /** succeeded. */
-    String SUCCEEDED = "succeeded";
-    /** succeed_with_errors. */
-    String SUCCEED_WITH_ERRORS = "succeed_with_errors";
-    /** failed. */
-    String FAILED = "failed";
-  }
-
   @SerializedName("resource_created")
   protected AssignmentResourceCreated resourceCreated;
   @SerializedName("error_message")
   protected ErrorResponse errorMessage;
-  protected String status;
 
   protected PolicyAssignmentResourcesPolicy() { }
 
@@ -62,17 +47,6 @@ public class PolicyAssignmentResourcesPolicy extends GenericModel {
    */
   public ErrorResponse getErrorMessage() {
     return errorMessage;
-  }
-
-  /**
-   * Gets the status.
-   *
-   * The policy assignment status.
-   *
-   * @return the status
-   */
-  public String getStatus() {
-    return status;
   }
 }
 

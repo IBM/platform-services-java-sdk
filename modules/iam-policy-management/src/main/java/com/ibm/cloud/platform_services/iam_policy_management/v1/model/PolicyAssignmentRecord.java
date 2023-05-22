@@ -31,6 +31,20 @@ public class PolicyAssignmentRecord extends GenericModel {
     String ACCOUNT = "Account";
   }
 
+  /**
+   * The policy assignment status.
+   */
+  public interface Status {
+    /** in_progress. */
+    String IN_PROGRESS = "in_progress";
+    /** succeeded. */
+    String SUCCEEDED = "succeeded";
+    /** succeed_with_errors. */
+    String SUCCEED_WITH_ERRORS = "succeed_with_errors";
+    /** failed. */
+    String FAILED = "failed";
+  }
+
   @SerializedName("template_id")
   protected String templateId;
   @SerializedName("template_version")
@@ -51,6 +65,7 @@ public class PolicyAssignmentRecord extends GenericModel {
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
   protected List<PolicyAssignmentResources> resources;
+  protected String status;
 
   protected PolicyAssignmentRecord() { }
 
@@ -184,6 +199,17 @@ public class PolicyAssignmentRecord extends GenericModel {
    */
   public List<PolicyAssignmentResources> getResources() {
     return resources;
+  }
+
+  /**
+   * Gets the status.
+   *
+   * The policy assignment status.
+   *
+   * @return the status
+   */
+  public String getStatus() {
+    return status;
   }
 }
 

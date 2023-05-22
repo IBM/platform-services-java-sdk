@@ -39,6 +39,5 @@ public class PolicyAssignmentResourcesPolicyTest {
     PolicyAssignmentResourcesPolicy policyAssignmentResourcesPolicyModel = new PolicyAssignmentResourcesPolicy();
     assertNull(policyAssignmentResourcesPolicyModel.getResourceCreated());
     assertNull(policyAssignmentResourcesPolicyModel.getErrorMessage());
-    assertNull(policyAssignmentResourcesPolicyModel.getStatus());
   }
 }

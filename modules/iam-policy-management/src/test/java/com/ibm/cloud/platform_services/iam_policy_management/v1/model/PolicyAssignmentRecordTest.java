@@ -45,5 +45,6 @@ public class PolicyAssignmentRecordTest {
     assertNull(policyAssignmentRecordModel.getTargetType());
     assertNull(policyAssignmentRecordModel.getTarget());
     assertNull(policyAssignmentRecordModel.getResources());
+    assertNull(policyAssignmentRecordModel.getStatus());
   }
 }

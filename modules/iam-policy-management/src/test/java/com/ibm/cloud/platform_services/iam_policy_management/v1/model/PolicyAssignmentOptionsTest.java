@@ -31,33 +31,11 @@ public class PolicyAssignmentOptionsTest {
 
   @Test
   public void testPolicyAssignmentOptions() throws Throwable {
-    PolicyAssignmentOptions policyAssignmentOptionsModel = new PolicyAssignmentOptions.Builder()
-      .subjectType("iam_id")
-      .subjectId("testString")
-      .rootRequesterId("testString")
-      .rootTemplateId("testString")
-      .rootTemplateVersion("testString")
-      .build();
-    assertEquals(policyAssignmentOptionsModel.subjectType(), "iam_id");
-    assertEquals(policyAssignmentOptionsModel.subjectId(), "testString");
-    assertEquals(policyAssignmentOptionsModel.rootRequesterId(), "testString");
-    assertEquals(policyAssignmentOptionsModel.rootTemplateId(), "testString");
-    assertEquals(policyAssignmentOptionsModel.rootTemplateVersion(), "testString");
-
-    String json = TestUtilities.serialize(policyAssignmentOptionsModel);
-
-    PolicyAssignmentOptions policyAssignmentOptionsModelNew = TestUtilities.deserialize(json, PolicyAssignmentOptions.class);
-    assertTrue(policyAssignmentOptionsModelNew instanceof PolicyAssignmentOptions);
-    assertEquals(policyAssignmentOptionsModelNew.subjectType(), "iam_id");
-    assertEquals(policyAssignmentOptionsModelNew.subjectId(), "testString");
-    assertEquals(policyAssignmentOptionsModelNew.rootRequesterId(), "testString");
-    assertEquals(policyAssignmentOptionsModelNew.rootTemplateId(), "testString");
-    assertEquals(policyAssignmentOptionsModelNew.rootTemplateVersion(), "testString");
+    PolicyAssignmentOptions policyAssignmentOptionsModel = new PolicyAssignmentOptions();
+    assertNull(policyAssignmentOptionsModel.getSubjectType());
+    assertNull(policyAssignmentOptionsModel.getSubjectId());
+    assertNull(policyAssignmentOptionsModel.getRootRequesterId());
+    assertNull(policyAssignmentOptionsModel.getRootTemplateId());
+    assertNull(policyAssignmentOptionsModel.getRootTemplateVersion());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testPolicyAssignmentOptionsError() throws Throwable {
-    new PolicyAssignmentOptions.Builder().build();
-  }
-
 }

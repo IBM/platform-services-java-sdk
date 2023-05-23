@@ -18,6 +18,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ConflictsW
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorResponse;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentRecord;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcesPolicy;
@@ -44,6 +45,7 @@ public class PolicyAssignmentRecordTest {
     assertNull(policyAssignmentRecordModel.getAssignmentId());
     assertNull(policyAssignmentRecordModel.getTargetType());
     assertNull(policyAssignmentRecordModel.getTarget());
+    assertNull(policyAssignmentRecordModel.getOptions());
     assertNull(policyAssignmentRecordModel.getResources());
     assertNull(policyAssignmentRecordModel.getStatus());
   }

@@ -55,6 +55,8 @@ public class PolicyAssignmentRecord extends GenericModel {
   protected String targetType;
   protected String target;
   protected String id;
+  @SerializedName("account_id")
+  protected String accountId;
   protected String href;
   @SerializedName("created_at")
   protected Date createdAt;
@@ -64,6 +66,7 @@ public class PolicyAssignmentRecord extends GenericModel {
   protected Date lastModifiedAt;
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
+  protected List<PolicyAssignmentOptions> options;
   protected List<PolicyAssignmentResources> resources;
   protected String status;
 
@@ -136,6 +139,17 @@ public class PolicyAssignmentRecord extends GenericModel {
   }
 
   /**
+   * Gets the accountId.
+   *
+   * The account GUID that the policies assignments belong to..
+   *
+   * @return the accountId
+   */
+  public String getAccountId() {
+    return accountId;
+  }
+
+  /**
    * Gets the href.
    *
    * The href URL that links to the policies assignments API by policy assignment ID.
@@ -188,6 +202,17 @@ public class PolicyAssignmentRecord extends GenericModel {
    */
   public String getLastModifiedById() {
     return lastModifiedById;
+  }
+
+  /**
+   * Gets the options.
+   *
+   * Object for each properties for a policy assignment.
+   *
+   * @return the options
+   */
+  public List<PolicyAssignmentOptions> getOptions() {
+    return options;
   }
 
   /**

@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.64.0-959a5845-20230112-195144
+ * IBM OpenAPI SDK Code Generator Version: 3.72.0-5d70f2bb-20230511-203609
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -32,6 +32,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOpti
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
@@ -41,6 +42,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentitiesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
@@ -53,6 +56,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentitiesResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
@@ -60,6 +65,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollment
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
@@ -1083,6 +1090,148 @@ public class IamIdentity extends BaseService {
     pathParamsMap.put("link-id", deleteLinkOptions.linkId());
     RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/links/{link-id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteLink");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get a list of identities that can assume the trusted profile.
+   *
+   * Get a list of identities that can assume the trusted profile.
+   *
+   * @param getProfileIdentitiesOptions the {@link GetProfileIdentitiesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileIdentitiesResponse}
+   */
+  public ServiceCall<ProfileIdentitiesResponse> getProfileIdentities(GetProfileIdentitiesOptions getProfileIdentitiesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getProfileIdentitiesOptions,
+      "getProfileIdentitiesOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", getProfileIdentitiesOptions.profileId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/identities", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getProfileIdentities");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ProfileIdentitiesResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileIdentitiesResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update the list of identities that can assume the trusted profile.
+   *
+   * Update the list of identities that can assume the trusted profile.
+   *
+   * @param setProfileIdentitiesOptions the {@link SetProfileIdentitiesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileIdentitiesResponse}
+   */
+  public ServiceCall<ProfileIdentitiesResponse> setProfileIdentities(SetProfileIdentitiesOptions setProfileIdentitiesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(setProfileIdentitiesOptions,
+      "setProfileIdentitiesOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", setProfileIdentitiesOptions.profileId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/identities", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "setProfileIdentities");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", setProfileIdentitiesOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    if (setProfileIdentitiesOptions.identities() != null) {
+      contentJson.add("identities", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(setProfileIdentitiesOptions.identities()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ProfileIdentitiesResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileIdentitiesResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Add a specific identity that can assume the trusted profile.
+   *
+   * Add a specific identity that can assume the trusted profile.
+   *
+   * @param setProfileIdentityOptions the {@link SetProfileIdentityOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileIdentity}
+   */
+  public ServiceCall<ProfileIdentity> setProfileIdentity(SetProfileIdentityOptions setProfileIdentityOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(setProfileIdentityOptions,
+      "setProfileIdentityOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", setProfileIdentityOptions.profileId());
+    pathParamsMap.put("identity-type", setProfileIdentityOptions.identityType());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/identities/{identity-type}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "setProfileIdentity");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("identifier", setProfileIdentityOptions.identifier());
+    contentJson.addProperty("type", setProfileIdentityOptions.type());
+    if (setProfileIdentityOptions.iamId() != null) {
+      contentJson.addProperty("iam_id", setProfileIdentityOptions.iamId());
+    }
+    if (setProfileIdentityOptions.accounts() != null) {
+      contentJson.add("accounts", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(setProfileIdentityOptions.accounts()));
+    }
+    if (setProfileIdentityOptions.description() != null) {
+      contentJson.addProperty("description", setProfileIdentityOptions.description());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ProfileIdentity> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileIdentity>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get the identity that can assume the trusted profile.
+   *
+   * Get the identity that can assume the trusted profile.
+   *
+   * @param getProfileIdentityOptions the {@link GetProfileIdentityOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ProfileIdentity}
+   */
+  public ServiceCall<ProfileIdentity> getProfileIdentity(GetProfileIdentityOptions getProfileIdentityOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getProfileIdentityOptions,
+      "getProfileIdentityOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", getProfileIdentityOptions.profileId());
+    pathParamsMap.put("identity-type", getProfileIdentityOptions.identityType());
+    pathParamsMap.put("identifier-id", getProfileIdentityOptions.identifierId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/identities/{identity-type}/{identifier-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getProfileIdentity");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ProfileIdentity> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ProfileIdentity>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete the identity that can assume the trusted profile.
+   *
+   * Delete the identity that can assume the trusted profile.
+   *
+   * @param deleteProfileIdentityOptions the {@link DeleteProfileIdentityOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteProfileIdentity(DeleteProfileIdentityOptions deleteProfileIdentityOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteProfileIdentityOptions,
+      "deleteProfileIdentityOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", deleteProfileIdentityOptions.profileId());
+    pathParamsMap.put("identity-type", deleteProfileIdentityOptions.identityType());
+    pathParamsMap.put("identifier-id", deleteProfileIdentityOptions.identifierId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/identities/{identity-type}/{identifier-id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteProfileIdentity");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }

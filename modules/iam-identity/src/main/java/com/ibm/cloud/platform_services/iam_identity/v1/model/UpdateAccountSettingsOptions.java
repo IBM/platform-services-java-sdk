@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -55,6 +55,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Defines the MFA trait for the account. Valid values:
    *   * NONE - No MFA trait set
+   *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users
@@ -64,6 +65,8 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   public interface Mfa {
     /** NONE. */
     String NONE = "NONE";
+    /** NONE_NO_ROPC. */
+    String NONE_NO_ROPC = "NONE_NO_ROPC";
     /** TOTP. */
     String TOTP = "TOTP";
     /** TOTP4ALL. */
@@ -400,6 +403,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
    *
    * Defines the MFA trait for the account. Valid values:
    *   * NONE - No MFA trait set
+   *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users
@@ -479,7 +483,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
    * Gets the systemRefreshTokenExpirationInSeconds.
    *
    * Defines the refresh token expiration in seconds. Valid values:
-   *   * Any whole number between '900' and '2592000'
+   *   * Any whole number between '900' and '259200'
    *   * NOT_SET - To unset account setting and use service default.
    *
    * @return the systemRefreshTokenExpirationInSeconds

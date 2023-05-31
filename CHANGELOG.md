@@ -1,3 +1,10 @@
+# [0.34.0](https://github.com/IBM/platform-services-java-sdk/compare/0.33.2...0.34.0) (2023-05-31)
+
+
+### Features
+
+* **build:** force new version to be published ([#197](https://github.com/IBM/platform-services-java-sdk/issues/197)) ([11069fa](https://github.com/IBM/platform-services-java-sdk/commit/11069fa6d79f8efde8ff04cb62015829908ba517))
+
 ## [0.33.2](https://github.com/IBM/platform-services-java-sdk/compare/0.33.1...0.33.2) (2023-04-28)
 
 

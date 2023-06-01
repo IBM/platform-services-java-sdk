@@ -37,6 +37,7 @@ public class PlanTest {
     assertNull(planModel.getPlanId());
     assertNull(planModel.getPlanName());
     assertNull(planModel.getPricingRegion());
+    assertNull(planModel.getPricingPlanId());
     assertNull(planModel.isBillable());
     assertNull(planModel.getCost());
     assertNull(planModel.getRatedCost());

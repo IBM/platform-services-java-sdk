@@ -28,6 +28,8 @@ public class Plan extends GenericModel {
   protected String planName;
   @SerializedName("pricing_region")
   protected String pricingRegion;
+  @SerializedName("pricing_plan_id")
+  protected String pricingPlanId;
   protected Boolean billable;
   protected Double cost;
   @SerializedName("rated_cost")
@@ -69,6 +71,15 @@ public class Plan extends GenericModel {
    */
   public String getPricingRegion() {
     return pricingRegion;
+  }
+
+  /**
+   * Gets the pricingPlanId.
+   *
+   * @return the pricingPlanId
+   */
+  public String getPricingPlanId() {
+    return pricingPlanId;
   }
 
   /**

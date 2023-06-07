@@ -1,3 +1,10 @@
+# [0.35.0](https://github.com/IBM/platform-services-java-sdk/compare/0.34.0...0.35.0) (2023-06-01)
+
+
+### Features
+
+* **Usage Reports:** Update Account Summary ([#198](https://github.com/IBM/platform-services-java-sdk/issues/198)) ([fa3fa46](https://github.com/IBM/platform-services-java-sdk/commit/fa3fa469ef4b9af392c801e510ab7814829f06b2))
+
 # [0.34.0](https://github.com/IBM/platform-services-java-sdk/compare/0.33.2...0.34.0) (2023-05-31)
 
 

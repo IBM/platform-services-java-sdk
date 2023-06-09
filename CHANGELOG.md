@@ -1,3 +1,10 @@
+# [0.36.0](https://github.com/IBM/platform-services-java-sdk/compare/0.35.0...0.36.0) (2023-06-09)
+
+
+### Features
+
+* **IAM Identity:** add trusted profile identities API ([#196](https://github.com/IBM/platform-services-java-sdk/issues/196)) ([162d0fd](https://github.com/IBM/platform-services-java-sdk/commit/162d0fd5831ca8c1cea6032426eaea752339b0f4))
+
 # [0.35.0](https://github.com/IBM/platform-services-java-sdk/compare/0.34.0...0.35.0) (2023-06-01)
 
 

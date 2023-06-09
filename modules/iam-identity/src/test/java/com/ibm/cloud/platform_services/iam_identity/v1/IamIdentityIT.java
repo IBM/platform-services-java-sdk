@@ -44,6 +44,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOpti
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
@@ -53,6 +54,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentitiesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
@@ -66,6 +69,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOption
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentitiesResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
@@ -73,6 +78,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollment
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
@@ -162,6 +169,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         IAM_ID = config.get("IAM_ID");
         IAM_ID_MEMBER = config.get("IAM_ID_MEMBER");
         IAM_APIKEY = config.get("APIKEY");
+
+        profileId1 = config.get("profileId1");
 
         assertNotNull(ACCOUNT_ID);
         assertNotNull(IAM_ID);
@@ -1593,9 +1602,9 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .accountId(ACCOUNT_ID)
                     .reference(reportReference)
                     .build();
-            Response<Report> response = service.getReport(getReportOptions).execute();           
+            Response<Report> response = service.getReport(getReportOptions).execute();
             assertTrue(response.getStatusCode() == 204 || response.getStatusCode() == 200);
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -1728,6 +1737,135 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             UserMfaEnrollments mfaStatusResponseResult = response.getResult();
             assertNotNull(mfaStatusResponseResult);
             assertNotNull(mfaStatusResponseResult.getIamId());
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+
+
+    @Test(dependsOnMethods = { "testCreateProfile1" })
+    public void testSetProfileIdentities() throws Exception {
+        try {
+        	List<String> accounts= new ArrayList<String>();
+        	accounts.add(ACCOUNT_ID);
+        	String type="user";
+        	String description="Identity description";
+        	ProfileIdentity profileIdentity= new ProfileIdentity.Builder()
+        			.identifier(IAM_ID)
+        			.accounts(accounts)
+        			.type(type)
+        			.description(description)
+        			.build();
+        	List<ProfileIdentity> listProfileIdentity= new ArrayList<ProfileIdentity>();
+        	listProfileIdentity.add(profileIdentity);
+
+        	SetProfileIdentitiesOptions setProfileIdentitiesOptions = new SetProfileIdentitiesOptions.Builder()
+        			.profileId(profileId1)
+        			.identities(listProfileIdentity)
+        			.ifMatch("*")
+                    .build();
+            Response<ProfileIdentitiesResponse> response = service.setProfileIdentities(setProfileIdentitiesOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ProfileIdentitiesResponse profileIdentitiesResponseResult = response.getResult();
+            assertNotNull(profileIdentitiesResponseResult);
+            assertNotNull(profileIdentitiesResponseResult.getIdentities());
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testSetProfileIdentities" })
+    public void testGetProfileIdentities() throws Exception {
+        try {
+        	GetProfileIdentitiesOptions getProfileIdentitiesOptions = new GetProfileIdentitiesOptions.Builder()
+                    .profileId(profileId1)
+                    .build();
+            Response<ProfileIdentitiesResponse> response = service.getProfileIdentities(getProfileIdentitiesOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ProfileIdentitiesResponse profileIdentitiesResponseResult = response.getResult();
+            assertNotNull(profileIdentitiesResponseResult);
+            assertNotNull(profileIdentitiesResponseResult.getIdentities());
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateProfile1" })
+    public void testSetProfileIdentity() throws Exception {
+        try {
+        	List<String> accounts= new ArrayList<String>();
+        	accounts.add(ACCOUNT_ID);
+        	String type="user";
+        	String description="Identity description";
+
+        	SetProfileIdentityOptions setProfileIdentityOptions = new SetProfileIdentityOptions.Builder()
+        			.profileId(profileId1)
+        			.identityType(type)
+        			.identifier(IAM_ID_MEMBER)
+        			.type("user")
+        			.accounts(accounts)
+        			.description(description)
+                    .build();
+            Response<ProfileIdentity> response = service.setProfileIdentity(setProfileIdentityOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ProfileIdentity profileIdentityResponseResult = response.getResult();
+            assertNotNull(profileIdentityResponseResult);
+            assertNotNull(profileIdentityResponseResult.identifier());
+            assertEquals(profileIdentityResponseResult.identifier(), IAM_ID_MEMBER);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testSetProfileIdentity" })
+    public void testGetProfileIdentity() throws Exception {
+        try {
+        	GetProfileIdentityOptions getProfileIdentityOptions = new GetProfileIdentityOptions.Builder()
+                    .profileId(profileId1)
+                    .identityType("user")
+                    .identifierId(IAM_ID_MEMBER)
+                    .build();
+            Response<ProfileIdentity> response = service.getProfileIdentity(getProfileIdentityOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ProfileIdentity profileIdentityResponseResult = response.getResult();
+            assertNotNull(profileIdentityResponseResult);
+            assertNotNull(profileIdentityResponseResult.identifier());
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testGetProfileIdentity" })
+    public void testDeleteProfileIdentity() throws Exception {
+        try {
+        	DeleteProfileIdentityOptions deleteProfileIdentityOptions = new DeleteProfileIdentityOptions.Builder()
+                    .profileId(profileId1)
+                    .identityType("user")
+                    .identifierId(IAM_ID_MEMBER)
+                    .build();
+            Response<Void> response = service.deleteProfileIdentity(deleteProfileIdentityOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

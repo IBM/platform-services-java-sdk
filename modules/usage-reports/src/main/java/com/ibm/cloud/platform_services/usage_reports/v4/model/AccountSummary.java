@@ -24,6 +24,8 @@ public class AccountSummary extends GenericModel {
 
   @SerializedName("account_id")
   protected String accountId;
+  @SerializedName("account_resources")
+  protected List<Resource> accountResources;
   protected String month;
   @SerializedName("billing_country_code")
   protected String billingCountryCode;
@@ -32,6 +34,8 @@ public class AccountSummary extends GenericModel {
   protected ResourcesSummary resources;
   protected List<Offer> offers;
   protected List<SupportSummary> support;
+  @SerializedName("support_resources")
+  protected List<Object> supportResources;
   protected SubscriptionSummary subscription;
 
   protected AccountSummary() { }
@@ -45,6 +49,17 @@ public class AccountSummary extends GenericModel {
    */
   public String getAccountId() {
     return accountId;
+  }
+
+  /**
+   * Gets the accountResources.
+   *
+   * The list of account resources for the month.
+   *
+   * @return the accountResources
+   */
+  public List<Resource> getAccountResources() {
+    return accountResources;
   }
 
   /**
@@ -111,6 +126,17 @@ public class AccountSummary extends GenericModel {
    */
   public List<SupportSummary> getSupport() {
     return support;
+  }
+
+  /**
+   * Gets the supportResources.
+   *
+   * The list of support resources for the month.
+   *
+   * @return the supportResources
+   */
+  public List<Object> getSupportResources() {
+    return supportResources;
   }
 
   /**

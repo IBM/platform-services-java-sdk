@@ -11,12 +11,11 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.ibm.cloud.platform_services.usage_reports.v4.model;
+package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Discount;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Metric;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Plan;
-import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentitiesResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentity;
+import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -25,24 +24,16 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Plan model.
+ * Unit test class for the ProfileIdentitiesResponse model.
  */
-public class PlanTest {
+public class ProfileIdentitiesResponseTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPlan() throws Throwable {
-    Plan planModel = new Plan();
-    assertNull(planModel.getPlanId());
-    assertNull(planModel.getPlanName());
-    assertNull(planModel.getPricingRegion());
-    assertNull(planModel.getPricingPlanId());
-    assertNull(planModel.isBillable());
-    assertNull(planModel.getCost());
-    assertNull(planModel.getRatedCost());
-    assertNull(planModel.getUsage());
-    assertNull(planModel.getDiscounts());
-    assertNull(planModel.isPending());
+  public void testProfileIdentitiesResponse() throws Throwable {
+    ProfileIdentitiesResponse profileIdentitiesResponseModel = new ProfileIdentitiesResponse();
+    assertNull(profileIdentitiesResponseModel.getEntityTag());
+    assertNull(profileIdentitiesResponseModel.getIdentities());
   }
 }

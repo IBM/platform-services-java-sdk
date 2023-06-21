@@ -35,6 +35,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOpti
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
@@ -44,6 +45,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentitiesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
@@ -57,6 +60,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOption
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentitiesResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
@@ -64,6 +69,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollment
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
@@ -125,6 +132,7 @@ public class IamIdentityExamples {
     private static String linkId;
     private static String accountSettingsEtag;
     private static String reportReferenceValue;
+    private static String profileIdentitiesEtag;
 
     static {
         System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_identity.env");
@@ -778,6 +786,136 @@ public class IamIdentityExamples {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
+
+        try {
+            System.out.println("getProfileIdentities() result:");
+
+            // begin-get_profile_identities
+            GetProfileIdentitiesOptions getProfileIdentitiesOptions = new GetProfileIdentitiesOptions.Builder()
+                    .profileId(profileId).build();
+            Response<ProfileIdentitiesResponse> response = service.getProfileIdentities(getProfileIdentitiesOptions)
+                    .execute();
+            ProfileIdentitiesResponse profileIdentitiesResponseResult = response.getResult();
+
+            ProfileIdentitiesResponse profileIdentityResponseResult = response.getResult();
+            profileIdentitiesEtag = profileIdentityResponseResult.getEntityTag();
+
+            // end-get_profile_identities
+
+            System.out.println(profileIdentityResponseResult);
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("setProfileIdentities() result:");
+
+            // begin-set_profile_identities
+            List<String> accounts = new ArrayList<String>();
+            accounts.add(accountId);
+            String type = "user";
+            String description = "Identity description";
+            ProfileIdentity profileIdentity = new ProfileIdentity.Builder()
+                    .identifier(iamId)
+                    .accounts(accounts)
+                    .type(type)
+                    .description(description)
+                    .build();
+            List<ProfileIdentity> listProfileIdentity = new ArrayList<ProfileIdentity>();
+            listProfileIdentity.add(profileIdentity);
+
+            SetProfileIdentitiesOptions setProfileIdentitiesOptions = new SetProfileIdentitiesOptions.Builder()
+                    .profileId(profileId)
+                    .identities(listProfileIdentity)
+                    .ifMatch(profileIdentitiesEtag)
+                    .build();
+
+            Response<ProfileIdentitiesResponse> response = service.setProfileIdentities(setProfileIdentitiesOptions)
+                    .execute();
+            ProfileIdentitiesResponse profileIdentitiesResponseResult = response.getResult();
+
+            // end-set_profile_identities
+
+            System.out.println(profileIdentitiesResponseResult);
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("setProfileIdentity() result:");
+
+            // begin-set_profile_identity
+            List<String> accounts = new ArrayList<String>();
+            accounts.add(accountId);
+            String type = "user";
+            String description = "Identity description";
+
+            SetProfileIdentityOptions setProfileIdentityOptions = new SetProfileIdentityOptions.Builder()
+                    .profileId(profileId)
+                    .identityType(type)
+                    .identifier(iamIdMember)
+                    .type("user")
+                    .accounts(accounts)
+                    .description(description)
+                    .build();
+            Response<ProfileIdentity> response = service.setProfileIdentity(setProfileIdentityOptions).execute();
+
+            ProfileIdentity profileIdentityResponseResult = response.getResult();
+            System.out.println(profileIdentityResponseResult);
+
+            // end-set_profile_identity
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getProfileIdentity() result:");
+
+            // begin-get_profile_identity
+            GetProfileIdentityOptions getProfileIdentityOptions = new GetProfileIdentityOptions.Builder()
+                    .profileId(profileId)
+                    .identityType("user")
+                    .identifierId(iamIdMember)
+                    .build();
+            Response<ProfileIdentity> response = service.getProfileIdentity(getProfileIdentityOptions).execute();
+
+            ProfileIdentity profileIdentityResponseResult = response.getResult();
+            System.out.println(profileIdentityResponseResult);
+
+            // end-get_profile_identity
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteProfileIdentity() result:");
+
+            // begin-delete_profile_identity
+            DeleteProfileIdentityOptions deleteProfileIdentityOptions = new DeleteProfileIdentityOptions.Builder()
+                    .profileId(profileId)
+                    .identityType("user")
+                    .identifierId(iamIdMember)
+                    .build();
+            Response<Void> response = service.deleteProfileIdentity(deleteProfileIdentityOptions).execute();
+
+            Void profileIdentityResponseResult = response.getResult();
+            System.out.println(profileIdentityResponseResult);
+
+            // end-delete_profile_identity
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
 
         try {
             System.out.println("deleteProfile() result:");

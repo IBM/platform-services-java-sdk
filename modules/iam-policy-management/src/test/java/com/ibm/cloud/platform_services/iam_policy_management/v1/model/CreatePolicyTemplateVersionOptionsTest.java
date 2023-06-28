@@ -107,10 +107,12 @@ public class CreatePolicyTemplateVersionOptionsTest {
       .policyTemplateId("testString")
       .policy(templatePolicyModel)
       .description("testString")
+      .committed(true)
       .build();
     assertEquals(createPolicyTemplateVersionOptionsModel.policyTemplateId(), "testString");
     assertEquals(createPolicyTemplateVersionOptionsModel.policy(), templatePolicyModel);
     assertEquals(createPolicyTemplateVersionOptionsModel.description(), "testString");
+    assertEquals(createPolicyTemplateVersionOptionsModel.committed(), Boolean.valueOf(true));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

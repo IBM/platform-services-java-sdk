@@ -1537,6 +1537,7 @@ public class IamPolicyManagementTest {
       .policyTemplateId("testString")
       .policy(templatePolicyModel)
       .description("testString")
+      .committed(true)
       .build();
 
     // Invoke createPolicyTemplateVersion() with a valid options model and verify the result
@@ -1695,6 +1696,7 @@ public class IamPolicyManagementTest {
       .ifMatch("testString")
       .policy(templatePolicyModel)
       .description("testString")
+      .committed(true)
       .build();
 
     // Invoke replacePolicyTemplate() with a valid options model and verify the result

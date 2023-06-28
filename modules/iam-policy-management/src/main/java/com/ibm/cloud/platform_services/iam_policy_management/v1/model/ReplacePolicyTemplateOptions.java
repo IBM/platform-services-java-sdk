@@ -24,6 +24,7 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
   protected String ifMatch;
   protected TemplatePolicy policy;
   protected String description;
+  protected Boolean committed;
 
   /**
    * Builder.
@@ -34,6 +35,7 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
     private String ifMatch;
     private TemplatePolicy policy;
     private String description;
+    private Boolean committed;
 
     /**
      * Instantiates a new Builder from an existing ReplacePolicyTemplateOptions instance.
@@ -46,6 +48,7 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
       this.ifMatch = replacePolicyTemplateOptions.ifMatch;
       this.policy = replacePolicyTemplateOptions.policy;
       this.description = replacePolicyTemplateOptions.description;
+      this.committed = replacePolicyTemplateOptions.committed;
     }
 
     /**
@@ -132,6 +135,17 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
       this.description = description;
       return this;
     }
+
+    /**
+     * Set the committed.
+     *
+     * @param committed the committed
+     * @return the ReplacePolicyTemplateOptions builder
+     */
+    public Builder committed(Boolean committed) {
+      this.committed = committed;
+      return this;
+    }
   }
 
   protected ReplacePolicyTemplateOptions() { }
@@ -150,6 +164,7 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
     ifMatch = builder.ifMatch;
     policy = builder.policy;
     description = builder.description;
+    committed = builder.committed;
   }
 
   /**
@@ -216,6 +231,17 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
    */
   public String description() {
     return description;
+  }
+
+  /**
+   * Gets the committed.
+   *
+   * Template vesrsion committed status.
+   *
+   * @return the committed
+   */
+  public Boolean committed() {
+    return committed;
   }
 }
 

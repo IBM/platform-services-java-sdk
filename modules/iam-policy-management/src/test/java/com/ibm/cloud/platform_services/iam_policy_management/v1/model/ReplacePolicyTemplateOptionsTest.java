@@ -109,12 +109,14 @@ public class ReplacePolicyTemplateOptionsTest {
       .ifMatch("testString")
       .policy(templatePolicyModel)
       .description("testString")
+      .committed(true)
       .build();
     assertEquals(replacePolicyTemplateOptionsModel.policyTemplateId(), "testString");
     assertEquals(replacePolicyTemplateOptionsModel.version(), "testString");
     assertEquals(replacePolicyTemplateOptionsModel.ifMatch(), "testString");
     assertEquals(replacePolicyTemplateOptionsModel.policy(), templatePolicyModel);
     assertEquals(replacePolicyTemplateOptionsModel.description(), "testString");
+    assertEquals(replacePolicyTemplateOptionsModel.committed(), Boolean.valueOf(true));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

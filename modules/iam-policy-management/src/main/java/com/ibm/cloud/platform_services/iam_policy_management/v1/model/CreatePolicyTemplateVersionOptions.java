@@ -22,6 +22,7 @@ public class CreatePolicyTemplateVersionOptions extends GenericModel {
   protected String policyTemplateId;
   protected TemplatePolicy policy;
   protected String description;
+  protected Boolean committed;
 
   /**
    * Builder.
@@ -30,6 +31,7 @@ public class CreatePolicyTemplateVersionOptions extends GenericModel {
     private String policyTemplateId;
     private TemplatePolicy policy;
     private String description;
+    private Boolean committed;
 
     /**
      * Instantiates a new Builder from an existing CreatePolicyTemplateVersionOptions instance.
@@ -40,6 +42,7 @@ public class CreatePolicyTemplateVersionOptions extends GenericModel {
       this.policyTemplateId = createPolicyTemplateVersionOptions.policyTemplateId;
       this.policy = createPolicyTemplateVersionOptions.policy;
       this.description = createPolicyTemplateVersionOptions.description;
+      this.committed = createPolicyTemplateVersionOptions.committed;
     }
 
     /**
@@ -100,6 +103,17 @@ public class CreatePolicyTemplateVersionOptions extends GenericModel {
       this.description = description;
       return this;
     }
+
+    /**
+     * Set the committed.
+     *
+     * @param committed the committed
+     * @return the CreatePolicyTemplateVersionOptions builder
+     */
+    public Builder committed(Boolean committed) {
+      this.committed = committed;
+      return this;
+    }
   }
 
   protected CreatePolicyTemplateVersionOptions() { }
@@ -112,6 +126,7 @@ public class CreatePolicyTemplateVersionOptions extends GenericModel {
     policyTemplateId = builder.policyTemplateId;
     policy = builder.policy;
     description = builder.description;
+    committed = builder.committed;
   }
 
   /**
@@ -154,6 +169,17 @@ public class CreatePolicyTemplateVersionOptions extends GenericModel {
    */
   public String description() {
     return description;
+  }
+
+  /**
+   * Gets the committed.
+   *
+   * Template vesrsion committed status.
+   *
+   * @return the committed
+   */
+  public Boolean committed() {
+    return committed;
   }
 }
 

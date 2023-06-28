@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.65.0-79fc0b8f-20230209-215651
+ * IBM OpenAPI SDK Code Generator Version: 3.71.0-316eb5da-20230504-195406
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -1025,6 +1025,9 @@ public class IamPolicyManagement extends BaseService {
     if (createPolicyTemplateVersionOptions.description() != null) {
       contentJson.addProperty("description", createPolicyTemplateVersionOptions.description());
     }
+    if (createPolicyTemplateVersionOptions.committed() != null) {
+      contentJson.addProperty("committed", createPolicyTemplateVersionOptions.committed());
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<PolicyTemplate> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplate>() { }.getType());
@@ -1080,6 +1083,9 @@ public class IamPolicyManagement extends BaseService {
     contentJson.add("policy", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replacePolicyTemplateOptions.policy()));
     if (replacePolicyTemplateOptions.description() != null) {
       contentJson.addProperty("description", replacePolicyTemplateOptions.description());
+    }
+    if (replacePolicyTemplateOptions.committed() != null) {
+      contentJson.addProperty("committed", replacePolicyTemplateOptions.committed());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<PolicyTemplate> responseConverter =

@@ -33,13 +33,16 @@ public class CreateAccountRequestTraitsTest {
   public void testCreateAccountRequestTraits() throws Throwable {
     CreateAccountRequestTraits createAccountRequestTraitsModel = new CreateAccountRequestTraits.Builder()
       .mfa("testString")
+      .enterpriseIamManaged(true)
       .build();
     assertEquals(createAccountRequestTraitsModel.mfa(), "testString");
+    assertEquals(createAccountRequestTraitsModel.enterpriseIamManaged(), Boolean.valueOf(true));
 
     String json = TestUtilities.serialize(createAccountRequestTraitsModel);
 
     CreateAccountRequestTraits createAccountRequestTraitsModelNew = TestUtilities.deserialize(json, CreateAccountRequestTraits.class);
     assertTrue(createAccountRequestTraitsModelNew instanceof CreateAccountRequestTraits);
     assertEquals(createAccountRequestTraitsModelNew.mfa(), "testString");
+    assertEquals(createAccountRequestTraitsModelNew.enterpriseIamManaged(), Boolean.valueOf(true));
   }
 }

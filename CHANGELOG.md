@@ -1,3 +1,10 @@
+# [0.37.0](https://github.com/IBM/platform-services-java-sdk/compare/0.36.0...0.37.0) (2023-07-05)
+
+
+### Features
+
+* **Enterprise Management:** re-gen service after update trait object ([#199](https://github.com/IBM/platform-services-java-sdk/issues/199)) ([508f17e](https://github.com/IBM/platform-services-java-sdk/commit/508f17e085027ad6b8dd4eb9a0e7b634860989d5))
+
 # [0.36.0](https://github.com/IBM/platform-services-java-sdk/compare/0.35.0...0.36.0) (2023-06-09)
 
 

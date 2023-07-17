@@ -1,3 +1,31 @@
+# [0.37.0](https://github.com/IBM/platform-services-java-sdk/compare/0.36.0...0.37.0) (2023-07-05)
+
+
+### Features
+
+* **Enterprise Management:** re-gen service after update trait object ([#199](https://github.com/IBM/platform-services-java-sdk/issues/199)) ([508f17e](https://github.com/IBM/platform-services-java-sdk/commit/508f17e085027ad6b8dd4eb9a0e7b634860989d5))
+
+# [0.36.0](https://github.com/IBM/platform-services-java-sdk/compare/0.35.0...0.36.0) (2023-06-09)
+
+
+### Features
+
+* **IAM Identity:** add trusted profile identities API ([#196](https://github.com/IBM/platform-services-java-sdk/issues/196)) ([162d0fd](https://github.com/IBM/platform-services-java-sdk/commit/162d0fd5831ca8c1cea6032426eaea752339b0f4))
+
+# [0.35.0](https://github.com/IBM/platform-services-java-sdk/compare/0.34.0...0.35.0) (2023-06-01)
+
+
+### Features
+
+* **Usage Reports:** Update Account Summary ([#198](https://github.com/IBM/platform-services-java-sdk/issues/198)) ([fa3fa46](https://github.com/IBM/platform-services-java-sdk/commit/fa3fa469ef4b9af392c801e510ab7814829f06b2))
+
+# [0.34.0](https://github.com/IBM/platform-services-java-sdk/compare/0.33.2...0.34.0) (2023-05-31)
+
+
+### Features
+
+* **build:** force new version to be published ([#197](https://github.com/IBM/platform-services-java-sdk/issues/197)) ([11069fa](https://github.com/IBM/platform-services-java-sdk/commit/11069fa6d79f8efde8ff04cb62015829908ba517))
+
 ## [0.33.2](https://github.com/IBM/platform-services-java-sdk/compare/0.33.1...0.33.2) (2023-04-28)
 
 

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-	<!-- >>> Replace this with the parent pom's artifactId -->
+	<!-- >>> Replace this with the parent pom's artifactId  -->
         <artifactId>platform-services</artifactId>
         <groupId>com.ibm.cloud</groupId>
         <version>99-SNAPSHOT</version>

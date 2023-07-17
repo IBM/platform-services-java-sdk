@@ -34,8 +34,10 @@ public class CreateAccountOptionsTest {
   public void testCreateAccountOptions() throws Throwable {
     CreateAccountRequestTraits createAccountRequestTraitsModel = new CreateAccountRequestTraits.Builder()
       .mfa("testString")
+      .enterpriseIamManaged(true)
       .build();
     assertEquals(createAccountRequestTraitsModel.mfa(), "testString");
+    assertEquals(createAccountRequestTraitsModel.enterpriseIamManaged(), Boolean.valueOf(true));
 
     CreateAccountOptions createAccountOptionsModel = new CreateAccountOptions.Builder()
       .parent("testString")

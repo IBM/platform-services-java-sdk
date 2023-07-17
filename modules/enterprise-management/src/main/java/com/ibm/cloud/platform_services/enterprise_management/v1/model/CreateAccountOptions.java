@@ -179,8 +179,9 @@ public class CreateAccountOptions extends GenericModel {
   /**
    * Gets the traits.
    *
-   * The traits object can be used to opt-out of Multi-Factor Authentication setting when creating a child account in
-   * the enterprise. This is an optional field.
+   * The traits object can be used to set properties on child accounts of an enterprise. You can pass a field to opt-out
+   * of Multi-Factor Authentication setting or setup enterprise IAM settings when creating a child account in the
+   * enterprise. This is an optional field.
    *
    * @return the traits
    */

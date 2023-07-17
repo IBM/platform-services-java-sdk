@@ -14,8 +14,12 @@
 package com.ibm.cloud.platform_services.usage_reports.v4.model;
 
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountSummary;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Discount;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Metric;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.Offer;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OfferCredits;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Plan;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Resource;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourcesSummary;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.Subscription;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SubscriptionSummary;
@@ -42,12 +46,14 @@ public class AccountSummaryTest {
   public void testAccountSummary() throws Throwable {
     AccountSummary accountSummaryModel = new AccountSummary();
     assertNull(accountSummaryModel.getAccountId());
+    assertNull(accountSummaryModel.getAccountResources());
     assertNull(accountSummaryModel.getMonth());
     assertNull(accountSummaryModel.getBillingCountryCode());
     assertNull(accountSummaryModel.getBillingCurrencyCode());
     assertNull(accountSummaryModel.getResources());
     assertNull(accountSummaryModel.getOffers());
     assertNull(accountSummaryModel.getSupport());
+    assertNull(accountSummaryModel.getSupportResources());
     assertNull(accountSummaryModel.getSubscription());
   }
 }

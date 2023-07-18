@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -234,8 +234,7 @@ public class CreateApiKeyOptions extends GenericModel {
    *
    * You can optionally passthrough the API key value for this API key. If passed, NO validation of that apiKey value is
    * done, i.e. the value can be non-URL safe. If omitted, the API key management will create an URL safe opaque API key
-   * value. The value of the API key is checked for uniqueness. Please ensure enough variations when passing in this
-   * value.
+   * value. The value of the API key is checked for uniqueness. Ensure enough variations when passing in this value.
    *
    * @return the apikey
    */

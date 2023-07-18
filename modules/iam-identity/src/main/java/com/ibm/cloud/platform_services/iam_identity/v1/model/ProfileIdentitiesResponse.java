@@ -24,7 +24,7 @@ public class ProfileIdentitiesResponse extends GenericModel {
 
   @SerializedName("entity_tag")
   protected String entityTag;
-  protected List<ProfileIdentity> identities;
+  protected List<ProfileIdentityResponse> identities;
 
   protected ProfileIdentitiesResponse() { }
 
@@ -46,7 +46,7 @@ public class ProfileIdentitiesResponse extends GenericModel {
    *
    * @return the identities
    */
-  public List<ProfileIdentity> getIdentities() {
+  public List<ProfileIdentityResponse> getIdentities() {
     return identities;
   }
 }

@@ -1,3 +1,10 @@
+## [0.37.1](https://github.com/IBM/platform-services-java-sdk/compare/0.37.0...0.37.1) (2023-07-19)
+
+
+### Bug Fixes
+
+* fix javadoc/gh-pages issues ([#200](https://github.com/IBM/platform-services-java-sdk/issues/200)) ([9b26bda](https://github.com/IBM/platform-services-java-sdk/commit/9b26bdab91b124b1bc41157ec74339f4fff9cdc8))
+
 # [0.37.0](https://github.com/IBM/platform-services-java-sdk/compare/0.36.0...0.37.0) (2023-07-05)
 
 

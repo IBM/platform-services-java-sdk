@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,7 +17,7 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * A list of rules attached to the access group.
+ * A list of dynamic rules attached to the access group.
  */
 public class RulesList extends GenericModel {
 
@@ -28,7 +28,7 @@ public class RulesList extends GenericModel {
   /**
    * Gets the rules.
    *
-   * A list of rules.
+   * A list of dynamic rules.
    *
    * @return the rules
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,6 +22,7 @@ public class ListAccessGroupsOptions extends GenericModel {
   protected String accountId;
   protected String transactionId;
   protected String iamId;
+  protected String search;
   protected String membershipType;
   protected Long limit;
   protected Long offset;
@@ -36,6 +37,7 @@ public class ListAccessGroupsOptions extends GenericModel {
     private String accountId;
     private String transactionId;
     private String iamId;
+    private String search;
     private String membershipType;
     private Long limit;
     private Long offset;
@@ -52,6 +54,7 @@ public class ListAccessGroupsOptions extends GenericModel {
       this.accountId = listAccessGroupsOptions.accountId;
       this.transactionId = listAccessGroupsOptions.transactionId;
       this.iamId = listAccessGroupsOptions.iamId;
+      this.search = listAccessGroupsOptions.search;
       this.membershipType = listAccessGroupsOptions.membershipType;
       this.limit = listAccessGroupsOptions.limit;
       this.offset = listAccessGroupsOptions.offset;
@@ -114,6 +117,17 @@ public class ListAccessGroupsOptions extends GenericModel {
      */
     public Builder iamId(String iamId) {
       this.iamId = iamId;
+      return this;
+    }
+
+    /**
+     * Set the search.
+     *
+     * @param search the search
+     * @return the ListAccessGroupsOptions builder
+     */
+    public Builder search(String search) {
+      this.search = search;
       return this;
     }
 
@@ -192,6 +206,7 @@ public class ListAccessGroupsOptions extends GenericModel {
     accountId = builder.accountId;
     transactionId = builder.transactionId;
     iamId = builder.iamId;
+    search = builder.search;
     membershipType = builder.membershipType;
     limit = builder.limit;
     offset = builder.offset;
@@ -244,6 +259,20 @@ public class ListAccessGroupsOptions extends GenericModel {
    */
   public String iamId() {
     return iamId;
+  }
+
+  /**
+   * Gets the search.
+   *
+   * Use search to filter access groups list by id, name or description.
+   * * `search=id:&lt;ACCESS_GROUP_ID&gt;` - To list access groups by id
+   * * `search=name:&lt;ACCESS_GROUP_NAME&gt;` - To list access groups by name
+   * * `search=description:&lt;ACCESS_GROUP_DESC&gt;` - To list access groups by description.
+   *
+   * @return the search
+   */
+  public String search() {
+    return search;
   }
 
   /**

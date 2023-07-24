@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -221,9 +221,9 @@ public class ListAccessGroupMembersOptions extends GenericModel {
   /**
    * Gets the membershipType.
    *
-   * Filters members by membership type. Membership type can be either `static`, `dynamic` or `all`. `static` lists
-   * those members explicitly added to the access group, `dynamic` lists those members part of access group via dynamic
-   * rules at the moment. `all` lists both static and dynamic members.
+   * Filters members by membership type. Filter by `static`, `dynamic` or `all`. `static` lists the members explicitly
+   * added to the access group, and `dynamic` lists the members that are part of the access group at that time via
+   * dynamic rules. `all` lists both static and dynamic members.
    *
    * @return the membershipType
    */

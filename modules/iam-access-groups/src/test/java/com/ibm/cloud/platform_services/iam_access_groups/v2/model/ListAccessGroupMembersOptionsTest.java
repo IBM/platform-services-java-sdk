@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -35,8 +35,8 @@ public class ListAccessGroupMembersOptionsTest {
       .accessGroupId("testString")
       .transactionId("testString")
       .membershipType("static")
-      .limit(Long.valueOf("100"))
-      .offset(Long.valueOf("26"))
+      .limit(Long.valueOf("50"))
+      .offset(Long.valueOf("0"))
       .type("testString")
       .verbose(false)
       .sort("testString")
@@ -44,8 +44,8 @@ public class ListAccessGroupMembersOptionsTest {
     assertEquals(listAccessGroupMembersOptionsModel.accessGroupId(), "testString");
     assertEquals(listAccessGroupMembersOptionsModel.transactionId(), "testString");
     assertEquals(listAccessGroupMembersOptionsModel.membershipType(), "static");
-    assertEquals(listAccessGroupMembersOptionsModel.limit(), Long.valueOf("100"));
-    assertEquals(listAccessGroupMembersOptionsModel.offset(), Long.valueOf("26"));
+    assertEquals(listAccessGroupMembersOptionsModel.limit(), Long.valueOf("50"));
+    assertEquals(listAccessGroupMembersOptionsModel.offset(), Long.valueOf("0"));
     assertEquals(listAccessGroupMembersOptionsModel.type(), "testString");
     assertEquals(listAccessGroupMembersOptionsModel.verbose(), Boolean.valueOf(false));
     assertEquals(listAccessGroupMembersOptionsModel.sort(), "testString");

@@ -1,6 +1,6 @@
 ---
 language: java
-dist: bionic
+dist: jammy
 
 jdk:
 - openjdk11
@@ -30,7 +30,7 @@ stages:
 before_install:
   - sudo apt-get update
   - env | grep TRAVIS
-  - pyenv global 3.8
+  - python -V
 
 jobs:
   include:
@@ -48,7 +48,9 @@ jobs:
 
     - stage: Semantic-Release
       install:
-        - nvm install 14
+        - nvm install 18
+        - node --version
+        - npm --version
         - npm install
         - pip install --user bump2version
       script:

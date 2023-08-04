@@ -425,6 +425,7 @@ public class EnterpriseManagementTest {
     // Construct an instance of the CreateAccountRequestTraits model
     CreateAccountRequestTraits createAccountRequestTraitsModel = new CreateAccountRequestTraits.Builder()
       .mfa("testString")
+      .enterpriseIamManaged(true)
       .build();
 
     // Construct an instance of the CreateAccountOptions model

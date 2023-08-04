@@ -17,23 +17,23 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * A collection of versions for a specific policy template.
+ * A collection of policies.
  */
-public class PolicyTemplateVersionsCollection extends GenericModel {
+public class PolicyCollection extends GenericModel {
 
-  protected List<PolicyTemplate> versions;
+  protected List<Policy> policies;
 
-  protected PolicyTemplateVersionsCollection() { }
+  protected PolicyCollection() { }
 
   /**
-   * Gets the versions.
+   * Gets the policies.
    *
-   * List of policy templates versions.
+   * List of policies.
    *
-   * @return the versions
+   * @return the policies
    */
-  public List<PolicyTemplate> getVersions() {
-    return versions;
+  public List<Policy> getPolicies() {
+    return policies;
   }
 }
 

@@ -24,11 +24,11 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolici
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
@@ -51,7 +51,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySu
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentRecord;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignment;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
@@ -66,7 +66,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePoli
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitPolicyTemplateOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolcyTemplateAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
 import com.ibm.cloud.sdk.core.http.Response;
@@ -307,10 +307,10 @@ public class IamPolicyManagementExamples {
               .format("include_last_permit")
               .build();
 
-      Response<PolicyList> response = service.listPolicies(options).execute();
-      PolicyList policyList = response.getResult();
+      Response<PolicyCollection> response = service.listPolicies(options).execute();
+      PolicyCollection policyCollection = response.getResult();
 
-      System.out.println(policyList);
+      System.out.println(policyCollection);
 
       // end-list_policies
 
@@ -672,10 +672,10 @@ public class IamPolicyManagementExamples {
               .accountId(exampleAccountId)
               .build();
 
-      Response<RoleList> response = service.listRoles(options).execute();
-      RoleList roleList = response.getResult();
+      Response<RoleCollection> response = service.listRoles(options).execute();
+      RoleCollection roleCollection = response.getResult();
 
-      System.out.println(roleList);
+      System.out.println(roleCollection);
 
       // end-list_roles
 
@@ -924,13 +924,13 @@ public class IamPolicyManagementExamples {
         .accountId(exampleAccountId)
         .build();
 
-      Response<PolcyTemplateAssignmentCollection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
-      PolcyTemplateAssignmentCollection polcyTemplateAssignmentCollection = response.getResult();
+      Response<PolicyTemplateAssignmentCollection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
+      PolicyTemplateAssignmentCollection polcyTemplateAssignmentCollection = response.getResult();
 
       System.out.println(polcyTemplateAssignmentCollection);
       // end-list_Policy Assignments
 
-      exampleAssignmentId = polcyTemplateAssignmentCollection.getPolicyAssignments().get(0).getId();
+      exampleAssignmentId = polcyTemplateAssignmentCollection.getAssignments().get(0).getId();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -943,8 +943,8 @@ public class IamPolicyManagementExamples {
         .assignmentId(exampleAssignmentId)
         .build();
 
-      Response<PolicyAssignmentRecord> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
-      PolicyAssignmentRecord policyAssignmentRecord = response.getResult();
+      Response<PolicyAssignment> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
+      PolicyAssignment policyAssignmentRecord = response.getResult();
 
       System.out.println(policyAssignmentRecord);
       // end-get_policy_assignment

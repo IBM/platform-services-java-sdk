@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.71.0-316eb5da-20230504-195406
+ * IBM OpenAPI SDK Code Generator Version: 3.65.0-79fc0b8f-20230209-215651
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -43,18 +43,18 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicy
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolcyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentRecord;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
@@ -132,9 +132,9 @@ public class IamPolicyManagement extends BaseService {
    * the caller does not have read access to any policies an empty array is returned.
    *
    * @param listPoliciesOptions the {@link ListPoliciesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PolicyList}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyCollection}
    */
-  public ServiceCall<PolicyList> listPolicies(ListPoliciesOptions listPoliciesOptions) {
+  public ServiceCall<PolicyCollection> listPolicies(ListPoliciesOptions listPoliciesOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listPoliciesOptions,
       "listPoliciesOptions cannot be null");
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policies"));
@@ -174,8 +174,8 @@ public class IamPolicyManagement extends BaseService {
     if (listPoliciesOptions.state() != null) {
       builder.query("state", String.valueOf(listPoliciesOptions.state()));
     }
-    ResponseConverter<PolicyList> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyList>() { }.getType());
+    ResponseConverter<PolicyCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyCollection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -412,9 +412,9 @@ public class IamPolicyManagement extends BaseService {
    * caller does not have read access to any roles an empty array is returned.
    *
    * @param listRolesOptions the {@link ListRolesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link RoleList}
+   * @return a {@link ServiceCall} with a result of type {@link RoleCollection}
    */
-  public ServiceCall<RoleList> listRoles(ListRolesOptions listRolesOptions) {
+  public ServiceCall<RoleCollection> listRoles(ListRolesOptions listRolesOptions) {
     if (listRolesOptions == null) {
       listRolesOptions = new ListRolesOptions.Builder().build();
     }
@@ -442,8 +442,8 @@ public class IamPolicyManagement extends BaseService {
     if (listRolesOptions.serviceGroupId() != null) {
       builder.query("service_group_id", String.valueOf(listRolesOptions.serviceGroupId()));
     }
-    ResponseConverter<RoleList> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleList>() { }.getType());
+    ResponseConverter<RoleCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleCollection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -456,9 +456,9 @@ public class IamPolicyManagement extends BaseService {
    * mutually exclusive. Only roles that match the filter and that the caller has read access to are returned. If the
    * caller does not have read access to any roles an empty array is returned.
    *
-   * @return a {@link ServiceCall} with a result of type {@link RoleList}
+   * @return a {@link ServiceCall} with a result of type {@link RoleCollection}
    */
-  public ServiceCall<RoleList> listRoles() {
+  public ServiceCall<RoleCollection> listRoles() {
     return listRoles(null);
   }
 
@@ -654,7 +654,7 @@ public class IamPolicyManagement extends BaseService {
    * The policy resource must include either the **`serviceType`**, **`serviceName`**, **`resourceGroupId`** or
    * **`service_group_id`** attribute and the **`accountId`** attribute. In the rule field, you can specify a single
    * condition by using **`key`**, **`value`**, and condition **`operator`**, or a set of **`conditions`** with a
-   * combination **`operator`**.  The possible combination operators are **`and`** and **`or`**. Combine conditions to
+   * combination **`operator`**. The possible combination operators are **`and`** and **`or`**. Combine conditions to
    * specify a time-based restriction (e.g., access only during business hours, during the Monday-Friday work week). For
    * example, a policy can grant access Monday-Friday, 9:00am-5:00pm using the following rule:
    * ```json
@@ -757,7 +757,7 @@ public class IamPolicyManagement extends BaseService {
    * The policy resource must include either the **`serviceType`**, **`serviceName`**, **`resourceGroupId`** or
    * **`service_group_id`** attribute and the **`accountId`** attribute. In the rule field, you can specify a single
    * condition by using **`key`**, **`value`**, and condition **`operator`**, or a set of **`conditions`** with a
-   * combination **`operator`**.  The possible combination operators are **`and`** and **`or`**. Combine conditions to
+   * combination **`operator`**. The possible combination operators are **`and`** and **`or`**. Combine conditions to
    * specify a time-based restriction (e.g., access only during business hours, during the Monday-Friday work week). For
    * example, a policy can grant access Monday-Friday, 9:00am-5:00pm using the following rule:
    * ```json
@@ -890,12 +890,13 @@ public class IamPolicyManagement extends BaseService {
   }
 
   /**
-   * Get policy templates by attributes.
+   * List policy templates by attributes.
    *
-   * Get policy templates and filter by attributes through query parameters. The following attributes are supported:
-   * account_id account_id is a required query parameter. Only policy templates that have the specified attributes and
-   * that the caller has read access to are returned. If the caller does not have read access to any policy templates an
-   * empty array is returned.
+   * List policy templates and filter by attributes by using query parameters. The following attributes are supported:
+   * `account_id`.
+   * `account_id` is a required query parameter. Only policy templates that have the specified attributes and that the
+   * caller has read access to are returned. If the caller does not have read access to any policy templates an empty
+   * array is returned.
    *
    * @param listPolicyTemplatesOptions the {@link ListPolicyTemplatesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link PolicyTemplateCollection}
@@ -921,7 +922,8 @@ public class IamPolicyManagement extends BaseService {
   /**
    * Create a policy template.
    *
-   * Creates a policy template.
+   * Create a policy template. Policy templates define a policy without requiring a subject, and you can use them to
+   * grant access to multiple subjects.
    *
    * @param createPolicyTemplateOptions the {@link CreatePolicyTemplateOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link PolicyTemplate}
@@ -955,7 +957,7 @@ public class IamPolicyManagement extends BaseService {
   }
 
   /**
-   * Retrieve latest policy template version by template ID.
+   * Retrieve latest version of a policy template.
    *
    * Retrieve the latest version of a policy template by providing a policy template ID.
    *
@@ -979,10 +981,11 @@ public class IamPolicyManagement extends BaseService {
   }
 
   /**
-   * Delete a policy template by ID.
+   * Delete a policy template.
    *
-   * Delete a policy template by providing a policy template ID. This deletes all versions of this template. A policy
-   * template cannot be deleted if the template version is assigned to an account.
+   * Delete a policy template by providing the policy template ID. This deletes all versions of this template. A policy
+   * template can't be deleted if any version of the template is assigned to one or more child accounts. You must remove
+   * the policy assignments first.
    *
    * @param deletePolicyTemplateOptions the {@link DeletePolicyTemplateOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -1004,7 +1007,8 @@ public class IamPolicyManagement extends BaseService {
   /**
    * Create a new policy template version.
    *
-   * Creates a new policy template version Details TBD.
+   * Create a new version of a policy template. Use this if you need to make updates to a policy template that is
+   * committed.
    *
    * @param createPolicyTemplateVersionOptions the {@link CreatePolicyTemplateVersionOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link PolicyTemplate}
@@ -1061,7 +1065,7 @@ public class IamPolicyManagement extends BaseService {
   /**
    * Update a policy template version.
    *
-   * Update a policy template version  Details TBD.
+   * Update a specific version of a policy template. You can use this only if the version isn't committed.
    *
    * @param replacePolicyTemplateOptions the {@link ReplacePolicyTemplateOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link PolicyTemplate}
@@ -1094,10 +1098,11 @@ public class IamPolicyManagement extends BaseService {
   }
 
   /**
-   * Delete a policy template version by ID and version.
+   * Delete a policy template version.
    *
-   * Delete a policy template by providing a policy template ID and version. You can't delete a policy template if the
-   * template version is assigned to an account.
+   * Delete a specific version of a policy template by providing a policy template ID and version number. You can't
+   * delete a policy template version that is assigned to one or more child accounts. You must remove the policy
+   * assignments first.
    *
    * @param deletePolicyTemplateVersionOptions the {@link DeletePolicyTemplateVersionOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -1118,9 +1123,9 @@ public class IamPolicyManagement extends BaseService {
   }
 
   /**
-   * Retrieve a policy template version by ID.
+   * Retrieve a policy template version.
    *
-   * Retrieve a policy template by providing a policy template ID and version.
+   * Retrieve a policy template by providing a policy template ID and version number.
    *
    * @param getPolicyTemplateVersionOptions the {@link GetPolicyTemplateVersionOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link PolicyTemplate}
@@ -1145,7 +1150,8 @@ public class IamPolicyManagement extends BaseService {
   /**
    * Commit a policy template version.
    *
-   * Commit a policy template version  Details TBD.
+   * Commit a policy template version. You can make no further changes to the policy template once it's committed. If
+   * you need to make updates after committing a version, create a new version.
    *
    * @param commitPolicyTemplateOptions the {@link CommitPolicyTemplateOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -1167,17 +1173,18 @@ public class IamPolicyManagement extends BaseService {
   }
 
   /**
-   * Get policies template assignments by attributes.
+   * Get policy template assignments.
    *
-   * Get policy template assignments by attributes. The following attributes are supported: account_id, template_id,
-   * template_version, sort account_id is a required query parameter. Only policy template assignments that have the
-   * specified attributes and that the caller has read access to are returned. If the caller does not have read access
-   * to any policy template assignments an empty array is returned.
+   * Get policy template assignments by attributes. The following attributes are supported:
+   * `account_id`, `template_id`, `template_version`, `sort`.
+   * `account_id` is a required query parameter. Only policy template assignments that have the specified attributes and
+   * that the caller has read access to are returned. If the caller does not have read access to any policy template
+   * assignments an empty array is returned.
    *
    * @param listPolicyAssignmentsOptions the {@link ListPolicyAssignmentsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PolcyTemplateAssignmentCollection}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyTemplateAssignmentCollection}
    */
-  public ServiceCall<PolcyTemplateAssignmentCollection> listPolicyAssignments(ListPolicyAssignmentsOptions listPolicyAssignmentsOptions) {
+  public ServiceCall<PolicyTemplateAssignmentCollection> listPolicyAssignments(ListPolicyAssignmentsOptions listPolicyAssignmentsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listPolicyAssignmentsOptions,
       "listPolicyAssignmentsOptions cannot be null");
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policy_assignments"));
@@ -1196,20 +1203,20 @@ public class IamPolicyManagement extends BaseService {
     if (listPolicyAssignmentsOptions.templateVersion() != null) {
       builder.query("template_version", String.valueOf(listPolicyAssignmentsOptions.templateVersion()));
     }
-    ResponseConverter<PolcyTemplateAssignmentCollection> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolcyTemplateAssignmentCollection>() { }.getType());
+    ResponseConverter<PolicyTemplateAssignmentCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateAssignmentCollection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
-   * Retrieve a policy assignment by ID.
+   * Retrieve a policy assignment.
    *
    * Retrieve a policy template assignment by providing a policy assignment ID.
    *
    * @param getPolicyAssignmentOptions the {@link GetPolicyAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PolicyAssignmentRecord}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyAssignment}
    */
-  public ServiceCall<PolicyAssignmentRecord> getPolicyAssignment(GetPolicyAssignmentOptions getPolicyAssignmentOptions) {
+  public ServiceCall<PolicyAssignment> getPolicyAssignment(GetPolicyAssignmentOptions getPolicyAssignmentOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getPolicyAssignmentOptions,
       "getPolicyAssignmentOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -1220,8 +1227,8 @@ public class IamPolicyManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    ResponseConverter<PolicyAssignmentRecord> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyAssignmentRecord>() { }.getType());
+    ResponseConverter<PolicyAssignment> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyAssignment>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

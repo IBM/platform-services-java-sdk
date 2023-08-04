@@ -49,7 +49,7 @@ public class Policy extends GenericModel {
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
   protected String state;
-  protected TemplateMetada template;
+  protected TemplateMetadata template;
 
   protected Policy() { }
 
@@ -192,7 +192,7 @@ public class Policy extends GenericModel {
    *
    * @return the template
    */
-  public TemplateMetada getTemplate() {
+  public TemplateMetadata getTemplate() {
     return template;
   }
 }

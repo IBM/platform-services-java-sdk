@@ -12,28 +12,38 @@
  */
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import java.util.List;
-
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * A collection of versions for a specific policy template.
+ * Origin Template information.
  */
-public class PolicyTemplateVersionsCollection extends GenericModel {
+public class TemplateMetadata extends GenericModel {
 
-  protected List<PolicyTemplate> versions;
+  protected String crn;
+  protected String version;
 
-  protected PolicyTemplateVersionsCollection() { }
+  protected TemplateMetadata() { }
 
   /**
-   * Gets the versions.
+   * Gets the crn.
    *
-   * List of policy templates versions.
+   * Origin Template CRN.
    *
-   * @return the versions
+   * @return the crn
    */
-  public List<PolicyTemplate> getVersions() {
-    return versions;
+  public String getCrn() {
+    return crn;
+  }
+
+  /**
+   * Gets the version.
+   *
+   * Template version.
+   *
+   * @return the version
+   */
+  public String getVersion() {
+    return version;
   }
 }
 

@@ -163,7 +163,8 @@ public class CreatePolicyTemplateVersionOptions extends GenericModel {
   /**
    * Gets the description.
    *
-   * description of template purpose.
+   * Description of the policy template. This is shown to users in the enterprise account. Use this to describe the
+   * purpose or context of the policy for enterprise users managing IAM templates.
    *
    * @return the description
    */
@@ -174,7 +175,7 @@ public class CreatePolicyTemplateVersionOptions extends GenericModel {
   /**
    * Gets the committed.
    *
-   * Template vesrsion committed status.
+   * Committed status of the template version.
    *
    * @return the committed
    */

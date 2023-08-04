@@ -49,17 +49,17 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicy
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolcyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentRecord;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentRequestOptionsItem;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcesPolicy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
@@ -70,11 +70,11 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAt
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Role;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAction;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetada;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetadata;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
@@ -150,9 +150,9 @@ public class IamPolicyManagementTest {
       .build();
 
     // Invoke listPolicies() with a valid options model and verify the result
-    Response<PolicyList> response = iamPolicyManagementService.listPolicies(listPoliciesOptionsModel).execute();
+    Response<PolicyCollection> response = iamPolicyManagementService.listPolicies(listPoliciesOptionsModel).execute();
     assertNotNull(response);
-    PolicyList responseObj = response.getResult();
+    PolicyCollection responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request sent to the mock server
@@ -559,9 +559,9 @@ public class IamPolicyManagementTest {
       .build();
 
     // Invoke listRoles() with a valid options model and verify the result
-    Response<RoleList> response = iamPolicyManagementService.listRoles(listRolesOptionsModel).execute();
+    Response<RoleCollection> response = iamPolicyManagementService.listRoles(listRolesOptionsModel).execute();
     assertNotNull(response);
-    RoleList responseObj = response.getResult();
+    RoleCollection responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request sent to the mock server
@@ -1897,7 +1897,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyAssignmentsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"policy_assignments\": [{\"template_id\": \"templateId\", \"template_version\": \"templateVersion\", \"assignment_id\": \"assignmentId\", \"target_type\": \"Account\", \"target\": \"target\", \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"options\": [{\"subject_type\": \"iam_id\", \"subject_id\": \"subjectId\", \"root_requester_id\": \"rootRequesterId\", \"root_template_id\": \"rootTemplateId\", \"root_template_version\": \"rootTemplateVersion\"}], \"resources\": [{\"target\": \"target\", \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"status\": \"in_progress\"}]}";
+    String mockResponseBody = "{\"assignments\": [{\"template_id\": \"templateId\", \"template_version\": \"templateVersion\", \"assignment_id\": \"assignmentId\", \"target_type\": \"Account\", \"target\": \"target\", \"options\": [{\"subject_type\": \"iam_id\", \"subject_id\": \"subjectId\", \"root_requester_id\": \"rootRequesterId\", \"root_template_id\": \"rootTemplateId\", \"root_template_version\": \"rootTemplateVersion\"}], \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": \"target\", \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"status\": \"in_progress\"}]}";
     String listPolicyAssignmentsPath = "/v1/policy_assignments";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1913,9 +1913,9 @@ public class IamPolicyManagementTest {
       .build();
 
     // Invoke listPolicyAssignments() with a valid options model and verify the result
-    Response<PolcyTemplateAssignmentCollection> response = iamPolicyManagementService.listPolicyAssignments(listPolicyAssignmentsOptionsModel).execute();
+    Response<PolicyTemplateAssignmentCollection> response = iamPolicyManagementService.listPolicyAssignments(listPolicyAssignmentsOptionsModel).execute();
     assertNotNull(response);
-    PolcyTemplateAssignmentCollection responseObj = response.getResult();
+    PolicyTemplateAssignmentCollection responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request sent to the mock server
@@ -1954,7 +1954,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testGetPolicyAssignmentWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"template_id\": \"templateId\", \"template_version\": \"templateVersion\", \"assignment_id\": \"assignmentId\", \"target_type\": \"Account\", \"target\": \"target\", \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"options\": [{\"subject_type\": \"iam_id\", \"subject_id\": \"subjectId\", \"root_requester_id\": \"rootRequesterId\", \"root_template_id\": \"rootTemplateId\", \"root_template_version\": \"rootTemplateVersion\"}], \"resources\": [{\"target\": \"target\", \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"status\": \"in_progress\"}";
+    String mockResponseBody = "{\"template_id\": \"templateId\", \"template_version\": \"templateVersion\", \"assignment_id\": \"assignmentId\", \"target_type\": \"Account\", \"target\": \"target\", \"options\": [{\"subject_type\": \"iam_id\", \"subject_id\": \"subjectId\", \"root_requester_id\": \"rootRequesterId\", \"root_template_id\": \"rootTemplateId\", \"root_template_version\": \"rootTemplateVersion\"}], \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": \"target\", \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"status\": \"in_progress\"}";
     String getPolicyAssignmentPath = "/v1/policy_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1967,9 +1967,9 @@ public class IamPolicyManagementTest {
       .build();
 
     // Invoke getPolicyAssignment() with a valid options model and verify the result
-    Response<PolicyAssignmentRecord> response = iamPolicyManagementService.getPolicyAssignment(getPolicyAssignmentOptionsModel).execute();
+    Response<PolicyAssignment> response = iamPolicyManagementService.getPolicyAssignment(getPolicyAssignmentOptionsModel).execute();
     assertNotNull(response);
-    PolicyAssignmentRecord responseObj = response.getResult();
+    PolicyAssignment responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request sent to the mock server

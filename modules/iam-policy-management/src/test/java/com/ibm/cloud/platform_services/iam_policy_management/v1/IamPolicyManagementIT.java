@@ -291,11 +291,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .accountId(testAccountId)
                 .build();
 
-        Response<PolicyList> response = service.listPolicies(options).execute();
+        Response<PolicyCollection> response = service.listPolicies(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
-        PolicyList result = response.getResult();
+        PolicyCollection result = response.getResult();
         assertNotNull(result);
 
         // Confirm the test policy is present
@@ -646,11 +646,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .accountId(testAccountId)
                 .build();
 
-        Response<RoleList> response = service.listRoles(options).execute();
+        Response<RoleCollection> response = service.listRoles(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
-        RoleList result = response.getResult();
+        RoleCollection result = response.getResult();
         assertNotNull(result);
 
         // Confirm the test role is present
@@ -671,11 +671,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .serviceGroupId("IAM")
                 .build();
         
-        Response<RoleList> response = service.listRoles(options).execute();
+        Response<RoleCollection> response = service.listRoles(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
-        RoleList result = response.getResult();
+        RoleCollection result = response.getResult();
         assertNotNull(result);
 
         // Confirm the test role is present
@@ -1039,14 +1039,15 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       .accountId(testAccountId)
       .build();
 
-      Response<PolcyTemplateAssignmentCollection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
+      Response<PolicyTemplateAssignmentCollection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
-      PolcyTemplateAssignmentCollection result = response.getResult();
+      PolicyTemplateAssignmentCollection result = response.getResult();
       assertNotNull(result);
-      assertNotNull(result.getPolicyAssignments());
+      assertNotNull(result.getAssignments());
+      List<PolicyAssignment> assignments = result.getAssignments();
       // As long there is one assignment in test account, then there should be one assignment to run next test.
-      testAssignmentId = result.getPolicyAssignments().get(0).getId();
+      testAssignmentId = assignments.get(assignments.size() - 1).getId();
     }
 
     @Test(dependsOnMethods = { "testListPolicyAssignments" })
@@ -1056,11 +1057,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .assignmentId(testAssignmentId)
         .build();
 
-      Response<PolicyAssignmentRecord> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
+      Response<PolicyAssignment> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
 
-      PolicyAssignmentRecord result = response.getResult();
+      PolicyAssignment result = response.getResult();
 
       assertNotNull(result);
       assertEquals(result.getId(), testAssignmentId);
@@ -1081,12 +1082,12 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .accountId(testAccountId)
                 .build();
 
-        Response<PolicyList> policyResponse = service.listPolicies(policyOptions).execute();
+        Response<PolicyCollection> policyResponse = service.listPolicies(policyOptions).execute();
         assertNotNull(policyResponse);
         assertEquals(policyResponse.getStatusCode(), 200);
 
         // Iterate across the policies
-        PolicyList policyList = policyResponse.getResult();
+        PolicyCollection policyList = policyResponse.getResult();
         assertNotNull(policyList);
         for (Policy policy : policyList.getPolicies()) {
 
@@ -1122,11 +1123,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .accountId(testAccountId)
                 .build();
 
-        Response<RoleList> roleResponse = service.listRoles(roleOptions).execute();
+        Response<RoleCollection> roleResponse = service.listRoles(roleOptions).execute();
         assertNotNull(roleResponse);
         assertEquals(roleResponse.getStatusCode(), 200);
 
-        RoleList rolesList = roleResponse.getResult();
+        RoleCollection rolesList = roleResponse.getResult();
         assertNotNull(rolesList);
 
         // Iterate across the list of custom roles

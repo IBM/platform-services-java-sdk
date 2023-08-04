@@ -175,7 +175,8 @@ public class CreatePolicyTemplateOptions extends GenericModel {
   /**
    * Gets the name.
    *
-   * name of template.
+   * Required field when creating a new template. Otherwise this field is optional. If the field is included it will
+   * change the name value for all existing versions of the template.
    *
    * @return the name
    */
@@ -186,7 +187,7 @@ public class CreatePolicyTemplateOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * account id where this template will be created.
+   * Enterprise account ID where this template will be created.
    *
    * @return the accountId
    */
@@ -208,7 +209,8 @@ public class CreatePolicyTemplateOptions extends GenericModel {
   /**
    * Gets the description.
    *
-   * description of template purpose.
+   * Description of the policy template. This is shown to users in the enterprise account. Use this to describe the
+   * purpose or context of the policy for enterprise users managing IAM templates.
    *
    * @return the description
    */
@@ -219,7 +221,7 @@ public class CreatePolicyTemplateOptions extends GenericModel {
   /**
    * Gets the committed.
    *
-   * committed status for the template.
+   * Committed status of the template.
    *
    * @return the committed
    */

@@ -196,7 +196,8 @@ public class TemplatePolicy extends GenericModel {
   /**
    * Gets the description.
    *
-   * Allows the customer to use their own words to record the purpose/context related to a policy.
+   * Description of the policy. This is shown in child accounts when an access group or trusted profile template uses
+   * the policy template to assign access.
    *
    * @return the description
    */

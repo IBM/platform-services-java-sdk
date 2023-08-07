@@ -21,9 +21,10 @@ echo '<!DOCTYPE html>
         | <a href="https://github.com/IBM/platform-services-java-sdk">GitHub</a>
     </p>
 
-    <p>Javadoc by branch/release:</p>
-    <ul><li><a href="docs/latest">Latest</a></li>'
-ls docs | grep --invert-match index.html | sed 's/^.*/<li><a href="docs\/&">&<\/a><\/li>/'
+    <p>Javadoc by release:</p>
+    <ul>'
+echo ${TRAVIS_BRANCH} | sed 's/^.*/        <li><a href="docs\/&">Latest release<\/a><\/li>/'
+ls docs | grep --invert-match index.html | sed 's/^.*/        <li><a href="docs\/&">&<\/a><\/li>/'
 echo '    </ul>
 </div>
 </body>

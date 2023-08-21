@@ -58,11 +58,14 @@ public class InstanceUsage extends GenericModel {
   protected String planId;
   @SerializedName("plan_name")
   protected String planName;
+  @SerializedName("pricing_plan_id")
+  protected String pricingPlanId;
   protected String month;
   protected List<Metric> usage;
   protected Boolean pending;
   @SerializedName("currency_rate")
   protected Double currencyRate;
+  protected List<Object> tags;
 
   protected InstanceUsage() { }
 
@@ -276,6 +279,17 @@ public class InstanceUsage extends GenericModel {
   }
 
   /**
+   * Gets the pricingPlanId.
+   *
+   * The ID of the pricing plan used to rate the usage.
+   *
+   * @return the pricingPlanId
+   */
+  public String getPricingPlanId() {
+    return pricingPlanId;
+  }
+
+  /**
    * Gets the month.
    *
    * The month.
@@ -317,6 +331,17 @@ public class InstanceUsage extends GenericModel {
    */
   public Double getCurrencyRate() {
     return currencyRate;
+  }
+
+  /**
+   * Gets the tags.
+   *
+   * The user tags associated with a resource instance.
+   *
+   * @return the tags
+   */
+  public List<Object> getTags() {
+    return tags;
   }
 }
 

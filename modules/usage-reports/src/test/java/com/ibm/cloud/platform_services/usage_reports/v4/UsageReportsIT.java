@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,35 +13,66 @@
 
 package com.ibm.cloud.platform_services.usage_reports.v4;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountSummary;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.CreateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.DeleteReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Discount;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountSummaryOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetOrgUsageOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceGroupUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageAccountOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageAccountPager;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageOrgOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageOrgPager;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageResourceGroupOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageResourceGroupPager;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.InstanceUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsageFirst;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsageNext;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Metric;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Offer;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.OfferCredits;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Plan;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Resource;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourcesSummary;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfigHistoryItem;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListFirst;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListNext;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListSnapshotsItem;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListSnapshotsItemBillingPeriod;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListSnapshotsItemFilesItem;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListSnapshotsItemReportTypesItem;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Subscription;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SubscriptionSummary;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SubscriptionTerm;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SubscriptionTermCredits;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SupportSummary;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * Integration test class for the UsageReports service.
@@ -49,21 +80,14 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 public class UsageReportsIT extends SdkIntegrationTestBase {
   public UsageReports service = null;
   public static Map<String, String> config = null;
+  final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
+  final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
+  /**
+   * This method provides our config filename to the base class.
+   */
 
-  // Test-related config properties.
-  private static String ACCOUNT_ID;
-  private static String RESOURCE_GROUP_ID;
-  private static String ORG_ID;
-  private static String BILLING_MONTH;
-
-  @Override
   public String getConfigFilename() {
-    return "../../usage_reports.env";
-  }
-
-  @Override
-  public boolean loggingEnabled() {
-      return false;
+    return "../../usage_reports_v4.env";
   }
 
   @BeforeClass
@@ -83,283 +107,459 @@ public class UsageReportsIT extends SdkIntegrationTestBase {
     assertFalse(config.isEmpty());
     assertEquals(service.getServiceUrl(), config.get("URL"));
 
-    // Retrieve and verify some additional test-related config properties.
-    ACCOUNT_ID = config.get("ACCOUNT_ID");
-    RESOURCE_GROUP_ID = config.get("RESOURCE_GROUP_ID");
-    ORG_ID = config.get("ORG_ID");
-    BILLING_MONTH = config.get("BILLING_MONTH");
-    assertNotNull(ACCOUNT_ID);
-    assertNotNull(RESOURCE_GROUP_ID);
-    assertNotNull(ORG_ID);
-    assertNotNull(BILLING_MONTH);
+    service.enableRetries(4, 30);
 
-    log("Setup complete.");
+    System.out.println("Setup complete.");
   }
 
   @Test
   public void testGetAccountSummary() throws Exception {
-      try {
-          GetAccountSummaryOptions getAccountSummaryOptions = new GetAccountSummaryOptions.Builder()
-                  .accountId(ACCOUNT_ID)
-                  .billingmonth(BILLING_MONTH)
-                  .build();
-
-          Response<AccountSummary> response = service.getAccountSummary(getAccountSummaryOptions).execute();
-          assertNotNull(response);
-          assertEquals(response.getStatusCode(), 200);
-
-          AccountSummary accountSummaryResult = response.getResult();
-          assertNotNull(accountSummaryResult);
-          log(String.format("GetAccountSummary response:\n%s", accountSummaryResult.toString()));
-
-          assertEquals(accountSummaryResult.getAccountId(), ACCOUNT_ID);
-          assertNotNull(accountSummaryResult.getOffers());
-          assertFalse(accountSummaryResult.getOffers().isEmpty());
-      } catch (ServiceResponseException e) {
-          fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-                  e.getMessage(), e.getDebuggingInfo()));
-      }
-  }
-
-  @Test
-  public void testGetAccountUsage() throws Exception {
-      try {
-          GetAccountUsageOptions getAccountUsageOptions = new GetAccountUsageOptions.Builder()
-                  .accountId(ACCOUNT_ID)
-                  .billingmonth(BILLING_MONTH)
-                  .names(true)
-                  .acceptLanguage("English")
-                  .build();
-
-          Response<AccountUsage> response = service.getAccountUsage(getAccountUsageOptions).execute();
-          assertNotNull(response);
-          assertEquals(response.getStatusCode(), 200);
-
-          AccountUsage accountUsageResult = response.getResult();
-          assertNotNull(accountUsageResult);
-          log(String.format("GetAccountUsage response:\n%s", accountUsageResult.toString()));
-
-          assertEquals(accountUsageResult.getAccountId(), ACCOUNT_ID);
-          assertEquals(accountUsageResult.getMonth(), BILLING_MONTH);
-          assertNotNull(accountUsageResult.getResources());
-          assertFalse(accountUsageResult.getResources().isEmpty());
-      } catch (ServiceResponseException e) {
-          fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-                  e.getMessage(), e.getDebuggingInfo()));
-      }
-  }
-
-  @Test
-  public void testGetResourceGroupUsage() throws Exception {
     try {
-      GetResourceGroupUsageOptions getResourceGroupUsageOptions = new GetResourceGroupUsageOptions.Builder()
-      .accountId(ACCOUNT_ID)
-      .resourceGroupId(RESOURCE_GROUP_ID)
-      .billingmonth(BILLING_MONTH)
-      .names(true)
-      .build();
+      GetAccountSummaryOptions getAccountSummaryOptions = new GetAccountSummaryOptions.Builder()
+        .accountId("testString")
+        .billingmonth("testString")
+        .build();
 
-      Response<ResourceGroupUsage> response = service.getResourceGroupUsage(getResourceGroupUsageOptions).execute();
+      // Invoke operation
+      Response<AccountSummary> response = service.getAccountSummary(getAccountSummaryOptions).execute();
+      // Validate response
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
 
-      ResourceGroupUsage resourceGroupUsageResult = response.getResult();
-      assertNotNull(resourceGroupUsageResult);
-      log(String.format("GetResourceGroupUsage response:\n%s", resourceGroupUsageResult.toString()));
+      AccountSummary accountSummaryResult = response.getResult();
 
-      assertEquals(resourceGroupUsageResult.getAccountId(), ACCOUNT_ID);
-      assertEquals(resourceGroupUsageResult.getMonth(), BILLING_MONTH);
-      assertNotNull(resourceGroupUsageResult.getResources());
-      assertFalse(resourceGroupUsageResult.getResources().isEmpty());
+      assertNotNull(accountSummaryResult);
     } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s\nError details: %s",
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
 
-  @Test
-  public void testGetOrgUsage() throws Exception {
-      try {
-          GetOrgUsageOptions getOrgUsageOptions = new GetOrgUsageOptions.Builder()
-                  .accountId(ACCOUNT_ID)
-                  .organizationId(ORG_ID)
-                  .billingmonth(BILLING_MONTH)
-                  .names(true)
-                  .build();
+  @Test(dependsOnMethods = { "testGetAccountSummary" })
+  public void testGetAccountUsage() throws Exception {
+    try {
+      GetAccountUsageOptions getAccountUsageOptions = new GetAccountUsageOptions.Builder()
+        .accountId("testString")
+        .billingmonth("testString")
+        .names(true)
+        .acceptLanguage("testString")
+        .build();
 
-          Response<OrgUsage> response = service.getOrgUsage(getOrgUsageOptions).execute();
-          assertNotNull(response);
-          assertEquals(response.getStatusCode(), 200);
+      // Invoke operation
+      Response<AccountUsage> response = service.getAccountUsage(getAccountUsageOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
 
-          OrgUsage orgUsageResult = response.getResult();
-          assertNotNull(orgUsageResult);
-          log(String.format("GetOrgUsage response:\n%s", orgUsageResult.toString()));
+      AccountUsage accountUsageResult = response.getResult();
 
-          assertEquals(orgUsageResult.getAccountId(), ACCOUNT_ID);
-          assertEquals(orgUsageResult.getMonth(), BILLING_MONTH);
-          assertNotNull(orgUsageResult.getResources());
-          assertFalse(orgUsageResult.getResources().isEmpty());
-      } catch (ServiceResponseException e) {
-          fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-                  e.getMessage(), e.getDebuggingInfo()));
-      }
+      assertNotNull(accountUsageResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
   }
 
-  @Test
+  @Test(dependsOnMethods = { "testGetAccountUsage" })
+  public void testGetResourceGroupUsage() throws Exception {
+    try {
+      GetResourceGroupUsageOptions getResourceGroupUsageOptions = new GetResourceGroupUsageOptions.Builder()
+        .accountId("testString")
+        .resourceGroupId("testString")
+        .billingmonth("testString")
+        .names(true)
+        .acceptLanguage("testString")
+        .build();
+
+      // Invoke operation
+      Response<ResourceGroupUsage> response = service.getResourceGroupUsage(getResourceGroupUsageOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ResourceGroupUsage resourceGroupUsageResult = response.getResult();
+
+      assertNotNull(resourceGroupUsageResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetResourceGroupUsage" })
   public void testGetResourceUsageAccount() throws Exception {
-      try {
-          GetResourceUsageAccountOptions getResourceUsageAccountOptions = new GetResourceUsageAccountOptions.Builder()
-                  .accountId(ACCOUNT_ID)
-                  .billingmonth(BILLING_MONTH)
-                  .names(true)
-                  .limit(50L)
-                  .build();
+    try {
+      GetResourceUsageAccountOptions getResourceUsageAccountOptions = new GetResourceUsageAccountOptions.Builder()
+        .accountId("testString")
+        .billingmonth("testString")
+        .names(true)
+        .tags(true)
+        .acceptLanguage("testString")
+        .limit(Long.valueOf("30"))
+        .start("testString")
+        .resourceGroupId("testString")
+        .organizationId("testString")
+        .resourceInstanceId("testString")
+        .resourceId("testString")
+        .planId("testString")
+        .region("testString")
+        .build();
 
-          List<InstanceUsage> results = new ArrayList<>();
+      // Invoke operation
+      Response<InstancesUsage> response = service.getResourceUsageAccount(getResourceUsageAccountOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
 
-          String offset = null;
-          boolean moreResults = true;
+      InstancesUsage instancesUsageResult = response.getResult();
 
-          while (moreResults) {
-
-              // Set "start" parameter for next page of results.
-              getResourceUsageAccountOptions = getResourceUsageAccountOptions.newBuilder()
-                      .start(offset)
-                      .build();
-
-              Response<InstancesUsage> response = service.getResourceUsageAccount(getResourceUsageAccountOptions)
-                      .execute();
-              assertNotNull(response);
-              assertEquals(response.getStatusCode(), 200);
-
-              InstancesUsage instancesUsageResult = response.getResult();
-              assertNotNull(instancesUsageResult);
-
-              // Add the just-retrieved page to the results.
-              if (instancesUsageResult.getResources() != null) {
-                  results.addAll(instancesUsageResult.getResources());
-              }
-
-              // Determine offset for next page of results.
-              if (instancesUsageResult.getNext() != null) {
-                  offset = instancesUsageResult.getNext().getOffset();
-              } else {
-                  offset = null;
-                  moreResults = false;
-              }
-          }
-
-          log(String.format("GetResourceUsageAccount response contained %d total resources.", results.size()));
-          assertFalse(results.isEmpty());
-      } catch (ServiceResponseException e) {
-          fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-                  e.getMessage(), e.getDebuggingInfo()));
-      }
+      assertNotNull(instancesUsageResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
   }
 
-  @Test
+  @Test(dependsOnMethods = { "testGetResourceUsageAccount" })
+  public void testGetResourceUsageAccountWithPager() throws Exception {
+    try {
+      GetResourceUsageAccountOptions options = new GetResourceUsageAccountOptions.Builder()
+        .accountId("testString")
+        .billingmonth("testString")
+        .names(true)
+        .tags(true)
+        .acceptLanguage("testString")
+        .limit(Long.valueOf("30"))
+        .resourceGroupId("testString")
+        .organizationId("testString")
+        .resourceInstanceId("testString")
+        .resourceId("testString")
+        .planId("testString")
+        .region("testString")
+        .build();
+
+      // Test getNext().
+      List<InstanceUsage> allResults = new ArrayList<>();
+      GetResourceUsageAccountPager pager = new GetResourceUsageAccountPager(service, options);
+      while (pager.hasNext()) {
+        List<InstanceUsage> nextPage = pager.getNext();
+        assertNotNull(nextPage);
+        allResults.addAll(nextPage);
+      }
+      assertFalse(allResults.isEmpty());
+
+      // Test getAll();
+      pager = new GetResourceUsageAccountPager(service, options);
+      List<InstanceUsage> allItems = pager.getAll();
+      assertNotNull(allItems);
+      assertFalse(allItems.isEmpty());
+
+      assertEquals(allItems.size(), allResults.size());
+      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetResourceUsageAccount" })
   public void testGetResourceUsageResourceGroup() throws Exception {
-      try {
-          GetResourceUsageResourceGroupOptions getResourceUsageResourceGroupOptions =
-                  new GetResourceUsageResourceGroupOptions.Builder()
-                      .accountId(ACCOUNT_ID)
-                      .resourceGroupId(RESOURCE_GROUP_ID)
-                      .billingmonth(BILLING_MONTH)
-                      .names(true)
-                      .limit(50L)
-                      .build();
+    try {
+      GetResourceUsageResourceGroupOptions getResourceUsageResourceGroupOptions = new GetResourceUsageResourceGroupOptions.Builder()
+        .accountId("testString")
+        .resourceGroupId("testString")
+        .billingmonth("testString")
+        .names(true)
+        .tags(true)
+        .acceptLanguage("testString")
+        .limit(Long.valueOf("30"))
+        .start("testString")
+        .resourceInstanceId("testString")
+        .resourceId("testString")
+        .planId("testString")
+        .region("testString")
+        .build();
 
-          List<InstanceUsage> results = new ArrayList<>();
+      // Invoke operation
+      Response<InstancesUsage> response = service.getResourceUsageResourceGroup(getResourceUsageResourceGroupOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
 
-          String offset = null;
-          boolean moreResults = true;
+      InstancesUsage instancesUsageResult = response.getResult();
 
-          while (moreResults) {
-
-              // Set "start" parameter for next page of results.
-              getResourceUsageResourceGroupOptions = getResourceUsageResourceGroupOptions.newBuilder()
-                      .start(offset)
-                      .build();
-
-              Response<InstancesUsage> response = service
-                      .getResourceUsageResourceGroup(getResourceUsageResourceGroupOptions).execute();
-              assertNotNull(response);
-              assertEquals(response.getStatusCode(), 200);
-
-              InstancesUsage instancesUsageResult = response.getResult();
-              assertNotNull(instancesUsageResult);
-
-              // Add the just-retrieved page to the results.
-              if (instancesUsageResult.getResources() != null) {
-                  results.addAll(instancesUsageResult.getResources());
-              }
-
-              // Determine offset for next page of results.
-              if (instancesUsageResult.getNext() != null) {
-                  offset = instancesUsageResult.getNext().getOffset();
-              } else {
-                  offset = null;
-                  moreResults = false;
-              }
-          }
-
-          log(String.format("GetResourceUsageResourceGroup response contained %d total resources.", results.size()));
-          assertFalse(results.isEmpty());
-      } catch (ServiceResponseException e) {
-          fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-                  e.getMessage(), e.getDebuggingInfo()));
-      }
+      assertNotNull(instancesUsageResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
   }
 
-  @Test
-  public void testGetResourceUsageOrg() throws Exception {
-      try {
-          GetResourceUsageOrgOptions getResourceUsageOrgOptions = new GetResourceUsageOrgOptions.Builder()
-                  .accountId(ACCOUNT_ID)
-                  .organizationId(ORG_ID)
-                  .billingmonth(BILLING_MONTH)
-                  .names(true)
-                  .limit(50L)
-                  .build();
+  @Test(dependsOnMethods = { "testGetResourceUsageResourceGroup" })
+  public void testGetResourceUsageResourceGroupWithPager() throws Exception {
+    try {
+      GetResourceUsageResourceGroupOptions options = new GetResourceUsageResourceGroupOptions.Builder()
+        .accountId("testString")
+        .resourceGroupId("testString")
+        .billingmonth("testString")
+        .names(true)
+        .tags(true)
+        .acceptLanguage("testString")
+        .limit(Long.valueOf("30"))
+        .resourceInstanceId("testString")
+        .resourceId("testString")
+        .planId("testString")
+        .region("testString")
+        .build();
 
-          List<InstanceUsage> results = new ArrayList<>();
-
-          String offset = null;
-          boolean moreResults = true;
-
-          while (moreResults) {
-
-              // Set "start" parameter for next page of results.
-              getResourceUsageOrgOptions = getResourceUsageOrgOptions.newBuilder()
-                      .start(offset)
-                      .build();
-
-              Response<InstancesUsage> response = service.getResourceUsageOrg(getResourceUsageOrgOptions).execute();
-              assertNotNull(response);
-              assertEquals(response.getStatusCode(), 200);
-
-              InstancesUsage instancesUsageResult = response.getResult();
-              assertNotNull(instancesUsageResult);
-
-              // Add the just-retrieved page to the results.
-              if (instancesUsageResult.getResources() != null) {
-                  results.addAll(instancesUsageResult.getResources());
-              }
-
-              // Determine offset for next page of results.
-              if (instancesUsageResult.getNext() != null) {
-                  offset = instancesUsageResult.getNext().getOffset();
-              } else {
-                  offset = null;
-                  moreResults = false;
-              }
-          }
-
-          log(String.format("GetResourceUsageOrg response contained %d total resources.", results.size()));
-          assertFalse(results.isEmpty());
-      } catch (ServiceResponseException e) {
-          fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
-                  e.getMessage(), e.getDebuggingInfo()));
+      // Test getNext().
+      List<InstanceUsage> allResults = new ArrayList<>();
+      GetResourceUsageResourceGroupPager pager = new GetResourceUsageResourceGroupPager(service, options);
+      while (pager.hasNext()) {
+        List<InstanceUsage> nextPage = pager.getNext();
+        assertNotNull(nextPage);
+        allResults.addAll(nextPage);
       }
+      assertFalse(allResults.isEmpty());
+
+      // Test getAll();
+      pager = new GetResourceUsageResourceGroupPager(service, options);
+      List<InstanceUsage> allItems = pager.getAll();
+      assertNotNull(allItems);
+      assertFalse(allItems.isEmpty());
+
+      assertEquals(allItems.size(), allResults.size());
+      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetResourceUsageResourceGroup" })
+  public void testGetResourceUsageOrg() throws Exception {
+    try {
+      GetResourceUsageOrgOptions getResourceUsageOrgOptions = new GetResourceUsageOrgOptions.Builder()
+        .accountId("testString")
+        .organizationId("testString")
+        .billingmonth("testString")
+        .names(true)
+        .tags(true)
+        .acceptLanguage("testString")
+        .limit(Long.valueOf("30"))
+        .start("testString")
+        .resourceInstanceId("testString")
+        .resourceId("testString")
+        .planId("testString")
+        .region("testString")
+        .build();
+
+      // Invoke operation
+      Response<InstancesUsage> response = service.getResourceUsageOrg(getResourceUsageOrgOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      InstancesUsage instancesUsageResult = response.getResult();
+
+      assertNotNull(instancesUsageResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetResourceUsageOrg" })
+  public void testGetResourceUsageOrgWithPager() throws Exception {
+    try {
+      GetResourceUsageOrgOptions options = new GetResourceUsageOrgOptions.Builder()
+        .accountId("testString")
+        .organizationId("testString")
+        .billingmonth("testString")
+        .names(true)
+        .tags(true)
+        .acceptLanguage("testString")
+        .limit(Long.valueOf("30"))
+        .resourceInstanceId("testString")
+        .resourceId("testString")
+        .planId("testString")
+        .region("testString")
+        .build();
+
+      // Test getNext().
+      List<InstanceUsage> allResults = new ArrayList<>();
+      GetResourceUsageOrgPager pager = new GetResourceUsageOrgPager(service, options);
+      while (pager.hasNext()) {
+        List<InstanceUsage> nextPage = pager.getNext();
+        assertNotNull(nextPage);
+        allResults.addAll(nextPage);
+      }
+      assertFalse(allResults.isEmpty());
+
+      // Test getAll();
+      pager = new GetResourceUsageOrgPager(service, options);
+      List<InstanceUsage> allItems = pager.getAll();
+      assertNotNull(allItems);
+      assertFalse(allItems.isEmpty());
+
+      assertEquals(allItems.size(), allResults.size());
+      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetResourceUsageOrg" })
+  public void testGetOrgUsage() throws Exception {
+    try {
+      GetOrgUsageOptions getOrgUsageOptions = new GetOrgUsageOptions.Builder()
+        .accountId("testString")
+        .organizationId("testString")
+        .billingmonth("testString")
+        .names(true)
+        .acceptLanguage("testString")
+        .build();
+
+      // Invoke operation
+      Response<OrgUsage> response = service.getOrgUsage(getOrgUsageOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      OrgUsage orgUsageResult = response.getResult();
+
+      assertNotNull(orgUsageResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetOrgUsage" })
+  public void testCreateReportsSnapshotConfig() throws Exception {
+    try {
+      CreateReportsSnapshotConfigOptions createReportsSnapshotConfigOptions = new CreateReportsSnapshotConfigOptions.Builder()
+        .accountId("abc")
+        .interval("daily")
+        .cosBucket("bucket_name")
+        .cosLocation("us-south")
+        .cosReportsFolder("IBMCloud-Billing-Reports")
+        .reportTypes(java.util.Arrays.asList("account_summary", "enterprise_summary", "account_resource_instance_usage"))
+        .versioning("new")
+        .build();
+
+      // Invoke operation
+      Response<SnapshotConfig> response = service.createReportsSnapshotConfig(createReportsSnapshotConfigOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      SnapshotConfig snapshotConfigResult = response.getResult();
+
+      assertNotNull(snapshotConfigResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testCreateReportsSnapshotConfig" })
+  public void testGetReportsSnapshotConfig() throws Exception {
+    try {
+      GetReportsSnapshotConfigOptions getReportsSnapshotConfigOptions = new GetReportsSnapshotConfigOptions.Builder()
+        .accountId("abc")
+        .build();
+
+      // Invoke operation
+      Response<SnapshotConfig> response = service.getReportsSnapshotConfig(getReportsSnapshotConfigOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      SnapshotConfig snapshotConfigResult = response.getResult();
+
+      assertNotNull(snapshotConfigResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetReportsSnapshotConfig" })
+  public void testUpdateReportsSnapshotConfig() throws Exception {
+    try {
+      UpdateReportsSnapshotConfigOptions updateReportsSnapshotConfigOptions = new UpdateReportsSnapshotConfigOptions.Builder()
+        .accountId("abc")
+        .interval("daily")
+        .cosBucket("bucket_name")
+        .cosLocation("us-south")
+        .cosReportsFolder("IBMCloud-Billing-Reports")
+        .reportTypes(java.util.Arrays.asList("account_summary", "enterprise_summary", "account_resource_instance_usage"))
+        .versioning("new")
+        .build();
+
+      // Invoke operation
+      Response<SnapshotConfig> response = service.updateReportsSnapshotConfig(updateReportsSnapshotConfigOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      SnapshotConfig snapshotConfigResult = response.getResult();
+
+      assertNotNull(snapshotConfigResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testUpdateReportsSnapshotConfig" })
+  public void testGetReportsSnapshot() throws Exception {
+    try {
+      GetReportsSnapshotOptions getReportsSnapshotOptions = new GetReportsSnapshotOptions.Builder()
+        .accountId("abc")
+        .month("2023-02")
+        .dateFrom(Double.valueOf("1675209600000"))
+        .dateTo(Double.valueOf("1675987200000"))
+        .build();
+
+      // Invoke operation
+      Response<SnapshotList> response = service.getReportsSnapshot(getReportsSnapshotOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      SnapshotList snapshotListResult = response.getResult();
+
+      assertNotNull(snapshotListResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetReportsSnapshot" })
+  public void testDeleteReportsSnapshotConfig() throws Exception {
+    try {
+      DeleteReportsSnapshotConfigOptions deleteReportsSnapshotConfigOptions = new DeleteReportsSnapshotConfigOptions.Builder()
+        .accountId("abc")
+        .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteReportsSnapshotConfig(deleteReportsSnapshotConfigOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @AfterClass
+  public void tearDown() {
+    // Add any clean up logic here
+    System.out.println("Clean up complete.");
   }
  }

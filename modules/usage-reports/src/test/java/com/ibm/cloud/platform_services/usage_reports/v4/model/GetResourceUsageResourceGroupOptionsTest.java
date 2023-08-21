@@ -36,8 +36,9 @@ public class GetResourceUsageResourceGroupOptionsTest {
       .resourceGroupId("testString")
       .billingmonth("testString")
       .names(true)
+      .tags(true)
       .acceptLanguage("testString")
-      .limit(Long.valueOf("1"))
+      .limit(Long.valueOf("30"))
       .start("testString")
       .resourceInstanceId("testString")
       .resourceId("testString")
@@ -48,8 +49,9 @@ public class GetResourceUsageResourceGroupOptionsTest {
     assertEquals(getResourceUsageResourceGroupOptionsModel.resourceGroupId(), "testString");
     assertEquals(getResourceUsageResourceGroupOptionsModel.billingmonth(), "testString");
     assertEquals(getResourceUsageResourceGroupOptionsModel.names(), Boolean.valueOf(true));
+    assertEquals(getResourceUsageResourceGroupOptionsModel.tags(), Boolean.valueOf(true));
     assertEquals(getResourceUsageResourceGroupOptionsModel.acceptLanguage(), "testString");
-    assertEquals(getResourceUsageResourceGroupOptionsModel.limit(), Long.valueOf("1"));
+    assertEquals(getResourceUsageResourceGroupOptionsModel.limit(), Long.valueOf("30"));
     assertEquals(getResourceUsageResourceGroupOptionsModel.start(), "testString");
     assertEquals(getResourceUsageResourceGroupOptionsModel.resourceInstanceId(), "testString");
     assertEquals(getResourceUsageResourceGroupOptionsModel.resourceId(), "testString");

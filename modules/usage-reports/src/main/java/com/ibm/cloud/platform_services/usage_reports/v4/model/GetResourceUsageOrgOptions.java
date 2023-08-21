@@ -23,6 +23,7 @@ public class GetResourceUsageOrgOptions extends GenericModel {
   protected String organizationId;
   protected String billingmonth;
   protected Boolean names;
+  protected Boolean tags;
   protected String acceptLanguage;
   protected Long limit;
   protected String start;
@@ -39,6 +40,7 @@ public class GetResourceUsageOrgOptions extends GenericModel {
     private String organizationId;
     private String billingmonth;
     private Boolean names;
+    private Boolean tags;
     private String acceptLanguage;
     private Long limit;
     private String start;
@@ -57,6 +59,7 @@ public class GetResourceUsageOrgOptions extends GenericModel {
       this.organizationId = getResourceUsageOrgOptions.organizationId;
       this.billingmonth = getResourceUsageOrgOptions.billingmonth;
       this.names = getResourceUsageOrgOptions.names;
+      this.tags = getResourceUsageOrgOptions.tags;
       this.acceptLanguage = getResourceUsageOrgOptions.acceptLanguage;
       this.limit = getResourceUsageOrgOptions.limit;
       this.start = getResourceUsageOrgOptions.start;
@@ -135,6 +138,17 @@ public class GetResourceUsageOrgOptions extends GenericModel {
      */
     public Builder names(Boolean names) {
       this.names = names;
+      return this;
+    }
+
+    /**
+     * Set the tags.
+     *
+     * @param tags the tags
+     * @return the GetResourceUsageOrgOptions builder
+     */
+    public Builder tags(Boolean tags) {
+      this.tags = tags;
       return this;
     }
 
@@ -229,6 +243,7 @@ public class GetResourceUsageOrgOptions extends GenericModel {
     organizationId = builder.organizationId;
     billingmonth = builder.billingmonth;
     names = builder.names;
+    tags = builder.tags;
     acceptLanguage = builder.acceptLanguage;
     limit = builder.limit;
     start = builder.start;
@@ -289,6 +304,17 @@ public class GetResourceUsageOrgOptions extends GenericModel {
    */
   public Boolean names() {
     return names;
+  }
+
+  /**
+   * Gets the tags.
+   *
+   * Include the user tags associated with every resource instance. By default it is always `true`.
+   *
+   * @return the tags
+   */
+  public Boolean tags() {
+    return tags;
   }
 
   /**

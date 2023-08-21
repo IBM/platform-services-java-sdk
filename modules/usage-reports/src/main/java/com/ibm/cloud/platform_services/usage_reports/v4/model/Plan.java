@@ -76,6 +76,8 @@ public class Plan extends GenericModel {
   /**
    * Gets the pricingPlanId.
    *
+   * The ID of the pricing plan used to rate the usage.
+   *
    * @return the pricingPlanId
    */
   public String getPricingPlanId() {

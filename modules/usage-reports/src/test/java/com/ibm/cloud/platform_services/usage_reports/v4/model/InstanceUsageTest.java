@@ -53,9 +53,11 @@ public class InstanceUsageTest {
     assertNull(instanceUsageModel.isBillable());
     assertNull(instanceUsageModel.getPlanId());
     assertNull(instanceUsageModel.getPlanName());
+    assertNull(instanceUsageModel.getPricingPlanId());
     assertNull(instanceUsageModel.getMonth());
     assertNull(instanceUsageModel.getUsage());
     assertNull(instanceUsageModel.isPending());
     assertNull(instanceUsageModel.getCurrencyRate());
+    assertNull(instanceUsageModel.getTags());
   }
 }

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -154,8 +154,8 @@ public class CreateAccessGroupOptions extends GenericModel {
   /**
    * Gets the name.
    *
-   * Assign the specified name to the access group. This field is case-insensitive and has a limit of 100 characters.
-   * The group name has to be unique within an account.
+   * Give the access group a unique name that doesn't conflict with an existing access group in the account. This field
+   * is case-insensitive and has a limit of 100 characters.
    *
    * @return the name
    */

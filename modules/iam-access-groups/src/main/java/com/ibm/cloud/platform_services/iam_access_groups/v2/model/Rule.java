@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,7 +19,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * A rule of an access group.
+ * A dynamic rule of an access group.
  */
 public class Rule extends GenericModel {
 
@@ -69,7 +69,8 @@ public class Rule extends GenericModel {
   /**
    * Gets the expiration.
    *
-   * The number of hours that the rule lives for (Must be between 1 and 24).
+   * Session duration in hours. Access group membership is revoked after this time period expires. Users must log back
+   * in to refresh their access group membership. Must be between 1 and 24.
    *
    * @return the expiration
    */
@@ -80,7 +81,7 @@ public class Rule extends GenericModel {
   /**
    * Gets the realmName.
    *
-   * The url of the identity provider.
+   * The URL of the identity provider.
    *
    * @return the realmName
    */
@@ -91,7 +92,7 @@ public class Rule extends GenericModel {
   /**
    * Gets the accessGroupId.
    *
-   * The group id that the rule is assigned to.
+   * The group id that the dynamic rule is assigned to.
    *
    * @return the accessGroupId
    */
@@ -113,7 +114,7 @@ public class Rule extends GenericModel {
   /**
    * Gets the conditions.
    *
-   * A list of conditions the rule must satisfy.
+   * A list of conditions that identities must satisfy to gain access group membership.
    *
    * @return the conditions
    */
@@ -124,7 +125,7 @@ public class Rule extends GenericModel {
   /**
    * Gets the createdAt.
    *
-   * The timestamp the rule was created at.
+   * The timestamp for when the rule was created.
    *
    * @return the createdAt
    */
@@ -135,7 +136,7 @@ public class Rule extends GenericModel {
   /**
    * Gets the createdById.
    *
-   * The `iam_id` of the entity that created the rule.
+   * The `iam_id` of the entity that created the dynamic rule.
    *
    * @return the createdById
    */
@@ -146,7 +147,7 @@ public class Rule extends GenericModel {
   /**
    * Gets the lastModifiedAt.
    *
-   * The timestamp the rule was last edited at.
+   * The timestamp for when the dynamic rule was last edited.
    *
    * @return the lastModifiedAt
    */

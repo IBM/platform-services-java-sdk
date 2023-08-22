@@ -1,3 +1,10 @@
+# [0.38.0](https://github.com/IBM/platform-services-java-sdk/compare/0.37.1...0.38.0) (2023-08-22)
+
+
+### Features
+
+* **IAM Access Groups:** add support for access group templates ([#203](https://github.com/IBM/platform-services-java-sdk/issues/203)) ([f25bf86](https://github.com/IBM/platform-services-java-sdk/commit/f25bf86f50846e3bf5e4dbcc9023ad1edf105334))
+
 ## [0.37.1](https://github.com/IBM/platform-services-java-sdk/compare/0.37.0...0.37.1) (2023-07-19)
 
 

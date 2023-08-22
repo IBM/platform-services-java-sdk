@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022, 2023.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,63 +12,107 @@
  */
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.fail;
-
+import com.ibm.cloud.platform_services.iam_access_groups.v2.IamAccessGroups;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessActionControls;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupMembersPager;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupRequest;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupsPager;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccountSettings;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddAccessGroupRuleOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersRequestMembersItem;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersResponseMembersItem;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMemberToMultipleAccessGroupsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembersToAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembershipMultipleGroupsResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembershipMultipleGroupsResponseGroupsItem;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Assertions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AssertionsActionControls;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AssertionsRule;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AssignmentResourceAccessGroup;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AssignmentResourceEntry;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CommitTemplateOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Conditions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateTemplateOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteFromAllGroupsResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteFromAllGroupsResponseGroupsItem;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteGroupBulkMembersResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteGroupBulkMembersResponseMembersItem;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteTemplateOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Error;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupRuleOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccountSettingsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetLatestTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Group;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupActionControls;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupMembersList;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupTemplate;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupsList;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.HrefStruct;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.IsMemberOfAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupMembersOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupRulesOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAssignmentsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListGroupMembersResponseMember;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplateAssignmentResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplateVersionResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplateVersionsResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplatesOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplatesResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Members;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.MembersActionControls;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.PolicyTemplates;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveAccessGroupRuleOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAllAccessGroupsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMembersFromAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ReplaceAccessGroupRuleOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ResourceListWithTargetAccountID;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Rule;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RuleActionControls;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RuleConditions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RulesList;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateAssignmentResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateAssignmentVerboseResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateVersionResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateVersionsPager;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplatesPager;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccountSettingsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.utils.TestUtilities;
+import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.security.Authenticator;
+import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
+import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupMembersPager;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupsPager;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccountSettings;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddAccessGroupRuleOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersRequestMembersItem;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMembersResponse;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMemberToMultipleAccessGroupsOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembersToAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembershipMultipleGroupsResponse;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteFromAllGroupsResponse;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteGroupBulkMembersResponse;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupRuleOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccountSettingsOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Group;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupMembersList;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupsList;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.IsMemberOfAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupMembersOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupRulesOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupsOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListGroupMembersResponseMember;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveAccessGroupRuleOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAllAccessGroupsOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMembersFromAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ReplaceAccessGroupRuleOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Rule;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RuleConditions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RulesList;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccessGroupOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccountSettingsOptions;
-import com.ibm.cloud.platform_services.iam_access_groups.v2.utils.TestUtilities;
-import com.ibm.cloud.sdk.core.http.Response;
-import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * Unit test class for the IamAccessGroups service.
@@ -159,9 +203,10 @@ public class IamAccessGroupsTest {
       .accountId("testString")
       .transactionId("testString")
       .iamId("testString")
+      .search("testString")
       .membershipType("static")
       .limit(Long.valueOf("10"))
-      .offset(Long.valueOf("26"))
+      .offset(Long.valueOf("0"))
       .sort("name")
       .showFederated(false)
       .hidePublicAccess(false)
@@ -185,9 +230,10 @@ public class IamAccessGroupsTest {
     assertNotNull(query);
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("iam_id"), "testString");
+    assertEquals(query.get("search"), "testString");
     assertEquals(query.get("membership_type"), "static");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
-    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("0"));
     assertEquals(query.get("sort"), "name");
     assertEquals(Boolean.valueOf(query.get("show_federated")), Boolean.valueOf(false));
     assertEquals(Boolean.valueOf(query.get("hide_public_access")), Boolean.valueOf(false));
@@ -233,6 +279,7 @@ public class IamAccessGroupsTest {
       .accountId("testString")
       .transactionId("testString")
       .iamId("testString")
+      .search("testString")
       .membershipType("static")
       .limit(Long.valueOf("10"))
       .sort("name")
@@ -249,7 +296,7 @@ public class IamAccessGroupsTest {
     }
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the listAccessGroups operation using the AccessGroupsPager.getAll() method
   @Test
   public void testListAccessGroupsWithPagerGetAll() throws Throwable {
@@ -273,6 +320,7 @@ public class IamAccessGroupsTest {
       .accountId("testString")
       .transactionId("testString")
       .iamId("testString")
+      .search("testString")
       .membershipType("static")
       .limit(Long.valueOf("10"))
       .sort("name")
@@ -285,7 +333,7 @@ public class IamAccessGroupsTest {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the getAccessGroup operation with a valid options model parameter
   @Test
   public void testGetAccessGroupWOptions() throws Throwable {
@@ -578,7 +626,7 @@ public class IamAccessGroupsTest {
       .transactionId("testString")
       .membershipType("static")
       .limit(Long.valueOf("10"))
-      .offset(Long.valueOf("26"))
+      .offset(Long.valueOf("0"))
       .type("testString")
       .verbose(false)
       .sort("testString")
@@ -602,7 +650,7 @@ public class IamAccessGroupsTest {
     assertNotNull(query);
     assertEquals(query.get("membership_type"), "static");
     assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
-    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("26"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("0"));
     assertEquals(query.get("type"), "testString");
     assertEquals(Boolean.valueOf(query.get("verbose")), Boolean.valueOf(false));
     assertEquals(query.get("sort"), "testString");
@@ -663,7 +711,7 @@ public class IamAccessGroupsTest {
     }
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the listAccessGroupMembers operation using the AccessGroupMembersPager.getAll() method
   @Test
   public void testListAccessGroupMembersWithPagerGetAll() throws Throwable {
@@ -698,7 +746,7 @@ public class IamAccessGroupsTest {
     assertNotNull(allResults);
     assertEquals(allResults.size(), 2);
   }
-
+  
   // Test the removeMemberFromAccessGroup operation with a valid options model parameter
   @Test
   public void testRemoveMemberFromAccessGroupWOptions() throws Throwable {
@@ -874,7 +922,7 @@ public class IamAccessGroupsTest {
       .accountId("testString")
       .iamId("testString")
       .type("user")
-      .groups(java.util.Arrays.asList("access-group-id-1"))
+      .groups(java.util.Arrays.asList("AccessGroupId-b0d32f56-f85c-4bf1-af37-7bbd92b1b2b3"))
       .transactionId("testString")
       .build();
 
@@ -1306,6 +1354,1190 @@ public class IamAccessGroupsTest {
   public void testUpdateAccountSettingsNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     iamAccessGroupsService.updateAccountSettings(null).execute();
+  }
+
+  // Test the createTemplate operation with a valid options model parameter
+  @Test
+  public void testCreateTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"group\": {\"name\": \"name\", \"description\": \"description\", \"members\": {\"users\": [\"users\"], \"services\": [\"services\"], \"action_controls\": {\"add\": false, \"remove\": true}}, \"assertions\": {\"rules\": [{\"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"action_controls\": {\"remove\": true, \"update\": true}}], \"action_controls\": {\"add\": false, \"remove\": true, \"update\": true}}, \"action_controls\": {\"access\": {\"add\": false}}}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String createTemplatePath = "/v1/group_templates";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the MembersActionControls model
+    MembersActionControls membersActionControlsModel = new MembersActionControls.Builder()
+      .add(true)
+      .remove(false)
+      .build();
+
+    // Construct an instance of the Members model
+    Members membersModel = new Members.Builder()
+      .users(java.util.Arrays.asList("IBMid-50PJGPKYJJ", "IBMid-665000T8WY"))
+      .services(java.util.Arrays.asList("iam-ServiceId-345", "iam-ServiceId-456"))
+      .actionControls(membersActionControlsModel)
+      .build();
+
+    // Construct an instance of the Conditions model
+    Conditions conditionsModel = new Conditions.Builder()
+      .claim("blueGroup")
+      .operator("CONTAINS")
+      .value("test-bluegroup-saml")
+      .build();
+
+    // Construct an instance of the RuleActionControls model
+    RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
+      .remove(false)
+      .update(false)
+      .build();
+
+    // Construct an instance of the AssertionsRule model
+    AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
+      .name("Manager group rule")
+      .expiration(Long.valueOf("12"))
+      .realmName("https://idp.example.org/SAML2")
+      .conditions(java.util.Arrays.asList(conditionsModel))
+      .actionControls(ruleActionControlsModel)
+      .build();
+
+    // Construct an instance of the AssertionsActionControls model
+    AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
+      .add(false)
+      .remove(true)
+      .update(true)
+      .build();
+
+    // Construct an instance of the Assertions model
+    Assertions assertionsModel = new Assertions.Builder()
+      .rules(java.util.Arrays.asList(assertionsRuleModel))
+      .actionControls(assertionsActionControlsModel)
+      .build();
+
+    // Construct an instance of the AccessActionControls model
+    AccessActionControls accessActionControlsModel = new AccessActionControls.Builder()
+      .add(false)
+      .build();
+
+    // Construct an instance of the GroupActionControls model
+    GroupActionControls groupActionControlsModel = new GroupActionControls.Builder()
+      .access(accessActionControlsModel)
+      .build();
+
+    // Construct an instance of the AccessGroupRequest model
+    AccessGroupRequest accessGroupRequestModel = new AccessGroupRequest.Builder()
+      .name("IAM Admin Group")
+      .description("This access group template allows admin access to all IAM platform services in the account.")
+      .members(membersModel)
+      .assertions(assertionsModel)
+      .actionControls(groupActionControlsModel)
+      .build();
+
+    // Construct an instance of the PolicyTemplates model
+    PolicyTemplates policyTemplatesModel = new PolicyTemplates.Builder()
+      .id("policyTemplateId-123")
+      .version("1")
+      .build();
+
+    // Construct an instance of the CreateTemplateOptions model
+    CreateTemplateOptions createTemplateOptionsModel = new CreateTemplateOptions.Builder()
+      .name("IAM Admin Group template")
+      .accountId("accountID-123")
+      .description("This access group template allows admin access to all IAM platform services in the account.")
+      .group(accessGroupRequestModel)
+      .policyTemplateReferences(java.util.Arrays.asList(policyTemplatesModel))
+      .transactionId("testString")
+      .build();
+
+    // Invoke createTemplate() with a valid options model and verify the result
+    Response<TemplateResponse> response = iamAccessGroupsService.createTemplate(createTemplateOptionsModel).execute();
+    assertNotNull(response);
+    TemplateResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createTemplatePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createTemplate operation with and without retries enabled
+  @Test
+  public void testCreateTemplateWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testCreateTemplateWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testCreateTemplateWOptions();
+  }
+
+  // Test the createTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.createTemplate(null).execute();
+  }
+
+  // Test the listTemplates operation with a valid options model parameter
+  @Test
+  public void testListTemplatesWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"group_templates\": [{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"version\": \"version\", \"committed\": false, \"group\": {\"name\": \"name\", \"description\": \"description\", \"members\": {\"users\": [\"users\"], \"services\": [\"services\"], \"action_controls\": {\"add\": false, \"remove\": true}}, \"assertions\": {\"rules\": [{\"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"action_controls\": {\"remove\": true, \"update\": true}}], \"action_controls\": {\"add\": false, \"remove\": true, \"update\": true}}, \"action_controls\": {\"access\": {\"add\": false}}}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String listTemplatesPath = "/v1/group_templates";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListTemplatesOptions model
+    ListTemplatesOptions listTemplatesOptionsModel = new ListTemplatesOptions.Builder()
+      .accountId("accountID-123")
+      .transactionId("testString")
+      .limit(Long.valueOf("50"))
+      .offset(Long.valueOf("0"))
+      .verbose(true)
+      .build();
+
+    // Invoke listTemplates() with a valid options model and verify the result
+    Response<ListTemplatesResponse> response = iamAccessGroupsService.listTemplates(listTemplatesOptionsModel).execute();
+    assertNotNull(response);
+    ListTemplatesResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listTemplatesPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "accountID-123");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("50"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("0"));
+    assertEquals(Boolean.valueOf(query.get("verbose")), Boolean.valueOf(true));
+  }
+
+  // Test the listTemplates operation with and without retries enabled
+  @Test
+  public void testListTemplatesWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testListTemplatesWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testListTemplatesWOptions();
+  }
+
+  // Test the listTemplates operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListTemplatesNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.listTemplates(null).execute();
+  }
+
+  // Test the listTemplates operation using the TemplatesPager.getNext() method
+  @Test
+  public void testListTemplatesWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"group_templates\":[{\"id\":\"id\",\"name\":\"name\",\"description\":\"description\",\"version\":\"version\",\"committed\":false,\"group\":{\"name\":\"name\",\"description\":\"description\",\"members\":{\"users\":[\"users\"],\"services\":[\"services\"],\"action_controls\":{\"add\":false,\"remove\":true}},\"assertions\":{\"rules\":[{\"name\":\"name\",\"expiration\":10,\"realm_name\":\"realmName\",\"conditions\":[{\"claim\":\"claim\",\"operator\":\"operator\",\"value\":\"value\"}],\"action_controls\":{\"remove\":true,\"update\":true}}],\"action_controls\":{\"add\":false,\"remove\":true,\"update\":true}},\"action_controls\":{\"access\":{\"add\":false}}},\"policy_template_references\":[{\"id\":\"id\",\"version\":\"version\"}],\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"next\":{\"href\":\"https://myhost.com/somePath?offset=1\"},\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"group_templates\":[{\"id\":\"id\",\"name\":\"name\",\"description\":\"description\",\"version\":\"version\",\"committed\":false,\"group\":{\"name\":\"name\",\"description\":\"description\",\"members\":{\"users\":[\"users\"],\"services\":[\"services\"],\"action_controls\":{\"add\":false,\"remove\":true}},\"assertions\":{\"rules\":[{\"name\":\"name\",\"expiration\":10,\"realm_name\":\"realmName\",\"conditions\":[{\"claim\":\"claim\",\"operator\":\"operator\",\"value\":\"value\"}],\"action_controls\":{\"remove\":true,\"update\":true}}],\"action_controls\":{\"add\":false,\"remove\":true,\"update\":true}},\"action_controls\":{\"access\":{\"add\":false}}},\"policy_template_references\":[{\"id\":\"id\",\"version\":\"version\"}],\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListTemplatesOptions listTemplatesOptions = new ListTemplatesOptions.Builder()
+      .accountId("accountID-123")
+      .transactionId("testString")
+      .limit(Long.valueOf("50"))
+      .verbose(true)
+      .build();
+
+    List<GroupTemplate> allResults = new ArrayList<>();
+    TemplatesPager pager = new TemplatesPager(iamAccessGroupsService, listTemplatesOptions);
+    while (pager.hasNext()) {
+      List<GroupTemplate> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listTemplates operation using the TemplatesPager.getAll() method
+  @Test
+  public void testListTemplatesWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"group_templates\":[{\"id\":\"id\",\"name\":\"name\",\"description\":\"description\",\"version\":\"version\",\"committed\":false,\"group\":{\"name\":\"name\",\"description\":\"description\",\"members\":{\"users\":[\"users\"],\"services\":[\"services\"],\"action_controls\":{\"add\":false,\"remove\":true}},\"assertions\":{\"rules\":[{\"name\":\"name\",\"expiration\":10,\"realm_name\":\"realmName\",\"conditions\":[{\"claim\":\"claim\",\"operator\":\"operator\",\"value\":\"value\"}],\"action_controls\":{\"remove\":true,\"update\":true}}],\"action_controls\":{\"add\":false,\"remove\":true,\"update\":true}},\"action_controls\":{\"access\":{\"add\":false}}},\"policy_template_references\":[{\"id\":\"id\",\"version\":\"version\"}],\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"next\":{\"href\":\"https://myhost.com/somePath?offset=1\"},\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"group_templates\":[{\"id\":\"id\",\"name\":\"name\",\"description\":\"description\",\"version\":\"version\",\"committed\":false,\"group\":{\"name\":\"name\",\"description\":\"description\",\"members\":{\"users\":[\"users\"],\"services\":[\"services\"],\"action_controls\":{\"add\":false,\"remove\":true}},\"assertions\":{\"rules\":[{\"name\":\"name\",\"expiration\":10,\"realm_name\":\"realmName\",\"conditions\":[{\"claim\":\"claim\",\"operator\":\"operator\",\"value\":\"value\"}],\"action_controls\":{\"remove\":true,\"update\":true}}],\"action_controls\":{\"add\":false,\"remove\":true,\"update\":true}},\"action_controls\":{\"access\":{\"add\":false}}},\"policy_template_references\":[{\"id\":\"id\",\"version\":\"version\"}],\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListTemplatesOptions listTemplatesOptions = new ListTemplatesOptions.Builder()
+      .accountId("accountID-123")
+      .transactionId("testString")
+      .limit(Long.valueOf("50"))
+      .verbose(true)
+      .build();
+
+    TemplatesPager pager = new TemplatesPager(iamAccessGroupsService, listTemplatesOptions);
+    List<GroupTemplate> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the createTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testCreateTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"group\": {\"name\": \"name\", \"description\": \"description\", \"members\": {\"users\": [\"users\"], \"services\": [\"services\"], \"action_controls\": {\"add\": false, \"remove\": true}}, \"assertions\": {\"rules\": [{\"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"action_controls\": {\"remove\": true, \"update\": true}}], \"action_controls\": {\"add\": false, \"remove\": true, \"update\": true}}, \"action_controls\": {\"access\": {\"add\": false}}}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String createTemplateVersionPath = "/v1/group_templates/testString/versions";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the MembersActionControls model
+    MembersActionControls membersActionControlsModel = new MembersActionControls.Builder()
+      .add(true)
+      .remove(false)
+      .build();
+
+    // Construct an instance of the Members model
+    Members membersModel = new Members.Builder()
+      .users(java.util.Arrays.asList("IBMid-50PJGPKYJJ", "IBMid-665000T8WY"))
+      .services(java.util.Arrays.asList("iam-ServiceId-345"))
+      .actionControls(membersActionControlsModel)
+      .build();
+
+    // Construct an instance of the Conditions model
+    Conditions conditionsModel = new Conditions.Builder()
+      .claim("blueGroup")
+      .operator("CONTAINS")
+      .value("test-bluegroup-saml")
+      .build();
+
+    // Construct an instance of the RuleActionControls model
+    RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
+      .remove(true)
+      .update(true)
+      .build();
+
+    // Construct an instance of the AssertionsRule model
+    AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
+      .name("Manager group rule")
+      .expiration(Long.valueOf("12"))
+      .realmName("https://idp.example.org/SAML2")
+      .conditions(java.util.Arrays.asList(conditionsModel))
+      .actionControls(ruleActionControlsModel)
+      .build();
+
+    // Construct an instance of the AssertionsActionControls model
+    AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
+      .add(false)
+      .remove(true)
+      .update(true)
+      .build();
+
+    // Construct an instance of the Assertions model
+    Assertions assertionsModel = new Assertions.Builder()
+      .rules(java.util.Arrays.asList(assertionsRuleModel))
+      .actionControls(assertionsActionControlsModel)
+      .build();
+
+    // Construct an instance of the AccessActionControls model
+    AccessActionControls accessActionControlsModel = new AccessActionControls.Builder()
+      .add(false)
+      .build();
+
+    // Construct an instance of the GroupActionControls model
+    GroupActionControls groupActionControlsModel = new GroupActionControls.Builder()
+      .access(accessActionControlsModel)
+      .build();
+
+    // Construct an instance of the AccessGroupRequest model
+    AccessGroupRequest accessGroupRequestModel = new AccessGroupRequest.Builder()
+      .name("IAM Admin Group 8")
+      .description("This access group template allows admin access to all IAM platform services in the account.")
+      .members(membersModel)
+      .assertions(assertionsModel)
+      .actionControls(groupActionControlsModel)
+      .build();
+
+    // Construct an instance of the PolicyTemplates model
+    PolicyTemplates policyTemplatesModel = new PolicyTemplates.Builder()
+      .id("policyTemplateId-123")
+      .version("1")
+      .build();
+
+    // Construct an instance of the CreateTemplateVersionOptions model
+    CreateTemplateVersionOptions createTemplateVersionOptionsModel = new CreateTemplateVersionOptions.Builder()
+      .templateId("testString")
+      .name("IAM Admin Group template 2")
+      .description("This access group template allows admin access to all IAM platform services in the account.")
+      .group(accessGroupRequestModel)
+      .policyTemplateReferences(java.util.Arrays.asList(policyTemplatesModel))
+      .transactionId("testString")
+      .build();
+
+    // Invoke createTemplateVersion() with a valid options model and verify the result
+    Response<TemplateVersionResponse> response = iamAccessGroupsService.createTemplateVersion(createTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    TemplateVersionResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createTemplateVersionPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createTemplateVersion operation with and without retries enabled
+  @Test
+  public void testCreateTemplateVersionWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testCreateTemplateVersionWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testCreateTemplateVersionWOptions();
+  }
+
+  // Test the createTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.createTemplateVersion(null).execute();
+  }
+
+  // Test the listTemplateVersions operation with a valid options model parameter
+  @Test
+  public void testListTemplateVersionsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"previous\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"group_template_versions\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"group\": {\"name\": \"name\", \"description\": \"description\", \"members\": {\"users\": [\"users\"], \"services\": [\"services\"], \"action_controls\": {\"add\": false, \"remove\": true}}, \"assertions\": {\"rules\": [{\"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"action_controls\": {\"remove\": true, \"update\": true}}], \"action_controls\": {\"add\": false, \"remove\": true, \"update\": true}}, \"action_controls\": {\"access\": {\"add\": false}}}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String listTemplateVersionsPath = "/v1/group_templates/testString/versions";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListTemplateVersionsOptions model
+    ListTemplateVersionsOptions listTemplateVersionsOptionsModel = new ListTemplateVersionsOptions.Builder()
+      .templateId("testString")
+      .limit(Long.valueOf("100"))
+      .offset(Long.valueOf("0"))
+      .build();
+
+    // Invoke listTemplateVersions() with a valid options model and verify the result
+    Response<ListTemplateVersionsResponse> response = iamAccessGroupsService.listTemplateVersions(listTemplateVersionsOptionsModel).execute();
+    assertNotNull(response);
+    ListTemplateVersionsResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listTemplateVersionsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("0"));
+  }
+
+  // Test the listTemplateVersions operation with and without retries enabled
+  @Test
+  public void testListTemplateVersionsWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testListTemplateVersionsWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testListTemplateVersionsWOptions();
+  }
+
+  // Test the listTemplateVersions operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListTemplateVersionsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.listTemplateVersions(null).execute();
+  }
+
+  // Test the listTemplateVersions operation using the TemplateVersionsPager.getNext() method
+  @Test
+  public void testListTemplateVersionsWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"href\":\"https://myhost.com/somePath?offset=1\"},\"total_count\":2,\"group_template_versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"group\":{\"name\":\"name\",\"description\":\"description\",\"members\":{\"users\":[\"users\"],\"services\":[\"services\"],\"action_controls\":{\"add\":false,\"remove\":true}},\"assertions\":{\"rules\":[{\"name\":\"name\",\"expiration\":10,\"realm_name\":\"realmName\",\"conditions\":[{\"claim\":\"claim\",\"operator\":\"operator\",\"value\":\"value\"}],\"action_controls\":{\"remove\":true,\"update\":true}}],\"action_controls\":{\"add\":false,\"remove\":true,\"update\":true}},\"action_controls\":{\"access\":{\"add\":false}}},\"policy_template_references\":[{\"id\":\"id\",\"version\":\"version\"}],\"href\":\"href\",\"created_at\":\"createdAt\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"lastModifiedAt\",\"last_modified_by_id\":\"lastModifiedById\"}],\"limit\":1}";
+    String mockResponsePage2 = "{\"total_count\":2,\"group_template_versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"group\":{\"name\":\"name\",\"description\":\"description\",\"members\":{\"users\":[\"users\"],\"services\":[\"services\"],\"action_controls\":{\"add\":false,\"remove\":true}},\"assertions\":{\"rules\":[{\"name\":\"name\",\"expiration\":10,\"realm_name\":\"realmName\",\"conditions\":[{\"claim\":\"claim\",\"operator\":\"operator\",\"value\":\"value\"}],\"action_controls\":{\"remove\":true,\"update\":true}}],\"action_controls\":{\"add\":false,\"remove\":true,\"update\":true}},\"action_controls\":{\"access\":{\"add\":false}}},\"policy_template_references\":[{\"id\":\"id\",\"version\":\"version\"}],\"href\":\"href\",\"created_at\":\"createdAt\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"lastModifiedAt\",\"last_modified_by_id\":\"lastModifiedById\"}],\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListTemplateVersionsOptions listTemplateVersionsOptions = new ListTemplateVersionsOptions.Builder()
+      .templateId("testString")
+      .limit(Long.valueOf("100"))
+      .build();
+
+    List<ListTemplateVersionResponse> allResults = new ArrayList<>();
+    TemplateVersionsPager pager = new TemplateVersionsPager(iamAccessGroupsService, listTemplateVersionsOptions);
+    while (pager.hasNext()) {
+      List<ListTemplateVersionResponse> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listTemplateVersions operation using the TemplateVersionsPager.getAll() method
+  @Test
+  public void testListTemplateVersionsWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"href\":\"https://myhost.com/somePath?offset=1\"},\"total_count\":2,\"group_template_versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"group\":{\"name\":\"name\",\"description\":\"description\",\"members\":{\"users\":[\"users\"],\"services\":[\"services\"],\"action_controls\":{\"add\":false,\"remove\":true}},\"assertions\":{\"rules\":[{\"name\":\"name\",\"expiration\":10,\"realm_name\":\"realmName\",\"conditions\":[{\"claim\":\"claim\",\"operator\":\"operator\",\"value\":\"value\"}],\"action_controls\":{\"remove\":true,\"update\":true}}],\"action_controls\":{\"add\":false,\"remove\":true,\"update\":true}},\"action_controls\":{\"access\":{\"add\":false}}},\"policy_template_references\":[{\"id\":\"id\",\"version\":\"version\"}],\"href\":\"href\",\"created_at\":\"createdAt\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"lastModifiedAt\",\"last_modified_by_id\":\"lastModifiedById\"}],\"limit\":1}";
+    String mockResponsePage2 = "{\"total_count\":2,\"group_template_versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"group\":{\"name\":\"name\",\"description\":\"description\",\"members\":{\"users\":[\"users\"],\"services\":[\"services\"],\"action_controls\":{\"add\":false,\"remove\":true}},\"assertions\":{\"rules\":[{\"name\":\"name\",\"expiration\":10,\"realm_name\":\"realmName\",\"conditions\":[{\"claim\":\"claim\",\"operator\":\"operator\",\"value\":\"value\"}],\"action_controls\":{\"remove\":true,\"update\":true}}],\"action_controls\":{\"add\":false,\"remove\":true,\"update\":true}},\"action_controls\":{\"access\":{\"add\":false}}},\"policy_template_references\":[{\"id\":\"id\",\"version\":\"version\"}],\"href\":\"href\",\"created_at\":\"createdAt\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"lastModifiedAt\",\"last_modified_by_id\":\"lastModifiedById\"}],\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListTemplateVersionsOptions listTemplateVersionsOptions = new ListTemplateVersionsOptions.Builder()
+      .templateId("testString")
+      .limit(Long.valueOf("100"))
+      .build();
+
+    TemplateVersionsPager pager = new TemplateVersionsPager(iamAccessGroupsService, listTemplateVersionsOptions);
+    List<ListTemplateVersionResponse> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the getTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testGetTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"group\": {\"name\": \"name\", \"description\": \"description\", \"members\": {\"users\": [\"users\"], \"services\": [\"services\"], \"action_controls\": {\"add\": false, \"remove\": true}}, \"assertions\": {\"rules\": [{\"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"action_controls\": {\"remove\": true, \"update\": true}}], \"action_controls\": {\"add\": false, \"remove\": true, \"update\": true}}, \"action_controls\": {\"access\": {\"add\": false}}}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String getTemplateVersionPath = "/v1/group_templates/testString/versions/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetTemplateVersionOptions model
+    GetTemplateVersionOptions getTemplateVersionOptionsModel = new GetTemplateVersionOptions.Builder()
+      .templateId("testString")
+      .versionNum("testString")
+      .verbose(true)
+      .transactionId("testString")
+      .build();
+
+    // Invoke getTemplateVersion() with a valid options model and verify the result
+    Response<TemplateVersionResponse> response = iamAccessGroupsService.getTemplateVersion(getTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    TemplateVersionResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getTemplateVersionPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("verbose")), Boolean.valueOf(true));
+  }
+
+  // Test the getTemplateVersion operation with and without retries enabled
+  @Test
+  public void testGetTemplateVersionWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testGetTemplateVersionWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testGetTemplateVersionWOptions();
+  }
+
+  // Test the getTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.getTemplateVersion(null).execute();
+  }
+
+  // Test the updateTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testUpdateTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"group\": {\"name\": \"name\", \"description\": \"description\", \"members\": {\"users\": [\"users\"], \"services\": [\"services\"], \"action_controls\": {\"add\": false, \"remove\": true}}, \"assertions\": {\"rules\": [{\"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"action_controls\": {\"remove\": true, \"update\": true}}], \"action_controls\": {\"add\": false, \"remove\": true, \"update\": true}}, \"action_controls\": {\"access\": {\"add\": false}}}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String updateTemplateVersionPath = "/v1/group_templates/testString/versions/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the MembersActionControls model
+    MembersActionControls membersActionControlsModel = new MembersActionControls.Builder()
+      .add(true)
+      .remove(false)
+      .build();
+
+    // Construct an instance of the Members model
+    Members membersModel = new Members.Builder()
+      .users(java.util.Arrays.asList("IBMid-665000T8WY"))
+      .services(java.util.Arrays.asList("iam-ServiceId-e371b0e5-1c80-48e3-bf12-c6a8ef2b1a11"))
+      .actionControls(membersActionControlsModel)
+      .build();
+
+    // Construct an instance of the Conditions model
+    Conditions conditionsModel = new Conditions.Builder()
+      .claim("blueGroup")
+      .operator("CONTAINS")
+      .value("test-bluegroup-saml")
+      .build();
+
+    // Construct an instance of the RuleActionControls model
+    RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
+      .remove(false)
+      .update(false)
+      .build();
+
+    // Construct an instance of the AssertionsRule model
+    AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
+      .name("Manager group rule")
+      .expiration(Long.valueOf("12"))
+      .realmName("https://idp.example.org/SAML2")
+      .conditions(java.util.Arrays.asList(conditionsModel))
+      .actionControls(ruleActionControlsModel)
+      .build();
+
+    // Construct an instance of the AssertionsActionControls model
+    AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
+      .add(false)
+      .remove(true)
+      .update(true)
+      .build();
+
+    // Construct an instance of the Assertions model
+    Assertions assertionsModel = new Assertions.Builder()
+      .rules(java.util.Arrays.asList(assertionsRuleModel))
+      .actionControls(assertionsActionControlsModel)
+      .build();
+
+    // Construct an instance of the AccessActionControls model
+    AccessActionControls accessActionControlsModel = new AccessActionControls.Builder()
+      .add(false)
+      .build();
+
+    // Construct an instance of the GroupActionControls model
+    GroupActionControls groupActionControlsModel = new GroupActionControls.Builder()
+      .access(accessActionControlsModel)
+      .build();
+
+    // Construct an instance of the AccessGroupRequest model
+    AccessGroupRequest accessGroupRequestModel = new AccessGroupRequest.Builder()
+      .name("IAM Admin Group 8")
+      .description("This access group template allows admin access to all IAM platform services in the account.")
+      .members(membersModel)
+      .assertions(assertionsModel)
+      .actionControls(groupActionControlsModel)
+      .build();
+
+    // Construct an instance of the PolicyTemplates model
+    PolicyTemplates policyTemplatesModel = new PolicyTemplates.Builder()
+      .id("policyTemplateId-123")
+      .version("1")
+      .build();
+
+    // Construct an instance of the UpdateTemplateVersionOptions model
+    UpdateTemplateVersionOptions updateTemplateVersionOptionsModel = new UpdateTemplateVersionOptions.Builder()
+      .templateId("testString")
+      .versionNum("testString")
+      .ifMatch("testString")
+      .name("IAM Admin Group template 2")
+      .description("This access group template allows admin access to all IAM platform services in the account.")
+      .group(accessGroupRequestModel)
+      .policyTemplateReferences(java.util.Arrays.asList(policyTemplatesModel))
+      .transactionId("83adf5bd-de790caa3")
+      .build();
+
+    // Invoke updateTemplateVersion() with a valid options model and verify the result
+    Response<TemplateVersionResponse> response = iamAccessGroupsService.updateTemplateVersion(updateTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    TemplateVersionResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateTemplateVersionPath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the updateTemplateVersion operation with and without retries enabled
+  @Test
+  public void testUpdateTemplateVersionWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testUpdateTemplateVersionWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testUpdateTemplateVersionWOptions();
+  }
+
+  // Test the updateTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.updateTemplateVersion(null).execute();
+  }
+
+  // Test the deleteTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testDeleteTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteTemplateVersionPath = "/v1/group_templates/testString/versions/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteTemplateVersionOptions model
+    DeleteTemplateVersionOptions deleteTemplateVersionOptionsModel = new DeleteTemplateVersionOptions.Builder()
+      .templateId("testString")
+      .versionNum("testString")
+      .transactionId("testString")
+      .build();
+
+    // Invoke deleteTemplateVersion() with a valid options model and verify the result
+    Response<Void> response = iamAccessGroupsService.deleteTemplateVersion(deleteTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteTemplateVersionPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteTemplateVersion operation with and without retries enabled
+  @Test
+  public void testDeleteTemplateVersionWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testDeleteTemplateVersionWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testDeleteTemplateVersionWOptions();
+  }
+
+  // Test the deleteTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.deleteTemplateVersion(null).execute();
+  }
+
+  // Test the commitTemplate operation with a valid options model parameter
+  @Test
+  public void testCommitTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String commitTemplatePath = "/v1/group_templates/testString/versions/testString/commit";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the CommitTemplateOptions model
+    CommitTemplateOptions commitTemplateOptionsModel = new CommitTemplateOptions.Builder()
+      .templateId("testString")
+      .versionNum("testString")
+      .ifMatch("testString")
+      .transactionId("testString")
+      .build();
+
+    // Invoke commitTemplate() with a valid options model and verify the result
+    Response<Void> response = iamAccessGroupsService.commitTemplate(commitTemplateOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, commitTemplatePath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the commitTemplate operation with and without retries enabled
+  @Test
+  public void testCommitTemplateWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testCommitTemplateWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testCommitTemplateWOptions();
+  }
+
+  // Test the commitTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCommitTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.commitTemplate(null).execute();
+  }
+
+  // Test the getLatestTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testGetLatestTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"group\": {\"name\": \"name\", \"description\": \"description\", \"members\": {\"users\": [\"users\"], \"services\": [\"services\"], \"action_controls\": {\"add\": false, \"remove\": true}}, \"assertions\": {\"rules\": [{\"name\": \"name\", \"expiration\": 10, \"realm_name\": \"realmName\", \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}], \"action_controls\": {\"remove\": true, \"update\": true}}], \"action_controls\": {\"add\": false, \"remove\": true, \"update\": true}}, \"action_controls\": {\"access\": {\"add\": false}}}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String getLatestTemplateVersionPath = "/v1/group_templates/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetLatestTemplateVersionOptions model
+    GetLatestTemplateVersionOptions getLatestTemplateVersionOptionsModel = new GetLatestTemplateVersionOptions.Builder()
+      .templateId("testString")
+      .verbose(true)
+      .transactionId("testString")
+      .build();
+
+    // Invoke getLatestTemplateVersion() with a valid options model and verify the result
+    Response<TemplateVersionResponse> response = iamAccessGroupsService.getLatestTemplateVersion(getLatestTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    TemplateVersionResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getLatestTemplateVersionPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("verbose")), Boolean.valueOf(true));
+  }
+
+  // Test the getLatestTemplateVersion operation with and without retries enabled
+  @Test
+  public void testGetLatestTemplateVersionWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testGetLatestTemplateVersionWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testGetLatestTemplateVersionWOptions();
+  }
+
+  // Test the getLatestTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetLatestTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.getLatestTemplateVersion(null).execute();
+  }
+
+  // Test the deleteTemplate operation with a valid options model parameter
+  @Test
+  public void testDeleteTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteTemplatePath = "/v1/group_templates/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteTemplateOptions model
+    DeleteTemplateOptions deleteTemplateOptionsModel = new DeleteTemplateOptions.Builder()
+      .templateId("testString")
+      .transactionId("testString")
+      .build();
+
+    // Invoke deleteTemplate() with a valid options model and verify the result
+    Response<Void> response = iamAccessGroupsService.deleteTemplate(deleteTemplateOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteTemplatePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteTemplate operation with and without retries enabled
+  @Test
+  public void testDeleteTemplateWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testDeleteTemplateWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testDeleteTemplateWOptions();
+  }
+
+  // Test the deleteTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.deleteTemplate(null).execute();
+  }
+
+  // Test the createAssignment operation with a valid options model parameter
+  @Test
+  public void testCreateAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": \"templateVersion\", \"target_type\": \"Account\", \"target\": \"target\", \"operation\": \"assign\", \"status\": \"accepted\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String createAssignmentPath = "/v1/group_assignments";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(202)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the CreateAssignmentOptions model
+    CreateAssignmentOptions createAssignmentOptionsModel = new CreateAssignmentOptions.Builder()
+      .templateId("AccessGroupTemplateId-4be4")
+      .templateVersion("1")
+      .targetType("AccountGroup")
+      .target("0a45594d0f-123")
+      .transactionId("testString")
+      .build();
+
+    // Invoke createAssignment() with a valid options model and verify the result
+    Response<TemplateAssignmentResponse> response = iamAccessGroupsService.createAssignment(createAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    TemplateAssignmentResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createAssignmentPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createAssignment operation with and without retries enabled
+  @Test
+  public void testCreateAssignmentWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testCreateAssignmentWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testCreateAssignmentWOptions();
+  }
+
+  // Test the createAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.createAssignment(null).execute();
+  }
+
+  // Test the listAssignments operation with a valid options model parameter
+  @Test
+  public void testListAssignmentsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"limit\": 5, \"offset\": 6, \"total_count\": 10, \"first\": {\"href\": \"href\"}, \"last\": {\"href\": \"href\"}, \"assignments\": [{\"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": \"templateVersion\", \"target_type\": \"Account\", \"target\": \"target\", \"operation\": \"assign\", \"status\": \"accepted\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String listAssignmentsPath = "/v1/group_assignments";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListAssignmentsOptions model
+    ListAssignmentsOptions listAssignmentsOptionsModel = new ListAssignmentsOptions.Builder()
+      .accountId("accountID-123")
+      .templateId("testString")
+      .templateVersion("testString")
+      .target("testString")
+      .status("accepted")
+      .transactionId("testString")
+      .limit(Long.valueOf("50"))
+      .offset(Long.valueOf("0"))
+      .build();
+
+    // Invoke listAssignments() with a valid options model and verify the result
+    Response<ListTemplateAssignmentResponse> response = iamAccessGroupsService.listAssignments(listAssignmentsOptionsModel).execute();
+    assertNotNull(response);
+    ListTemplateAssignmentResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listAssignmentsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "accountID-123");
+    assertEquals(query.get("template_id"), "testString");
+    assertEquals(query.get("template_version"), "testString");
+    assertEquals(query.get("target"), "testString");
+    assertEquals(query.get("status"), "accepted");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("50"));
+    assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("0"));
+  }
+
+  // Test the listAssignments operation with and without retries enabled
+  @Test
+  public void testListAssignmentsWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testListAssignmentsWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testListAssignmentsWOptions();
+  }
+
+  // Test the listAssignments operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListAssignmentsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.listAssignments(null).execute();
+  }
+
+  // Test the getAssignment operation with a valid options model parameter
+  @Test
+  public void testGetAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": \"templateVersion\", \"target_type\": \"targetType\", \"target\": \"target\", \"operation\": \"operation\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"group\": {\"group\": {\"id\": \"id\", \"name\": \"name\", \"version\": \"version\", \"resource\": \"resource\", \"error\": \"error\", \"operation\": \"operation\", \"status\": \"status\"}, \"members\": [{\"id\": \"id\", \"name\": \"name\", \"version\": \"version\", \"resource\": \"resource\", \"error\": \"error\", \"operation\": \"operation\", \"status\": \"status\"}], \"rules\": [{\"id\": \"id\", \"name\": \"name\", \"version\": \"version\", \"resource\": \"resource\", \"error\": \"error\", \"operation\": \"operation\", \"status\": \"status\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"name\": \"name\", \"version\": \"version\", \"resource\": \"resource\", \"error\": \"error\", \"operation\": \"operation\", \"status\": \"status\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String getAssignmentPath = "/v1/group_assignments/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetAssignmentOptions model
+    GetAssignmentOptions getAssignmentOptionsModel = new GetAssignmentOptions.Builder()
+      .assignmentId("testString")
+      .transactionId("testString")
+      .verbose(false)
+      .build();
+
+    // Invoke getAssignment() with a valid options model and verify the result
+    Response<TemplateAssignmentVerboseResponse> response = iamAccessGroupsService.getAssignment(getAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    TemplateAssignmentVerboseResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getAssignmentPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("verbose")), Boolean.valueOf(false));
+  }
+
+  // Test the getAssignment operation with and without retries enabled
+  @Test
+  public void testGetAssignmentWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testGetAssignmentWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testGetAssignmentWOptions();
+  }
+
+  // Test the getAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.getAssignment(null).execute();
+  }
+
+  // Test the updateAssignment operation with a valid options model parameter
+  @Test
+  public void testUpdateAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": \"templateVersion\", \"target_type\": \"targetType\", \"target\": \"target\", \"operation\": \"operation\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"group\": {\"group\": {\"id\": \"id\", \"name\": \"name\", \"version\": \"version\", \"resource\": \"resource\", \"error\": \"error\", \"operation\": \"operation\", \"status\": \"status\"}, \"members\": [{\"id\": \"id\", \"name\": \"name\", \"version\": \"version\", \"resource\": \"resource\", \"error\": \"error\", \"operation\": \"operation\", \"status\": \"status\"}], \"rules\": [{\"id\": \"id\", \"name\": \"name\", \"version\": \"version\", \"resource\": \"resource\", \"error\": \"error\", \"operation\": \"operation\", \"status\": \"status\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"name\": \"name\", \"version\": \"version\", \"resource\": \"resource\", \"error\": \"error\", \"operation\": \"operation\", \"status\": \"status\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String updateAssignmentPath = "/v1/group_assignments/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(202)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the UpdateAssignmentOptions model
+    UpdateAssignmentOptions updateAssignmentOptionsModel = new UpdateAssignmentOptions.Builder()
+      .assignmentId("testString")
+      .ifMatch("testString")
+      .templateVersion("1")
+      .build();
+
+    // Invoke updateAssignment() with a valid options model and verify the result
+    Response<TemplateAssignmentVerboseResponse> response = iamAccessGroupsService.updateAssignment(updateAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    TemplateAssignmentVerboseResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PATCH");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateAssignmentPath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the updateAssignment operation with and without retries enabled
+  @Test
+  public void testUpdateAssignmentWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testUpdateAssignmentWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testUpdateAssignmentWOptions();
+  }
+
+  // Test the updateAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.updateAssignment(null).execute();
+  }
+
+  // Test the deleteAssignment operation with a valid options model parameter
+  @Test
+  public void testDeleteAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteAssignmentPath = "/v1/group_assignments/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(202)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteAssignmentOptions model
+    DeleteAssignmentOptions deleteAssignmentOptionsModel = new DeleteAssignmentOptions.Builder()
+      .assignmentId("testString")
+      .transactionId("testString")
+      .build();
+
+    // Invoke deleteAssignment() with a valid options model and verify the result
+    Response<Void> response = iamAccessGroupsService.deleteAssignment(deleteAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteAssignmentPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteAssignment operation with and without retries enabled
+  @Test
+  public void testDeleteAssignmentWRetries() throws Throwable {
+    iamAccessGroupsService.enableRetries(4, 30);
+    testDeleteAssignmentWOptions();
+
+    iamAccessGroupsService.disableRetries();
+    testDeleteAssignmentWOptions();
+  }
+
+  // Test the deleteAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamAccessGroupsService.deleteAssignment(null).execute();
   }
 
   // Perform setup needed before each test method

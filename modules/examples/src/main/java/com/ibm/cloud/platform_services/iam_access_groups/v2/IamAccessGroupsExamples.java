@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020, 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,14 +13,9 @@
 
 package com.ibm.cloud.platform_services.iam_access_groups.v2;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessActionControls;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupMembersPager;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupRequest;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccessGroupsPager;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AccountSettings;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddAccessGroupRuleOptions;
@@ -29,33 +24,71 @@ import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddGroupMember
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMemberToMultipleAccessGroupsOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembersToAccessGroupOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AddMembershipMultipleGroupsResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Assertions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AssertionsActionControls;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.AssertionsRule;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CommitTemplateOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Conditions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateTemplateOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.CreateTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteAccessGroupOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteFromAllGroupsResponse;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteGroupBulkMembersResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteTemplateOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.DeleteTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccessGroupRuleOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAccountSettingsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetLatestTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GetTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Group;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupActionControls;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.GroupTemplate;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.IsMemberOfAccessGroupOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupMembersOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupRulesOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAccessGroupsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListGroupMembersResponseMember;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplateAssignmentResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplateVersionResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ListTemplatesOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Members;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.MembersActionControls;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.PolicyTemplates;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveAccessGroupRuleOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAccessGroupOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMemberFromAllAccessGroupsOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RemoveMembersFromAccessGroupOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.ReplaceAccessGroupRuleOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.Rule;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RuleActionControls;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RuleConditions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.RulesList;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateAssignmentResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateAssignmentVerboseResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateVersionResponse;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplateVersionsPager;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.TemplatesPager;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccessGroupOptions;
 import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAccountSettingsOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_access_groups.v2.model.UpdateTemplateVersionOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 import com.ibm.cloud.sdk.core.util.GsonSingleton;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //
 // This file provides an example of how to use the IAM Access Groups service.
@@ -83,6 +116,13 @@ public class IamAccessGroupsExamples {
   private static String testGroupETag = null;
   private static String testClaimRuleId = null;
   private static String testClaimRuleETag = null;
+  private static String testPolicyTemplateId = null;
+  private static String testTemplateId = null;
+  private static String testTemplateETag = null;
+  private static String testLatestVersionETag = null;
+  private static String testAccountGroupId = null;
+  private static String testAssignmentId = null;
+  private static String testAssignmentETag = null;
 
   static {
       System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_access_groups_v2.env");
@@ -95,6 +135,8 @@ public class IamAccessGroupsExamples {
     Map<String, String> config = CredentialUtils.getServiceProperties(IamAccessGroups.DEFAULT_SERVICE_NAME);
     testAccountId = config.get("TEST_ACCOUNT_ID");
     testProfileId = config.get("TEST_PROFILE_ID");
+    testPolicyTemplateId = config.get("TEST_POLICY_TEMPLATE_ID");
+    testAccountGroupId = config.get("TEST_ACCOUNT_GROUP_ID");
 
     try {
       System.out.println("createAccessGroup() result:");
@@ -556,6 +598,434 @@ public class IamAccessGroupsExamples {
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createTemplate() result:");
+      // begin-create_template
+      MembersActionControls membersActionControlsModel = new MembersActionControls.Builder()
+              .add(true)
+              .remove(false)
+              .build();
+      Members membersModel = new Members.Builder()
+              .users(java.util.Arrays.asList("IBMid-50PJGPKYJJ", "IBMid-665000T8WY"))
+              .actionControls(membersActionControlsModel)
+              .build();
+      Conditions conditionsModel = new Conditions.Builder()
+              .claim("blueGroup")
+              .operator("CONTAINS")
+              .value("\"test-bluegroup-saml\"")
+              .build();
+      RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
+              .remove(false)
+              .update(false)
+              .build();
+      AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
+              .name("Manager group rule")
+              .expiration(Long.valueOf("12"))
+              .realmName("https://idp.example.org/SAML2")
+              .conditions(java.util.Arrays.asList(conditionsModel))
+              .actionControls(ruleActionControlsModel)
+              .build();
+      AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
+              .add(false)
+              .remove(true)
+              .update(true)
+              .build();
+      Assertions assertionsModel = new Assertions.Builder()
+              .rules(java.util.Arrays.asList(assertionsRuleModel))
+              .actionControls(assertionsActionControlsModel)
+              .build();
+      AccessActionControls accessActionControlsModel = new AccessActionControls.Builder()
+              .add(false)
+              .build();
+      GroupActionControls groupActionControlsModel = new GroupActionControls.Builder()
+              .access(accessActionControlsModel)
+              .build();
+      AccessGroupRequest accessGroupRequestModel = new AccessGroupRequest.Builder()
+              .name("IAM Admin Group")
+              .description("This access group template allows admin access to all IAM platform services in the account.")
+              .members(membersModel)
+              .assertions(assertionsModel)
+              .actionControls(groupActionControlsModel)
+              .build();
+      PolicyTemplates policyTemplatesModel = new PolicyTemplates.Builder()
+              .id(testPolicyTemplateId)
+              .version("1")
+              .build();
+      CreateTemplateOptions createTemplateOptions = new CreateTemplateOptions.Builder()
+              .name("IAM Admin Group template")
+              .accountId(testAccountId)
+              .description("This access group template allows admin access to all IAM platform services in the account.")
+              .group(accessGroupRequestModel)
+              .policyTemplateReferences(java.util.Arrays.asList(policyTemplatesModel))
+              .build();
+
+      Response<TemplateResponse> response = iamAccessGroupsService.createTemplate(createTemplateOptions).execute();
+      TemplateResponse templateResponse = response.getResult();
+
+      System.out.println(templateResponse);
+      // end-create_template
+      testTemplateId = templateResponse.getId();
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listTemplates() result:");
+      // begin-list_templates
+      ListTemplatesOptions listTemplatesOptions = new ListTemplatesOptions.Builder()
+              .accountId(testAccountId)
+              .transactionId("testString")
+              .limit(Long.valueOf("50"))
+              .verbose(true)
+              .build();
+
+      TemplatesPager pager = new TemplatesPager(iamAccessGroupsService, listTemplatesOptions);
+      List<GroupTemplate> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+          List<GroupTemplate> nextPage = pager.getNext();
+          allResults.addAll(nextPage);
+      }
+
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
+      // end-list_templates
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createTemplateVersion() result:");
+      // begin-create_template_version
+      MembersActionControls membersActionControlsModel = new MembersActionControls.Builder()
+              .add(true)
+              .remove(false)
+              .build();
+      Members membersModel = new Members.Builder()
+              .users(java.util.Arrays.asList("IBMid-50PJGPKYJJ", "IBMid-665000T8WY"))
+              .actionControls(membersActionControlsModel)
+              .build();
+      Conditions conditionsModel = new Conditions.Builder()
+              .claim("blueGroup")
+              .operator("CONTAINS")
+              .value("\"test-bluegroup-saml\"")
+              .build();
+      AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
+              .name("Manager group rule")
+              .expiration(Long.valueOf("12"))
+              .realmName("https://idp.example.org/SAML2")
+              .conditions(java.util.Arrays.asList(conditionsModel))
+              .build();
+      AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
+              .add(false)
+              .build();
+      Assertions assertionsModel = new Assertions.Builder()
+              .rules(java.util.Arrays.asList(assertionsRuleModel))
+              .actionControls(assertionsActionControlsModel)
+              .build();
+      AccessActionControls accessActionControlsModel = new AccessActionControls.Builder()
+              .add(false)
+              .build();
+      GroupActionControls groupActionControlsModel = new GroupActionControls.Builder()
+              .access(accessActionControlsModel)
+              .build();
+      AccessGroupRequest accessGroupRequestModel = new AccessGroupRequest.Builder()
+              .name("IAM Admin Group 8")
+              .description("This access group template allows admin access to all IAM platform services in the account.")
+              .members(membersModel)
+              .assertions(assertionsModel)
+              .actionControls(groupActionControlsModel)
+              .build();
+      PolicyTemplates policyTemplatesModel = new PolicyTemplates.Builder()
+              .id(testPolicyTemplateId)
+              .version("1")
+              .build();
+      CreateTemplateVersionOptions createTemplateVersionOptions = new CreateTemplateVersionOptions.Builder()
+              .templateId(testTemplateId)
+              .name("IAM Admin Group template 2")
+              .description("This access group template allows admin access to all IAM platform services in the account.")
+              .group(accessGroupRequestModel)
+              .policyTemplateReferences(java.util.Arrays.asList(policyTemplatesModel))
+              .build();
+
+      Response<TemplateVersionResponse> response = iamAccessGroupsService.createTemplateVersion(createTemplateVersionOptions).execute();
+      TemplateVersionResponse templateVersionResponse = response.getResult();
+
+      System.out.println(templateVersionResponse);
+      // end-create_template_version
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listTemplateVersions() result:");
+      // begin-list_template_versions
+      ListTemplateVersionsOptions listTemplateVersionsOptions = new ListTemplateVersionsOptions.Builder()
+              .templateId(testTemplateId)
+              .limit(Long.valueOf("100"))
+              .build();
+
+      TemplateVersionsPager pager = new TemplateVersionsPager(iamAccessGroupsService, listTemplateVersionsOptions);
+      List<ListTemplateVersionResponse> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+          List<ListTemplateVersionResponse> nextPage = pager.getNext();
+          allResults.addAll(nextPage);
+      }
+
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
+      // end-list_template_versions
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getTemplateVersion() result:");
+      // begin-get_template_version
+      GetTemplateVersionOptions getTemplateVersionOptions = new GetTemplateVersionOptions.Builder()
+              .templateId(testTemplateId)
+              .versionNum("1")
+              .build();
+
+      Response<TemplateVersionResponse> response = iamAccessGroupsService.getTemplateVersion(getTemplateVersionOptions).execute();
+      TemplateVersionResponse templateVersionResponse = response.getResult();
+
+      System.out.println(templateVersionResponse);
+      // end-get_template_version
+      testTemplateETag = response.getHeaders().values("Etag").get(0);
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("updateTemplateVersion() result:");
+      // begin-update_template_version
+      MembersActionControls membersActionControlsModel = new MembersActionControls.Builder()
+              .add(true)
+              .remove(false)
+              .build();
+      Members membersModel = new Members.Builder()
+              .users(java.util.Arrays.asList("IBMid-665000T8WY"))
+              .actionControls(membersActionControlsModel)
+              .build();
+      Conditions conditionsModel = new Conditions.Builder()
+              .claim("blueGroup")
+              .operator("CONTAINS")
+              .value("\"test-bluegroup-saml\"")
+              .build();
+      RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
+              .remove(false)
+              .update(false)
+              .build();
+      AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
+              .name("Manager group rule")
+              .expiration(Long.valueOf("12"))
+              .realmName("https://idp.example.org/SAML2")
+              .conditions(java.util.Arrays.asList(conditionsModel))
+              .actionControls(ruleActionControlsModel)
+              .build();
+      AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
+              .add(false)
+              .build();
+      Assertions assertionsModel = new Assertions.Builder()
+              .rules(java.util.Arrays.asList(assertionsRuleModel))
+              .actionControls(assertionsActionControlsModel)
+              .build();
+      AccessActionControls accessActionControlsModel = new AccessActionControls.Builder()
+              .add(false)
+              .build();
+      GroupActionControls groupActionControlsModel = new GroupActionControls.Builder()
+              .access(accessActionControlsModel)
+              .build();
+      AccessGroupRequest accessGroupRequestModel = new AccessGroupRequest.Builder()
+              .name("IAM Admin Group 8")
+              .description("This access group template allows admin access to all IAM platform services in the account.")
+              .members(membersModel)
+              .assertions(assertionsModel)
+              .actionControls(groupActionControlsModel)
+              .build();
+      PolicyTemplates policyTemplatesModel = new PolicyTemplates.Builder()
+              .id(testPolicyTemplateId)
+              .version("1")
+              .build();
+      UpdateTemplateVersionOptions updateTemplateVersionOptions = new UpdateTemplateVersionOptions.Builder()
+              .templateId(testTemplateId)
+              .versionNum("1")
+              .ifMatch(testTemplateETag)
+              .name("IAM Admin Group template 2")
+              .description("This access group template allows admin access to all IAM platform services in the account.")
+              .group(accessGroupRequestModel)
+              .policyTemplateReferences(java.util.Arrays.asList(policyTemplatesModel))
+              .transactionId("83adf5bd-de790caa3")
+              .build();
+
+      Response<TemplateVersionResponse> response = iamAccessGroupsService.updateTemplateVersion(updateTemplateVersionOptions).execute();
+      TemplateVersionResponse templateVersionResponse = response.getResult();
+
+      System.out.println(templateVersionResponse);
+      // end-update_template_version
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getLatestTemplateVersion() result:");
+      // begin-get_latest_template_version
+      GetLatestTemplateVersionOptions getLatestTemplateVersionOptions = new GetLatestTemplateVersionOptions.Builder()
+              .templateId(testTemplateId)
+              .build();
+
+      Response<TemplateVersionResponse> response = iamAccessGroupsService.getLatestTemplateVersion(getLatestTemplateVersionOptions).execute();
+      TemplateVersionResponse templateVersionResponse = response.getResult();
+
+      System.out.println(templateVersionResponse);
+      // end-get_latest_template_version
+      testLatestVersionETag = response.getHeaders().values("Etag").get(0);
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-commit_template
+      CommitTemplateOptions commitTemplateOptions = new CommitTemplateOptions.Builder()
+              .templateId(testTemplateId)
+              .versionNum("2")
+              .ifMatch(testLatestVersionETag)
+              .build();
+
+      Response<Void> response = iamAccessGroupsService.commitTemplate(commitTemplateOptions).execute();
+      // end-commit_template
+      System.out.printf("commitTemplate() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createAssignment() result:");
+      // begin-create_assignment
+      CreateAssignmentOptions createAssignmentOptions = new CreateAssignmentOptions.Builder()
+              .templateId(testTemplateId)
+              .templateVersion("2")
+              .targetType("AccountGroup")
+              .target(testAccountGroupId)
+              .build();
+
+      Response<TemplateAssignmentResponse> response = iamAccessGroupsService.createAssignment(createAssignmentOptions).execute();
+      TemplateAssignmentResponse templateAssignmentResponse = response.getResult();
+
+      System.out.println(templateAssignmentResponse);
+      // end-create_assignment
+      testAssignmentId = templateAssignmentResponse.getId();
+      Thread.sleep(60000);
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listAssignments() result:");
+      // begin-list_assignments
+      ListAssignmentsOptions listAssignmentsOptions = new ListAssignmentsOptions.Builder()
+              .accountId(testAccountId)
+              .build();
+
+      Response<ListTemplateAssignmentResponse> response = iamAccessGroupsService.listAssignments(listAssignmentsOptions).execute();
+      ListTemplateAssignmentResponse listTemplateAssignmentResponse = response.getResult();
+
+      System.out.println(listTemplateAssignmentResponse);
+      // end-list_assignments
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getAssignment() result:");
+      // begin-get_assignment
+      GetAssignmentOptions getAssignmentOptions = new GetAssignmentOptions.Builder()
+              .assignmentId(testAssignmentId)
+              .build();
+
+      Response<TemplateAssignmentVerboseResponse> response = iamAccessGroupsService.getAssignment(getAssignmentOptions).execute();
+      TemplateAssignmentVerboseResponse templateAssignmentVerboseResponse = response.getResult();
+
+      System.out.println(templateAssignmentVerboseResponse);
+      // end-get_assignment
+      testAssignmentETag = response.getHeaders().values("Etag").get(0);
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("updateAssignment() result:");
+      // begin-update_assignment
+      UpdateAssignmentOptions updateAssignmentOptions = new UpdateAssignmentOptions.Builder()
+              .assignmentId(testAssignmentId)
+              .ifMatch(testAssignmentETag)
+              .templateVersion("2")
+              .build();
+
+      Response<TemplateAssignmentVerboseResponse> response = iamAccessGroupsService.updateAssignment(updateAssignmentOptions).execute();
+      TemplateAssignmentVerboseResponse templateAssignmentVerboseResponse = response.getResult();
+
+      System.out.println(templateAssignmentVerboseResponse);
+      // end-update_assignment
+      Thread.sleep(60000);
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_assignment
+      DeleteAssignmentOptions deleteAssignmentOptions = new DeleteAssignmentOptions.Builder()
+              .assignmentId(testAssignmentId)
+              .build();
+
+      Response<Void> response = iamAccessGroupsService.deleteAssignment(deleteAssignmentOptions).execute();
+      // end-delete_assignment
+      System.out.printf("deleteAssignment() response status code: %d%n", response.getStatusCode());
+      Thread.sleep(90000);
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_template_version
+      DeleteTemplateVersionOptions deleteTemplateVersionOptions = new DeleteTemplateVersionOptions.Builder()
+              .templateId(testTemplateId)
+              .versionNum("1")
+              .build();
+
+      Response<Void> response = iamAccessGroupsService.deleteTemplateVersion(deleteTemplateVersionOptions).execute();
+      // end-delete_template_version
+      System.out.printf("deleteTemplateVersion() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_template
+      DeleteTemplateOptions deleteTemplateOptions = new DeleteTemplateOptions.Builder()
+              .templateId(testTemplateId)
+              .build();
+
+      Response<Void> response = iamAccessGroupsService.deleteTemplate(deleteTemplateOptions).execute();
+      // end-delete_template
+      System.out.printf("deleteTemplate() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
   }

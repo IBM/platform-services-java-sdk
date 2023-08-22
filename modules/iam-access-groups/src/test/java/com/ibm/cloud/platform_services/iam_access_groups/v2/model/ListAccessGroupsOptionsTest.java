@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -35,9 +35,10 @@ public class ListAccessGroupsOptionsTest {
       .accountId("testString")
       .transactionId("testString")
       .iamId("testString")
+      .search("testString")
       .membershipType("static")
-      .limit(Long.valueOf("100"))
-      .offset(Long.valueOf("26"))
+      .limit(Long.valueOf("50"))
+      .offset(Long.valueOf("0"))
       .sort("name")
       .showFederated(false)
       .hidePublicAccess(false)
@@ -45,9 +46,10 @@ public class ListAccessGroupsOptionsTest {
     assertEquals(listAccessGroupsOptionsModel.accountId(), "testString");
     assertEquals(listAccessGroupsOptionsModel.transactionId(), "testString");
     assertEquals(listAccessGroupsOptionsModel.iamId(), "testString");
+    assertEquals(listAccessGroupsOptionsModel.search(), "testString");
     assertEquals(listAccessGroupsOptionsModel.membershipType(), "static");
-    assertEquals(listAccessGroupsOptionsModel.limit(), Long.valueOf("100"));
-    assertEquals(listAccessGroupsOptionsModel.offset(), Long.valueOf("26"));
+    assertEquals(listAccessGroupsOptionsModel.limit(), Long.valueOf("50"));
+    assertEquals(listAccessGroupsOptionsModel.offset(), Long.valueOf("0"));
     assertEquals(listAccessGroupsOptionsModel.sort(), "name");
     assertEquals(listAccessGroupsOptionsModel.showFederated(), Boolean.valueOf(false));
     assertEquals(listAccessGroupsOptionsModel.hidePublicAccess(), Boolean.valueOf(false));

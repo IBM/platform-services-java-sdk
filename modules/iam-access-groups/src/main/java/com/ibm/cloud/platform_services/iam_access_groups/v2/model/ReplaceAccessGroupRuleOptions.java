@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -270,7 +270,8 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the expiration.
    *
-   * The number of hours that the rule lives for.
+   * Session duration in hours. Access group membership is revoked after this time period expires. Users must log back
+   * in to refresh their access group membership.
    *
    * @return the expiration
    */
@@ -281,7 +282,7 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the realmName.
    *
-   * The url of the identity provider.
+   * The URL of the identity provider (IdP).
    *
    * @return the realmName
    */
@@ -292,7 +293,7 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the conditions.
    *
-   * A list of conditions the rule must satisfy.
+   * A list of conditions that identities must satisfy to gain access group membership.
    *
    * @return the conditions
    */
@@ -303,7 +304,7 @@ public class ReplaceAccessGroupRuleOptions extends GenericModel {
   /**
    * Gets the name.
    *
-   * The name of the rule.
+   * The name of the dynaimic rule.
    *
    * @return the name
    */

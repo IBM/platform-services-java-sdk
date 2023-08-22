@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -88,7 +88,7 @@ public class Group extends GenericModel {
   /**
    * Gets the createdAt.
    *
-   * The timestamp the group was created at.
+   * The timestamp of when the group was created.
    *
    * @return the createdAt
    */
@@ -110,7 +110,7 @@ public class Group extends GenericModel {
   /**
    * Gets the lastModifiedAt.
    *
-   * The timestamp the group was last edited at.
+   * The timestamp of when the group was last edited.
    *
    * @return the lastModifiedAt
    */

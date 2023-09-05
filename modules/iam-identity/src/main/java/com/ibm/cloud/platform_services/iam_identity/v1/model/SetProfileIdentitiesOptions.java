@@ -24,7 +24,7 @@ public class SetProfileIdentitiesOptions extends GenericModel {
 
   protected String profileId;
   protected String ifMatch;
-  protected List<ProfileIdentity> identities;
+  protected List<ProfileIdentityRequest> identities;
 
   /**
    * Builder.
@@ -32,7 +32,7 @@ public class SetProfileIdentitiesOptions extends GenericModel {
   public static class Builder {
     private String profileId;
     private String ifMatch;
-    private List<ProfileIdentity> identities;
+    private List<ProfileIdentityRequest> identities;
 
     /**
      * Instantiates a new Builder from an existing SetProfileIdentitiesOptions instance.
@@ -77,11 +77,11 @@ public class SetProfileIdentitiesOptions extends GenericModel {
      * @param identities the new identities
      * @return the SetProfileIdentitiesOptions builder
      */
-    public Builder addIdentities(ProfileIdentity identities) {
+    public Builder addIdentities(ProfileIdentityRequest identities) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(identities,
         "identities cannot be null");
       if (this.identities == null) {
-        this.identities = new ArrayList<ProfileIdentity>();
+        this.identities = new ArrayList<ProfileIdentityRequest>();
       }
       this.identities.add(identities);
       return this;
@@ -116,7 +116,7 @@ public class SetProfileIdentitiesOptions extends GenericModel {
      * @param identities the identities
      * @return the SetProfileIdentitiesOptions builder
      */
-    public Builder identities(List<ProfileIdentity> identities) {
+    public Builder identities(List<ProfileIdentityRequest> identities) {
       this.identities = identities;
       return this;
     }
@@ -174,7 +174,7 @@ public class SetProfileIdentitiesOptions extends GenericModel {
    *
    * @return the identities
    */
-  public List<ProfileIdentity> identities() {
+  public List<ProfileIdentityRequest> identities() {
     return identities;
   }
 }

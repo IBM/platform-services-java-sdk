@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -130,8 +130,7 @@ public class ProfileClaimRuleConditions extends GenericModel {
   /**
    * Gets the claim.
    *
-   * The claim to evaluate against. [Learn
-   * more](/docs/account?topic=account-iam-condition-properties&amp;interface=ui#cr-attribute-names).
+   * The claim to evaluate against.
    *
    * @return the claim
    */

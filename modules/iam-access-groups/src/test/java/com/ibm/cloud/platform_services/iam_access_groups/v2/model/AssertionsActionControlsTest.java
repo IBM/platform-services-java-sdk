@@ -34,11 +34,9 @@ public class AssertionsActionControlsTest {
     AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
       .add(true)
       .remove(true)
-      .update(true)
       .build();
     assertEquals(assertionsActionControlsModel.add(), Boolean.valueOf(true));
     assertEquals(assertionsActionControlsModel.remove(), Boolean.valueOf(true));
-    assertEquals(assertionsActionControlsModel.update(), Boolean.valueOf(true));
 
     String json = TestUtilities.serialize(assertionsActionControlsModel);
 
@@ -46,6 +44,5 @@ public class AssertionsActionControlsTest {
     assertTrue(assertionsActionControlsModelNew instanceof AssertionsActionControls);
     assertEquals(assertionsActionControlsModelNew.add(), Boolean.valueOf(true));
     assertEquals(assertionsActionControlsModelNew.remove(), Boolean.valueOf(true));
-    assertEquals(assertionsActionControlsModelNew.update(), Boolean.valueOf(true));
   }
 }

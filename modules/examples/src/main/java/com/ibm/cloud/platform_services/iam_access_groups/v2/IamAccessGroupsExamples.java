@@ -618,7 +618,6 @@ public class IamAccessGroupsExamples {
               .build();
       RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
               .remove(false)
-              .update(false)
               .build();
       AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
               .name("Manager group rule")
@@ -630,7 +629,6 @@ public class IamAccessGroupsExamples {
       AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
               .add(false)
               .remove(true)
-              .update(true)
               .build();
       Assertions assertionsModel = new Assertions.Builder()
               .rules(java.util.Arrays.asList(assertionsRuleModel))
@@ -819,7 +817,6 @@ public class IamAccessGroupsExamples {
               .build();
       RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
               .remove(false)
-              .update(false)
               .build();
       AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
               .name("Manager group rule")

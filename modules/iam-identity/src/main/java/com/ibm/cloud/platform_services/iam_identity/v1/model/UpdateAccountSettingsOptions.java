@@ -23,10 +23,11 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class UpdateAccountSettingsOptions extends GenericModel {
 
   /**
-   * Defines whether or not creating a Service Id is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
-   *   * NOT_SET - to unset a previously set value.
+   * Defines whether or not creating a service ID is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
+   *   * NOT_SET - to 'unset' a previous set value.
    */
   public interface RestrictCreateServiceId {
     /** RESTRICTED. */
@@ -39,8 +40,9 @@ public class UpdateAccountSettingsOptions extends GenericModel {
 
   /**
    * Defines whether or not creating platform API keys is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
+   *   * RESTRICTED - only users assigned the 'User API key creator' role on the IAM Identity Service can create API
+   * keys, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create platform API keys
    *   * NOT_SET - to 'unset' a previous set value.
    */
   public interface RestrictCreatePlatformApikey {
@@ -362,10 +364,11 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the restrictCreateServiceId.
    *
-   * Defines whether or not creating a Service Id is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
-   *   * NOT_SET - to unset a previously set value.
+   * Defines whether or not creating a service ID is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
+   *   * NOT_SET - to 'unset' a previous set value.
    *
    * @return the restrictCreateServiceId
    */
@@ -377,8 +380,9 @@ public class UpdateAccountSettingsOptions extends GenericModel {
    * Gets the restrictCreatePlatformApikey.
    *
    * Defines whether or not creating platform API keys is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
+   *   * RESTRICTED - only users assigned the 'User API key creator' role on the IAM Identity Service can create API
+   * keys, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create platform API keys
    *   * NOT_SET - to 'unset' a previous set value.
    *
    * @return the restrictCreatePlatformApikey

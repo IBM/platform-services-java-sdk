@@ -15,13 +15,12 @@ package com.ibm.cloud.platform_services.iam_identity.v1.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * ProfileIdentity.
+ * ProfileIdentityRequest.
  */
-public class ProfileIdentity extends GenericModel {
+public class ProfileIdentityRequest extends GenericModel {
 
   /**
    * Type of the identity.
@@ -35,8 +34,6 @@ public class ProfileIdentity extends GenericModel {
     String CRN = "crn";
   }
 
-  @SerializedName("iam_id")
-  protected String iamId;
   protected String identifier;
   protected String type;
   protected List<String> accounts;
@@ -46,23 +43,21 @@ public class ProfileIdentity extends GenericModel {
    * Builder.
    */
   public static class Builder {
-    private String iamId;
     private String identifier;
     private String type;
     private List<String> accounts;
     private String description;
 
     /**
-     * Instantiates a new Builder from an existing ProfileIdentity instance.
+     * Instantiates a new Builder from an existing ProfileIdentityRequest instance.
      *
-     * @param profileIdentity the instance to initialize the Builder with
+     * @param profileIdentityRequest the instance to initialize the Builder with
      */
-    private Builder(ProfileIdentity profileIdentity) {
-      this.iamId = profileIdentity.iamId;
-      this.identifier = profileIdentity.identifier;
-      this.type = profileIdentity.type;
-      this.accounts = profileIdentity.accounts;
-      this.description = profileIdentity.description;
+    private Builder(ProfileIdentityRequest profileIdentityRequest) {
+      this.identifier = profileIdentityRequest.identifier;
+      this.type = profileIdentityRequest.type;
+      this.accounts = profileIdentityRequest.accounts;
+      this.description = profileIdentityRequest.description;
     }
 
     /**
@@ -83,19 +78,19 @@ public class ProfileIdentity extends GenericModel {
     }
 
     /**
-     * Builds a ProfileIdentity.
+     * Builds a ProfileIdentityRequest.
      *
-     * @return the new ProfileIdentity instance
+     * @return the new ProfileIdentityRequest instance
      */
-    public ProfileIdentity build() {
-      return new ProfileIdentity(this);
+    public ProfileIdentityRequest build() {
+      return new ProfileIdentityRequest(this);
     }
 
     /**
      * Adds an accounts to accounts.
      *
      * @param accounts the new accounts
-     * @return the ProfileIdentity builder
+     * @return the ProfileIdentityRequest builder
      */
     public Builder addAccounts(String accounts) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(accounts,
@@ -108,21 +103,10 @@ public class ProfileIdentity extends GenericModel {
     }
 
     /**
-     * Set the iamId.
-     *
-     * @param iamId the iamId
-     * @return the ProfileIdentity builder
-     */
-    public Builder iamId(String iamId) {
-      this.iamId = iamId;
-      return this;
-    }
-
-    /**
      * Set the identifier.
      *
      * @param identifier the identifier
-     * @return the ProfileIdentity builder
+     * @return the ProfileIdentityRequest builder
      */
     public Builder identifier(String identifier) {
       this.identifier = identifier;
@@ -133,7 +117,7 @@ public class ProfileIdentity extends GenericModel {
      * Set the type.
      *
      * @param type the type
-     * @return the ProfileIdentity builder
+     * @return the ProfileIdentityRequest builder
      */
     public Builder type(String type) {
       this.type = type;
@@ -145,7 +129,7 @@ public class ProfileIdentity extends GenericModel {
      * Existing accounts will be replaced.
      *
      * @param accounts the accounts
-     * @return the ProfileIdentity builder
+     * @return the ProfileIdentityRequest builder
      */
     public Builder accounts(List<String> accounts) {
       this.accounts = accounts;
@@ -156,7 +140,7 @@ public class ProfileIdentity extends GenericModel {
      * Set the description.
      *
      * @param description the description
-     * @return the ProfileIdentity builder
+     * @return the ProfileIdentityRequest builder
      */
     public Builder description(String description) {
       this.description = description;
@@ -164,14 +148,13 @@ public class ProfileIdentity extends GenericModel {
     }
   }
 
-  protected ProfileIdentity() { }
+  protected ProfileIdentityRequest() { }
 
-  protected ProfileIdentity(Builder builder) {
+  protected ProfileIdentityRequest(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.identifier,
       "identifier cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
-    iamId = builder.iamId;
     identifier = builder.identifier;
     type = builder.type;
     accounts = builder.accounts;
@@ -181,21 +164,10 @@ public class ProfileIdentity extends GenericModel {
   /**
    * New builder.
    *
-   * @return a ProfileIdentity builder
+   * @return a ProfileIdentityRequest builder
    */
   public Builder newBuilder() {
     return new Builder(this);
-  }
-
-  /**
-   * Gets the iamId.
-   *
-   * IAM ID of the identity.
-   *
-   * @return the iamId
-   */
-  public String iamId() {
-    return iamId;
   }
 
   /**

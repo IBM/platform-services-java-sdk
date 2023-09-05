@@ -36,7 +36,6 @@ public class SetProfileIdentityOptionsTest {
       .identityType("user")
       .identifier("testString")
       .type("user")
-      .iamId("testString")
       .accounts(java.util.Arrays.asList("testString"))
       .description("testString")
       .build();
@@ -44,7 +43,6 @@ public class SetProfileIdentityOptionsTest {
     assertEquals(setProfileIdentityOptionsModel.identityType(), "user");
     assertEquals(setProfileIdentityOptionsModel.identifier(), "testString");
     assertEquals(setProfileIdentityOptionsModel.type(), "user");
-    assertEquals(setProfileIdentityOptionsModel.iamId(), "testString");
     assertEquals(setProfileIdentityOptionsModel.accounts(), java.util.Arrays.asList("testString"));
     assertEquals(setProfileIdentityOptionsModel.description(), "testString");
   }

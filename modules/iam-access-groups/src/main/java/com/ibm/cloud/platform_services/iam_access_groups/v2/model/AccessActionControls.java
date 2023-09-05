@@ -83,7 +83,11 @@ public class AccessActionControls extends GenericModel {
    * Gets the add.
    *
    * Action control for adding access policies to an enterprise-managed access group in a child account. If an access
-   * group administrator in a child account adds a policy, they can always update or remove it.
+   * group administrator in a child account adds a policy, they can always update or remove it. Note that if conflicts
+   * arise between an update to this control in a new version and polices added to the access group by an administrator
+   * in a child account, you must resolve those conflicts in the child account. This prevents breaking access in the
+   * child account. For more information, see [Working with
+   * versions](https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
    *
    * @return the add
    */

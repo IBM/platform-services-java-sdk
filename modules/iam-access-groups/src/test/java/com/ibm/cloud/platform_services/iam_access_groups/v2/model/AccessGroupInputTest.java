@@ -67,10 +67,8 @@ public class AccessGroupInputTest {
 
     RulesActionControls rulesActionControlsModel = new RulesActionControls.Builder()
       .remove(true)
-      .update(true)
       .build();
     assertEquals(rulesActionControlsModel.remove(), Boolean.valueOf(true));
-    assertEquals(rulesActionControlsModel.update(), Boolean.valueOf(true));
 
     RuleInput ruleInputModel = new RuleInput.Builder()
       .name("testString")
@@ -88,11 +86,9 @@ public class AccessGroupInputTest {
     AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
       .add(true)
       .remove(true)
-      .update(true)
       .build();
     assertEquals(assertionsActionControlsModel.add(), Boolean.valueOf(true));
     assertEquals(assertionsActionControlsModel.remove(), Boolean.valueOf(true));
-    assertEquals(assertionsActionControlsModel.update(), Boolean.valueOf(true));
 
     AssertionsInput assertionsInputModel = new AssertionsInput.Builder()
       .rules(java.util.Arrays.asList(ruleInputModel))

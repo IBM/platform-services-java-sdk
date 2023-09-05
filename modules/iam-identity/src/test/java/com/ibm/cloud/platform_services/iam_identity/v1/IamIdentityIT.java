@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020, 2021.
+ * (C) Copyright IBM Corp. 2020, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,67 +29,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateMfaReportOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentitiesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentitiesResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentity;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollmentStatus;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentityOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfaEnrollments;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.*;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
@@ -110,12 +50,18 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private static String PROFILE_NAME_1 = "Java-SDK-IT-TrustedProfile1";
     private static String PROFILE_NAME_2 = "Java-SDK-IT-TrustedProfile2";
     private static String CLAIMRULE_TYPE = "Profile-SAML";
-    private static String REALM_NAME = "https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20";
+    private static String REALM_NAME = "https://sdk.test.realm/1234";
+    private static String PROFILE_TEMPLATE_NAME = "Java-SDK-IT-TrustedProfileTemplate";
+    private static String PROFILE_TEMPLATE_PROFILE_NAME = "Java-SDK-IT-TrustedProfile-FromTemplate";
+    private static String ASSIGNMENT_TARGET_TYPE_ACCOUNT = "Account";
+    private static String ACCOUNT_SETTINGS_TEMPLATE_NAME = "Java-SDK-IT-AccountSettingsTemplate";
 
     private static String ACCOUNT_ID;
     private static String IAM_ID;
     private static String IAM_ID_MEMBER;
     private static String IAM_APIKEY;
+    private static String ENTERPRISE_ACCOUNT_ID;
+    private static String ENTERPRISE_SUBACCOUNT_ID;
 
     private static String IAM_ID_INVALID = "IAM-InvalidId";
     private static String ACCOUNT_ID_INVALID = "Account-InvalidId";
@@ -143,7 +89,19 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private String reportReference;
     private String reportReferenceMfa;
+    
+    private String profileTemplateId;
+    private long profileTemplateVersion;
+    private String profileTemplateEtag;
+    private String profileTemplateAssignmentId;
+    private String profileTemplateAssignmentEtag;
 
+    private String accountSettingsTemplateId;
+    private long accountSettingsTemplateVersion;
+    private String accountSettingsTemplateEtag;
+    private String accountSettingsTemplateAssignmentId;
+    private String accountSettingsTemplateAssignmentEtag;
+    
     @Override
     public String getConfigFilename() {
         return "../../iam_identity.env";
@@ -169,6 +127,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         IAM_ID = config.get("IAM_ID");
         IAM_ID_MEMBER = config.get("IAM_ID_MEMBER");
         IAM_APIKEY = config.get("APIKEY");
+        ENTERPRISE_ACCOUNT_ID = config.get("ENTERPRISE_ACCOUNT_ID"); 
+        ENTERPRISE_SUBACCOUNT_ID = config.get("ENTERPRISE_SUBACCOUNT_ID"); 
 
         profileId1 = config.get("profileId1");
 
@@ -1752,13 +1712,13 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         	accounts.add(ACCOUNT_ID);
         	String type="user";
         	String description="Identity description";
-        	ProfileIdentity profileIdentity= new ProfileIdentity.Builder()
+        	ProfileIdentityRequest profileIdentity= new ProfileIdentityRequest.Builder()
         			.identifier(IAM_ID)
         			.accounts(accounts)
         			.type(type)
         			.description(description)
         			.build();
-        	List<ProfileIdentity> listProfileIdentity= new ArrayList<ProfileIdentity>();
+        	List<ProfileIdentityRequest> listProfileIdentity= new ArrayList<ProfileIdentityRequest>();
         	listProfileIdentity.add(profileIdentity);
 
         	SetProfileIdentitiesOptions setProfileIdentitiesOptions = new SetProfileIdentitiesOptions.Builder()
@@ -1816,15 +1776,15 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.accounts(accounts)
         			.description(description)
                     .build();
-            Response<ProfileIdentity> response = service.setProfileIdentity(setProfileIdentityOptions).execute();
+            Response<ProfileIdentityResponse> response = service.setProfileIdentity(setProfileIdentityOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            ProfileIdentity profileIdentityResponseResult = response.getResult();
+            ProfileIdentityResponse profileIdentityResponseResult = response.getResult();
             assertNotNull(profileIdentityResponseResult);
-            assertNotNull(profileIdentityResponseResult.identifier());
-            assertEquals(profileIdentityResponseResult.identifier(), IAM_ID_MEMBER);
+            assertNotNull(profileIdentityResponseResult.getIdentifier());
+            assertEquals(profileIdentityResponseResult.getIdentifier(), IAM_ID_MEMBER);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -1839,14 +1799,14 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .identityType("user")
                     .identifierId(IAM_ID_MEMBER)
                     .build();
-            Response<ProfileIdentity> response = service.getProfileIdentity(getProfileIdentityOptions).execute();
+            Response<ProfileIdentityResponse> response = service.getProfileIdentity(getProfileIdentityOptions).execute();
             // Validate response
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            ProfileIdentity profileIdentityResponseResult = response.getResult();
+            ProfileIdentityResponse profileIdentityResponseResult = response.getResult();
             assertNotNull(profileIdentityResponseResult);
-            assertNotNull(profileIdentityResponseResult.identifier());
+            assertNotNull(profileIdentityResponseResult.getIdentifier());
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -1871,7 +1831,686 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
+    
+    @Test
+    public void testCreateProfileTemplate() throws Exception {
+        try {
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("blueGroups")
+                    .operator("EQUALS")
+                    .value("\"cloud-docs-dev\"")
+                    .build();
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
+            conditions.add(condition);
+            
+        	TrustedProfileTemplateClaimRule claimRule = new TrustedProfileTemplateClaimRule.Builder()
+        			.name("My Rule")
+        			.realmName(REALM_NAME)
+        			.type(CLAIMRULE_TYPE)
+        			.expiration(43200)
+        			.conditions(conditions)
+        			.build();
+        	
+        	TemplateProfileComponentRequest profile = new TemplateProfileComponentRequest.Builder()
+        			.addRules(claimRule)
+        			.name(PROFILE_TEMPLATE_PROFILE_NAME)
+        			.description("JavaSDK test Profile cretaed from Profile Template #1")
+        			.build();
+        	
+        	CreateProfileTemplateOptions createProfileTemplateOptions = new CreateProfileTemplateOptions.Builder()
+        			.name(PROFILE_TEMPLATE_NAME)
+                    .description("JavaSDK test Profile Template #1")
+                    .accountId(ENTERPRISE_ACCOUNT_ID)
+                    .profile(profile)
+        			.build();
+        			
+            Response<TrustedProfileTemplateResponse> response = service.createProfileTemplate(createProfileTemplateOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
 
+            TrustedProfileTemplateResponse trustedProfileTemplateResult = response.getResult();
+            assertNotNull(trustedProfileTemplateResult);
+
+            // Save the id for use by other test methods.
+            assertNotNull(trustedProfileTemplateResult.getId());
+            profileTemplateId = trustedProfileTemplateResult.getId();
+            assertNotNull(trustedProfileTemplateResult.getVersion());
+            profileTemplateVersion = trustedProfileTemplateResult.getVersion().longValue();
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    
+    @Test(dependsOnMethods = { "testCreateProfileTemplate" })
+    public void testGetProfileTemplate() throws Exception {
+        try {
+            GetProfileTemplateVersionOptions getProfileTemplateOptions = new GetProfileTemplateVersionOptions.Builder()
+            		.templateId(profileTemplateId)
+            		.version(Long.toString(profileTemplateVersion))
+                    .build();
+
+            Response<TrustedProfileTemplateResponse> response = service.getProfileTemplateVersion(getProfileTemplateOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            TrustedProfileTemplateResponse profileTemplateResult = response.getResult();
+            assertNotNull(profileTemplateResult);
+
+            assertEquals(profileTemplateResult.getId(), profileTemplateId);
+
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(response.getHeaders().values("Etag"));
+            assertEquals(response.getHeaders().values("Etag").size(), 1);
+            profileTemplateEtag = response.getHeaders().values("Etag").get(0);
+            assertNotNull(profileTemplateEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateProfileTemplate" })
+    public void testListProfileTemplates() throws Exception {
+        try {
+        	ListProfileTemplatesOptions listOptions = new ListProfileTemplatesOptions.Builder()
+        			.accountId(ENTERPRISE_ACCOUNT_ID)
+        			.build();
+        	
+        	Response<TrustedProfileTemplateList> response = service.listProfileTemplates(listOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+            assertNotNull(response.getResult());
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testGetProfileTemplate" })
+    public void testUpdateProfileTemplate() throws Exception {
+        try {
+        	UpdateProfileTemplateVersionOptions updateOptions = new UpdateProfileTemplateVersionOptions.Builder()
+        			.accountId(ENTERPRISE_ACCOUNT_ID)
+        			.templateId(profileTemplateId)
+        			.version(Long.toString(profileTemplateVersion))
+        			.ifMatch(profileTemplateEtag)
+        			.name(PROFILE_TEMPLATE_NAME)
+        			.description("JavaSDK test Profile Template #1 - updated")
+        			.build();
+        	
+        	Response<TrustedProfileTemplateResponse> updateResponse = service.updateProfileTemplateVersion(updateOptions).execute();
+            assertNotNull(updateResponse);
+            assertEquals(updateResponse.getStatusCode(), 200);
+            assertNotNull(updateResponse.getResult());
+        	
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(updateResponse.getHeaders().values("Etag"));
+            assertEquals(updateResponse.getHeaders().values("Etag").size(), 1);
+            profileTemplateEtag = updateResponse.getHeaders().values("Etag").get(0);
+            assertNotNull(profileTemplateEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testUpdateProfileTemplate" })
+    public void testAssignProfileTemplate() throws Exception {
+        try {
+        	CommitProfileTemplateOptions commitOptions = new CommitProfileTemplateOptions.Builder()
+        			.templateId(profileTemplateId)
+        			.version(Long.toString(profileTemplateVersion))
+        			.build();
+        	
+        	Response<Void> commitResponse = service.commitProfileTemplate(commitOptions).execute();
+            assertNotNull(commitResponse);
+            assertEquals(commitResponse.getStatusCode(), 204);
+            
+            CreateTrustedProfileAssignmentOptions assignOptions = new CreateTrustedProfileAssignmentOptions.Builder()
+            		.templateId(profileTemplateId)
+            		.templateVersion(profileTemplateVersion)
+            		.targetType(ASSIGNMENT_TARGET_TYPE_ACCOUNT)
+            		.target(ENTERPRISE_SUBACCOUNT_ID)
+            		.build();
+            
+            Response<TemplateAssignmentResponse> assignResponse = service.createTrustedProfileAssignment(assignOptions).execute();
+            assertNotNull(commitResponse);
+            assertEquals(commitResponse.getStatusCode(), 204);
+            
+            TemplateAssignmentResponse assignmentResponseResult = assignResponse.getResult();
+            assertNotNull(assignmentResponseResult);
+
+            // Save the id for use by other test methods.
+            assertNotNull(assignmentResponseResult.getId());
+            profileTemplateAssignmentId = assignmentResponseResult.getId();
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(assignResponse.getHeaders().values("Etag"));
+            assertEquals(assignResponse.getHeaders().values("Etag").size(), 1);
+            profileTemplateAssignmentEtag = assignResponse.getHeaders().values("Etag").get(0);
+            assertNotNull(profileTemplateAssignmentEtag);
+            
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testAssignProfileTemplate" })
+    public void testListProfileTemplateAssignments() throws Exception {
+        try {
+        	ListTrustedProfileAssignmentsOptions listOptions = new ListTrustedProfileAssignmentsOptions.Builder()
+        			.accountId(ENTERPRISE_ACCOUNT_ID)
+        			.templateId(profileTemplateId)
+        			.build();
+        	
+        	Response<TemplateAssignmentListResponse> listResponse = service.listTrustedProfileAssignments(listOptions).execute();
+            assertNotNull(listResponse);
+            assertEquals(listResponse.getStatusCode(), 200);
+            assertNotNull(listResponse.getResult());
+            
+            TemplateAssignmentListResponse listResult = listResponse.getResult();
+            assertNotNull(listResult.getAssignments());
+            assertEquals(listResult.getAssignments().size(), 1);
+        	
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testAssignProfileTemplate" })
+    public void testCreateNewProfileTemplateVersion() throws Exception {
+        try {
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("blueGroups")
+                    .operator("EQUALS")
+                    .value("\"cloud-docs-dev\"")
+                    .build();
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
+            conditions.add(condition);
+            
+        	TrustedProfileTemplateClaimRule claimRule = new TrustedProfileTemplateClaimRule.Builder()
+        			.name("My Rule")
+        			.realmName(REALM_NAME)
+        			.type(CLAIMRULE_TYPE)
+        			.expiration(43200)
+        			.conditions(conditions)
+        			.build();
+        	
+        	List<String> accounts= new ArrayList<String>();
+        	accounts.add(ENTERPRISE_ACCOUNT_ID);
+        	ProfileIdentityRequest profileIdentity= new ProfileIdentityRequest.Builder()
+        			.identifier(IAM_ID)
+        			.accounts(accounts)
+        			.type("user")
+        			.description("Identity description")
+        			.build();
+        	List<ProfileIdentityRequest> identities= new ArrayList<ProfileIdentityRequest>();
+        	identities.add(profileIdentity);
+        	
+        	TemplateProfileComponentRequest profile = new TemplateProfileComponentRequest.Builder()
+        			.addRules(claimRule)
+        			.name(PROFILE_TEMPLATE_PROFILE_NAME)
+        			.description("JavaSDK test Profile cretaed from Profile Template #1 - new version")
+        			.identities(identities)
+        			.build();
+        	
+        	CreateProfileTemplateVersionOptions createOptions = new CreateProfileTemplateVersionOptions.Builder()
+        			.accountId(ENTERPRISE_ACCOUNT_ID)
+        			.templateId(profileTemplateId)
+        			.name(PROFILE_TEMPLATE_NAME)
+        			.description("JavaSDK test Profile Template #1 - new version")
+        			.profile(profile)
+        			.build();
+        	
+        	Response<TrustedProfileTemplateResponse> createResponse = service.createProfileTemplateVersion(createOptions).execute();
+            assertNotNull(createResponse);
+            assertEquals(createResponse.getStatusCode(), 201);
+            assertNotNull(createResponse.getResult());
+            
+            TrustedProfileTemplateResponse createResult = createResponse.getResult();
+            assertNotNull(createResult);
+
+            // Save the version for use by other test methods.
+            assertNotNull(createResult.getVersion());
+            profileTemplateVersion = createResult.getVersion().longValue();
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testCreateNewProfileTemplateVersion" })
+    public void testGetLatestProfileTemplateVersion() throws Exception {
+    	GetLatestProfileTemplateVersionOptions getOptions = new GetLatestProfileTemplateVersionOptions.Builder()
+    			.templateId(profileTemplateId)
+    			.build();
+    	
+    	Response<TrustedProfileTemplateResponse> getResponse = service.getLatestProfileTemplateVersion(getOptions).execute();
+        assertNotNull(getResponse);
+        assertEquals(getResponse.getStatusCode(), 200);
+        assertNotNull(getResponse.getResult());
+    }
+    
+    @Test(dependsOnMethods = { "testCreateNewProfileTemplateVersion" })
+    public void testListProfileTemplateVersions() throws Exception {
+    	
+    	ListVersionsOfProfileTemplateOptions listOptions = new ListVersionsOfProfileTemplateOptions.Builder()
+    			.templateId(profileTemplateId)
+    			.build();
+    	
+    	Response<TrustedProfileTemplateList> listResponse = service.listVersionsOfProfileTemplate(listOptions).execute();
+        assertNotNull(listResponse);
+        assertEquals(listResponse.getStatusCode(), 200);
+        assertNotNull(listResponse.getResult());
+        TrustedProfileTemplateList listResult = listResponse.getResult();
+        assertNotNull(listResult.getProfileTemplates());
+        assertTrue(listResult.getProfileTemplates().size() > 0);
+    }
+    
+    @Test(dependsOnMethods = { "testAssignProfileTemplate", "testCreateNewProfileTemplateVersion" })
+    public void testUpdateProfileTemplateAssignment() throws Exception {
+        try {
+        	CommitProfileTemplateOptions commitOptions = new CommitProfileTemplateOptions.Builder()
+        			.templateId(profileTemplateId)
+        			.version(Long.toString(profileTemplateVersion))
+        			.build();
+        	
+        	Response<Void> commitResponse = service.commitProfileTemplate(commitOptions).execute();
+            assertNotNull(commitResponse);
+            assertEquals(commitResponse.getStatusCode(), 204);
+
+        	waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId);
+        	
+        	UpdateTrustedProfileAssignmentOptions updateOptions = new UpdateTrustedProfileAssignmentOptions.Builder()
+        			.assignmentId(profileTemplateAssignmentId)
+        			.templateVersion(profileTemplateVersion)
+        			.ifMatch(profileTemplateAssignmentEtag)
+        			.build();
+        	
+        	Response<TemplateAssignmentResponse> updateResponse = service.updateTrustedProfileAssignment(updateOptions).execute();
+            assertNotNull(updateResponse);
+            assertEquals(updateResponse.getStatusCode(), 202);
+            assertNotNull(updateResponse.getResult());
+            
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(updateResponse.getHeaders().values("Etag"));
+            assertEquals(updateResponse.getHeaders().values("Etag").size(), 1);
+            profileTemplateAssignmentEtag = updateResponse.getHeaders().values("Etag").get(0);
+            assertNotNull(profileTemplateAssignmentEtag);
+            
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testUpdateProfileTemplateAssignment" })
+    public void testDeleteProfileTemplateAssignment() throws Exception {
+        try {
+        	waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId);
+        	
+        	DeleteTrustedProfileAssignmentOptions deleteOptions = new DeleteTrustedProfileAssignmentOptions.Builder()
+        			.assignmentId(profileTemplateAssignmentId)
+        			.build();
+        	
+        	Response<ExceptionResponse> deleteResponse = service.deleteTrustedProfileAssignment(deleteOptions).execute();
+            assertNotNull(deleteResponse);
+            assertEquals(deleteResponse.getStatusCode(), 202);
+        	
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testDeleteProfileTemplateAssignment" })
+    public void testDeleteProfileTemplateVersion() throws Exception {
+        try {
+        	DeleteProfileTemplateVersionOptions deleteOptions = new DeleteProfileTemplateVersionOptions.Builder()
+        			.templateId(profileTemplateId)
+        			.version("1")
+        			.build();
+        	
+        	Response<Void> deleteResponse = service.deleteProfileTemplateVersion(deleteOptions).execute();
+            assertNotNull(deleteResponse);
+            assertEquals(deleteResponse.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testDeleteProfileTemplateVersion" })
+    public void testDeleteProfileTemplate() throws Exception {
+        try {
+        	waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId);
+        	
+            DeleteAllVersionsOfProfileTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfProfileTemplateOptions.Builder()
+            		.templateId(profileTemplateId)
+                    .build();
+
+            // Invoke operation
+            Response<Void> deleteResponse = service.deleteAllVersionsOfProfileTemplate(deleteTeplateOptions).execute();
+            assertNotNull(deleteResponse);
+            assertEquals(deleteResponse.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test
+    public void testCreateAccountSettingsTemplate() throws Exception {
+        try {
+        	
+        	AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
+        			.mfa("LEVEL1")
+        			.systemAccessTokenExpirationInSeconds("3000")
+        			.build();
+        	CreateAccountSettingsTemplateOptions createOptions = new CreateAccountSettingsTemplateOptions.Builder()
+        			.accountId(ENTERPRISE_ACCOUNT_ID)
+        			.name(ACCOUNT_SETTINGS_TEMPLATE_NAME)
+        			.description("JavaSDK test Account Settings Template #1")
+        			.accountSettings(accountSettings)
+        			.build();
+        	Response<AccountSettingsTemplateResponse> createResponse = service.createAccountSettingsTemplate(createOptions).execute();
+            assertNotNull(createResponse);
+            assertEquals(createResponse.getStatusCode(), 201);
+
+            AccountSettingsTemplateResponse createResult = createResponse.getResult();
+            assertNotNull(createResult);
+
+            // Save the id for use by other test methods.
+            assertNotNull(createResult.getId());
+            accountSettingsTemplateId = createResult.getId();
+            assertNotNull(createResult.getVersion());
+            accountSettingsTemplateVersion = createResult.getVersion().longValue();
+        	
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testCreateAccountSettingsTemplate" })
+    public void testGetAccountSettingsTemplate() throws Exception {
+        try {
+            GetAccountSettingsTemplateVersionOptions getOptions = new GetAccountSettingsTemplateVersionOptions.Builder()
+            		.templateId(accountSettingsTemplateId)
+            		.version(Long.toString(accountSettingsTemplateVersion))
+                    .build();
+
+            Response<AccountSettingsTemplateResponse> response = service.getAccountSettingsTemplateVersion(getOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            AccountSettingsTemplateResponse getResult = response.getResult();
+            assertNotNull(getResult);
+
+            assertEquals(getResult.getId(), accountSettingsTemplateId);
+
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(response.getHeaders().values("Etag"));
+            assertEquals(response.getHeaders().values("Etag").size(), 1);
+            accountSettingsTemplateEtag = response.getHeaders().values("Etag").get(0);
+            assertNotNull(accountSettingsTemplateEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateAccountSettingsTemplate" })
+    public void testListAccountSettingsTemplates() throws Exception {
+        try {
+        	ListAccountSettingsTemplatesOptions listOptions = new ListAccountSettingsTemplatesOptions.Builder()
+        			.accountId(ENTERPRISE_ACCOUNT_ID)
+        			.build();
+        	
+        	Response<AccountSettingsTemplateList> response = service.listAccountSettingsTemplates(listOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+            assertNotNull(response.getResult());
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testCreateAccountSettingsTemplate" })
+    public void testUpdateAccountSettingsTemplate() throws Exception {
+        try {
+        	AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
+        			.mfa("LEVEL1")
+        			.systemAccessTokenExpirationInSeconds("3000")
+        			.build();
+        	UpdateAccountSettingsTemplateVersionOptions updateOptions = new UpdateAccountSettingsTemplateVersionOptions.Builder()
+        			.accountId(ENTERPRISE_ACCOUNT_ID)
+        			.templateId(accountSettingsTemplateId)
+        			.version(Long.toString(accountSettingsTemplateVersion))
+        			.ifMatch(accountSettingsTemplateEtag)
+        			.name(ACCOUNT_SETTINGS_TEMPLATE_NAME)
+        			.description("JavaSDK test Account Settings Template #1 - updated")
+        			.accountSettings(accountSettings)
+        			.build();
+        	
+        	Response<AccountSettingsTemplateResponse> updateResponse = service.updateAccountSettingsTemplateVersion(updateOptions).execute();
+            assertNotNull(updateResponse);
+            assertEquals(updateResponse.getStatusCode(), 200);
+            assertNotNull(updateResponse.getResult());
+        	
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(updateResponse.getHeaders().values("Etag"));
+            assertEquals(updateResponse.getHeaders().values("Etag").size(), 1);
+            accountSettingsTemplateEtag = updateResponse.getHeaders().values("Etag").get(0);
+            assertNotNull(accountSettingsTemplateEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testUpdateAccountSettingsTemplate" })
+    public void testAssignAccountSettingsTemplate() throws Exception {
+        try {
+        	CommitAccountSettingsTemplateOptions commitOptions = new CommitAccountSettingsTemplateOptions.Builder()
+        			.templateId(accountSettingsTemplateId)
+        			.version(Long.toString(accountSettingsTemplateVersion))
+        			.build();
+        	
+        	Response<Void> commitResponse = service.commitAccountSettingsTemplate(commitOptions).execute();
+            assertNotNull(commitResponse);
+            assertEquals(commitResponse.getStatusCode(), 204);
+            
+            CreateAccountSettingsAssignmentOptions assignOptions = new CreateAccountSettingsAssignmentOptions.Builder()
+            		.templateId(accountSettingsTemplateId)
+            		.templateVersion(accountSettingsTemplateVersion)
+            		.targetType(ASSIGNMENT_TARGET_TYPE_ACCOUNT)
+            		.target(ENTERPRISE_SUBACCOUNT_ID)
+            		.build();
+            
+            Response<TemplateAssignmentResponse> assignResponse = service.createAccountSettingsAssignment(assignOptions).execute();
+            assertNotNull(commitResponse);
+            assertEquals(commitResponse.getStatusCode(), 204);
+            
+            TemplateAssignmentResponse assignmentResponseResult = assignResponse.getResult();
+            assertNotNull(assignmentResponseResult);
+
+            // Save the id for use by other test methods.
+            assertNotNull(assignmentResponseResult.getId());
+            accountSettingsTemplateAssignmentId = assignmentResponseResult.getId();
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(assignResponse.getHeaders().values("Etag"));
+            assertEquals(assignResponse.getHeaders().values("Etag").size(), 1);
+            accountSettingsTemplateAssignmentEtag = assignResponse.getHeaders().values("Etag").get(0);
+            assertNotNull(accountSettingsTemplateAssignmentEtag);
+            
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testAssignAccountSettingsTemplate" })
+    public void testCreateNewAccountSettingsTemplateVersion() throws Exception {
+        try {
+        	AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
+        			.mfa("LEVEL1")
+        			.systemAccessTokenExpirationInSeconds("2600")
+        			.restrictCreatePlatformApikey("RESTRICTED")
+        			.restrictCreateServiceId("RESTRICTED")
+        			.build();
+        	CreateAccountSettingsTemplateVersionOptions createOptions = new CreateAccountSettingsTemplateVersionOptions.Builder()
+        			.accountId(ENTERPRISE_ACCOUNT_ID)
+        			.templateId(accountSettingsTemplateId)
+        			.name(ACCOUNT_SETTINGS_TEMPLATE_NAME)
+        			.description("JavaSDK test AccountSettings Template #1 - new version")
+        			.accountSettings(accountSettings)
+        			.build();
+        	
+        	Response<AccountSettingsTemplateResponse> createResponse = service.createAccountSettingsTemplateVersion(createOptions).execute();
+            assertNotNull(createResponse);
+            assertEquals(createResponse.getStatusCode(), 201);
+            assertNotNull(createResponse.getResult());
+            
+            AccountSettingsTemplateResponse createResult = createResponse.getResult();
+            assertNotNull(createResult);
+
+            // Save the version for use by other test methods.
+            assertNotNull(createResult.getVersion());
+            accountSettingsTemplateVersion = createResult.getVersion().longValue();
+            
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testCreateNewAccountSettingsTemplateVersion" })
+    public void testGetLatestAccountSettingsTemplateVersion() throws Exception {
+        GetLatestAccountSettingsTemplateVersionOptions getOptions = new GetLatestAccountSettingsTemplateVersionOptions.Builder()
+                .templateId(accountSettingsTemplateId)
+                .build();
+        
+        Response<AccountSettingsTemplateResponse> getResponse = service.getLatestAccountSettingsTemplateVersion(getOptions).execute();
+        assertNotNull(getResponse);
+        assertEquals(getResponse.getStatusCode(), 200);
+        assertNotNull(getResponse.getResult());
+    }
+    
+    @Test(dependsOnMethods = { "testCreateNewAccountSettingsTemplateVersion" })
+    public void testListAccountSettingsTemplateVersions() throws Exception {
+        
+        ListVersionsOfAccountSettingsTemplateOptions listOptions = new ListVersionsOfAccountSettingsTemplateOptions.Builder()
+                .templateId(accountSettingsTemplateId)
+                .build();
+        
+        Response<AccountSettingsTemplateList> listResponse = service.listVersionsOfAccountSettingsTemplate(listOptions).execute();
+        assertNotNull(listResponse);
+        assertEquals(listResponse.getStatusCode(), 200);
+        assertNotNull(listResponse.getResult());
+        AccountSettingsTemplateList listResult = listResponse.getResult();
+        assertNotNull(listResult.getAccountSettingsTemplates());
+        assertTrue(listResult.getAccountSettingsTemplates().size() > 0);
+    }
+    
+    @Test(dependsOnMethods = { "testAssignAccountSettingsTemplate", "testCreateNewAccountSettingsTemplateVersion" })
+    public void testUpdateAccountSettingsTemplateAssignment() throws Exception {
+        try {
+        	CommitAccountSettingsTemplateOptions commitOptions = new CommitAccountSettingsTemplateOptions.Builder()
+        			.templateId(accountSettingsTemplateId)
+        			.version(Long.toString(accountSettingsTemplateVersion))
+        			.build();
+        	
+        	Response<Void> commitResponse = service.commitAccountSettingsTemplate(commitOptions).execute();
+            assertNotNull(commitResponse);
+            assertEquals(commitResponse.getStatusCode(), 204);
+
+        	waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId);
+        	
+        	UpdateAccountSettingsAssignmentOptions updateOptions = new UpdateAccountSettingsAssignmentOptions.Builder()
+        			.assignmentId(accountSettingsTemplateAssignmentId)
+        			.templateVersion(accountSettingsTemplateVersion)
+        			.ifMatch(accountSettingsTemplateAssignmentEtag)
+        			.build();
+        	
+        	Response<TemplateAssignmentResponse> updateResponse = service.updateAccountSettingsAssignment(updateOptions).execute();
+            assertNotNull(updateResponse);
+            assertEquals(updateResponse.getStatusCode(), 202);
+            assertNotNull(updateResponse.getResult());
+            
+            // Grab the Etag value from the response for use in the update operation.
+            assertNotNull(updateResponse.getHeaders().values("Etag"));
+            assertEquals(updateResponse.getHeaders().values("Etag").size(), 1);
+            accountSettingsTemplateAssignmentEtag = updateResponse.getHeaders().values("Etag").get(0);
+            assertNotNull(accountSettingsTemplateAssignmentEtag);
+            
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testUpdateAccountSettingsTemplateAssignment" })
+    public void testDeleteAccountSettingsTemplateAssignment() throws Exception {
+        try {
+        	waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId);
+        	
+        	DeleteAccountSettingsAssignmentOptions deleteOptions = new DeleteAccountSettingsAssignmentOptions.Builder()
+        			.assignmentId(accountSettingsTemplateAssignmentId)
+        			.build();
+        	
+        	Response<ExceptionResponse> deleteResponse = service.deleteAccountSettingsAssignment(deleteOptions).execute();
+            assertNotNull(deleteResponse);
+            assertEquals(deleteResponse.getStatusCode(), 202);
+        	
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testUpdateAccountSettingsTemplateAssignment" })
+    public void testDeleteAccountSettingsTemplateVersion() throws Exception {
+        try {
+        	DeleteAccountSettingsTemplateVersionOptions deleteOptions = new DeleteAccountSettingsTemplateVersionOptions.Builder()
+        			.templateId(accountSettingsTemplateId)
+        			.version("1")
+        			.build();
+        	
+        	Response<Void> deleteResponse = service.deleteAccountSettingsTemplateVersion(deleteOptions).execute();
+            assertNotNull(deleteResponse);
+            assertEquals(deleteResponse.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testDeleteAccountSettingsTemplateVersion" })
+    public void testDeleteAccountSettingsTemplate() throws Exception {
+        try {
+        	waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId);
+        	
+            DeleteAllVersionsOfAccountSettingsTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfAccountSettingsTemplateOptions.Builder()
+            		.templateId(accountSettingsTemplateId)
+                    .build();
+
+            // Invoke operation
+            Response<Void> deleteResponse = service.deleteAllVersionsOfAccountSettingsTemplate(deleteTeplateOptions).execute();
+            assertNotNull(deleteResponse);
+            assertEquals(deleteResponse.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
     @AfterClass
     public void tearDown() {
         // Add any clean up logic here.
@@ -1879,12 +2518,73 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         cleanupResources();
     }
 
+    private boolean isFinished(String status) {
+    	return ("succeeded".equalsIgnoreCase(status) || "failed".equalsIgnoreCase(status));
+    }
+    
+    private void waitUntilTrustedProfileAssignmentFinished(String assignmentId) {
+    	GetTrustedProfileAssignmentOptions getOptions = new GetTrustedProfileAssignmentOptions.Builder()
+    			.assignmentId(assignmentId)
+    			.build();
+
+    	boolean finished = false;
+    	for (int i = 0; i < 20; i++) {
+            Response<TemplateAssignmentResponse> getResponse = null;
+    		try {
+    		    getResponse = service.getTrustedProfileAssignment(getOptions).execute();
+                TemplateAssignmentResponse result = getResponse.getResult();
+                finished = isFinished(result.getStatus());
+                if (finished) {
+                	// Grab the Etag value from the response for use in the update operation.
+                	assertNotNull(getResponse.getHeaders().values("Etag"));
+                	assertEquals(getResponse.getHeaders().values("Etag").size(), 1);
+                	profileTemplateAssignmentEtag = getResponse.getHeaders().values("Etag").get(0);
+                    break;
+                }
+    	    } catch (NotFoundException e) {
+    	    	// assignment removed
+    	    	finished = true;
+                break;
+    	    }
+            sleep(10);
+        }
+        assertEquals(finished, true);
+    }
+    
+    private void waitUntilAccountSettingsAssignmentFinished(String assignmentId) {
+    	GetAccountSettingsAssignmentOptions getOptions = new GetAccountSettingsAssignmentOptions.Builder()
+    			.assignmentId(assignmentId)
+    			.build();
+
+    	boolean finished = false;
+    	for (int i = 0; i < 20; i++) {
+            Response<TemplateAssignmentResponse> getResponse = null;
+    		try {
+    		    getResponse = service.getAccountSettingsAssignment(getOptions).execute();
+                TemplateAssignmentResponse result = getResponse.getResult();
+                finished = isFinished(result.getStatus());
+                if (finished) {
+                	// Grab the Etag value from the response for use in the update operation.
+                	assertNotNull(getResponse.getHeaders().values("Etag"));
+                	assertEquals(getResponse.getHeaders().values("Etag").size(), 1);
+                	accountSettingsTemplateAssignmentEtag = getResponse.getHeaders().values("Etag").get(0);
+                    break;
+                }
+    	    } catch (NotFoundException e) {
+    	    	// assignment removed
+    	    	finished = true;
+                break;
+    	    }
+            sleep(10);
+        }
+        assertEquals(finished, true);
+    }
+    
     private void sleep(int numSecs) {
         try {
             Thread.sleep(numSecs * 1000);
         } catch (Throwable t) {
         }
-
     }
 
     private void cleanupResources() {
@@ -1947,7 +2647,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                 .build();
 
         Response<TrustedProfilesList> profileResponse = service.listProfiles(listProfilesOptions).execute();
-        assertNotNull(response);
+        assertNotNull(profileResponse);
         assertEquals(profileResponse.getStatusCode(), 200);
 
         TrustedProfilesList profilesListResult = profileResponse.getResult();
@@ -1962,6 +2662,112 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
                     // Invoke operation
                     Response<Void> deleteResponse = service.deleteProfile(deleteProfileOptions).execute();
+                    assertNotNull(deleteResponse);
+                }
+            }
+        }
+        
+        ListProfileTemplatesOptions listProfileTemplateOptions = new ListProfileTemplatesOptions.Builder()
+        		.accountId(ENTERPRISE_ACCOUNT_ID)
+        		.build(); 
+        Response<TrustedProfileTemplateList> profileTemplatesResponse = service.listProfileTemplates(listProfileTemplateOptions).execute();
+        assertNotNull(profileTemplatesResponse);
+        assertEquals(profileTemplatesResponse.getStatusCode(), 200);
+        
+        TrustedProfileTemplateList profileTemplateList = profileTemplatesResponse.getResult();
+        long numProfileTemplates = profileTemplateList.getProfileTemplates().size();
+
+        if (numProfileTemplates > 0) {
+            for (TrustedProfileTemplateResponse template : profileTemplateList.getProfileTemplates()) {
+                if (PROFILE_TEMPLATE_NAME.equals(template.getName())) {
+                	
+                	ListTrustedProfileAssignmentsOptions assignmentsListOptions = new ListTrustedProfileAssignmentsOptions.Builder()
+                			.accountId(ENTERPRISE_ACCOUNT_ID)
+                			.templateId(template.getId())
+                			.build();
+                	
+                	Response<TemplateAssignmentListResponse> assignmentsListResponse = service.listTrustedProfileAssignments(assignmentsListOptions).execute();
+                    assertNotNull(assignmentsListResponse);
+                    assertEquals(assignmentsListResponse.getStatusCode(), 200);
+                    assertNotNull(assignmentsListResponse.getResult());
+                    
+                    TemplateAssignmentListResponse assignmentsListResult = assignmentsListResponse.getResult();
+                    assertNotNull(assignmentsListResult.getAssignments());
+                    long numAssignments = assignmentsListResult.getAssignments().size();
+                    if (numAssignments > 0) {
+                    	for (TemplateAssignmentResponse assignment : assignmentsListResult.getAssignments()) {
+                    		if (!isFinished(assignment.getStatus())) {
+                    			waitUntilTrustedProfileAssignmentFinished(assignment.getId());
+                    		}
+                    		DeleteTrustedProfileAssignmentOptions deleteAssignmentOptions = new DeleteTrustedProfileAssignmentOptions.Builder()
+                    				.assignmentId(assignment.getId())
+                    				.build();
+                            Response<ExceptionResponse> deleteAssignmentResponse = service.deleteTrustedProfileAssignment(deleteAssignmentOptions).execute();
+                            assertNotNull(deleteAssignmentResponse);
+                            assertEquals(deleteAssignmentResponse.getStatusCode(), 202);
+                			waitUntilTrustedProfileAssignmentFinished(assignment.getId());
+                    	}
+                    }
+                	
+                    DeleteAllVersionsOfProfileTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfProfileTemplateOptions.Builder()
+                    		.templateId(template.getId())
+                            .build();
+
+                    // Invoke operation
+                    Response<Void> deleteResponse = service.deleteAllVersionsOfProfileTemplate(deleteTeplateOptions).execute();
+                    assertNotNull(deleteResponse);
+                }
+            }
+        }
+        
+        ListAccountSettingsTemplatesOptions listAccountSettingsTemplateOptions = new ListAccountSettingsTemplatesOptions.Builder()
+        		.accountId(ENTERPRISE_ACCOUNT_ID)
+        		.build(); 
+        Response<AccountSettingsTemplateList> accountSettingsTemplatesResponse = service.listAccountSettingsTemplates(listAccountSettingsTemplateOptions).execute();
+        assertNotNull(accountSettingsTemplatesResponse);
+        assertEquals(accountSettingsTemplatesResponse.getStatusCode(), 200);
+        
+        AccountSettingsTemplateList accountSettingsTemplateList = accountSettingsTemplatesResponse.getResult();
+        long numAccountSettingsTemplates = accountSettingsTemplateList.getAccountSettingsTemplates().size();
+
+        if (numAccountSettingsTemplates > 0) {
+            for (AccountSettingsTemplateResponse template : accountSettingsTemplateList.getAccountSettingsTemplates()) {
+                if (ACCOUNT_SETTINGS_TEMPLATE_NAME.equals(template.getName())) {
+                	
+                	ListAccountSettingsAssignmentsOptions assignmentsListOptions = new ListAccountSettingsAssignmentsOptions.Builder()
+                			.accountId(ENTERPRISE_ACCOUNT_ID)
+                			.templateId(template.getId())
+                			.build();
+                	
+                	Response<TemplateAssignmentListResponse> assignmentsListResponse = service.listAccountSettingsAssignments(assignmentsListOptions).execute();
+                    assertNotNull(assignmentsListResponse);
+                    assertEquals(assignmentsListResponse.getStatusCode(), 200);
+                    assertNotNull(assignmentsListResponse.getResult());
+                    
+                    TemplateAssignmentListResponse assignmentsListResult = assignmentsListResponse.getResult();
+                    assertNotNull(assignmentsListResult.getAssignments());
+                    long numAssignments = assignmentsListResult.getAssignments().size();
+                    if (numAssignments > 0) {
+                    	for (TemplateAssignmentResponse assignment : assignmentsListResult.getAssignments()) {
+                    		if (!isFinished(assignment.getStatus())) {
+                    			waitUntilAccountSettingsAssignmentFinished(assignment.getId());
+                    		}
+                    		DeleteAccountSettingsAssignmentOptions deleteAssignmentOptions = new DeleteAccountSettingsAssignmentOptions.Builder()
+                    				.assignmentId(assignment.getId())
+                    				.build();
+                            Response<ExceptionResponse> deleteAssignmentResponse = service.deleteAccountSettingsAssignment(deleteAssignmentOptions).execute();
+                            assertNotNull(deleteAssignmentResponse);
+                            assertEquals(deleteAssignmentResponse.getStatusCode(), 202);
+                			waitUntilAccountSettingsAssignmentFinished(assignment.getId());
+                    	}
+                    }
+                	
+                    DeleteAllVersionsOfAccountSettingsTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfAccountSettingsTemplateOptions.Builder()
+                    		.templateId(template.getId())
+                            .build();
+
+                    // Invoke operation
+                    Response<Void> deleteResponse = service.deleteAllVersionsOfAccountSettingsTemplate(deleteTeplateOptions).execute();
                     assertNotNull(deleteResponse);
                 }
             }

@@ -14,7 +14,7 @@
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentitiesResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentity;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentityResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;

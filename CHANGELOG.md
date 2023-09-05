@@ -1,3 +1,10 @@
+## [0.39.1](https://github.com/IBM/platform-services-java-sdk/compare/0.39.0...0.39.1) (2023-09-05)
+
+
+### Bug Fixes
+
+* **IAM Access Groups:** remove update action control from assertions ([#208](https://github.com/IBM/platform-services-java-sdk/issues/208)) ([4f89f96](https://github.com/IBM/platform-services-java-sdk/commit/4f89f96ac794d14520b74635f3fd89ae057a5eb4))
+
 # [0.39.0](https://github.com/IBM/platform-services-java-sdk/compare/0.38.0...0.39.0) (2023-09-05)
 
 

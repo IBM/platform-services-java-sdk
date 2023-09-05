@@ -23,9 +23,10 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class AccountSettingsResponse extends GenericModel {
 
   /**
-   * Defines whether or not creating a Service Id is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
+   * Defines whether or not creating a service ID is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
    *   * NOT_SET - to 'unset' a previous set value.
    */
   public interface RestrictCreateServiceId {
@@ -132,9 +133,10 @@ public class AccountSettingsResponse extends GenericModel {
   /**
    * Gets the restrictCreateServiceId.
    *
-   * Defines whether or not creating a Service Id is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
+   * Defines whether or not creating a service ID is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
    *   * NOT_SET - to 'unset' a previous set value.
    *
    * @return the restrictCreateServiceId

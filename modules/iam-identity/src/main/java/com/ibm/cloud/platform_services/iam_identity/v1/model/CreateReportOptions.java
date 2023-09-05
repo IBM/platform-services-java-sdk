@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -145,7 +145,7 @@ public class CreateReportOptions extends GenericModel {
   /**
    * Gets the duration.
    *
-   * Optional duration of the report. The supported unit of duration is hours.
+   * Optional duration of the report, supported unit of duration is hours.
    *
    * @return the duration
    */

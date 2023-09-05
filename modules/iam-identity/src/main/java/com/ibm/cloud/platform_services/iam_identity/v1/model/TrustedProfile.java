@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -38,6 +38,10 @@ public class TrustedProfile extends GenericModel {
   protected String iamId;
   @SerializedName("account_id")
   protected String accountId;
+  @SerializedName("template_id")
+  protected String templateId;
+  @SerializedName("assignment_id")
+  protected String assignmentId;
   @SerializedName("ims_account_id")
   protected Long imsAccountId;
   @SerializedName("ims_user_id")
@@ -159,6 +163,31 @@ public class TrustedProfile extends GenericModel {
    */
   public String getAccountId() {
     return accountId;
+  }
+
+  /**
+   * Gets the templateId.
+   *
+   * ID of the IAM template that was used to create an enterprise-managed trusted profile in your account. When
+   * returned, this indicates that the trusted profile is created from and managed by a template in the root enterprise
+   * account.
+   *
+   * @return the templateId
+   */
+  public String getTemplateId() {
+    return templateId;
+  }
+
+  /**
+   * Gets the assignmentId.
+   *
+   * ID of the assignment that was used to create an enterprise-managed trusted profile in your account. When returned,
+   * this indicates that the trusted profile is created from and managed by a template in the root enterprise account.
+   *
+   * @return the assignmentId
+   */
+  public String getAssignmentId() {
+    return assignmentId;
   }
 
   /**

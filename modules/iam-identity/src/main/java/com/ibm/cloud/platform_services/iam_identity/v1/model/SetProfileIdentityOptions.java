@@ -50,7 +50,6 @@ public class SetProfileIdentityOptions extends GenericModel {
   protected String identityType;
   protected String identifier;
   protected String type;
-  protected String iamId;
   protected List<String> accounts;
   protected String description;
 
@@ -62,7 +61,6 @@ public class SetProfileIdentityOptions extends GenericModel {
     private String identityType;
     private String identifier;
     private String type;
-    private String iamId;
     private List<String> accounts;
     private String description;
 
@@ -76,7 +74,6 @@ public class SetProfileIdentityOptions extends GenericModel {
       this.identityType = setProfileIdentityOptions.identityType;
       this.identifier = setProfileIdentityOptions.identifier;
       this.type = setProfileIdentityOptions.type;
-      this.iamId = setProfileIdentityOptions.iamId;
       this.accounts = setProfileIdentityOptions.accounts;
       this.description = setProfileIdentityOptions.description;
     }
@@ -172,17 +169,6 @@ public class SetProfileIdentityOptions extends GenericModel {
     }
 
     /**
-     * Set the iamId.
-     *
-     * @param iamId the iamId
-     * @return the SetProfileIdentityOptions builder
-     */
-    public Builder iamId(String iamId) {
-      this.iamId = iamId;
-      return this;
-    }
-
-    /**
      * Set the accounts.
      * Existing accounts will be replaced.
      *
@@ -204,21 +190,6 @@ public class SetProfileIdentityOptions extends GenericModel {
       this.description = description;
       return this;
     }
-
-    /**
-     * Set the profileIdentity.
-     *
-     * @param profileIdentity the profileIdentity
-     * @return the SetProfileIdentityOptions builder
-     */
-    public Builder profileIdentity(ProfileIdentity profileIdentity) {
-      this.identifier = profileIdentity.identifier();
-      this.type = profileIdentity.type();
-      this.iamId = profileIdentity.iamId();
-      this.accounts = profileIdentity.accounts();
-      this.description = profileIdentity.description();
-      return this;
-    }
   }
 
   protected SetProfileIdentityOptions() { }
@@ -236,7 +207,6 @@ public class SetProfileIdentityOptions extends GenericModel {
     identityType = builder.identityType;
     identifier = builder.identifier;
     type = builder.type;
-    iamId = builder.iamId;
     accounts = builder.accounts;
     description = builder.description;
   }
@@ -294,17 +264,6 @@ public class SetProfileIdentityOptions extends GenericModel {
    */
   public String type() {
     return type;
-  }
-
-  /**
-   * Gets the iamId.
-   *
-   * IAM ID of the identity.
-   *
-   * @return the iamId
-   */
-  public String iamId() {
-    return iamId;
   }
 
   /**

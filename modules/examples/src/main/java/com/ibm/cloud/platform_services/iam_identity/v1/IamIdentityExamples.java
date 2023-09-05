@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020, 2021.
+ * (C) Copyright IBM Corp. 2020, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,48 +20,78 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsComponent;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitAccountSettingsTemplateOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitProfileTemplateOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsTemplateOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileTemplateOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateTrustedProfileAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAccountSettingsAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAccountSettingsTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOfAccountSettingsTemplateOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOfProfileTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteTrustedProfileAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ExceptionResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestAccountSettingsTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentitiesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetTrustedProfileAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListTrustedProfileAssignmentsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListVersionsOfAccountSettingsTemplateOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListVersionsOfProfileTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentitiesResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentity;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentityRequest;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentityResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
@@ -71,17 +101,28 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentityOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentListResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateProfileComponentRequest;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfileTemplateClaimRule;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfileTemplateList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfileTemplateResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfaEnrollments;
 import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
@@ -96,6 +137,9 @@ import com.ibm.cloud.sdk.core.util.CredentialUtils;
 // IAM_IDENTITY_APIKEY=<IAM APIKEY for the User>
 // IAM_IDENTITY_ACCOUNT_ID=<AccountID which is unique to the User>
 // IAM_IDENTITY_IAM_ID=<IAM ID which is unique to the User account>
+// IAM_IDENTITY_IAM_ID_MEMBER=<IAM ID of a user belonging to the account but different to the one above>
+// IAM_IDENTITY_ENTERPISE_ACCOUNT_ID=<AccountID of the enterprise account>
+// IAM_IDENTITY_ENTERPISE_SUBACCOUNT_ID=<AccountID of an account in the enterprise>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
@@ -111,13 +155,18 @@ public class IamIdentityExamples {
     private static String serviceIdName = "Example-ServiceId";
     private static String profileName = "Example-Profile";
     private static String claimRuleType = "Profile-SAML";
-    private static String realmName = "https://w3id.sso.ibm.com/auth/sps/samlidp2/saml20";
+    private static String realmName = "https://my.test.realm/1234/saml20";
+    private static String profileTemplateName = "Example-Profile-Template";
+    private static String profileTemplateProfileName = "Profile-From-Example-Template";
+    private static String accountSettingsTemplateName = "Example-Account-Settings-Template";
 
     //values to be read from the env file
     private static String accountId;
     private static String iamId;
     private static String iamIdMember;
     private static String iamApiKey;
+    private static String enterpriseAccountId;
+    private static String enterpriseSubAccountId;
 
     // Variables used to hold various values shared between operations.
     private static String apikeyId;
@@ -125,7 +174,6 @@ public class IamIdentityExamples {
     private static String svcId;
     private static String svcIdEtag;
     private static String profileId;
-    private static String profileIamId;
     private static String profileEtag;
     private static String claimRuleId;
     private static String claimRuleEtag;
@@ -133,6 +181,16 @@ public class IamIdentityExamples {
     private static String accountSettingsEtag;
     private static String reportReferenceValue;
     private static String profileIdentitiesEtag;
+    private static String profileTemplateId;
+    private static long profileTemplateVersion;
+    private static String profileTemplateEtag;
+    private static String profileTemplateAssignmentId;
+    private static String profileTemplateAssignmentEtag;
+    private static String accountSettingsTemplateId;
+    private static long accountSettingsTemplateVersion;
+    private static String accountSettingsTemplateEtag;
+    private static String accountSettingsTemplateAssignmentId;
+    private static String accountSettingsTemplateAssignmentEtag;
 
     static {
         System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_identity.env");
@@ -147,6 +205,8 @@ public class IamIdentityExamples {
         iamApiKey = config.get("APIKEY");
         iamId = config.get("IAM_ID");
         iamIdMember = config.get("IAM_ID_MEMBER");
+        enterpriseAccountId = config.get("ENTERPRISE_ACCOUNT_ID");
+        enterpriseSubAccountId = config.get("ENTERPRISE_SUBACCOUNT_ID");
 
         try {
             System.out.println("createApiKey() result:");
@@ -478,7 +538,6 @@ public class IamIdentityExamples {
             Response<TrustedProfile> response = service.createProfile(createProfileOptions).execute();
             TrustedProfile profile = response.getResult();
             profileId = profile.getId();
-            profileIamId = profile.getIamId();
 
             System.out.println(profile);
 
@@ -795,7 +854,6 @@ public class IamIdentityExamples {
                     .profileId(profileId).build();
             Response<ProfileIdentitiesResponse> response = service.getProfileIdentities(getProfileIdentitiesOptions)
                     .execute();
-            ProfileIdentitiesResponse profileIdentitiesResponseResult = response.getResult();
 
             ProfileIdentitiesResponse profileIdentityResponseResult = response.getResult();
             profileIdentitiesEtag = profileIdentityResponseResult.getEntityTag();
@@ -817,13 +875,13 @@ public class IamIdentityExamples {
             accounts.add(accountId);
             String type = "user";
             String description = "Identity description";
-            ProfileIdentity profileIdentity = new ProfileIdentity.Builder()
+            ProfileIdentityRequest profileIdentity = new ProfileIdentityRequest.Builder()
                     .identifier(iamId)
                     .accounts(accounts)
                     .type(type)
                     .description(description)
                     .build();
-            List<ProfileIdentity> listProfileIdentity = new ArrayList<ProfileIdentity>();
+            List<ProfileIdentityRequest> listProfileIdentity = new ArrayList<ProfileIdentityRequest>();
             listProfileIdentity.add(profileIdentity);
 
             SetProfileIdentitiesOptions setProfileIdentitiesOptions = new SetProfileIdentitiesOptions.Builder()
@@ -862,9 +920,9 @@ public class IamIdentityExamples {
                     .accounts(accounts)
                     .description(description)
                     .build();
-            Response<ProfileIdentity> response = service.setProfileIdentity(setProfileIdentityOptions).execute();
+            Response<ProfileIdentityResponse> response = service.setProfileIdentity(setProfileIdentityOptions).execute();
 
-            ProfileIdentity profileIdentityResponseResult = response.getResult();
+            ProfileIdentityResponse profileIdentityResponseResult = response.getResult();
             System.out.println(profileIdentityResponseResult);
 
             // end-set_profile_identity
@@ -883,9 +941,9 @@ public class IamIdentityExamples {
                     .identityType("user")
                     .identifierId(iamIdMember)
                     .build();
-            Response<ProfileIdentity> response = service.getProfileIdentity(getProfileIdentityOptions).execute();
+            Response<ProfileIdentityResponse> response = service.getProfileIdentity(getProfileIdentityOptions).execute();
 
-            ProfileIdentity profileIdentityResponseResult = response.getResult();
+            ProfileIdentityResponse profileIdentityResponseResult = response.getResult();
             System.out.println(profileIdentityResponseResult);
 
             // end-get_profile_identity
@@ -1108,6 +1166,870 @@ public class IamIdentityExamples {
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createProfileTemplate() result:");
+
+            // begin-create_profile_template
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("blueGroups")
+                    .operator("EQUALS")
+                    .value("\"cloud-docs-dev\"")
+                    .build();
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
+            conditions.add(condition);
+
+            TrustedProfileTemplateClaimRule claimRule = new TrustedProfileTemplateClaimRule.Builder()
+                    .name("My Rule")
+                    .realmName(realmName)
+                    .type(claimRuleType)
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            TemplateProfileComponentRequest profile = new TemplateProfileComponentRequest.Builder()
+                    .addRules(claimRule)
+                    .name(profileTemplateProfileName)
+                    .description("Trusted profile created from a template")
+                    .build();
+
+            CreateProfileTemplateOptions createProfileTemplateOptions = new CreateProfileTemplateOptions.Builder()
+                    .name(profileTemplateName)
+                    .description("IAM enterprise trusted profile template example")
+                    .accountId(enterpriseAccountId)
+                    .profile(profile)
+                    .build();
+
+            Response<TrustedProfileTemplateResponse> response = service.createProfileTemplate(createProfileTemplateOptions).execute();
+            TrustedProfileTemplateResponse trustedProfileTemplateResult = response.getResult();
+
+            // Save the id for use by other test methods.
+            profileTemplateId = trustedProfileTemplateResult.getId();
+            profileTemplateVersion = trustedProfileTemplateResult.getVersion().longValue();
+
+            System.out.println(trustedProfileTemplateResult);
+
+            // end-create_profile_template
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getProfileTemplateVersion() result:");
+
+            // begin-get_profile_template_version
+
+            GetProfileTemplateVersionOptions getProfileTemplateOptions = new GetProfileTemplateVersionOptions.Builder()
+                    .templateId(profileTemplateId)
+                    .version(Long.toString(profileTemplateVersion))
+                    .build();
+
+            Response<TrustedProfileTemplateResponse> response = service.getProfileTemplateVersion(getProfileTemplateOptions).execute();
+            TrustedProfileTemplateResponse profileTemplateResult = response.getResult();
+
+            // Grab the Etag value from the response for use in the update operation.
+            profileTemplateEtag = response.getHeaders().values("Etag").get(0);
+
+            System.out.println(profileTemplateResult);
+
+            // end-get_profile_template_version
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listProfileTemplates() result:");
+
+            // begin-list_profile_templates
+
+            ListProfileTemplatesOptions listOptions = new ListProfileTemplatesOptions.Builder()
+                    .accountId(enterpriseAccountId)
+                    .build();
+
+            Response<TrustedProfileTemplateList> response = service.listProfileTemplates(listOptions).execute();
+            TrustedProfileTemplateList listResult = response.getResult();
+            System.out.println(listResult);
+
+            // end-list_profile_templates
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("updateProfileTemplateVersion() result:");
+
+            // begin-update_profile_template_version
+
+            UpdateProfileTemplateVersionOptions updateOptions = new UpdateProfileTemplateVersionOptions.Builder()
+                    .accountId(enterpriseAccountId)
+                    .templateId(profileTemplateId)
+                    .version(Long.toString(profileTemplateVersion))
+                    .ifMatch(profileTemplateEtag)
+                    .name(profileTemplateName)
+                    .description("IAM enterprise trusted profile template example - updated")
+                    .build();
+
+            Response<TrustedProfileTemplateResponse> updateResponse = service.updateProfileTemplateVersion(updateOptions).execute();
+            TrustedProfileTemplateResponse updateResult = updateResponse.getResult();
+
+            // Grab the Etag value from the response for use in the update operation.
+            profileTemplateEtag = updateResponse.getHeaders().values("Etag").get(0);
+
+            System.out.println(updateResult);
+
+            // end-update_profile_template_version
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("commitProfileTemplate() result:");
+
+            // begin-commit_profile_template
+
+            CommitProfileTemplateOptions commitOptions = new CommitProfileTemplateOptions.Builder()
+                    .templateId(profileTemplateId)
+                    .version(Long.toString(profileTemplateVersion))
+                    .build();
+
+            Response<Void> commitResponse = service.commitProfileTemplate(commitOptions).execute();
+
+            // end-commit_profile_template
+
+            System.out.printf("commitProfileTemplate() response status code: %d%n", commitResponse.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createProfileTemplateAssignment() result:");
+
+            // begin-create_trusted_profile_assignment
+
+            CreateTrustedProfileAssignmentOptions assignOptions = new CreateTrustedProfileAssignmentOptions.Builder()
+                    .templateId(profileTemplateId)
+                    .templateVersion(profileTemplateVersion)
+                    .targetType("Account")
+                    .target(enterpriseSubAccountId)
+                    .build();
+
+            Response<TemplateAssignmentResponse> assignResponse = service.createTrustedProfileAssignment(assignOptions).execute();
+            TemplateAssignmentResponse assignmentResponseResult = assignResponse.getResult();
+
+            // Save the id for use by other test methods.
+            profileTemplateAssignmentId = assignmentResponseResult.getId();
+            // Grab the Etag value from the response for use in the update operation.
+            profileTemplateAssignmentEtag = assignResponse.getHeaders().values("Etag").get(0);
+
+            System.out.println(assignmentResponseResult);
+
+            // end-create_trusted_profile_assignment
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getProfileTemplateAssignment() result:");
+
+            // begin-get_trusted_profile_assignment
+
+            GetTrustedProfileAssignmentOptions getOptions = new GetTrustedProfileAssignmentOptions.Builder()
+                    .assignmentId(profileTemplateAssignmentId)
+                    .build();
+
+            Response<TemplateAssignmentResponse> getResponse = service.getTrustedProfileAssignment(getOptions).execute();
+            TemplateAssignmentResponse getResult = getResponse.getResult();
+
+            System.out.println(getResult);
+
+            // end-get_trusted_profile_assignment
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listTrustedProfileAssignments() result:");
+
+            // begin-list_trusted_profile_assignments
+
+            ListTrustedProfileAssignmentsOptions listOptions = new ListTrustedProfileAssignmentsOptions.Builder()
+                    .accountId(enterpriseAccountId)
+                    .templateId(profileTemplateId)
+                    .build();
+
+            Response<TemplateAssignmentListResponse> listResponse = service.listTrustedProfileAssignments(listOptions).execute();
+            TemplateAssignmentListResponse listResult = listResponse.getResult();
+            System.out.println(listResult);
+
+            // end-list_trusted_profile_assignments
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createProfileTemplateVersion() result:");
+
+            // begin-create_profile_template_version
+
+            ProfileClaimRuleConditions condition = new ProfileClaimRuleConditions.Builder()
+                    .claim("blueGroups")
+                    .operator("EQUALS")
+                    .value("\"cloud-docs-dev\"")
+                    .build();
+            List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
+            conditions.add(condition);
+
+            TrustedProfileTemplateClaimRule claimRule = new TrustedProfileTemplateClaimRule.Builder()
+                    .name("My Rule")
+                    .realmName(realmName)
+                    .type(claimRuleType)
+                    .expiration(43200)
+                    .conditions(conditions)
+                    .build();
+
+            List<String> accounts = new ArrayList<String>();
+            accounts.add(enterpriseAccountId);
+            ProfileIdentityRequest profileIdentity = new ProfileIdentityRequest.Builder()
+                    .identifier(iamId)
+                    .accounts(accounts)
+                    .type("user")
+                    .description("Identity description")
+                    .build();
+            List<ProfileIdentityRequest> identities = new ArrayList<ProfileIdentityRequest>();
+            identities.add(profileIdentity);
+
+            TemplateProfileComponentRequest profile = new TemplateProfileComponentRequest.Builder()
+                    .addRules(claimRule)
+                    .name(profileTemplateProfileName)
+                    .description("Trusted profile created from a template - new version")
+                    .identities(identities)
+                    .build();
+
+            CreateProfileTemplateVersionOptions createOptions = new CreateProfileTemplateVersionOptions.Builder()
+                    .accountId(enterpriseAccountId)
+                    .templateId(profileTemplateId)
+                    .name(profileTemplateName)
+                    .description("IAM enterprise trusted profile template example - new version")
+                    .profile(profile)
+                    .build();
+
+            Response<TrustedProfileTemplateResponse> createResponse = service.createProfileTemplateVersion(createOptions).execute();
+            TrustedProfileTemplateResponse createResult = createResponse.getResult();
+
+            // Save the version for use by other test methods.
+            profileTemplateVersion = createResult.getVersion().longValue();
+            System.out.println(createResult);
+
+            // end-create_profile_template_version
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getLatestProfileTemplateVersion() result:");
+
+            // begin-get_latest_profile_template_version
+
+            GetLatestProfileTemplateVersionOptions getOptions = new GetLatestProfileTemplateVersionOptions.Builder()
+                    .templateId(profileTemplateId)
+                    .build();
+
+            Response<TrustedProfileTemplateResponse> getResponse = service.getLatestProfileTemplateVersion(getOptions).execute();
+            TrustedProfileTemplateResponse getResult = getResponse.getResult();
+
+            System.out.println(getResult);
+
+            // end-get_latest_profile_template_version
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listVersionsOfProfileTemplate() result:");
+
+            // begin-list_versions_of_profile_template
+
+            ListVersionsOfProfileTemplateOptions listOptions = new ListVersionsOfProfileTemplateOptions.Builder()
+                    .templateId(profileTemplateId)
+                    .build();
+
+            Response<TrustedProfileTemplateList> listResponse = service.listVersionsOfProfileTemplate(listOptions).execute();
+            TrustedProfileTemplateList listResult = listResponse.getResult();
+
+            System.out.println(listResult);
+
+            // end-list_versions_of_profile_template
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            CommitProfileTemplateOptions commitOptions = new CommitProfileTemplateOptions.Builder()
+                    .templateId(profileTemplateId)
+                    .version(Long.toString(profileTemplateVersion))
+                    .build();
+            service.commitProfileTemplate(commitOptions).execute();
+
+            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, service);
+
+            System.out.println("updateTrustedProfileAssignment() result:");
+
+            // begin-update_trusted_profile_assignment
+
+            UpdateTrustedProfileAssignmentOptions updateOptions = new UpdateTrustedProfileAssignmentOptions.Builder()
+                    .assignmentId(profileTemplateAssignmentId)
+                    .templateVersion(profileTemplateVersion)
+                    .ifMatch(profileTemplateAssignmentEtag)
+                    .build();
+
+            Response<TemplateAssignmentResponse> updateResponse = service.updateTrustedProfileAssignment(updateOptions).execute();
+            TemplateAssignmentResponse updateResult = updateResponse.getResult();
+
+            // Grab the Etag value from the response for use in the update operation.
+            profileTemplateAssignmentEtag = updateResponse.getHeaders().values("Etag").get(0);
+
+            System.out.println(updateResult);
+
+            // end-update_trusted_profile_assignment
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteTrustedProfileAssignment() result:");
+
+            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, service);
+
+            // begin-delete_trusted_profile_assignment
+
+            DeleteTrustedProfileAssignmentOptions deleteOptions = new DeleteTrustedProfileAssignmentOptions.Builder()
+                    .assignmentId(profileTemplateAssignmentId)
+                    .build();
+
+            Response<ExceptionResponse> deleteResponse = service.deleteTrustedProfileAssignment(deleteOptions).execute();
+
+            // end-delete_trusted_profile_assignment
+
+            System.out.printf("deleteTrustedProfileAssignment() response status code: %d%n", deleteResponse.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteProfileTemplateVersion() result:");
+
+            // begin-delete_profile_template_version
+
+            DeleteProfileTemplateVersionOptions deleteOptions = new DeleteProfileTemplateVersionOptions.Builder()
+                    .templateId(profileTemplateId)
+                    .version("1")
+                    .build();
+
+            Response<Void> deleteResponse = service.deleteProfileTemplateVersion(deleteOptions).execute();
+
+            // end-delete_profile_template_version
+
+            System.out.printf("deleteProfileTemplateVersion() response status code: %d%n", deleteResponse.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteProfileTemplateAllVersions() result:");
+
+            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, service);
+
+            // begin-delete_all_versions_of_profile_template
+
+            DeleteAllVersionsOfProfileTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfProfileTemplateOptions.Builder()
+                    .templateId(profileTemplateId)
+                    .build();
+
+            Response<Void> deleteResponse = service.deleteAllVersionsOfProfileTemplate(deleteTeplateOptions).execute();
+
+            // end-delete_all_versions_of_profile_template
+
+            System.out.printf("deleteProfileTemplateAllVersions() response status code: %d%n", deleteResponse.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createAccountSettingsTemplate() result:");
+
+            // begin-create_account_settings_template
+
+            AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
+                    .mfa("LEVEL1")
+                    .systemAccessTokenExpirationInSeconds("3000")
+                    .build();
+
+            CreateAccountSettingsTemplateOptions createOptions = new CreateAccountSettingsTemplateOptions.Builder()
+                    .accountId(enterpriseAccountId)
+                    .name(accountSettingsTemplateName)
+                    .description("IAM enterprise account settings template example")
+                    .accountSettings(accountSettings)
+                    .build();
+
+            Response<AccountSettingsTemplateResponse> createResponse = service.createAccountSettingsTemplate(createOptions).execute();
+            AccountSettingsTemplateResponse createResult = createResponse.getResult();
+
+            // Save the id for use by other test methods.
+            accountSettingsTemplateId = createResult.getId();
+            accountSettingsTemplateVersion = createResult.getVersion().longValue();
+
+            System.out.println(createResult);
+
+            // end-create_account_settings_template
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getAccountSettingsTemplateVersion() result:");
+
+            // begin-get_account_settings_template_version
+
+            GetAccountSettingsTemplateVersionOptions getOptions = new GetAccountSettingsTemplateVersionOptions.Builder()
+                    .templateId(accountSettingsTemplateId)
+                    .version(Long.toString(accountSettingsTemplateVersion))
+                    .build();
+
+            Response<AccountSettingsTemplateResponse> response = service.getAccountSettingsTemplateVersion(getOptions).execute();
+            AccountSettingsTemplateResponse getResult = response.getResult();
+
+            // Grab the Etag value from the response for use in the update operation.
+            accountSettingsTemplateEtag = response.getHeaders().values("Etag").get(0);
+
+            System.out.println(getResult);
+
+            // end-get_account_settings_template_version
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listAccountSettingsTemplates() result:");
+
+            // begin-list_account_settings_templates
+
+            ListAccountSettingsTemplatesOptions listOptions = new ListAccountSettingsTemplatesOptions.Builder()
+                    .accountId(enterpriseAccountId)
+                    .build();
+
+            Response<AccountSettingsTemplateList> response = service.listAccountSettingsTemplates(listOptions).execute();
+            AccountSettingsTemplateList result = response.getResult();
+
+            System.out.println(result);
+
+            // end-list_account_settings_templates
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("updateAccountSettingsTemplateVersion() result:");
+
+            // begin-update_account_settings_template_version
+
+            AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
+                    .mfa("LEVEL1")
+                    .systemAccessTokenExpirationInSeconds("3000")
+                    .build();
+            UpdateAccountSettingsTemplateVersionOptions updateOptions = new UpdateAccountSettingsTemplateVersionOptions.Builder()
+                    .accountId(enterpriseAccountId)
+                    .templateId(accountSettingsTemplateId)
+                    .version(Long.toString(accountSettingsTemplateVersion))
+                    .ifMatch(accountSettingsTemplateEtag)
+                    .name(accountSettingsTemplateName)
+                    .description("IAM enterprise account settings template example - updated")
+                    .accountSettings(accountSettings)
+                    .build();
+
+            Response<AccountSettingsTemplateResponse> updateResponse = service.updateAccountSettingsTemplateVersion(updateOptions).execute();
+            AccountSettingsTemplateResponse updateResult = updateResponse.getResult();
+
+            // Grab the Etag value from the response for use in the update operation.
+            accountSettingsTemplateEtag = updateResponse.getHeaders().values("Etag").get(0);
+
+            System.out.println(updateResult);
+
+            // end-update_account_settings_template_version
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("commitAccountSettingsTemplate() result:");
+
+            // begin-commit_account_settings_template
+
+            CommitAccountSettingsTemplateOptions commitOptions = new CommitAccountSettingsTemplateOptions.Builder()
+                    .templateId(accountSettingsTemplateId)
+                    .version(Long.toString(accountSettingsTemplateVersion))
+                    .build();
+
+            Response<Void> commitResponse = service.commitAccountSettingsTemplate(commitOptions).execute();
+
+            // end-commit_account_settings_template
+
+            System.out.printf("deleteProfileTemplateAllVersions() response status code: %d%n", commitResponse.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createAccountSettingsAssignment() result:");
+
+            // begin-create_account_settings_assignment
+
+            CreateAccountSettingsAssignmentOptions assignOptions = new CreateAccountSettingsAssignmentOptions.Builder()
+                    .templateId(accountSettingsTemplateId)
+                    .templateVersion(accountSettingsTemplateVersion)
+                    .targetType("Account")
+                    .target(enterpriseSubAccountId)
+                    .build();
+
+            Response<TemplateAssignmentResponse> assignResponse = service.createAccountSettingsAssignment(assignOptions).execute();
+            TemplateAssignmentResponse assignmentResult = assignResponse.getResult();
+
+            // Save the id for use by other test methods.
+            accountSettingsTemplateAssignmentId = assignmentResult.getId();
+            // Grab the Etag value from the response for use in the update operation.
+            accountSettingsTemplateAssignmentEtag = assignResponse.getHeaders().values("Etag").get(0);
+
+            System.out.println(assignmentResult);
+
+            // end-create_account_settings_assignment
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listAccountSettingsAssignments() result:");
+
+            // begin-list_account_settings_assignments
+
+            ListAccountSettingsTemplatesOptions listOptions = new ListAccountSettingsTemplatesOptions.Builder()
+                    .accountId(enterpriseAccountId)
+                    .build();
+
+            Response<AccountSettingsTemplateList> listResponse = service.listAccountSettingsTemplates(listOptions).execute();
+            AccountSettingsTemplateList listResult = listResponse.getResult();
+
+            System.out.println(listResult);
+
+            // end-list_account_settings_assignments
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getAccountSettingsAssignment() result:");
+
+            // begin-get_account_settings_assignment
+
+            GetAccountSettingsAssignmentOptions getOptions = new GetAccountSettingsAssignmentOptions.Builder()
+                    .assignmentId(accountSettingsTemplateAssignmentId)
+                    .build();
+
+            Response<TemplateAssignmentResponse> getResponse = service.getAccountSettingsAssignment(getOptions).execute();
+            TemplateAssignmentResponse getResult = getResponse.getResult();
+
+            // Grab the Etag value from the response for use in the update operation.
+            accountSettingsTemplateAssignmentEtag = getResponse.getHeaders().values("Etag").get(0);
+
+            System.out.println(getResult);
+
+            // end-get_account_settings_assignment
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createAccountSettingsTemplateVersion() result:");
+
+            // begin-create_account_settings_template_version
+
+            AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
+                    .mfa("LEVEL1")
+                    .systemAccessTokenExpirationInSeconds("2600")
+                    .restrictCreatePlatformApikey("RESTRICTED")
+                    .restrictCreateServiceId("RESTRICTED")
+                    .build();
+            CreateAccountSettingsTemplateVersionOptions createOptions = new CreateAccountSettingsTemplateVersionOptions.Builder()
+                    .accountId(enterpriseAccountId)
+                    .templateId(accountSettingsTemplateId)
+                    .name(accountSettingsTemplateName)
+                    .description("IAM enterprise account settings template example - new version")
+                    .accountSettings(accountSettings)
+                    .build();
+
+            Response<AccountSettingsTemplateResponse> createResponse = service.createAccountSettingsTemplateVersion(createOptions).execute();
+            AccountSettingsTemplateResponse createResult = createResponse.getResult();
+
+            // Save the version for use by other test methods.
+            accountSettingsTemplateVersion = createResult.getVersion().longValue();
+
+            System.out.println(createResult);
+
+            // end-create_account_settings_template_version
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getLatestAccountSettingsTemplateVersion() result:");
+
+            // begin-get_latest_account_settings_template_version
+
+            GetLatestAccountSettingsTemplateVersionOptions getOptions = new GetLatestAccountSettingsTemplateVersionOptions.Builder()
+                    .templateId(accountSettingsTemplateId)
+                    .build();
+
+            Response<AccountSettingsTemplateResponse> getResponse = service.getLatestAccountSettingsTemplateVersion(getOptions).execute();
+            AccountSettingsTemplateResponse getResult = getResponse.getResult();
+
+            System.out.println(getResult);
+
+            // end-get_latest_account_settings_template_version
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listVersionsOfAccountSettingsTemplate() result:");
+
+            // begin-list_versions_of_account_settings_template
+
+            ListVersionsOfAccountSettingsTemplateOptions listOptions = new ListVersionsOfAccountSettingsTemplateOptions.Builder()
+                    .templateId(accountSettingsTemplateId)
+                    .build();
+
+            Response<AccountSettingsTemplateList> listResponse = service.listVersionsOfAccountSettingsTemplate(listOptions).execute();
+            AccountSettingsTemplateList listResult = listResponse.getResult();
+
+            System.out.println(listResult);
+
+            // end-list_versions_of_account_settings_template
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("updateAccountSettingsAssignment() result:");
+
+            CommitAccountSettingsTemplateOptions commitOptions = new CommitAccountSettingsTemplateOptions.Builder()
+                    .templateId(accountSettingsTemplateId)
+                    .version(Long.toString(accountSettingsTemplateVersion))
+                    .build();
+
+            service.commitAccountSettingsTemplate(commitOptions).execute();
+
+            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, service);
+
+            // begin-update_account_settings_assignment
+
+            UpdateAccountSettingsAssignmentOptions updateOptions = new UpdateAccountSettingsAssignmentOptions.Builder()
+                    .assignmentId(accountSettingsTemplateAssignmentId)
+                    .templateVersion(accountSettingsTemplateVersion)
+                    .ifMatch(accountSettingsTemplateAssignmentEtag)
+                    .build();
+
+            Response<TemplateAssignmentResponse> updateResponse = service.updateAccountSettingsAssignment(updateOptions).execute();
+            TemplateAssignmentResponse updateResult = updateResponse.getResult();
+
+            // Grab the Etag value from the response for use in the update operation.
+            accountSettingsTemplateAssignmentEtag = updateResponse.getHeaders().values("Etag").get(0);
+
+            System.out.println(updateResult);
+
+            // end-update_account_settings_assignment
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteAccountSettingsAssignment() result:");
+
+            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, service);
+
+            // begin-delete_account_settings_assignment
+
+            DeleteAccountSettingsAssignmentOptions deleteOptions = new DeleteAccountSettingsAssignmentOptions.Builder()
+                    .assignmentId(accountSettingsTemplateAssignmentId)
+                    .build();
+
+            Response<ExceptionResponse> deleteResponse = service.deleteAccountSettingsAssignment(deleteOptions).execute();
+
+            // end-delete_account_settings_assignment
+
+            System.out.printf("deleteProfileTemplateAllVersions() response status code: %d%n", deleteResponse.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteAccountSettingsTemplateVersion() result:");
+
+            // begin-delete_account_settings_template_version
+
+            DeleteAccountSettingsTemplateVersionOptions deleteOptions = new DeleteAccountSettingsTemplateVersionOptions.Builder()
+                    .templateId(accountSettingsTemplateId)
+                    .version("1")
+                    .build();
+
+            Response<Void> deleteResponse = service.deleteAccountSettingsTemplateVersion(deleteOptions).execute();
+
+            // end-delete_account_settings_template_version
+
+            System.out.printf("deleteProfileTemplateAllVersions() response status code: %d%n", deleteResponse.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteAllVersionsOfAccountSettingsTemplate() result:");
+
+            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, service);
+
+            // begin-delete_all_versions_of_account_settings_template
+
+            DeleteAllVersionsOfAccountSettingsTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfAccountSettingsTemplateOptions.Builder()
+                    .templateId(accountSettingsTemplateId)
+                    .build();
+
+            Response<Void> deleteResponse = service.deleteAllVersionsOfAccountSettingsTemplate(deleteTeplateOptions).execute();
+
+            // end-delete_all_versions_of_account_settings_template
+
+            System.out.printf("deleteProfileTemplateAllVersions() response status code: %d%n", deleteResponse.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+    }
+
+    private static void sleep(int numSecs) {
+        try {
+            Thread.sleep(numSecs * 1000);
+        } catch (Throwable t) {
+        }
+    }
+
+    private static boolean isFinished(String status) {
+        return ("succeeded".equalsIgnoreCase(status) || "failed".equalsIgnoreCase(status));
+    }
+
+    private static void waitUntilTrustedProfileAssignmentFinished(String assignmentId, IamIdentity service) {
+        GetTrustedProfileAssignmentOptions getOptions = new GetTrustedProfileAssignmentOptions.Builder()
+                .assignmentId(assignmentId)
+                .build();
+
+        boolean finished = false;
+        for (int i = 0; i < 50; i++) {
+            Response<TemplateAssignmentResponse> getResponse = null;
+            try {
+                getResponse = service.getTrustedProfileAssignment(getOptions).execute();
+                TemplateAssignmentResponse result = getResponse.getResult();
+                finished = isFinished(result.getStatus());
+                if (finished) {
+                    // Grab the Etag value from the response for use in the update operation.
+                    profileTemplateAssignmentEtag = getResponse.getHeaders().values("Etag").get(0);
+                    break;
+                }
+            } catch (NotFoundException e) {
+                // assignment removed
+                finished = true;
+                break;
+            }
+            sleep(10);
+        }
+    }
+
+    private static void waitUntilAccountSettingsAssignmentFinished(String assignmentId, IamIdentity service) {
+        GetAccountSettingsAssignmentOptions getOptions = new GetAccountSettingsAssignmentOptions.Builder()
+                .assignmentId(assignmentId)
+                .build();
+
+        boolean finished = false;
+        for (int i = 0; i < 50; i++) {
+            Response<TemplateAssignmentResponse> getResponse = null;
+            try {
+                getResponse = service.getAccountSettingsAssignment(getOptions).execute();
+                TemplateAssignmentResponse result = getResponse.getResult();
+                finished = isFinished(result.getStatus());
+                if (finished) {
+                    // Grab the Etag value from the response for use in the update operation.
+                    accountSettingsTemplateAssignmentEtag = getResponse.getHeaders().values("Etag").get(0);
+                    break;
+                }
+            } catch (NotFoundException e) {
+                // assignment removed
+                finished = true;
+                break;
+            }
+            sleep(10);
         }
     }
 }

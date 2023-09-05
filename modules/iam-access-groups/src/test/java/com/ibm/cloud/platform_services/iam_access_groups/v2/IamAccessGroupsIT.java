@@ -645,7 +645,6 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
             RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
                     .remove(false)
-                    .update(false)
                     .build();
 
             AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
@@ -659,7 +658,6 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
             AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
                     .add(false)
                     .remove(true)
-                    .update(true)
                     .build();
 
             Assertions assertionsModel = new Assertions.Builder()
@@ -793,7 +791,6 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
             RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
                     .remove(true)
-                    .update(true)
                     .build();
 
             AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
@@ -807,7 +804,6 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
             AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
                     .add(false)
                     .remove(true)
-                    .update(true)
                     .build();
 
             Assertions assertionsModel = new Assertions.Builder()
@@ -961,7 +957,6 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
 
             RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
                     .remove(false)
-                    .update(false)
                     .build();
 
             AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
@@ -975,7 +970,6 @@ public class IamAccessGroupsIT extends SdkIntegrationTestBase {
             AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
                     .add(false)
                     .remove(true)
-                    .update(true)
                     .build();
 
             Assertions assertionsModel = new Assertions.Builder()

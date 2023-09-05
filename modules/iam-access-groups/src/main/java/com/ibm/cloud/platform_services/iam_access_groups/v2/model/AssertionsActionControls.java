@@ -23,7 +23,6 @@ public class AssertionsActionControls extends GenericModel {
 
   protected Boolean add;
   protected Boolean remove;
-  protected Boolean update;
 
   /**
    * Builder.
@@ -31,7 +30,6 @@ public class AssertionsActionControls extends GenericModel {
   public static class Builder {
     private Boolean add;
     private Boolean remove;
-    private Boolean update;
 
     /**
      * Instantiates a new Builder from an existing AssertionsActionControls instance.
@@ -41,7 +39,6 @@ public class AssertionsActionControls extends GenericModel {
     private Builder(AssertionsActionControls assertionsActionControls) {
       this.add = assertionsActionControls.add;
       this.remove = assertionsActionControls.remove;
-      this.update = assertionsActionControls.update;
     }
 
     /**
@@ -80,17 +77,6 @@ public class AssertionsActionControls extends GenericModel {
       this.remove = remove;
       return this;
     }
-
-    /**
-     * Set the update.
-     *
-     * @param update the update
-     * @return the AssertionsActionControls builder
-     */
-    public Builder update(Boolean update) {
-      this.update = update;
-      return this;
-    }
   }
 
   protected AssertionsActionControls() { }
@@ -98,7 +84,6 @@ public class AssertionsActionControls extends GenericModel {
   protected AssertionsActionControls(Builder builder) {
     add = builder.add;
     remove = builder.remove;
-    update = builder.update;
   }
 
   /**
@@ -114,7 +99,10 @@ public class AssertionsActionControls extends GenericModel {
    * Gets the add.
    *
    * Action control for adding dynamic rules to an enterprise-managed access group. If an access group administrator in
-   * a child account adds a dynamic rule, they can always update or remove it.
+   * a child account adds a dynamic rule, they can always update or remove it. Note that if conflicts arise between an
+   * update to this control and rules added or updated by an administrator in the child account, you must resolve those
+   * conflicts in the child account. This prevents breaking access that the rules might grant in the child account. For
+   * more information, see [Working with versions].
    *
    * @return the add
    */
@@ -125,23 +113,14 @@ public class AssertionsActionControls extends GenericModel {
   /**
    * Gets the remove.
    *
-   * Action control for removing enterprise-managed dynamic rules in an enterprise-managed access group.
+   * Action control for removing enterprise-managed dynamic rules in an enterprise-managed access group. Note that if a
+   * rule is removed from an enterprise-managed access group by an administrator in a child account and and you reassign
+   * the template, the rule is reinstated.
    *
    * @return the remove
    */
   public Boolean remove() {
     return remove;
-  }
-
-  /**
-   * Gets the update.
-   *
-   * Action control for updating enterprise-managed dynamic rules in an enterprise-managed access group.
-   *
-   * @return the update
-   */
-  public Boolean update() {
-    return update;
   }
 }
 

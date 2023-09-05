@@ -21,14 +21,12 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class RuleActionControls extends GenericModel {
 
   protected Boolean remove;
-  protected Boolean update;
 
   /**
    * Builder.
    */
   public static class Builder {
     private Boolean remove;
-    private Boolean update;
 
     /**
      * Instantiates a new Builder from an existing RuleActionControls instance.
@@ -37,7 +35,6 @@ public class RuleActionControls extends GenericModel {
      */
     private Builder(RuleActionControls ruleActionControls) {
       this.remove = ruleActionControls.remove;
-      this.update = ruleActionControls.update;
     }
 
     /**
@@ -65,24 +62,12 @@ public class RuleActionControls extends GenericModel {
       this.remove = remove;
       return this;
     }
-
-    /**
-     * Set the update.
-     *
-     * @param update the update
-     * @return the RuleActionControls builder
-     */
-    public Builder update(Boolean update) {
-      this.update = update;
-      return this;
-    }
   }
 
   protected RuleActionControls() { }
 
   protected RuleActionControls(Builder builder) {
     remove = builder.remove;
-    update = builder.update;
   }
 
   /**
@@ -103,17 +88,6 @@ public class RuleActionControls extends GenericModel {
    */
   public Boolean remove() {
     return remove;
-  }
-
-  /**
-   * Gets the update.
-   *
-   * Action control for updating this enterprise-managed dynamic rule.
-   *
-   * @return the update
-   */
-  public Boolean update() {
-    return update;
   }
 }
 

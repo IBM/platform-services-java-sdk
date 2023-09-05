@@ -44,10 +44,8 @@ public class AssertionsRuleTest {
 
     RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
       .remove(true)
-      .update(true)
       .build();
     assertEquals(ruleActionControlsModel.remove(), Boolean.valueOf(true));
-    assertEquals(ruleActionControlsModel.update(), Boolean.valueOf(true));
 
     AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
       .name("testString")

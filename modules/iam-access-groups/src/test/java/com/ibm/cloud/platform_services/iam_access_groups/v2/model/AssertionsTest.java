@@ -46,10 +46,8 @@ public class AssertionsTest {
 
     RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
       .remove(true)
-      .update(true)
       .build();
     assertEquals(ruleActionControlsModel.remove(), Boolean.valueOf(true));
-    assertEquals(ruleActionControlsModel.update(), Boolean.valueOf(true));
 
     AssertionsRule assertionsRuleModel = new AssertionsRule.Builder()
       .name("testString")
@@ -67,11 +65,9 @@ public class AssertionsTest {
     AssertionsActionControls assertionsActionControlsModel = new AssertionsActionControls.Builder()
       .add(true)
       .remove(true)
-      .update(true)
       .build();
     assertEquals(assertionsActionControlsModel.add(), Boolean.valueOf(true));
     assertEquals(assertionsActionControlsModel.remove(), Boolean.valueOf(true));
-    assertEquals(assertionsActionControlsModel.update(), Boolean.valueOf(true));
 
     Assertions assertionsModel = new Assertions.Builder()
       .rules(java.util.Arrays.asList(assertionsRuleModel))

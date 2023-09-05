@@ -98,7 +98,11 @@ public class MembersActionControls extends GenericModel {
    * Gets the add.
    *
    * Action control for adding child account members to an enterprise-managed access group. If an access group
-   * administrator in a child account adds a member, they can always remove them.
+   * administrator in a child account adds a member, they can always remove them. Note that if conflicts arise between
+   * an update to this control in a new version and members added by an administrator in the child account, you must
+   * resolve those conflicts in the child account. This prevents breaking access in the child account. For more
+   * information, see [Working with versions]
+   * (https://test.cloud.ibm.com/docs/secure-enterprise?topic=secure-enterprise-working-with-versions#new-version-scenarios).
    *
    * @return the add
    */
@@ -109,7 +113,9 @@ public class MembersActionControls extends GenericModel {
   /**
    * Gets the remove.
    *
-   * Action control for removing enterprise-managed members from an enterprise-managed access group.
+   * Action control for removing enterprise-managed members from an enterprise-managed access group. Note that if an
+   * enterprise member is removed from an enterprise-managed access group in a child account and you reassign the
+   * template, the membership is reinstated.
    *
    * @return the remove
    */

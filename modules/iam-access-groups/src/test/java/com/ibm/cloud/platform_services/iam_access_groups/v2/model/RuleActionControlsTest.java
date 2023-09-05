@@ -33,16 +33,13 @@ public class RuleActionControlsTest {
   public void testRuleActionControls() throws Throwable {
     RuleActionControls ruleActionControlsModel = new RuleActionControls.Builder()
       .remove(true)
-      .update(true)
       .build();
     assertEquals(ruleActionControlsModel.remove(), Boolean.valueOf(true));
-    assertEquals(ruleActionControlsModel.update(), Boolean.valueOf(true));
 
     String json = TestUtilities.serialize(ruleActionControlsModel);
 
     RuleActionControls ruleActionControlsModelNew = TestUtilities.deserialize(json, RuleActionControls.class);
     assertTrue(ruleActionControlsModelNew instanceof RuleActionControls);
     assertEquals(ruleActionControlsModelNew.remove(), Boolean.valueOf(true));
-    assertEquals(ruleActionControlsModelNew.update(), Boolean.valueOf(true));
   }
 }

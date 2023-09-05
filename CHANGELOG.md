@@ -1,3 +1,10 @@
+# [0.40.0](https://github.com/IBM/platform-services-java-sdk/compare/0.39.1...0.40.0) (2023-09-05)
+
+
+### Features
+
+* **IAM Policy Management:** add support for policy templates ([#194](https://github.com/IBM/platform-services-java-sdk/issues/194)) ([6f752c2](https://github.com/IBM/platform-services-java-sdk/commit/6f752c23fdb6535e4bb5abd109a12dfb587adaf2))
+
 ## [0.39.1](https://github.com/IBM/platform-services-java-sdk/compare/0.39.0...0.39.1) (2023-09-05)
 
 

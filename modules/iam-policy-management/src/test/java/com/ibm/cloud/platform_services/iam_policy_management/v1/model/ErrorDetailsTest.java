@@ -13,15 +13,8 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetada;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ConflictsWith;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -31,15 +24,15 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the PolicyList model.
+ * Unit test class for the ErrorDetails model.
  */
-public class PolicyListTest {
+public class ErrorDetailsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPolicyList() throws Throwable {
-    PolicyList policyListModel = new PolicyList();
-    assertNull(policyListModel.getPolicies());
+  public void testErrorDetails() throws Throwable {
+    ErrorDetails errorDetailsModel = new ErrorDetails();
+    assertNull(errorDetailsModel.getConflictsWith());
   }
 }

@@ -279,7 +279,7 @@ public class ReplaceV2PolicyOptions extends GenericModel {
   /**
    * Gets the description.
    *
-   * Allows the customer to use their own words to record the purpose/context related to a policy.
+   * Description of the policy.
    *
    * @return the description
    */

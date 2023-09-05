@@ -24,11 +24,11 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolici
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleList;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
@@ -51,6 +51,24 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySu
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplatesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitPolicyTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -90,6 +108,10 @@ public class IamPolicyManagementExamples {
   private static String exampleV2PolicyEtag = null;
   private static String exampleCustomRoleId = null;
   private static String exampleCustomRoleEtag = null;
+  private static String exampleTemplateId = null;
+  private static String exampleTemplateEtag = null;
+  private static String exampleTemplateVersion = null;
+  private static String exampleAssignmentId = null;
 
   static {
     System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_policy_management.env");
@@ -285,10 +307,10 @@ public class IamPolicyManagementExamples {
               .format("include_last_permit")
               .build();
 
-      Response<PolicyList> response = service.listPolicies(options).execute();
-      PolicyList policyList = response.getResult();
+      Response<PolicyCollection> response = service.listPolicies(options).execute();
+      PolicyCollection policyCollection = response.getResult();
 
-      System.out.println(policyList);
+      System.out.println(policyCollection);
 
       // end-list_policies
 
@@ -650,10 +672,10 @@ public class IamPolicyManagementExamples {
               .accountId(exampleAccountId)
               .build();
 
-      Response<RoleList> response = service.listRoles(options).execute();
-      RoleList roleList = response.getResult();
+      Response<RoleCollection> response = service.listRoles(options).execute();
+      RoleCollection roleCollection = response.getResult();
 
-      System.out.println(roleList);
+      System.out.println(roleCollection);
 
       // end-list_roles
 
@@ -676,6 +698,287 @@ public class IamPolicyManagementExamples {
       System.out.printf("deleteRole() response status code: %d%n", response.getStatusCode());
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createPolicyTemplate() result:");
+      // begin-create_policy_template
+      V2PolicyResourceAttribute v2PolicyResourceAttributeModel = new V2PolicyResourceAttribute.Builder()
+        .key("serviceType")
+        .operator("stringEquals")
+        .value("service")
+        .build();
+      V2PolicyResource v2PolicyResourceModel = new V2PolicyResource.Builder()
+        .attributes(java.util.Arrays.asList(v2PolicyResourceAttributeModel))
+        .build();
+      Roles rolesModel = new Roles.Builder()
+        .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
+        .build();
+      Grant grantModel = new Grant.Builder()
+        .roles(java.util.Arrays.asList(rolesModel))
+        .build();
+      Control controlModel = new Control.Builder()
+        .grant(grantModel)
+        .build();
+      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+        .type("access")
+        .resource(v2PolicyResourceModel)
+        .control(controlModel)
+        .build();
+      CreatePolicyTemplateOptions createPolicyTemplateOptions = new CreatePolicyTemplateOptions.Builder()
+        .name("SDKExamplesTest")
+        .accountId(exampleAccountId)
+        .policy(templatePolicyModel)
+        .build();
+
+      Response<PolicyTemplate> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
+      PolicyTemplate policyTemplate = response.getResult();
+
+      System.out.println(policyTemplate);
+      // end-create_policy_template
+
+      exampleTemplateId = policyTemplate.getId();
+      exampleTemplateVersion = policyTemplate.getVersion();
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getPolicyTemplate() result:");
+      // begin-get_policy_template
+      GetPolicyTemplateOptions getPolicyTemplateOptions = new GetPolicyTemplateOptions.Builder()
+        .policyTemplateId(exampleTemplateId)
+        .build();
+
+      Response<PolicyTemplate> response = service.getPolicyTemplate(getPolicyTemplateOptions).execute();
+      PolicyTemplate policyTemplate = response.getResult();
+
+      System.out.println(policyTemplate);
+      // end-get_policy_template
+
+      exampleTemplateEtag = response.getHeaders().values("Etag").get(0);
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("replacePolicyTemplate() result:");
+      // begin-replace_policy_template
+      V2PolicyResourceAttribute v2PolicyResourceAttributeModel = new V2PolicyResourceAttribute.Builder()
+        .key("serviceType")
+        .operator("stringEquals")
+        .value("service")
+        .build();
+      V2PolicyResource v2PolicyResourceModel = new V2PolicyResource.Builder()
+        .attributes(java.util.Arrays.asList(v2PolicyResourceAttributeModel))
+        .build();
+      Roles rolesModel = new Roles.Builder()
+        .roleId("crn:v1:bluemix:public:iam::::role:Editor")
+        .build();
+      Grant grantModel = new Grant.Builder()
+        .roles(java.util.Arrays.asList(rolesModel))
+        .build();
+      Control controlModel = new Control.Builder()
+        .grant(grantModel)
+        .build();
+      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+        .type("access")
+        .resource(v2PolicyResourceModel)
+        .control(controlModel)
+        .build();
+      ReplacePolicyTemplateOptions replacePolicyTemplateOptions = new ReplacePolicyTemplateOptions.Builder()
+        .policyTemplateId(exampleTemplateId)
+        .version(exampleTemplateVersion)
+        .ifMatch(exampleTemplateEtag)
+        .policy(templatePolicyModel)
+        .build();
+
+      Response<PolicyTemplate> response = service.replacePolicyTemplate(replacePolicyTemplateOptions).execute();
+      PolicyTemplate policyTemplate = response.getResult();
+
+      System.out.println(policyTemplate);
+      // end-replace_policy_template
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listPolicyTemplates() result:");
+      // begin-list_policy_templates
+      ListPolicyTemplatesOptions listPolicyTemplatesOptions = new ListPolicyTemplatesOptions.Builder()
+        .accountId(exampleAccountId)
+        .build();
+
+      Response<PolicyTemplateCollection> response = service.listPolicyTemplates(listPolicyTemplatesOptions).execute();
+      PolicyTemplateCollection policyTemplateCollection = response.getResult();
+
+      System.out.println(policyTemplateCollection);
+      // end-list_policy_templates
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createPolicyTemplateVersion() result:");
+      // begin-create_policy_template_version
+      V2PolicyResourceAttribute v2PolicyResourceAttributeModel = new V2PolicyResourceAttribute.Builder()
+        .key("serviceType")
+        .operator("stringEquals")
+        .value("service")
+        .build();
+      V2PolicyResource v2PolicyResourceModel = new V2PolicyResource.Builder()
+        .attributes(java.util.Arrays.asList(v2PolicyResourceAttributeModel))
+        .build();
+      Roles rolesModel = new Roles.Builder()
+        .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
+        .build();
+      Grant grantModel = new Grant.Builder()
+        .roles(java.util.Arrays.asList(rolesModel))
+        .build();
+      Control controlModel = new Control.Builder()
+        .grant(grantModel)
+        .build();
+      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+        .type("access")
+        .resource(v2PolicyResourceModel)
+        .control(controlModel)
+        .build();
+      CreatePolicyTemplateVersionOptions createPolicyTemplateVersionOptions = new CreatePolicyTemplateVersionOptions.Builder()
+        .policyTemplateId(exampleTemplateId)
+        .policy(templatePolicyModel)
+        .build();
+
+      Response<PolicyTemplate> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
+      PolicyTemplate policyTemplate = response.getResult();
+
+      System.out.println(policyTemplate);
+      // end-create_policy_template_version
+
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listPolicyTemplateVersions() result:");
+      // begin-list_policy_template_versions
+      ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptions = new ListPolicyTemplateVersionsOptions.Builder()
+        .policyTemplateId(exampleAccountId)
+        .build();
+
+      Response<PolicyTemplateVersionsCollection> response = service.listPolicyTemplateVersions(listPolicyTemplateVersionsOptions).execute();
+      PolicyTemplateVersionsCollection policyTemplateVersionsCollection = response.getResult();
+
+      System.out.println(policyTemplateVersionsCollection);
+      // end-list_policy_template_versions
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getPolicyTemplateVersion() result:");
+      // begin-get_policy_template_version
+      GetPolicyTemplateVersionOptions getPolicyTemplateVersionOptions = new GetPolicyTemplateVersionOptions.Builder()
+        .policyTemplateId(exampleTemplateId)
+        .version(exampleTemplateVersion)
+        .build();
+
+      Response<PolicyTemplate> response = service.getPolicyTemplateVersion(getPolicyTemplateVersionOptions).execute();
+      PolicyTemplate policyTemplate = response.getResult();
+
+      System.out.println(policyTemplate);
+      // end-get_policy_template_version
+
+      exampleTemplateEtag = response.getHeaders().values("Etag").get(0);
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-commit_policy_template
+      CommitPolicyTemplateOptions commitPolicyTemplateOptions = new CommitPolicyTemplateOptions.Builder()
+        .policyTemplateId(exampleTemplateId)
+        .version(exampleTemplateVersion)
+        .ifMatch(exampleTemplateEtag)
+        .build();
+
+      Response<Void> response = service.commitPolicyTemplate(commitPolicyTemplateOptions).execute();
+      // end-commit_policy_template
+      System.out.printf("commitPolicyTemplate() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listPolicyAssignments() result:");
+      // begin-list_Policy Assignments
+      ListPolicyAssignmentsOptions listPolicyAssignmentsOptions = new ListPolicyAssignmentsOptions.Builder()
+        .accountId(exampleAccountId)
+        .build();
+
+      Response<PolicyTemplateAssignmentCollection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
+      PolicyTemplateAssignmentCollection polcyTemplateAssignmentCollection = response.getResult();
+
+      System.out.println(polcyTemplateAssignmentCollection);
+      // end-list_Policy Assignments
+
+      exampleAssignmentId = polcyTemplateAssignmentCollection.getAssignments().get(0).getId();
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getPolicyAssignment() result:");
+      // begin-get_policy_assignment
+      GetPolicyAssignmentOptions getPolicyAssignmentOptions = new GetPolicyAssignmentOptions.Builder()
+        .assignmentId(exampleAssignmentId)
+        .build();
+
+      Response<PolicyAssignment> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
+      PolicyAssignment policyAssignmentRecord = response.getResult();
+
+      System.out.println(policyAssignmentRecord);
+      // end-get_policy_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_policy_template_version
+      DeletePolicyTemplateVersionOptions deletePolicyTemplateVersionOptions = new DeletePolicyTemplateVersionOptions.Builder()
+        .policyTemplateId(exampleTemplateId)
+        .version(exampleTemplateVersion)
+        .build();
+
+      Response<Void> response = service.deletePolicyTemplateVersion(deletePolicyTemplateVersionOptions).execute();
+      // end-delete_policy_template_version
+      System.out.printf("deletePolicyTemplateVersion() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_policy_template
+      DeletePolicyTemplateOptions deletePolicyTemplateOptions = new DeletePolicyTemplateOptions.Builder()
+        .policyTemplateId(exampleTemplateId)
+        .build();
+
+      Response<Void> response = service.deletePolicyTemplate(deletePolicyTemplateOptions).execute();
+      // end-delete_policy_template
+      System.out.printf("deletePolicyTemplate() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
   }

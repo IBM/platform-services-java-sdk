@@ -1,3 +1,10 @@
+## [0.40.1](https://github.com/IBM/platform-services-java-sdk/compare/0.40.0...0.40.1) (2023-09-06)
+
+
+### Bug Fixes
+
+* bump dependencies to avoid CVE ([#209](https://github.com/IBM/platform-services-java-sdk/issues/209)) ([5a0be02](https://github.com/IBM/platform-services-java-sdk/commit/5a0be02be36cf5aa9eaea9712c10041d18437c93))
+
 # [0.40.0](https://github.com/IBM/platform-services-java-sdk/compare/0.39.1...0.40.0) (2023-09-05)
 
 

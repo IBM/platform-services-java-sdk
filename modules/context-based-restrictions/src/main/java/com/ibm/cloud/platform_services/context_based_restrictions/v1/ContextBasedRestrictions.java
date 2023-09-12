@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.57.1-4c556507-20220928-143422
+ * IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
  */
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
@@ -61,8 +61,14 @@ import java.util.Map.Entry;
  */
 public class ContextBasedRestrictions extends BaseService {
 
+  /**
+   * Default service name used when configuring the `ContextBasedRestrictions` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "context_based_restrictions";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://cbr.cloud.ibm.com";
 
  /**
@@ -613,8 +619,9 @@ public class ContextBasedRestrictions extends BaseService {
    * @return a {@link ServiceCall} with a result of type {@link OperationsList}
    */
   public ServiceCall<OperationsList> listAvailableServiceOperations(ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(listAvailableServiceOperationsOptions,
-      "listAvailableServiceOperationsOptions cannot be null");
+    if (listAvailableServiceOperationsOptions == null) {
+      listAvailableServiceOperationsOptions = new ListAvailableServiceOperationsOptions.Builder().build();
+    }
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/operations"));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("context_based_restrictions", "v1", "listAvailableServiceOperations");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
@@ -627,10 +634,29 @@ public class ContextBasedRestrictions extends BaseService {
     if (listAvailableServiceOperationsOptions.transactionId() != null) {
       builder.header("Transaction-Id", listAvailableServiceOperationsOptions.transactionId());
     }
-    builder.query("service_name", String.valueOf(listAvailableServiceOperationsOptions.serviceName()));
+    if (listAvailableServiceOperationsOptions.serviceName() != null) {
+      builder.query("service_name", String.valueOf(listAvailableServiceOperationsOptions.serviceName()));
+    }
+    if (listAvailableServiceOperationsOptions.serviceGroupId() != null) {
+      builder.query("service_group_id", String.valueOf(listAvailableServiceOperationsOptions.serviceGroupId()));
+    }
+    if (listAvailableServiceOperationsOptions.resourceType() != null) {
+      builder.query("resource_type", String.valueOf(listAvailableServiceOperationsOptions.resourceType()));
+    }
     ResponseConverter<OperationsList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OperationsList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List available service operations.
+   *
+   * This operation lists all available service operations.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link OperationsList}
+   */
+  public ServiceCall<OperationsList> listAvailableServiceOperations() {
+    return listAvailableServiceOperations(null);
   }
 
 }

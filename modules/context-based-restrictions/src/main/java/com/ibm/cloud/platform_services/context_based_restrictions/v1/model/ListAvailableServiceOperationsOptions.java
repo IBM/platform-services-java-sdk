@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,22 +19,33 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListAvailableServiceOperationsOptions extends GenericModel {
 
-  protected String serviceName;
   protected String xCorrelationId;
   protected String transactionId;
+  protected String serviceName;
+  protected String serviceGroupId;
+  protected String resourceType;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private String serviceName;
     private String xCorrelationId;
     private String transactionId;
+    private String serviceName;
+    private String serviceGroupId;
+    private String resourceType;
 
+    /**
+     * Instantiates a new Builder from an existing ListAvailableServiceOperationsOptions instance.
+     *
+     * @param listAvailableServiceOperationsOptions the instance to initialize the Builder with
+     */
     private Builder(ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions) {
-      this.serviceName = listAvailableServiceOperationsOptions.serviceName;
       this.xCorrelationId = listAvailableServiceOperationsOptions.xCorrelationId;
       this.transactionId = listAvailableServiceOperationsOptions.transactionId;
+      this.serviceName = listAvailableServiceOperationsOptions.serviceName;
+      this.serviceGroupId = listAvailableServiceOperationsOptions.serviceGroupId;
+      this.resourceType = listAvailableServiceOperationsOptions.resourceType;
     }
 
     /**
@@ -44,32 +55,12 @@ public class ListAvailableServiceOperationsOptions extends GenericModel {
     }
 
     /**
-     * Instantiates a new builder with required properties.
-     *
-     * @param serviceName the serviceName
-     */
-    public Builder(String serviceName) {
-      this.serviceName = serviceName;
-    }
-
-    /**
      * Builds a ListAvailableServiceOperationsOptions.
      *
      * @return the new ListAvailableServiceOperationsOptions instance
      */
     public ListAvailableServiceOperationsOptions build() {
       return new ListAvailableServiceOperationsOptions(this);
-    }
-
-    /**
-     * Set the serviceName.
-     *
-     * @param serviceName the serviceName
-     * @return the ListAvailableServiceOperationsOptions builder
-     */
-    public Builder serviceName(String serviceName) {
-      this.serviceName = serviceName;
-      return this;
     }
 
     /**
@@ -88,9 +79,44 @@ public class ListAvailableServiceOperationsOptions extends GenericModel {
      *
      * @param transactionId the transactionId
      * @return the ListAvailableServiceOperationsOptions builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder transactionId(String transactionId) {
       this.transactionId = transactionId;
+      return this;
+    }
+
+    /**
+     * Set the serviceName.
+     *
+     * @param serviceName the serviceName
+     * @return the ListAvailableServiceOperationsOptions builder
+     */
+    public Builder serviceName(String serviceName) {
+      this.serviceName = serviceName;
+      return this;
+    }
+
+    /**
+     * Set the serviceGroupId.
+     *
+     * @param serviceGroupId the serviceGroupId
+     * @return the ListAvailableServiceOperationsOptions builder
+     */
+    public Builder serviceGroupId(String serviceGroupId) {
+      this.serviceGroupId = serviceGroupId;
+      return this;
+    }
+
+    /**
+     * Set the resourceType.
+     *
+     * @param resourceType the resourceType
+     * @return the ListAvailableServiceOperationsOptions builder
+     */
+    public Builder resourceType(String resourceType) {
+      this.resourceType = resourceType;
       return this;
     }
   }
@@ -98,11 +124,11 @@ public class ListAvailableServiceOperationsOptions extends GenericModel {
   protected ListAvailableServiceOperationsOptions() { }
 
   protected ListAvailableServiceOperationsOptions(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.serviceName,
-      "serviceName cannot be null");
-    serviceName = builder.serviceName;
     xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
+    serviceName = builder.serviceName;
+    serviceGroupId = builder.serviceGroupId;
+    resourceType = builder.resourceType;
   }
 
   /**
@@ -112,17 +138,6 @@ public class ListAvailableServiceOperationsOptions extends GenericModel {
    */
   public Builder newBuilder() {
     return new Builder(this);
-  }
-
-  /**
-   * Gets the serviceName.
-   *
-   * The name of the service.
-   *
-   * @return the serviceName
-   */
-  public String serviceName() {
-    return serviceName;
   }
 
   /**
@@ -146,9 +161,44 @@ public class ListAvailableServiceOperationsOptions extends GenericModel {
    * `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
    *
    * @return the transactionId
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String transactionId() {
     return transactionId;
+  }
+
+  /**
+   * Gets the serviceName.
+   *
+   * The name of the service.
+   *
+   * @return the serviceName
+   */
+  public String serviceName() {
+    return serviceName;
+  }
+
+  /**
+   * Gets the serviceGroupId.
+   *
+   * The id of the service group.
+   *
+   * @return the serviceGroupId
+   */
+  public String serviceGroupId() {
+    return serviceGroupId;
+  }
+
+  /**
+   * Gets the resourceType.
+   *
+   * The type of resource.
+   *
+   * @return the resourceType
+   */
+  public String resourceType() {
+    return resourceType;
   }
 }
 

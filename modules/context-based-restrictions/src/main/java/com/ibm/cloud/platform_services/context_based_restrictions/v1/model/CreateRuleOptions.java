@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -57,6 +57,11 @@ public class CreateRuleOptions extends GenericModel {
     private String xCorrelationId;
     private String transactionId;
 
+    /**
+     * Instantiates a new Builder from an existing CreateRuleOptions instance.
+     *
+     * @param createRuleOptions the instance to initialize the Builder with
+     */
     private Builder(CreateRuleOptions createRuleOptions) {
       this.description = createRuleOptions.description;
       this.contexts = createRuleOptions.contexts;
@@ -187,7 +192,9 @@ public class CreateRuleOptions extends GenericModel {
      *
      * @param transactionId the transactionId
      * @return the CreateRuleOptions builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder transactionId(String transactionId) {
       this.transactionId = transactionId;
       return this;
@@ -294,7 +301,9 @@ public class CreateRuleOptions extends GenericModel {
    * `Transaction-Id` are provided, `X-Correlation-Id` has the precedence over `Transaction-Id`.
    *
    * @return the transactionId
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String transactionId() {
     return transactionId;
   }

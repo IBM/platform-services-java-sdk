@@ -968,7 +968,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
       ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions = new ListAvailableServiceOperationsOptions.Builder()
         .transactionId(getTransactionID())
         .serviceName("iam-access-management")
-        .resourceType("iam-access-management.customRole")
+        .resourceType("customRole")
         .build();
 
       // Invoke operation

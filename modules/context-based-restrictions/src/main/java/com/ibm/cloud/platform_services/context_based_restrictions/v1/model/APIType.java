@@ -27,6 +27,7 @@ public class APIType extends GenericModel {
   @SerializedName("display_name")
   protected String displayName;
   protected String description;
+  protected String type;
   protected List<Action> actions;
 
   protected APIType() { }
@@ -62,6 +63,17 @@ public class APIType extends GenericModel {
    */
   public String getDescription() {
     return description;
+  }
+
+  /**
+   * Gets the type.
+   *
+   * The type of the API type.
+   *
+   * @return the type
+   */
+  public String getType() {
+    return type;
   }
 
   /**

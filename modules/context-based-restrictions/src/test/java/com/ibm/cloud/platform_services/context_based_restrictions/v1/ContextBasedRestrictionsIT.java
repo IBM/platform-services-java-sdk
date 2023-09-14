@@ -933,6 +933,10 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
       OperationsList operationsListResult = response.getResult();
 
       assertNotNull(operationsListResult);
+
+      for (APIType apiType : operationsListResult.getApiTypes()) {
+        assertNotEquals(apiType.getType(), "");
+      }
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -956,6 +960,10 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
       OperationsList operationsListResult = response.getResult();
 
       assertNotNull(operationsListResult);
+
+      for (APIType apiType : operationsListResult.getApiTypes()) {
+        assertNotEquals(apiType.getType(), "");
+      }
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -980,9 +988,32 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
       OperationsList operationsListResult = response.getResult();
 
       assertNotNull(operationsListResult);
+
+      for (APIType apiType : operationsListResult.getApiTypes()) {
+        assertNotEquals(apiType.getType(), "");
+      }
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void testListAvailableServiceOperationsMutualExclusion() throws Exception {
+    try {
+      ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions = new ListAvailableServiceOperationsOptions.Builder()
+        .transactionId(getTransactionID())
+        .serviceName("iam-access-management")
+        .serviceGroupId("IAM")
+        .build();
+
+      // Invoke operation
+      service.listAvailableServiceOperations(listAvailableServiceOperationsOptions).execute();
+    } catch (ServiceResponseException e) {
+      if (e.getStatusCode() != 400) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
   }
 

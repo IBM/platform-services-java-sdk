@@ -13,7 +13,7 @@
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
 /**
- * An IP address range.
+ * An IP address range. IPv4 and IPv6 are supported.
  */
 public class AddressIPAddressRange extends Address {
 

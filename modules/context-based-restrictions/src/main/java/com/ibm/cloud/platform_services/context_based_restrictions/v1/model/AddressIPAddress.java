@@ -13,7 +13,7 @@
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
 /**
- * A single IP address.
+ * A single IP address. IPv4 and IPv6 are supported.
  */
 public class AddressIPAddress extends Address {
 

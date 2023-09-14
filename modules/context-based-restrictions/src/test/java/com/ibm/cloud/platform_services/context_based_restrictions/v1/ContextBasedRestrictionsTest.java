@@ -103,7 +103,7 @@ public class ContextBasedRestrictionsTest {
     // Construct an instance of the AddressIPAddress model
     AddressIPAddress addressModel = new AddressIPAddress.Builder()
       .type("ipAddress")
-      .value("169.23.56.234")
+      .value("169.23.56.234, 3ffe:1900:fe21:4545::")
       .build();
 
     // Construct an instance of the CreateZoneOptions model
@@ -270,7 +270,7 @@ public class ContextBasedRestrictionsTest {
     // Construct an instance of the AddressIPAddress model
     AddressIPAddress addressModel = new AddressIPAddress.Builder()
       .type("ipAddress")
-      .value("169.23.56.234")
+      .value("169.23.56.234, 3ffe:1900:fe21:4545::")
       .build();
 
     // Construct an instance of the ReplaceZoneOptions model
@@ -851,7 +851,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testListAvailableServiceOperationsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"api_types\": [{\"api_type_id\": \"apiTypeId\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [{\"action_id\": \"actionId\", \"description\": \"description\"}]}]}";
+    String mockResponseBody = "{\"api_types\": [{\"api_type_id\": \"apiTypeId\", \"display_name\": \"displayName\", \"description\": \"description\", \"type\": \"type\", \"actions\": [{\"action_id\": \"actionId\", \"description\": \"description\"}]}]}";
     String listAvailableServiceOperationsPath = "/v1/operations";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

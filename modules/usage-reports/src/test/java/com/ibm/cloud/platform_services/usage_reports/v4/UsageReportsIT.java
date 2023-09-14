@@ -28,9 +28,13 @@ import org.testng.annotations.Test;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountSummary;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.CreateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.DeleteReportsSnapshotConfigOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountSummaryOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetOrgUsageOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceGroupUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageAccountOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageOrgOptions;
@@ -39,6 +43,9 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.InstanceUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -55,6 +62,10 @@ public class UsageReportsIT extends SdkIntegrationTestBase {
   private static String RESOURCE_GROUP_ID;
   private static String ORG_ID;
   private static String BILLING_MONTH;
+  private static String COS_BUCKET;
+  private static String COS_LOCATION;
+  private static String SNAPSHOT_DATE_FROM;
+  private static String SNAPSHOT_DATE_TO;
 
   @Override
   public String getConfigFilename() {
@@ -88,10 +99,18 @@ public class UsageReportsIT extends SdkIntegrationTestBase {
     RESOURCE_GROUP_ID = config.get("RESOURCE_GROUP_ID");
     ORG_ID = config.get("ORG_ID");
     BILLING_MONTH = config.get("BILLING_MONTH");
+    COS_BUCKET = config.get("COS_BUCKET");
+    COS_LOCATION = config.get("COS_LOCATION");
+    SNAPSHOT_DATE_FROM = config.get("DATE_FROM");
+    SNAPSHOT_DATE_TO = config.get("DATE_TO");
     assertNotNull(ACCOUNT_ID);
     assertNotNull(RESOURCE_GROUP_ID);
     assertNotNull(ORG_ID);
     assertNotNull(BILLING_MONTH);
+    assertNotNull(COS_BUCKET);
+    assertNotNull(COS_LOCATION);
+    assertNotNull(SNAPSHOT_DATE_FROM);
+    assertNotNull(SNAPSHOT_DATE_TO);
 
     log("Setup complete.");
   }
@@ -361,5 +380,126 @@ public class UsageReportsIT extends SdkIntegrationTestBase {
           fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),
                   e.getMessage(), e.getDebuggingInfo()));
       }
+  }
+
+  @Test(dependsOnMethods = { "testGetOrgUsage" })
+  public void testCreateReportsSnapshotConfig() throws Exception {
+    try {
+      CreateReportsSnapshotConfigOptions createReportsSnapshotConfigOptions = new CreateReportsSnapshotConfigOptions.Builder()
+        .accountId(ACCOUNT_ID)
+        .interval("daily")
+        .cosBucket(COS_BUCKET)
+        .cosLocation(COS_LOCATION)
+        .cosReportsFolder("IBMCloud-Billing-Reports")
+        .reportTypes(java.util.Arrays.asList("account_summary", "enterprise_summary", "account_resource_instance_usage"))
+        .versioning("new")
+        .build();
+
+      // Invoke operation
+      Response<SnapshotConfig> response = service.createReportsSnapshotConfig(createReportsSnapshotConfigOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      SnapshotConfig snapshotConfigResult = response.getResult();
+
+      assertNotNull(snapshotConfigResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testCreateReportsSnapshotConfig" })
+  public void testGetReportsSnapshotConfig() throws Exception {
+    try {
+      GetReportsSnapshotConfigOptions getReportsSnapshotConfigOptions = new GetReportsSnapshotConfigOptions.Builder()
+        .accountId(ACCOUNT_ID)
+        .build();
+
+      // Invoke operation
+      Response<SnapshotConfig> response = service.getReportsSnapshotConfig(getReportsSnapshotConfigOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      SnapshotConfig snapshotConfigResult = response.getResult();
+
+      assertNotNull(snapshotConfigResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetReportsSnapshotConfig" })
+  public void testUpdateReportsSnapshotConfig() throws Exception {
+    try {
+      UpdateReportsSnapshotConfigOptions updateReportsSnapshotConfigOptions = new UpdateReportsSnapshotConfigOptions.Builder()
+        .accountId(ACCOUNT_ID)
+        .interval("daily")
+        .cosBucket(COS_BUCKET)
+        .cosLocation(COS_LOCATION)
+        .cosReportsFolder("IBMCloud-Billing-Reports")
+        .reportTypes(java.util.Arrays.asList("account_summary", "enterprise_summary"))
+        .versioning("new")
+        .build();
+
+      // Invoke operation
+      Response<SnapshotConfig> response = service.updateReportsSnapshotConfig(updateReportsSnapshotConfigOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      SnapshotConfig snapshotConfigResult = response.getResult();
+
+      assertNotNull(snapshotConfigResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testUpdateReportsSnapshotConfig" })
+  public void testGetReportsSnapshot() throws Exception {
+    try {
+      GetReportsSnapshotOptions getReportsSnapshotOptions = new GetReportsSnapshotOptions.Builder()
+        .accountId(ACCOUNT_ID)
+        .month(BILLING_MONTH)
+        .dateFrom(Long.valueOf(SNAPSHOT_DATE_FROM))
+        .dateTo(Long.valueOf(SNAPSHOT_DATE_TO))
+        .build();
+
+      // Invoke operation
+      Response<SnapshotList> response = service.getReportsSnapshot(getReportsSnapshotOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      SnapshotList snapshotListResult = response.getResult();
+
+      assertNotNull(snapshotListResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetReportsSnapshot" })
+  public void testDeleteReportsSnapshotConfig() throws Exception {
+    try {
+      DeleteReportsSnapshotConfigOptions deleteReportsSnapshotConfigOptions = new DeleteReportsSnapshotConfigOptions.Builder()
+        .accountId(ACCOUNT_ID)
+        .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteReportsSnapshotConfig(deleteReportsSnapshotConfigOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
   }
  }

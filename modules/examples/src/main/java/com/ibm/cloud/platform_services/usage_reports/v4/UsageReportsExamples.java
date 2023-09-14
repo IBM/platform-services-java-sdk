@@ -15,9 +15,13 @@ package com.ibm.cloud.platform_services.usage_reports.v4;
 
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountSummary;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.CreateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.DeleteReportsSnapshotConfigOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountSummaryOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetOrgUsageOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceGroupUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageAccountOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageOrgOptions;
@@ -25,6 +29,9 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageRe
 import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -45,6 +52,10 @@ import org.slf4j.LoggerFactory;
 // USAGE_REPORTS_RESOURCE_GROUP_ID=<the id of the resource group whose usage info will be retrieved>
 // USAGE_REPORTS_ORG_ID=<the id of the organization whose usage info will be retrieved>
 // USAGE_REPORTS_BILLING_MONTH=<the billing month (yyyy-mm) for which usage info will be retrieved>
+// USAGE_REPORTS_COS_BUCKET=<The name of the COS bucket to store the snapshot of the billing reports.>
+// USAGE_REPORTS_COS_LOCATION=<Region of the COS instance.>
+// USAGE_REPORTS_DATE_FROM=<Timestamp in milliseconds for which billing report snapshot is requested.>
+// USAGE_REPORTS_DATE_TO=<Timestamp in milliseconds for which billing report snapshot is requested.>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
@@ -58,6 +69,10 @@ public class UsageReportsExamples {
   private static String resourceGroupId;
   private static String orgId;
   private static String billingMonth;
+  private static String cosBucket;
+  private static String cosLocation;
+  private static String snapshotDateFrom;
+  private static String snapshotDateTo;
 
   static {
       System.setProperty("IBM_CREDENTIALS_FILE", "../../usage_reports.env");
@@ -73,6 +88,10 @@ public class UsageReportsExamples {
     resourceGroupId = config.get("RESOURCE_GROUP_ID");
     orgId = config.get("ORG_ID");
     billingMonth = config.get("BILLING_MONTH");
+    cosBucket = config.get("COS_BUCKET");
+    cosLocation = config.get("COS_LOCATION");
+    snapshotDateFrom = config.get("DATE_FROM");
+    snapshotDateTo = config.get("DATE_TO");
 
     try {
       System.out.println("getAccountSummary() result:");
@@ -229,6 +248,95 @@ public class UsageReportsExamples {
 
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createReportsSnapshotConfig() result:");
+      // begin-create_reports_snapshot_config
+      CreateReportsSnapshotConfigOptions createReportsSnapshotConfigOptions = new CreateReportsSnapshotConfigOptions.Builder()
+        .accountId(accountId)
+        .interval("daily")
+        .cosBucket(cosBucket)
+        .cosLocation(cosLocation)
+        .build();
+
+      Response<SnapshotConfig> response = service.createReportsSnapshotConfig(createReportsSnapshotConfigOptions).execute();
+      SnapshotConfig snapshotConfig = response.getResult();
+
+      System.out.println(snapshotConfig);
+      // end-create_reports_snapshot_config
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getReportsSnapshotConfig() result:");
+      // begin-get_reports_snapshot_config
+      GetReportsSnapshotConfigOptions getReportsSnapshotConfigOptions = new GetReportsSnapshotConfigOptions.Builder()
+        .accountId(accountId)
+        .build();
+
+      Response<SnapshotConfig> response = service.getReportsSnapshotConfig(getReportsSnapshotConfigOptions).execute();
+      SnapshotConfig snapshotConfig = response.getResult();
+
+      System.out.println(snapshotConfig);
+      // end-get_reports_snapshot_config
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("updateReportsSnapshotConfig() result:");
+      // begin-update_reports_snapshot_config
+      UpdateReportsSnapshotConfigOptions updateReportsSnapshotConfigOptions = new UpdateReportsSnapshotConfigOptions.Builder()
+        .accountId(accountId)
+        .reportTypes(java.util.Arrays.asList("account_summary", "enterprise_summary"))
+        .build();
+
+      Response<SnapshotConfig> response = service.updateReportsSnapshotConfig(updateReportsSnapshotConfigOptions).execute();
+      SnapshotConfig snapshotConfig = response.getResult();
+
+      System.out.println(snapshotConfig);
+      // end-update_reports_snapshot_config
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getReportsSnapshot() result:");
+      // begin-get_reports_snapshot
+      GetReportsSnapshotOptions getReportsSnapshotOptions = new GetReportsSnapshotOptions.Builder()
+        .accountId(accountId)
+        .month(billingMonth)
+        .dateFrom(Long.valueOf(snapshotDateFrom))
+        .dateTo(Long.valueOf(snapshotDateTo))
+        .build();
+
+      Response<SnapshotList> response = service.getReportsSnapshot(getReportsSnapshotOptions).execute();
+      SnapshotList snapshotList = response.getResult();
+
+      System.out.println(snapshotList);
+      // end-get_reports_snapshot
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_reports_snapshot_config
+      DeleteReportsSnapshotConfigOptions deleteReportsSnapshotConfigOptions = new DeleteReportsSnapshotConfigOptions.Builder()
+        .accountId(accountId)
+        .build();
+
+      Response<Void> response = service.deleteReportsSnapshotConfig(deleteReportsSnapshotConfigOptions).execute();
+      // end-delete_reports_snapshot_config
+      System.out.printf("deleteReportsSnapshotConfig() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
   }

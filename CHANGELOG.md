@@ -1,3 +1,10 @@
+# [0.41.0](https://github.com/IBM/platform-services-java-sdk/compare/0.40.1...0.41.0) (2023-09-14)
+
+
+### Features
+
+* **Usage Reports:** add billing snapshot config service to usage reports ([#210](https://github.com/IBM/platform-services-java-sdk/issues/210)) ([7f119c0](https://github.com/IBM/platform-services-java-sdk/commit/7f119c0c4bcae83854f903c5e9e9d42399cb3494))
+
 ## [0.40.1](https://github.com/IBM/platform-services-java-sdk/compare/0.40.0...0.40.1) (2023-09-06)
 
 

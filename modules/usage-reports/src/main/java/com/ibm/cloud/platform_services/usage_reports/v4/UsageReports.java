@@ -12,17 +12,22 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.75.0-726bc7e3-20230713-221716
  */
 
 package com.ibm.cloud.platform_services.usage_reports.v4;
 
+import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountSummary;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.AccountUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.CreateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.DeleteReportsSnapshotConfigOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountSummaryOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetOrgUsageOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceGroupUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageAccountOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageOrgOptions;
@@ -30,6 +35,9 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageRe
 import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
 import com.ibm.cloud.sdk.core.http.ServiceCall;
@@ -373,6 +381,161 @@ public class UsageReports extends BaseService {
     }
     ResponseConverter<OrgUsage> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<OrgUsage>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Setup the snapshot configuration.
+   *
+   * Snapshots of the billing reports would be taken on a periodic interval and stored based on the configuration setup
+   * by the customer for the given Account Id.
+   *
+   * @param createReportsSnapshotConfigOptions the {@link CreateReportsSnapshotConfigOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link SnapshotConfig}
+   */
+  public ServiceCall<SnapshotConfig> createReportsSnapshotConfig(CreateReportsSnapshotConfigOptions createReportsSnapshotConfigOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createReportsSnapshotConfigOptions,
+      "createReportsSnapshotConfigOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/billing-reports-snapshot-config"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("usage_reports", "v4", "createReportsSnapshotConfig");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("account_id", createReportsSnapshotConfigOptions.accountId());
+    contentJson.addProperty("interval", createReportsSnapshotConfigOptions.interval());
+    contentJson.addProperty("cos_bucket", createReportsSnapshotConfigOptions.cosBucket());
+    contentJson.addProperty("cos_location", createReportsSnapshotConfigOptions.cosLocation());
+    if (createReportsSnapshotConfigOptions.cosReportsFolder() != null) {
+      contentJson.addProperty("cos_reports_folder", createReportsSnapshotConfigOptions.cosReportsFolder());
+    }
+    if (createReportsSnapshotConfigOptions.reportTypes() != null) {
+      contentJson.add("report_types", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createReportsSnapshotConfigOptions.reportTypes()));
+    }
+    if (createReportsSnapshotConfigOptions.versioning() != null) {
+      contentJson.addProperty("versioning", createReportsSnapshotConfigOptions.versioning());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<SnapshotConfig> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<SnapshotConfig>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Fetch the snapshot configuration.
+   *
+   * Returns the configuration of snapshot of the billing reports setup by the customer for the given Account Id.
+   *
+   * @param getReportsSnapshotConfigOptions the {@link GetReportsSnapshotConfigOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link SnapshotConfig}
+   */
+  public ServiceCall<SnapshotConfig> getReportsSnapshotConfig(GetReportsSnapshotConfigOptions getReportsSnapshotConfigOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getReportsSnapshotConfigOptions,
+      "getReportsSnapshotConfigOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/billing-reports-snapshot-config"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("usage_reports", "v4", "getReportsSnapshotConfig");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.query("account_id", String.valueOf(getReportsSnapshotConfigOptions.accountId()));
+    ResponseConverter<SnapshotConfig> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<SnapshotConfig>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update the snapshot configuration.
+   *
+   * Updates the configuration of snapshot of the billing reports setup by the customer for the given Account Id.
+   *
+   * @param updateReportsSnapshotConfigOptions the {@link UpdateReportsSnapshotConfigOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link SnapshotConfig}
+   */
+  public ServiceCall<SnapshotConfig> updateReportsSnapshotConfig(UpdateReportsSnapshotConfigOptions updateReportsSnapshotConfigOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateReportsSnapshotConfigOptions,
+      "updateReportsSnapshotConfigOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/billing-reports-snapshot-config"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("usage_reports", "v4", "updateReportsSnapshotConfig");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("account_id", updateReportsSnapshotConfigOptions.accountId());
+    if (updateReportsSnapshotConfigOptions.interval() != null) {
+      contentJson.addProperty("interval", updateReportsSnapshotConfigOptions.interval());
+    }
+    if (updateReportsSnapshotConfigOptions.cosBucket() != null) {
+      contentJson.addProperty("cos_bucket", updateReportsSnapshotConfigOptions.cosBucket());
+    }
+    if (updateReportsSnapshotConfigOptions.cosLocation() != null) {
+      contentJson.addProperty("cos_location", updateReportsSnapshotConfigOptions.cosLocation());
+    }
+    if (updateReportsSnapshotConfigOptions.cosReportsFolder() != null) {
+      contentJson.addProperty("cos_reports_folder", updateReportsSnapshotConfigOptions.cosReportsFolder());
+    }
+    if (updateReportsSnapshotConfigOptions.reportTypes() != null) {
+      contentJson.add("report_types", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateReportsSnapshotConfigOptions.reportTypes()));
+    }
+    if (updateReportsSnapshotConfigOptions.versioning() != null) {
+      contentJson.addProperty("versioning", updateReportsSnapshotConfigOptions.versioning());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<SnapshotConfig> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<SnapshotConfig>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete the snapshot configuration.
+   *
+   * Delete the configuration of snapshot of the billing reports setup by the customer for the given Account Id.
+   *
+   * @param deleteReportsSnapshotConfigOptions the {@link DeleteReportsSnapshotConfigOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteReportsSnapshotConfig(DeleteReportsSnapshotConfigOptions deleteReportsSnapshotConfigOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteReportsSnapshotConfigOptions,
+      "deleteReportsSnapshotConfigOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/billing-reports-snapshot-config"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("usage_reports", "v4", "deleteReportsSnapshotConfig");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.query("account_id", String.valueOf(deleteReportsSnapshotConfigOptions.accountId()));
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Fetch the current or past snapshots.
+   *
+   * Returns the billing reports snapshots captured for the given Account Id in the specific time period.
+   *
+   * @param getReportsSnapshotOptions the {@link GetReportsSnapshotOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link SnapshotList}
+   */
+  public ServiceCall<SnapshotList> getReportsSnapshot(GetReportsSnapshotOptions getReportsSnapshotOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getReportsSnapshotOptions,
+      "getReportsSnapshotOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/billing-reports-snapshots"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("usage_reports", "v4", "getReportsSnapshot");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.query("account_id", String.valueOf(getReportsSnapshotOptions.accountId()));
+    builder.query("month", String.valueOf(getReportsSnapshotOptions.month()));
+    if (getReportsSnapshotOptions.dateFrom() != null) {
+      builder.query("date_from", String.valueOf(getReportsSnapshotOptions.dateFrom()));
+    }
+    if (getReportsSnapshotOptions.dateTo() != null) {
+      builder.query("date_to", String.valueOf(getReportsSnapshotOptions.dateTo()));
+    }
+    ResponseConverter<SnapshotList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<SnapshotList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

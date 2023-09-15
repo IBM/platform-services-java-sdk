@@ -933,9 +933,87 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
       OperationsList operationsListResult = response.getResult();
 
       assertNotNull(operationsListResult);
+
+      for (APIType apiType : operationsListResult.getApiTypes()) {
+        assertNotEquals(apiType.getType(), "");
+      }
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void testListAvailableServiceOperationsServiceGroup() throws Exception {
+    try {
+      ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions = new ListAvailableServiceOperationsOptions.Builder()
+        .transactionId(getTransactionID())
+        .serviceGroupId("IAM")
+        .build();
+
+      // Invoke operation
+      Response<OperationsList> response = service.listAvailableServiceOperations(listAvailableServiceOperationsOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      OperationsList operationsListResult = response.getResult();
+
+      assertNotNull(operationsListResult);
+
+      for (APIType apiType : operationsListResult.getApiTypes()) {
+        assertNotEquals(apiType.getType(), "");
+      }
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void testListAvailableServiceOperationsResourceType() throws Exception {
+    try {
+      ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions = new ListAvailableServiceOperationsOptions.Builder()
+        .transactionId(getTransactionID())
+        .serviceName("iam-access-management")
+        .resourceType("customRole")
+        .build();
+
+      // Invoke operation
+      Response<OperationsList> response = service.listAvailableServiceOperations(listAvailableServiceOperationsOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      OperationsList operationsListResult = response.getResult();
+
+      assertNotNull(operationsListResult);
+
+      for (APIType apiType : operationsListResult.getApiTypes()) {
+        assertNotEquals(apiType.getType(), "");
+      }
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test
+  public void testListAvailableServiceOperationsMutualExclusion() throws Exception {
+    try {
+      ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions = new ListAvailableServiceOperationsOptions.Builder()
+        .transactionId(getTransactionID())
+        .serviceName("iam-access-management")
+        .serviceGroupId("IAM")
+        .build();
+
+      // Invoke operation
+      service.listAvailableServiceOperations(listAvailableServiceOperationsOptions).execute();
+    } catch (ServiceResponseException e) {
+      if (e.getStatusCode() != 400) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
     }
   }
 

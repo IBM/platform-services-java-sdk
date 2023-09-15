@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -32,18 +32,16 @@ public class ListAvailableServiceOperationsOptionsTest {
   @Test
   public void testListAvailableServiceOperationsOptions() throws Throwable {
     ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptionsModel = new ListAvailableServiceOperationsOptions.Builder()
-      .serviceName("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
+      .serviceName("testString")
+      .serviceGroupId("testString")
+      .resourceType("testString")
       .build();
-    assertEquals(listAvailableServiceOperationsOptionsModel.serviceName(), "testString");
     assertEquals(listAvailableServiceOperationsOptionsModel.xCorrelationId(), "testString");
     assertEquals(listAvailableServiceOperationsOptionsModel.transactionId(), "testString");
+    assertEquals(listAvailableServiceOperationsOptionsModel.serviceName(), "testString");
+    assertEquals(listAvailableServiceOperationsOptionsModel.serviceGroupId(), "testString");
+    assertEquals(listAvailableServiceOperationsOptionsModel.resourceType(), "testString");
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListAvailableServiceOperationsOptionsError() throws Throwable {
-    new ListAvailableServiceOperationsOptions.Builder().build();
-  }
-
 }

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,7 +13,7 @@
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
 /**
- * An IP address range.
+ * An IP address range. IPv4 and IPv6 are supported.
  */
 public class AddressIPAddressRange extends Address {
 
@@ -33,6 +33,11 @@ public class AddressIPAddressRange extends Address {
     private String type;
     private String value;
 
+    /**
+     * Instantiates a new Builder from an existing AddressIPAddressRange instance.
+     *
+     * @param addressIpAddressRange the instance to initialize the Builder with
+     */
     public Builder(Address addressIpAddressRange) {
       this.type = addressIpAddressRange.type;
       this.value = addressIpAddressRange.value;

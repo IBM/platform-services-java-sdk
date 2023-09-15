@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022, 2023.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,23 +12,16 @@
  */
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertNull;
-import static org.testng.Assert.fail;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.ContextBasedRestrictions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.APIType;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Action;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddressRange;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressServiceRef;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressSubnet;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressVPC;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
@@ -52,16 +45,31 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetLocationsItem;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefValue;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneSummary;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
+import com.ibm.cloud.sdk.core.security.Authenticator;
+import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
-
+import com.ibm.cloud.sdk.core.util.DateUtils;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import static org.testng.Assert.*;
 
 /**
  * Unit test class for the ContextBasedRestrictions service.
@@ -95,7 +103,7 @@ public class ContextBasedRestrictionsTest {
     // Construct an instance of the AddressIPAddress model
     AddressIPAddress addressModel = new AddressIPAddress.Builder()
       .type("ipAddress")
-      .value("169.23.56.234")
+      .value("169.23.56.234, 3ffe:1900:fe21:4545::")
       .build();
 
     // Construct an instance of the CreateZoneOptions model
@@ -262,7 +270,7 @@ public class ContextBasedRestrictionsTest {
     // Construct an instance of the AddressIPAddress model
     AddressIPAddress addressModel = new AddressIPAddress.Builder()
       .type("ipAddress")
-      .value("169.23.56.234")
+      .value("169.23.56.234, 3ffe:1900:fe21:4545::")
       .build();
 
     // Construct an instance of the ReplaceZoneOptions model
@@ -843,7 +851,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testListAvailableServiceOperationsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"api_types\": [{\"api_type_id\": \"apiTypeId\", \"display_name\": \"displayName\", \"description\": \"description\", \"actions\": [{\"action_id\": \"actionId\", \"description\": \"description\"}]}]}";
+    String mockResponseBody = "{\"api_types\": [{\"api_type_id\": \"apiTypeId\", \"display_name\": \"displayName\", \"description\": \"description\", \"type\": \"type\", \"actions\": [{\"action_id\": \"actionId\", \"description\": \"description\"}]}]}";
     String listAvailableServiceOperationsPath = "/v1/operations";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -852,9 +860,11 @@ public class ContextBasedRestrictionsTest {
 
     // Construct an instance of the ListAvailableServiceOperationsOptions model
     ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptionsModel = new ListAvailableServiceOperationsOptions.Builder()
-      .serviceName("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
+      .serviceName("testString")
+      .serviceGroupId("testString")
+      .resourceType("testString")
       .build();
 
     // Invoke listAvailableServiceOperations() with a valid options model and verify the result
@@ -874,6 +884,8 @@ public class ContextBasedRestrictionsTest {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(query.get("service_name"), "testString");
+    assertEquals(query.get("service_group_id"), "testString");
+    assertEquals(query.get("resource_type"), "testString");
   }
 
   // Test the listAvailableServiceOperations operation with and without retries enabled
@@ -884,13 +896,6 @@ public class ContextBasedRestrictionsTest {
 
     contextBasedRestrictionsService.disableRetries();
     testListAvailableServiceOperationsWOptions();
-  }
-
-  // Test the listAvailableServiceOperations operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListAvailableServiceOperationsNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    contextBasedRestrictionsService.listAvailableServiceOperations(null).execute();
   }
 
   // Perform setup needed before each test method

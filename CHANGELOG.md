@@ -1,3 +1,10 @@
+# [0.42.0](https://github.com/IBM/platform-services-java-sdk/compare/0.41.0...0.42.0) (2023-09-15)
+
+
+### Features
+
+* **Context-Based Restrictions:** add service group support to operations ([#211](https://github.com/IBM/platform-services-java-sdk/issues/211)) ([73a19fe](https://github.com/IBM/platform-services-java-sdk/commit/73a19fec84c780a1d13c36abb341ce21570a7243))
+
 # [0.41.0](https://github.com/IBM/platform-services-java-sdk/compare/0.40.1...0.41.0) (2023-09-14)
 
 

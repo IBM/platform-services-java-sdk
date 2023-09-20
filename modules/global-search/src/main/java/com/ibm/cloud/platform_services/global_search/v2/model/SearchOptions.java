@@ -79,6 +79,8 @@ public class SearchOptions extends GenericModel {
   protected String query;
   protected List<String> fields;
   protected String searchCursor;
+  protected String xRequestId;
+  protected String xCorrelationId;
   protected String transactionId;
   protected String accountId;
   protected Long limit;
@@ -97,6 +99,8 @@ public class SearchOptions extends GenericModel {
     private String query;
     private List<String> fields;
     private String searchCursor;
+    private String xRequestId;
+    private String xCorrelationId;
     private String transactionId;
     private String accountId;
     private Long limit;
@@ -117,6 +121,8 @@ public class SearchOptions extends GenericModel {
       this.query = searchOptions.query;
       this.fields = searchOptions.fields;
       this.searchCursor = searchOptions.searchCursor;
+      this.xRequestId = searchOptions.xRequestId;
+      this.xCorrelationId = searchOptions.xCorrelationId;
       this.transactionId = searchOptions.transactionId;
       this.accountId = searchOptions.accountId;
       this.limit = searchOptions.limit;
@@ -211,11 +217,35 @@ public class SearchOptions extends GenericModel {
     }
 
     /**
+     * Set the xRequestId.
+     *
+     * @param xRequestId the xRequestId
+     * @return the SearchOptions builder
+     */
+    public Builder xRequestId(String xRequestId) {
+      this.xRequestId = xRequestId;
+      return this;
+    }
+
+    /**
+     * Set the xCorrelationId.
+     *
+     * @param xCorrelationId the xCorrelationId
+     * @return the SearchOptions builder
+     */
+    public Builder xCorrelationId(String xCorrelationId) {
+      this.xCorrelationId = xCorrelationId;
+      return this;
+    }
+
+    /**
      * Set the transactionId.
      *
      * @param transactionId the transactionId
      * @return the SearchOptions builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder transactionId(String transactionId) {
       this.transactionId = transactionId;
       return this;
@@ -328,6 +358,8 @@ public class SearchOptions extends GenericModel {
     query = builder.query;
     fields = builder.fields;
     searchCursor = builder.searchCursor;
+    xRequestId = builder.xRequestId;
+    xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
     accountId = builder.accountId;
     limit = builder.limit;
@@ -385,13 +417,46 @@ public class SearchOptions extends GenericModel {
   }
 
   /**
+   * Gets the xRequestId.
+   *
+   * An alphanumeric string that is used to trace the request. The value  may include ASCII alphanumerics and any of
+   * following segment separators: space ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+   * 1024 bytes. The value is considered invalid and must be ignored if that value includes any other character or is
+   * longer than 1024 bytes or is fewer than 8 characters. If not specified or invalid, it is automatically replaced by
+   * a random (version 4) UUID.
+   *
+   * @return the xRequestId
+   */
+  public String xRequestId() {
+    return xRequestId;
+  }
+
+  /**
+   * Gets the xCorrelationId.
+   *
+   * An alphanumeric string that is used to trace the request as a part of a larger context: the same value is used for
+   * downstream requests and retries of those requests. The value may include ASCII alphanumerics and any of following
+   * segment separators: space ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to 1024 bytes.
+   * The value is considered invalid and must be ignored if that value includes any other character or is longer than
+   * 1024 bytes or is fewer than 8 characters. If not specified or invalid, it is automatically replaced by a random
+   * (version 4) UUID.
+   *
+   * @return the xCorrelationId
+   */
+  public String xCorrelationId() {
+    return xCorrelationId;
+  }
+
+  /**
    * Gets the transactionId.
    *
    * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
    * generated with the prefix "gst-".
    *
    * @return the transactionId
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String transactionId() {
     return transactionId;
   }

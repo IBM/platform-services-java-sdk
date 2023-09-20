@@ -43,6 +43,8 @@ public class AttachTagOptionsTest {
       .resources(java.util.Arrays.asList(resourceModel))
       .tagName("testString")
       .tagNames(java.util.Arrays.asList("testString"))
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .impersonateUser("testString")
       .accountId("testString")
@@ -51,6 +53,8 @@ public class AttachTagOptionsTest {
     assertEquals(attachTagOptionsModel.resources(), java.util.Arrays.asList(resourceModel));
     assertEquals(attachTagOptionsModel.tagName(), "testString");
     assertEquals(attachTagOptionsModel.tagNames(), java.util.Arrays.asList("testString"));
+    assertEquals(attachTagOptionsModel.xRequestId(), "testString");
+    assertEquals(attachTagOptionsModel.xCorrelationId(), "testString");
     assertEquals(attachTagOptionsModel.transactionId(), "testString");
     assertEquals(attachTagOptionsModel.impersonateUser(), "testString");
     assertEquals(attachTagOptionsModel.accountId(), "testString");

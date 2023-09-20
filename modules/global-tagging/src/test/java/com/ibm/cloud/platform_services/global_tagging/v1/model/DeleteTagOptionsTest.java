@@ -33,6 +33,8 @@ public class DeleteTagOptionsTest {
   public void testDeleteTagOptions() throws Throwable {
     DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
       .tagName("testString")
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .providers(java.util.Arrays.asList("ghost"))
       .impersonateUser("testString")
@@ -40,6 +42,8 @@ public class DeleteTagOptionsTest {
       .tagType("user")
       .build();
     assertEquals(deleteTagOptionsModel.tagName(), "testString");
+    assertEquals(deleteTagOptionsModel.xRequestId(), "testString");
+    assertEquals(deleteTagOptionsModel.xCorrelationId(), "testString");
     assertEquals(deleteTagOptionsModel.transactionId(), "testString");
     assertEquals(deleteTagOptionsModel.providers(), java.util.Arrays.asList("ghost"));
     assertEquals(deleteTagOptionsModel.impersonateUser(), "testString");

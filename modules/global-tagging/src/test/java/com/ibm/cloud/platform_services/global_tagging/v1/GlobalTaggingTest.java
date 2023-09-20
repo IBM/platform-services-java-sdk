@@ -80,6 +80,8 @@ public class GlobalTaggingTest {
 
     // Construct an instance of the ListTagsOptions model
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .impersonateUser("testString")
       .accountId("testString")
@@ -88,7 +90,7 @@ public class GlobalTaggingTest {
       .providers(java.util.Arrays.asList("ghost"))
       .attachedTo("testString")
       .offset(Long.valueOf("0"))
-      .limit(Long.valueOf("1"))
+      .limit(Long.valueOf("100"))
       .timeout(Long.valueOf("0"))
       .orderByName("asc")
       .attachedOnly(false)
@@ -117,7 +119,7 @@ public class GlobalTaggingTest {
     assertEquals(query.get("providers"), RequestUtils.join(java.util.Arrays.asList("ghost"), ","));
     assertEquals(query.get("attached_to"), "testString");
     assertEquals(Long.valueOf(query.get("offset")), Long.valueOf("0"));
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1"));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("100"));
     assertEquals(Long.valueOf(query.get("timeout")), Long.valueOf("0"));
     assertEquals(query.get("order_by_name"), "asc");
     assertEquals(Boolean.valueOf(query.get("attached_only")), Boolean.valueOf(false));
@@ -148,6 +150,8 @@ public class GlobalTaggingTest {
     CreateTagOptions createTagOptionsModel = new CreateTagOptions.Builder()
       .tagNames(java.util.Arrays.asList("testString"))
       .impersonateUser("testString")
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .accountId("testString")
       .tagType("access")
@@ -204,6 +208,8 @@ public class GlobalTaggingTest {
 
     // Construct an instance of the DeleteTagAllOptions model
     DeleteTagAllOptions deleteTagAllOptionsModel = new DeleteTagAllOptions.Builder()
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .providers("ghost")
       .impersonateUser("testString")
@@ -257,6 +263,8 @@ public class GlobalTaggingTest {
     // Construct an instance of the DeleteTagOptions model
     DeleteTagOptions deleteTagOptionsModel = new DeleteTagOptions.Builder()
       .tagName("testString")
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .providers(java.util.Arrays.asList("ghost"))
       .impersonateUser("testString")
@@ -325,6 +333,8 @@ public class GlobalTaggingTest {
       .resources(java.util.Arrays.asList(resourceModel))
       .tagName("testString")
       .tagNames(java.util.Arrays.asList("testString"))
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .impersonateUser("testString")
       .accountId("testString")
@@ -391,6 +401,8 @@ public class GlobalTaggingTest {
       .resources(java.util.Arrays.asList(resourceModel))
       .tagName("testString")
       .tagNames(java.util.Arrays.asList("testString"))
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .impersonateUser("testString")
       .accountId("testString")

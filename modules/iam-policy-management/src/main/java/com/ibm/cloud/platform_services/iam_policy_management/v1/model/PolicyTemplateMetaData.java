@@ -13,27 +13,18 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The core set of properties associated with the policy.
+ * The core set of properties associated with a policy.
  */
-public class V2Policy extends GenericModel {
+public class PolicyTemplateMetaData extends GenericModel {
 
   /**
-   * The policy type; either 'access' or 'authorization'.
-   */
-  public interface Type {
-    /** access. */
-    String ACCESS = "access";
-    /** authorization. */
-    String AUTHORIZATION = "authorization";
-  }
-
-  /**
-   * The policy state, either 'deleted' or 'active'.
+   * The policy state.
    */
   public interface State {
     /** active. */
@@ -42,15 +33,13 @@ public class V2Policy extends GenericModel {
     String DELETED = "deleted";
   }
 
+  protected String id;
   protected String type;
   protected String description;
-  protected V2PolicySubject subject;
-  protected V2PolicyResource resource;
-  protected String pattern;
-  protected V2PolicyRule rule;
-  protected String id;
+  protected List<PolicySubject> subjects;
+  protected List<PolicyRole> roles;
+  protected List<PolicyResource> resources;
   protected String href;
-  protected ControlResponse control;
   @SerializedName("created_at")
   protected Date createdAt;
   @SerializedName("created_by_id")
@@ -60,12 +49,20 @@ public class V2Policy extends GenericModel {
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
   protected String state;
-  @SerializedName("last_permit_at")
-  protected String lastPermitAt;
-  @SerializedName("last_permit_frequency")
-  protected Long lastPermitFrequency;
+  protected TemplateMetadata template;
 
-  protected V2Policy() { }
+  protected PolicyTemplateMetaData() { }
+
+  /**
+   * Gets the id.
+   *
+   * The policy ID.
+   *
+   * @return the id
+   */
+  public String getId() {
+    return id;
+  }
 
   /**
    * Gets the type.
@@ -81,7 +78,7 @@ public class V2Policy extends GenericModel {
   /**
    * Gets the description.
    *
-   * Description of the policy.
+   * Customer-defined description.
    *
    * @return the description
    */
@@ -90,79 +87,47 @@ public class V2Policy extends GenericModel {
   }
 
   /**
-   * Gets the subject.
+   * Gets the subjects.
    *
-   * The subject attributes for whom the policy grants access.
+   * The subjects associated with a policy.
    *
-   * @return the subject
+   * @return the subjects
    */
-  public V2PolicySubject getSubject() {
-    return subject;
+  public List<PolicySubject> getSubjects() {
+    return subjects;
   }
 
   /**
-   * Gets the resource.
+   * Gets the roles.
    *
-   * The resource attributes to which the policy grants access.
+   * A set of role cloud resource names (CRNs) granted by the policy.
    *
-   * @return the resource
+   * @return the roles
    */
-  public V2PolicyResource getResource() {
-    return resource;
+  public List<PolicyRole> getRoles() {
+    return roles;
   }
 
   /**
-   * Gets the pattern.
+   * Gets the resources.
    *
-   * Indicates pattern of rule, either 'time-based-conditions:once', 'time-based-conditions:weekly:all-day', or
-   * 'time-based-conditions:weekly:custom-hours'.
+   * The resources associated with a policy.
    *
-   * @return the pattern
+   * @return the resources
    */
-  public String getPattern() {
-    return pattern;
-  }
-
-  /**
-   * Gets the rule.
-   *
-   * Additional access conditions associated with the policy.
-   *
-   * @return the rule
-   */
-  public V2PolicyRule getRule() {
-    return rule;
-  }
-
-  /**
-   * Gets the id.
-   *
-   * The policy ID.
-   *
-   * @return the id
-   */
-  public String getId() {
-    return id;
+  public List<PolicyResource> getResources() {
+    return resources;
   }
 
   /**
    * Gets the href.
    *
-   * The href URL that links to the policies API by policy ID.
+   * The href link back to the policy.
    *
    * @return the href
    */
   public String getHref() {
     return href;
-  }
-
-  /**
-   * Gets the control.
-   *
-   * @return the control
-   */
-  public ControlResponse getControl() {
-    return control;
   }
 
   /**
@@ -212,7 +177,7 @@ public class V2Policy extends GenericModel {
   /**
    * Gets the state.
    *
-   * The policy state, either 'deleted' or 'active'.
+   * The policy state.
    *
    * @return the state
    */
@@ -221,26 +186,15 @@ public class V2Policy extends GenericModel {
   }
 
   /**
-   * Gets the lastPermitAt.
+   * Gets the template.
    *
-   * The optional last permit time of policy, when passing query parameter format=include_last_permit.
+   * The details of the IAM template that was used to create an enterprise-managed policy in your account. When
+   * returned, this indicates that the policy is created from and managed by a template in the root enterprise account.
    *
-   * @return the lastPermitAt
+   * @return the template
    */
-  public String getLastPermitAt() {
-    return lastPermitAt;
-  }
-
-  /**
-   * Gets the lastPermitFrequency.
-   *
-   * The optional count of times that policy has provided a permit, when passing query parameter
-   * format=include_last_permit.
-   *
-   * @return the lastPermitFrequency
-   */
-  public Long getLastPermitFrequency() {
-    return lastPermitFrequency;
+  public TemplateMetadata getTemplate() {
+    return template;
   }
 }
 

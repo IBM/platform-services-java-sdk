@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.65.0-79fc0b8f-20230209-215651
+ * IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -49,6 +49,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyColl
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyTemplateOptions;
@@ -58,6 +59,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollec
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyTemplateMetaData;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
 import com.ibm.cloud.sdk.core.http.ServiceCall;
@@ -330,9 +332,9 @@ public class IamPolicyManagement extends BaseService {
    * Retrieve a policy by providing a policy ID.
    *
    * @param getPolicyOptions the {@link GetPolicyOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link Policy}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyTemplateMetaData}
    */
-  public ServiceCall<Policy> getPolicy(GetPolicyOptions getPolicyOptions) {
+  public ServiceCall<PolicyTemplateMetaData> getPolicy(GetPolicyOptions getPolicyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getPolicyOptions,
       "getPolicyOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -343,8 +345,8 @@ public class IamPolicyManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    ResponseConverter<Policy> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Policy>() { }.getType());
+    ResponseConverter<PolicyTemplateMetaData> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateMetaData>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -845,9 +847,9 @@ public class IamPolicyManagement extends BaseService {
    * Retrieve a policy by providing a policy ID.
    *
    * @param getV2PolicyOptions the {@link GetV2PolicyOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link V2Policy}
+   * @return a {@link ServiceCall} with a result of type {@link V2PolicyTemplateMetaData}
    */
-  public ServiceCall<V2Policy> getV2Policy(GetV2PolicyOptions getV2PolicyOptions) {
+  public ServiceCall<V2PolicyTemplateMetaData> getV2Policy(GetV2PolicyOptions getV2PolicyOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getV2PolicyOptions,
       "getV2PolicyOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -861,8 +863,8 @@ public class IamPolicyManagement extends BaseService {
     if (getV2PolicyOptions.format() != null) {
       builder.query("format", String.valueOf(getV2PolicyOptions.format()));
     }
-    ResponseConverter<V2Policy> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<V2Policy>() { }.getType());
+    ResponseConverter<V2PolicyTemplateMetaData> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<V2PolicyTemplateMetaData>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -1026,6 +1028,9 @@ public class IamPolicyManagement extends BaseService {
     builder.header("Accept", "application/json");
     final JsonObject contentJson = new JsonObject();
     contentJson.add("policy", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyTemplateVersionOptions.policy()));
+    if (createPolicyTemplateVersionOptions.name() != null) {
+      contentJson.addProperty("name", createPolicyTemplateVersionOptions.name());
+    }
     if (createPolicyTemplateVersionOptions.description() != null) {
       contentJson.addProperty("description", createPolicyTemplateVersionOptions.description());
     }
@@ -1085,6 +1090,9 @@ public class IamPolicyManagement extends BaseService {
     builder.header("If-Match", replacePolicyTemplateOptions.ifMatch());
     final JsonObject contentJson = new JsonObject();
     contentJson.add("policy", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replacePolicyTemplateOptions.policy()));
+    if (replacePolicyTemplateOptions.name() != null) {
+      contentJson.addProperty("name", replacePolicyTemplateOptions.name());
+    }
     if (replacePolicyTemplateOptions.description() != null) {
       contentJson.addProperty("description", replacePolicyTemplateOptions.description());
     }
@@ -1167,7 +1175,6 @@ public class IamPolicyManagement extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    builder.header("If-Match", commitPolicyTemplateOptions.ifMatch());
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }

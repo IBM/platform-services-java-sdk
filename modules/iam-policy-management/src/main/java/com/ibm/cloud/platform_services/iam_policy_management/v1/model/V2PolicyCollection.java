@@ -21,7 +21,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class V2PolicyCollection extends GenericModel {
 
-  protected List<V2Policy> policies;
+  protected List<V2PolicyTemplateMetaData> policies;
 
   protected V2PolicyCollection() { }
 
@@ -32,7 +32,7 @@ public class V2PolicyCollection extends GenericModel {
    *
    * @return the policies
    */
-  public List<V2Policy> getPolicies() {
+  public List<V2PolicyTemplateMetaData> getPolicies() {
     return policies;
   }
 }

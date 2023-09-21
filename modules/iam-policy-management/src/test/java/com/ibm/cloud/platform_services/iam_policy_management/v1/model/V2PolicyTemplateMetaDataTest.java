@@ -17,7 +17,6 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlRes
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetadata;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
@@ -34,15 +33,25 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the V2PolicyCollection model.
+ * Unit test class for the V2PolicyTemplateMetaData model.
  */
-public class V2PolicyCollectionTest {
+public class V2PolicyTemplateMetaDataTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testV2PolicyCollection() throws Throwable {
-    V2PolicyCollection v2PolicyCollectionModel = new V2PolicyCollection();
-    assertNull(v2PolicyCollectionModel.getPolicies());
+  public void testV2PolicyTemplateMetaData() throws Throwable {
+    V2PolicyTemplateMetaData v2PolicyTemplateMetaDataModel = new V2PolicyTemplateMetaData();
+    assertNull(v2PolicyTemplateMetaDataModel.getType());
+    assertNull(v2PolicyTemplateMetaDataModel.getDescription());
+    assertNull(v2PolicyTemplateMetaDataModel.getSubject());
+    assertNull(v2PolicyTemplateMetaDataModel.getResource());
+    assertNull(v2PolicyTemplateMetaDataModel.getPattern());
+    assertNull(v2PolicyTemplateMetaDataModel.getRule());
+    assertNull(v2PolicyTemplateMetaDataModel.getControl());
+    assertNull(v2PolicyTemplateMetaDataModel.getState());
+    assertNull(v2PolicyTemplateMetaDataModel.getLastPermitAt());
+    assertNull(v2PolicyTemplateMetaDataModel.getLastPermitFrequency());
+    assertNull(v2PolicyTemplateMetaDataModel.getTemplate());
   }
 }

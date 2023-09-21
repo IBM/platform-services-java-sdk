@@ -20,7 +20,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * The core set of properties associated with the policy.
  */
-public class V2Policy extends GenericModel {
+public class V2PolicyTemplateMetaData extends GenericModel {
 
   /**
    * The policy type; either 'access' or 'authorization'.
@@ -64,8 +64,9 @@ public class V2Policy extends GenericModel {
   protected String lastPermitAt;
   @SerializedName("last_permit_frequency")
   protected Long lastPermitFrequency;
+  protected TemplateMetadata template;
 
-  protected V2Policy() { }
+  protected V2PolicyTemplateMetaData() { }
 
   /**
    * Gets the type.
@@ -241,6 +242,18 @@ public class V2Policy extends GenericModel {
    */
   public Long getLastPermitFrequency() {
     return lastPermitFrequency;
+  }
+
+  /**
+   * Gets the template.
+   *
+   * The details of the IAM template that was used to create an enterprise-managed policy in your account. When
+   * returned, this indicates that the policy is created from and managed by a template in the root enterprise account.
+   *
+   * @return the template
+   */
+  public TemplateMetadata getTemplate() {
+    return template;
   }
 }
 

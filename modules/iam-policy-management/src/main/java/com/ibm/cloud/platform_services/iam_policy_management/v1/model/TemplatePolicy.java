@@ -71,12 +71,10 @@ public class TemplatePolicy extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param type the type
-     * @param resource the resource
      * @param control the control
      */
-    public Builder(String type, V2PolicyResource resource, Control control) {
+    public Builder(String type, Control control) {
       this.type = type;
-      this.resource = resource;
       this.control = control;
     }
 
@@ -161,8 +159,6 @@ public class TemplatePolicy extends GenericModel {
   protected TemplatePolicy(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.resource,
-      "resource cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.control,
       "control cannot be null");
     type = builder.type;

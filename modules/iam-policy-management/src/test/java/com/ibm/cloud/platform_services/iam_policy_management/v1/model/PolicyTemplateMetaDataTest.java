@@ -13,7 +13,6 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
@@ -31,15 +30,21 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the PolicyCollection model.
+ * Unit test class for the PolicyTemplateMetaData model.
  */
-public class PolicyCollectionTest {
+public class PolicyTemplateMetaDataTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPolicyCollection() throws Throwable {
-    PolicyCollection policyCollectionModel = new PolicyCollection();
-    assertNull(policyCollectionModel.getPolicies());
+  public void testPolicyTemplateMetaData() throws Throwable {
+    PolicyTemplateMetaData policyTemplateMetaDataModel = new PolicyTemplateMetaData();
+    assertNull(policyTemplateMetaDataModel.getType());
+    assertNull(policyTemplateMetaDataModel.getDescription());
+    assertNull(policyTemplateMetaDataModel.getSubjects());
+    assertNull(policyTemplateMetaDataModel.getRoles());
+    assertNull(policyTemplateMetaDataModel.getResources());
+    assertNull(policyTemplateMetaDataModel.getState());
+    assertNull(policyTemplateMetaDataModel.getTemplate());
   }
 }

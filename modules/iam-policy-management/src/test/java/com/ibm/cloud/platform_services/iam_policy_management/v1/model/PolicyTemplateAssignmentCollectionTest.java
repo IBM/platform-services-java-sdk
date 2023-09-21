@@ -19,9 +19,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetai
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorResponse;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignment;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentRequestOptionsItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResources;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcesPolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;

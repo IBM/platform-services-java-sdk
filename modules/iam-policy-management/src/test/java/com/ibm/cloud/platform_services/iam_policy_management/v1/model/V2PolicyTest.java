@@ -16,7 +16,6 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControl;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetadata;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
@@ -52,6 +51,5 @@ public class V2PolicyTest {
     assertNull(v2PolicyModel.getState());
     assertNull(v2PolicyModel.getLastPermitAt());
     assertNull(v2PolicyModel.getLastPermitFrequency());
-    assertNull(v2PolicyModel.getTemplate());
   }
 }

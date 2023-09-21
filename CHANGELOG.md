@@ -1,3 +1,10 @@
+## [0.42.1](https://github.com/IBM/platform-services-java-sdk/compare/0.42.0...0.42.1) (2023-09-21)
+
+
+### Bug Fixes
+
+* **Global Search/Tagging:** regen services with latest API definitions ([#212](https://github.com/IBM/platform-services-java-sdk/issues/212)) ([99670a2](https://github.com/IBM/platform-services-java-sdk/commit/99670a23c63e9add25c1accd5b35e0570ce1dc18))
+
 # [0.42.0](https://github.com/IBM/platform-services-java-sdk/compare/0.41.0...0.42.0) (2023-09-15)
 
 

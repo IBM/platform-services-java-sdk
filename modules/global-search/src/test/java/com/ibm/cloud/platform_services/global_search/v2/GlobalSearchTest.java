@@ -69,9 +69,11 @@ public class GlobalSearchTest {
       .query("testString")
       .fields(java.util.Arrays.asList("testString"))
       .searchCursor("testString")
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .accountId("testString")
-      .limit(Long.valueOf("1"))
+      .limit(Long.valueOf("10"))
       .timeout(Long.valueOf("0"))
       .sort(java.util.Arrays.asList("testString"))
       .isDeleted("false")
@@ -98,7 +100,7 @@ public class GlobalSearchTest {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(query.get("account_id"), "testString");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("1"));
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
     assertEquals(Long.valueOf(query.get("timeout")), Long.valueOf("0"));
     assertEquals(query.get("sort"), RequestUtils.join(java.util.Arrays.asList("testString"), ","));
     assertEquals(query.get("is_deleted"), "false");

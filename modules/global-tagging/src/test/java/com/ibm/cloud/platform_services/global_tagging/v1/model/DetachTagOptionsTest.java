@@ -43,6 +43,8 @@ public class DetachTagOptionsTest {
       .resources(java.util.Arrays.asList(resourceModel))
       .tagName("testString")
       .tagNames(java.util.Arrays.asList("testString"))
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .impersonateUser("testString")
       .accountId("testString")
@@ -51,6 +53,8 @@ public class DetachTagOptionsTest {
     assertEquals(detachTagOptionsModel.resources(), java.util.Arrays.asList(resourceModel));
     assertEquals(detachTagOptionsModel.tagName(), "testString");
     assertEquals(detachTagOptionsModel.tagNames(), java.util.Arrays.asList("testString"));
+    assertEquals(detachTagOptionsModel.xRequestId(), "testString");
+    assertEquals(detachTagOptionsModel.xCorrelationId(), "testString");
     assertEquals(detachTagOptionsModel.transactionId(), "testString");
     assertEquals(detachTagOptionsModel.impersonateUser(), "testString");
     assertEquals(detachTagOptionsModel.accountId(), "testString");

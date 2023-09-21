@@ -32,6 +32,8 @@ public class ListTagsOptionsTest {
   @Test
   public void testListTagsOptions() throws Throwable {
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .impersonateUser("testString")
       .accountId("testString")
@@ -40,11 +42,13 @@ public class ListTagsOptionsTest {
       .providers(java.util.Arrays.asList("ghost"))
       .attachedTo("testString")
       .offset(Long.valueOf("0"))
-      .limit(Long.valueOf("1"))
+      .limit(Long.valueOf("100"))
       .timeout(Long.valueOf("0"))
       .orderByName("asc")
       .attachedOnly(false)
       .build();
+    assertEquals(listTagsOptionsModel.xRequestId(), "testString");
+    assertEquals(listTagsOptionsModel.xCorrelationId(), "testString");
     assertEquals(listTagsOptionsModel.transactionId(), "testString");
     assertEquals(listTagsOptionsModel.impersonateUser(), "testString");
     assertEquals(listTagsOptionsModel.accountId(), "testString");
@@ -53,7 +57,7 @@ public class ListTagsOptionsTest {
     assertEquals(listTagsOptionsModel.providers(), java.util.Arrays.asList("ghost"));
     assertEquals(listTagsOptionsModel.attachedTo(), "testString");
     assertEquals(listTagsOptionsModel.offset(), Long.valueOf("0"));
-    assertEquals(listTagsOptionsModel.limit(), Long.valueOf("1"));
+    assertEquals(listTagsOptionsModel.limit(), Long.valueOf("100"));
     assertEquals(listTagsOptionsModel.timeout(), Long.valueOf("0"));
     assertEquals(listTagsOptionsModel.orderByName(), "asc");
     assertEquals(listTagsOptionsModel.attachedOnly(), Boolean.valueOf(false));

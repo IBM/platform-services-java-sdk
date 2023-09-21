@@ -35,9 +35,11 @@ public class SearchOptionsTest {
       .query("testString")
       .fields(java.util.Arrays.asList("testString"))
       .searchCursor("testString")
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .accountId("testString")
-      .limit(Long.valueOf("1"))
+      .limit(Long.valueOf("10"))
       .timeout(Long.valueOf("0"))
       .sort(java.util.Arrays.asList("testString"))
       .isDeleted("false")
@@ -49,9 +51,11 @@ public class SearchOptionsTest {
     assertEquals(searchOptionsModel.query(), "testString");
     assertEquals(searchOptionsModel.fields(), java.util.Arrays.asList("testString"));
     assertEquals(searchOptionsModel.searchCursor(), "testString");
+    assertEquals(searchOptionsModel.xRequestId(), "testString");
+    assertEquals(searchOptionsModel.xCorrelationId(), "testString");
     assertEquals(searchOptionsModel.transactionId(), "testString");
     assertEquals(searchOptionsModel.accountId(), "testString");
-    assertEquals(searchOptionsModel.limit(), Long.valueOf("1"));
+    assertEquals(searchOptionsModel.limit(), Long.valueOf("10"));
     assertEquals(searchOptionsModel.timeout(), Long.valueOf("0"));
     assertEquals(searchOptionsModel.sort(), java.util.Arrays.asList("testString"));
     assertEquals(searchOptionsModel.isDeleted(), "false");

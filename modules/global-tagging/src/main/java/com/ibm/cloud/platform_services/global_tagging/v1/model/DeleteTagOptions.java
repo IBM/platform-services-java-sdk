@@ -43,6 +43,8 @@ public class DeleteTagOptions extends GenericModel {
   }
 
   protected String tagName;
+  protected String xRequestId;
+  protected String xCorrelationId;
   protected String transactionId;
   protected List<String> providers;
   protected String impersonateUser;
@@ -54,6 +56,8 @@ public class DeleteTagOptions extends GenericModel {
    */
   public static class Builder {
     private String tagName;
+    private String xRequestId;
+    private String xCorrelationId;
     private String transactionId;
     private List<String> providers;
     private String impersonateUser;
@@ -67,6 +71,8 @@ public class DeleteTagOptions extends GenericModel {
      */
     private Builder(DeleteTagOptions deleteTagOptions) {
       this.tagName = deleteTagOptions.tagName;
+      this.xRequestId = deleteTagOptions.xRequestId;
+      this.xCorrelationId = deleteTagOptions.xCorrelationId;
       this.transactionId = deleteTagOptions.transactionId;
       this.providers = deleteTagOptions.providers;
       this.impersonateUser = deleteTagOptions.impersonateUser;
@@ -126,11 +132,35 @@ public class DeleteTagOptions extends GenericModel {
     }
 
     /**
+     * Set the xRequestId.
+     *
+     * @param xRequestId the xRequestId
+     * @return the DeleteTagOptions builder
+     */
+    public Builder xRequestId(String xRequestId) {
+      this.xRequestId = xRequestId;
+      return this;
+    }
+
+    /**
+     * Set the xCorrelationId.
+     *
+     * @param xCorrelationId the xCorrelationId
+     * @return the DeleteTagOptions builder
+     */
+    public Builder xCorrelationId(String xCorrelationId) {
+      this.xCorrelationId = xCorrelationId;
+      return this;
+    }
+
+    /**
      * Set the transactionId.
      *
      * @param transactionId the transactionId
      * @return the DeleteTagOptions builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder transactionId(String transactionId) {
       this.transactionId = transactionId;
       return this;
@@ -188,6 +218,8 @@ public class DeleteTagOptions extends GenericModel {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.tagName,
       "tagName cannot be empty");
     tagName = builder.tagName;
+    xRequestId = builder.xRequestId;
+    xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
     providers = builder.providers;
     impersonateUser = builder.impersonateUser;
@@ -216,13 +248,46 @@ public class DeleteTagOptions extends GenericModel {
   }
 
   /**
+   * Gets the xRequestId.
+   *
+   * An alphanumeric string that is used to trace the request. The value  may include ASCII alphanumerics and any of
+   * following segment separators: space ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+   * 1024 bytes. The value is considered invalid and must be ignored if that value includes any other character or is
+   * longer than 1024 bytes or is fewer than 8 characters. If not specified or invalid, it is automatically replaced by
+   * a random (version 4) UUID.
+   *
+   * @return the xRequestId
+   */
+  public String xRequestId() {
+    return xRequestId;
+  }
+
+  /**
+   * Gets the xCorrelationId.
+   *
+   * An alphanumeric string that is used to trace the request as a part of a larger context: the same value is used for
+   * downstream requests and retries of those requests. The value may include ASCII alphanumerics and any of following
+   * segment separators: space ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to 1024 bytes.
+   * The value is considered invalid and must be ignored if that value includes any other character or is longer than
+   * 1024 bytes or is fewer than 8 characters. If not specified or invalid, it is automatically replaced by a random
+   * (version 4) UUID.
+   *
+   * @return the xCorrelationId
+   */
+  public String xCorrelationId() {
+    return xCorrelationId;
+  }
+
+  /**
    * Gets the transactionId.
    *
    * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
    * generated with the prefix "gst-".
    *
    * @return the transactionId
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String transactionId() {
     return transactionId;
   }

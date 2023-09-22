@@ -38,6 +38,8 @@ public class AttachTagOptions extends GenericModel {
   protected List<Resource> resources;
   protected String tagName;
   protected List<String> tagNames;
+  protected String xRequestId;
+  protected String xCorrelationId;
   protected String transactionId;
   protected String impersonateUser;
   protected String accountId;
@@ -50,6 +52,8 @@ public class AttachTagOptions extends GenericModel {
     private List<Resource> resources;
     private String tagName;
     private List<String> tagNames;
+    private String xRequestId;
+    private String xCorrelationId;
     private String transactionId;
     private String impersonateUser;
     private String accountId;
@@ -64,6 +68,8 @@ public class AttachTagOptions extends GenericModel {
       this.resources = attachTagOptions.resources;
       this.tagName = attachTagOptions.tagName;
       this.tagNames = attachTagOptions.tagNames;
+      this.xRequestId = attachTagOptions.xRequestId;
+      this.xCorrelationId = attachTagOptions.xCorrelationId;
       this.transactionId = attachTagOptions.transactionId;
       this.impersonateUser = attachTagOptions.impersonateUser;
       this.accountId = attachTagOptions.accountId;
@@ -162,11 +168,35 @@ public class AttachTagOptions extends GenericModel {
     }
 
     /**
+     * Set the xRequestId.
+     *
+     * @param xRequestId the xRequestId
+     * @return the AttachTagOptions builder
+     */
+    public Builder xRequestId(String xRequestId) {
+      this.xRequestId = xRequestId;
+      return this;
+    }
+
+    /**
+     * Set the xCorrelationId.
+     *
+     * @param xCorrelationId the xCorrelationId
+     * @return the AttachTagOptions builder
+     */
+    public Builder xCorrelationId(String xCorrelationId) {
+      this.xCorrelationId = xCorrelationId;
+      return this;
+    }
+
+    /**
      * Set the transactionId.
      *
      * @param transactionId the transactionId
      * @return the AttachTagOptions builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder transactionId(String transactionId) {
       this.transactionId = transactionId;
       return this;
@@ -214,6 +244,8 @@ public class AttachTagOptions extends GenericModel {
     resources = builder.resources;
     tagName = builder.tagName;
     tagNames = builder.tagNames;
+    xRequestId = builder.xRequestId;
+    xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
     impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
@@ -263,13 +295,46 @@ public class AttachTagOptions extends GenericModel {
   }
 
   /**
+   * Gets the xRequestId.
+   *
+   * An alphanumeric string that is used to trace the request. The value  may include ASCII alphanumerics and any of
+   * following segment separators: space ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to
+   * 1024 bytes. The value is considered invalid and must be ignored if that value includes any other character or is
+   * longer than 1024 bytes or is fewer than 8 characters. If not specified or invalid, it is automatically replaced by
+   * a random (version 4) UUID.
+   *
+   * @return the xRequestId
+   */
+  public String xRequestId() {
+    return xRequestId;
+  }
+
+  /**
+   * Gets the xCorrelationId.
+   *
+   * An alphanumeric string that is used to trace the request as a part of a larger context: the same value is used for
+   * downstream requests and retries of those requests. The value may include ASCII alphanumerics and any of following
+   * segment separators: space ( ), comma (,), hyphen, (-), and underscore (_) and may have a length up to 1024 bytes.
+   * The value is considered invalid and must be ignored if that value includes any other character or is longer than
+   * 1024 bytes or is fewer than 8 characters. If not specified or invalid, it is automatically replaced by a random
+   * (version 4) UUID.
+   *
+   * @return the xCorrelationId
+   */
+  public String xCorrelationId() {
+    return xCorrelationId;
+  }
+
+  /**
    * Gets the transactionId.
    *
    * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
    * generated with the prefix "gst-".
    *
    * @return the transactionId
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String transactionId() {
     return transactionId;
   }

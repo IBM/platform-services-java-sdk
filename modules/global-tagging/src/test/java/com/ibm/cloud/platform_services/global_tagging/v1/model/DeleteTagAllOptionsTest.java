@@ -32,12 +32,16 @@ public class DeleteTagAllOptionsTest {
   @Test
   public void testDeleteTagAllOptions() throws Throwable {
     DeleteTagAllOptions deleteTagAllOptionsModel = new DeleteTagAllOptions.Builder()
+      .xRequestId("testString")
+      .xCorrelationId("testString")
       .transactionId("testString")
       .providers("ghost")
       .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
+    assertEquals(deleteTagAllOptionsModel.xRequestId(), "testString");
+    assertEquals(deleteTagAllOptionsModel.xCorrelationId(), "testString");
     assertEquals(deleteTagAllOptionsModel.transactionId(), "testString");
     assertEquals(deleteTagAllOptionsModel.providers(), "ghost");
     assertEquals(deleteTagAllOptionsModel.impersonateUser(), "testString");

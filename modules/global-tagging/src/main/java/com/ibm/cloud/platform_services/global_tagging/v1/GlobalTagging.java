@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.64.0-959a5845-20230112-195144
+ * IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
  */
 
 package com.ibm.cloud.platform_services.global_tagging.v1;
@@ -119,6 +119,12 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listTagsOptions.xRequestId() != null) {
+      builder.header("x-request-id", listTagsOptions.xRequestId());
+    }
+    if (listTagsOptions.xCorrelationId() != null) {
+      builder.header("x-correlation-id", listTagsOptions.xCorrelationId());
+    }
     if (listTagsOptions.transactionId() != null) {
       builder.header("transaction-id", listTagsOptions.transactionId());
     }
@@ -191,6 +197,12 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (createTagOptions.xRequestId() != null) {
+      builder.header("x-request-id", createTagOptions.xRequestId());
+    }
+    if (createTagOptions.xCorrelationId() != null) {
+      builder.header("x-correlation-id", createTagOptions.xCorrelationId());
+    }
     if (createTagOptions.transactionId() != null) {
       builder.header("transaction-id", createTagOptions.transactionId());
     }
@@ -229,6 +241,12 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (deleteTagAllOptions.xRequestId() != null) {
+      builder.header("x-request-id", deleteTagAllOptions.xRequestId());
+    }
+    if (deleteTagAllOptions.xCorrelationId() != null) {
+      builder.header("x-correlation-id", deleteTagAllOptions.xCorrelationId());
+    }
     if (deleteTagAllOptions.transactionId() != null) {
       builder.header("transaction-id", deleteTagAllOptions.transactionId());
     }
@@ -279,6 +297,12 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (deleteTagOptions.xRequestId() != null) {
+      builder.header("x-request-id", deleteTagOptions.xRequestId());
+    }
+    if (deleteTagOptions.xCorrelationId() != null) {
+      builder.header("x-correlation-id", deleteTagOptions.xCorrelationId());
+    }
     if (deleteTagOptions.transactionId() != null) {
       builder.header("transaction-id", deleteTagOptions.transactionId());
     }
@@ -317,6 +341,12 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (attachTagOptions.xRequestId() != null) {
+      builder.header("x-request-id", attachTagOptions.xRequestId());
+    }
+    if (attachTagOptions.xCorrelationId() != null) {
+      builder.header("x-correlation-id", attachTagOptions.xCorrelationId());
+    }
     if (attachTagOptions.transactionId() != null) {
       builder.header("transaction-id", attachTagOptions.transactionId());
     }
@@ -360,6 +390,12 @@ public class GlobalTagging extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (detachTagOptions.xRequestId() != null) {
+      builder.header("x-request-id", detachTagOptions.xRequestId());
+    }
+    if (detachTagOptions.xCorrelationId() != null) {
+      builder.header("x-correlation-id", detachTagOptions.xCorrelationId());
+    }
     if (detachTagOptions.transactionId() != null) {
       builder.header("transaction-id", detachTagOptions.transactionId());
     }

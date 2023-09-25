@@ -1,3 +1,10 @@
+# [0.43.0](https://github.com/IBM/platform-services-java-sdk/compare/0.42.1...0.43.0) (2023-09-25)
+
+
+### Features
+
+* **IAM Policy Management:** re-gen service after fix the template metadata as part of policies ([#213](https://github.com/IBM/platform-services-java-sdk/issues/213)) ([4984f85](https://github.com/IBM/platform-services-java-sdk/commit/4984f85546121cad889ce674de7a74182d2ab530))
+
 ## [0.42.1](https://github.com/IBM/platform-services-java-sdk/compare/0.42.0...0.42.1) (2023-09-21)
 
 

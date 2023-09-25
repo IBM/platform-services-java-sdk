@@ -12,27 +12,35 @@
  */
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Origin Template information.
+ * The details of the IAM template that was used to create an enterprise-managed policy in your account. When returned,
+ * this indicates that the policy is created from and managed by a template in the root enterprise account.
  */
 public class TemplateMetadata extends GenericModel {
 
-  protected String crn;
+  protected String id;
   protected String version;
+  @SerializedName("assignment_id")
+  protected String assignmentId;
+  @SerializedName("root_id")
+  protected String rootId;
+  @SerializedName("root_version")
+  protected String rootVersion;
 
   protected TemplateMetadata() { }
 
   /**
-   * Gets the crn.
+   * Gets the id.
    *
-   * Origin Template CRN.
+   * The policy template ID.
    *
-   * @return the crn
+   * @return the id
    */
-  public String getCrn() {
-    return crn;
+  public String getId() {
+    return id;
   }
 
   /**
@@ -44,6 +52,39 @@ public class TemplateMetadata extends GenericModel {
    */
   public String getVersion() {
     return version;
+  }
+
+  /**
+   * Gets the assignmentId.
+   *
+   * policy assignment id.
+   *
+   * @return the assignmentId
+   */
+  public String getAssignmentId() {
+    return assignmentId;
+  }
+
+  /**
+   * Gets the rootId.
+   *
+   * orchestrator template id.
+   *
+   * @return the rootId
+   */
+  public String getRootId() {
+    return rootId;
+  }
+
+  /**
+   * Gets the rootVersion.
+   *
+   * orchestrator template version.
+   *
+   * @return the rootVersion
+   */
+  public String getRootVersion() {
+    return rootVersion;
   }
 }
 

@@ -78,6 +78,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     String testTemplateEtag = null;
     String testNewTemplateVersion = null;
     String testAssignmentId = null;
+    String testAssignmentPolicyId = null;
 
     @Override
     public String getConfigFilename() {
@@ -186,11 +187,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .policyId(testPolicyId)
                 .build();
 
-        Response<Policy> response = service.getPolicy(options).execute();
+        Response<PolicyTemplateMetaData> response = service.getPolicy(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
-        Policy result = response.getResult();
+        PolicyTemplateMetaData result = response.getResult();
         assertNotNull(result);
         assertEquals(result.getId(), testPolicyId);
 
@@ -300,7 +301,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         // Confirm the test policy is present
         boolean foundTestPolicy = false;
-        for (Policy policy : result.getPolicies()) {
+        for (PolicyTemplateMetaData policy : result.getPolicies()) {
             if (testPolicyId.equals(policy.getId())) {
                 foundTestPolicy = true;
                 break;
@@ -417,11 +418,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .id(testV2PolicyId)
                 .build();
 
-        Response<V2Policy> response = service.getV2Policy(options).execute();
+        Response<V2PolicyTemplateMetaData> response = service.getV2Policy(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
 
-        V2Policy result = response.getResult();
+        V2PolicyTemplateMetaData result = response.getResult();
         assertNotNull(result);
         assertEquals(result.getId(), testV2PolicyId);
 
@@ -546,7 +547,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         // Confirm the test policy is present
         boolean foundTestPolicy = false;
-        for (V2Policy policy : result.getPolicies()) {
+        for (V2PolicyTemplateMetaData policy : result.getPolicies()) {
             if (testV2PolicyId.equals(policy.getId())) {
                 foundTestPolicy = true;
                 break;
@@ -924,7 +925,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       CommitPolicyTemplateOptions commitPolicyTemplateOptions = new CommitPolicyTemplateOptions.Builder()
         .policyTemplateId(testTemplateId)
         .version(testTemplateVersion)
-        .ifMatch(testTemplateEtag)
         .build();
 
       Response<Void> response = service.commitPolicyTemplate(commitPolicyTemplateOptions).execute();
@@ -1062,9 +1062,31 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       assertEquals(response.getStatusCode(), 200);
 
       PolicyAssignment result = response.getResult();
+      PolicyAssignmentResources resource = result.getResources().get(0);
+      PolicyAssignmentResourcePolicy policy = resource.getPolicy();
+      AssignmentResourceCreated resource_created = policy.getResourceCreated();
+      testAssignmentPolicyId = resource_created.getId();
 
       assertNotNull(result);
       assertEquals(result.getId(), testAssignmentId);
+    }
+
+    @Test(dependsOnMethods = { "testGetPolicyAssignment" })
+      public void testGetTemplateMetaDataV2AccessPolicy() {
+        assertNotNull(testAssignmentPolicyId);
+
+        GetV2PolicyOptions options = new GetV2PolicyOptions.Builder()
+                .id(testAssignmentPolicyId)
+                .build();
+
+        Response<V2PolicyTemplateMetaData> response = service.getV2Policy(options).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        V2PolicyTemplateMetaData result = response.getResult();
+        assertNotNull(result);
+        assertEquals(result.getId(), testAssignmentPolicyId);
+        assertNotNull(result.getTemplate());
     }
 
     @AfterClass
@@ -1089,7 +1111,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         // Iterate across the policies
         PolicyCollection policyList = policyResponse.getResult();
         assertNotNull(policyList);
-        for (Policy policy : policyList.getPolicies()) {
+        for (PolicyTemplateMetaData policy : policyList.getPolicies()) {
 
             // Delete the test policy or any test polcies older than 5 minutes
             if (policy.getSubjects().get(0).attributes().get(0).value().contains(TEST_USER_PREFIX)) {

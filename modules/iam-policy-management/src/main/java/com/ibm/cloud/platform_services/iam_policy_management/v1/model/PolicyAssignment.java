@@ -54,7 +54,7 @@ public class PolicyAssignment extends GenericModel {
   @SerializedName("target_type")
   protected String targetType;
   protected String target;
-  protected List<PolicyAssignmentRequestOptionsItem> options;
+  protected List<PolicyAssignmentOptions> options;
   protected String id;
   @SerializedName("account_id")
   protected String accountId;
@@ -134,7 +134,7 @@ public class PolicyAssignment extends GenericModel {
    *
    * @return the options
    */
-  public List<PolicyAssignmentRequestOptionsItem> getOptions() {
+  public List<PolicyAssignmentOptions> getOptions() {
     return options;
   }
 

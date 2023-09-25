@@ -23,6 +23,7 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
   protected String version;
   protected String ifMatch;
   protected TemplatePolicy policy;
+  protected String name;
   protected String description;
   protected Boolean committed;
 
@@ -34,6 +35,7 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
     private String version;
     private String ifMatch;
     private TemplatePolicy policy;
+    private String name;
     private String description;
     private Boolean committed;
 
@@ -47,6 +49,7 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
       this.version = replacePolicyTemplateOptions.version;
       this.ifMatch = replacePolicyTemplateOptions.ifMatch;
       this.policy = replacePolicyTemplateOptions.policy;
+      this.name = replacePolicyTemplateOptions.name;
       this.description = replacePolicyTemplateOptions.description;
       this.committed = replacePolicyTemplateOptions.committed;
     }
@@ -126,6 +129,17 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
     }
 
     /**
+     * Set the name.
+     *
+     * @param name the name
+     * @return the ReplacePolicyTemplateOptions builder
+     */
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    /**
      * Set the description.
      *
      * @param description the description
@@ -163,6 +177,7 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
     version = builder.version;
     ifMatch = builder.ifMatch;
     policy = builder.policy;
+    name = builder.name;
     description = builder.description;
     committed = builder.committed;
   }
@@ -220,6 +235,18 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
    */
   public TemplatePolicy policy() {
     return policy;
+  }
+
+  /**
+   * Gets the name.
+   *
+   * Required field when creating a new template. Otherwise this field is optional. If the field is included it will
+   * change the name value for all existing versions of the template.
+   *
+   * @return the name
+   */
+  public String name() {
+    return name;
   }
 
   /**

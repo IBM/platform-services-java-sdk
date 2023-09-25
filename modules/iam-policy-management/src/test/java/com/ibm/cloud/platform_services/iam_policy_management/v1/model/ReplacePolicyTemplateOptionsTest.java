@@ -108,6 +108,7 @@ public class ReplacePolicyTemplateOptionsTest {
       .version("testString")
       .ifMatch("testString")
       .policy(templatePolicyModel)
+      .name("testString")
       .description("testString")
       .committed(true)
       .build();
@@ -115,6 +116,7 @@ public class ReplacePolicyTemplateOptionsTest {
     assertEquals(replacePolicyTemplateOptionsModel.version(), "testString");
     assertEquals(replacePolicyTemplateOptionsModel.ifMatch(), "testString");
     assertEquals(replacePolicyTemplateOptionsModel.policy(), templatePolicyModel);
+    assertEquals(replacePolicyTemplateOptionsModel.name(), "testString");
     assertEquals(replacePolicyTemplateOptionsModel.description(), "testString");
     assertEquals(replacePolicyTemplateOptionsModel.committed(), Boolean.valueOf(true));
   }

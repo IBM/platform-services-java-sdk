@@ -20,7 +20,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class PolicyAssignmentResources extends GenericModel {
 
   protected String target;
-  protected PolicyAssignmentResourcesPolicy policy;
+  protected PolicyAssignmentResourcePolicy policy;
 
   protected PolicyAssignmentResources() { }
 
@@ -42,7 +42,7 @@ public class PolicyAssignmentResources extends GenericModel {
    *
    * @return the policy
    */
-  public PolicyAssignmentResourcesPolicy getPolicy() {
+  public PolicyAssignmentResourcePolicy getPolicy() {
     return policy;
   }
 }

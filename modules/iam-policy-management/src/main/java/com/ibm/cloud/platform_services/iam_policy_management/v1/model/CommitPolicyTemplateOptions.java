@@ -21,7 +21,6 @@ public class CommitPolicyTemplateOptions extends GenericModel {
 
   protected String policyTemplateId;
   protected String version;
-  protected String ifMatch;
 
   /**
    * Builder.
@@ -29,7 +28,6 @@ public class CommitPolicyTemplateOptions extends GenericModel {
   public static class Builder {
     private String policyTemplateId;
     private String version;
-    private String ifMatch;
 
     /**
      * Instantiates a new Builder from an existing CommitPolicyTemplateOptions instance.
@@ -39,7 +37,6 @@ public class CommitPolicyTemplateOptions extends GenericModel {
     private Builder(CommitPolicyTemplateOptions commitPolicyTemplateOptions) {
       this.policyTemplateId = commitPolicyTemplateOptions.policyTemplateId;
       this.version = commitPolicyTemplateOptions.version;
-      this.ifMatch = commitPolicyTemplateOptions.ifMatch;
     }
 
     /**
@@ -53,12 +50,10 @@ public class CommitPolicyTemplateOptions extends GenericModel {
      *
      * @param policyTemplateId the policyTemplateId
      * @param version the version
-     * @param ifMatch the ifMatch
      */
-    public Builder(String policyTemplateId, String version, String ifMatch) {
+    public Builder(String policyTemplateId, String version) {
       this.policyTemplateId = policyTemplateId;
       this.version = version;
-      this.ifMatch = ifMatch;
     }
 
     /**
@@ -91,17 +86,6 @@ public class CommitPolicyTemplateOptions extends GenericModel {
       this.version = version;
       return this;
     }
-
-    /**
-     * Set the ifMatch.
-     *
-     * @param ifMatch the ifMatch
-     * @return the CommitPolicyTemplateOptions builder
-     */
-    public Builder ifMatch(String ifMatch) {
-      this.ifMatch = ifMatch;
-      return this;
-    }
   }
 
   protected CommitPolicyTemplateOptions() { }
@@ -111,11 +95,8 @@ public class CommitPolicyTemplateOptions extends GenericModel {
       "policyTemplateId cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.version,
       "version cannot be empty");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ifMatch,
-      "ifMatch cannot be null");
     policyTemplateId = builder.policyTemplateId;
     version = builder.version;
-    ifMatch = builder.ifMatch;
   }
 
   /**
@@ -147,19 +128,6 @@ public class CommitPolicyTemplateOptions extends GenericModel {
    */
   public String version() {
     return version;
-  }
-
-  /**
-   * Gets the ifMatch.
-   *
-   * The revision number for updating a policy template version and must match the ETag value of the existing policy
-   * template version. The Etag can be retrieved using the GET
-   * /v1/policy_templates/{policy_template_id}/versions/{version} API and looking at the ETag response header.
-   *
-   * @return the ifMatch
-   */
-  public String ifMatch() {
-    return ifMatch;
   }
 }
 

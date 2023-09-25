@@ -106,11 +106,13 @@ public class CreatePolicyTemplateVersionOptionsTest {
     CreatePolicyTemplateVersionOptions createPolicyTemplateVersionOptionsModel = new CreatePolicyTemplateVersionOptions.Builder()
       .policyTemplateId("testString")
       .policy(templatePolicyModel)
+      .name("testString")
       .description("testString")
       .committed(true)
       .build();
     assertEquals(createPolicyTemplateVersionOptionsModel.policyTemplateId(), "testString");
     assertEquals(createPolicyTemplateVersionOptionsModel.policy(), templatePolicyModel);
+    assertEquals(createPolicyTemplateVersionOptionsModel.name(), "testString");
     assertEquals(createPolicyTemplateVersionOptionsModel.description(), "testString");
     assertEquals(createPolicyTemplateVersionOptionsModel.committed(), Boolean.valueOf(true));
   }

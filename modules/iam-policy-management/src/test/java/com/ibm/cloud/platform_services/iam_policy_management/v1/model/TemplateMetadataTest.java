@@ -32,7 +32,10 @@ public class TemplateMetadataTest {
   @Test
   public void testTemplateMetadata() throws Throwable {
     TemplateMetadata templateMetadataModel = new TemplateMetadata();
-    assertNull(templateMetadataModel.getCrn());
+    assertNull(templateMetadataModel.getId());
     assertNull(templateMetadataModel.getVersion());
+    assertNull(templateMetadataModel.getAssignmentId());
+    assertNull(templateMetadataModel.getRootId());
+    assertNull(templateMetadataModel.getRootVersion());
   }
 }

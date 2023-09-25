@@ -40,6 +40,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2Polic
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubjectAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
@@ -52,8 +53,11 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCo
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateOptions;
@@ -65,6 +69,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePoli
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceCreated;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitPolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyAssignmentOptions;
@@ -112,6 +117,7 @@ public class IamPolicyManagementExamples {
   private static String exampleTemplateEtag = null;
   private static String exampleTemplateVersion = null;
   private static String exampleAssignmentId = null;
+  private static String exampleAssignmentPolicyId = null;
 
   static {
     System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_policy_management.env");
@@ -196,8 +202,8 @@ public class IamPolicyManagementExamples {
               .policyId(examplePolicyId)
               .build();
 
-      Response<Policy> response = service.getPolicy(options).execute();
-      Policy policy = response.getResult();
+      Response<PolicyTemplateMetaData> response = service.getPolicy(options).execute();
+      PolicyTemplateMetaData policy = response.getResult();
 
       System.out.println(policy);
 
@@ -441,8 +447,8 @@ public class IamPolicyManagementExamples {
               .id(exampleV2PolicyId)
               .build();
 
-      Response<V2Policy> response = service.getV2Policy(options).execute();
-      V2Policy policy = response.getResult();
+      Response<V2PolicyTemplateMetaData> response = service.getV2Policy(options).execute();
+      V2PolicyTemplateMetaData policy = response.getResult();
 
       System.out.println(policy);
 
@@ -868,7 +874,7 @@ public class IamPolicyManagementExamples {
       System.out.println("listPolicyTemplateVersions() result:");
       // begin-list_policy_template_versions
       ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptions = new ListPolicyTemplateVersionsOptions.Builder()
-        .policyTemplateId(exampleAccountId)
+        .policyTemplateId(exampleTemplateId)
         .build();
 
       Response<PolicyTemplateVersionsCollection> response = service.listPolicyTemplateVersions(listPolicyTemplateVersionsOptions).execute();
@@ -906,7 +912,6 @@ public class IamPolicyManagementExamples {
       CommitPolicyTemplateOptions commitPolicyTemplateOptions = new CommitPolicyTemplateOptions.Builder()
         .policyTemplateId(exampleTemplateId)
         .version(exampleTemplateVersion)
-        .ifMatch(exampleTemplateEtag)
         .build();
 
       Response<Void> response = service.commitPolicyTemplate(commitPolicyTemplateOptions).execute();
@@ -945,12 +950,35 @@ public class IamPolicyManagementExamples {
 
       Response<PolicyAssignment> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
       PolicyAssignment policyAssignmentRecord = response.getResult();
+      PolicyAssignmentResources resource = policyAssignmentRecord.getResources().get(0);
+      PolicyAssignmentResourcePolicy policy = resource.getPolicy();
+      AssignmentResourceCreated resourceCreated = policy.getResourceCreated();
+      exampleAssignmentPolicyId = resourceCreated.getId();
 
       System.out.println(policyAssignmentRecord);
       // end-get_policy_assignment
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getTemplateMetaDataV2AccessPolicy() result:");
+      // begin-get_v2_policy
+
+      GetV2PolicyOptions options = new GetV2PolicyOptions.Builder()
+              .id(exampleAssignmentPolicyId)
+              .build();
+
+      Response<V2PolicyTemplateMetaData> response = service.getV2Policy(options).execute();
+      V2PolicyTemplateMetaData policy = response.getResult();
+
+      System.out.println(policy.getTemplate());
+
+      // end-get_v2_policy
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {

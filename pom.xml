@@ -14,10 +14,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- This is the version associated with the Java core. -->
-    <sdk-core-version>9.18.6</sdk-core-version>
+    <sdk-core-version>9.18.7</sdk-core-version>
 
     <testng-version>7.8.0</testng-version>
-    <okhttp3-version>4.11.0</okhttp3-version>
+    <okhttp3-version>4.12.0</okhttp3-version>
     <surefire-version>3.1.2</surefire-version>
     <jacoco-plugin-version>0.8.10</jacoco-plugin-version>
     <maven-deploy-plugin-version>3.1.1</maven-deploy-plugin-version>

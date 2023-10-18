@@ -1,3 +1,10 @@
+# [0.44.0](https://github.com/IBM/platform-services-java-sdk/compare/0.43.1...0.44.0) (2023-10-18)
+
+
+### Features
+
+* **Usage Reports:** Update query param for getting reports snapshot list ([#216](https://github.com/IBM/platform-services-java-sdk/issues/216)) ([3dba623](https://github.com/IBM/platform-services-java-sdk/commit/3dba6236540c5b38de8cc7fcb891d2eee4bd986c))
+
 ## [0.43.1](https://github.com/IBM/platform-services-java-sdk/compare/0.43.0...0.43.1) (2023-10-02)
 
 

@@ -21,6 +21,7 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountUsageOpt
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetOrgUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotConfigOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotPager;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceGroupUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageAccountOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageAccountPager;
@@ -34,6 +35,7 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListSnapshotsItem;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
@@ -959,7 +961,7 @@ public class UsageReportsTest {
   @Test
   public void testGetReportsSnapshotWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"count\": 3, \"first\": {\"href\": \"/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06\"}, \"next\": {\"href\": \"/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06\"}, \"snapshots\": [{\"account_id\": \"abc\", \"month\": \"2023-06\", \"account_type\": \"account\", \"expected_processed_at\": 1687470383610, \"state\": \"enabled\", \"billing_period\": {\"start\": \"2023-06-01T00:00:00.000Z\", \"end\": \"2023-06-30T23:59:59.999Z\"}, \"snapshot_id\": \"1685577600000\", \"charset\": \"UTF-8\", \"compression\": \"GZIP\", \"content_type\": \"text/csv\", \"bucket\": \"bucket_name\", \"version\": \"1.0\", \"created_on\": \"2023-06-22T21:47:28.297Z\", \"report_types\": [{\"type\": \"account_summary\", \"version\": \"1.0\"}], \"files\": [{\"report_types\": \"account_summary\", \"location\": \"june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz\", \"account_id\": \"abc\"}], \"processed_at\": 1687470448297}]}";
+    String mockResponseBody = "{\"count\": 3, \"first\": {\"href\": \"/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06\"}, \"next\": {\"href\": \"/v1/billing-reports-snapshots?_limit=10&account_id=272b9a4f73e11030d0ba037daee47a35&date_from=-Infinity&date_to=Infinity&month=2023-06\", \"offset\": \"g1AAAAHyeJzLYWBgYMtgTmHQSklKzi9KdUhJMtRLytVNTtZNSU3JTE4sSU0xMjTUS87JL01JzCvRy0styQHqYUpSAJJJ-v___88C892cKtZ\"}, \"snapshots\": [{\"account_id\": \"abc\", \"month\": \"2023-06\", \"account_type\": \"account\", \"expected_processed_at\": 1687470383610, \"state\": \"enabled\", \"billing_period\": {\"start\": \"2023-06-01T00:00:00.000Z\", \"end\": \"2023-06-30T23:59:59.999Z\"}, \"snapshot_id\": \"1685577600000\", \"charset\": \"UTF-8\", \"compression\": \"GZIP\", \"content_type\": \"text/csv\", \"bucket\": \"bucket_name\", \"version\": \"1.0\", \"created_on\": \"2023-06-22T21:47:28.297Z\", \"report_types\": [{\"type\": \"account_summary\", \"version\": \"1.0\"}], \"files\": [{\"report_types\": \"account_summary\", \"location\": \"june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz\", \"account_id\": \"abc\"}], \"processed_at\": 1687470448297}]}";
     String getReportsSnapshotPath = "/v1/billing-reports-snapshots";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -972,6 +974,8 @@ public class UsageReportsTest {
       .month("2023-02")
       .dateFrom(Long.valueOf("1675209600000"))
       .dateTo(Long.valueOf("1675987200000"))
+      .limit(Long.valueOf("30"))
+      .start("testString")
       .build();
 
     // Invoke getReportsSnapshot() with a valid options model and verify the result
@@ -994,6 +998,8 @@ public class UsageReportsTest {
     assertEquals(query.get("month"), "2023-02");
     assertEquals(Long.valueOf(query.get("date_from")), Long.valueOf("1675209600000"));
     assertEquals(Long.valueOf(query.get("date_to")), Long.valueOf("1675987200000"));
+    assertEquals(Long.valueOf(query.get("_limit")), Long.valueOf("30"));
+    assertEquals(query.get("_start"), "testString");
   }
 
   // Test the getReportsSnapshot operation with and without retries enabled
@@ -1013,6 +1019,76 @@ public class UsageReportsTest {
     usageReportsService.getReportsSnapshot(null).execute();
   }
 
+  // Test the getReportsSnapshot operation using the GetReportsSnapshotPager.getNext() method
+  @Test
+  public void testGetReportsSnapshotWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"snapshots\":[{\"account_id\":\"abc\",\"month\":\"2023-06\",\"account_type\":\"account\",\"expected_processed_at\":1687470383610,\"state\":\"enabled\",\"billing_period\":{\"start\":\"2023-06-01T00:00:00.000Z\",\"end\":\"2023-06-30T23:59:59.999Z\"},\"snapshot_id\":\"1685577600000\",\"charset\":\"UTF-8\",\"compression\":\"GZIP\",\"content_type\":\"text/csv\",\"bucket\":\"bucket_name\",\"version\":\"1.0\",\"created_on\":\"2023-06-22T21:47:28.297Z\",\"report_types\":[{\"type\":\"account_summary\",\"version\":\"1.0\"}],\"files\":[{\"report_types\":\"account_summary\",\"location\":\"june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz\",\"account_id\":\"abc\"}],\"processed_at\":1687470448297}],\"next\":{\"href\":\"https://myhost.com/somePath?_start=1\"},\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"snapshots\":[{\"account_id\":\"abc\",\"month\":\"2023-06\",\"account_type\":\"account\",\"expected_processed_at\":1687470383610,\"state\":\"enabled\",\"billing_period\":{\"start\":\"2023-06-01T00:00:00.000Z\",\"end\":\"2023-06-30T23:59:59.999Z\"},\"snapshot_id\":\"1685577600000\",\"charset\":\"UTF-8\",\"compression\":\"GZIP\",\"content_type\":\"text/csv\",\"bucket\":\"bucket_name\",\"version\":\"1.0\",\"created_on\":\"2023-06-22T21:47:28.297Z\",\"report_types\":[{\"type\":\"account_summary\",\"version\":\"1.0\"}],\"files\":[{\"report_types\":\"account_summary\",\"location\":\"june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz\",\"account_id\":\"abc\"}],\"processed_at\":1687470448297}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    GetReportsSnapshotOptions getReportsSnapshotOptions = new GetReportsSnapshotOptions.Builder()
+      .accountId("abc")
+      .month("2023-02")
+      .dateFrom(Long.valueOf("1675209600000"))
+      .dateTo(Long.valueOf("1675987200000"))
+      .limit(Long.valueOf("30"))
+      .build();
+
+    List<SnapshotListSnapshotsItem> allResults = new ArrayList<>();
+    GetReportsSnapshotPager pager = new GetReportsSnapshotPager(usageReportsService, getReportsSnapshotOptions);
+    while (pager.hasNext()) {
+      List<SnapshotListSnapshotsItem> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the getReportsSnapshot operation using the GetReportsSnapshotPager.getAll() method
+  @Test
+  public void testGetReportsSnapshotWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"snapshots\":[{\"account_id\":\"abc\",\"month\":\"2023-06\",\"account_type\":\"account\",\"expected_processed_at\":1687470383610,\"state\":\"enabled\",\"billing_period\":{\"start\":\"2023-06-01T00:00:00.000Z\",\"end\":\"2023-06-30T23:59:59.999Z\"},\"snapshot_id\":\"1685577600000\",\"charset\":\"UTF-8\",\"compression\":\"GZIP\",\"content_type\":\"text/csv\",\"bucket\":\"bucket_name\",\"version\":\"1.0\",\"created_on\":\"2023-06-22T21:47:28.297Z\",\"report_types\":[{\"type\":\"account_summary\",\"version\":\"1.0\"}],\"files\":[{\"report_types\":\"account_summary\",\"location\":\"june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz\",\"account_id\":\"abc\"}],\"processed_at\":1687470448297}],\"next\":{\"href\":\"https://myhost.com/somePath?_start=1\"},\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"snapshots\":[{\"account_id\":\"abc\",\"month\":\"2023-06\",\"account_type\":\"account\",\"expected_processed_at\":1687470383610,\"state\":\"enabled\",\"billing_period\":{\"start\":\"2023-06-01T00:00:00.000Z\",\"end\":\"2023-06-30T23:59:59.999Z\"},\"snapshot_id\":\"1685577600000\",\"charset\":\"UTF-8\",\"compression\":\"GZIP\",\"content_type\":\"text/csv\",\"bucket\":\"bucket_name\",\"version\":\"1.0\",\"created_on\":\"2023-06-22T21:47:28.297Z\",\"report_types\":[{\"type\":\"account_summary\",\"version\":\"1.0\"}],\"files\":[{\"report_types\":\"account_summary\",\"location\":\"june/2023-06/1685577600000/2023-06-account-summary-272b9a4f73e11030d0ba037daee47a35.csv.gz\",\"account_id\":\"abc\"}],\"processed_at\":1687470448297}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    GetReportsSnapshotOptions getReportsSnapshotOptions = new GetReportsSnapshotOptions.Builder()
+      .accountId("abc")
+      .month("2023-02")
+      .dateFrom(Long.valueOf("1675209600000"))
+      .dateTo(Long.valueOf("1675987200000"))
+      .limit(Long.valueOf("30"))
+      .build();
+
+    GetReportsSnapshotPager pager = new GetReportsSnapshotPager(usageReportsService, getReportsSnapshotOptions);
+    List<SnapshotListSnapshotsItem> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
   // Perform setup needed before each test method
   @BeforeMethod
   public void beforeEachTest() {

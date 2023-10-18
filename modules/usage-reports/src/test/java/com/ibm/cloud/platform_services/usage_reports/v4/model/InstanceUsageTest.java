@@ -13,9 +13,6 @@
 
 package com.ibm.cloud.platform_services.usage_reports.v4.model;
 
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Discount;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.InstanceUsage;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.Metric;
 import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;

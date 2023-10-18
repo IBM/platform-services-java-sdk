@@ -13,7 +13,6 @@
 
 package com.ibm.cloud.platform_services.usage_reports.v4.model;
 
-import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -36,11 +35,15 @@ public class GetReportsSnapshotOptionsTest {
       .month("2023-02")
       .dateFrom(Long.valueOf("1675209600000"))
       .dateTo(Long.valueOf("1675987200000"))
+      .limit(Long.valueOf("30"))
+      .start("testString")
       .build();
     assertEquals(getReportsSnapshotOptionsModel.accountId(), "abc");
     assertEquals(getReportsSnapshotOptionsModel.month(), "2023-02");
     assertEquals(getReportsSnapshotOptionsModel.dateFrom(), Long.valueOf("1675209600000"));
     assertEquals(getReportsSnapshotOptionsModel.dateTo(), Long.valueOf("1675987200000"));
+    assertEquals(getReportsSnapshotOptionsModel.limit(), Long.valueOf("30"));
+    assertEquals(getReportsSnapshotOptionsModel.start(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

@@ -20,6 +20,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class SnapshotListNext extends GenericModel {
 
   protected String href;
+  protected String offset;
 
   protected SnapshotListNext() { }
 
@@ -30,6 +31,15 @@ public class SnapshotListNext extends GenericModel {
    */
   public String getHref() {
     return href;
+  }
+
+  /**
+   * Gets the offset.
+   *
+   * @return the offset
+   */
+  public String getOffset() {
+    return offset;
   }
 }
 

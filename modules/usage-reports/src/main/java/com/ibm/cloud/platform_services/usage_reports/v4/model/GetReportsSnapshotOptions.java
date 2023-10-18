@@ -23,6 +23,8 @@ public class GetReportsSnapshotOptions extends GenericModel {
   protected String month;
   protected Long dateFrom;
   protected Long dateTo;
+  protected Long limit;
+  protected String start;
 
   /**
    * Builder.
@@ -32,6 +34,8 @@ public class GetReportsSnapshotOptions extends GenericModel {
     private String month;
     private Long dateFrom;
     private Long dateTo;
+    private Long limit;
+    private String start;
 
     /**
      * Instantiates a new Builder from an existing GetReportsSnapshotOptions instance.
@@ -43,6 +47,8 @@ public class GetReportsSnapshotOptions extends GenericModel {
       this.month = getReportsSnapshotOptions.month;
       this.dateFrom = getReportsSnapshotOptions.dateFrom;
       this.dateTo = getReportsSnapshotOptions.dateTo;
+      this.limit = getReportsSnapshotOptions.limit;
+      this.start = getReportsSnapshotOptions.start;
     }
 
     /**
@@ -114,6 +120,28 @@ public class GetReportsSnapshotOptions extends GenericModel {
       this.dateTo = dateTo;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the GetReportsSnapshotOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the GetReportsSnapshotOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
+      return this;
+    }
   }
 
   protected GetReportsSnapshotOptions() { }
@@ -127,6 +155,8 @@ public class GetReportsSnapshotOptions extends GenericModel {
     month = builder.month;
     dateFrom = builder.dateFrom;
     dateTo = builder.dateTo;
+    limit = builder.limit;
+    start = builder.start;
   }
 
   /**
@@ -180,6 +210,28 @@ public class GetReportsSnapshotOptions extends GenericModel {
    */
   public Long dateTo() {
     return dateTo;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * Number of usage records returned. The default value is 30. Maximum value is 200.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * The offset from which the records must be fetched. Offset information is included in the response.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 }
 

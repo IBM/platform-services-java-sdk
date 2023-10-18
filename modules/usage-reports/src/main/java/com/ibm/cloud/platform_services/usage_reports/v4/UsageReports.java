@@ -534,6 +534,12 @@ public class UsageReports extends BaseService {
     if (getReportsSnapshotOptions.dateTo() != null) {
       builder.query("date_to", String.valueOf(getReportsSnapshotOptions.dateTo()));
     }
+    if (getReportsSnapshotOptions.limit() != null) {
+      builder.query("_limit", String.valueOf(getReportsSnapshotOptions.limit()));
+    }
+    if (getReportsSnapshotOptions.start() != null) {
+      builder.query("_start", String.valueOf(getReportsSnapshotOptions.start()));
+    }
     ResponseConverter<SnapshotList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<SnapshotList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);

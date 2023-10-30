@@ -43,7 +43,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySu
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttributeWithConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
@@ -57,6 +57,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssi
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateLimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
@@ -393,19 +394,19 @@ public class IamPolicyManagementExamples {
               .grant(policyGrant)
               .build();
 
-      RuleAttribute weeklyConditionAttribute = new RuleAttribute.Builder()
+      RuleAttributeWithConditions weeklyConditionAttribute = new RuleAttributeWithConditions.Builder()
               .key("{{environment.attributes.day_of_week}}")
               .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
               .operator("dayOfWeekAnyOf")
               .build();
 
-      RuleAttribute startConditionAttribute = new RuleAttribute.Builder()
+      RuleAttributeWithConditions startConditionAttribute = new RuleAttributeWithConditions.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("09:00:00+00:00")
               .operator("timeGreaterThanOrEquals")
               .build();
 
-      RuleAttribute endConditionAttribute = new RuleAttribute.Builder()
+      RuleAttributeWithConditions endConditionAttribute = new RuleAttributeWithConditions.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("17:00:00+00:00")
               .operator("timeLessThanOrEquals")
@@ -413,7 +414,7 @@ public class IamPolicyManagementExamples {
 
       V2PolicyRuleRuleWithConditions policyRule = new V2PolicyRuleRuleWithConditions.Builder()
               .operator("and")
-              .conditions(new ArrayList<RuleAttribute>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
+              .conditions(new ArrayList<RuleAttributeWithConditions>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
               .build();
 
       CreateV2PolicyOptions options = new CreateV2PolicyOptions.Builder()
@@ -510,19 +511,19 @@ public class IamPolicyManagementExamples {
               .grant(policyGrant)
               .build();
 
-      RuleAttribute weeklyConditionAttribute = new RuleAttribute.Builder()
+      RuleAttributeWithConditions weeklyConditionAttribute = new RuleAttributeWithConditions.Builder()
               .key("{{environment.attributes.day_of_week}}")
               .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
               .operator("dayOfWeekAnyOf")
               .build();
 
-      RuleAttribute startConditionAttribute = new RuleAttribute.Builder()
+      RuleAttributeWithConditions startConditionAttribute = new RuleAttributeWithConditions.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("09:00:00+00:00")
               .operator("timeGreaterThanOrEquals")
               .build();
 
-      RuleAttribute endConditionAttribute = new RuleAttribute.Builder()
+      RuleAttributeWithConditions endConditionAttribute = new RuleAttributeWithConditions.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("17:00:00+00:00")
               .operator("timeLessThanOrEquals")
@@ -530,7 +531,7 @@ public class IamPolicyManagementExamples {
 
       V2PolicyRuleRuleWithConditions policyRule = new V2PolicyRuleRuleWithConditions.Builder()
               .operator("and")
-              .conditions(new ArrayList<RuleAttribute>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
+              .conditions(new ArrayList<RuleAttributeWithConditions>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
               .build();
 
       ReplaceV2PolicyOptions options = new ReplaceV2PolicyOptions.Builder()
@@ -738,8 +739,8 @@ public class IamPolicyManagementExamples {
         .policy(templatePolicyModel)
         .build();
 
-      Response<PolicyTemplate> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
-      PolicyTemplate policyTemplate = response.getResult();
+      Response<PolicyTemplateLimitData> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
+      PolicyTemplateLimitData policyTemplate = response.getResult();
 
       System.out.println(policyTemplate);
       // end-create_policy_template
@@ -859,8 +860,8 @@ public class IamPolicyManagementExamples {
         .policy(templatePolicyModel)
         .build();
 
-      Response<PolicyTemplate> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
-      PolicyTemplate policyTemplate = response.getResult();
+      Response<PolicyTemplateLimitData> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
+      PolicyTemplateLimitData policyTemplate = response.getResult();
 
       System.out.println(policyTemplate);
       // end-create_policy_template_version

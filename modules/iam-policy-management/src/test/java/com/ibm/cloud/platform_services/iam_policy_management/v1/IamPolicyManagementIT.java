@@ -360,20 +360,20 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .grant(policyGrantModel)
           .build();
 
-        RuleAttribute weeklyConditionAttributeModel = new RuleAttribute.Builder()
+        RuleAttributeWithConditions weeklyConditionAttributeModel = new RuleAttributeWithConditions.Builder()
           .key("{{environment.attributes.day_of_week}}")
           .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
           .operator("dayOfWeekAnyOf")
           .build();
         
 
-        RuleAttribute startConditionAttributeModel = new RuleAttribute.Builder()
+        RuleAttributeWithConditions startConditionAttributeModel = new RuleAttributeWithConditions.Builder()
           .key("{{environment.attributes.current_time}}")
           .value("09:00:00+00:00")
           .operator("timeGreaterThanOrEquals")
           .build();
 
-        RuleAttribute endConditionAttributeModel = new RuleAttribute.Builder()
+        RuleAttributeWithConditions endConditionAttributeModel = new RuleAttributeWithConditions.Builder()
           .key("{{environment.attributes.current_time}}")
           .value("17:00:00+00:00")
           .operator("timeLessThanOrEquals")
@@ -381,7 +381,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         V2PolicyRuleRuleWithConditions policyRuleModel = new V2PolicyRuleRuleWithConditions.Builder()
           .operator("and")
-          .conditions(new ArrayList<RuleAttribute>(Arrays.asList(weeklyConditionAttributeModel,
+          .conditions(new ArrayList<RuleAttributeWithConditions>(Arrays.asList(weeklyConditionAttributeModel,
             startConditionAttributeModel, endConditionAttributeModel)))
           .build();
 
@@ -475,20 +475,20 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         Control controlModel = new Control.Builder()
           .grant(policyGrantModel)
           .build();
-        RuleAttribute weeklyConditionAttributeModel = new RuleAttribute.Builder()
+        RuleAttributeWithConditions weeklyConditionAttributeModel = new RuleAttributeWithConditions.Builder()
           .key("{{environment.attributes.day_of_week}}")
           .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
           .operator("dayOfWeekAnyOf")
           .build();
         
 
-        RuleAttribute startConditionAttributeModel = new RuleAttribute.Builder()
+        RuleAttributeWithConditions startConditionAttributeModel = new RuleAttributeWithConditions.Builder()
           .key("{{environment.attributes.current_time}}")
           .value("09:00:00+00:00")
           .operator("timeGreaterThanOrEquals")
           .build();
 
-        RuleAttribute endConditionAttributeModel = new RuleAttribute.Builder()
+        RuleAttributeWithConditions endConditionAttributeModel = new RuleAttributeWithConditions.Builder()
           .key("{{environment.attributes.current_time}}")
           .value("17:00:00+00:00")
           .operator("timeLessThanOrEquals")
@@ -496,7 +496,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         V2PolicyRuleRuleWithConditions policyRuleModel = new V2PolicyRuleRuleWithConditions.Builder()
           .operator("and")
-          .conditions(new ArrayList<RuleAttribute>(Arrays.asList(weeklyConditionAttributeModel,
+          .conditions(new ArrayList<RuleAttributeWithConditions>(Arrays.asList(weeklyConditionAttributeModel,
             startConditionAttributeModel, endConditionAttributeModel)))
           .build();
 
@@ -736,11 +736,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .description("SDK Test template with viewer role")
         .build();
 
-      Response<PolicyTemplate> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
+      Response<PolicyTemplateLimitData> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
 
-      PolicyTemplate result = response.getResult();
+      PolicyTemplateLimitData result = response.getResult();
 
       assertNotNull(result);
       assertEquals(result.getPolicy(), templatePolicyModel);
@@ -887,12 +887,12 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .build();
 
       // Invoke operation
-      Response<PolicyTemplate> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
+      Response<PolicyTemplateLimitData> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
       
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 201);
 
-      PolicyTemplate result = response.getResult();
+      PolicyTemplateLimitData result = response.getResult();
 
       assertNotNull(result);
       testNewTemplateVersion = result.getVersion();

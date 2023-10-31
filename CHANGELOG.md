@@ -1,3 +1,10 @@
+## [0.44.2](https://github.com/IBM/platform-services-java-sdk/compare/0.44.1...0.44.2) (2023-10-31)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** add nested conditions to rule.conditions ([#218](https://github.com/IBM/platform-services-java-sdk/issues/218)) ([653fdfa](https://github.com/IBM/platform-services-java-sdk/commit/653fdfa806fdcbf926eab7d92a3040e24ee2f731))
+
 ## [0.44.1](https://github.com/IBM/platform-services-java-sdk/compare/0.44.0...0.44.1) (2023-10-18)
 
 

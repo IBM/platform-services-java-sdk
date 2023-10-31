@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
+ * IBM OpenAPI SDK Code Generator Version: 3.81.0-c73a091c-20231026-215706
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -49,6 +49,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyColl
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateLimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
@@ -208,12 +209,13 @@ public class IamPolicyManagement extends BaseService {
    * their support of authorization policies. To create an authorization policy, use **`"type": "authorization"`** in
    * the body. The subject attributes must match the supported authorization subjects of the resource. Multiple subject
    * attributes might be provided. The following attributes are supported:
-   *   serviceName, serviceInstance, region, resourceType, resource, accountId Assign roles that are supported by the
-   * service or platform roles. For more information, see [IAM roles and
+   *   serviceName, serviceInstance, region, resourceType, resource, accountId, resourceGroupId Assign roles that are
+   * supported by the service or platform roles. For more information, see [IAM roles and
    * actions](/docs/account?topic=account-iam-service-roles-actions). The user must also have the same level of access
    * or greater to the target resource in order to grant the role. Use only the resource attributes supported by the
    * service. To view a service's or the platform's supported attributes, check the [documentation](/docs?tab=all-docs).
-   * Both the policy subject and the policy resource must include the **`serviceName`** and **`accountId`** attributes.
+   * Both the policy subject and the policy resource must include the **`accountId`** attributes. The policy subject
+   * must include either **`serviceName`** or **`resourceGroupId`** (or both) attributes.
    *
    * ### Attribute Operators
    *
@@ -278,12 +280,13 @@ public class IamPolicyManagement extends BaseService {
    * To update an authorization policy, use **`"type": "authorization"`** in the body. The subject attributes must match
    * the supported authorization subjects of the resource. Multiple subject attributes might be provided. The following
    * attributes are supported:
-   *   serviceName, serviceInstance, region, resourceType, resource, accountId Assign roles that are supported by the
-   * service or platform roles. For more information, see [IAM roles and
+   *   serviceName, serviceInstance, region, resourceType, resource, accountId, resourceGroupId Assign roles that are
+   * supported by the service or platform roles. For more information, see [IAM roles and
    * actions](/docs/account?topic=account-iam-service-roles-actions). The user must also have the same level of access
    * or greater to the target resource in order to grant the role. Use only the resource attributes supported by the
    * service. To view a service's or the platform's supported attributes, check the [documentation](/docs?tab=all-docs).
-   * Both the policy subject and the policy resource must include the **`serviceName`** and **`accountId`** attributes.
+   * Both the policy subject and the policy resource must include the **`accountId`** attributes. The policy subject
+   * must include either **`serviceName`** or **`resourceGroupId`** (or both) attributes.
    *
    * ### Attribute Operators
    *
@@ -691,6 +694,20 @@ public class IamPolicyManagement extends BaseService {
    * conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&amp;interface=ui). If the subject is a
    * locked service-id, the request will fail.
    *
+   * ### Authorization
+   *
+   * Authorization policies are supported by services on a case by case basis. Refer to service documentation to verify
+   * their support of authorization policies. To create an authorization policy, use **`"type": "authorization"`** in
+   * the body. The subject attributes must match the supported authorization subjects of the resource. Multiple subject
+   * attributes might be provided. The following attributes are supported:
+   *   serviceName, serviceInstance, region, resourceType, resource, accountId, resourceGroupId Assign roles that are
+   * supported by the service or platform roles. For more information, see [IAM roles and
+   * actions](/docs/account?topic=account-iam-service-roles-actions). The user must also have the same level of access
+   * or greater to the target resource in order to grant the role. Use only the resource attributes supported by the
+   * service. To view a service's or the platform's supported attributes, check the [documentation](/docs?tab=all-docs).
+   * Both the policy subject and the policy resource must include the **`accountId`** attributes. The policy subject
+   * must include either **`serviceName`** or **`resourceGroupId`** (or both) attributes.
+   *
    * ### Attribute Operators
    *
    * Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators are available. For more
@@ -750,7 +767,7 @@ public class IamPolicyManagement extends BaseService {
    *
    * ### Access
    *
-   * To create an access policy, use **`"type": "access"`** in the body. The supported subject attributes are
+   * To update an access policy, use **`"type": "access"`** in the body. The supported subject attributes are
    * **`iam_id`** and **`access_group_id`**. Use the **`iam_id`** subject attribute to assign access to a user or
    * service-id. Use the **`access_group_id`** subject attribute to assign access to an access group. Assign roles that
    * are supported by the service or platform roles. For more information, see [IAM roles and
@@ -790,6 +807,20 @@ public class IamPolicyManagement extends BaseService {
    * and
    * [Limiting access with time-based
    * conditions](https://cloud.ibm.com/docs/account?topic=account-iam-time-based&amp;interface=ui).
+   *
+   * ### Authorization
+   *
+   * To update an authorization policy, use **`"type": "authorization"`** in the body. The subject attributes must match
+   * the supported authorization subjects of the resource. Multiple subject attributes might be provided. The following
+   * attributes are supported:
+   *   serviceName, serviceInstance, region, resourceType, resource, accountId, resourceGroupId Assign roles that are
+   * supported by the service or platform roles. For more information, see [IAM roles and
+   * actions](/docs/account?topic=account-iam-service-roles-actions). The user must also have the same level of access
+   * or greater to the target resource in order to grant the role. Use only the resource attributes supported by the
+   * service. To view a service's or the platform's supported attributes, check the [documentation](/docs?tab=all-docs).
+   * Both the policy subject and the policy resource must include the **`accountId`** attributes. The policy subject
+   * must include either **`serviceName`** or **`resourceGroupId`** (or both) attributes.
+   *
    * ### Attribute Operators
    *
    * Currently, only the `stringEquals`, `stringMatch`, and `stringEquals` operators are available. For more
@@ -928,9 +959,9 @@ public class IamPolicyManagement extends BaseService {
    * grant access to multiple subjects.
    *
    * @param createPolicyTemplateOptions the {@link CreatePolicyTemplateOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PolicyTemplate}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyTemplateLimitData}
    */
-  public ServiceCall<PolicyTemplate> createPolicyTemplate(CreatePolicyTemplateOptions createPolicyTemplateOptions) {
+  public ServiceCall<PolicyTemplateLimitData> createPolicyTemplate(CreatePolicyTemplateOptions createPolicyTemplateOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createPolicyTemplateOptions,
       "createPolicyTemplateOptions cannot be null");
     RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policy_templates"));
@@ -953,8 +984,8 @@ public class IamPolicyManagement extends BaseService {
       contentJson.addProperty("committed", createPolicyTemplateOptions.committed());
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<PolicyTemplate> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplate>() { }.getType());
+    ResponseConverter<PolicyTemplateLimitData> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateLimitData>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -1013,9 +1044,9 @@ public class IamPolicyManagement extends BaseService {
    * committed.
    *
    * @param createPolicyTemplateVersionOptions the {@link CreatePolicyTemplateVersionOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PolicyTemplate}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyTemplateLimitData}
    */
-  public ServiceCall<PolicyTemplate> createPolicyTemplateVersion(CreatePolicyTemplateVersionOptions createPolicyTemplateVersionOptions) {
+  public ServiceCall<PolicyTemplateLimitData> createPolicyTemplateVersion(CreatePolicyTemplateVersionOptions createPolicyTemplateVersionOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(createPolicyTemplateVersionOptions,
       "createPolicyTemplateVersionOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -1038,8 +1069,8 @@ public class IamPolicyManagement extends BaseService {
       contentJson.addProperty("committed", createPolicyTemplateVersionOptions.committed());
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<PolicyTemplate> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplate>() { }.getType());
+    ResponseConverter<PolicyTemplateLimitData> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateLimitData>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

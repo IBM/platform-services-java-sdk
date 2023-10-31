@@ -36,7 +36,7 @@ public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
    */
   public static class Builder {
     private String operator;
-    private List<RuleAttribute> conditions;
+    private List<RuleAttributeWithConditions> conditions;
 
     /**
      * Instantiates a new Builder from an existing V2PolicyRuleRuleWithConditions instance.
@@ -60,7 +60,7 @@ public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
      * @param operator the operator
      * @param conditions the conditions
      */
-    public Builder(String operator, List<RuleAttribute> conditions) {
+    public Builder(String operator, List<RuleAttributeWithConditions> conditions) {
       this.operator = operator;
       this.conditions = conditions;
     }
@@ -80,11 +80,11 @@ public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
      * @param conditions the new conditions
      * @return the V2PolicyRuleRuleWithConditions builder
      */
-    public Builder addConditions(RuleAttribute conditions) {
+    public Builder addConditions(RuleAttributeWithConditions conditions) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(conditions,
         "conditions cannot be null");
       if (this.conditions == null) {
-        this.conditions = new ArrayList<RuleAttribute>();
+        this.conditions = new ArrayList<RuleAttributeWithConditions>();
       }
       this.conditions.add(conditions);
       return this;
@@ -108,7 +108,7 @@ public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
      * @param conditions the conditions
      * @return the V2PolicyRuleRuleWithConditions builder
      */
-    public Builder conditions(List<RuleAttribute> conditions) {
+    public Builder conditions(List<RuleAttributeWithConditions> conditions) {
       this.conditions = conditions;
       return this;
     }

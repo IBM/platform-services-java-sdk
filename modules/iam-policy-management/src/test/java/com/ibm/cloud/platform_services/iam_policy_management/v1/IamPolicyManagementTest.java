@@ -43,6 +43,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOpt
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GrantWithEnrichedRoles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.LimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
@@ -61,6 +62,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubj
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateLimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
@@ -74,7 +76,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAction
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttributeWithConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateCountData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetadata;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
@@ -1266,7 +1270,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testCreatePolicyTemplateWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"counts\": {\"template\": {\"current\": 7, \"limit\": 5}, \"version\": {\"current\": 7, \"limit\": 5}}}";
     String createPolicyTemplatePath = "/v1/policy_templates";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1336,9 +1340,9 @@ public class IamPolicyManagementTest {
       .build();
 
     // Invoke createPolicyTemplate() with a valid options model and verify the result
-    Response<PolicyTemplate> response = iamPolicyManagementService.createPolicyTemplate(createPolicyTemplateOptionsModel).execute();
+    Response<PolicyTemplateLimitData> response = iamPolicyManagementService.createPolicyTemplate(createPolicyTemplateOptionsModel).execute();
     assertNotNull(response);
-    PolicyTemplate responseObj = response.getResult();
+    PolicyTemplateLimitData responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request sent to the mock server
@@ -1475,7 +1479,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testCreatePolicyTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"timeLessThan\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"counts\": {\"template\": {\"current\": 7, \"limit\": 5}, \"version\": {\"current\": 7, \"limit\": 5}}}";
     String createPolicyTemplateVersionPath = "/v1/policy_templates/testString/versions";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1544,9 +1548,9 @@ public class IamPolicyManagementTest {
       .build();
 
     // Invoke createPolicyTemplateVersion() with a valid options model and verify the result
-    Response<PolicyTemplate> response = iamPolicyManagementService.createPolicyTemplateVersion(createPolicyTemplateVersionOptionsModel).execute();
+    Response<PolicyTemplateLimitData> response = iamPolicyManagementService.createPolicyTemplateVersion(createPolicyTemplateVersionOptionsModel).execute();
     assertNotNull(response);
-    PolicyTemplate responseObj = response.getResult();
+    PolicyTemplateLimitData responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request sent to the mock server

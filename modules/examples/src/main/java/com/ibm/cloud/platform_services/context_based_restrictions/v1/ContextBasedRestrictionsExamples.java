@@ -102,9 +102,17 @@ public class ContextBasedRestrictionsExamples {
                 .type("ipAddress")
                 .value("169.23.56.234")
                 .build();
+            AddressIPAddress ipAddressV6Model = new AddressIPAddress.Builder()
+                .type("ipAddress")
+                .value("3ffe:1900:fe21:4545::")
+                .build();
             AddressIPAddressRange ipRangeAddressModel = new AddressIPAddressRange.Builder()
                 .type("ipRange")
                 .value("169.23.22.0-169.23.22.255")
+                .build();
+            AddressIPAddressRange ipRangeAddressV6Model = new AddressIPAddressRange.Builder()
+                .type("ipRange")
+                .value("3ffe:1900:fe21:4545::-3ffe:1900:fe21:6767::")
                 .build();
             AddressSubnet subnetAddressModel = new AddressSubnet.Builder()
                 .type("subnet")
@@ -130,7 +138,7 @@ public class ContextBasedRestrictionsExamples {
                 .name("an example of zone")
                 .accountId(accountID)
                 .description("this is an example of zone")
-                .addresses(java.util.Arrays.asList(ipAddressModel, ipRangeAddressModel, subnetAddressModel, vpcAddressModel, serviceRefAddressModel))
+                .addresses(java.util.Arrays.asList(ipAddressModel, ipAddressV6Model, ipRangeAddressModel, ipRangeAddressV6Model, subnetAddressModel, vpcAddressModel, serviceRefAddressModel))
                 .excluded(java.util.Arrays.asList(excludedIPAddressModel))
                 .build();
 

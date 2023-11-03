@@ -36,5 +36,6 @@ public class IdBasedMfaEnrollmentTest {
     assertNull(idBasedMfaEnrollmentModel.getTraitUserSpecific());
     assertNull(idBasedMfaEnrollmentModel.getTraitEffective());
     assertNull(idBasedMfaEnrollmentModel.isComplies());
+    assertNull(idBasedMfaEnrollmentModel.getComplyState());
   }
 }

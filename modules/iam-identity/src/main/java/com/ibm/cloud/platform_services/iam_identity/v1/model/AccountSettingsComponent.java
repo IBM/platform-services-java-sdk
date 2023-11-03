@@ -57,6 +57,7 @@ public class AccountSettingsComponent extends GenericModel {
   /**
    * Defines the MFA trait for the account. Valid values:
    *   * NONE - No MFA trait set
+   *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users
@@ -66,6 +67,8 @@ public class AccountSettingsComponent extends GenericModel {
   public interface Mfa {
     /** NONE. */
     String NONE = "NONE";
+    /** NONE_NO_ROPC. */
+    String NONE_NO_ROPC = "NONE_NO_ROPC";
     /** TOTP. */
     String TOTP = "TOTP";
     /** TOTP4ALL. */
@@ -343,6 +346,7 @@ public class AccountSettingsComponent extends GenericModel {
    *
    * Defines the MFA trait for the account. Valid values:
    *   * NONE - No MFA trait set
+   *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users

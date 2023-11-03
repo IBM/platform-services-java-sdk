@@ -2193,7 +2193,7 @@ public class IamIdentityTest {
   @Test
   public void testGetMfaStatusWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"iam_id\": \"iamId\", \"effective_mfa_type\": \"effectiveMfaType\", \"id_based_mfa\": {\"trait_account_default\": \"NONE\", \"trait_user_specific\": \"NONE\", \"trait_effective\": \"NONE\", \"complies\": true}, \"account_based_mfa\": {\"security_questions\": {\"required\": true, \"enrolled\": true}, \"totp\": {\"required\": true, \"enrolled\": true}, \"verisign\": {\"required\": true, \"enrolled\": true}, \"complies\": true}}";
+    String mockResponseBody = "{\"iam_id\": \"iamId\", \"effective_mfa_type\": \"effectiveMfaType\", \"id_based_mfa\": {\"trait_account_default\": \"NONE\", \"trait_user_specific\": \"NONE\", \"trait_effective\": \"NONE\", \"complies\": true, \"comply_state\": \"NO\"}, \"account_based_mfa\": {\"security_questions\": {\"required\": true, \"enrolled\": true}, \"totp\": {\"required\": true, \"enrolled\": true}, \"verisign\": {\"required\": true, \"enrolled\": true}, \"complies\": true}}";
     String getMfaStatusPath = "/v1/mfa/accounts/testString/status";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2299,7 +2299,7 @@ public class IamIdentityTest {
   @Test
   public void testGetMfaReportWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"created_by\": \"createdBy\", \"reference\": \"reference\", \"report_time\": \"reportTime\", \"account_id\": \"accountId\", \"ims_account_id\": \"imsAccountId\", \"users\": [{\"iam_id\": \"iamId\", \"name\": \"name\", \"username\": \"username\", \"email\": \"email\", \"enrollments\": {\"effective_mfa_type\": \"effectiveMfaType\", \"id_based_mfa\": {\"trait_account_default\": \"NONE\", \"trait_user_specific\": \"NONE\", \"trait_effective\": \"NONE\", \"complies\": true}, \"account_based_mfa\": {\"security_questions\": {\"required\": true, \"enrolled\": true}, \"totp\": {\"required\": true, \"enrolled\": true}, \"verisign\": {\"required\": true, \"enrolled\": true}, \"complies\": true}}}]}";
+    String mockResponseBody = "{\"created_by\": \"createdBy\", \"reference\": \"reference\", \"report_time\": \"reportTime\", \"account_id\": \"accountId\", \"ims_account_id\": \"imsAccountId\", \"users\": [{\"iam_id\": \"iamId\", \"name\": \"name\", \"username\": \"username\", \"email\": \"email\", \"enrollments\": {\"effective_mfa_type\": \"effectiveMfaType\", \"id_based_mfa\": {\"trait_account_default\": \"NONE\", \"trait_user_specific\": \"NONE\", \"trait_effective\": \"NONE\", \"complies\": true, \"comply_state\": \"NO\"}, \"account_based_mfa\": {\"security_questions\": {\"required\": true, \"enrolled\": true}, \"totp\": {\"required\": true, \"enrolled\": true}, \"verisign\": {\"required\": true, \"enrolled\": true}, \"complies\": true}}}]}";
     String getMfaReportPath = "/v1/mfa/accounts/testString/report/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

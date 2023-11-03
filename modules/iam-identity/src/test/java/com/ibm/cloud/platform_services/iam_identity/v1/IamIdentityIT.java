@@ -89,7 +89,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private String reportReference;
     private String reportReferenceMfa;
-    
+
     private String profileTemplateId;
     private long profileTemplateVersion;
     private String profileTemplateEtag;
@@ -101,7 +101,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private String accountSettingsTemplateEtag;
     private String accountSettingsTemplateAssignmentId;
     private String accountSettingsTemplateAssignmentEtag;
-    
+
     @Override
     public String getConfigFilename() {
         return "../../iam_identity.env";
@@ -127,8 +127,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         IAM_ID = config.get("IAM_ID");
         IAM_ID_MEMBER = config.get("IAM_ID_MEMBER");
         IAM_APIKEY = config.get("APIKEY");
-        ENTERPRISE_ACCOUNT_ID = config.get("ENTERPRISE_ACCOUNT_ID"); 
-        ENTERPRISE_SUBACCOUNT_ID = config.get("ENTERPRISE_SUBACCOUNT_ID"); 
+        ENTERPRISE_ACCOUNT_ID = config.get("ENTERPRISE_ACCOUNT_ID");
+        ENTERPRISE_SUBACCOUNT_ID = config.get("ENTERPRISE_SUBACCOUNT_ID");
 
         profileId1 = config.get("profileId1");
 
@@ -1697,6 +1697,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             UserMfaEnrollments mfaStatusResponseResult = response.getResult();
             assertNotNull(mfaStatusResponseResult);
             assertNotNull(mfaStatusResponseResult.getIamId());
+            assertNotNull(mfaStatusResponseResult.getIdBasedMfa().getComplyState());
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -1831,7 +1832,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test
     public void testCreateProfileTemplate() throws Exception {
         try {
@@ -1842,7 +1843,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .build();
             List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
             conditions.add(condition);
-            
+
         	TrustedProfileTemplateClaimRule claimRule = new TrustedProfileTemplateClaimRule.Builder()
         			.name("My Rule")
         			.realmName(REALM_NAME)
@@ -1850,20 +1851,20 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.expiration(43200)
         			.conditions(conditions)
         			.build();
-        	
+
         	TemplateProfileComponentRequest profile = new TemplateProfileComponentRequest.Builder()
         			.addRules(claimRule)
         			.name(PROFILE_TEMPLATE_PROFILE_NAME)
         			.description("JavaSDK test Profile cretaed from Profile Template #1")
         			.build();
-        	
+
         	CreateProfileTemplateOptions createProfileTemplateOptions = new CreateProfileTemplateOptions.Builder()
         			.name(PROFILE_TEMPLATE_NAME)
                     .description("JavaSDK test Profile Template #1")
                     .accountId(ENTERPRISE_ACCOUNT_ID)
                     .profile(profile)
         			.build();
-        			
+
             Response<TrustedProfileTemplateResponse> response = service.createProfileTemplate(createProfileTemplateOptions).execute();
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 201);
@@ -1881,8 +1882,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
-    
+
+
     @Test(dependsOnMethods = { "testCreateProfileTemplate" })
     public void testGetProfileTemplate() throws Exception {
         try {
@@ -1917,7 +1918,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         	ListProfileTemplatesOptions listOptions = new ListProfileTemplatesOptions.Builder()
         			.accountId(ENTERPRISE_ACCOUNT_ID)
         			.build();
-        	
+
         	Response<TrustedProfileTemplateList> response = service.listProfileTemplates(listOptions).execute();
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
@@ -1928,7 +1929,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testGetProfileTemplate" })
     public void testUpdateProfileTemplate() throws Exception {
         try {
@@ -1940,12 +1941,12 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.name(PROFILE_TEMPLATE_NAME)
         			.description("JavaSDK test Profile Template #1 - updated")
         			.build();
-        	
+
         	Response<TrustedProfileTemplateResponse> updateResponse = service.updateProfileTemplateVersion(updateOptions).execute();
             assertNotNull(updateResponse);
             assertEquals(updateResponse.getStatusCode(), 200);
             assertNotNull(updateResponse.getResult());
-        	
+
             // Grab the Etag value from the response for use in the update operation.
             assertNotNull(updateResponse.getHeaders().values("Etag"));
             assertEquals(updateResponse.getHeaders().values("Etag").size(), 1);
@@ -1956,7 +1957,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testUpdateProfileTemplate" })
     public void testAssignProfileTemplate() throws Exception {
         try {
@@ -1964,22 +1965,22 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.templateId(profileTemplateId)
         			.version(Long.toString(profileTemplateVersion))
         			.build();
-        	
+
         	Response<Void> commitResponse = service.commitProfileTemplate(commitOptions).execute();
             assertNotNull(commitResponse);
             assertEquals(commitResponse.getStatusCode(), 204);
-            
+
             CreateTrustedProfileAssignmentOptions assignOptions = new CreateTrustedProfileAssignmentOptions.Builder()
             		.templateId(profileTemplateId)
             		.templateVersion(profileTemplateVersion)
             		.targetType(ASSIGNMENT_TARGET_TYPE_ACCOUNT)
             		.target(ENTERPRISE_SUBACCOUNT_ID)
             		.build();
-            
+
             Response<TemplateAssignmentResponse> assignResponse = service.createTrustedProfileAssignment(assignOptions).execute();
             assertNotNull(commitResponse);
             assertEquals(commitResponse.getStatusCode(), 204);
-            
+
             TemplateAssignmentResponse assignmentResponseResult = assignResponse.getResult();
             assertNotNull(assignmentResponseResult);
 
@@ -1991,13 +1992,13 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(assignResponse.getHeaders().values("Etag").size(), 1);
             profileTemplateAssignmentEtag = assignResponse.getHeaders().values("Etag").get(0);
             assertNotNull(profileTemplateAssignmentEtag);
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testAssignProfileTemplate" })
     public void testListProfileTemplateAssignments() throws Exception {
         try {
@@ -2005,22 +2006,22 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.accountId(ENTERPRISE_ACCOUNT_ID)
         			.templateId(profileTemplateId)
         			.build();
-        	
+
         	Response<TemplateAssignmentListResponse> listResponse = service.listTrustedProfileAssignments(listOptions).execute();
             assertNotNull(listResponse);
             assertEquals(listResponse.getStatusCode(), 200);
             assertNotNull(listResponse.getResult());
-            
+
             TemplateAssignmentListResponse listResult = listResponse.getResult();
             assertNotNull(listResult.getAssignments());
             assertEquals(listResult.getAssignments().size(), 1);
-        	
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testAssignProfileTemplate" })
     public void testCreateNewProfileTemplateVersion() throws Exception {
         try {
@@ -2031,7 +2032,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .build();
             List<ProfileClaimRuleConditions> conditions = new ArrayList<>();
             conditions.add(condition);
-            
+
         	TrustedProfileTemplateClaimRule claimRule = new TrustedProfileTemplateClaimRule.Builder()
         			.name("My Rule")
         			.realmName(REALM_NAME)
@@ -2039,7 +2040,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.expiration(43200)
         			.conditions(conditions)
         			.build();
-        	
+
         	List<String> accounts= new ArrayList<String>();
         	accounts.add(ENTERPRISE_ACCOUNT_ID);
         	ProfileIdentityRequest profileIdentity= new ProfileIdentityRequest.Builder()
@@ -2050,14 +2051,14 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.build();
         	List<ProfileIdentityRequest> identities= new ArrayList<ProfileIdentityRequest>();
         	identities.add(profileIdentity);
-        	
+
         	TemplateProfileComponentRequest profile = new TemplateProfileComponentRequest.Builder()
         			.addRules(claimRule)
         			.name(PROFILE_TEMPLATE_PROFILE_NAME)
         			.description("JavaSDK test Profile cretaed from Profile Template #1 - new version")
         			.identities(identities)
         			.build();
-        	
+
         	CreateProfileTemplateVersionOptions createOptions = new CreateProfileTemplateVersionOptions.Builder()
         			.accountId(ENTERPRISE_ACCOUNT_ID)
         			.templateId(profileTemplateId)
@@ -2065,12 +2066,12 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.description("JavaSDK test Profile Template #1 - new version")
         			.profile(profile)
         			.build();
-        	
+
         	Response<TrustedProfileTemplateResponse> createResponse = service.createProfileTemplateVersion(createOptions).execute();
             assertNotNull(createResponse);
             assertEquals(createResponse.getStatusCode(), 201);
             assertNotNull(createResponse.getResult());
-            
+
             TrustedProfileTemplateResponse createResult = createResponse.getResult();
             assertNotNull(createResult);
 
@@ -2082,26 +2083,26 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testCreateNewProfileTemplateVersion" })
     public void testGetLatestProfileTemplateVersion() throws Exception {
     	GetLatestProfileTemplateVersionOptions getOptions = new GetLatestProfileTemplateVersionOptions.Builder()
     			.templateId(profileTemplateId)
     			.build();
-    	
+
     	Response<TrustedProfileTemplateResponse> getResponse = service.getLatestProfileTemplateVersion(getOptions).execute();
         assertNotNull(getResponse);
         assertEquals(getResponse.getStatusCode(), 200);
         assertNotNull(getResponse.getResult());
     }
-    
+
     @Test(dependsOnMethods = { "testCreateNewProfileTemplateVersion" })
     public void testListProfileTemplateVersions() throws Exception {
-    	
+
     	ListVersionsOfProfileTemplateOptions listOptions = new ListVersionsOfProfileTemplateOptions.Builder()
     			.templateId(profileTemplateId)
     			.build();
-    	
+
     	Response<TrustedProfileTemplateList> listResponse = service.listVersionsOfProfileTemplate(listOptions).execute();
         assertNotNull(listResponse);
         assertEquals(listResponse.getStatusCode(), 200);
@@ -2110,7 +2111,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         assertNotNull(listResult.getProfileTemplates());
         assertTrue(listResult.getProfileTemplates().size() > 0);
     }
-    
+
     @Test(dependsOnMethods = { "testAssignProfileTemplate", "testCreateNewProfileTemplateVersion" })
     public void testUpdateProfileTemplateAssignment() throws Exception {
         try {
@@ -2118,55 +2119,57 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.templateId(profileTemplateId)
         			.version(Long.toString(profileTemplateVersion))
         			.build();
-        	
+
         	Response<Void> commitResponse = service.commitProfileTemplate(commitOptions).execute();
             assertNotNull(commitResponse);
             assertEquals(commitResponse.getStatusCode(), 204);
 
         	waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId);
-        	
+
         	UpdateTrustedProfileAssignmentOptions updateOptions = new UpdateTrustedProfileAssignmentOptions.Builder()
         			.assignmentId(profileTemplateAssignmentId)
         			.templateVersion(profileTemplateVersion)
         			.ifMatch(profileTemplateAssignmentEtag)
         			.build();
-        	
+
         	Response<TemplateAssignmentResponse> updateResponse = service.updateTrustedProfileAssignment(updateOptions).execute();
             assertNotNull(updateResponse);
             assertEquals(updateResponse.getStatusCode(), 202);
             assertNotNull(updateResponse.getResult());
-            
+
             // Grab the Etag value from the response for use in the update operation.
             assertNotNull(updateResponse.getHeaders().values("Etag"));
             assertEquals(updateResponse.getHeaders().values("Etag").size(), 1);
             profileTemplateAssignmentEtag = updateResponse.getHeaders().values("Etag").get(0);
             assertNotNull(profileTemplateAssignmentEtag);
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testUpdateProfileTemplateAssignment" })
     public void testDeleteProfileTemplateAssignment() throws Exception {
         try {
         	waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId);
-        	
+
         	DeleteTrustedProfileAssignmentOptions deleteOptions = new DeleteTrustedProfileAssignmentOptions.Builder()
         			.assignmentId(profileTemplateAssignmentId)
         			.build();
-        	
+
         	Response<ExceptionResponse> deleteResponse = service.deleteTrustedProfileAssignment(deleteOptions).execute();
             assertNotNull(deleteResponse);
             assertEquals(deleteResponse.getStatusCode(), 202);
-        	
+
+            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId);
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testDeleteProfileTemplateAssignment" })
     public void testDeleteProfileTemplateVersion() throws Exception {
         try {
@@ -2174,7 +2177,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.templateId(profileTemplateId)
         			.version("1")
         			.build();
-        	
+
         	Response<Void> deleteResponse = service.deleteProfileTemplateVersion(deleteOptions).execute();
             assertNotNull(deleteResponse);
             assertEquals(deleteResponse.getStatusCode(), 204);
@@ -2183,12 +2186,12 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testDeleteProfileTemplateVersion" })
     public void testDeleteProfileTemplate() throws Exception {
         try {
         	waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId);
-        	
+
             DeleteAllVersionsOfProfileTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfProfileTemplateOptions.Builder()
             		.templateId(profileTemplateId)
                     .build();
@@ -2202,11 +2205,11 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test
     public void testCreateAccountSettingsTemplate() throws Exception {
         try {
-        	
+
         	AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
         			.mfa("LEVEL1")
         			.systemAccessTokenExpirationInSeconds("3000")
@@ -2229,13 +2232,13 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             accountSettingsTemplateId = createResult.getId();
             assertNotNull(createResult.getVersion());
             accountSettingsTemplateVersion = createResult.getVersion().longValue();
-        	
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testCreateAccountSettingsTemplate" })
     public void testGetAccountSettingsTemplate() throws Exception {
         try {
@@ -2270,7 +2273,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         	ListAccountSettingsTemplatesOptions listOptions = new ListAccountSettingsTemplatesOptions.Builder()
         			.accountId(ENTERPRISE_ACCOUNT_ID)
         			.build();
-        	
+
         	Response<AccountSettingsTemplateList> response = service.listAccountSettingsTemplates(listOptions).execute();
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
@@ -2281,7 +2284,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testCreateAccountSettingsTemplate" })
     public void testUpdateAccountSettingsTemplate() throws Exception {
         try {
@@ -2298,12 +2301,12 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.description("JavaSDK test Account Settings Template #1 - updated")
         			.accountSettings(accountSettings)
         			.build();
-        	
+
         	Response<AccountSettingsTemplateResponse> updateResponse = service.updateAccountSettingsTemplateVersion(updateOptions).execute();
             assertNotNull(updateResponse);
             assertEquals(updateResponse.getStatusCode(), 200);
             assertNotNull(updateResponse.getResult());
-        	
+
             // Grab the Etag value from the response for use in the update operation.
             assertNotNull(updateResponse.getHeaders().values("Etag"));
             assertEquals(updateResponse.getHeaders().values("Etag").size(), 1);
@@ -2314,7 +2317,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testUpdateAccountSettingsTemplate" })
     public void testAssignAccountSettingsTemplate() throws Exception {
         try {
@@ -2322,22 +2325,22 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.templateId(accountSettingsTemplateId)
         			.version(Long.toString(accountSettingsTemplateVersion))
         			.build();
-        	
+
         	Response<Void> commitResponse = service.commitAccountSettingsTemplate(commitOptions).execute();
             assertNotNull(commitResponse);
             assertEquals(commitResponse.getStatusCode(), 204);
-            
+
             CreateAccountSettingsAssignmentOptions assignOptions = new CreateAccountSettingsAssignmentOptions.Builder()
             		.templateId(accountSettingsTemplateId)
             		.templateVersion(accountSettingsTemplateVersion)
             		.targetType(ASSIGNMENT_TARGET_TYPE_ACCOUNT)
             		.target(ENTERPRISE_SUBACCOUNT_ID)
             		.build();
-            
+
             Response<TemplateAssignmentResponse> assignResponse = service.createAccountSettingsAssignment(assignOptions).execute();
             assertNotNull(commitResponse);
             assertEquals(commitResponse.getStatusCode(), 204);
-            
+
             TemplateAssignmentResponse assignmentResponseResult = assignResponse.getResult();
             assertNotNull(assignmentResponseResult);
 
@@ -2349,13 +2352,13 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(assignResponse.getHeaders().values("Etag").size(), 1);
             accountSettingsTemplateAssignmentEtag = assignResponse.getHeaders().values("Etag").get(0);
             assertNotNull(accountSettingsTemplateAssignmentEtag);
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testAssignAccountSettingsTemplate" })
     public void testCreateNewAccountSettingsTemplateVersion() throws Exception {
         try {
@@ -2372,44 +2375,44 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.description("JavaSDK test AccountSettings Template #1 - new version")
         			.accountSettings(accountSettings)
         			.build();
-        	
+
         	Response<AccountSettingsTemplateResponse> createResponse = service.createAccountSettingsTemplateVersion(createOptions).execute();
             assertNotNull(createResponse);
             assertEquals(createResponse.getStatusCode(), 201);
             assertNotNull(createResponse.getResult());
-            
+
             AccountSettingsTemplateResponse createResult = createResponse.getResult();
             assertNotNull(createResult);
 
             // Save the version for use by other test methods.
             assertNotNull(createResult.getVersion());
             accountSettingsTemplateVersion = createResult.getVersion().longValue();
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testCreateNewAccountSettingsTemplateVersion" })
     public void testGetLatestAccountSettingsTemplateVersion() throws Exception {
         GetLatestAccountSettingsTemplateVersionOptions getOptions = new GetLatestAccountSettingsTemplateVersionOptions.Builder()
                 .templateId(accountSettingsTemplateId)
                 .build();
-        
+
         Response<AccountSettingsTemplateResponse> getResponse = service.getLatestAccountSettingsTemplateVersion(getOptions).execute();
         assertNotNull(getResponse);
         assertEquals(getResponse.getStatusCode(), 200);
         assertNotNull(getResponse.getResult());
     }
-    
+
     @Test(dependsOnMethods = { "testCreateNewAccountSettingsTemplateVersion" })
     public void testListAccountSettingsTemplateVersions() throws Exception {
-        
+
         ListVersionsOfAccountSettingsTemplateOptions listOptions = new ListVersionsOfAccountSettingsTemplateOptions.Builder()
                 .templateId(accountSettingsTemplateId)
                 .build();
-        
+
         Response<AccountSettingsTemplateList> listResponse = service.listVersionsOfAccountSettingsTemplate(listOptions).execute();
         assertNotNull(listResponse);
         assertEquals(listResponse.getStatusCode(), 200);
@@ -2418,7 +2421,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         assertNotNull(listResult.getAccountSettingsTemplates());
         assertTrue(listResult.getAccountSettingsTemplates().size() > 0);
     }
-    
+
     @Test(dependsOnMethods = { "testAssignAccountSettingsTemplate", "testCreateNewAccountSettingsTemplateVersion" })
     public void testUpdateAccountSettingsTemplateAssignment() throws Exception {
         try {
@@ -2426,55 +2429,57 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.templateId(accountSettingsTemplateId)
         			.version(Long.toString(accountSettingsTemplateVersion))
         			.build();
-        	
+
         	Response<Void> commitResponse = service.commitAccountSettingsTemplate(commitOptions).execute();
             assertNotNull(commitResponse);
             assertEquals(commitResponse.getStatusCode(), 204);
 
         	waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId);
-        	
+
         	UpdateAccountSettingsAssignmentOptions updateOptions = new UpdateAccountSettingsAssignmentOptions.Builder()
         			.assignmentId(accountSettingsTemplateAssignmentId)
         			.templateVersion(accountSettingsTemplateVersion)
         			.ifMatch(accountSettingsTemplateAssignmentEtag)
         			.build();
-        	
+
         	Response<TemplateAssignmentResponse> updateResponse = service.updateAccountSettingsAssignment(updateOptions).execute();
             assertNotNull(updateResponse);
             assertEquals(updateResponse.getStatusCode(), 202);
             assertNotNull(updateResponse.getResult());
-            
+
             // Grab the Etag value from the response for use in the update operation.
             assertNotNull(updateResponse.getHeaders().values("Etag"));
             assertEquals(updateResponse.getHeaders().values("Etag").size(), 1);
             accountSettingsTemplateAssignmentEtag = updateResponse.getHeaders().values("Etag").get(0);
             assertNotNull(accountSettingsTemplateAssignmentEtag);
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testUpdateAccountSettingsTemplateAssignment" })
     public void testDeleteAccountSettingsTemplateAssignment() throws Exception {
         try {
         	waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId);
-        	
+
         	DeleteAccountSettingsAssignmentOptions deleteOptions = new DeleteAccountSettingsAssignmentOptions.Builder()
         			.assignmentId(accountSettingsTemplateAssignmentId)
         			.build();
-        	
+
         	Response<ExceptionResponse> deleteResponse = service.deleteAccountSettingsAssignment(deleteOptions).execute();
             assertNotNull(deleteResponse);
             assertEquals(deleteResponse.getStatusCode(), 202);
-        	
+
+            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId);
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testUpdateAccountSettingsTemplateAssignment" })
     public void testDeleteAccountSettingsTemplateVersion() throws Exception {
         try {
@@ -2482,7 +2487,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.templateId(accountSettingsTemplateId)
         			.version("1")
         			.build();
-        	
+
         	Response<Void> deleteResponse = service.deleteAccountSettingsTemplateVersion(deleteOptions).execute();
             assertNotNull(deleteResponse);
             assertEquals(deleteResponse.getStatusCode(), 204);
@@ -2491,12 +2496,12 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @Test(dependsOnMethods = { "testDeleteAccountSettingsTemplateVersion" })
     public void testDeleteAccountSettingsTemplate() throws Exception {
         try {
         	waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId);
-        	
+
             DeleteAllVersionsOfAccountSettingsTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfAccountSettingsTemplateOptions.Builder()
             		.templateId(accountSettingsTemplateId)
                     .build();
@@ -2510,7 +2515,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
-    
+
     @AfterClass
     public void tearDown() {
         // Add any clean up logic here.
@@ -2521,7 +2526,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private boolean isFinished(String status) {
     	return ("succeeded".equalsIgnoreCase(status) || "failed".equalsIgnoreCase(status));
     }
-    
+
     private void waitUntilTrustedProfileAssignmentFinished(String assignmentId) {
     	GetTrustedProfileAssignmentOptions getOptions = new GetTrustedProfileAssignmentOptions.Builder()
     			.assignmentId(assignmentId)
@@ -2550,7 +2555,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
         assertEquals(finished, true);
     }
-    
+
     private void waitUntilAccountSettingsAssignmentFinished(String assignmentId) {
     	GetAccountSettingsAssignmentOptions getOptions = new GetAccountSettingsAssignmentOptions.Builder()
     			.assignmentId(assignmentId)
@@ -2579,7 +2584,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
         assertEquals(finished, true);
     }
-    
+
     private void sleep(int numSecs) {
         try {
             Thread.sleep(numSecs * 1000);
@@ -2666,31 +2671,31 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                 }
             }
         }
-        
+
         ListProfileTemplatesOptions listProfileTemplateOptions = new ListProfileTemplatesOptions.Builder()
         		.accountId(ENTERPRISE_ACCOUNT_ID)
-        		.build(); 
+        		.build();
         Response<TrustedProfileTemplateList> profileTemplatesResponse = service.listProfileTemplates(listProfileTemplateOptions).execute();
         assertNotNull(profileTemplatesResponse);
         assertEquals(profileTemplatesResponse.getStatusCode(), 200);
-        
+
         TrustedProfileTemplateList profileTemplateList = profileTemplatesResponse.getResult();
         long numProfileTemplates = profileTemplateList.getProfileTemplates().size();
 
         if (numProfileTemplates > 0) {
             for (TrustedProfileTemplateResponse template : profileTemplateList.getProfileTemplates()) {
                 if (PROFILE_TEMPLATE_NAME.equals(template.getName())) {
-                	
+
                 	ListTrustedProfileAssignmentsOptions assignmentsListOptions = new ListTrustedProfileAssignmentsOptions.Builder()
                 			.accountId(ENTERPRISE_ACCOUNT_ID)
                 			.templateId(template.getId())
                 			.build();
-                	
+
                 	Response<TemplateAssignmentListResponse> assignmentsListResponse = service.listTrustedProfileAssignments(assignmentsListOptions).execute();
                     assertNotNull(assignmentsListResponse);
                     assertEquals(assignmentsListResponse.getStatusCode(), 200);
                     assertNotNull(assignmentsListResponse.getResult());
-                    
+
                     TemplateAssignmentListResponse assignmentsListResult = assignmentsListResponse.getResult();
                     assertNotNull(assignmentsListResult.getAssignments());
                     long numAssignments = assignmentsListResult.getAssignments().size();
@@ -2708,7 +2713,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                 			waitUntilTrustedProfileAssignmentFinished(assignment.getId());
                     	}
                     }
-                	
+
                     DeleteAllVersionsOfProfileTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfProfileTemplateOptions.Builder()
                     		.templateId(template.getId())
                             .build();
@@ -2719,31 +2724,31 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                 }
             }
         }
-        
+
         ListAccountSettingsTemplatesOptions listAccountSettingsTemplateOptions = new ListAccountSettingsTemplatesOptions.Builder()
         		.accountId(ENTERPRISE_ACCOUNT_ID)
-        		.build(); 
+        		.build();
         Response<AccountSettingsTemplateList> accountSettingsTemplatesResponse = service.listAccountSettingsTemplates(listAccountSettingsTemplateOptions).execute();
         assertNotNull(accountSettingsTemplatesResponse);
         assertEquals(accountSettingsTemplatesResponse.getStatusCode(), 200);
-        
+
         AccountSettingsTemplateList accountSettingsTemplateList = accountSettingsTemplatesResponse.getResult();
         long numAccountSettingsTemplates = accountSettingsTemplateList.getAccountSettingsTemplates().size();
 
         if (numAccountSettingsTemplates > 0) {
             for (AccountSettingsTemplateResponse template : accountSettingsTemplateList.getAccountSettingsTemplates()) {
                 if (ACCOUNT_SETTINGS_TEMPLATE_NAME.equals(template.getName())) {
-                	
+
                 	ListAccountSettingsAssignmentsOptions assignmentsListOptions = new ListAccountSettingsAssignmentsOptions.Builder()
                 			.accountId(ENTERPRISE_ACCOUNT_ID)
                 			.templateId(template.getId())
                 			.build();
-                	
+
                 	Response<TemplateAssignmentListResponse> assignmentsListResponse = service.listAccountSettingsAssignments(assignmentsListOptions).execute();
                     assertNotNull(assignmentsListResponse);
                     assertEquals(assignmentsListResponse.getStatusCode(), 200);
                     assertNotNull(assignmentsListResponse.getResult());
-                    
+
                     TemplateAssignmentListResponse assignmentsListResult = assignmentsListResponse.getResult();
                     assertNotNull(assignmentsListResult.getAssignments());
                     long numAssignments = assignmentsListResult.getAssignments().size();
@@ -2761,7 +2766,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                 			waitUntilAccountSettingsAssignmentFinished(assignment.getId());
                     	}
                     }
-                	
+
                     DeleteAllVersionsOfAccountSettingsTemplateOptions deleteTeplateOptions = new DeleteAllVersionsOfAccountSettingsTemplateOptions.Builder()
                     		.templateId(template.getId())
                             .build();

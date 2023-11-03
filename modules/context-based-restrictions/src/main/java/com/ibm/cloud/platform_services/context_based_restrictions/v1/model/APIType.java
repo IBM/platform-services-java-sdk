@@ -29,6 +29,8 @@ public class APIType extends GenericModel {
   protected String description;
   protected String type;
   protected List<Action> actions;
+  @SerializedName("enforcement_modes")
+  protected List<String> enforcementModes;
 
   protected APIType() { }
 
@@ -85,6 +87,17 @@ public class APIType extends GenericModel {
    */
   public List<Action> getActions() {
     return actions;
+  }
+
+  /**
+   * Gets the enforcementModes.
+   *
+   * The enforcement modes supported by the API type.
+   *
+   * @return the enforcementModes
+   */
+  public List<String> getEnforcementModes() {
+    return enforcementModes;
   }
 }
 

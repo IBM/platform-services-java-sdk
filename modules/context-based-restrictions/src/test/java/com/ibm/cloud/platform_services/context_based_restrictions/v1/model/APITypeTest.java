@@ -38,5 +38,6 @@ public class APITypeTest {
     assertNull(apiTypeModel.getDescription());
     assertNull(apiTypeModel.getType());
     assertNull(apiTypeModel.getActions());
+    assertNull(apiTypeModel.getEnforcementModes());
   }
 }

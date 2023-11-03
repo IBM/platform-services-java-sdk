@@ -1,3 +1,10 @@
+# [0.45.0](https://github.com/IBM/platform-services-java-sdk/compare/0.44.2...0.45.0) (2023-11-03)
+
+
+### Features
+
+* **Context-Based Restrictions:** add enforcement_modes to operations response ([#219](https://github.com/IBM/platform-services-java-sdk/issues/219)) ([9e1b58e](https://github.com/IBM/platform-services-java-sdk/commit/9e1b58ea04b93233193f25e39a2c0eed7445b788))
+
 ## [0.44.2](https://github.com/IBM/platform-services-java-sdk/compare/0.44.1...0.44.2) (2023-10-31)
 
 

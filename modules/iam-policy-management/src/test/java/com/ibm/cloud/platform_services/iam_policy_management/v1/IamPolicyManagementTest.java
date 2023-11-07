@@ -50,6 +50,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicy
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedCondition;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedConditionRuleAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedConditionRuleWithConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignment;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentOptions;
@@ -76,7 +79,6 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAction
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttributeWithConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateCountData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetadata;
@@ -89,7 +91,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRe
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRule;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleWithConditions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleWithNestedConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyTemplateMetaData;

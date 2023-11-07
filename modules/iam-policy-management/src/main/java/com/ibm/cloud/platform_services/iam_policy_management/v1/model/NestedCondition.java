@@ -17,13 +17,13 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Additional access conditions associated with the policy.
+ * Condition that specifies additional conditions or RuleAttribute to grant access.s.
  *
  * Classes which extend this class:
- * - V2PolicyRuleRuleAttribute
- * - V2PolicyRuleRuleWithNestedConditions
+ * - NestedConditionRuleAttribute
+ * - NestedConditionRuleWithConditions
  */
-public class V2PolicyRule extends GenericModel {
+public class NestedCondition extends GenericModel {
 
   /**
    * The operator of an attribute.
@@ -54,9 +54,9 @@ public class V2PolicyRule extends GenericModel {
   protected String key;
   protected String operator;
   protected Object value;
-  protected List<NestedCondition> conditions;
+  protected List<RuleAttribute> conditions;
 
-  protected V2PolicyRule() { }
+  protected NestedCondition() { }
 
   /**
    * Gets the key.
@@ -100,7 +100,7 @@ public class V2PolicyRule extends GenericModel {
    *
    * @return the conditions
    */
-  public List<NestedCondition> conditions() {
+  public List<RuleAttribute> conditions() {
     return conditions;
   }
 }

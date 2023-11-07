@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Rule that specifies additional access granted (e.g., time-based condition) accross multiple conditions.
  */
-public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
+public class V2PolicyRuleRuleWithNestedConditions extends V2PolicyRule {
 
   /**
    * Operator to evaluate conditions.
@@ -36,16 +36,16 @@ public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
    */
   public static class Builder {
     private String operator;
-    private List<RuleAttributeWithConditions> conditions;
+    private List<NestedCondition> conditions;
 
     /**
-     * Instantiates a new Builder from an existing V2PolicyRuleRuleWithConditions instance.
+     * Instantiates a new Builder from an existing V2PolicyRuleRuleWithNestedConditions instance.
      *
-     * @param v2PolicyRuleRuleWithConditions the instance to initialize the Builder with
+     * @param v2PolicyRuleRuleWithNestedConditions the instance to initialize the Builder with
      */
-    public Builder(V2PolicyRule v2PolicyRuleRuleWithConditions) {
-      this.operator = v2PolicyRuleRuleWithConditions.operator;
-      this.conditions = v2PolicyRuleRuleWithConditions.conditions;
+    public Builder(V2PolicyRule v2PolicyRuleRuleWithNestedConditions) {
+      this.operator = v2PolicyRuleRuleWithNestedConditions.operator;
+      this.conditions = v2PolicyRuleRuleWithNestedConditions.conditions;
     }
 
     /**
@@ -60,31 +60,31 @@ public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
      * @param operator the operator
      * @param conditions the conditions
      */
-    public Builder(String operator, List<RuleAttributeWithConditions> conditions) {
+    public Builder(String operator, List<NestedCondition> conditions) {
       this.operator = operator;
       this.conditions = conditions;
     }
 
     /**
-     * Builds a V2PolicyRuleRuleWithConditions.
+     * Builds a V2PolicyRuleRuleWithNestedConditions.
      *
-     * @return the new V2PolicyRuleRuleWithConditions instance
+     * @return the new V2PolicyRuleRuleWithNestedConditions instance
      */
-    public V2PolicyRuleRuleWithConditions build() {
-      return new V2PolicyRuleRuleWithConditions(this);
+    public V2PolicyRuleRuleWithNestedConditions build() {
+      return new V2PolicyRuleRuleWithNestedConditions(this);
     }
 
     /**
      * Adds an conditions to conditions.
      *
      * @param conditions the new conditions
-     * @return the V2PolicyRuleRuleWithConditions builder
+     * @return the V2PolicyRuleRuleWithNestedConditions builder
      */
-    public Builder addConditions(RuleAttributeWithConditions conditions) {
+    public Builder addConditions(NestedCondition conditions) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(conditions,
         "conditions cannot be null");
       if (this.conditions == null) {
-        this.conditions = new ArrayList<RuleAttributeWithConditions>();
+        this.conditions = new ArrayList<NestedCondition>();
       }
       this.conditions.add(conditions);
       return this;
@@ -94,7 +94,7 @@ public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
      * Set the operator.
      *
      * @param operator the operator
-     * @return the V2PolicyRuleRuleWithConditions builder
+     * @return the V2PolicyRuleRuleWithNestedConditions builder
      */
     public Builder operator(String operator) {
       this.operator = operator;
@@ -106,17 +106,17 @@ public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
      * Existing conditions will be replaced.
      *
      * @param conditions the conditions
-     * @return the V2PolicyRuleRuleWithConditions builder
+     * @return the V2PolicyRuleRuleWithNestedConditions builder
      */
-    public Builder conditions(List<RuleAttributeWithConditions> conditions) {
+    public Builder conditions(List<NestedCondition> conditions) {
       this.conditions = conditions;
       return this;
     }
   }
 
-  protected V2PolicyRuleRuleWithConditions() { }
+  protected V2PolicyRuleRuleWithNestedConditions() { }
 
-  protected V2PolicyRuleRuleWithConditions(Builder builder) {
+  protected V2PolicyRuleRuleWithNestedConditions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.operator,
       "operator cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.conditions,
@@ -128,7 +128,7 @@ public class V2PolicyRuleRuleWithConditions extends V2PolicyRule {
   /**
    * New builder.
    *
-   * @return a V2PolicyRuleRuleWithConditions builder
+   * @return a V2PolicyRuleRuleWithNestedConditions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

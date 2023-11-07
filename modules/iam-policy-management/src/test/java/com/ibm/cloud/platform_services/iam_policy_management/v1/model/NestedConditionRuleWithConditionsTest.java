@@ -13,8 +13,8 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedConditionRuleWithConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleWithNestedConditionsConditionsItemRuleWithConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -24,14 +24,14 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the RuleWithNestedConditionsConditionsItemRuleWithConditions model.
+ * Unit test class for the NestedConditionRuleWithConditions model.
  */
-public class RuleWithNestedConditionsConditionsItemRuleWithConditionsTest {
+public class NestedConditionRuleWithConditionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testRuleWithNestedConditionsConditionsItemRuleWithConditions() throws Throwable {
+  public void testNestedConditionRuleWithConditions() throws Throwable {
     RuleAttribute ruleAttributeModel = new RuleAttribute.Builder()
       .key("testString")
       .operator("timeLessThan")
@@ -41,23 +41,23 @@ public class RuleWithNestedConditionsConditionsItemRuleWithConditionsTest {
     assertEquals(ruleAttributeModel.operator(), "timeLessThan");
     assertEquals(ruleAttributeModel.value(), "testString");
 
-    RuleWithNestedConditionsConditionsItemRuleWithConditions ruleWithNestedConditionsConditionsItemRuleWithConditionsModel = new RuleWithNestedConditionsConditionsItemRuleWithConditions.Builder()
+    NestedConditionRuleWithConditions nestedConditionRuleWithConditionsModel = new NestedConditionRuleWithConditions.Builder()
       .operator("and")
       .conditions(java.util.Arrays.asList(ruleAttributeModel))
       .build();
-    assertEquals(ruleWithNestedConditionsConditionsItemRuleWithConditionsModel.operator(), "and");
-    assertEquals(ruleWithNestedConditionsConditionsItemRuleWithConditionsModel.conditions(), java.util.Arrays.asList(ruleAttributeModel));
+    assertEquals(nestedConditionRuleWithConditionsModel.operator(), "and");
+    assertEquals(nestedConditionRuleWithConditionsModel.conditions(), java.util.Arrays.asList(ruleAttributeModel));
 
-    String json = TestUtilities.serialize(ruleWithNestedConditionsConditionsItemRuleWithConditionsModel);
+    String json = TestUtilities.serialize(nestedConditionRuleWithConditionsModel);
 
-    RuleWithNestedConditionsConditionsItemRuleWithConditions ruleWithNestedConditionsConditionsItemRuleWithConditionsModelNew = TestUtilities.deserialize(json, RuleWithNestedConditionsConditionsItemRuleWithConditions.class);
-    assertTrue(ruleWithNestedConditionsConditionsItemRuleWithConditionsModelNew instanceof RuleWithNestedConditionsConditionsItemRuleWithConditions);
-    assertEquals(ruleWithNestedConditionsConditionsItemRuleWithConditionsModelNew.operator(), "and");
+    NestedConditionRuleWithConditions nestedConditionRuleWithConditionsModelNew = TestUtilities.deserialize(json, NestedConditionRuleWithConditions.class);
+    assertTrue(nestedConditionRuleWithConditionsModelNew instanceof NestedConditionRuleWithConditions);
+    assertEquals(nestedConditionRuleWithConditionsModelNew.operator(), "and");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testRuleWithNestedConditionsConditionsItemRuleWithConditionsError() throws Throwable {
-    new RuleWithNestedConditionsConditionsItemRuleWithConditions.Builder().build();
+  public void testNestedConditionRuleWithConditionsError() throws Throwable {
+    new NestedConditionRuleWithConditions.Builder().build();
   }
 
 }

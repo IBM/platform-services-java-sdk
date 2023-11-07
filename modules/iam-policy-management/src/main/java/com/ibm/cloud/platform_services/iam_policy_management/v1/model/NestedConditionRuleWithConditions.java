@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Rule that specifies additional access granted (e.g., time-based condition) accross multiple conditions.
  */
-public class RuleWithNestedConditionsConditionsItemRuleWithConditions extends RuleWithNestedConditionsConditionsItem {
+public class NestedConditionRuleWithConditions extends NestedCondition {
 
   /**
    * Operator to evaluate conditions.
@@ -39,13 +39,13 @@ public class RuleWithNestedConditionsConditionsItemRuleWithConditions extends Ru
     private List<RuleAttribute> conditions;
 
     /**
-     * Instantiates a new Builder from an existing RuleWithNestedConditionsConditionsItemRuleWithConditions instance.
+     * Instantiates a new Builder from an existing NestedConditionRuleWithConditions instance.
      *
-     * @param ruleWithNestedConditionsConditionsItemRuleWithConditions the instance to initialize the Builder with
+     * @param nestedConditionRuleWithConditions the instance to initialize the Builder with
      */
-    public Builder(RuleWithNestedConditionsConditionsItem ruleWithNestedConditionsConditionsItemRuleWithConditions) {
-      this.operator = ruleWithNestedConditionsConditionsItemRuleWithConditions.operator;
-      this.conditions = ruleWithNestedConditionsConditionsItemRuleWithConditions.conditions;
+    public Builder(NestedCondition nestedConditionRuleWithConditions) {
+      this.operator = nestedConditionRuleWithConditions.operator;
+      this.conditions = nestedConditionRuleWithConditions.conditions;
     }
 
     /**
@@ -66,19 +66,19 @@ public class RuleWithNestedConditionsConditionsItemRuleWithConditions extends Ru
     }
 
     /**
-     * Builds a RuleWithNestedConditionsConditionsItemRuleWithConditions.
+     * Builds a NestedConditionRuleWithConditions.
      *
-     * @return the new RuleWithNestedConditionsConditionsItemRuleWithConditions instance
+     * @return the new NestedConditionRuleWithConditions instance
      */
-    public RuleWithNestedConditionsConditionsItemRuleWithConditions build() {
-      return new RuleWithNestedConditionsConditionsItemRuleWithConditions(this);
+    public NestedConditionRuleWithConditions build() {
+      return new NestedConditionRuleWithConditions(this);
     }
 
     /**
      * Adds an conditions to conditions.
      *
      * @param conditions the new conditions
-     * @return the RuleWithNestedConditionsConditionsItemRuleWithConditions builder
+     * @return the NestedConditionRuleWithConditions builder
      */
     public Builder addConditions(RuleAttribute conditions) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(conditions,
@@ -94,7 +94,7 @@ public class RuleWithNestedConditionsConditionsItemRuleWithConditions extends Ru
      * Set the operator.
      *
      * @param operator the operator
-     * @return the RuleWithNestedConditionsConditionsItemRuleWithConditions builder
+     * @return the NestedConditionRuleWithConditions builder
      */
     public Builder operator(String operator) {
       this.operator = operator;
@@ -106,7 +106,7 @@ public class RuleWithNestedConditionsConditionsItemRuleWithConditions extends Ru
      * Existing conditions will be replaced.
      *
      * @param conditions the conditions
-     * @return the RuleWithNestedConditionsConditionsItemRuleWithConditions builder
+     * @return the NestedConditionRuleWithConditions builder
      */
     public Builder conditions(List<RuleAttribute> conditions) {
       this.conditions = conditions;
@@ -114,9 +114,9 @@ public class RuleWithNestedConditionsConditionsItemRuleWithConditions extends Ru
     }
   }
 
-  protected RuleWithNestedConditionsConditionsItemRuleWithConditions() { }
+  protected NestedConditionRuleWithConditions() { }
 
-  protected RuleWithNestedConditionsConditionsItemRuleWithConditions(Builder builder) {
+  protected NestedConditionRuleWithConditions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.operator,
       "operator cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.conditions,
@@ -128,7 +128,7 @@ public class RuleWithNestedConditionsConditionsItemRuleWithConditions extends Ru
   /**
    * New builder.
    *
-   * @return a RuleWithNestedConditionsConditionsItemRuleWithConditions builder
+   * @return a NestedConditionRuleWithConditions builder
    */
   public Builder newBuilder() {
     return new Builder(this);

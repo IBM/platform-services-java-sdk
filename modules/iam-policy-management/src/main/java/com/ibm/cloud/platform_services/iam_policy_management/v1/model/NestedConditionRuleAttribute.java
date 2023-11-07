@@ -15,7 +15,7 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 /**
  * Rule that specifies additional access granted (e.g., time-based condition).
  */
-public class RuleWithNestedConditionsConditionsItemRuleAttribute extends RuleWithNestedConditionsConditionsItem {
+public class NestedConditionRuleAttribute extends NestedCondition {
 
   /**
    * The operator of an attribute.
@@ -53,14 +53,14 @@ public class RuleWithNestedConditionsConditionsItemRuleAttribute extends RuleWit
     private Object value;
 
     /**
-     * Instantiates a new Builder from an existing RuleWithNestedConditionsConditionsItemRuleAttribute instance.
+     * Instantiates a new Builder from an existing NestedConditionRuleAttribute instance.
      *
-     * @param ruleWithNestedConditionsConditionsItemRuleAttribute the instance to initialize the Builder with
+     * @param nestedConditionRuleAttribute the instance to initialize the Builder with
      */
-    public Builder(RuleWithNestedConditionsConditionsItem ruleWithNestedConditionsConditionsItemRuleAttribute) {
-      this.key = ruleWithNestedConditionsConditionsItemRuleAttribute.key;
-      this.operator = ruleWithNestedConditionsConditionsItemRuleAttribute.operator;
-      this.value = ruleWithNestedConditionsConditionsItemRuleAttribute.value;
+    public Builder(NestedCondition nestedConditionRuleAttribute) {
+      this.key = nestedConditionRuleAttribute.key;
+      this.operator = nestedConditionRuleAttribute.operator;
+      this.value = nestedConditionRuleAttribute.value;
     }
 
     /**
@@ -83,19 +83,19 @@ public class RuleWithNestedConditionsConditionsItemRuleAttribute extends RuleWit
     }
 
     /**
-     * Builds a RuleWithNestedConditionsConditionsItemRuleAttribute.
+     * Builds a NestedConditionRuleAttribute.
      *
-     * @return the new RuleWithNestedConditionsConditionsItemRuleAttribute instance
+     * @return the new NestedConditionRuleAttribute instance
      */
-    public RuleWithNestedConditionsConditionsItemRuleAttribute build() {
-      return new RuleWithNestedConditionsConditionsItemRuleAttribute(this);
+    public NestedConditionRuleAttribute build() {
+      return new NestedConditionRuleAttribute(this);
     }
 
     /**
      * Set the key.
      *
      * @param key the key
-     * @return the RuleWithNestedConditionsConditionsItemRuleAttribute builder
+     * @return the NestedConditionRuleAttribute builder
      */
     public Builder key(String key) {
       this.key = key;
@@ -106,7 +106,7 @@ public class RuleWithNestedConditionsConditionsItemRuleAttribute extends RuleWit
      * Set the operator.
      *
      * @param operator the operator
-     * @return the RuleWithNestedConditionsConditionsItemRuleAttribute builder
+     * @return the NestedConditionRuleAttribute builder
      */
     public Builder operator(String operator) {
       this.operator = operator;
@@ -117,7 +117,7 @@ public class RuleWithNestedConditionsConditionsItemRuleAttribute extends RuleWit
      * Set the value.
      *
      * @param value the value
-     * @return the RuleWithNestedConditionsConditionsItemRuleAttribute builder
+     * @return the NestedConditionRuleAttribute builder
      */
     public Builder value(Object value) {
       this.value = value;
@@ -125,9 +125,9 @@ public class RuleWithNestedConditionsConditionsItemRuleAttribute extends RuleWit
     }
   }
 
-  protected RuleWithNestedConditionsConditionsItemRuleAttribute() { }
+  protected NestedConditionRuleAttribute() { }
 
-  protected RuleWithNestedConditionsConditionsItemRuleAttribute(Builder builder) {
+  protected NestedConditionRuleAttribute(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.key,
       "key cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.operator,
@@ -142,7 +142,7 @@ public class RuleWithNestedConditionsConditionsItemRuleAttribute extends RuleWit
   /**
    * New builder.
    *
-   * @return a RuleWithNestedConditionsConditionsItemRuleAttribute builder
+   * @return a NestedConditionRuleAttribute builder
    */
   public Builder newBuilder() {
     return new Builder(this);

@@ -36,7 +36,7 @@ public class V2PolicyRuleRuleWithNestedConditions extends V2PolicyRule {
    */
   public static class Builder {
     private String operator;
-    private List<RuleWithNestedConditionsConditionsItem> conditions;
+    private List<NestedCondition> conditions;
 
     /**
      * Instantiates a new Builder from an existing V2PolicyRuleRuleWithNestedConditions instance.
@@ -60,7 +60,7 @@ public class V2PolicyRuleRuleWithNestedConditions extends V2PolicyRule {
      * @param operator the operator
      * @param conditions the conditions
      */
-    public Builder(String operator, List<RuleWithNestedConditionsConditionsItem> conditions) {
+    public Builder(String operator, List<NestedCondition> conditions) {
       this.operator = operator;
       this.conditions = conditions;
     }
@@ -80,11 +80,11 @@ public class V2PolicyRuleRuleWithNestedConditions extends V2PolicyRule {
      * @param conditions the new conditions
      * @return the V2PolicyRuleRuleWithNestedConditions builder
      */
-    public Builder addConditions(RuleWithNestedConditionsConditionsItem conditions) {
+    public Builder addConditions(NestedCondition conditions) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(conditions,
         "conditions cannot be null");
       if (this.conditions == null) {
-        this.conditions = new ArrayList<RuleWithNestedConditionsConditionsItem>();
+        this.conditions = new ArrayList<NestedCondition>();
       }
       this.conditions.add(conditions);
       return this;
@@ -108,7 +108,7 @@ public class V2PolicyRuleRuleWithNestedConditions extends V2PolicyRule {
      * @param conditions the conditions
      * @return the V2PolicyRuleRuleWithNestedConditions builder
      */
-    public Builder conditions(List<RuleWithNestedConditionsConditionsItem> conditions) {
+    public Builder conditions(List<NestedCondition> conditions) {
       this.conditions = conditions;
       return this;
     }

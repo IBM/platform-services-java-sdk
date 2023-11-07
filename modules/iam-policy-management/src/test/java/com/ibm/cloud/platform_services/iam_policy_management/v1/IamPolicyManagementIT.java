@@ -360,20 +360,20 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .grant(policyGrantModel)
           .build();
 
-        RuleWithNestedConditionsConditionsItemRuleAttribute weeklyConditionAttributeModel = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+        NestedConditionRuleAttribute weeklyConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
           .key("{{environment.attributes.day_of_week}}")
           .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
           .operator("dayOfWeekAnyOf")
           .build();
         
 
-        RuleWithNestedConditionsConditionsItemRuleAttribute startConditionAttributeModel = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+        NestedConditionRuleAttribute startConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
           .key("{{environment.attributes.current_time}}")
           .value("09:00:00+00:00")
           .operator("timeGreaterThanOrEquals")
           .build();
 
-        RuleWithNestedConditionsConditionsItemRuleAttribute endConditionAttributeModel = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+        NestedConditionRuleAttribute endConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
           .key("{{environment.attributes.current_time}}")
           .value("17:00:00+00:00")
           .operator("timeLessThanOrEquals")
@@ -381,7 +381,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         V2PolicyRuleRuleWithNestedConditions policyRuleModel = new V2PolicyRuleRuleWithNestedConditions.Builder()
           .operator("and")
-          .conditions(new ArrayList<RuleWithNestedConditionsConditionsItem>(Arrays.asList(weeklyConditionAttributeModel,
+          .conditions(new ArrayList<NestedCondition>(Arrays.asList(weeklyConditionAttributeModel,
             startConditionAttributeModel, endConditionAttributeModel)))
           .build();
 
@@ -475,20 +475,20 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         Control controlModel = new Control.Builder()
           .grant(policyGrantModel)
           .build();
-        RuleWithNestedConditionsConditionsItemRuleAttribute weeklyConditionAttributeModel = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+        NestedConditionRuleAttribute weeklyConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
           .key("{{environment.attributes.day_of_week}}")
           .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
           .operator("dayOfWeekAnyOf")
           .build();
         
 
-        RuleWithNestedConditionsConditionsItemRuleAttribute startConditionAttributeModel = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+        NestedConditionRuleAttribute startConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
           .key("{{environment.attributes.current_time}}")
           .value("09:00:00+00:00")
           .operator("timeGreaterThanOrEquals")
           .build();
 
-        RuleWithNestedConditionsConditionsItemRuleAttribute endConditionAttributeModel = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+        NestedConditionRuleAttribute endConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
           .key("{{environment.attributes.current_time}}")
           .value("17:00:00+00:00")
           .operator("timeLessThanOrEquals")
@@ -496,7 +496,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         V2PolicyRuleRuleWithNestedConditions policyRuleModel = new V2PolicyRuleRuleWithNestedConditions.Builder()
           .operator("and")
-          .conditions(new ArrayList<RuleWithNestedConditionsConditionsItem>(Arrays.asList(weeklyConditionAttributeModel,
+          .conditions(new ArrayList<NestedCondition>(Arrays.asList(weeklyConditionAttributeModel,
             startConditionAttributeModel, endConditionAttributeModel)))
           .build();
 

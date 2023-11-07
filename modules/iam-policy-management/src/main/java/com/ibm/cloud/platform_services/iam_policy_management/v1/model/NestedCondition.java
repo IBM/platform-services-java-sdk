@@ -17,13 +17,13 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * RuleWithNestedConditionsConditionsItem.
+ * Condition that specifies additional conditions or RuleAttribute to grant access.s.
  *
  * Classes which extend this class:
- * - RuleWithNestedConditionsConditionsItemRuleAttribute
- * - RuleWithNestedConditionsConditionsItemRuleWithConditions
+ * - NestedConditionRuleAttribute
+ * - NestedConditionRuleWithConditions
  */
-public class RuleWithNestedConditionsConditionsItem extends GenericModel {
+public class NestedCondition extends GenericModel {
 
   /**
    * The operator of an attribute.
@@ -56,7 +56,7 @@ public class RuleWithNestedConditionsConditionsItem extends GenericModel {
   protected Object value;
   protected List<RuleAttribute> conditions;
 
-  protected RuleWithNestedConditionsConditionsItem() { }
+  protected NestedCondition() { }
 
   /**
    * Gets the key.

@@ -43,8 +43,8 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySu
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleWithNestedConditionsConditionsItemRuleAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleWithNestedConditionsConditionsItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedCondition;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedConditionRuleAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
@@ -395,19 +395,19 @@ public class IamPolicyManagementExamples {
               .grant(policyGrant)
               .build();
 
-      RuleWithNestedConditionsConditionsItemRuleAttribute weeklyConditionAttribute = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+      NestedConditionRuleAttribute weeklyConditionAttribute = new NestedConditionRuleAttribute.Builder()
               .key("{{environment.attributes.day_of_week}}")
               .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
               .operator("dayOfWeekAnyOf")
               .build();
 
-      RuleWithNestedConditionsConditionsItemRuleAttribute startConditionAttribute = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+      NestedConditionRuleAttribute startConditionAttribute = new NestedConditionRuleAttribute.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("09:00:00+00:00")
               .operator("timeGreaterThanOrEquals")
               .build();
 
-      RuleWithNestedConditionsConditionsItemRuleAttribute endConditionAttribute = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+      NestedConditionRuleAttribute endConditionAttribute = new NestedConditionRuleAttribute.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("17:00:00+00:00")
               .operator("timeLessThanOrEquals")
@@ -415,7 +415,7 @@ public class IamPolicyManagementExamples {
 
       V2PolicyRuleRuleWithNestedConditions policyRule = new V2PolicyRuleRuleWithNestedConditions.Builder()
               .operator("and")
-              .conditions(new ArrayList<RuleWithNestedConditionsConditionsItem>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
+              .conditions(new ArrayList<NestedCondition>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
               .build();
 
       CreateV2PolicyOptions options = new CreateV2PolicyOptions.Builder()
@@ -512,19 +512,19 @@ public class IamPolicyManagementExamples {
               .grant(policyGrant)
               .build();
 
-      RuleWithNestedConditionsConditionsItemRuleAttribute weeklyConditionAttribute = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+      NestedConditionRuleAttribute weeklyConditionAttribute = new NestedConditionRuleAttribute.Builder()
               .key("{{environment.attributes.day_of_week}}")
               .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
               .operator("dayOfWeekAnyOf")
               .build();
 
-      RuleWithNestedConditionsConditionsItemRuleAttribute startConditionAttribute = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+      NestedConditionRuleAttribute startConditionAttribute = new NestedConditionRuleAttribute.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("09:00:00+00:00")
               .operator("timeGreaterThanOrEquals")
               .build();
 
-      RuleWithNestedConditionsConditionsItemRuleAttribute endConditionAttribute = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+      NestedConditionRuleAttribute endConditionAttribute = new NestedConditionRuleAttribute.Builder()
               .key("{{environment.attributes.current_time}}")
               .value("17:00:00+00:00")
               .operator("timeLessThanOrEquals")
@@ -532,7 +532,7 @@ public class IamPolicyManagementExamples {
 
       V2PolicyRuleRuleWithNestedConditions policyRule = new V2PolicyRuleRuleWithNestedConditions.Builder()
               .operator("and")
-              .conditions(new ArrayList<RuleWithNestedConditionsConditionsItem>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
+              .conditions(new ArrayList<NestedCondition>(Arrays.asList(weeklyConditionAttribute, startConditionAttribute, endConditionAttribute)))
               .build();
 
       ReplaceV2PolicyOptions options = new ReplaceV2PolicyOptions.Builder()

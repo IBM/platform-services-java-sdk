@@ -54,7 +54,7 @@ public class V2PolicyRule extends GenericModel {
   protected String key;
   protected String operator;
   protected Object value;
-  protected List<RuleWithNestedConditionsConditionsItem> conditions;
+  protected List<NestedCondition> conditions;
 
   protected V2PolicyRule() { }
 
@@ -100,7 +100,7 @@ public class V2PolicyRule extends GenericModel {
    *
    * @return the conditions
    */
-  public List<RuleWithNestedConditionsConditionsItem> conditions() {
+  public List<NestedCondition> conditions() {
     return conditions;
   }
 }

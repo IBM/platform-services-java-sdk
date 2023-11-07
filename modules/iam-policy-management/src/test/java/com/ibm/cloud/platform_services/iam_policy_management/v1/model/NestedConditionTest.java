@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleWithNestedConditionsConditionsItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedCondition;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,16 +23,16 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the RuleWithNestedConditionsConditionsItem model.
+ * Unit test class for the NestedCondition model.
  */
-public class RuleWithNestedConditionsConditionsItemTest {
+public class NestedConditionTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   // TODO: Add tests for models that are abstract
   @Test
-  public void testRuleWithNestedConditionsConditionsItem() throws Throwable {
-    RuleWithNestedConditionsConditionsItem ruleWithNestedConditionsConditionsItemModel = new RuleWithNestedConditionsConditionsItem();
-    assertNotNull(ruleWithNestedConditionsConditionsItemModel);
+  public void testNestedCondition() throws Throwable {
+    NestedCondition nestedConditionModel = new NestedCondition();
+    assertNotNull(nestedConditionModel);
   }
 }

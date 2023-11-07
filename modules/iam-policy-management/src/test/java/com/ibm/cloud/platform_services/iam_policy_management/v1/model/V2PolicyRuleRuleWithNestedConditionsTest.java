@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleWithNestedConditionsConditionsItemRuleAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedConditionRuleAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleWithNestedConditions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -32,21 +32,21 @@ public class V2PolicyRuleRuleWithNestedConditionsTest {
 
   @Test
   public void testV2PolicyRuleRuleWithNestedConditions() throws Throwable {
-    RuleWithNestedConditionsConditionsItemRuleAttribute ruleWithNestedConditionsConditionsItemModel = new RuleWithNestedConditionsConditionsItemRuleAttribute.Builder()
+    NestedConditionRuleAttribute nestedConditionModel = new NestedConditionRuleAttribute.Builder()
       .key("testString")
       .operator("timeLessThan")
       .value("testString")
       .build();
-    assertEquals(ruleWithNestedConditionsConditionsItemModel.key(), "testString");
-    assertEquals(ruleWithNestedConditionsConditionsItemModel.operator(), "timeLessThan");
-    assertEquals(ruleWithNestedConditionsConditionsItemModel.value(), "testString");
+    assertEquals(nestedConditionModel.key(), "testString");
+    assertEquals(nestedConditionModel.operator(), "timeLessThan");
+    assertEquals(nestedConditionModel.value(), "testString");
 
     V2PolicyRuleRuleWithNestedConditions v2PolicyRuleRuleWithNestedConditionsModel = new V2PolicyRuleRuleWithNestedConditions.Builder()
       .operator("and")
-      .conditions(java.util.Arrays.asList(ruleWithNestedConditionsConditionsItemModel))
+      .conditions(java.util.Arrays.asList(nestedConditionModel))
       .build();
     assertEquals(v2PolicyRuleRuleWithNestedConditionsModel.operator(), "and");
-    assertEquals(v2PolicyRuleRuleWithNestedConditionsModel.conditions(), java.util.Arrays.asList(ruleWithNestedConditionsConditionsItemModel));
+    assertEquals(v2PolicyRuleRuleWithNestedConditionsModel.conditions(), java.util.Arrays.asList(nestedConditionModel));
 
     String json = TestUtilities.serialize(v2PolicyRuleRuleWithNestedConditionsModel);
 

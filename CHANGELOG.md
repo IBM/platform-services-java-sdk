@@ -1,3 +1,10 @@
+# [0.46.0](https://github.com/IBM/platform-services-java-sdk/compare/0.45.1...0.46.0) (2023-11-14)
+
+
+### Features
+
+* **IAM Identity:** add comply_state variable to mfa report ([#220](https://github.com/IBM/platform-services-java-sdk/issues/220)) ([010c798](https://github.com/IBM/platform-services-java-sdk/commit/010c7987e8389e17679d2f65f74295cc4fc6b1b7))
+
 ## [0.45.1](https://github.com/IBM/platform-services-java-sdk/compare/0.45.0...0.45.1) (2023-11-07)
 
 

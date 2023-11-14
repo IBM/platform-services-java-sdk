@@ -145,7 +145,7 @@ public class CreateReportOptions extends GenericModel {
   /**
    * Gets the duration.
    *
-   * Optional duration of the report, supported unit of duration is hours.
+   * Optional duration of the report. The supported unit of duration is hours.
    *
    * @return the duration
    */

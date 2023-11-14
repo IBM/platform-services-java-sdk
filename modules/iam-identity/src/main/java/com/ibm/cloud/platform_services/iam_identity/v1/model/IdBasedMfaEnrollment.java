@@ -101,6 +101,22 @@ public class IdBasedMfaEnrollment extends GenericModel {
     String LEVEL3 = "LEVEL3";
   }
 
+  /**
+   * Defines comply state for the account. Valid values:
+   *   * NO - User does not comply in the given account.
+   *   * ACCOUNT- User complies in the given account, but does not comply in at least one of the other account
+   * memberships.
+   *   * CROSS_ACCOUNT - User complies in the given account and across all other account memberships.
+   */
+  public interface ComplyState {
+    /** NO. */
+    String NO = "NO";
+    /** ACCOUNT. */
+    String ACCOUNT = "ACCOUNT";
+    /** CROSS_ACCOUNT. */
+    String CROSS_ACCOUNT = "CROSS_ACCOUNT";
+  }
+
   @SerializedName("trait_account_default")
   protected String traitAccountDefault;
   @SerializedName("trait_user_specific")
@@ -108,6 +124,8 @@ public class IdBasedMfaEnrollment extends GenericModel {
   @SerializedName("trait_effective")
   protected String traitEffective;
   protected Boolean complies;
+  @SerializedName("comply_state")
+  protected String complyState;
 
   protected IdBasedMfaEnrollment() { }
 
@@ -174,6 +192,21 @@ public class IdBasedMfaEnrollment extends GenericModel {
    */
   public Boolean isComplies() {
     return complies;
+  }
+
+  /**
+   * Gets the complyState.
+   *
+   * Defines comply state for the account. Valid values:
+   *   * NO - User does not comply in the given account.
+   *   * ACCOUNT- User complies in the given account, but does not comply in at least one of the other account
+   * memberships.
+   *   * CROSS_ACCOUNT - User complies in the given account and across all other account memberships.
+   *
+   * @return the complyState
+   */
+  public String getComplyState() {
+    return complyState;
   }
 }
 

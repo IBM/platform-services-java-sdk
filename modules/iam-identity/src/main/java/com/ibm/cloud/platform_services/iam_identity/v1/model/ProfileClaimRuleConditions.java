@@ -130,7 +130,8 @@ public class ProfileClaimRuleConditions extends GenericModel {
   /**
    * Gets the claim.
    *
-   * The claim to evaluate against.
+   * The claim to evaluate against. [Learn
+   * more](/docs/account?topic=account-iam-condition-properties&amp;interface=ui#cr-attribute-names).
    *
    * @return the claim
    */

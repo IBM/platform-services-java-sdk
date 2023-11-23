@@ -41,7 +41,6 @@ public class AttachTagOptions extends GenericModel {
   protected String xRequestId;
   protected String xCorrelationId;
   protected String transactionId;
-  protected String impersonateUser;
   protected String accountId;
   protected String tagType;
 
@@ -55,7 +54,6 @@ public class AttachTagOptions extends GenericModel {
     private String xRequestId;
     private String xCorrelationId;
     private String transactionId;
-    private String impersonateUser;
     private String accountId;
     private String tagType;
 
@@ -71,7 +69,6 @@ public class AttachTagOptions extends GenericModel {
       this.xRequestId = attachTagOptions.xRequestId;
       this.xCorrelationId = attachTagOptions.xCorrelationId;
       this.transactionId = attachTagOptions.transactionId;
-      this.impersonateUser = attachTagOptions.impersonateUser;
       this.accountId = attachTagOptions.accountId;
       this.tagType = attachTagOptions.tagType;
     }
@@ -203,17 +200,6 @@ public class AttachTagOptions extends GenericModel {
     }
 
     /**
-     * Set the impersonateUser.
-     *
-     * @param impersonateUser the impersonateUser
-     * @return the AttachTagOptions builder
-     */
-    public Builder impersonateUser(String impersonateUser) {
-      this.impersonateUser = impersonateUser;
-      return this;
-    }
-
-    /**
      * Set the accountId.
      *
      * @param accountId the accountId
@@ -247,7 +233,6 @@ public class AttachTagOptions extends GenericModel {
     xRequestId = builder.xRequestId;
     xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
-    impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
     tagType = builder.tagType;
   }
@@ -337,17 +322,6 @@ public class AttachTagOptions extends GenericModel {
   @Deprecated
   public String transactionId() {
     return transactionId;
-  }
-
-  /**
-   * Gets the impersonateUser.
-   *
-   * The user on whose behalf the attach operation must be performed (_for administrators only_).
-   *
-   * @return the impersonateUser
-   */
-  public String impersonateUser() {
-    return impersonateUser;
   }
 
   /**

@@ -37,7 +37,6 @@ public class DeleteTagOptionsTest {
       .xCorrelationId("testString")
       .transactionId("testString")
       .providers(java.util.Arrays.asList("ghost"))
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
@@ -46,7 +45,6 @@ public class DeleteTagOptionsTest {
     assertEquals(deleteTagOptionsModel.xCorrelationId(), "testString");
     assertEquals(deleteTagOptionsModel.transactionId(), "testString");
     assertEquals(deleteTagOptionsModel.providers(), java.util.Arrays.asList("ghost"));
-    assertEquals(deleteTagOptionsModel.impersonateUser(), "testString");
     assertEquals(deleteTagOptionsModel.accountId(), "testString");
     assertEquals(deleteTagOptionsModel.tagType(), "user");
   }

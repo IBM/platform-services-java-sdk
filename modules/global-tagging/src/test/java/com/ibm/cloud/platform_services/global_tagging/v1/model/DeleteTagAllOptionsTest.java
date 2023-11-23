@@ -36,7 +36,6 @@ public class DeleteTagAllOptionsTest {
       .xCorrelationId("testString")
       .transactionId("testString")
       .providers("ghost")
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
@@ -44,7 +43,6 @@ public class DeleteTagAllOptionsTest {
     assertEquals(deleteTagAllOptionsModel.xCorrelationId(), "testString");
     assertEquals(deleteTagAllOptionsModel.transactionId(), "testString");
     assertEquals(deleteTagAllOptionsModel.providers(), "ghost");
-    assertEquals(deleteTagAllOptionsModel.impersonateUser(), "testString");
     assertEquals(deleteTagAllOptionsModel.accountId(), "testString");
     assertEquals(deleteTagAllOptionsModel.tagType(), "user");
   }

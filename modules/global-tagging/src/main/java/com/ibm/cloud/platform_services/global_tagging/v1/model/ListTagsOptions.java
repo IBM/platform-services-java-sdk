@@ -54,7 +54,6 @@ public class ListTagsOptions extends GenericModel {
   protected String xRequestId;
   protected String xCorrelationId;
   protected String transactionId;
-  protected String impersonateUser;
   protected String accountId;
   protected String tagType;
   protected Boolean fullData;
@@ -73,7 +72,6 @@ public class ListTagsOptions extends GenericModel {
     private String xRequestId;
     private String xCorrelationId;
     private String transactionId;
-    private String impersonateUser;
     private String accountId;
     private String tagType;
     private Boolean fullData;
@@ -94,7 +92,6 @@ public class ListTagsOptions extends GenericModel {
       this.xRequestId = listTagsOptions.xRequestId;
       this.xCorrelationId = listTagsOptions.xCorrelationId;
       this.transactionId = listTagsOptions.transactionId;
-      this.impersonateUser = listTagsOptions.impersonateUser;
       this.accountId = listTagsOptions.accountId;
       this.tagType = listTagsOptions.tagType;
       this.fullData = listTagsOptions.fullData;
@@ -170,17 +167,6 @@ public class ListTagsOptions extends GenericModel {
     @Deprecated
     public Builder transactionId(String transactionId) {
       this.transactionId = transactionId;
-      return this;
-    }
-
-    /**
-     * Set the impersonateUser.
-     *
-     * @param impersonateUser the impersonateUser
-     * @return the ListTagsOptions builder
-     */
-    public Builder impersonateUser(String impersonateUser) {
-      this.impersonateUser = impersonateUser;
       return this;
     }
 
@@ -302,7 +288,6 @@ public class ListTagsOptions extends GenericModel {
     xRequestId = builder.xRequestId;
     xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
-    impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
     tagType = builder.tagType;
     fullData = builder.fullData;
@@ -367,17 +352,6 @@ public class ListTagsOptions extends GenericModel {
   @Deprecated
   public String transactionId() {
     return transactionId;
-  }
-
-  /**
-   * Gets the impersonateUser.
-   *
-   * The user on whose behalf the get operation must be performed (_for administrators only_).
-   *
-   * @return the impersonateUser
-   */
-  public String impersonateUser() {
-    return impersonateUser;
   }
 
   /**

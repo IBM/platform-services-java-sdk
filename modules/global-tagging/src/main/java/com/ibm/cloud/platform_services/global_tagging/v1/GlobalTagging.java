@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.79.0-2eb6af3d-20230905-174838
+ * IBM OpenAPI SDK Code Generator Version: 3.82.1-2082d402-20231115-195014
  */
 
 package com.ibm.cloud.platform_services.global_tagging.v1;
@@ -128,9 +128,6 @@ public class GlobalTagging extends BaseService {
     if (listTagsOptions.transactionId() != null) {
       builder.header("transaction-id", listTagsOptions.transactionId());
     }
-    if (listTagsOptions.impersonateUser() != null) {
-      builder.query("impersonate_user", String.valueOf(listTagsOptions.impersonateUser()));
-    }
     if (listTagsOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(listTagsOptions.accountId()));
     }
@@ -206,9 +203,6 @@ public class GlobalTagging extends BaseService {
     if (createTagOptions.transactionId() != null) {
       builder.header("transaction-id", createTagOptions.transactionId());
     }
-    if (createTagOptions.impersonateUser() != null) {
-      builder.query("impersonate_user", String.valueOf(createTagOptions.impersonateUser()));
-    }
     if (createTagOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(createTagOptions.accountId()));
     }
@@ -252,9 +246,6 @@ public class GlobalTagging extends BaseService {
     }
     if (deleteTagAllOptions.providers() != null) {
       builder.query("providers", String.valueOf(deleteTagAllOptions.providers()));
-    }
-    if (deleteTagAllOptions.impersonateUser() != null) {
-      builder.query("impersonate_user", String.valueOf(deleteTagAllOptions.impersonateUser()));
     }
     if (deleteTagAllOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(deleteTagAllOptions.accountId()));
@@ -309,9 +300,6 @@ public class GlobalTagging extends BaseService {
     if (deleteTagOptions.providers() != null) {
       builder.query("providers", RequestUtils.join(deleteTagOptions.providers(), ","));
     }
-    if (deleteTagOptions.impersonateUser() != null) {
-      builder.query("impersonate_user", String.valueOf(deleteTagOptions.impersonateUser()));
-    }
     if (deleteTagOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(deleteTagOptions.accountId()));
     }
@@ -349,9 +337,6 @@ public class GlobalTagging extends BaseService {
     }
     if (attachTagOptions.transactionId() != null) {
       builder.header("transaction-id", attachTagOptions.transactionId());
-    }
-    if (attachTagOptions.impersonateUser() != null) {
-      builder.query("impersonate_user", String.valueOf(attachTagOptions.impersonateUser()));
     }
     if (attachTagOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(attachTagOptions.accountId()));
@@ -398,9 +383,6 @@ public class GlobalTagging extends BaseService {
     }
     if (detachTagOptions.transactionId() != null) {
       builder.header("transaction-id", detachTagOptions.transactionId());
-    }
-    if (detachTagOptions.impersonateUser() != null) {
-      builder.query("impersonate_user", String.valueOf(detachTagOptions.impersonateUser()));
     }
     if (detachTagOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(detachTagOptions.accountId()));

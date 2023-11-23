@@ -46,7 +46,6 @@ public class AttachTagOptionsTest {
       .xRequestId("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
@@ -56,7 +55,6 @@ public class AttachTagOptionsTest {
     assertEquals(attachTagOptionsModel.xRequestId(), "testString");
     assertEquals(attachTagOptionsModel.xCorrelationId(), "testString");
     assertEquals(attachTagOptionsModel.transactionId(), "testString");
-    assertEquals(attachTagOptionsModel.impersonateUser(), "testString");
     assertEquals(attachTagOptionsModel.accountId(), "testString");
     assertEquals(attachTagOptionsModel.tagType(), "user");
   }

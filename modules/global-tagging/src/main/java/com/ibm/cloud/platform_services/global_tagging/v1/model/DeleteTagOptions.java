@@ -47,7 +47,6 @@ public class DeleteTagOptions extends GenericModel {
   protected String xCorrelationId;
   protected String transactionId;
   protected List<String> providers;
-  protected String impersonateUser;
   protected String accountId;
   protected String tagType;
 
@@ -60,7 +59,6 @@ public class DeleteTagOptions extends GenericModel {
     private String xCorrelationId;
     private String transactionId;
     private List<String> providers;
-    private String impersonateUser;
     private String accountId;
     private String tagType;
 
@@ -75,7 +73,6 @@ public class DeleteTagOptions extends GenericModel {
       this.xCorrelationId = deleteTagOptions.xCorrelationId;
       this.transactionId = deleteTagOptions.transactionId;
       this.providers = deleteTagOptions.providers;
-      this.impersonateUser = deleteTagOptions.impersonateUser;
       this.accountId = deleteTagOptions.accountId;
       this.tagType = deleteTagOptions.tagType;
     }
@@ -179,17 +176,6 @@ public class DeleteTagOptions extends GenericModel {
     }
 
     /**
-     * Set the impersonateUser.
-     *
-     * @param impersonateUser the impersonateUser
-     * @return the DeleteTagOptions builder
-     */
-    public Builder impersonateUser(String impersonateUser) {
-      this.impersonateUser = impersonateUser;
-      return this;
-    }
-
-    /**
      * Set the accountId.
      *
      * @param accountId the accountId
@@ -222,7 +208,6 @@ public class DeleteTagOptions extends GenericModel {
     xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
     providers = builder.providers;
-    impersonateUser = builder.impersonateUser;
     accountId = builder.accountId;
     tagType = builder.tagType;
   }
@@ -302,17 +287,6 @@ public class DeleteTagOptions extends GenericModel {
    */
   public List<String> providers() {
     return providers;
-  }
-
-  /**
-   * Gets the impersonateUser.
-   *
-   * The user on whose behalf the delete operation must be performed (_for administrators only_).
-   *
-   * @return the impersonateUser
-   */
-  public String impersonateUser() {
-    return impersonateUser;
   }
 
   /**

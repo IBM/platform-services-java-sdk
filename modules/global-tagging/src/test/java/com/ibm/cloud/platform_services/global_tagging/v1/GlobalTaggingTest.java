@@ -83,7 +83,6 @@ public class GlobalTaggingTest {
       .xRequestId("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .fullData(false)
@@ -112,7 +111,6 @@ public class GlobalTaggingTest {
     // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
-    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
     assertEquals(Boolean.valueOf(query.get("full_data")), Boolean.valueOf(false));
@@ -149,7 +147,6 @@ public class GlobalTaggingTest {
     // Construct an instance of the CreateTagOptions model
     CreateTagOptions createTagOptionsModel = new CreateTagOptions.Builder()
       .tagNames(java.util.Arrays.asList("testString"))
-      .impersonateUser("testString")
       .xRequestId("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
@@ -173,7 +170,6 @@ public class GlobalTaggingTest {
     // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
-    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "access");
   }
@@ -212,7 +208,6 @@ public class GlobalTaggingTest {
       .xCorrelationId("testString")
       .transactionId("testString")
       .providers("ghost")
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
@@ -234,7 +229,6 @@ public class GlobalTaggingTest {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(query.get("providers"), "ghost");
-    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
   }
@@ -267,7 +261,6 @@ public class GlobalTaggingTest {
       .xCorrelationId("testString")
       .transactionId("testString")
       .providers(java.util.Arrays.asList("ghost"))
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
@@ -289,7 +282,6 @@ public class GlobalTaggingTest {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(query.get("providers"), RequestUtils.join(java.util.Arrays.asList("ghost"), ","));
-    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
   }
@@ -336,7 +328,6 @@ public class GlobalTaggingTest {
       .xRequestId("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
@@ -357,7 +348,6 @@ public class GlobalTaggingTest {
     // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
-    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
   }
@@ -404,7 +394,6 @@ public class GlobalTaggingTest {
       .xRequestId("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
@@ -425,7 +414,6 @@ public class GlobalTaggingTest {
     // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
-    assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
   }

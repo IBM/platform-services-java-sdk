@@ -46,7 +46,6 @@ public class DetachTagOptionsTest {
       .xRequestId("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .build();
@@ -56,7 +55,6 @@ public class DetachTagOptionsTest {
     assertEquals(detachTagOptionsModel.xRequestId(), "testString");
     assertEquals(detachTagOptionsModel.xCorrelationId(), "testString");
     assertEquals(detachTagOptionsModel.transactionId(), "testString");
-    assertEquals(detachTagOptionsModel.impersonateUser(), "testString");
     assertEquals(detachTagOptionsModel.accountId(), "testString");
     assertEquals(detachTagOptionsModel.tagType(), "user");
   }

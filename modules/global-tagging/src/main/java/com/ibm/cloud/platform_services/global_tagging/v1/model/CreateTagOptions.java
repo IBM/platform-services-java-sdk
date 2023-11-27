@@ -31,7 +31,6 @@ public class CreateTagOptions extends GenericModel {
   }
 
   protected List<String> tagNames;
-  protected String impersonateUser;
   protected String xRequestId;
   protected String xCorrelationId;
   protected String transactionId;
@@ -43,7 +42,6 @@ public class CreateTagOptions extends GenericModel {
    */
   public static class Builder {
     private List<String> tagNames;
-    private String impersonateUser;
     private String xRequestId;
     private String xCorrelationId;
     private String transactionId;
@@ -57,7 +55,6 @@ public class CreateTagOptions extends GenericModel {
      */
     private Builder(CreateTagOptions createTagOptions) {
       this.tagNames = createTagOptions.tagNames;
-      this.impersonateUser = createTagOptions.impersonateUser;
       this.xRequestId = createTagOptions.xRequestId;
       this.xCorrelationId = createTagOptions.xCorrelationId;
       this.transactionId = createTagOptions.transactionId;
@@ -114,17 +111,6 @@ public class CreateTagOptions extends GenericModel {
      */
     public Builder tagNames(List<String> tagNames) {
       this.tagNames = tagNames;
-      return this;
-    }
-
-    /**
-     * Set the impersonateUser.
-     *
-     * @param impersonateUser the impersonateUser
-     * @return the CreateTagOptions builder
-     */
-    public Builder impersonateUser(String impersonateUser) {
-      this.impersonateUser = impersonateUser;
       return this;
     }
 
@@ -192,7 +178,6 @@ public class CreateTagOptions extends GenericModel {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.tagNames,
       "tagNames cannot be null");
     tagNames = builder.tagNames;
-    impersonateUser = builder.impersonateUser;
     xRequestId = builder.xRequestId;
     xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
@@ -218,17 +203,6 @@ public class CreateTagOptions extends GenericModel {
    */
   public List<String> tagNames() {
     return tagNames;
-  }
-
-  /**
-   * Gets the impersonateUser.
-   *
-   * The user on whose behalf the create operation must be performed (_for administrators only_).
-   *
-   * @return the impersonateUser
-   */
-  public String impersonateUser() {
-    return impersonateUser;
   }
 
   /**
@@ -279,8 +253,7 @@ public class CreateTagOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The ID of the billing account where the tag must be created. It is a required parameter if `impersonate_user` is
-   * set.
+   * The ID of the billing account where the tag must be created.
    *
    * @return the accountId
    */

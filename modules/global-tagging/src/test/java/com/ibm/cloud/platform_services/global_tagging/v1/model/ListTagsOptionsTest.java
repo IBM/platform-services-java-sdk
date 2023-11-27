@@ -35,7 +35,6 @@ public class ListTagsOptionsTest {
       .xRequestId("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
-      .impersonateUser("testString")
       .accountId("testString")
       .tagType("user")
       .fullData(false)
@@ -50,7 +49,6 @@ public class ListTagsOptionsTest {
     assertEquals(listTagsOptionsModel.xRequestId(), "testString");
     assertEquals(listTagsOptionsModel.xCorrelationId(), "testString");
     assertEquals(listTagsOptionsModel.transactionId(), "testString");
-    assertEquals(listTagsOptionsModel.impersonateUser(), "testString");
     assertEquals(listTagsOptionsModel.accountId(), "testString");
     assertEquals(listTagsOptionsModel.tagType(), "user");
     assertEquals(listTagsOptionsModel.fullData(), Boolean.valueOf(false));

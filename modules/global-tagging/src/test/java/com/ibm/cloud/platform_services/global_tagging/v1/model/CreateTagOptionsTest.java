@@ -33,7 +33,6 @@ public class CreateTagOptionsTest {
   public void testCreateTagOptions() throws Throwable {
     CreateTagOptions createTagOptionsModel = new CreateTagOptions.Builder()
       .tagNames(java.util.Arrays.asList("testString"))
-      .impersonateUser("testString")
       .xRequestId("testString")
       .xCorrelationId("testString")
       .transactionId("testString")
@@ -41,7 +40,6 @@ public class CreateTagOptionsTest {
       .tagType("access")
       .build();
     assertEquals(createTagOptionsModel.tagNames(), java.util.Arrays.asList("testString"));
-    assertEquals(createTagOptionsModel.impersonateUser(), "testString");
     assertEquals(createTagOptionsModel.xRequestId(), "testString");
     assertEquals(createTagOptionsModel.xCorrelationId(), "testString");
     assertEquals(createTagOptionsModel.transactionId(), "testString");

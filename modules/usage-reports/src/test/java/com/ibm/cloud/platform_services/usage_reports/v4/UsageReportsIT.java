@@ -35,6 +35,7 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountUsageOpt
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetOrgUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotConfigOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotPager;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceGroupUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageAccountOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageOrgOptions;
@@ -44,8 +45,11 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfigValidateResponse;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListSnapshotsItem;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.ValidateReportsSnapshotConfigOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -461,6 +465,34 @@ public class UsageReportsIT extends SdkIntegrationTestBase {
   }
 
   @Test(dependsOnMethods = { "testUpdateReportsSnapshotConfig" })
+  public void testValidateReportsSnapshotConfig() throws Exception {
+    try {
+      ValidateReportsSnapshotConfigOptions validateReportsSnapshotConfigOptions = new ValidateReportsSnapshotConfigOptions.Builder()
+        .accountId(ACCOUNT_ID)
+        .interval("daily")
+        .cosBucket(COS_BUCKET)
+        .cosLocation(COS_LOCATION)
+        .cosReportsFolder("IBMCloud-Billing-Reports")
+        .reportTypes(java.util.Arrays.asList("account_summary", "enterprise_summary", "account_resource_instance_usage"))
+        .versioning("new")
+        .build();
+
+      // Invoke operation
+      Response<SnapshotConfigValidateResponse> response = service.validateReportsSnapshotConfig(validateReportsSnapshotConfigOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      SnapshotConfigValidateResponse snapshotConfigValidateResponseResult = response.getResult();
+
+      assertNotNull(snapshotConfigValidateResponseResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testValidateReportsSnapshotConfig" })
   public void testGetReportsSnapshot() throws Exception {
     try {
       GetReportsSnapshotOptions getReportsSnapshotOptions = new GetReportsSnapshotOptions.Builder()
@@ -479,6 +511,41 @@ public class UsageReportsIT extends SdkIntegrationTestBase {
       SnapshotList snapshotListResult = response.getResult();
 
       assertNotNull(snapshotListResult);
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetReportsSnapshot" })
+  public void testGetReportsSnapshotWithPager() throws Exception {
+    try {
+      GetReportsSnapshotOptions options = new GetReportsSnapshotOptions.Builder()
+        .accountId(ACCOUNT_ID)
+        .month(BILLING_MONTH)
+        .dateFrom(Long.valueOf(SNAPSHOT_DATE_FROM))
+        .dateTo(Long.valueOf(SNAPSHOT_DATE_TO))
+        .limit(Long.valueOf("30"))
+        .build();
+
+      // Test getNext().
+      List<SnapshotListSnapshotsItem> allResults = new ArrayList<>();
+      GetReportsSnapshotPager pager = new GetReportsSnapshotPager(service, options);
+      while (pager.hasNext()) {
+        List<SnapshotListSnapshotsItem> nextPage = pager.getNext();
+        assertNotNull(nextPage);
+        allResults.addAll(nextPage);
+      }
+      assertFalse(allResults.isEmpty());
+
+      // Test getAll();
+      pager = new GetReportsSnapshotPager(service, options);
+      List<SnapshotListSnapshotsItem> allItems = pager.getAll();
+      assertNotNull(allItems);
+      assertFalse(allItems.isEmpty());
+
+      assertEquals(allItems.size(), allResults.size());
+      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

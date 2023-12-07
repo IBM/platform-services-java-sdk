@@ -36,8 +36,10 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfigValidateResponse;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.ValidateReportsSnapshotConfigOptions;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
 import com.ibm.cloud.sdk.core.http.ServiceCall;
@@ -506,6 +508,50 @@ public class UsageReports extends BaseService {
     }
     builder.query("account_id", String.valueOf(deleteReportsSnapshotConfigOptions.accountId()));
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Verify billing to COS authorization.
+   *
+   * Verify billing service to COS bucket authorization for the given account_id. If COS bucket information is not
+   * provided, COS bucket information is retrieved from the configuration file.
+   *
+   * @param validateReportsSnapshotConfigOptions the {@link ValidateReportsSnapshotConfigOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link SnapshotConfigValidateResponse}
+   */
+  public ServiceCall<SnapshotConfigValidateResponse> validateReportsSnapshotConfig(ValidateReportsSnapshotConfigOptions validateReportsSnapshotConfigOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(validateReportsSnapshotConfigOptions,
+      "validateReportsSnapshotConfigOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/billing-reports-snapshot-config/validate"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("usage_reports", "v4", "validateReportsSnapshotConfig");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("account_id", validateReportsSnapshotConfigOptions.accountId());
+    if (validateReportsSnapshotConfigOptions.interval() != null) {
+      contentJson.addProperty("interval", validateReportsSnapshotConfigOptions.interval());
+    }
+    if (validateReportsSnapshotConfigOptions.cosBucket() != null) {
+      contentJson.addProperty("cos_bucket", validateReportsSnapshotConfigOptions.cosBucket());
+    }
+    if (validateReportsSnapshotConfigOptions.cosLocation() != null) {
+      contentJson.addProperty("cos_location", validateReportsSnapshotConfigOptions.cosLocation());
+    }
+    if (validateReportsSnapshotConfigOptions.cosReportsFolder() != null) {
+      contentJson.addProperty("cos_reports_folder", validateReportsSnapshotConfigOptions.cosReportsFolder());
+    }
+    if (validateReportsSnapshotConfigOptions.reportTypes() != null) {
+      contentJson.add("report_types", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(validateReportsSnapshotConfigOptions.reportTypes()));
+    }
+    if (validateReportsSnapshotConfigOptions.versioning() != null) {
+      contentJson.addProperty("versioning", validateReportsSnapshotConfigOptions.versioning());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<SnapshotConfigValidateResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<SnapshotConfigValidateResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

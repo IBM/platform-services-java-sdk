@@ -22,6 +22,7 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.GetAccountUsageOpt
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetOrgUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotConfigOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetReportsSnapshotPager;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceGroupUsageOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageAccountOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageOrgOptions;
@@ -30,11 +31,17 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
-import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfigValidateResponse;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListSnapshotsItem;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.ValidateReportsSnapshotConfigOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+import com.ibm.cloud.sdk.core.util.GsonSingleton;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -307,6 +314,26 @@ public class UsageReportsExamples {
     }
 
     try {
+      System.out.println("validateReportsSnapshotConfig() result:");
+      // begin-validate_reports_snapshot_config
+      ValidateReportsSnapshotConfigOptions validateReportsSnapshotConfigOptions = new ValidateReportsSnapshotConfigOptions.Builder()
+        .accountId(accountId)
+        .interval("daily")
+        .cosBucket(cosBucket)
+        .cosLocation(cosLocation)
+        .build();
+
+      Response<SnapshotConfigValidateResponse> response = service.validateReportsSnapshotConfig(validateReportsSnapshotConfigOptions).execute();
+      SnapshotConfigValidateResponse snapshotConfigValidateResponse = response.getResult();
+
+      System.out.println(snapshotConfigValidateResponse);
+      // end-validate_reports_snapshot_config
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
       System.out.println("getReportsSnapshot() result:");
       // begin-get_reports_snapshot
       GetReportsSnapshotOptions getReportsSnapshotOptions = new GetReportsSnapshotOptions.Builder()
@@ -314,12 +341,17 @@ public class UsageReportsExamples {
         .month(billingMonth)
         .dateFrom(Long.valueOf(snapshotDateFrom))
         .dateTo(Long.valueOf(snapshotDateTo))
+        .limit(Long.valueOf("30"))
         .build();
 
-      Response<SnapshotList> response = service.getReportsSnapshot(getReportsSnapshotOptions).execute();
-      SnapshotList snapshotList = response.getResult();
+      GetReportsSnapshotPager pager = new GetReportsSnapshotPager(service, getReportsSnapshotOptions);
+      List<SnapshotListSnapshotsItem> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<SnapshotListSnapshotsItem> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
 
-      System.out.println(snapshotList);
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
       // end-get_reports_snapshot
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",

@@ -36,6 +36,8 @@ public class SnapshotListNext extends GenericModel {
   /**
    * Gets the offset.
    *
+   * The value of the `_start` query parameter to fetch the next page.
+   *
    * @return the offset
    */
   public String getOffset() {

@@ -34,9 +34,11 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.InstancesUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.OrgUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfigValidateResponse;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListSnapshotsItem;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.ValidateReportsSnapshotConfigOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -239,7 +241,7 @@ public class UsageReportsTest {
   @Test
   public void testGetResourceUsageAccountWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"limit\": 5, \"count\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"account_id\": \"accountId\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_instance_name\": \"resourceInstanceName\", \"resource_id\": \"resourceId\", \"resource_name\": \"resourceName\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_name\": \"resourceGroupName\", \"organization_id\": \"organizationId\", \"organization_name\": \"organizationName\", \"space_id\": \"spaceId\", \"space_name\": \"spaceName\", \"consumer_id\": \"consumerId\", \"region\": \"region\", \"pricing_region\": \"pricingRegion\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"billable\": true, \"plan_id\": \"planId\", \"plan_name\": \"planName\", \"month\": \"2017-08\", \"usage\": [{\"metric\": \"UP-TIME\", \"metric_name\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"unit_name\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"pending\": true, \"currency_rate\": 10.8716}]}";
+    String mockResponseBody = "{\"limit\": 5, \"count\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"account_id\": \"accountId\", \"resource_instance_id\": \"resourceInstanceId\", \"resource_instance_name\": \"resourceInstanceName\", \"resource_id\": \"resourceId\", \"resource_name\": \"resourceName\", \"resource_group_id\": \"resourceGroupId\", \"resource_group_name\": \"resourceGroupName\", \"organization_id\": \"organizationId\", \"organization_name\": \"organizationName\", \"space_id\": \"spaceId\", \"space_name\": \"spaceName\", \"consumer_id\": \"consumerId\", \"region\": \"region\", \"pricing_region\": \"pricingRegion\", \"pricing_country\": \"USA\", \"currency_code\": \"USD\", \"billable\": true, \"plan_id\": \"planId\", \"plan_name\": \"planName\", \"pricing_plan_id\": \"pricingPlanId\", \"month\": \"2017-08\", \"usage\": [{\"metric\": \"UP-TIME\", \"metric_name\": \"UP-TIME\", \"quantity\": 711.11, \"rateable_quantity\": 700, \"cost\": 123.45, \"rated_cost\": 130.0, \"price\": [\"anyValue\"], \"unit\": \"HOURS\", \"unit_name\": \"HOURS\", \"non_chargeable\": true, \"discounts\": [{\"ref\": \"Discount-d27beddb-111b-4bbf-8cb1-b770f531c1a9\", \"name\": \"platform-discount\", \"display_name\": \"Platform Service Discount\", \"discount\": 5}]}], \"pending\": true, \"currency_rate\": 10.8716, \"tags\": [\"anyValue\"]}]}";
     String getResourceUsageAccountPath = "/v4/accounts/testString/resource_instances/usage/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -955,6 +957,63 @@ public class UsageReportsTest {
   public void testDeleteReportsSnapshotConfigNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     usageReportsService.deleteReportsSnapshotConfig(null).execute();
+  }
+
+  // Test the validateReportsSnapshotConfig operation with a valid options model parameter
+  @Test
+  public void testValidateReportsSnapshotConfigWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"account_id\": \"abc\", \"cos_bucket\": \"bucket_name\", \"cos_location\": \"us-south\"}";
+    String validateReportsSnapshotConfigPath = "/v1/billing-reports-snapshot-config/validate";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ValidateReportsSnapshotConfigOptions model
+    ValidateReportsSnapshotConfigOptions validateReportsSnapshotConfigOptionsModel = new ValidateReportsSnapshotConfigOptions.Builder()
+      .accountId("abc")
+      .interval("daily")
+      .cosBucket("bucket_name")
+      .cosLocation("us-south")
+      .cosReportsFolder("IBMCloud-Billing-Reports")
+      .reportTypes(java.util.Arrays.asList("account_summary", "enterprise_summary", "account_resource_instance_usage"))
+      .versioning("new")
+      .build();
+
+    // Invoke validateReportsSnapshotConfig() with a valid options model and verify the result
+    Response<SnapshotConfigValidateResponse> response = usageReportsService.validateReportsSnapshotConfig(validateReportsSnapshotConfigOptionsModel).execute();
+    assertNotNull(response);
+    SnapshotConfigValidateResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, validateReportsSnapshotConfigPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the validateReportsSnapshotConfig operation with and without retries enabled
+  @Test
+  public void testValidateReportsSnapshotConfigWRetries() throws Throwable {
+    usageReportsService.enableRetries(4, 30);
+    testValidateReportsSnapshotConfigWOptions();
+
+    usageReportsService.disableRetries();
+    testValidateReportsSnapshotConfigWOptions();
+  }
+
+  // Test the validateReportsSnapshotConfig operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testValidateReportsSnapshotConfigNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    usageReportsService.validateReportsSnapshotConfig(null).execute();
   }
 
   // Test the getReportsSnapshot operation with a valid options model parameter

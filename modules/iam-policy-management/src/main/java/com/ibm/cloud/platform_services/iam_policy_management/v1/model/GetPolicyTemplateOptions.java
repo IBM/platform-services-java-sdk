@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,13 +19,25 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class GetPolicyTemplateOptions extends GenericModel {
 
+  /**
+   * The policy template state.
+   */
+  public interface State {
+    /** active. */
+    String ACTIVE = "active";
+    /** deleted. */
+    String DELETED = "deleted";
+  }
+
   protected String policyTemplateId;
+  protected String state;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String policyTemplateId;
+    private String state;
 
     /**
      * Instantiates a new Builder from an existing GetPolicyTemplateOptions instance.
@@ -34,6 +46,7 @@ public class GetPolicyTemplateOptions extends GenericModel {
      */
     private Builder(GetPolicyTemplateOptions getPolicyTemplateOptions) {
       this.policyTemplateId = getPolicyTemplateOptions.policyTemplateId;
+      this.state = getPolicyTemplateOptions.state;
     }
 
     /**
@@ -70,6 +83,17 @@ public class GetPolicyTemplateOptions extends GenericModel {
       this.policyTemplateId = policyTemplateId;
       return this;
     }
+
+    /**
+     * Set the state.
+     *
+     * @param state the state
+     * @return the GetPolicyTemplateOptions builder
+     */
+    public Builder state(String state) {
+      this.state = state;
+      return this;
+    }
   }
 
   protected GetPolicyTemplateOptions() { }
@@ -78,6 +102,7 @@ public class GetPolicyTemplateOptions extends GenericModel {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.policyTemplateId,
       "policyTemplateId cannot be empty");
     policyTemplateId = builder.policyTemplateId;
+    state = builder.state;
   }
 
   /**
@@ -98,6 +123,17 @@ public class GetPolicyTemplateOptions extends GenericModel {
    */
   public String policyTemplateId() {
     return policyTemplateId;
+  }
+
+  /**
+   * Gets the state.
+   *
+   * The policy template state.
+   *
+   * @return the state
+   */
+  public String state() {
+    return state;
   }
 }
 

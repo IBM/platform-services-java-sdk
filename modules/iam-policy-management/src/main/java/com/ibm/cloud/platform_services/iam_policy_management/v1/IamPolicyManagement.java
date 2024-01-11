@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.81.0-c73a091c-20231026-215706
+ * IBM OpenAPI SDK Code Generator Version: 3.84.0-a4533f12-20240103-170852
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -273,7 +273,87 @@ public class IamPolicyManagement extends BaseService {
    * actions](/docs/account?topic=account-iam-service-roles-actions). Use only the resource attributes supported by the
    * service. To view a service's or the platform's supported attributes, check the [documentation](/docs?tab=all-docs).
    * The policy resource must include either the **`serviceType`**, **`serviceName`**,  or **`resourceGroupId`**
-   * attribute and the **`accountId`** attribute.` If the subject is a locked service-id, the request will fail.
+   * attribute and the **`accountId`** attribute.`
+   *
+   * In the rule field, you can specify a single condition by using **`key`**, **`value`**, and condition
+   * **`operator`**, or a set of **`conditions`** with a combination **`operator`**. The possible combination operators
+   * are **`and`** and **`or`**.
+   *
+   * Currently, we support two types of patterns:
+   *
+   * 1. `time-based`: Used to specify a time-based restriction
+   *
+   * Combine conditions to specify a time-based restriction (e.g., access only during business hours, during the
+   * Monday-Friday work week). For example, a policy can grant access Monday-Friday, 9:00am-5:00pm using the following
+   * rule:
+   * ```json
+   *   "rule": {
+   *     "operator": "and",
+   *     "conditions": [{
+   *       "key": "{{environment.attributes.day_of_week}}",
+   *       "operator": "dayOfWeekAnyOf",
+   *       "value": ["1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00"]
+   *     },
+   *       "key": "{{environment.attributes.current_time}}",
+   *       "operator": "timeGreaterThanOrEquals",
+   *       "value": "09:00:00+00:00"
+   *     },
+   *       "key": "{{environment.attributes.current_time}}",
+   *       "operator": "timeLessThanOrEquals",
+   *       "value": "17:00:00+00:00"
+   *     }]
+   *   }
+   * ``` You can use the following operators in the **`key`** and **`value`** pair:
+   * ```
+   *   'timeLessThan', 'timeLessThanOrEquals', 'timeGreaterThan', 'timeGreaterThanOrEquals',
+   *   'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan', 'dateTimeGreaterThanOrEquals',
+   *   'dayOfWeekEquals', 'dayOfWeekAnyOf',
+   * ``` The pattern field that matches the rule is required when rule is provided. For the business hour rule example
+   * above, the **`pattern`** is **`"time-based-conditions:weekly"`**. For more information, see [Time-based conditions
+   * operators](/docs/account?topic=account-iam-condition-properties&amp;interface=ui#policy-condition-properties) and
+   * [Limiting access with time-based conditions](/docs/account?topic=account-iam-time-based&amp;interface=ui). If the
+   * subject is a locked service-id, the request will fail.
+   *
+   * 2. `attribute-based`: Used to specify a combination of OR/AND based conditions applied on resource attributes.
+   *
+   * Combine conditions to specify an attribute-based condition using AN/OR-based operators.
+   *
+   * For example, a policy can grant access based on multiple conditions applied on the resource attributes below:
+   * ```json
+   *   "pattern": "attribute-based-condition:resource:literal-and-wildcard"
+   *   "rule": {
+   *       "operator": "or",
+   *       "conditions": [
+   *         {
+   *           "operator": "and",
+   *           "conditions": [
+   *             {
+   *               "key": "{{resource.attributes.prefix}}",
+   *               "operator": "stringEquals",
+   *               "value": "home/test"
+   *             },
+   *             {
+   *               "key": "{{environment.attributes.delimiter}}",
+   *               "operator": "stringEquals",
+   *               "value": "/"
+   *             }
+   *           ]
+   *         },
+   *         {
+   *           "key": "{{resource.attributes.path}}",
+   *           "operator": "stringMatch",
+   *           "value": "home/David/_*"
+   *         }
+   *       ]
+   *   }
+   * ```
+   *
+   * In addition to satisfying the `resources` section, the policy grants permission only if either the `path` begins
+   * with `home/David/` **OR**  the `prefix` is `home/test` and the `delimiter` is `/`. This mechanism helps you
+   * consolidate multiple policies in to a single policy,  making policies easier to administer and stay within the
+   * policy limit for an account. View the list of operators that can be used in the condition
+   * [here](/docs/account?topic=account-wildcard#string-comparisons).
+   *
    *
    * ### Authorization
    *
@@ -947,6 +1027,9 @@ public class IamPolicyManagement extends BaseService {
       builder.header("Accept-Language", listPolicyTemplatesOptions.acceptLanguage());
     }
     builder.query("account_id", String.valueOf(listPolicyTemplatesOptions.accountId()));
+    if (listPolicyTemplatesOptions.state() != null) {
+      builder.query("state", String.valueOf(listPolicyTemplatesOptions.state()));
+    }
     ResponseConverter<PolicyTemplateCollection> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateCollection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1008,6 +1091,9 @@ public class IamPolicyManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (getPolicyTemplateOptions.state() != null) {
+      builder.query("state", String.valueOf(getPolicyTemplateOptions.state()));
+    }
     ResponseConverter<PolicyTemplate> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplate>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1093,6 +1179,9 @@ public class IamPolicyManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
+    if (listPolicyTemplateVersionsOptions.state() != null) {
+      builder.query("state", String.valueOf(listPolicyTemplateVersionsOptions.state()));
+    }
     ResponseConverter<PolicyTemplateVersionsCollection> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateVersionsCollection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);

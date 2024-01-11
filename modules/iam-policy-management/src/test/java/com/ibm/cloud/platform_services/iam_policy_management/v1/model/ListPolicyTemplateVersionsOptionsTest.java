@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,8 +33,10 @@ public class ListPolicyTemplateVersionsOptionsTest {
   public void testListPolicyTemplateVersionsOptions() throws Throwable {
     ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptionsModel = new ListPolicyTemplateVersionsOptions.Builder()
       .policyTemplateId("testString")
+      .state("active")
       .build();
     assertEquals(listPolicyTemplateVersionsOptionsModel.policyTemplateId(), "testString");
+    assertEquals(listPolicyTemplateVersionsOptionsModel.state(), "active");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

@@ -745,6 +745,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       assertNotNull(result);
       assertEquals(result.getPolicy(), templatePolicyModel);
       testTemplateId = result.getId();
+      assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testCreatePolicyTemplate"})
@@ -766,6 +767,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       List<String> values = response.getHeaders().values(HEADER_ETAG);
       assertNotNull(values);
       testTemplateEtag = values.get(0);
+      assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testGetPolicyTemplate"})
@@ -816,6 +818,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       PolicyTemplate result = response.getResult();
       assertEquals(result.getPolicy(), templatePolicyModel);
       assertEquals(result.getDescription(), "Updated SDK test template with editor role");
+      assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testReplacePolicyTemplate"})
@@ -845,6 +848,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           }
       }
       assertTrue(foundTestPolicyTemplate);
+      assertEquals(result.getPolicyTemplates().get(0).getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testListPolicyTemplates"})
@@ -898,6 +902,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       testNewTemplateVersion = result.getVersion();
       assertEquals(result.getPolicy(), templatePolicyModel);
       assertTrue(Integer.parseInt(testNewTemplateVersion) > Integer.parseInt(testTemplateVersion));
+      assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testCreatePolicyTemplateVersion"})
@@ -916,6 +921,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
       PolicyTemplate result = response.getResult();
       assertNotNull(result);
+      assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = { "testGetPolicyTemplateVersion" })

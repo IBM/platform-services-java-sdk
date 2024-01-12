@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,8 +19,19 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListPolicyTemplatesOptions extends GenericModel {
 
+  /**
+   * The policy template state.
+   */
+  public interface State {
+    /** active. */
+    String ACTIVE = "active";
+    /** deleted. */
+    String DELETED = "deleted";
+  }
+
   protected String accountId;
   protected String acceptLanguage;
+  protected String state;
 
   /**
    * Builder.
@@ -28,6 +39,7 @@ public class ListPolicyTemplatesOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private String acceptLanguage;
+    private String state;
 
     /**
      * Instantiates a new Builder from an existing ListPolicyTemplatesOptions instance.
@@ -37,6 +49,7 @@ public class ListPolicyTemplatesOptions extends GenericModel {
     private Builder(ListPolicyTemplatesOptions listPolicyTemplatesOptions) {
       this.accountId = listPolicyTemplatesOptions.accountId;
       this.acceptLanguage = listPolicyTemplatesOptions.acceptLanguage;
+      this.state = listPolicyTemplatesOptions.state;
     }
 
     /**
@@ -84,6 +97,17 @@ public class ListPolicyTemplatesOptions extends GenericModel {
       this.acceptLanguage = acceptLanguage;
       return this;
     }
+
+    /**
+     * Set the state.
+     *
+     * @param state the state
+     * @return the ListPolicyTemplatesOptions builder
+     */
+    public Builder state(String state) {
+      this.state = state;
+      return this;
+    }
   }
 
   protected ListPolicyTemplatesOptions() { }
@@ -93,6 +117,7 @@ public class ListPolicyTemplatesOptions extends GenericModel {
       "accountId cannot be null");
     accountId = builder.accountId;
     acceptLanguage = builder.acceptLanguage;
+    state = builder.state;
   }
 
   /**
@@ -135,6 +160,17 @@ public class ListPolicyTemplatesOptions extends GenericModel {
    */
   public String acceptLanguage() {
     return acceptLanguage;
+  }
+
+  /**
+   * Gets the state.
+   *
+   * The policy template state.
+   *
+   * @return the state
+   */
+  public String state() {
+    return state;
   }
 }
 

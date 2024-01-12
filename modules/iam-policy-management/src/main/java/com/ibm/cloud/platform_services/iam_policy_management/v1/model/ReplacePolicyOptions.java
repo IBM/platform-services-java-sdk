@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -92,9 +92,9 @@ public class ReplacePolicyOptions extends GenericModel {
     }
 
     /**
-     * Adds an subjects to subjects.
+     * Adds a new element to subjects.
      *
-     * @param subjects the new subjects
+     * @param subjects the new element to be added
      * @return the ReplacePolicyOptions builder
      */
     public Builder addSubjects(PolicySubject subjects) {
@@ -108,9 +108,9 @@ public class ReplacePolicyOptions extends GenericModel {
     }
 
     /**
-     * Adds an roles to roles.
+     * Adds a new element to roles.
      *
-     * @param roles the new roles
+     * @param roles the new element to be added
      * @return the ReplacePolicyOptions builder
      */
     public Builder addRoles(PolicyRole roles) {
@@ -124,9 +124,9 @@ public class ReplacePolicyOptions extends GenericModel {
     }
 
     /**
-     * Adds an resources to resources.
+     * Adds a new element to resources.
      *
-     * @param resources the new resources
+     * @param resources the new element to be added
      * @return the ReplacePolicyOptions builder
      */
     public Builder addResources(PolicyResource resources) {

@@ -1,0 +1,63 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+	<!-- >>> Replace this with the parent pom's artifactId -->
+        <artifactId>platform-services</artifactId>
+        <groupId>com.ibm.cloud</groupId>
+        <version>99-SNAPSHOT</version>
+        <relativePath>../..</relativePath>
+    </parent>
+
+    <!-- >>> Replace this with the service module's artifactId (e.g. "example-service") -->
+    <artifactId>partner-usage-reports</artifactId>
+
+    <!-- >>> Replace this with a text description of this module (e.g. "Example Service") -->
+    <name>IBM Cloud Partner Usage Reports API</name>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.ibm.cloud</groupId>
+            <artifactId>sdk-core</artifactId>
+        </dependency>
+        <dependency>
+            <!-- >>> Replace this with the "common" module's artifactId (e.g. my-services-common) -->
+            <artifactId>platform-services-common</artifactId>
+            <groupId>com.ibm.cloud</groupId>
+        </dependency>
+        <dependency>
+            <!-- >>> Replace this with the "common" module's artifactId (e.g. my-services-common) -->
+            <artifactId>platform-services-common</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <type>test-jar</type>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <developers>
+        <developer>
+            <name>IBM Cloud DevX SDK Development</name>
+            <email>devxsdk@us.ibm.com</email>
+            <url>https://www.ibm.com/</url>
+        </developer>
+    </developers>
+
+</project>

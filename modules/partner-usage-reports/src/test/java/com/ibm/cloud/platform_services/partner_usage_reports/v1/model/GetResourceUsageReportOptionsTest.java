@@ -35,7 +35,7 @@ public class GetResourceUsageReportOptionsTest {
       .resellerId("testString")
       .customerId("testString")
       .children(false)
-      .month("2022-04")
+      .month("2024-01")
       .viewpoint("DISTRIBUTOR")
       .recurse(false)
       .limit(Long.valueOf("30"))
@@ -45,7 +45,7 @@ public class GetResourceUsageReportOptionsTest {
     assertEquals(getResourceUsageReportOptionsModel.resellerId(), "testString");
     assertEquals(getResourceUsageReportOptionsModel.customerId(), "testString");
     assertEquals(getResourceUsageReportOptionsModel.children(), Boolean.valueOf(false));
-    assertEquals(getResourceUsageReportOptionsModel.month(), "2022-04");
+    assertEquals(getResourceUsageReportOptionsModel.month(), "2024-01");
     assertEquals(getResourceUsageReportOptionsModel.viewpoint(), "DISTRIBUTOR");
     assertEquals(getResourceUsageReportOptionsModel.recurse(), Boolean.valueOf(false));
     assertEquals(getResourceUsageReportOptionsModel.limit(), Long.valueOf("30"));

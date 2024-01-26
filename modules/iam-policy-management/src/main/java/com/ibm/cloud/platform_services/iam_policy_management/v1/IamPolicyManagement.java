@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.84.0-a4533f12-20240103-170852
+ * IBM OpenAPI SDK Code Generator Version: 3.84.1-55f6d880-20240110-194020
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;

@@ -54,7 +54,7 @@ public class PartnerBillingUnitsTest {
   @Test
   public void testGetBillingOptionsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"limit\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"id\": \"CFL_JJKLVZ2I0JE-_MGU\", \"billing_unit_id\": \"e19fa97c9bb34963a31a2008044d8b59\", \"customer_id\": \"<ford_account_id>\", \"customer_type\": \"ACCOUNT\", \"customer_name\": \"Ford\", \"reseller_id\": \"<techdata_enterprise_id>\", \"reseller_name\": \"TechData\", \"month\": \"2022-04\", \"errors\": [{\"anyKey\": \"anyValue\"}], \"type\": \"SUBSCRIPTION\", \"start_date\": \"2019-05-01T00:00:00.000Z\", \"end_date\": \"2020-05-01T00:00:00.000Z\", \"state\": \"ACTIVE\", \"category\": \"PLATFORM\", \"payment_instrument\": {\"anyKey\": \"anyValue\"}, \"part_number\": \"<PART_NUMBER_1>\", \"catalog_id\": \"ibmcloud-platform-payg-commit\", \"order_id\": \"23wzpnpmh8\", \"po_number\": \"<PO_NUMBER_1>\", \"subscription_model\": \"4.0\", \"duration_in_months\": 11, \"monthly_amount\": 8333.333333333334, \"billing_system\": {\"anyKey\": \"anyValue\"}, \"country_code\": \"USA\", \"currency_code\": \"USD\"}]}";
+    String mockResponseBody = "{\"limit\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"id\": \"CFL_JJKLVZ2I0JE-_MGU\", \"billing_unit_id\": \"e19fa97c9bb34963a31a2008044d8b59\", \"customer_id\": \"<ford_account_id>\", \"customer_type\": \"ACCOUNT\", \"customer_name\": \"Ford\", \"reseller_id\": \"<techdata_enterprise_id>\", \"reseller_name\": \"TechData\", \"month\": \"2024-01\", \"errors\": [{\"anyKey\": \"anyValue\"}], \"type\": \"SUBSCRIPTION\", \"start_date\": \"2019-05-01T00:00:00.000Z\", \"end_date\": \"2020-05-01T00:00:00.000Z\", \"state\": \"ACTIVE\", \"category\": \"PLATFORM\", \"payment_instrument\": {\"anyKey\": \"anyValue\"}, \"part_number\": \"<PART_NUMBER_1>\", \"catalog_id\": \"ibmcloud-platform-payg-commit\", \"order_id\": \"23wzpnpmh8\", \"po_number\": \"<PO_NUMBER_1>\", \"subscription_model\": \"4.0\", \"duration_in_months\": 11, \"monthly_amount\": 8333.333333333334, \"billing_system\": {\"anyKey\": \"anyValue\"}, \"country_code\": \"USA\", \"currency_code\": \"USD\"}]}";
     String getBillingOptionsPath = "/v1/billing-options";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -66,7 +66,7 @@ public class PartnerBillingUnitsTest {
       .partnerId("testString")
       .customerId("testString")
       .resellerId("testString")
-      .date("2022-04")
+      .date("2024-01")
       .limit(Long.valueOf("30"))
       .build();
 
@@ -89,7 +89,7 @@ public class PartnerBillingUnitsTest {
     assertEquals(query.get("partner_id"), "testString");
     assertEquals(query.get("customer_id"), "testString");
     assertEquals(query.get("reseller_id"), "testString");
-    assertEquals(query.get("date"), "2022-04");
+    assertEquals(query.get("date"), "2024-01");
     assertEquals(Long.valueOf(query.get("_limit")), Long.valueOf("30"));
   }
 
@@ -114,7 +114,7 @@ public class PartnerBillingUnitsTest {
   @Test
   public void testGetCreditPoolsReportWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"limit\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"type\": \"PLATFORM\", \"billing_unit_id\": \"e19fa97c9bb34963a31a2008044d8b59\", \"customer_id\": \"<ford_account_id>\", \"customer_type\": \"ACCOUNT\", \"customer_name\": \"Ford\", \"reseller_id\": \"<techdata_enterprise_id>\", \"reseller_name\": \"TechData\", \"month\": \"2022-04\", \"currency_code\": \"USD\", \"term_credits\": [{\"billing_option_id\": \"JWX986YRGFSHACQUEFOI\", \"billing_option_model\": \"4.0\", \"category\": \"PLATFORM\", \"start_date\": \"2019-07-01T00:00:00.000Z\", \"end_date\": \"2019-08-31T23:59:59.999Z\", \"total_credits\": 100000, \"starting_balance\": 100000, \"used_credits\": 0, \"current_balance\": 100000, \"resources\": [{\"anyKey\": \"anyValue\"}]}], \"overage\": {\"cost\": 500, \"resources\": [{\"anyKey\": \"anyValue\"}]}}]}";
+    String mockResponseBody = "{\"limit\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"offset\": \"offset\"}, \"resources\": [{\"type\": \"PLATFORM\", \"billing_unit_id\": \"e19fa97c9bb34963a31a2008044d8b59\", \"customer_id\": \"<ford_account_id>\", \"customer_type\": \"ACCOUNT\", \"customer_name\": \"Ford\", \"reseller_id\": \"<techdata_enterprise_id>\", \"reseller_name\": \"TechData\", \"month\": \"2024-01\", \"currency_code\": \"USD\", \"term_credits\": [{\"billing_option_id\": \"JWX986YRGFSHACQUEFOI\", \"billing_option_model\": \"4.0\", \"category\": \"PLATFORM\", \"start_date\": \"2019-07-01T00:00:00.000Z\", \"end_date\": \"2019-08-31T23:59:59.999Z\", \"total_credits\": 100000, \"starting_balance\": 100000, \"used_credits\": 0, \"current_balance\": 100000, \"resources\": [{\"anyKey\": \"anyValue\"}]}], \"overage\": {\"cost\": 500, \"resources\": [{\"anyKey\": \"anyValue\"}]}}]}";
     String getCreditPoolsReportPath = "/v1/credit-pools";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -126,7 +126,7 @@ public class PartnerBillingUnitsTest {
       .partnerId("testString")
       .customerId("testString")
       .resellerId("testString")
-      .date("2022-04")
+      .date("2024-01")
       .limit(Long.valueOf("30"))
       .build();
 
@@ -149,7 +149,7 @@ public class PartnerBillingUnitsTest {
     assertEquals(query.get("partner_id"), "testString");
     assertEquals(query.get("customer_id"), "testString");
     assertEquals(query.get("reseller_id"), "testString");
-    assertEquals(query.get("date"), "2022-04");
+    assertEquals(query.get("date"), "2024-01");
     assertEquals(Long.valueOf(query.get("_limit")), Long.valueOf("30"));
   }
 

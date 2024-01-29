@@ -34,13 +34,13 @@ public class GetCreditPoolsReportOptionsTest {
       .partnerId("testString")
       .customerId("testString")
       .resellerId("testString")
-      .date("2022-04")
+      .date("2024-01")
       .limit(Long.valueOf("30"))
       .build();
     assertEquals(getCreditPoolsReportOptionsModel.partnerId(), "testString");
     assertEquals(getCreditPoolsReportOptionsModel.customerId(), "testString");
     assertEquals(getCreditPoolsReportOptionsModel.resellerId(), "testString");
-    assertEquals(getCreditPoolsReportOptionsModel.date(), "2022-04");
+    assertEquals(getCreditPoolsReportOptionsModel.date(), "2024-01");
     assertEquals(getCreditPoolsReportOptionsModel.limit(), Long.valueOf("30"));
   }
 

@@ -34,13 +34,13 @@ public class GetBillingOptionsOptionsTest {
       .partnerId("testString")
       .customerId("testString")
       .resellerId("testString")
-      .date("2022-04")
+      .date("2024-01")
       .limit(Long.valueOf("30"))
       .build();
     assertEquals(getBillingOptionsOptionsModel.partnerId(), "testString");
     assertEquals(getBillingOptionsOptionsModel.customerId(), "testString");
     assertEquals(getBillingOptionsOptionsModel.resellerId(), "testString");
-    assertEquals(getBillingOptionsOptionsModel.date(), "2022-04");
+    assertEquals(getBillingOptionsOptionsModel.date(), "2024-01");
     assertEquals(getBillingOptionsOptionsModel.limit(), Long.valueOf("30"));
   }
 

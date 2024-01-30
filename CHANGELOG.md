@@ -1,3 +1,10 @@
+## [0.48.2](https://github.com/IBM/platform-services-java-sdk/compare/0.48.1...0.48.2) (2024-01-30)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** update examples format for doc generation ([#228](https://github.com/IBM/platform-services-java-sdk/issues/228)) ([bf6aef6](https://github.com/IBM/platform-services-java-sdk/commit/bf6aef66a0a1f62638cb2b492d69ed6f95904373))
+
 ## [0.48.1](https://github.com/IBM/platform-services-java-sdk/compare/0.48.0...0.48.1) (2024-01-26)
 
 

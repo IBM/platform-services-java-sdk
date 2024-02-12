@@ -185,11 +185,12 @@ public class IamPolicyManagementExamples {
       Response<Policy> response = service.createPolicy(options).execute();
       Policy policy = response.getResult();
 
+      examplePolicyId = policy.getId();
+
       System.out.println(policy);
 
       // end-create_policy
 
-      examplePolicyId = policy.getId();
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -207,11 +208,12 @@ public class IamPolicyManagementExamples {
       Response<PolicyTemplateMetaData> response = service.getPolicy(options).execute();
       PolicyTemplateMetaData policy = response.getResult();
 
+      examplePolicyEtag = response.getHeaders().values("Etag").get(0);
+
       System.out.println(policy);
 
       // end-get_policy
 
-      examplePolicyEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -271,11 +273,12 @@ public class IamPolicyManagementExamples {
       Response<Policy> response = service.replacePolicy(options).execute();
       Policy policy = response.getResult();
 
+      examplePolicyEtag = response.getHeaders().values("Etag").get(0);
+
       System.out.println(policy);
 
       // end-replace_policy
 
-      examplePolicyEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -430,11 +433,12 @@ public class IamPolicyManagementExamples {
       Response<V2Policy> response = service.createV2Policy(options).execute();
       V2Policy policy = response.getResult();
 
+      exampleV2PolicyId = policy.getId();
+
       System.out.println(policy);
 
       // end-create_v2_policy
 
-      exampleV2PolicyId = policy.getId();
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -452,11 +456,12 @@ public class IamPolicyManagementExamples {
       Response<V2PolicyTemplateMetaData> response = service.getV2Policy(options).execute();
       V2PolicyTemplateMetaData policy = response.getResult();
 
+      exampleV2PolicyEtag = response.getHeaders().values("Etag").get(0);
+
       System.out.println(policy);
 
       // end-get_v2_policy
 
-      exampleV2PolicyEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -549,11 +554,12 @@ public class IamPolicyManagementExamples {
       Response<V2Policy> response = service.replaceV2Policy(options).execute();
       V2Policy policy = response.getResult();
 
+      exampleV2PolicyEtag = response.getHeaders().values("Etag").get(0);
+
       System.out.println(policy);
 
       // end-replace_v2_policy
 
-      exampleV2PolicyEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -614,11 +620,12 @@ public class IamPolicyManagementExamples {
       Response<CustomRole> response = service.createRole(options).execute();
       CustomRole customRole = response.getResult();
 
+      exampleCustomRoleId = customRole.getId();
+
       System.out.println(customRole);
 
       // end-create_role
 
-      exampleCustomRoleId = customRole.getId();
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -636,11 +643,12 @@ public class IamPolicyManagementExamples {
       Response<CustomRole> response = service.getRole(options).execute();
       CustomRole customRole = response.getResult();
 
+      exampleCustomRoleEtag = response.getHeaders().values("Etag").get(0);
+
       System.out.println(customRole);
 
       // end-get_role
 
-      exampleCustomRoleEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -743,11 +751,12 @@ public class IamPolicyManagementExamples {
       Response<PolicyTemplateLimitData> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
       PolicyTemplateLimitData policyTemplate = response.getResult();
 
+      exampleTemplateId = policyTemplate.getId();
+      exampleTemplateVersion = policyTemplate.getVersion();
+
       System.out.println(policyTemplate);
       // end-create_policy_template
 
-      exampleTemplateId = policyTemplate.getId();
-      exampleTemplateVersion = policyTemplate.getVersion();
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -763,10 +772,11 @@ public class IamPolicyManagementExamples {
       Response<PolicyTemplate> response = service.getPolicyTemplate(getPolicyTemplateOptions).execute();
       PolicyTemplate policyTemplate = response.getResult();
 
+      exampleTemplateEtag = response.getHeaders().values("Etag").get(0);
+
       System.out.println(policyTemplate);
       // end-get_policy_template
 
-      exampleTemplateEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -900,10 +910,11 @@ public class IamPolicyManagementExamples {
       Response<PolicyTemplate> response = service.getPolicyTemplateVersion(getPolicyTemplateVersionOptions).execute();
       PolicyTemplate policyTemplate = response.getResult();
 
+      exampleTemplateEtag = response.getHeaders().values("Etag").get(0);
+
       System.out.println(policyTemplate);
       // end-get_policy_template_version
 
-      exampleTemplateEtag = response.getHeaders().values("Etag").get(0);
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -926,7 +937,7 @@ public class IamPolicyManagementExamples {
 
     try {
       System.out.println("listPolicyAssignments() result:");
-      // begin-list_Policy Assignments
+      // begin-list_policy_assignments
       ListPolicyAssignmentsOptions listPolicyAssignmentsOptions = new ListPolicyAssignmentsOptions.Builder()
         .accountId(exampleAccountId)
         .build();
@@ -934,10 +945,11 @@ public class IamPolicyManagementExamples {
       Response<PolicyTemplateAssignmentCollection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
       PolicyTemplateAssignmentCollection polcyTemplateAssignmentCollection = response.getResult();
 
-      System.out.println(polcyTemplateAssignmentCollection);
-      // end-list_Policy Assignments
-
       exampleAssignmentId = polcyTemplateAssignmentCollection.getAssignments().get(0).getId();
+
+      System.out.println(polcyTemplateAssignmentCollection);
+      // end-list_policy_assignments
+
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

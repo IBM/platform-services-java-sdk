@@ -164,8 +164,8 @@ public class V2PolicyResourceAttribute extends GenericModel {
   /**
    * Gets the value.
    *
-   * The value of a rule or resource attribute; can be boolean or string for resource attribute. Can be string or an
-   * array of strings (e.g., array of days to permit access) for rule attribute.
+   * The value of a rule, resource, or subject attribute; can be boolean or string for resource and subject attribute.
+   * Can be string or an array of strings (e.g., array of days to permit access) for rule attribute.
    *
    * @return the value
    */

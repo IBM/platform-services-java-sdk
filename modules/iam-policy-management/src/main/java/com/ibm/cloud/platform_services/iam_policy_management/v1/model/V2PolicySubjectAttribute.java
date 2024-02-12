@@ -29,7 +29,7 @@ public class V2PolicySubjectAttribute extends GenericModel {
 
   protected String key;
   protected String operator;
-  protected String value;
+  protected Object value;
 
   /**
    * Builder.
@@ -37,7 +37,7 @@ public class V2PolicySubjectAttribute extends GenericModel {
   public static class Builder {
     private String key;
     private String operator;
-    private String value;
+    private Object value;
 
     /**
      * Instantiates a new Builder from an existing V2PolicySubjectAttribute instance.
@@ -63,7 +63,7 @@ public class V2PolicySubjectAttribute extends GenericModel {
      * @param operator the operator
      * @param value the value
      */
-    public Builder(String key, String operator, String value) {
+    public Builder(String key, String operator, Object value) {
       this.key = key;
       this.operator = operator;
       this.value = value;
@@ -106,7 +106,7 @@ public class V2PolicySubjectAttribute extends GenericModel {
      * @param value the value
      * @return the V2PolicySubjectAttribute builder
      */
-    public Builder value(String value) {
+    public Builder value(Object value) {
       this.value = value;
       return this;
     }
@@ -160,11 +160,12 @@ public class V2PolicySubjectAttribute extends GenericModel {
   /**
    * Gets the value.
    *
-   * The value of the ID of the subject, e.g., service ID, access group ID, IAM ID.
+   * The value of a rule, resource, or subject attribute; can be boolean or string for resource and subject attribute.
+   * Can be string or an array of strings (e.g., array of days to permit access) for rule attribute.
    *
    * @return the value
    */
-  public String value() {
+  public Object value() {
     return value;
   }
 }

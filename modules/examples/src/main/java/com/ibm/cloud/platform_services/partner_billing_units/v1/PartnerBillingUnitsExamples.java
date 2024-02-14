@@ -32,6 +32,10 @@ import org.slf4j.LoggerFactory;
  * PARTNER_BILLING_UNITS_AUTH_TYPE=iam
  * PARTNER_BILLING_UNITS_APIKEY=&lt;IAM apikey&gt;
  * PARTNER_BILLING_UNITS_AUTH_URL=&lt;IAM token service base URL - omit this if using the production environment&gt;
+ * PARTNER_BILLING_UNITS_PARTNER_ID=Enterprise ID of the distributor or reseller for which the report is requested
+ * PARTNER_BILLING_UNITS_CUSTOMER_ID=Enterprise ID of the child customer for which the report is requested
+ * PARTNER_BILLING_UNITS_RESELLER_ID=Enterprise ID of the reseller for which the report is requested
+ * PARTNER_BILLING_UNITS_BILLING_MONTH=The billing month for which the usage report is requested. Format is `yyyy-mm`
  *
  * These configuration properties can be exported as environment variables, or stored
  * in a configuration file and then:

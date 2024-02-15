@@ -1,3 +1,10 @@
+# [0.49.0](https://github.com/IBM/platform-services-java-sdk/compare/0.48.2...0.49.0) (2024-02-15)
+
+
+### Features
+
+* **Partner Billing Units:** add new service to project ([#229](https://github.com/IBM/platform-services-java-sdk/issues/229)) ([11a96c7](https://github.com/IBM/platform-services-java-sdk/commit/11a96c7693187187dfb513aefbdb3fe8264671ac))
+
 ## [0.48.2](https://github.com/IBM/platform-services-java-sdk/compare/0.48.1...0.48.2) (2024-01-30)
 
 

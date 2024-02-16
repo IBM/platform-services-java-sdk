@@ -61,7 +61,7 @@ Service Name | Artifact Coordinates
 [IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=java) | com.ibm.cloud:ibm-cloud-shell:0.49.0
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=java) | com.ibm.cloud:open-service-broker:0.49.0
 [Partner Billing Units](https://cloud.ibm.com/apidocs/partner-apis/billing-unit?code=java) | com.ibm.cloud:partner-billing-units:0.49.0
-[Partner Usage Reports](https://cloud.ibm.com/apidocs/partner-apis/partner-usage-reports?code=java) | com.ibm.cloud:partner-usage-reports:0.49.0
+[Partner Usage Reports](https://cloud.ibm.com/apidocs/partner-apis/resource-usage-reports?code=java) | com.ibm.cloud:partner-usage-reports:0.49.0
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=java) | com.ibm.cloud:resource-controller:0.49.0
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=java) | com.ibm.cloud:resource-manager:0.49.0
 [Usage Metering](https://cloud.ibm.com/apidocs/usage-metering?code=java) | com.ibm.cloud:usage-metering:0.49.0

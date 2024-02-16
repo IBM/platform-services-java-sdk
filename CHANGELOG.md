@@ -1,3 +1,10 @@
+# [0.50.0](https://github.com/IBM/platform-services-java-sdk/compare/0.49.0...0.50.0) (2024-02-16)
+
+
+### Features
+
+* **Partner Usage Reports:** add new service to project ([#230](https://github.com/IBM/platform-services-java-sdk/issues/230)) ([f69605d](https://github.com/IBM/platform-services-java-sdk/commit/f69605d1d8897633d17c196c0b8e1f39c70ab68e))
+
 # [0.49.0](https://github.com/IBM/platform-services-java-sdk/compare/0.48.2...0.49.0) (2024-02-15)
 
 

@@ -34,11 +34,11 @@ public class V2PolicyRuleRuleWithNestedConditionsTest {
   public void testV2PolicyRuleRuleWithNestedConditions() throws Throwable {
     NestedConditionRuleAttribute nestedConditionModel = new NestedConditionRuleAttribute.Builder()
       .key("testString")
-      .operator("timeLessThan")
+      .operator("stringEquals")
       .value("testString")
       .build();
     assertEquals(nestedConditionModel.key(), "testString");
-    assertEquals(nestedConditionModel.operator(), "timeLessThan");
+    assertEquals(nestedConditionModel.operator(), "stringEquals");
     assertEquals(nestedConditionModel.value(), "testString");
 
     V2PolicyRuleRuleWithNestedConditions v2PolicyRuleRuleWithNestedConditionsModel = new V2PolicyRuleRuleWithNestedConditions.Builder()

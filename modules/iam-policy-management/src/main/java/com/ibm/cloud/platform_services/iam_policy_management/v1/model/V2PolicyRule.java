@@ -29,6 +29,16 @@ public class V2PolicyRule extends GenericModel {
    * The operator of an attribute.
    */
   public interface Operator {
+    /** stringEquals. */
+    String STRINGEQUALS = "stringEquals";
+    /** stringExists. */
+    String STRINGEXISTS = "stringExists";
+    /** stringEqualsAnyOf. */
+    String STRINGEQUALSANYOF = "stringEqualsAnyOf";
+    /** stringMatchAnyOf. */
+    String STRINGMATCHANYOF = "stringMatchAnyOf";
+    /** stringMatch. */
+    String STRINGMATCH = "stringMatch";
     /** timeLessThan. */
     String TIMELESSTHAN = "timeLessThan";
     /** timeLessThanOrEquals. */
@@ -37,6 +47,14 @@ public class V2PolicyRule extends GenericModel {
     String TIMEGREATERTHAN = "timeGreaterThan";
     /** timeGreaterThanOrEquals. */
     String TIMEGREATERTHANOREQUALS = "timeGreaterThanOrEquals";
+    /** dateLessThan. */
+    String DATELESSTHAN = "dateLessThan";
+    /** dateLessThanOrEquals. */
+    String DATELESSTHANOREQUALS = "dateLessThanOrEquals";
+    /** dateGreaterThan. */
+    String DATEGREATERTHAN = "dateGreaterThan";
+    /** dateGreaterThanOrEquals. */
+    String DATEGREATERTHANOREQUALS = "dateGreaterThanOrEquals";
     /** dateTimeLessThan. */
     String DATETIMELESSTHAN = "dateTimeLessThan";
     /** dateTimeLessThanOrEquals. */

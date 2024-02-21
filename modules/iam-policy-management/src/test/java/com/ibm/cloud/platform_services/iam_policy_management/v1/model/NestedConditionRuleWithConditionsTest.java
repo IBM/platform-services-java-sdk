@@ -34,11 +34,11 @@ public class NestedConditionRuleWithConditionsTest {
   public void testNestedConditionRuleWithConditions() throws Throwable {
     RuleAttribute ruleAttributeModel = new RuleAttribute.Builder()
       .key("testString")
-      .operator("timeLessThan")
+      .operator("stringEquals")
       .value("testString")
       .build();
     assertEquals(ruleAttributeModel.key(), "testString");
-    assertEquals(ruleAttributeModel.operator(), "timeLessThan");
+    assertEquals(ruleAttributeModel.operator(), "stringEquals");
     assertEquals(ruleAttributeModel.value(), "testString");
 
     NestedConditionRuleWithConditions nestedConditionRuleWithConditionsModel = new NestedConditionRuleWithConditions.Builder()

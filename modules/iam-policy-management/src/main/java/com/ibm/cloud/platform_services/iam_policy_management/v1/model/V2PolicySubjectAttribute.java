@@ -25,6 +25,8 @@ public class V2PolicySubjectAttribute extends GenericModel {
   public interface Operator {
     /** stringEquals. */
     String STRINGEQUALS = "stringEquals";
+    /** stringExists. */
+    String STRINGEXISTS = "stringExists";
   }
 
   protected String key;

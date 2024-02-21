@@ -1,3 +1,24 @@
+# [0.50.0](https://github.com/IBM/platform-services-java-sdk/compare/0.49.0...0.50.0) (2024-02-16)
+
+
+### Features
+
+* **Partner Usage Reports:** add new service to project ([#230](https://github.com/IBM/platform-services-java-sdk/issues/230)) ([f69605d](https://github.com/IBM/platform-services-java-sdk/commit/f69605d1d8897633d17c196c0b8e1f39c70ab68e))
+
+# [0.49.0](https://github.com/IBM/platform-services-java-sdk/compare/0.48.2...0.49.0) (2024-02-15)
+
+
+### Features
+
+* **Partner Billing Units:** add new service to project ([#229](https://github.com/IBM/platform-services-java-sdk/issues/229)) ([11a96c7](https://github.com/IBM/platform-services-java-sdk/commit/11a96c7693187187dfb513aefbdb3fe8264671ac))
+
+## [0.48.2](https://github.com/IBM/platform-services-java-sdk/compare/0.48.1...0.48.2) (2024-01-30)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** update examples format for doc generation ([#228](https://github.com/IBM/platform-services-java-sdk/issues/228)) ([bf6aef6](https://github.com/IBM/platform-services-java-sdk/commit/bf6aef66a0a1f62638cb2b492d69ed6f95904373))
+
 ## [0.48.1](https://github.com/IBM/platform-services-java-sdk/compare/0.48.0...0.48.1) (2024-01-26)
 
 

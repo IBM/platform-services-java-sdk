@@ -67,6 +67,8 @@
     <module>modules/iam-policy-management</module>
     <module>modules/ibm-cloud-shell</module>
     <module>modules/open-service-broker</module>
+    <module>modules/partner-billing-units</module>
+    <module>modules/partner-usage-reports</module>
     <module>modules/resource-controller</module>
     <module>modules/resource-manager</module>
     <module>modules/usage-metering</module>

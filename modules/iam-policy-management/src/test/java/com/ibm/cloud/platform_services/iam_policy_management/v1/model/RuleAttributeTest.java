@@ -33,11 +33,11 @@ public class RuleAttributeTest {
   public void testRuleAttribute() throws Throwable {
     RuleAttribute ruleAttributeModel = new RuleAttribute.Builder()
       .key("testString")
-      .operator("timeLessThan")
+      .operator("stringEquals")
       .value("testString")
       .build();
     assertEquals(ruleAttributeModel.key(), "testString");
-    assertEquals(ruleAttributeModel.operator(), "timeLessThan");
+    assertEquals(ruleAttributeModel.operator(), "stringEquals");
     assertEquals(ruleAttributeModel.value(), "testString");
 
     String json = TestUtilities.serialize(ruleAttributeModel);
@@ -45,7 +45,7 @@ public class RuleAttributeTest {
     RuleAttribute ruleAttributeModelNew = TestUtilities.deserialize(json, RuleAttribute.class);
     assertTrue(ruleAttributeModelNew instanceof RuleAttribute);
     assertEquals(ruleAttributeModelNew.key(), "testString");
-    assertEquals(ruleAttributeModelNew.operator(), "timeLessThan");
+    assertEquals(ruleAttributeModelNew.operator(), "stringEquals");
     assertEquals(ruleAttributeModelNew.value(), "testString");
   }
 

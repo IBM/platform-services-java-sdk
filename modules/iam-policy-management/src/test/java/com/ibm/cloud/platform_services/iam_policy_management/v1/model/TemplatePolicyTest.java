@@ -65,11 +65,11 @@ public class TemplatePolicyTest {
 
     V2PolicyRuleRuleAttribute v2PolicyRuleModel = new V2PolicyRuleRuleAttribute.Builder()
       .key("testString")
-      .operator("timeLessThan")
+      .operator("stringEquals")
       .value("testString")
       .build();
     assertEquals(v2PolicyRuleModel.key(), "testString");
-    assertEquals(v2PolicyRuleModel.operator(), "timeLessThan");
+    assertEquals(v2PolicyRuleModel.operator(), "stringEquals");
     assertEquals(v2PolicyRuleModel.value(), "testString");
 
     Roles rolesModel = new Roles.Builder()

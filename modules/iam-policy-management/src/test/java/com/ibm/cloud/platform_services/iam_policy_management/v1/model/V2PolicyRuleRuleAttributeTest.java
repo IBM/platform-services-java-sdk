@@ -33,11 +33,11 @@ public class V2PolicyRuleRuleAttributeTest {
   public void testV2PolicyRuleRuleAttribute() throws Throwable {
     V2PolicyRuleRuleAttribute v2PolicyRuleRuleAttributeModel = new V2PolicyRuleRuleAttribute.Builder()
       .key("testString")
-      .operator("timeLessThan")
+      .operator("stringEquals")
       .value("testString")
       .build();
     assertEquals(v2PolicyRuleRuleAttributeModel.key(), "testString");
-    assertEquals(v2PolicyRuleRuleAttributeModel.operator(), "timeLessThan");
+    assertEquals(v2PolicyRuleRuleAttributeModel.operator(), "stringEquals");
     assertEquals(v2PolicyRuleRuleAttributeModel.value(), "testString");
 
     String json = TestUtilities.serialize(v2PolicyRuleRuleAttributeModel);
@@ -45,7 +45,7 @@ public class V2PolicyRuleRuleAttributeTest {
     V2PolicyRuleRuleAttribute v2PolicyRuleRuleAttributeModelNew = TestUtilities.deserialize(json, V2PolicyRuleRuleAttribute.class);
     assertTrue(v2PolicyRuleRuleAttributeModelNew instanceof V2PolicyRuleRuleAttribute);
     assertEquals(v2PolicyRuleRuleAttributeModelNew.key(), "testString");
-    assertEquals(v2PolicyRuleRuleAttributeModelNew.operator(), "timeLessThan");
+    assertEquals(v2PolicyRuleRuleAttributeModelNew.operator(), "stringEquals");
     assertEquals(v2PolicyRuleRuleAttributeModelNew.value(), "testString");
   }
 

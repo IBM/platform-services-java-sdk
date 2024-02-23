@@ -33,11 +33,11 @@ public class NestedConditionRuleAttributeTest {
   public void testNestedConditionRuleAttribute() throws Throwable {
     NestedConditionRuleAttribute nestedConditionRuleAttributeModel = new NestedConditionRuleAttribute.Builder()
       .key("testString")
-      .operator("timeLessThan")
+      .operator("stringEquals")
       .value("testString")
       .build();
     assertEquals(nestedConditionRuleAttributeModel.key(), "testString");
-    assertEquals(nestedConditionRuleAttributeModel.operator(), "timeLessThan");
+    assertEquals(nestedConditionRuleAttributeModel.operator(), "stringEquals");
     assertEquals(nestedConditionRuleAttributeModel.value(), "testString");
 
     String json = TestUtilities.serialize(nestedConditionRuleAttributeModel);
@@ -45,7 +45,7 @@ public class NestedConditionRuleAttributeTest {
     NestedConditionRuleAttribute nestedConditionRuleAttributeModelNew = TestUtilities.deserialize(json, NestedConditionRuleAttribute.class);
     assertTrue(nestedConditionRuleAttributeModelNew instanceof NestedConditionRuleAttribute);
     assertEquals(nestedConditionRuleAttributeModelNew.key(), "testString");
-    assertEquals(nestedConditionRuleAttributeModelNew.operator(), "timeLessThan");
+    assertEquals(nestedConditionRuleAttributeModelNew.operator(), "stringEquals");
     assertEquals(nestedConditionRuleAttributeModelNew.value(), "testString");
   }
 

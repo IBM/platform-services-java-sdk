@@ -29,6 +29,10 @@ public class V2PolicyResourceAttribute extends GenericModel {
     String STRINGEXISTS = "stringExists";
     /** stringMatch. */
     String STRINGMATCH = "stringMatch";
+    /** stringEqualsAnyOf. */
+    String STRINGEQUALSANYOF = "stringEqualsAnyOf";
+    /** stringMatchAnyOf. */
+    String STRINGMATCHANYOF = "stringMatchAnyOf";
   }
 
   protected String key;

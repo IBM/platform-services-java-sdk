@@ -1,3 +1,10 @@
+## [0.50.1](https://github.com/IBM/platform-services-java-sdk/compare/0.50.0...0.50.1) (2024-02-23)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** regenerate based on minor API update to operator ([#231](https://github.com/IBM/platform-services-java-sdk/issues/231)) ([73dddf6](https://github.com/IBM/platform-services-java-sdk/commit/73dddf6a1760973e61fb3c117882ed9415358c90))
+
 # [0.50.0](https://github.com/IBM/platform-services-java-sdk/compare/0.49.0...0.50.0) (2024-02-16)
 
 

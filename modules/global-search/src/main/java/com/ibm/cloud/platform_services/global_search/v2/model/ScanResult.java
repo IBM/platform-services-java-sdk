@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -54,8 +54,9 @@ public class ScanResult extends GenericModel {
   /**
    * Gets the items.
    *
-   * The array of results. Each item represents a resource. An empty array signals the end of the result set, which
-   * means there are no more results to fetch.
+   * The array of results. Each item represents a resource. For each resource, the requested `fields` are returned. If
+   * you did not set the `fields` request body parameter, then the `account_id`, `name`, `type`, `family`, and `crn` are
+   * returned. An empty array signals the end of the result set, which means there are no more results to fetch.
    *
    * @return the items
    */

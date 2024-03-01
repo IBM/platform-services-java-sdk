@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.82.1-2082d402-20231115-195014
+ * IBM OpenAPI SDK Code Generator Version: 3.86.0-bc6f14b3-20240221-193958
  */
 
 package com.ibm.cloud.platform_services.global_search.v2;
@@ -105,8 +105,12 @@ public class GlobalSearch extends BaseService {
    *
    * You must use `/v3/resources/search` when you need to fetch more than `10000` resource items. On the first call, the
    * operation returns a live cursor on the data that you must use on all the subsequent calls to get the next batch of
-   * results until you get the empty result set. By default, the fields that are returned for every resource are "crn",
-   * "name", "family", "type", and "account_id". You can specify the subset of the fields you want in your request.
+   * results until you get the empty result set.
+   *
+   * By default, the fields that are returned for every resource are `crn`, `name`,
+   * `family`, `type`, and `account_id`. You can specify the subset of the fields you want in your request using the
+   * `fields` request body attribute. Set `"fields": ["*"]` to discover the set of fields which are available to
+   * request.
    *
    * @param searchOptions the {@link SearchOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
@@ -186,8 +190,12 @@ public class GlobalSearch extends BaseService {
    *
    * You must use `/v3/resources/search` when you need to fetch more than `10000` resource items. On the first call, the
    * operation returns a live cursor on the data that you must use on all the subsequent calls to get the next batch of
-   * results until you get the empty result set. By default, the fields that are returned for every resource are "crn",
-   * "name", "family", "type", and "account_id". You can specify the subset of the fields you want in your request.
+   * results until you get the empty result set.
+   *
+   * By default, the fields that are returned for every resource are `crn`, `name`,
+   * `family`, `type`, and `account_id`. You can specify the subset of the fields you want in your request using the
+   * `fields` request body attribute. Set `"fields": ["*"]` to discover the set of fields which are available to
+   * request.
    *
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
    */

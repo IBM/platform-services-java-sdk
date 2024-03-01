@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -151,9 +151,9 @@ public class SearchOptions extends GenericModel {
     }
 
     /**
-     * Adds an fields to fields.
+     * Adds a new element to fields.
      *
-     * @param fields the new fields
+     * @param fields the new element to be added
      * @return the SearchOptions builder
      */
     public Builder addFields(String fields) {
@@ -167,9 +167,9 @@ public class SearchOptions extends GenericModel {
     }
 
     /**
-     * Adds an sort to sort.
+     * Adds a new element to sort.
      *
-     * @param sort the new sort
+     * @param sort the new element to be added
      * @return the SearchOptions builder
      */
     public Builder addSort(String sort) {
@@ -396,7 +396,8 @@ public class SearchOptions extends GenericModel {
    * Gets the fields.
    *
    * The list of the fields returned by the search. By default, the returned fields are the `account_id`, `name`,
-   * `type`, `family`, and `crn`. For all queries, `crn` is always returned.
+   * `type`, `family`, and `crn`. For all queries, `crn` is always returned. You may set `"fields": ["*"]` to discover
+   * the set of fields available to request.
    *
    * @return the fields
    */

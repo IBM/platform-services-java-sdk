@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -28,10 +28,14 @@ public class AccountSettings extends GenericModel {
   protected Long ruleCountLimit;
   @SerializedName("zone_count_limit")
   protected Long zoneCountLimit;
+  @SerializedName("tags_rule_count_limit")
+  protected Long tagsRuleCountLimit;
   @SerializedName("current_rule_count")
   protected Long currentRuleCount;
   @SerializedName("current_zone_count")
   protected Long currentZoneCount;
+  @SerializedName("current_tags_rule_count")
+  protected Long currentTagsRuleCount;
   protected String href;
   @SerializedName("created_at")
   protected Date createdAt;
@@ -89,6 +93,17 @@ public class AccountSettings extends GenericModel {
   }
 
   /**
+   * Gets the tagsRuleCountLimit.
+   *
+   * the max number of rules with tags allowed for the account.
+   *
+   * @return the tagsRuleCountLimit
+   */
+  public Long getTagsRuleCountLimit() {
+    return tagsRuleCountLimit;
+  }
+
+  /**
    * Gets the currentRuleCount.
    *
    * the current number of rules used by the account.
@@ -108,6 +123,17 @@ public class AccountSettings extends GenericModel {
    */
   public Long getCurrentZoneCount() {
     return currentZoneCount;
+  }
+
+  /**
+   * Gets the currentTagsRuleCount.
+   *
+   * the current number of rules with tags used by the account.
+   *
+   * @return the currentTagsRuleCount
+   */
+  public Long getCurrentTagsRuleCount() {
+    return currentTagsRuleCount;
   }
 
   /**

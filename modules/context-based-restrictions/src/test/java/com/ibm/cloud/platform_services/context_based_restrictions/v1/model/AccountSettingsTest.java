@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -36,8 +36,10 @@ public class AccountSettingsTest {
     assertNull(accountSettingsModel.getCrn());
     assertNull(accountSettingsModel.getRuleCountLimit());
     assertNull(accountSettingsModel.getZoneCountLimit());
+    assertNull(accountSettingsModel.getTagsRuleCountLimit());
     assertNull(accountSettingsModel.getCurrentRuleCount());
     assertNull(accountSettingsModel.getCurrentZoneCount());
+    assertNull(accountSettingsModel.getCurrentTagsRuleCount());
     assertNull(accountSettingsModel.getHref());
     assertNull(accountSettingsModel.getCreatedAt());
     assertNull(accountSettingsModel.getCreatedById());

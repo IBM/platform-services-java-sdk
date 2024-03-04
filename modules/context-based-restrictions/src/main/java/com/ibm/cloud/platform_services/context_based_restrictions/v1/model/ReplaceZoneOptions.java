@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -90,9 +90,9 @@ public class ReplaceZoneOptions extends GenericModel {
     }
 
     /**
-     * Adds an addresses to addresses.
+     * Adds a new element to addresses.
      *
-     * @param addresses the new addresses
+     * @param addresses the new element to be added
      * @return the ReplaceZoneOptions builder
      */
     public Builder addAddresses(Address addresses) {
@@ -106,9 +106,9 @@ public class ReplaceZoneOptions extends GenericModel {
     }
 
     /**
-     * Adds an excluded to excluded.
+     * Adds a new element to excluded.
      *
-     * @param excluded the new excluded
+     * @param excluded the new element to be added
      * @return the ReplaceZoneOptions builder
      */
     public Builder addExcluded(Address excluded) {
@@ -266,8 +266,7 @@ public class ReplaceZoneOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * The current revision of the resource being updated. This can be found in the Create/Get/Update resource response
-   * ETag header.
+   * The ETag of the resource to replace. You can find the ETag in the response header for Create/Get/Update requests.
    *
    * @return the ifMatch
    */

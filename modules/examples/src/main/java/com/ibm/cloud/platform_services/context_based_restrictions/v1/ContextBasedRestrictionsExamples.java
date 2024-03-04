@@ -25,6 +25,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Delet
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetServicerefTargetOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
@@ -40,6 +41,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContext;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleContextAttribute;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefValue;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
@@ -228,6 +230,23 @@ public class ContextBasedRestrictionsExamples {
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
                 e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+          System.out.println("getServicerefTarget() result:");
+          // begin-get_serviceref_target
+          GetServicerefTargetOptions getServicerefTargetOptions = new GetServicerefTargetOptions.Builder()
+            .serviceName("testString")
+            .build();
+    
+          Response<ServiceRefTarget> response = contextBasedRestrictionsService.getServicerefTarget(getServicerefTargetOptions).execute();
+          ServiceRefTarget serviceRefTarget = response.getResult();
+    
+          System.out.println(serviceRefTarget);
+          // end-get_serviceref_target
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {

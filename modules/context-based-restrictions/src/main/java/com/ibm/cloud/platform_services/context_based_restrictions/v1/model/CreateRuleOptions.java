@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -88,9 +88,9 @@ public class CreateRuleOptions extends GenericModel {
     }
 
     /**
-     * Adds an contexts to contexts.
+     * Adds a new element to contexts.
      *
-     * @param contexts the new contexts
+     * @param contexts the new element to be added
      * @return the CreateRuleOptions builder
      */
     public Builder addContexts(RuleContext contexts) {
@@ -104,9 +104,9 @@ public class CreateRuleOptions extends GenericModel {
     }
 
     /**
-     * Adds an resources to resources.
+     * Adds a new element to resources.
      *
-     * @param resources the new resources
+     * @param resources the new element to be added
      * @return the CreateRuleOptions builder
      */
     public Builder addResources(Resource resources) {

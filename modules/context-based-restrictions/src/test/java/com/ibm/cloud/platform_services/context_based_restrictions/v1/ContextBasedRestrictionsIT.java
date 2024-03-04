@@ -31,6 +31,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRu
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetServicerefTargetOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
@@ -419,6 +420,48 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
             service.listAvailableServicerefTargets(listAvailableServicerefTargetsOptions).execute();
         } catch (ServiceResponseException e) {
             if (e.getStatusCode() != 400)
+                fail(String.format("Service returned status code %d: %s%nError details: %s",
+                        e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(groups = "serviceRef", dependsOnMethods = "replaceZone")
+    public void testGetServicerefTarget() throws Exception {
+      try {
+        GetServicerefTargetOptions getServicerefTargetOptions = new GetServicerefTargetOptions.Builder()
+          .serviceName(testServiceName)
+          .xCorrelationId("testString")
+          .transactionId("testString")
+          .build();
+  
+        // Invoke operation
+        Response<ServiceRefTarget> response = service.getServicerefTarget(getServicerefTargetOptions).execute();
+        // Validate response
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+  
+        ServiceRefTarget serviceRefTargetResult = response.getResult();
+  
+        assertNotNull(serviceRefTargetResult);
+      } catch (ServiceResponseException e) {
+          fail(String.format("Service returned status code %d: %s%nError details: %s",
+            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+      }
+    }
+
+    @Test(groups = "serviceRef", dependsOnMethods = "testGetServicerefTarget")
+    public void testGetServicerefTargetNotFound() throws Exception {
+        try {
+          GetServicerefTargetOptions getServicerefTargetOptions = new GetServicerefTargetOptions.Builder()
+            .serviceName("unknown-service-name")
+            .xCorrelationId("testString")
+            .transactionId("testString")
+            .build();
+
+            // Invoke operation
+            service.getServicerefTarget(getServicerefTargetOptions).execute();
+        } catch (ServiceResponseException e) {
+            if (e.getStatusCode() != 404)
                 fail(String.format("Service returned status code %d: %s%nError details: %s",
                         e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }

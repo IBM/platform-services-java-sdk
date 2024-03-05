@@ -425,11 +425,11 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test(groups = "serviceRef", dependsOnMethods = "replaceZone")
+    @Test(groups = "serviceRef", dependsOnGroups = "replaceZone")
     public void testGetServicerefTarget() throws Exception {
       try {
         GetServicerefTargetOptions getServicerefTargetOptions = new GetServicerefTargetOptions.Builder()
-          .serviceName(testServiceName)
+          .serviceName("containers-kubernetes")
           .xCorrelationId("testString")
           .transactionId("testString")
           .build();

@@ -234,16 +234,19 @@ public class ContextBasedRestrictionsExamples {
 
         try {
           System.out.println("getServicerefTarget() result:");
+          String tempServiceName = serviceName;
+          serviceName = "containers-kubernetes";
           // begin-get_serviceref_target
           GetServicerefTargetOptions getServicerefTargetOptions = new GetServicerefTargetOptions.Builder()
-            .serviceName("testString")
+            .serviceName(serviceName)
             .build();
-    
+
           Response<ServiceRefTarget> response = contextBasedRestrictionsService.getServicerefTarget(getServicerefTargetOptions).execute();
           ServiceRefTarget serviceRefTarget = response.getResult();
-    
+
           System.out.println(serviceRefTarget);
           // end-get_serviceref_target
+          serviceName = tempServiceName;
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

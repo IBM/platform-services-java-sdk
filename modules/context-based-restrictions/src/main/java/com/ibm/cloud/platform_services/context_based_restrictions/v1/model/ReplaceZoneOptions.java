@@ -266,7 +266,8 @@ public class ReplaceZoneOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * The ETag of the resource to replace. You can find the ETag in the response header for Create/Get/Update requests.
+   * The current revision of the resource being updated. This can be found in the Create/Get/Update resource response
+   * ETag header.
    *
    * @return the ifMatch
    */

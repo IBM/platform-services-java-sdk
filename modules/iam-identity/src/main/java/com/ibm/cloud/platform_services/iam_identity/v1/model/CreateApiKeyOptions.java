@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -25,7 +25,10 @@ public class CreateApiKeyOptions extends GenericModel {
   protected String accountId;
   protected String apikey;
   protected Boolean storeValue;
+  protected Boolean supportSessions;
+  protected String actionWhenLeaked;
   protected String entityLock;
+  protected String entityDisable;
 
   /**
    * Builder.
@@ -37,7 +40,10 @@ public class CreateApiKeyOptions extends GenericModel {
     private String accountId;
     private String apikey;
     private Boolean storeValue;
+    private Boolean supportSessions;
+    private String actionWhenLeaked;
     private String entityLock;
+    private String entityDisable;
 
     /**
      * Instantiates a new Builder from an existing CreateApiKeyOptions instance.
@@ -51,7 +57,10 @@ public class CreateApiKeyOptions extends GenericModel {
       this.accountId = createApiKeyOptions.accountId;
       this.apikey = createApiKeyOptions.apikey;
       this.storeValue = createApiKeyOptions.storeValue;
+      this.supportSessions = createApiKeyOptions.supportSessions;
+      this.actionWhenLeaked = createApiKeyOptions.actionWhenLeaked;
       this.entityLock = createApiKeyOptions.entityLock;
+      this.entityDisable = createApiKeyOptions.entityDisable;
     }
 
     /**
@@ -147,6 +156,28 @@ public class CreateApiKeyOptions extends GenericModel {
     }
 
     /**
+     * Set the supportSessions.
+     *
+     * @param supportSessions the supportSessions
+     * @return the CreateApiKeyOptions builder
+     */
+    public Builder supportSessions(Boolean supportSessions) {
+      this.supportSessions = supportSessions;
+      return this;
+    }
+
+    /**
+     * Set the actionWhenLeaked.
+     *
+     * @param actionWhenLeaked the actionWhenLeaked
+     * @return the CreateApiKeyOptions builder
+     */
+    public Builder actionWhenLeaked(String actionWhenLeaked) {
+      this.actionWhenLeaked = actionWhenLeaked;
+      return this;
+    }
+
+    /**
      * Set the entityLock.
      *
      * @param entityLock the entityLock
@@ -154,6 +185,17 @@ public class CreateApiKeyOptions extends GenericModel {
      */
     public Builder entityLock(String entityLock) {
       this.entityLock = entityLock;
+      return this;
+    }
+
+    /**
+     * Set the entityDisable.
+     *
+     * @param entityDisable the entityDisable
+     * @return the CreateApiKeyOptions builder
+     */
+    public Builder entityDisable(String entityDisable) {
+      this.entityDisable = entityDisable;
       return this;
     }
   }
@@ -171,7 +213,10 @@ public class CreateApiKeyOptions extends GenericModel {
     accountId = builder.accountId;
     apikey = builder.apikey;
     storeValue = builder.storeValue;
+    supportSessions = builder.supportSessions;
+    actionWhenLeaked = builder.actionWhenLeaked;
     entityLock = builder.entityLock;
+    entityDisable = builder.entityDisable;
   }
 
   /**
@@ -232,9 +277,11 @@ public class CreateApiKeyOptions extends GenericModel {
   /**
    * Gets the apikey.
    *
-   * You can optionally passthrough the API key value for this API key. If passed, NO validation of that apiKey value is
-   * done, i.e. the value can be non-URL safe. If omitted, the API key management will create an URL safe opaque API key
-   * value. The value of the API key is checked for uniqueness. Ensure enough variations when passing in this value.
+   * You can optionally passthrough the API key value for this API key. If passed, a minimum length validation of 32
+   * characters for that apiKey value is done, i.e. the value can contain any characters and can even be non-URL safe,
+   * but the minimum length requirement must be met. If omitted, the API key management will create an URL safe opaque
+   * API key value. The value of the API key is checked for uniqueness. Ensure enough variations when passing in this
+   * value.
    *
    * @return the apikey
    */
@@ -256,6 +303,28 @@ public class CreateApiKeyOptions extends GenericModel {
   }
 
   /**
+   * Gets the supportSessions.
+   *
+   * Defines if the API key supports sessions. Sessions are only supported for user apikeys.
+   *
+   * @return the supportSessions
+   */
+  public Boolean supportSessions() {
+    return supportSessions;
+  }
+
+  /**
+   * Gets the actionWhenLeaked.
+   *
+   * Defines the action to take when API key is leaked, valid values are 'none', 'disable' and 'delete'.
+   *
+   * @return the actionWhenLeaked
+   */
+  public String actionWhenLeaked() {
+    return actionWhenLeaked;
+  }
+
+  /**
    * Gets the entityLock.
    *
    * Indicates if the API key is locked for further write operations. False by default.
@@ -264,6 +333,17 @@ public class CreateApiKeyOptions extends GenericModel {
    */
   public String entityLock() {
     return entityLock;
+  }
+
+  /**
+   * Gets the entityDisable.
+   *
+   * Indicates if the API key is disabled. False by default.
+   *
+   * @return the entityDisable
+   */
+  public String entityDisable() {
+    return entityDisable;
   }
 }
 

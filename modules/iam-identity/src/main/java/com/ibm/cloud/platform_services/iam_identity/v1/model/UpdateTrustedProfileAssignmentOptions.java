@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -154,7 +154,7 @@ public class UpdateTrustedProfileAssignmentOptions extends GenericModel {
   /**
    * Gets the templateVersion.
    *
-   * Template version to be applied to the assignment. To retry all failed assignemtns, provide the existing version. To
+   * Template version to be applied to the assignment. To retry all failed assignments, provide the existing version. To
    * migrate to a different version, provide the new version number.
    *
    * @return the templateVersion

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -87,9 +87,9 @@ public class ProfileIdentityRequest extends GenericModel {
     }
 
     /**
-     * Adds an accounts to accounts.
+     * Adds a new element to accounts.
      *
-     * @param accounts the new accounts
+     * @param accounts the new element to be added
      * @return the ProfileIdentityRequest builder
      */
     public Builder addAccounts(String accounts) {

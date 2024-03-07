@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.80.0-29334a73-20230925-151553
+ * IBM OpenAPI SDK Code Generator Version: 3.86.2-8b8592a4-20240313-204553
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -51,6 +51,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOption
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteTrustedProfileAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DisableApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.EnableApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ExceptionResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
@@ -266,6 +268,9 @@ public class IamIdentity extends BaseService {
     if (createApiKeyOptions.entityLock() != null) {
       builder.header("Entity-Lock", createApiKeyOptions.entityLock());
     }
+    if (createApiKeyOptions.entityDisable() != null) {
+      builder.header("Entity-Disable", createApiKeyOptions.entityDisable());
+    }
     final JsonObject contentJson = new JsonObject();
     contentJson.addProperty("name", createApiKeyOptions.name());
     contentJson.addProperty("iam_id", createApiKeyOptions.iamId());
@@ -280,6 +285,12 @@ public class IamIdentity extends BaseService {
     }
     if (createApiKeyOptions.storeValue() != null) {
       contentJson.addProperty("store_value", createApiKeyOptions.storeValue());
+    }
+    if (createApiKeyOptions.supportSessions() != null) {
+      contentJson.addProperty("support_sessions", createApiKeyOptions.supportSessions());
+    }
+    if (createApiKeyOptions.actionWhenLeaked() != null) {
+      contentJson.addProperty("action_when_leaked", createApiKeyOptions.actionWhenLeaked());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<ApiKey> responseConverter =
@@ -392,6 +403,12 @@ public class IamIdentity extends BaseService {
     if (updateApiKeyOptions.description() != null) {
       contentJson.addProperty("description", updateApiKeyOptions.description());
     }
+    if (updateApiKeyOptions.supportSessions() != null) {
+      contentJson.addProperty("support_sessions", updateApiKeyOptions.supportSessions());
+    }
+    if (updateApiKeyOptions.actionWhenLeaked() != null) {
+      contentJson.addProperty("action_when_leaked", updateApiKeyOptions.actionWhenLeaked());
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<ApiKey> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ApiKey>() { }.getType());
@@ -462,6 +479,52 @@ public class IamIdentity extends BaseService {
     pathParamsMap.put("id", unlockApiKeyOptions.id());
     RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/apikeys/{id}/lock", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "unlockApiKey");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * disable the API key.
+   *
+   * Disable an API key. Users can manage user API keys for themself, or service ID API keys for service IDs that are
+   * bound to an entity they have access to.
+   *
+   * @param disableApiKeyOptions the {@link DisableApiKeyOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> disableApiKey(DisableApiKeyOptions disableApiKeyOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(disableApiKeyOptions,
+      "disableApiKeyOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", disableApiKeyOptions.id());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/apikeys/{id}/disable", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "disableApiKey");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Enable the API key.
+   *
+   * Enable an API key. Users can manage user API keys for themself, or service ID API keys for service IDs that are
+   * bound to an entity they have access to.
+   *
+   * @param enableApiKeyOptions the {@link EnableApiKeyOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> enableApiKey(EnableApiKeyOptions enableApiKeyOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(enableApiKeyOptions,
+      "enableApiKeyOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", enableApiKeyOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/apikeys/{id}/disable", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "enableApiKey");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }

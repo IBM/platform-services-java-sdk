@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -40,10 +40,13 @@ public class ApiKeyTest {
     assertNull(apiKeyModel.getEntityTag());
     assertNull(apiKeyModel.getCrn());
     assertNull(apiKeyModel.isLocked());
+    assertNull(apiKeyModel.isDisabled());
     assertNull(apiKeyModel.getCreatedAt());
     assertNull(apiKeyModel.getCreatedBy());
     assertNull(apiKeyModel.getModifiedAt());
     assertNull(apiKeyModel.getName());
+    assertNull(apiKeyModel.isSupportSessions());
+    assertNull(apiKeyModel.getActionWhenLeaked());
     assertNull(apiKeyModel.getDescription());
     assertNull(apiKeyModel.getIamId());
     assertNull(apiKeyModel.getAccountId());

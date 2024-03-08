@@ -15,41 +15,31 @@ package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The listAvailableServicerefTargets options.
+ * The getServicerefTarget options.
  */
-public class ListAvailableServicerefTargetsOptions extends GenericModel {
+public class GetServicerefTargetOptions extends GenericModel {
 
-  /**
-   * Specifies the types of services to retrieve.
-   */
-  public interface Type {
-    /** all. */
-    String ALL = "all";
-    /** platform_service. */
-    String PLATFORM_SERVICE = "platform_service";
-  }
-
+  protected String serviceName;
   protected String xCorrelationId;
   protected String transactionId;
-  protected String type;
 
   /**
    * Builder.
    */
   public static class Builder {
+    private String serviceName;
     private String xCorrelationId;
     private String transactionId;
-    private String type;
 
     /**
-     * Instantiates a new Builder from an existing ListAvailableServicerefTargetsOptions instance.
+     * Instantiates a new Builder from an existing GetServicerefTargetOptions instance.
      *
-     * @param listAvailableServicerefTargetsOptions the instance to initialize the Builder with
+     * @param getServicerefTargetOptions the instance to initialize the Builder with
      */
-    private Builder(ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptions) {
-      this.xCorrelationId = listAvailableServicerefTargetsOptions.xCorrelationId;
-      this.transactionId = listAvailableServicerefTargetsOptions.transactionId;
-      this.type = listAvailableServicerefTargetsOptions.type;
+    private Builder(GetServicerefTargetOptions getServicerefTargetOptions) {
+      this.serviceName = getServicerefTargetOptions.serviceName;
+      this.xCorrelationId = getServicerefTargetOptions.xCorrelationId;
+      this.transactionId = getServicerefTargetOptions.transactionId;
     }
 
     /**
@@ -59,19 +49,39 @@ public class ListAvailableServicerefTargetsOptions extends GenericModel {
     }
 
     /**
-     * Builds a ListAvailableServicerefTargetsOptions.
+     * Instantiates a new builder with required properties.
      *
-     * @return the new ListAvailableServicerefTargetsOptions instance
+     * @param serviceName the serviceName
      */
-    public ListAvailableServicerefTargetsOptions build() {
-      return new ListAvailableServicerefTargetsOptions(this);
+    public Builder(String serviceName) {
+      this.serviceName = serviceName;
+    }
+
+    /**
+     * Builds a GetServicerefTargetOptions.
+     *
+     * @return the new GetServicerefTargetOptions instance
+     */
+    public GetServicerefTargetOptions build() {
+      return new GetServicerefTargetOptions(this);
+    }
+
+    /**
+     * Set the serviceName.
+     *
+     * @param serviceName the serviceName
+     * @return the GetServicerefTargetOptions builder
+     */
+    public Builder serviceName(String serviceName) {
+      this.serviceName = serviceName;
+      return this;
     }
 
     /**
      * Set the xCorrelationId.
      *
      * @param xCorrelationId the xCorrelationId
-     * @return the ListAvailableServicerefTargetsOptions builder
+     * @return the GetServicerefTargetOptions builder
      */
     public Builder xCorrelationId(String xCorrelationId) {
       this.xCorrelationId = xCorrelationId;
@@ -82,7 +92,7 @@ public class ListAvailableServicerefTargetsOptions extends GenericModel {
      * Set the transactionId.
      *
      * @param transactionId the transactionId
-     * @return the ListAvailableServicerefTargetsOptions builder
+     * @return the GetServicerefTargetOptions builder
      * @deprecated this method is deprecated and may be removed in a future release
      */
     @Deprecated
@@ -90,34 +100,36 @@ public class ListAvailableServicerefTargetsOptions extends GenericModel {
       this.transactionId = transactionId;
       return this;
     }
-
-    /**
-     * Set the type.
-     *
-     * @param type the type
-     * @return the ListAvailableServicerefTargetsOptions builder
-     */
-    public Builder type(String type) {
-      this.type = type;
-      return this;
-    }
   }
 
-  protected ListAvailableServicerefTargetsOptions() { }
+  protected GetServicerefTargetOptions() { }
 
-  protected ListAvailableServicerefTargetsOptions(Builder builder) {
+  protected GetServicerefTargetOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.serviceName,
+      "serviceName cannot be empty");
+    serviceName = builder.serviceName;
     xCorrelationId = builder.xCorrelationId;
     transactionId = builder.transactionId;
-    type = builder.type;
   }
 
   /**
    * New builder.
    *
-   * @return a ListAvailableServicerefTargetsOptions builder
+   * @return a GetServicerefTargetOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Gets the serviceName.
+   *
+   * The name of a service.
+   *
+   * @return the serviceName
+   */
+  public String serviceName() {
+    return serviceName;
   }
 
   /**
@@ -146,17 +158,6 @@ public class ListAvailableServicerefTargetsOptions extends GenericModel {
   @Deprecated
   public String transactionId() {
     return transactionId;
-  }
-
-  /**
-   * Gets the type.
-   *
-   * Specifies the types of services to retrieve.
-   *
-   * @return the type
-   */
-  public String type() {
-    return type;
   }
 }
 

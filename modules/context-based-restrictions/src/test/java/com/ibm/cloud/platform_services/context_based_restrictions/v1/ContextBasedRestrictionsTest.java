@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -28,6 +28,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Delet
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetServicerefTargetOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
@@ -379,7 +380,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testListAvailableServicerefTargetsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"count\": 5, \"targets\": [{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\", \"locations\": [{\"name\": \"name\"}]}]}";
+    String mockResponseBody = "{\"count\": 5, \"targets\": [{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\", \"locations\": [{\"display_name\": \"displayName\", \"kind\": \"kind\", \"name\": \"name\"}]}]}";
     String listAvailableServicerefTargetsPath = "/v1/zones/serviceref_targets";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -420,6 +421,59 @@ public class ContextBasedRestrictionsTest {
 
     contextBasedRestrictionsService.disableRetries();
     testListAvailableServicerefTargetsWOptions();
+  }
+
+  // Test the getServicerefTarget operation with a valid options model parameter
+  @Test
+  public void testGetServicerefTargetWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\", \"locations\": [{\"display_name\": \"displayName\", \"kind\": \"kind\", \"name\": \"name\"}]}";
+    String getServicerefTargetPath = "/v1/zones/serviceref_targets/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetServicerefTargetOptions model
+    GetServicerefTargetOptions getServicerefTargetOptionsModel = new GetServicerefTargetOptions.Builder()
+      .serviceName("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
+
+    // Invoke getServicerefTarget() with a valid options model and verify the result
+    Response<ServiceRefTarget> response = contextBasedRestrictionsService.getServicerefTarget(getServicerefTargetOptionsModel).execute();
+    assertNotNull(response);
+    ServiceRefTarget responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getServicerefTargetPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getServicerefTarget operation with and without retries enabled
+  @Test
+  public void testGetServicerefTargetWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testGetServicerefTargetWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testGetServicerefTargetWOptions();
+  }
+
+  // Test the getServicerefTarget operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetServicerefTargetNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    contextBasedRestrictionsService.getServicerefTarget(null).execute();
   }
 
   // Test the createRule operation with a valid options model parameter
@@ -798,7 +852,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testGetAccountSettingsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"rule_count_limit\": 14, \"zone_count_limit\": 14, \"current_rule_count\": 16, \"current_zone_count\": 16, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"rule_count_limit\": 14, \"zone_count_limit\": 14, \"tags_rule_count_limit\": 18, \"current_rule_count\": 16, \"current_zone_count\": 16, \"current_tags_rule_count\": 20, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getAccountSettingsPath = "/v1/account_settings/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

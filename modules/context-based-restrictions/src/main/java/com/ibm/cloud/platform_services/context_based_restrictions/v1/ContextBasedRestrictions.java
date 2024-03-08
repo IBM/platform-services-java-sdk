@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.81.0-c73a091c-20231026-215706
+ * IBM OpenAPI SDK Code Generator Version: 3.86.0-bc6f14b3-20240221-193958
  */
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
@@ -26,6 +26,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Delet
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetServicerefTargetOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
@@ -36,6 +37,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Repla
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
@@ -351,6 +353,36 @@ public class ContextBasedRestrictions extends BaseService {
    */
   public ServiceCall<ServiceRefTargetList> listAvailableServicerefTargets() {
     return listAvailableServicerefTargets(null);
+  }
+
+  /**
+   * Get service reference target for a specified service name.
+   *
+   * This operation gets the service reference target for a specified service name.
+   *
+   * @param getServicerefTargetOptions the {@link GetServicerefTargetOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ServiceRefTarget}
+   */
+  public ServiceCall<ServiceRefTarget> getServicerefTarget(GetServicerefTargetOptions getServicerefTargetOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getServicerefTargetOptions,
+      "getServicerefTargetOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("service_name", getServicerefTargetOptions.serviceName());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/zones/serviceref_targets/{service_name}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("context_based_restrictions", "v1", "getServicerefTarget");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getServicerefTargetOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", getServicerefTargetOptions.xCorrelationId());
+    }
+    if (getServicerefTargetOptions.transactionId() != null) {
+      builder.header("Transaction-Id", getServicerefTargetOptions.transactionId());
+    }
+    ResponseConverter<ServiceRefTarget> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceRefTarget>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
   }
 
   /**

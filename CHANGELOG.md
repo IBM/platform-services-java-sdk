@@ -1,3 +1,10 @@
+# [0.51.0](https://github.com/IBM/platform-services-java-sdk/compare/0.50.2...0.51.0) (2024-03-08)
+
+
+### Features
+
+* **Context-Based Restrictions:** add Service Ref Target ([#234](https://github.com/IBM/platform-services-java-sdk/issues/234)) ([54d906b](https://github.com/IBM/platform-services-java-sdk/commit/54d906b1f84b9cb54a05d54e0a761b5bfdbe34d4))
+
 ## [0.50.2](https://github.com/IBM/platform-services-java-sdk/compare/0.50.1...0.50.2) (2024-03-01)
 
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,6 +12,7 @@
  */
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
@@ -19,9 +20,34 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ServiceRefTargetLocationsItem extends GenericModel {
 
+  @SerializedName("display_name")
+  protected String displayName;
+  protected String kind;
   protected String name;
 
   protected ServiceRefTargetLocationsItem() { }
+
+  /**
+   * Gets the displayName.
+   *
+   * The location display name.
+   *
+   * @return the displayName
+   */
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  /**
+   * Gets the kind.
+   *
+   * The location kind.
+   *
+   * @return the kind
+   */
+  public String getKind() {
+    return kind;
+  }
 
   /**
    * Gets the name.

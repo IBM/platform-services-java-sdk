@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -64,9 +64,9 @@ public class RuleContext extends GenericModel {
     }
 
     /**
-     * Adds an attributes to attributes.
+     * Adds a new element to attributes.
      *
-     * @param attributes the new attributes
+     * @param attributes the new element to be added
      * @return the RuleContext builder
      */
     public Builder addAttributes(RuleContextAttribute attributes) {

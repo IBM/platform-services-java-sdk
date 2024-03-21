@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetServicerefTargetOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,16 +23,27 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Address model.
+ * Unit test class for the GetServicerefTargetOptions model.
  */
-public class AddressTest {
+public class GetServicerefTargetOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
-  // TODO: Add tests for models that are abstract
   @Test
-  public void testAddress() throws Throwable {
-    Address addressModel = new Address();
-    assertNotNull(addressModel);
+  public void testGetServicerefTargetOptions() throws Throwable {
+    GetServicerefTargetOptions getServicerefTargetOptionsModel = new GetServicerefTargetOptions.Builder()
+      .serviceName("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
+    assertEquals(getServicerefTargetOptionsModel.serviceName(), "testString");
+    assertEquals(getServicerefTargetOptionsModel.xCorrelationId(), "testString");
+    assertEquals(getServicerefTargetOptionsModel.transactionId(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetServicerefTargetOptionsError() throws Throwable {
+    new GetServicerefTargetOptions.Builder().build();
+  }
+
 }

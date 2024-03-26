@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -72,9 +72,9 @@ public class SetProfileIdentitiesOptions extends GenericModel {
     }
 
     /**
-     * Adds an identities to identities.
+     * Adds a new element to identities.
      *
-     * @param identities the new identities
+     * @param identities the new element to be added
      * @return the SetProfileIdentitiesOptions builder
      */
     public Builder addIdentities(ProfileIdentityRequest identities) {

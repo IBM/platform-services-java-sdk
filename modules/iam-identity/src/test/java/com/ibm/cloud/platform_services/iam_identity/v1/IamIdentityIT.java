@@ -55,6 +55,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private static String PROFILE_TEMPLATE_PROFILE_NAME = "Java-SDK-IT-TrustedProfile-FromTemplate";
     private static String ASSIGNMENT_TARGET_TYPE_ACCOUNT = "Account";
     private static String ACCOUNT_SETTINGS_TEMPLATE_NAME = "Java-SDK-IT-AccountSettingsTemplate";
+    private static String APIKEY_ACTION_WHEN_LEAKED_DEFAULT="none";
 
     private static String ACCOUNT_ID;
     private static String IAM_ID;
@@ -216,7 +217,10 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(apiKeyResult.getCreatedBy(), IAM_ID);
             assertNotNull(apiKeyResult.getCreatedAt());
             assertFalse(apiKeyResult.isLocked());
+            assertFalse(apiKeyResult.isDisabled());
             assertNotNull(apiKeyResult.getCrn());
+            assertFalse(apiKeyResult.isSupportSessions());
+            assertEquals(apiKeyResult.getActionWhenLeaked(), APIKEY_ACTION_WHEN_LEAKED_DEFAULT);
 
             // Grab the Etag value from the response for use in the update operation.
             assertNotNull(response.getHeaders().values("Etag"));
@@ -367,6 +371,48 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             ApiKey apikey = getApikey(apikeyId2);
             assertNotNull(apikey);
             assertFalse(apikey.isLocked());
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testUpdateApiKey" })
+    public void testDisableApiKey() throws Exception {
+        assertNotNull(apikeyId2);
+        try {
+            DisableApiKeyOptions disableApiKeyOptions = new DisableApiKeyOptions.Builder()
+                    .id(apikeyId2)
+                    .build();
+            Response<Void> response = service.disableApiKey(disableApiKeyOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
+            // Now retrieve the apikey and make sure it is disabled.
+            ApiKey apikey = getApikey(apikeyId2);
+            assertNotNull(apikey);
+            assertTrue(apikey.isDisabled());
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testDisableApiKey" })
+    public void testEnableApiKey() throws Exception {
+        assertNotNull(apikeyId2);
+        try {
+            EnableApiKeyOptions enableApiKeyOptions = new EnableApiKeyOptions.Builder()
+                    .id(apikeyId2)
+                    .build();
+            Response<Void> response = service.enableApiKey(enableApiKeyOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
+            // Now retrieve the apikey and make sure it is enabled.
+            ApiKey apikey = getApikey(apikeyId2);
+            assertNotNull(apikey);
+            assertFalse(apikey.isDisabled());
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

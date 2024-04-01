@@ -20,107 +20,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsComponent;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitAccountSettingsTemplateOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitProfileTemplateOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsTemplateOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateMfaReportOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileLinkRequestLink;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileTemplateOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateTrustedProfileAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAccountSettingsAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAccountSettingsTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOfAccountSettingsTemplateOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOfProfileTemplateOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteTrustedProfileAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ExceptionResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestAccountSettingsTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestProfileTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentitiesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetTrustedProfileAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsTemplatesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileTemplatesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListTrustedProfileAssignmentsOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListVersionsOfAccountSettingsTemplateOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ListVersionsOfProfileTemplateOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.LockApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.LockServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentitiesResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentityRequest;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentityResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLink;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileLinkList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollmentStatus;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentityOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentListResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateProfileComponentRequest;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfileTemplateClaimRule;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfileTemplateList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfileTemplateResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfilesList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UnlockServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileTemplateVersionOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateTrustedProfileAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfaEnrollments;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.*;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
@@ -355,6 +255,42 @@ public class IamIdentityExamples {
             // end-unlock_api_key
 
             System.out.printf("unlockApiKey() response status code: %d%n", response.getStatusCode());
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+
+            // begin-disable_api_key
+
+            DisableApiKeyOptions disableApiKeyOptions = new DisableApiKeyOptions.Builder()
+                    .id(apikeyId)
+                    .build();
+
+            Response<Void> response = service.disableApiKey(disableApiKeyOptions).execute();
+
+            // end-disable_api_key
+
+            System.out.printf("disableApiKey() response status code: %d%n", response.getStatusCode());
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+
+            // begin-enable_api_key
+
+            EnableApiKeyOptions enableApiKeyOptions = new EnableApiKeyOptions.Builder()
+                    .id(apikeyId)
+                    .build();
+
+            Response<Void> response = service.enableApiKey(enableApiKeyOptions).execute();
+
+            // end-enable_api_key
+
+            System.out.printf("enableApiKey() response status code: %d%n", response.getStatusCode());
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -1544,6 +1480,7 @@ public class IamIdentityExamples {
 
         try {
             System.out.println("deleteProfileTemplateVersion() result:");
+            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, service);
 
             // begin-delete_profile_template_version
 
@@ -1928,6 +1865,7 @@ public class IamIdentityExamples {
 
         try {
             System.out.println("deleteAccountSettingsTemplateVersion() result:");
+            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, service);
 
             // begin-delete_account_settings_template_version
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +29,7 @@ public class ApiKey extends GenericModel {
   protected String entityTag;
   protected String crn;
   protected Boolean locked;
+  protected Boolean disabled;
   @SerializedName("created_at")
   protected Date createdAt;
   @SerializedName("created_by")
@@ -36,6 +37,10 @@ public class ApiKey extends GenericModel {
   @SerializedName("modified_at")
   protected Date modifiedAt;
   protected String name;
+  @SerializedName("support_sessions")
+  protected Boolean supportSessions;
+  @SerializedName("action_when_leaked")
+  protected String actionWhenLeaked;
   protected String description;
   @SerializedName("iam_id")
   protected String iamId;
@@ -105,6 +110,17 @@ public class ApiKey extends GenericModel {
   }
 
   /**
+   * Gets the disabled.
+   *
+   * Defines if API key is disabled, API key cannot be used if 'disabled' is set to true.
+   *
+   * @return the disabled
+   */
+  public Boolean isDisabled() {
+    return disabled;
+  }
+
+  /**
    * Gets the createdAt.
    *
    * If set contains a date time string of the creation date in ISO format.
@@ -147,6 +163,28 @@ public class ApiKey extends GenericModel {
    */
   public String getName() {
     return name;
+  }
+
+  /**
+   * Gets the supportSessions.
+   *
+   * Defines if the API key supports sessions. Sessions are only supported for user apikeys.
+   *
+   * @return the supportSessions
+   */
+  public Boolean isSupportSessions() {
+    return supportSessions;
+  }
+
+  /**
+   * Gets the actionWhenLeaked.
+   *
+   * Defines the action to take when API key is leaked, valid values are 'none', 'disable' and 'delete'.
+   *
+   * @return the actionWhenLeaked
+   */
+  public String getActionWhenLeaked() {
+    return actionWhenLeaked;
   }
 
   /**

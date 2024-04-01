@@ -1,3 +1,10 @@
+# [0.52.0](https://github.com/IBM/platform-services-java-sdk/compare/0.51.0...0.52.0) (2024-03-26)
+
+
+### Features
+
+* **IAM Identity:** add disable_api_key and enable_api_key operations ([c1a04a5](https://github.com/IBM/platform-services-java-sdk/commit/c1a04a59951a681678c2036f55e120ef81218cb9))
+
 # [0.51.0](https://github.com/IBM/platform-services-java-sdk/compare/0.50.2...0.51.0) (2024-03-08)
 
 

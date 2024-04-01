@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -163,9 +163,10 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
   /**
    * Gets the apikey.
    *
-   * You can optionally passthrough the API key value for this API key. If passed, NO validation of that apiKey value is
-   * done, i.e. the value can be non-URL safe. If omitted, the API key management will create an URL safe opaque API key
-   * value. The value of the API key is checked for uniqueness. Please ensure enough variations when passing in this
+   * You can optionally passthrough the API key value for this API key. If passed, a minimum length validation of 32
+   * characters for that apiKey value is done, i.e. the value can contain any characters and can even be non-URL safe,
+   * but the minimum length requirement must be met. If omitted, the API key management will create an URL safe opaque
+   * API key value. The value of the API key is checked for uniqueness. Ensure enough variations when passing in this
    * value.
    *
    * @return the apikey

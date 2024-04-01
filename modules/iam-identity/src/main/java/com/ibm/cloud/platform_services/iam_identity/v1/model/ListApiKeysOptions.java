@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,7 +20,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class ListApiKeysOptions extends GenericModel {
 
   /**
-   * Optional parameter to define the scope of the queried API Keys. Can be 'entity' (default) or 'account'.
+   * Optional parameter to define the scope of the queried API keys. Can be 'entity' (default) or 'account'.
    */
   public interface Scope {
     /** entity. */
@@ -30,7 +30,7 @@ public class ListApiKeysOptions extends GenericModel {
   }
 
   /**
-   * Optional parameter to filter the type of the queried API Keys. Can be 'user' or 'serviceid'.
+   * Optional parameter to filter the type of the queried API keys. Can be 'user' or 'serviceid'.
    */
   public interface Type {
     /** user. */
@@ -231,7 +231,7 @@ public class ListApiKeysOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * Account ID of the API keys(s) to query. If a service IAM ID is specified in iam_id then account_id must match the
+   * Account ID of the API keys to query. If a service IAM ID is specified in iam_id then account_id must match the
    * account of the IAM ID. If a user IAM ID is specified in iam_id then then account_id must match the account of the
    * Authorization token.
    *
@@ -244,8 +244,8 @@ public class ListApiKeysOptions extends GenericModel {
   /**
    * Gets the iamId.
    *
-   * IAM ID of the API key(s) to be queried. The IAM ID may be that of a user or a service. For a user IAM ID iam_id
-   * must match the Authorization token.
+   * IAM ID of the API keys to be queried. The IAM ID may be that of a user or a service. For a user IAM ID iam_id must
+   * match the Authorization token.
    *
    * @return the iamId
    */
@@ -278,7 +278,7 @@ public class ListApiKeysOptions extends GenericModel {
   /**
    * Gets the scope.
    *
-   * Optional parameter to define the scope of the queried API Keys. Can be 'entity' (default) or 'account'.
+   * Optional parameter to define the scope of the queried API keys. Can be 'entity' (default) or 'account'.
    *
    * @return the scope
    */
@@ -289,7 +289,7 @@ public class ListApiKeysOptions extends GenericModel {
   /**
    * Gets the type.
    *
-   * Optional parameter to filter the type of the queried API Keys. Can be 'user' or 'serviceid'.
+   * Optional parameter to filter the type of the queried API keys. Can be 'user' or 'serviceid'.
    *
    * @return the type
    */

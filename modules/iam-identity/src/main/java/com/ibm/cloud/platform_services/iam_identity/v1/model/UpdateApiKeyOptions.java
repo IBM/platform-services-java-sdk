@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,6 +23,8 @@ public class UpdateApiKeyOptions extends GenericModel {
   protected String ifMatch;
   protected String name;
   protected String description;
+  protected Boolean supportSessions;
+  protected String actionWhenLeaked;
 
   /**
    * Builder.
@@ -32,6 +34,8 @@ public class UpdateApiKeyOptions extends GenericModel {
     private String ifMatch;
     private String name;
     private String description;
+    private Boolean supportSessions;
+    private String actionWhenLeaked;
 
     /**
      * Instantiates a new Builder from an existing UpdateApiKeyOptions instance.
@@ -43,6 +47,8 @@ public class UpdateApiKeyOptions extends GenericModel {
       this.ifMatch = updateApiKeyOptions.ifMatch;
       this.name = updateApiKeyOptions.name;
       this.description = updateApiKeyOptions.description;
+      this.supportSessions = updateApiKeyOptions.supportSessions;
+      this.actionWhenLeaked = updateApiKeyOptions.actionWhenLeaked;
     }
 
     /**
@@ -114,6 +120,28 @@ public class UpdateApiKeyOptions extends GenericModel {
       this.description = description;
       return this;
     }
+
+    /**
+     * Set the supportSessions.
+     *
+     * @param supportSessions the supportSessions
+     * @return the UpdateApiKeyOptions builder
+     */
+    public Builder supportSessions(Boolean supportSessions) {
+      this.supportSessions = supportSessions;
+      return this;
+    }
+
+    /**
+     * Set the actionWhenLeaked.
+     *
+     * @param actionWhenLeaked the actionWhenLeaked
+     * @return the UpdateApiKeyOptions builder
+     */
+    public Builder actionWhenLeaked(String actionWhenLeaked) {
+      this.actionWhenLeaked = actionWhenLeaked;
+      return this;
+    }
   }
 
   protected UpdateApiKeyOptions() { }
@@ -127,6 +155,8 @@ public class UpdateApiKeyOptions extends GenericModel {
     ifMatch = builder.ifMatch;
     name = builder.name;
     description = builder.description;
+    supportSessions = builder.supportSessions;
+    actionWhenLeaked = builder.actionWhenLeaked;
   }
 
   /**
@@ -184,6 +214,28 @@ public class UpdateApiKeyOptions extends GenericModel {
    */
   public String description() {
     return description;
+  }
+
+  /**
+   * Gets the supportSessions.
+   *
+   * Defines if the API key supports sessions. Sessions are only supported for user apikeys.
+   *
+   * @return the supportSessions
+   */
+  public Boolean supportSessions() {
+    return supportSessions;
+  }
+
+  /**
+   * Gets the actionWhenLeaked.
+   *
+   * Defines the action to take when API key is leaked, valid values are 'none', 'disable' and 'delete'.
+   *
+   * @return the actionWhenLeaked
+   */
+  public String actionWhenLeaked() {
+    return actionWhenLeaked;
   }
 }
 

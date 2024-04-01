@@ -66,7 +66,9 @@ Java Style
 
     <!-- Checks for imports                              -->
     <!-- See http://checkstyle.sf.net/config_import.html -->
-    <module name="AvoidStarImport" />
+    <module name="AvoidStarImport">
+      <property name="excludes" value="com.ibm.cloud.platform_services.iam_identity.v1.model"/>
+    </module>
     <module name="IllegalImport" />
     <!-- defaults to sun.* packages -->
     <module name="RedundantImport" />

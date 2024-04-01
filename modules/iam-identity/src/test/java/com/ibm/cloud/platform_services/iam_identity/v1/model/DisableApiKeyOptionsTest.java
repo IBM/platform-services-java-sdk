@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DisableApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,33 +23,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the UpdateApiKeyOptions model.
+ * Unit test class for the DisableApiKeyOptions model.
  */
-public class UpdateApiKeyOptionsTest {
+public class DisableApiKeyOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testUpdateApiKeyOptions() throws Throwable {
-    UpdateApiKeyOptions updateApiKeyOptionsModel = new UpdateApiKeyOptions.Builder()
+  public void testDisableApiKeyOptions() throws Throwable {
+    DisableApiKeyOptions disableApiKeyOptionsModel = new DisableApiKeyOptions.Builder()
       .id("testString")
-      .ifMatch("testString")
-      .name("testString")
-      .description("testString")
-      .supportSessions(true)
-      .actionWhenLeaked("testString")
       .build();
-    assertEquals(updateApiKeyOptionsModel.id(), "testString");
-    assertEquals(updateApiKeyOptionsModel.ifMatch(), "testString");
-    assertEquals(updateApiKeyOptionsModel.name(), "testString");
-    assertEquals(updateApiKeyOptionsModel.description(), "testString");
-    assertEquals(updateApiKeyOptionsModel.supportSessions(), Boolean.valueOf(true));
-    assertEquals(updateApiKeyOptionsModel.actionWhenLeaked(), "testString");
+    assertEquals(disableApiKeyOptionsModel.id(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateApiKeyOptionsError() throws Throwable {
-    new UpdateApiKeyOptions.Builder().build();
+  public void testDisableApiKeyOptionsError() throws Throwable {
+    new DisableApiKeyOptions.Builder().build();
   }
 
 }

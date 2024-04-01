@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
  */
 
 package com.ibm.cloud.platform_services.enterprise_management.v1;
@@ -330,6 +330,9 @@ public class EnterpriseManagement extends BaseService {
     contentJson.addProperty("owner_iam_id", createAccountOptions.ownerIamId());
     if (createAccountOptions.traits() != null) {
       contentJson.add("traits", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createAccountOptions.traits()));
+    }
+    if (createAccountOptions.options() != null) {
+      contentJson.add("options", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createAccountOptions.options()));
     }
     builder.bodyJson(contentJson);
     ResponseConverter<CreateAccountResponse> responseConverter =

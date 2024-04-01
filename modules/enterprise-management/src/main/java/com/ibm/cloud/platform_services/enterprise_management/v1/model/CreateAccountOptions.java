@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,6 +23,7 @@ public class CreateAccountOptions extends GenericModel {
   protected String name;
   protected String ownerIamId;
   protected CreateAccountRequestTraits traits;
+  protected CreateAccountRequestOptions options;
 
   /**
    * Builder.
@@ -32,6 +33,7 @@ public class CreateAccountOptions extends GenericModel {
     private String name;
     private String ownerIamId;
     private CreateAccountRequestTraits traits;
+    private CreateAccountRequestOptions options;
 
     /**
      * Instantiates a new Builder from an existing CreateAccountOptions instance.
@@ -43,6 +45,7 @@ public class CreateAccountOptions extends GenericModel {
       this.name = createAccountOptions.name;
       this.ownerIamId = createAccountOptions.ownerIamId;
       this.traits = createAccountOptions.traits;
+      this.options = createAccountOptions.options;
     }
 
     /**
@@ -116,6 +119,17 @@ public class CreateAccountOptions extends GenericModel {
       this.traits = traits;
       return this;
     }
+
+    /**
+     * Set the options.
+     *
+     * @param options the options
+     * @return the CreateAccountOptions builder
+     */
+    public Builder options(CreateAccountRequestOptions options) {
+      this.options = options;
+      return this;
+    }
   }
 
   protected CreateAccountOptions() { }
@@ -131,6 +145,7 @@ public class CreateAccountOptions extends GenericModel {
     name = builder.name;
     ownerIamId = builder.ownerIamId;
     traits = builder.traits;
+    options = builder.options;
   }
 
   /**
@@ -180,13 +195,25 @@ public class CreateAccountOptions extends GenericModel {
    * Gets the traits.
    *
    * The traits object can be used to set properties on child accounts of an enterprise. You can pass a field to opt-out
-   * of Multi-Factor Authentication setting or setup enterprise IAM settings when creating a child account in the
-   * enterprise. This is an optional field.
+   * of the default multi-factor authentication setting or enable enterprise-managed IAM when creating a child account
+   * in the enterprise. This is an optional field.
    *
    * @return the traits
    */
   public CreateAccountRequestTraits traits() {
     return traits;
+  }
+
+  /**
+   * Gets the options.
+   *
+   * The options object can be used to set properties on child accounts of an enterprise. You can pass a field to to
+   * create IAM service id with IAM api key when creating a child account in the enterprise. This is an optional field.
+   *
+   * @return the options
+   */
+  public CreateAccountRequestOptions options() {
+    return options;
   }
 }
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,6 +34,8 @@ public class Enterprise extends GenericModel {
   protected String primaryContactIamId;
   @SerializedName("primary_contact_email")
   protected String primaryContactEmail;
+  @SerializedName("source_account_id")
+  protected String sourceAccountId;
   @SerializedName("created_at")
   protected Date createdAt;
   @SerializedName("created_by")
@@ -142,6 +144,17 @@ public class Enterprise extends GenericModel {
    */
   public String getPrimaryContactEmail() {
     return primaryContactEmail;
+  }
+
+  /**
+   * Gets the sourceAccountId.
+   *
+   * The ID of the account that is used to create the enterprise.
+   *
+   * @return the sourceAccountId
+   */
+  public String getSourceAccountId() {
+    return sourceAccountId;
   }
 
   /**

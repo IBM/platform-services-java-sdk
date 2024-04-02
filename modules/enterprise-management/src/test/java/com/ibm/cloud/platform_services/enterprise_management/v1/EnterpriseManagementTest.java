@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,6 +20,7 @@ import com.ibm.cloud.platform_services.enterprise_management.v1.model.AccountsPa
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountGroupResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountOptions;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountRequestOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountRequestTraits;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountResponse;
 import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseOptions;
@@ -137,7 +138,7 @@ public class EnterpriseManagementTest {
   @Test
   public void testListEnterprisesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
+    String mockResponseBody = "{\"rows_count\": 9, \"next_url\": \"nextUrl\", \"resources\": [{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"source_account_id\": \"sourceAccountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}]}";
     String listEnterprisesPath = "/enterprises";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -190,8 +191,8 @@ public class EnterpriseManagementTest {
   @Test
   public void testListEnterprisesWithPagerGetNext() throws Throwable {
     // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?next_docid=1\",\"resources\":[{\"url\":\"url\",\"id\":\"id\",\"enterprise_account_id\":\"enterpriseAccountId\",\"crn\":\"crn\",\"name\":\"name\",\"domain\":\"domain\",\"state\":\"state\",\"primary_contact_iam_id\":\"primaryContactIamId\",\"primary_contact_email\":\"primaryContactEmail\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by\":\"createdBy\",\"updated_at\":\"2019-01-01T12:00:00.000Z\",\"updated_by\":\"updatedBy\"}]}";
-    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"url\":\"url\",\"id\":\"id\",\"enterprise_account_id\":\"enterpriseAccountId\",\"crn\":\"crn\",\"name\":\"name\",\"domain\":\"domain\",\"state\":\"state\",\"primary_contact_iam_id\":\"primaryContactIamId\",\"primary_contact_email\":\"primaryContactEmail\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by\":\"createdBy\",\"updated_at\":\"2019-01-01T12:00:00.000Z\",\"updated_by\":\"updatedBy\"}]}";
+    String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?next_docid=1\",\"resources\":[{\"url\":\"url\",\"id\":\"id\",\"enterprise_account_id\":\"enterpriseAccountId\",\"crn\":\"crn\",\"name\":\"name\",\"domain\":\"domain\",\"state\":\"state\",\"primary_contact_iam_id\":\"primaryContactIamId\",\"primary_contact_email\":\"primaryContactEmail\",\"source_account_id\":\"sourceAccountId\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by\":\"createdBy\",\"updated_at\":\"2019-01-01T12:00:00.000Z\",\"updated_by\":\"updatedBy\"}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"url\":\"url\",\"id\":\"id\",\"enterprise_account_id\":\"enterpriseAccountId\",\"crn\":\"crn\",\"name\":\"name\",\"domain\":\"domain\",\"state\":\"state\",\"primary_contact_iam_id\":\"primaryContactIamId\",\"primary_contact_email\":\"primaryContactEmail\",\"source_account_id\":\"sourceAccountId\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by\":\"createdBy\",\"updated_at\":\"2019-01-01T12:00:00.000Z\",\"updated_by\":\"updatedBy\"}]}";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -226,8 +227,8 @@ public class EnterpriseManagementTest {
   @Test
   public void testListEnterprisesWithPagerGetAll() throws Throwable {
     // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?next_docid=1\",\"resources\":[{\"url\":\"url\",\"id\":\"id\",\"enterprise_account_id\":\"enterpriseAccountId\",\"crn\":\"crn\",\"name\":\"name\",\"domain\":\"domain\",\"state\":\"state\",\"primary_contact_iam_id\":\"primaryContactIamId\",\"primary_contact_email\":\"primaryContactEmail\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by\":\"createdBy\",\"updated_at\":\"2019-01-01T12:00:00.000Z\",\"updated_by\":\"updatedBy\"}]}";
-    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"url\":\"url\",\"id\":\"id\",\"enterprise_account_id\":\"enterpriseAccountId\",\"crn\":\"crn\",\"name\":\"name\",\"domain\":\"domain\",\"state\":\"state\",\"primary_contact_iam_id\":\"primaryContactIamId\",\"primary_contact_email\":\"primaryContactEmail\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by\":\"createdBy\",\"updated_at\":\"2019-01-01T12:00:00.000Z\",\"updated_by\":\"updatedBy\"}]}";
+    String mockResponsePage1 = "{\"total_count\":2,\"limit\":1,\"next_url\":\"https://myhost.com/somePath?next_docid=1\",\"resources\":[{\"url\":\"url\",\"id\":\"id\",\"enterprise_account_id\":\"enterpriseAccountId\",\"crn\":\"crn\",\"name\":\"name\",\"domain\":\"domain\",\"state\":\"state\",\"primary_contact_iam_id\":\"primaryContactIamId\",\"primary_contact_email\":\"primaryContactEmail\",\"source_account_id\":\"sourceAccountId\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by\":\"createdBy\",\"updated_at\":\"2019-01-01T12:00:00.000Z\",\"updated_by\":\"updatedBy\"}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"resources\":[{\"url\":\"url\",\"id\":\"id\",\"enterprise_account_id\":\"enterpriseAccountId\",\"crn\":\"crn\",\"name\":\"name\",\"domain\":\"domain\",\"state\":\"state\",\"primary_contact_iam_id\":\"primaryContactIamId\",\"primary_contact_email\":\"primaryContactEmail\",\"source_account_id\":\"sourceAccountId\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by\":\"createdBy\",\"updated_at\":\"2019-01-01T12:00:00.000Z\",\"updated_by\":\"updatedBy\"}]}";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -258,7 +259,7 @@ public class EnterpriseManagementTest {
   @Test
   public void testGetEnterpriseWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
+    String mockResponseBody = "{\"url\": \"url\", \"id\": \"id\", \"enterprise_account_id\": \"enterpriseAccountId\", \"crn\": \"crn\", \"name\": \"name\", \"domain\": \"domain\", \"state\": \"state\", \"primary_contact_iam_id\": \"primaryContactIamId\", \"primary_contact_email\": \"primaryContactEmail\", \"source_account_id\": \"sourceAccountId\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"updated_at\": \"2019-01-01T12:00:00.000Z\", \"updated_by\": \"updatedBy\"}";
     String getEnterprisePath = "/enterprises/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -419,7 +420,7 @@ public class EnterpriseManagementTest {
     String createAccountPath = "/accounts";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
-      .setResponseCode(201)
+      .setResponseCode(202)
       .setBody(mockResponseBody));
 
     // Construct an instance of the CreateAccountRequestTraits model
@@ -428,12 +429,18 @@ public class EnterpriseManagementTest {
       .enterpriseIamManaged(true)
       .build();
 
+    // Construct an instance of the CreateAccountRequestOptions model
+    CreateAccountRequestOptions createAccountRequestOptionsModel = new CreateAccountRequestOptions.Builder()
+      .createIamServiceIdWithApikeyAndOwnerPolicies(true)
+      .build();
+
     // Construct an instance of the CreateAccountOptions model
     CreateAccountOptions createAccountOptionsModel = new CreateAccountOptions.Builder()
       .parent("testString")
       .name("testString")
       .ownerIamId("testString")
       .traits(createAccountRequestTraitsModel)
+      .options(createAccountRequestOptionsModel)
       .build();
 
     // Invoke createAccount() with a valid options model and verify the result

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -40,9 +40,9 @@ public class AttachTagOptions extends GenericModel {
   protected List<String> tagNames;
   protected String xRequestId;
   protected String xCorrelationId;
-  protected String transactionId;
   protected String accountId;
   protected String tagType;
+  protected Boolean replace;
 
   /**
    * Builder.
@@ -53,9 +53,9 @@ public class AttachTagOptions extends GenericModel {
     private List<String> tagNames;
     private String xRequestId;
     private String xCorrelationId;
-    private String transactionId;
     private String accountId;
     private String tagType;
+    private Boolean replace;
 
     /**
      * Instantiates a new Builder from an existing AttachTagOptions instance.
@@ -68,9 +68,9 @@ public class AttachTagOptions extends GenericModel {
       this.tagNames = attachTagOptions.tagNames;
       this.xRequestId = attachTagOptions.xRequestId;
       this.xCorrelationId = attachTagOptions.xCorrelationId;
-      this.transactionId = attachTagOptions.transactionId;
       this.accountId = attachTagOptions.accountId;
       this.tagType = attachTagOptions.tagType;
+      this.replace = attachTagOptions.replace;
     }
 
     /**
@@ -98,9 +98,9 @@ public class AttachTagOptions extends GenericModel {
     }
 
     /**
-     * Adds an resources to resources.
+     * Adds a new element to resources.
      *
-     * @param resources the new resources
+     * @param resources the new element to be added
      * @return the AttachTagOptions builder
      */
     public Builder addResources(Resource resources) {
@@ -114,9 +114,9 @@ public class AttachTagOptions extends GenericModel {
     }
 
     /**
-     * Adds an tagNames to tagNames.
+     * Adds a new element to tagNames.
      *
-     * @param tagNames the new tagNames
+     * @param tagNames the new element to be added
      * @return the AttachTagOptions builder
      */
     public Builder addTagNames(String tagNames) {
@@ -187,19 +187,6 @@ public class AttachTagOptions extends GenericModel {
     }
 
     /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the AttachTagOptions builder
-     * @deprecated this method is deprecated and may be removed in a future release
-     */
-    @Deprecated
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
-
-    /**
      * Set the accountId.
      *
      * @param accountId the accountId
@@ -220,6 +207,17 @@ public class AttachTagOptions extends GenericModel {
       this.tagType = tagType;
       return this;
     }
+
+    /**
+     * Set the replace.
+     *
+     * @param replace the replace
+     * @return the AttachTagOptions builder
+     */
+    public Builder replace(Boolean replace) {
+      this.replace = replace;
+      return this;
+    }
   }
 
   protected AttachTagOptions() { }
@@ -232,9 +230,9 @@ public class AttachTagOptions extends GenericModel {
     tagNames = builder.tagNames;
     xRequestId = builder.xRequestId;
     xCorrelationId = builder.xCorrelationId;
-    transactionId = builder.transactionId;
     accountId = builder.accountId;
     tagType = builder.tagType;
+    replace = builder.replace;
   }
 
   /**
@@ -311,20 +309,6 @@ public class AttachTagOptions extends GenericModel {
   }
 
   /**
-   * Gets the transactionId.
-   *
-   * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
-   * generated with the prefix "gst-".
-   *
-   * @return the transactionId
-   * @deprecated this method is deprecated and may be removed in a future release
-   */
-  @Deprecated
-  public String transactionId() {
-    return transactionId;
-  }
-
-  /**
    * Gets the accountId.
    *
    * The ID of the billing account of the tagged resource. It is a required parameter if `tag_type` is set to `service`.
@@ -346,6 +330,18 @@ public class AttachTagOptions extends GenericModel {
    */
   public String tagType() {
     return tagType;
+  }
+
+  /**
+   * Gets the replace.
+   *
+   * Flag to request replacement of all attached tags. Set 'true' if you want to replace all the list of tags attached
+   * to the resource. Default value is false.
+   *
+   * @return the replace
+   */
+  public Boolean replace() {
+    return replace;
   }
 }
 

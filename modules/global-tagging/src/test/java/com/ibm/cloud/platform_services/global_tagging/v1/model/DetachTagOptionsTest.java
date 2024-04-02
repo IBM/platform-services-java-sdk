@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -45,7 +45,6 @@ public class DetachTagOptionsTest {
       .tagNames(java.util.Arrays.asList("testString"))
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .accountId("testString")
       .tagType("user")
       .build();
@@ -54,7 +53,6 @@ public class DetachTagOptionsTest {
     assertEquals(detachTagOptionsModel.tagNames(), java.util.Arrays.asList("testString"));
     assertEquals(detachTagOptionsModel.xRequestId(), "testString");
     assertEquals(detachTagOptionsModel.xCorrelationId(), "testString");
-    assertEquals(detachTagOptionsModel.transactionId(), "testString");
     assertEquals(detachTagOptionsModel.accountId(), "testString");
     assertEquals(detachTagOptionsModel.tagType(), "user");
   }

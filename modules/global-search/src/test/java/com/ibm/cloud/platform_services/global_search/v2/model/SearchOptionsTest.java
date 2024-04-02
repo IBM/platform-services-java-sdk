@@ -37,7 +37,6 @@ public class SearchOptionsTest {
       .searchCursor("testString")
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .accountId("testString")
       .limit(Long.valueOf("10"))
       .timeout(Long.valueOf("0"))
@@ -53,7 +52,6 @@ public class SearchOptionsTest {
     assertEquals(searchOptionsModel.searchCursor(), "testString");
     assertEquals(searchOptionsModel.xRequestId(), "testString");
     assertEquals(searchOptionsModel.xCorrelationId(), "testString");
-    assertEquals(searchOptionsModel.transactionId(), "testString");
     assertEquals(searchOptionsModel.accountId(), "testString");
     assertEquals(searchOptionsModel.limit(), Long.valueOf("10"));
     assertEquals(searchOptionsModel.timeout(), Long.valueOf("0"));

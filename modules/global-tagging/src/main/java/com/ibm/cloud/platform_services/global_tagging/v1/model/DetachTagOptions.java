@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -40,7 +40,6 @@ public class DetachTagOptions extends GenericModel {
   protected List<String> tagNames;
   protected String xRequestId;
   protected String xCorrelationId;
-  protected String transactionId;
   protected String accountId;
   protected String tagType;
 
@@ -53,7 +52,6 @@ public class DetachTagOptions extends GenericModel {
     private List<String> tagNames;
     private String xRequestId;
     private String xCorrelationId;
-    private String transactionId;
     private String accountId;
     private String tagType;
 
@@ -68,7 +66,6 @@ public class DetachTagOptions extends GenericModel {
       this.tagNames = detachTagOptions.tagNames;
       this.xRequestId = detachTagOptions.xRequestId;
       this.xCorrelationId = detachTagOptions.xCorrelationId;
-      this.transactionId = detachTagOptions.transactionId;
       this.accountId = detachTagOptions.accountId;
       this.tagType = detachTagOptions.tagType;
     }
@@ -98,9 +95,9 @@ public class DetachTagOptions extends GenericModel {
     }
 
     /**
-     * Adds an resources to resources.
+     * Adds a new element to resources.
      *
-     * @param resources the new resources
+     * @param resources the new element to be added
      * @return the DetachTagOptions builder
      */
     public Builder addResources(Resource resources) {
@@ -114,9 +111,9 @@ public class DetachTagOptions extends GenericModel {
     }
 
     /**
-     * Adds an tagNames to tagNames.
+     * Adds a new element to tagNames.
      *
-     * @param tagNames the new tagNames
+     * @param tagNames the new element to be added
      * @return the DetachTagOptions builder
      */
     public Builder addTagNames(String tagNames) {
@@ -187,19 +184,6 @@ public class DetachTagOptions extends GenericModel {
     }
 
     /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the DetachTagOptions builder
-     * @deprecated this method is deprecated and may be removed in a future release
-     */
-    @Deprecated
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
-
-    /**
      * Set the accountId.
      *
      * @param accountId the accountId
@@ -232,7 +216,6 @@ public class DetachTagOptions extends GenericModel {
     tagNames = builder.tagNames;
     xRequestId = builder.xRequestId;
     xCorrelationId = builder.xCorrelationId;
-    transactionId = builder.transactionId;
     accountId = builder.accountId;
     tagType = builder.tagType;
   }
@@ -308,20 +291,6 @@ public class DetachTagOptions extends GenericModel {
    */
   public String xCorrelationId() {
     return xCorrelationId;
-  }
-
-  /**
-   * Gets the transactionId.
-   *
-   * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
-   * generated with the prefix "gst-".
-   *
-   * @return the transactionId
-   * @deprecated this method is deprecated and may be removed in a future release
-   */
-  @Deprecated
-  public String transactionId() {
-    return transactionId;
   }
 
   /**

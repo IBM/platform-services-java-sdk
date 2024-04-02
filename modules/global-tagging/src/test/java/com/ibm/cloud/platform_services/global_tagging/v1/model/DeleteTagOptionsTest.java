@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -35,7 +35,6 @@ public class DeleteTagOptionsTest {
       .tagName("testString")
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .providers(java.util.Arrays.asList("ghost"))
       .accountId("testString")
       .tagType("user")
@@ -43,7 +42,6 @@ public class DeleteTagOptionsTest {
     assertEquals(deleteTagOptionsModel.tagName(), "testString");
     assertEquals(deleteTagOptionsModel.xRequestId(), "testString");
     assertEquals(deleteTagOptionsModel.xCorrelationId(), "testString");
-    assertEquals(deleteTagOptionsModel.transactionId(), "testString");
     assertEquals(deleteTagOptionsModel.providers(), java.util.Arrays.asList("ghost"));
     assertEquals(deleteTagOptionsModel.accountId(), "testString");
     assertEquals(deleteTagOptionsModel.tagType(), "user");

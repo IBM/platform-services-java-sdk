@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -82,7 +82,6 @@ public class GlobalTaggingTest {
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .accountId("testString")
       .tagType("user")
       .fullData(false)
@@ -149,7 +148,6 @@ public class GlobalTaggingTest {
       .tagNames(java.util.Arrays.asList("testString"))
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .accountId("testString")
       .tagType("access")
       .build();
@@ -206,7 +204,6 @@ public class GlobalTaggingTest {
     DeleteTagAllOptions deleteTagAllOptionsModel = new DeleteTagAllOptions.Builder()
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .providers("ghost")
       .accountId("testString")
       .tagType("user")
@@ -259,7 +256,6 @@ public class GlobalTaggingTest {
       .tagName("testString")
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .providers(java.util.Arrays.asList("ghost"))
       .accountId("testString")
       .tagType("user")
@@ -327,9 +323,9 @@ public class GlobalTaggingTest {
       .tagNames(java.util.Arrays.asList("testString"))
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .accountId("testString")
       .tagType("user")
+      .replace(false)
       .build();
 
     // Invoke attachTag() with a valid options model and verify the result
@@ -350,6 +346,7 @@ public class GlobalTaggingTest {
     assertNotNull(query);
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
+    assertEquals(Boolean.valueOf(query.get("replace")), Boolean.valueOf(false));
   }
 
   // Test the attachTag operation with and without retries enabled
@@ -393,7 +390,6 @@ public class GlobalTaggingTest {
       .tagNames(java.util.Arrays.asList("testString"))
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .accountId("testString")
       .tagType("user")
       .build();

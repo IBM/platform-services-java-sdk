@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.enterprise_management.v1.model;
 
-import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateEnterpriseResponse;
+import com.ibm.cloud.platform_services.enterprise_management.v1.model.CreateAccountRequestOptions;
 import com.ibm.cloud.platform_services.enterprise_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,16 +23,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the CreateEnterpriseResponse model.
+ * Unit test class for the CreateAccountRequestOptions model.
  */
-public class CreateEnterpriseResponseTest {
+public class CreateAccountRequestOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testCreateEnterpriseResponse() throws Throwable {
-    CreateEnterpriseResponse createEnterpriseResponseModel = new CreateEnterpriseResponse();
-    assertNull(createEnterpriseResponseModel.getEnterpriseId());
-    assertNull(createEnterpriseResponseModel.getEnterpriseAccountId());
+  public void testCreateAccountRequestOptions() throws Throwable {
+    CreateAccountRequestOptions createAccountRequestOptionsModel = new CreateAccountRequestOptions.Builder()
+      .createIamServiceIdWithApikeyAndOwnerPolicies(true)
+      .build();
+    assertEquals(createAccountRequestOptionsModel.createIamServiceIdWithApikeyAndOwnerPolicies(), Boolean.valueOf(true));
+
+    String json = TestUtilities.serialize(createAccountRequestOptionsModel);
+
+    CreateAccountRequestOptions createAccountRequestOptionsModelNew = TestUtilities.deserialize(json, CreateAccountRequestOptions.class);
+    assertTrue(createAccountRequestOptionsModelNew instanceof CreateAccountRequestOptions);
+    assertEquals(createAccountRequestOptionsModelNew.createIamServiceIdWithApikeyAndOwnerPolicies(), Boolean.valueOf(true));
   }
 }

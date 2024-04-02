@@ -1,3 +1,10 @@
+# [0.53.0](https://github.com/IBM/platform-services-java-sdk/compare/0.52.0...0.53.0) (2024-04-02)
+
+
+### Features
+
+* **Enterprise Management:** added options field in create child account payload ([#237](https://github.com/IBM/platform-services-java-sdk/issues/237)) ([2e13f47](https://github.com/IBM/platform-services-java-sdk/commit/2e13f470425f6873ea758144b36008e1004ab29a))
+
 # [0.52.0](https://github.com/IBM/platform-services-java-sdk/compare/0.51.0...0.52.0) (2024-03-26)
 
 

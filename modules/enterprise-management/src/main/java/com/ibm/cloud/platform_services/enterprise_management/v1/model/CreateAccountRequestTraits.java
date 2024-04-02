@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,8 +17,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
  * The traits object can be used to set properties on child accounts of an enterprise. You can pass a field to opt-out
- * of Multi-Factor Authentication setting or setup enterprise IAM settings when creating a child account in the
- * enterprise. This is an optional field.
+ * of the default multi-factor authentication setting or enable enterprise-managed IAM when creating a child account in
+ * the enterprise. This is an optional field.
  */
 public class CreateAccountRequestTraits extends GenericModel {
 
@@ -100,8 +100,8 @@ public class CreateAccountRequestTraits extends GenericModel {
   /**
    * Gets the mfa.
    *
-   * By default MFA will be enabled on a child account. To opt out, pass the traits object with the mfa field set to
-   * empty string. This is an optional field.
+   * By default MFA is set to `NONE_NO_ROPC` on a child account, which disables CLI logins with only a password. To opt
+   * out, pass the traits object with the mfa field set to empty string. This is an optional field.
    *
    * @return the mfa
    */
@@ -112,8 +112,10 @@ public class CreateAccountRequestTraits extends GenericModel {
   /**
    * Gets the enterpriseIamManaged.
    *
-   * The Enterprise IAM settings property will be turned off for a newly created child account by default. You can
-   * enable this property by passing 'true' in this boolean field. This is an optional field.
+   * By default enterprise-managed IAM is turned off for a newly created child account. You can enable this property by
+   * passing 'true' in this boolean field. Enabling enterprise-managed IAM allows the enterprise account to assign IAM
+   * resources, like access groups, trusted profiles, and account settings, to the child account. This is an optional
+   * field.
    *
    * @return the enterpriseIamManaged
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,7 +34,6 @@ public class ListTagsOptionsTest {
     ListTagsOptions listTagsOptionsModel = new ListTagsOptions.Builder()
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .accountId("testString")
       .tagType("user")
       .fullData(false)
@@ -48,7 +47,6 @@ public class ListTagsOptionsTest {
       .build();
     assertEquals(listTagsOptionsModel.xRequestId(), "testString");
     assertEquals(listTagsOptionsModel.xCorrelationId(), "testString");
-    assertEquals(listTagsOptionsModel.transactionId(), "testString");
     assertEquals(listTagsOptionsModel.accountId(), "testString");
     assertEquals(listTagsOptionsModel.tagType(), "user");
     assertEquals(listTagsOptionsModel.fullData(), Boolean.valueOf(false));

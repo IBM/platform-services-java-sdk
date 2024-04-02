@@ -81,7 +81,6 @@ public class SearchOptions extends GenericModel {
   protected String searchCursor;
   protected String xRequestId;
   protected String xCorrelationId;
-  protected String transactionId;
   protected String accountId;
   protected Long limit;
   protected Long timeout;
@@ -101,7 +100,6 @@ public class SearchOptions extends GenericModel {
     private String searchCursor;
     private String xRequestId;
     private String xCorrelationId;
-    private String transactionId;
     private String accountId;
     private Long limit;
     private Long timeout;
@@ -123,7 +121,6 @@ public class SearchOptions extends GenericModel {
       this.searchCursor = searchOptions.searchCursor;
       this.xRequestId = searchOptions.xRequestId;
       this.xCorrelationId = searchOptions.xCorrelationId;
-      this.transactionId = searchOptions.transactionId;
       this.accountId = searchOptions.accountId;
       this.limit = searchOptions.limit;
       this.timeout = searchOptions.timeout;
@@ -239,19 +236,6 @@ public class SearchOptions extends GenericModel {
     }
 
     /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the SearchOptions builder
-     * @deprecated this method is deprecated and may be removed in a future release
-     */
-    @Deprecated
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
-
-    /**
      * Set the accountId.
      *
      * @param accountId the accountId
@@ -360,7 +344,6 @@ public class SearchOptions extends GenericModel {
     searchCursor = builder.searchCursor;
     xRequestId = builder.xRequestId;
     xCorrelationId = builder.xCorrelationId;
-    transactionId = builder.transactionId;
     accountId = builder.accountId;
     limit = builder.limit;
     timeout = builder.timeout;
@@ -446,20 +429,6 @@ public class SearchOptions extends GenericModel {
    */
   public String xCorrelationId() {
     return xCorrelationId;
-  }
-
-  /**
-   * Gets the transactionId.
-   *
-   * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
-   * generated with the prefix "gst-".
-   *
-   * @return the transactionId
-   * @deprecated this method is deprecated and may be removed in a future release
-   */
-  @Deprecated
-  public String transactionId() {
-    return transactionId;
   }
 
   /**

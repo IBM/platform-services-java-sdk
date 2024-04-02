@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -45,7 +45,6 @@ public class DeleteTagOptions extends GenericModel {
   protected String tagName;
   protected String xRequestId;
   protected String xCorrelationId;
-  protected String transactionId;
   protected List<String> providers;
   protected String accountId;
   protected String tagType;
@@ -57,7 +56,6 @@ public class DeleteTagOptions extends GenericModel {
     private String tagName;
     private String xRequestId;
     private String xCorrelationId;
-    private String transactionId;
     private List<String> providers;
     private String accountId;
     private String tagType;
@@ -71,7 +69,6 @@ public class DeleteTagOptions extends GenericModel {
       this.tagName = deleteTagOptions.tagName;
       this.xRequestId = deleteTagOptions.xRequestId;
       this.xCorrelationId = deleteTagOptions.xCorrelationId;
-      this.transactionId = deleteTagOptions.transactionId;
       this.providers = deleteTagOptions.providers;
       this.accountId = deleteTagOptions.accountId;
       this.tagType = deleteTagOptions.tagType;
@@ -102,9 +99,9 @@ public class DeleteTagOptions extends GenericModel {
     }
 
     /**
-     * Adds an providers to providers.
+     * Adds a new element to providers.
      *
-     * @param providers the new providers
+     * @param providers the new element to be added
      * @return the DeleteTagOptions builder
      */
     public Builder addProviders(String providers) {
@@ -151,19 +148,6 @@ public class DeleteTagOptions extends GenericModel {
     }
 
     /**
-     * Set the transactionId.
-     *
-     * @param transactionId the transactionId
-     * @return the DeleteTagOptions builder
-     * @deprecated this method is deprecated and may be removed in a future release
-     */
-    @Deprecated
-    public Builder transactionId(String transactionId) {
-      this.transactionId = transactionId;
-      return this;
-    }
-
-    /**
      * Set the providers.
      * Existing providers will be replaced.
      *
@@ -206,7 +190,6 @@ public class DeleteTagOptions extends GenericModel {
     tagName = builder.tagName;
     xRequestId = builder.xRequestId;
     xCorrelationId = builder.xCorrelationId;
-    transactionId = builder.transactionId;
     providers = builder.providers;
     accountId = builder.accountId;
     tagType = builder.tagType;
@@ -261,20 +244,6 @@ public class DeleteTagOptions extends GenericModel {
    */
   public String xCorrelationId() {
     return xCorrelationId;
-  }
-
-  /**
-   * Gets the transactionId.
-   *
-   * An alphanumeric string that can be used to trace a request across services. If not specified, it automatically
-   * generated with the prefix "gst-".
-   *
-   * @return the transactionId
-   * @deprecated this method is deprecated and may be removed in a future release
-   */
-  @Deprecated
-  public String transactionId() {
-    return transactionId;
   }
 
   /**

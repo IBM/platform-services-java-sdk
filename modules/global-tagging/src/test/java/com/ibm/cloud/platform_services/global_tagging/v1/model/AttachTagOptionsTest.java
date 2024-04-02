@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -45,18 +45,18 @@ public class AttachTagOptionsTest {
       .tagNames(java.util.Arrays.asList("testString"))
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .accountId("testString")
       .tagType("user")
+      .replace(false)
       .build();
     assertEquals(attachTagOptionsModel.resources(), java.util.Arrays.asList(resourceModel));
     assertEquals(attachTagOptionsModel.tagName(), "testString");
     assertEquals(attachTagOptionsModel.tagNames(), java.util.Arrays.asList("testString"));
     assertEquals(attachTagOptionsModel.xRequestId(), "testString");
     assertEquals(attachTagOptionsModel.xCorrelationId(), "testString");
-    assertEquals(attachTagOptionsModel.transactionId(), "testString");
     assertEquals(attachTagOptionsModel.accountId(), "testString");
     assertEquals(attachTagOptionsModel.tagType(), "user");
+    assertEquals(attachTagOptionsModel.replace(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

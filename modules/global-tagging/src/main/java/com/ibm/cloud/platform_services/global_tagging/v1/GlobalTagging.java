@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.82.1-2082d402-20231115-195014
+ * IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
  */
 
 package com.ibm.cloud.platform_services.global_tagging.v1;
@@ -125,9 +125,6 @@ public class GlobalTagging extends BaseService {
     if (listTagsOptions.xCorrelationId() != null) {
       builder.header("x-correlation-id", listTagsOptions.xCorrelationId());
     }
-    if (listTagsOptions.transactionId() != null) {
-      builder.header("transaction-id", listTagsOptions.transactionId());
-    }
     if (listTagsOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(listTagsOptions.accountId()));
     }
@@ -200,9 +197,6 @@ public class GlobalTagging extends BaseService {
     if (createTagOptions.xCorrelationId() != null) {
       builder.header("x-correlation-id", createTagOptions.xCorrelationId());
     }
-    if (createTagOptions.transactionId() != null) {
-      builder.header("transaction-id", createTagOptions.transactionId());
-    }
     if (createTagOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(createTagOptions.accountId()));
     }
@@ -240,9 +234,6 @@ public class GlobalTagging extends BaseService {
     }
     if (deleteTagAllOptions.xCorrelationId() != null) {
       builder.header("x-correlation-id", deleteTagAllOptions.xCorrelationId());
-    }
-    if (deleteTagAllOptions.transactionId() != null) {
-      builder.header("transaction-id", deleteTagAllOptions.transactionId());
     }
     if (deleteTagAllOptions.providers() != null) {
       builder.query("providers", String.valueOf(deleteTagAllOptions.providers()));
@@ -294,9 +285,6 @@ public class GlobalTagging extends BaseService {
     if (deleteTagOptions.xCorrelationId() != null) {
       builder.header("x-correlation-id", deleteTagOptions.xCorrelationId());
     }
-    if (deleteTagOptions.transactionId() != null) {
-      builder.header("transaction-id", deleteTagOptions.transactionId());
-    }
     if (deleteTagOptions.providers() != null) {
       builder.query("providers", RequestUtils.join(deleteTagOptions.providers(), ","));
     }
@@ -335,14 +323,14 @@ public class GlobalTagging extends BaseService {
     if (attachTagOptions.xCorrelationId() != null) {
       builder.header("x-correlation-id", attachTagOptions.xCorrelationId());
     }
-    if (attachTagOptions.transactionId() != null) {
-      builder.header("transaction-id", attachTagOptions.transactionId());
-    }
     if (attachTagOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(attachTagOptions.accountId()));
     }
     if (attachTagOptions.tagType() != null) {
       builder.query("tag_type", String.valueOf(attachTagOptions.tagType()));
+    }
+    if (attachTagOptions.replace() != null) {
+      builder.query("replace", String.valueOf(attachTagOptions.replace()));
     }
     final JsonObject contentJson = new JsonObject();
     contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(attachTagOptions.resources()));
@@ -380,9 +368,6 @@ public class GlobalTagging extends BaseService {
     }
     if (detachTagOptions.xCorrelationId() != null) {
       builder.header("x-correlation-id", detachTagOptions.xCorrelationId());
-    }
-    if (detachTagOptions.transactionId() != null) {
-      builder.header("transaction-id", detachTagOptions.transactionId());
     }
     if (detachTagOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(detachTagOptions.accountId()));

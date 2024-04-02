@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.86.0-bc6f14b3-20240221-193958
+ * IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
  */
 
 package com.ibm.cloud.platform_services.global_search.v2;
@@ -36,10 +36,10 @@ import java.util.Map.Entry;
  * Search for resources with the global and shared resource properties repository that is integrated in the IBM Cloud
  * platform. The search repository stores and searches cloud resources attributes, which categorize or classify
  * resources. A resource is a physical or logical component that can be created or reserved for an application or
- * service instance. They are owned by resource providers, such as Cloud Foundry, IBM Kubernetes Service, or resource
- * controller in IBM Cloud. Resources are uniquely identified by a Cloud Resource Name (CRN) or by an IMS ID. The
- * properties of a resource include tags and system properties. Both properties are defined in an IBM Cloud billing
- * account, and span across many regions.
+ * service instance. They are owned by resource providers, such as IBM Kubernetes Service, or resource controller in IBM
+ * Cloud. Resources are uniquely identified by a Cloud Resource Name (CRN) or by an IMS ID. The properties of a resource
+ * include tags and system properties. Both properties are defined in an IBM Cloud billing account, and span across many
+ * regions.
  *
  * API Version: 2.0.1
  */
@@ -94,8 +94,8 @@ public class GlobalSearch extends BaseService {
   /**
    * Find instances of resources (v3).
    *
-   * Find Cloud Foundry resources, IAM-enabled resources, or storage and network resources that run on classic
-   * infrastructure in a specific account ID. You can apply query strings if necessary.
+   * Find IAM-enabled resources or storage and network resources that run on classic infrastructure in a specific
+   * account ID. You can apply query strings if necessary.
    *
    * To filter results, you can insert a string by using the Lucene syntax and the query string is parsed into a series
    * of terms and operators. A term can be a single word or a phrase, in which case the search is performed for all the
@@ -129,9 +129,6 @@ public class GlobalSearch extends BaseService {
     }
     if (searchOptions.xCorrelationId() != null) {
       builder.header("x-correlation-id", searchOptions.xCorrelationId());
-    }
-    if (searchOptions.transactionId() != null) {
-      builder.header("transaction-id", searchOptions.transactionId());
     }
     if (searchOptions.accountId() != null) {
       builder.query("account_id", String.valueOf(searchOptions.accountId()));
@@ -179,8 +176,8 @@ public class GlobalSearch extends BaseService {
   /**
    * Find instances of resources (v3).
    *
-   * Find Cloud Foundry resources, IAM-enabled resources, or storage and network resources that run on classic
-   * infrastructure in a specific account ID. You can apply query strings if necessary.
+   * Find IAM-enabled resources or storage and network resources that run on classic infrastructure in a specific
+   * account ID. You can apply query strings if necessary.
    *
    * To filter results, you can insert a string by using the Lucene syntax and the query string is parsed into a series
    * of terms and operators. A term can be a single word or a phrase, in which case the search is performed for all the

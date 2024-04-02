@@ -71,7 +71,6 @@ public class GlobalSearchTest {
       .searchCursor("testString")
       .xRequestId("testString")
       .xCorrelationId("testString")
-      .transactionId("testString")
       .accountId("testString")
       .limit(Long.valueOf("10"))
       .timeout(Long.valueOf("0"))

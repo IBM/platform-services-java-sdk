@@ -96,7 +96,6 @@ public class GlobalSearchIT extends SdkIntegrationTestBase {
                         .query("GST-sdk-*")
                         .fields(new java.util.ArrayList<String>(java.util.Arrays.asList("*")))
                         .searchCursor(searchCursor)
-                        .transactionId(transactionId)
                         .limit(1)
                         .build();
 

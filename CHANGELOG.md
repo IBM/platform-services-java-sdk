@@ -1082,3 +1082,4 @@
 ### Features
 
 * **Services:** add global-search, global-tagging service and test code to project ([0978c4c](https://github.com/IBM/platform-services-java-sdk/commit/0978c4cc1cbb26862fcdde88962ed9658cfb9774))
+

@@ -1,3 +1,10 @@
+## [0.53.1](https://github.com/IBM/platform-services-java-sdk/compare/0.53.0...0.53.1) (2024-04-10)
+
+
+### Bug Fixes
+
+* **Global Search/Tagging:** regen services with latest API definition ([e3e3fa2](https://github.com/IBM/platform-services-java-sdk/commit/e3e3fa2c26b83a9d791a14732287ce90768085b9))
+
 # [0.53.0](https://github.com/IBM/platform-services-java-sdk/compare/0.52.0...0.53.0) (2024-04-02)
 
 
@@ -1082,4 +1089,3 @@
 ### Features
 
 * **Services:** add global-search, global-tagging service and test code to project ([0978c4c](https://github.com/IBM/platform-services-java-sdk/commit/0978c4cc1cbb26862fcdde88962ed9658cfb9774))
-

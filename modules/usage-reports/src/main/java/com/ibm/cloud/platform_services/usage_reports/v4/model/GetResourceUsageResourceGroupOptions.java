@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -23,6 +23,7 @@ public class GetResourceUsageResourceGroupOptions extends GenericModel {
   protected String resourceGroupId;
   protected String billingmonth;
   protected Boolean names;
+  protected Boolean tags;
   protected String acceptLanguage;
   protected Long limit;
   protected String start;
@@ -39,6 +40,7 @@ public class GetResourceUsageResourceGroupOptions extends GenericModel {
     private String resourceGroupId;
     private String billingmonth;
     private Boolean names;
+    private Boolean tags;
     private String acceptLanguage;
     private Long limit;
     private String start;
@@ -57,6 +59,7 @@ public class GetResourceUsageResourceGroupOptions extends GenericModel {
       this.resourceGroupId = getResourceUsageResourceGroupOptions.resourceGroupId;
       this.billingmonth = getResourceUsageResourceGroupOptions.billingmonth;
       this.names = getResourceUsageResourceGroupOptions.names;
+      this.tags = getResourceUsageResourceGroupOptions.tags;
       this.acceptLanguage = getResourceUsageResourceGroupOptions.acceptLanguage;
       this.limit = getResourceUsageResourceGroupOptions.limit;
       this.start = getResourceUsageResourceGroupOptions.start;
@@ -135,6 +138,17 @@ public class GetResourceUsageResourceGroupOptions extends GenericModel {
      */
     public Builder names(Boolean names) {
       this.names = names;
+      return this;
+    }
+
+    /**
+     * Set the tags.
+     *
+     * @param tags the tags
+     * @return the GetResourceUsageResourceGroupOptions builder
+     */
+    public Builder tags(Boolean tags) {
+      this.tags = tags;
       return this;
     }
 
@@ -229,6 +243,7 @@ public class GetResourceUsageResourceGroupOptions extends GenericModel {
     resourceGroupId = builder.resourceGroupId;
     billingmonth = builder.billingmonth;
     names = builder.names;
+    tags = builder.tags;
     acceptLanguage = builder.acceptLanguage;
     limit = builder.limit;
     start = builder.start;
@@ -289,6 +304,17 @@ public class GetResourceUsageResourceGroupOptions extends GenericModel {
    */
   public Boolean names() {
     return names;
+  }
+
+  /**
+   * Gets the tags.
+   *
+   * Include the tags associated with every resource instance. By default it is always `true`.
+   *
+   * @return the tags
+   */
+  public Boolean tags() {
+    return tags;
   }
 
   /**

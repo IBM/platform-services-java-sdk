@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -30,6 +30,8 @@ public class InstanceUsage extends GenericModel {
   protected String resourceInstanceName;
   @SerializedName("resource_id")
   protected String resourceId;
+  @SerializedName("catalog_id")
+  protected String catalogId;
   @SerializedName("resource_name")
   protected String resourceName;
   @SerializedName("resource_group_id")
@@ -54,15 +56,22 @@ public class InstanceUsage extends GenericModel {
   @SerializedName("currency_code")
   protected String currencyCode;
   protected Boolean billable;
+  @SerializedName("parent_resource_instance_id")
+  protected String parentResourceInstanceId;
   @SerializedName("plan_id")
   protected String planId;
   @SerializedName("plan_name")
   protected String planName;
+  @SerializedName("pricing_plan_id")
+  protected String pricingPlanId;
   protected String month;
   protected List<Metric> usage;
   protected Boolean pending;
   @SerializedName("currency_rate")
   protected Double currencyRate;
+  protected List<Object> tags;
+  @SerializedName("service_tags")
+  protected List<Object> serviceTags;
 
   protected InstanceUsage() { }
 
@@ -108,6 +117,17 @@ public class InstanceUsage extends GenericModel {
    */
   public String getResourceId() {
     return resourceId;
+  }
+
+  /**
+   * Gets the catalogId.
+   *
+   * The catalog ID of the resource.
+   *
+   * @return the catalogId
+   */
+  public String getCatalogId() {
+    return catalogId;
   }
 
   /**
@@ -254,6 +274,17 @@ public class InstanceUsage extends GenericModel {
   }
 
   /**
+   * Gets the parentResourceInstanceId.
+   *
+   * The resource instance id of the parent resource associated with this instance.
+   *
+   * @return the parentResourceInstanceId
+   */
+  public String getParentResourceInstanceId() {
+    return parentResourceInstanceId;
+  }
+
+  /**
    * Gets the planId.
    *
    * The ID of the plan where the instance was provisioned and rated.
@@ -273,6 +304,17 @@ public class InstanceUsage extends GenericModel {
    */
   public String getPlanName() {
     return planName;
+  }
+
+  /**
+   * Gets the pricingPlanId.
+   *
+   * The ID of the pricing plan used to rate the usage.
+   *
+   * @return the pricingPlanId
+   */
+  public String getPricingPlanId() {
+    return pricingPlanId;
   }
 
   /**
@@ -317,6 +359,28 @@ public class InstanceUsage extends GenericModel {
    */
   public Double getCurrencyRate() {
     return currencyRate;
+  }
+
+  /**
+   * Gets the tags.
+   *
+   * The user tags associated with a resource instance.
+   *
+   * @return the tags
+   */
+  public List<Object> getTags() {
+    return tags;
+  }
+
+  /**
+   * Gets the serviceTags.
+   *
+   * The service tags associated with a resource instance.
+   *
+   * @return the serviceTags
+   */
+  public List<Object> getServiceTags() {
+    return serviceTags;
   }
 }
 

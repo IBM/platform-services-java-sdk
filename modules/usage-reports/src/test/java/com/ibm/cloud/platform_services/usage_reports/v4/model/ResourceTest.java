@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -36,6 +36,7 @@ public class ResourceTest {
   public void testResource() throws Throwable {
     Resource resourceModel = new Resource();
     assertNull(resourceModel.getResourceId());
+    assertNull(resourceModel.getCatalogId());
     assertNull(resourceModel.getResourceName());
     assertNull(resourceModel.getBillableCost());
     assertNull(resourceModel.getBillableRatedCost());

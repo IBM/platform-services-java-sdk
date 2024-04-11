@@ -45,6 +45,7 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourceGroupUsage
 import com.ibm.cloud.platform_services.usage_reports.v4.model.ResourcesSummary;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfig;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfigHistoryItem;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotConfigValidateResponse;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotList;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListFirst;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SnapshotListNext;
@@ -58,6 +59,7 @@ import com.ibm.cloud.platform_services.usage_reports.v4.model.SubscriptionTerm;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SubscriptionTermCredits;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.SupportSummary;
 import com.ibm.cloud.platform_services.usage_reports.v4.model.UpdateReportsSnapshotConfigOptions;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.ValidateReportsSnapshotConfigOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;

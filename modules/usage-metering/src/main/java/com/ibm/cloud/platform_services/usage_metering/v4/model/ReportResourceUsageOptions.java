@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -32,6 +32,11 @@ public class ReportResourceUsageOptions extends GenericModel {
     private String resourceId;
     private List<ResourceInstanceUsage> resourceUsage;
 
+    /**
+     * Instantiates a new Builder from an existing ReportResourceUsageOptions instance.
+     *
+     * @param reportResourceUsageOptions the instance to initialize the Builder with
+     */
     private Builder(ReportResourceUsageOptions reportResourceUsageOptions) {
       this.resourceId = reportResourceUsageOptions.resourceId;
       this.resourceUsage = reportResourceUsageOptions.resourceUsage;
@@ -64,9 +69,9 @@ public class ReportResourceUsageOptions extends GenericModel {
     }
 
     /**
-     * Adds an resourceUsage to resourceUsage.
+     * Adds a new element to resourceUsage.
      *
-     * @param resourceUsage the new resourceUsage
+     * @param resourceUsage the new element to be added
      * @return the ReportResourceUsageOptions builder
      */
     public Builder addResourceUsage(ResourceInstanceUsage resourceUsage) {
@@ -103,6 +108,8 @@ public class ReportResourceUsageOptions extends GenericModel {
     }
   }
 
+  protected ReportResourceUsageOptions() { }
+
   protected ReportResourceUsageOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.resourceId,
       "resourceId cannot be empty");
@@ -124,7 +131,8 @@ public class ReportResourceUsageOptions extends GenericModel {
   /**
    * Gets the resourceId.
    *
-   * The resource for which the usage is submitted.
+   * The resource for which the usage is submitted. You can find this value as the Global catalog ID listed on the
+   * Brokers tab in Partner Center.
    *
    * @return the resourceId
    */

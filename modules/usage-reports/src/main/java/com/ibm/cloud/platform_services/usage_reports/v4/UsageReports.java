@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -222,6 +222,9 @@ public class UsageReports extends BaseService {
     if (getResourceUsageAccountOptions.names() != null) {
       builder.query("_names", String.valueOf(getResourceUsageAccountOptions.names()));
     }
+    if (getResourceUsageAccountOptions.tags() != null) {
+      builder.query("_tags", String.valueOf(getResourceUsageAccountOptions.tags()));
+    }
     if (getResourceUsageAccountOptions.limit() != null) {
       builder.query("_limit", String.valueOf(getResourceUsageAccountOptions.limit()));
     }
@@ -279,6 +282,9 @@ public class UsageReports extends BaseService {
     if (getResourceUsageResourceGroupOptions.names() != null) {
       builder.query("_names", String.valueOf(getResourceUsageResourceGroupOptions.names()));
     }
+    if (getResourceUsageResourceGroupOptions.tags() != null) {
+      builder.query("_tags", String.valueOf(getResourceUsageResourceGroupOptions.tags()));
+    }
     if (getResourceUsageResourceGroupOptions.limit() != null) {
       builder.query("_limit", String.valueOf(getResourceUsageResourceGroupOptions.limit()));
     }
@@ -329,6 +335,9 @@ public class UsageReports extends BaseService {
     }
     if (getResourceUsageOrgOptions.names() != null) {
       builder.query("_names", String.valueOf(getResourceUsageOrgOptions.names()));
+    }
+    if (getResourceUsageOrgOptions.tags() != null) {
+      builder.query("_tags", String.valueOf(getResourceUsageOrgOptions.tags()));
     }
     if (getResourceUsageOrgOptions.limit() != null) {
       builder.query("_limit", String.valueOf(getResourceUsageOrgOptions.limit()));

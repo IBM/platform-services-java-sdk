@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,6 +29,11 @@ public class MeasureAndQuantity extends GenericModel {
     private String measure;
     private Object quantity;
 
+    /**
+     * Instantiates a new Builder from an existing MeasureAndQuantity instance.
+     *
+     * @param measureAndQuantity the instance to initialize the Builder with
+     */
     private Builder(MeasureAndQuantity measureAndQuantity) {
       this.measure = measureAndQuantity.measure;
       this.quantity = measureAndQuantity.quantity;
@@ -82,6 +87,8 @@ public class MeasureAndQuantity extends GenericModel {
       return this;
     }
   }
+
+  protected MeasureAndQuantity() { }
 
   protected MeasureAndQuantity(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.measure,

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -47,6 +47,11 @@ public class ResourceInstanceUsage extends GenericModel {
     private List<MeasureAndQuantity> measuredUsage;
     private String consumerId;
 
+    /**
+     * Instantiates a new Builder from an existing ResourceInstanceUsage instance.
+     *
+     * @param resourceInstanceUsage the instance to initialize the Builder with
+     */
     private Builder(ResourceInstanceUsage resourceInstanceUsage) {
       this.resourceInstanceId = resourceInstanceUsage.resourceInstanceId;
       this.planId = resourceInstanceUsage.planId;
@@ -90,9 +95,9 @@ public class ResourceInstanceUsage extends GenericModel {
     }
 
     /**
-     * Adds an measuredUsage to measuredUsage.
+     * Adds a new element to measuredUsage.
      *
-     * @param measuredUsage the new measuredUsage
+     * @param measuredUsage the new element to be added
      * @return the ResourceInstanceUsage builder
      */
     public Builder addMeasuredUsage(MeasureAndQuantity measuredUsage) {
@@ -184,6 +189,8 @@ public class ResourceInstanceUsage extends GenericModel {
     }
   }
 
+  protected ResourceInstanceUsage() { }
+
   protected ResourceInstanceUsage(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.resourceInstanceId,
       "resourceInstanceId cannot be null");
@@ -228,7 +235,7 @@ public class ResourceInstanceUsage extends GenericModel {
   /**
    * Gets the planId.
    *
-   * The plan with which the instance's usage should be metered.
+   * The ID of the pricing plan with which the instance's usage should be metered.
    *
    * @return the planId
    */

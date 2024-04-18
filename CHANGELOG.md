@@ -1,3 +1,10 @@
+## [0.53.2](https://github.com/IBM/platform-services-java-sdk/compare/0.53.1...0.53.2) (2024-04-18)
+
+
+### Bug Fixes
+
+* **Usage Reports:** re-gen service after recent API changes ([#240](https://github.com/IBM/platform-services-java-sdk/issues/240)) ([66ce55a](https://github.com/IBM/platform-services-java-sdk/commit/66ce55a50021424b9c96c1bb0a7791a03784c551))
+
 ## [0.53.1](https://github.com/IBM/platform-services-java-sdk/compare/0.53.0...0.53.1) (2024-04-10)
 
 

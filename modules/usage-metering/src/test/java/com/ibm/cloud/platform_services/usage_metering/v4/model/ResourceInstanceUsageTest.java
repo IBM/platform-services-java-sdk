@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -18,8 +18,6 @@ import com.ibm.cloud.platform_services.usage_metering.v4.model.ResourceInstanceU
 import com.ibm.cloud.platform_services.usage_metering.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -43,19 +41,19 @@ public class ResourceInstanceUsageTest {
 
     ResourceInstanceUsage resourceInstanceUsageModel = new ResourceInstanceUsage.Builder()
       .resourceInstanceId("crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::")
-      .planId("database-lite")
+      .planId("da40662d-2f72-4a19-8c79-8c77cf285e17")
       .region("us-south")
       .start(Long.valueOf("1485907200000"))
       .end(Long.valueOf("1485907200000"))
-      .measuredUsage(new java.util.ArrayList<MeasureAndQuantity>(java.util.Arrays.asList(measureAndQuantityModel)))
+      .measuredUsage(java.util.Arrays.asList(measureAndQuantityModel))
       .consumerId("cf-application:ed20abbe-8870-44e6-90f7-56d764c21127")
       .build();
     assertEquals(resourceInstanceUsageModel.resourceInstanceId(), "crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::");
-    assertEquals(resourceInstanceUsageModel.planId(), "database-lite");
+    assertEquals(resourceInstanceUsageModel.planId(), "da40662d-2f72-4a19-8c79-8c77cf285e17");
     assertEquals(resourceInstanceUsageModel.region(), "us-south");
     assertEquals(resourceInstanceUsageModel.start(), Long.valueOf("1485907200000"));
     assertEquals(resourceInstanceUsageModel.end(), Long.valueOf("1485907200000"));
-    assertEquals(resourceInstanceUsageModel.measuredUsage(), new java.util.ArrayList<MeasureAndQuantity>(java.util.Arrays.asList(measureAndQuantityModel)));
+    assertEquals(resourceInstanceUsageModel.measuredUsage(), java.util.Arrays.asList(measureAndQuantityModel));
     assertEquals(resourceInstanceUsageModel.consumerId(), "cf-application:ed20abbe-8870-44e6-90f7-56d764c21127");
 
     String json = TestUtilities.serialize(resourceInstanceUsageModel);
@@ -63,7 +61,7 @@ public class ResourceInstanceUsageTest {
     ResourceInstanceUsage resourceInstanceUsageModelNew = TestUtilities.deserialize(json, ResourceInstanceUsage.class);
     assertTrue(resourceInstanceUsageModelNew instanceof ResourceInstanceUsage);
     assertEquals(resourceInstanceUsageModelNew.resourceInstanceId(), "crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::");
-    assertEquals(resourceInstanceUsageModelNew.planId(), "database-lite");
+    assertEquals(resourceInstanceUsageModelNew.planId(), "da40662d-2f72-4a19-8c79-8c77cf285e17");
     assertEquals(resourceInstanceUsageModelNew.region(), "us-south");
     assertEquals(resourceInstanceUsageModelNew.start(), Long.valueOf("1485907200000"));
     assertEquals(resourceInstanceUsageModelNew.end(), Long.valueOf("1485907200000"));

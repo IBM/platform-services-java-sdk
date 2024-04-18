@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,8 +19,6 @@ import com.ibm.cloud.platform_services.usage_metering.v4.model.ResourceInstanceU
 import com.ibm.cloud.platform_services.usage_metering.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -48,7 +46,7 @@ public class ReportResourceUsageOptionsTest {
       .region("us-south")
       .start(Long.valueOf("1485907200001"))
       .end(Long.valueOf("1485910800000"))
-      .measuredUsage(new java.util.ArrayList<MeasureAndQuantity>(java.util.Arrays.asList(measureAndQuantityModel)))
+      .measuredUsage(java.util.Arrays.asList(measureAndQuantityModel))
       .consumerId("cf-application:ed20abbe-8870-44e6-90f7-56d764c21127")
       .build();
     assertEquals(resourceInstanceUsageModel.resourceInstanceId(), "crn:v1:bluemix:staging:database-service:us-south:a/1c8ae972c35e470d994b6faff9494ce1:793ff3d3-9fe3-4329-9ea0-404703a3c371::");
@@ -56,15 +54,15 @@ public class ReportResourceUsageOptionsTest {
     assertEquals(resourceInstanceUsageModel.region(), "us-south");
     assertEquals(resourceInstanceUsageModel.start(), Long.valueOf("1485907200001"));
     assertEquals(resourceInstanceUsageModel.end(), Long.valueOf("1485910800000"));
-    assertEquals(resourceInstanceUsageModel.measuredUsage(), new java.util.ArrayList<MeasureAndQuantity>(java.util.Arrays.asList(measureAndQuantityModel)));
+    assertEquals(resourceInstanceUsageModel.measuredUsage(), java.util.Arrays.asList(measureAndQuantityModel));
     assertEquals(resourceInstanceUsageModel.consumerId(), "cf-application:ed20abbe-8870-44e6-90f7-56d764c21127");
 
     ReportResourceUsageOptions reportResourceUsageOptionsModel = new ReportResourceUsageOptions.Builder()
-      .resourceId("testString")
-      .resourceUsage(new java.util.ArrayList<ResourceInstanceUsage>(java.util.Arrays.asList(resourceInstanceUsageModel)))
+      .resourceId("93d21e40-aafd-451c-a393-5273d09d056a")
+      .resourceUsage(java.util.Arrays.asList(resourceInstanceUsageModel))
       .build();
-    assertEquals(reportResourceUsageOptionsModel.resourceId(), "testString");
-    assertEquals(reportResourceUsageOptionsModel.resourceUsage(), new java.util.ArrayList<ResourceInstanceUsage>(java.util.Arrays.asList(resourceInstanceUsageModel)));
+    assertEquals(reportResourceUsageOptionsModel.resourceId(), "93d21e40-aafd-451c-a393-5273d09d056a");
+    assertEquals(reportResourceUsageOptionsModel.resourceUsage(), java.util.Arrays.asList(resourceInstanceUsageModel));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

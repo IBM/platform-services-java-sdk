@@ -1,3 +1,10 @@
+## [0.53.3](https://github.com/IBM/platform-services-java-sdk/compare/0.53.2...0.53.3) (2024-04-18)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** S2S support for enterprise accounts ([#241](https://github.com/IBM/platform-services-java-sdk/issues/241)) ([115888a](https://github.com/IBM/platform-services-java-sdk/commit/115888a8a44ee97506628c027b9cbcd006320295))
+
 ## [0.53.2](https://github.com/IBM/platform-services-java-sdk/compare/0.53.1...0.53.2) (2024-04-18)
 
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,6 +13,9 @@
 
 package com.ibm.cloud.platform_services.usage_reports.v4.model;
 
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Discount;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.InstanceUsage;
+import com.ibm.cloud.platform_services.usage_reports.v4.model.Metric;
 import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -35,6 +38,7 @@ public class InstanceUsageTest {
     assertNull(instanceUsageModel.getResourceInstanceId());
     assertNull(instanceUsageModel.getResourceInstanceName());
     assertNull(instanceUsageModel.getResourceId());
+    assertNull(instanceUsageModel.getCatalogId());
     assertNull(instanceUsageModel.getResourceName());
     assertNull(instanceUsageModel.getResourceGroupId());
     assertNull(instanceUsageModel.getResourceGroupName());
@@ -48,11 +52,15 @@ public class InstanceUsageTest {
     assertNull(instanceUsageModel.getPricingCountry());
     assertNull(instanceUsageModel.getCurrencyCode());
     assertNull(instanceUsageModel.isBillable());
+    assertNull(instanceUsageModel.getParentResourceInstanceId());
     assertNull(instanceUsageModel.getPlanId());
     assertNull(instanceUsageModel.getPlanName());
+    assertNull(instanceUsageModel.getPricingPlanId());
     assertNull(instanceUsageModel.getMonth());
     assertNull(instanceUsageModel.getUsage());
     assertNull(instanceUsageModel.isPending());
     assertNull(instanceUsageModel.getCurrencyRate());
+    assertNull(instanceUsageModel.getTags());
+    assertNull(instanceUsageModel.getServiceTags());
   }
 }

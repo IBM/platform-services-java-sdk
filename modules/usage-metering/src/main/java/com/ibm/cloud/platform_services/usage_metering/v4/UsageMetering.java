@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-d753183b-20201209-163011
+ * IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
  */
 
 package com.ibm.cloud.platform_services.usage_metering.v4;
@@ -33,17 +33,23 @@ import java.util.Map.Entry;
 
 /**
  * IBM Cloud Usage Metering is a platform service that enables service providers to submit metrics collected for
- * resource instances provisioned by IBM Cloud users. IBM and third-party service providers that are delivering  an
+ * resource instances provisioned by IBM Cloud users. IBM and third-party service providers that are delivering an
  * integrated billing service in IBM Cloud are required to submit usage for all active service instances every hour.
- * This is important because inability to report usage can lead to loss of revenue collection for IBM,  in turn causing
+ * This is important because inability to report usage can lead to loss of revenue collection for IBM, in turn causing
  * loss of revenue share for the service providers.
  *
- * @version v4
+ * API Version: 4.0.8
  */
 public class UsageMetering extends BaseService {
 
+  /**
+   * Default service name used when configuring the `UsageMetering` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "usage_metering";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://billing.cloud.ibm.com";
 
  /**
@@ -85,7 +91,9 @@ public class UsageMetering extends BaseService {
   /**
    * Report Resource Controller resource usage.
    *
-   * Report usage for resource instances that were provisioned through the resource controller.
+   * The Resource Controller is responsible for controlling and tracking the lifecycle of resources in an IBM Cloud
+   * account. Resources can mean anything from an instance of a service, or entities associated with an account. Report
+   * usage for these resource instances that were provisioned through the resource controller.
    *
    * @param reportResourceUsageOptions the {@link ReportResourceUsageOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResponseAccepted}

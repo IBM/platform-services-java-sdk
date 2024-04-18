@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,6 +13,7 @@
 
 package com.ibm.cloud.platform_services.usage_reports.v4.model;
 
+import com.ibm.cloud.platform_services.usage_reports.v4.model.GetResourceUsageOrgOptions;
 import com.ibm.cloud.platform_services.usage_reports.v4.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -35,8 +36,9 @@ public class GetResourceUsageOrgOptionsTest {
       .organizationId("testString")
       .billingmonth("testString")
       .names(true)
+      .tags(true)
       .acceptLanguage("testString")
-      .limit(Long.valueOf("1"))
+      .limit(Long.valueOf("30"))
       .start("testString")
       .resourceInstanceId("testString")
       .resourceId("testString")
@@ -47,8 +49,9 @@ public class GetResourceUsageOrgOptionsTest {
     assertEquals(getResourceUsageOrgOptionsModel.organizationId(), "testString");
     assertEquals(getResourceUsageOrgOptionsModel.billingmonth(), "testString");
     assertEquals(getResourceUsageOrgOptionsModel.names(), Boolean.valueOf(true));
+    assertEquals(getResourceUsageOrgOptionsModel.tags(), Boolean.valueOf(true));
     assertEquals(getResourceUsageOrgOptionsModel.acceptLanguage(), "testString");
-    assertEquals(getResourceUsageOrgOptionsModel.limit(), Long.valueOf("1"));
+    assertEquals(getResourceUsageOrgOptionsModel.limit(), Long.valueOf("30"));
     assertEquals(getResourceUsageOrgOptionsModel.start(), "testString");
     assertEquals(getResourceUsageOrgOptionsModel.resourceInstanceId(), "testString");
     assertEquals(getResourceUsageOrgOptionsModel.resourceId(), "testString");

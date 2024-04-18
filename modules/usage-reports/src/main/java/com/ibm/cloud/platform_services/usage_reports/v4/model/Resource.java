@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -24,6 +24,8 @@ public class Resource extends GenericModel {
 
   @SerializedName("resource_id")
   protected String resourceId;
+  @SerializedName("catalog_id")
+  protected String catalogId;
   @SerializedName("resource_name")
   protected String resourceName;
   @SerializedName("billable_cost")
@@ -48,6 +50,17 @@ public class Resource extends GenericModel {
    */
   public String getResourceId() {
     return resourceId;
+  }
+
+  /**
+   * Gets the catalogId.
+   *
+   * The catalog ID of the resource.
+   *
+   * @return the catalogId
+   */
+  public String getCatalogId() {
+    return catalogId;
   }
 
   /**

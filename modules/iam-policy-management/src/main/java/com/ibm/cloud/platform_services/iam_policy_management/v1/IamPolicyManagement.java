@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
+ * IBM OpenAPI SDK Code Generator Version: 3.88.0-b0b4c159-20240402-205910
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -21,11 +21,13 @@ import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitPolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateVersionOptions;
@@ -44,10 +46,10 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicy
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Collection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateLimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateMetaData;
@@ -57,6 +59,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePol
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
@@ -1015,10 +1018,11 @@ public class IamPolicyManagement extends BaseService {
    * List policy templates by attributes.
    *
    * List policy templates and filter by attributes by using query parameters. The following attributes are supported:
-   * `account_id`.
-   * `account_id` is a required query parameter. Only policy templates that have the specified attributes and that the
-   * caller has read access to are returned. If the caller does not have read access to any policy templates an empty
-   * array is returned.
+   * `account_id`, `policy_service_name`, `policy_service_type`, `policy_service_group_id` and `policy_type`.
+   * `account_id` is a required query parameter. These attributes `policy_service_name`, `policy_service_type` and
+   * `policy_service_group_id` are mutually exclusive. Only policy templates that have the specified attributes and that
+   * the caller has read access to are returned. If the caller does not have read access to any policy templates an
+   * empty array is returned.
    *
    * @param listPolicyTemplatesOptions the {@link ListPolicyTemplatesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link PolicyTemplateCollection}
@@ -1038,6 +1042,21 @@ public class IamPolicyManagement extends BaseService {
     builder.query("account_id", String.valueOf(listPolicyTemplatesOptions.accountId()));
     if (listPolicyTemplatesOptions.state() != null) {
       builder.query("state", String.valueOf(listPolicyTemplatesOptions.state()));
+    }
+    if (listPolicyTemplatesOptions.name() != null) {
+      builder.query("name", String.valueOf(listPolicyTemplatesOptions.name()));
+    }
+    if (listPolicyTemplatesOptions.policyServiceType() != null) {
+      builder.query("policy_service_type", String.valueOf(listPolicyTemplatesOptions.policyServiceType()));
+    }
+    if (listPolicyTemplatesOptions.policyServiceName() != null) {
+      builder.query("policy_service_name", String.valueOf(listPolicyTemplatesOptions.policyServiceName()));
+    }
+    if (listPolicyTemplatesOptions.policyServiceGroupId() != null) {
+      builder.query("policy_service_group_id", String.valueOf(listPolicyTemplatesOptions.policyServiceGroupId()));
+    }
+    if (listPolicyTemplatesOptions.policyType() != null) {
+      builder.query("policy_type", String.valueOf(listPolicyTemplatesOptions.policyType()));
     }
     ResponseConverter<PolicyTemplateCollection> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateCollection>() { }.getType());
@@ -1318,9 +1337,9 @@ public class IamPolicyManagement extends BaseService {
    * assignments an empty array is returned.
    *
    * @param listPolicyAssignmentsOptions the {@link ListPolicyAssignmentsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PolicyTemplateAssignmentCollection}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyAssignmentV1Collection}
    */
-  public ServiceCall<PolicyTemplateAssignmentCollection> listPolicyAssignments(ListPolicyAssignmentsOptions listPolicyAssignmentsOptions) {
+  public ServiceCall<PolicyAssignmentV1Collection> listPolicyAssignments(ListPolicyAssignmentsOptions listPolicyAssignmentsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listPolicyAssignmentsOptions,
       "listPolicyAssignmentsOptions cannot be null");
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policy_assignments"));
@@ -1332,6 +1351,7 @@ public class IamPolicyManagement extends BaseService {
     if (listPolicyAssignmentsOptions.acceptLanguage() != null) {
       builder.header("Accept-Language", listPolicyAssignmentsOptions.acceptLanguage());
     }
+    builder.query("version", String.valueOf(listPolicyAssignmentsOptions.version()));
     builder.query("account_id", String.valueOf(listPolicyAssignmentsOptions.accountId()));
     if (listPolicyAssignmentsOptions.templateId() != null) {
       builder.query("template_id", String.valueOf(listPolicyAssignmentsOptions.templateId()));
@@ -1339,8 +1359,40 @@ public class IamPolicyManagement extends BaseService {
     if (listPolicyAssignmentsOptions.templateVersion() != null) {
       builder.query("template_version", String.valueOf(listPolicyAssignmentsOptions.templateVersion()));
     }
-    ResponseConverter<PolicyTemplateAssignmentCollection> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateAssignmentCollection>() { }.getType());
+    ResponseConverter<PolicyAssignmentV1Collection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyAssignmentV1Collection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create a policy authorization template assignment.
+   *
+   * Assign a policy template to child accounts and account groups. This creates the policy in the accounts and account
+   * groups that you specify.
+   *
+   * @param createPolicyTemplateAssignmentOptions the {@link CreatePolicyTemplateAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link PolicyAssignmentV1Collection}
+   */
+  public ServiceCall<PolicyAssignmentV1Collection> createPolicyTemplateAssignment(CreatePolicyTemplateAssignmentOptions createPolicyTemplateAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createPolicyTemplateAssignmentOptions,
+      "createPolicyTemplateAssignmentOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policy_assignments"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "createPolicyTemplateAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createPolicyTemplateAssignmentOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", createPolicyTemplateAssignmentOptions.acceptLanguage());
+    }
+    builder.query("version", String.valueOf(createPolicyTemplateAssignmentOptions.version()));
+    final JsonObject contentJson = new JsonObject();
+    contentJson.add("target", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyTemplateAssignmentOptions.target()));
+    contentJson.add("options", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyTemplateAssignmentOptions.options()));
+    contentJson.add("templates", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyTemplateAssignmentOptions.templates()));
+    builder.bodyJson(contentJson);
+    ResponseConverter<PolicyAssignmentV1Collection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyAssignmentV1Collection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -1350,9 +1402,9 @@ public class IamPolicyManagement extends BaseService {
    * Retrieve a policy template assignment by providing a policy assignment ID.
    *
    * @param getPolicyAssignmentOptions the {@link GetPolicyAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PolicyAssignment}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyAssignmentV1}
    */
-  public ServiceCall<PolicyAssignment> getPolicyAssignment(GetPolicyAssignmentOptions getPolicyAssignmentOptions) {
+  public ServiceCall<PolicyAssignmentV1> getPolicyAssignment(GetPolicyAssignmentOptions getPolicyAssignmentOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getPolicyAssignmentOptions,
       "getPolicyAssignmentOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -1363,8 +1415,61 @@ public class IamPolicyManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    ResponseConverter<PolicyAssignment> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyAssignment>() { }.getType());
+    builder.query("version", String.valueOf(getPolicyAssignmentOptions.version()));
+    ResponseConverter<PolicyAssignmentV1> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyAssignmentV1>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update a policy authorization type assignment.
+   *
+   * Update a policy assignment by providing a policy assignment ID.
+   *
+   * @param updatePolicyAssignmentOptions the {@link UpdatePolicyAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link PolicyAssignmentV1}
+   */
+  public ServiceCall<PolicyAssignmentV1> updatePolicyAssignment(UpdatePolicyAssignmentOptions updatePolicyAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updatePolicyAssignmentOptions,
+      "updatePolicyAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", updatePolicyAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policy_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "updatePolicyAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updatePolicyAssignmentOptions.ifMatch());
+    builder.query("version", String.valueOf(updatePolicyAssignmentOptions.version()));
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("template_version", updatePolicyAssignmentOptions.templateVersion());
+    builder.bodyJson(contentJson);
+    ResponseConverter<PolicyAssignmentV1> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyAssignmentV1>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Remove a policy assignment.
+   *
+   * Remove a policy template assignment by providing a policy assignment ID. You can't delete a policy assignment if
+   * the status is "in_progress".
+   *
+   * @param deletePolicyAssignmentOptions the {@link DeletePolicyAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deletePolicyAssignment(DeletePolicyAssignmentOptions deletePolicyAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deletePolicyAssignmentOptions,
+      "deletePolicyAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", deletePolicyAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policy_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deletePolicyAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 

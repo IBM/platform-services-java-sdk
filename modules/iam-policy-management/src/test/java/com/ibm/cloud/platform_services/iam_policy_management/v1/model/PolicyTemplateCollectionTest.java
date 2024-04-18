@@ -23,6 +23,8 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRe
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;

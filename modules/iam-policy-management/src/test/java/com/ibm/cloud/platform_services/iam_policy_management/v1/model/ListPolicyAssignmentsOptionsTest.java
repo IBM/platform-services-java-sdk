@@ -32,11 +32,13 @@ public class ListPolicyAssignmentsOptionsTest {
   @Test
   public void testListPolicyAssignmentsOptions() throws Throwable {
     ListPolicyAssignmentsOptions listPolicyAssignmentsOptionsModel = new ListPolicyAssignmentsOptions.Builder()
+      .version("1.0")
       .accountId("testString")
       .acceptLanguage("default")
       .templateId("testString")
       .templateVersion("testString")
       .build();
+    assertEquals(listPolicyAssignmentsOptionsModel.version(), "1.0");
     assertEquals(listPolicyAssignmentsOptionsModel.accountId(), "testString");
     assertEquals(listPolicyAssignmentsOptionsModel.acceptLanguage(), "default");
     assertEquals(listPolicyAssignmentsOptionsModel.templateId(), "testString");

@@ -66,8 +66,8 @@ public class PolicyAssignmentRecord extends GenericModel {
   protected Date lastModifiedAt;
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
-  protected List<PolicyAssignmentOptions> options;
-  protected List<PolicyAssignmentResources> resources;
+  protected List<PolicyAssignmentV1Options> options;
+  protected List<PolicyAssignmentV1Resources> resources;
   protected String status;
 
   protected PolicyAssignmentRecord() { }
@@ -211,7 +211,7 @@ public class PolicyAssignmentRecord extends GenericModel {
    *
    * @return the options
    */
-  public List<PolicyAssignmentOptions> getOptions() {
+  public List<PolicyAssignmentV1Options> getOptions() {
     return options;
   }
 
@@ -222,7 +222,7 @@ public class PolicyAssignmentRecord extends GenericModel {
    *
    * @return the resources
    */
-  public List<PolicyAssignmentResources> getResources() {
+  public List<PolicyAssignmentV1Resources> getResources() {
     return resources;
   }
 

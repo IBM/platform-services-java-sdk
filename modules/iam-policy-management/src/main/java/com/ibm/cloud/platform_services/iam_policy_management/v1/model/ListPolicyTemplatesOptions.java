@@ -29,9 +29,34 @@ public class ListPolicyTemplatesOptions extends GenericModel {
     String DELETED = "deleted";
   }
 
+  /**
+   * Service type, Optional.
+   */
+  public interface PolicyServiceType {
+    /** service. */
+    String SERVICE = "service";
+    /** platform_service. */
+    String PLATFORM_SERVICE = "platform_service";
+  }
+
+  /**
+   * Policy type, Optional.
+   */
+  public interface PolicyType {
+    /** access. */
+    String ACCESS = "access";
+    /** authorization. */
+    String AUTHORIZATION = "authorization";
+  }
+
   protected String accountId;
   protected String acceptLanguage;
   protected String state;
+  protected String name;
+  protected String policyServiceType;
+  protected String policyServiceName;
+  protected String policyServiceGroupId;
+  protected String policyType;
 
   /**
    * Builder.
@@ -40,6 +65,11 @@ public class ListPolicyTemplatesOptions extends GenericModel {
     private String accountId;
     private String acceptLanguage;
     private String state;
+    private String name;
+    private String policyServiceType;
+    private String policyServiceName;
+    private String policyServiceGroupId;
+    private String policyType;
 
     /**
      * Instantiates a new Builder from an existing ListPolicyTemplatesOptions instance.
@@ -50,6 +80,11 @@ public class ListPolicyTemplatesOptions extends GenericModel {
       this.accountId = listPolicyTemplatesOptions.accountId;
       this.acceptLanguage = listPolicyTemplatesOptions.acceptLanguage;
       this.state = listPolicyTemplatesOptions.state;
+      this.name = listPolicyTemplatesOptions.name;
+      this.policyServiceType = listPolicyTemplatesOptions.policyServiceType;
+      this.policyServiceName = listPolicyTemplatesOptions.policyServiceName;
+      this.policyServiceGroupId = listPolicyTemplatesOptions.policyServiceGroupId;
+      this.policyType = listPolicyTemplatesOptions.policyType;
     }
 
     /**
@@ -108,6 +143,61 @@ public class ListPolicyTemplatesOptions extends GenericModel {
       this.state = state;
       return this;
     }
+
+    /**
+     * Set the name.
+     *
+     * @param name the name
+     * @return the ListPolicyTemplatesOptions builder
+     */
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    /**
+     * Set the policyServiceType.
+     *
+     * @param policyServiceType the policyServiceType
+     * @return the ListPolicyTemplatesOptions builder
+     */
+    public Builder policyServiceType(String policyServiceType) {
+      this.policyServiceType = policyServiceType;
+      return this;
+    }
+
+    /**
+     * Set the policyServiceName.
+     *
+     * @param policyServiceName the policyServiceName
+     * @return the ListPolicyTemplatesOptions builder
+     */
+    public Builder policyServiceName(String policyServiceName) {
+      this.policyServiceName = policyServiceName;
+      return this;
+    }
+
+    /**
+     * Set the policyServiceGroupId.
+     *
+     * @param policyServiceGroupId the policyServiceGroupId
+     * @return the ListPolicyTemplatesOptions builder
+     */
+    public Builder policyServiceGroupId(String policyServiceGroupId) {
+      this.policyServiceGroupId = policyServiceGroupId;
+      return this;
+    }
+
+    /**
+     * Set the policyType.
+     *
+     * @param policyType the policyType
+     * @return the ListPolicyTemplatesOptions builder
+     */
+    public Builder policyType(String policyType) {
+      this.policyType = policyType;
+      return this;
+    }
   }
 
   protected ListPolicyTemplatesOptions() { }
@@ -118,6 +208,11 @@ public class ListPolicyTemplatesOptions extends GenericModel {
     accountId = builder.accountId;
     acceptLanguage = builder.acceptLanguage;
     state = builder.state;
+    name = builder.name;
+    policyServiceType = builder.policyServiceType;
+    policyServiceName = builder.policyServiceName;
+    policyServiceGroupId = builder.policyServiceGroupId;
+    policyType = builder.policyType;
   }
 
   /**
@@ -171,6 +266,61 @@ public class ListPolicyTemplatesOptions extends GenericModel {
    */
   public String state() {
     return state;
+  }
+
+  /**
+   * Gets the name.
+   *
+   * The policy template name.
+   *
+   * @return the name
+   */
+  public String name() {
+    return name;
+  }
+
+  /**
+   * Gets the policyServiceType.
+   *
+   * Service type, Optional.
+   *
+   * @return the policyServiceType
+   */
+  public String policyServiceType() {
+    return policyServiceType;
+  }
+
+  /**
+   * Gets the policyServiceName.
+   *
+   * Service name, Optional.
+   *
+   * @return the policyServiceName
+   */
+  public String policyServiceName() {
+    return policyServiceName;
+  }
+
+  /**
+   * Gets the policyServiceGroupId.
+   *
+   * Service group id, Optional.
+   *
+   * @return the policyServiceGroupId
+   */
+  public String policyServiceGroupId() {
+    return policyServiceGroupId;
+  }
+
+  /**
+   * Gets the policyType.
+   *
+   * Policy type, Optional.
+   *
+   * @return the policyType
+   */
+  public String policyType() {
+    return policyType;
   }
 }
 

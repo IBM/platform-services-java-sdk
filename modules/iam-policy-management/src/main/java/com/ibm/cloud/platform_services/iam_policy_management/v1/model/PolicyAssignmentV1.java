@@ -21,15 +21,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * The set of properties associated with the policy template assignment.
  */
-public class PolicyAssignment extends GenericModel {
-
-  /**
-   * Assignment target type.
-   */
-  public interface TargetType {
-    /** Account. */
-    String ACCOUNT = "Account";
-  }
+public class PolicyAssignmentV1 extends GenericModel {
 
   /**
    * The policy assignment status.
@@ -45,16 +37,8 @@ public class PolicyAssignment extends GenericModel {
     String FAILED = "failed";
   }
 
-  @SerializedName("template_id")
-  protected String templateId;
-  @SerializedName("template_version")
-  protected String templateVersion;
-  @SerializedName("assignment_id")
-  protected String assignmentId;
-  @SerializedName("target_type")
-  protected String targetType;
-  protected String target;
-  protected List<PolicyAssignmentOptions> options;
+  protected AssignmentTargetDetails target;
+  protected PolicyAssignmentV1Options options;
   protected String id;
   @SerializedName("account_id")
   protected String accountId;
@@ -67,74 +51,32 @@ public class PolicyAssignment extends GenericModel {
   protected Date lastModifiedAt;
   @SerializedName("last_modified_by_id")
   protected String lastModifiedById;
-  protected List<PolicyAssignmentResources> resources;
+  protected List<PolicyAssignmentV1Resources> resources;
+  protected PolicyAssignmentV1Subject subject;
+  protected AssignmentTemplateDetails template;
   protected String status;
 
-  protected PolicyAssignment() { }
-
-  /**
-   * Gets the templateId.
-   *
-   * policy template id.
-   *
-   * @return the templateId
-   */
-  public String getTemplateId() {
-    return templateId;
-  }
-
-  /**
-   * Gets the templateVersion.
-   *
-   * policy template version.
-   *
-   * @return the templateVersion
-   */
-  public String getTemplateVersion() {
-    return templateVersion;
-  }
-
-  /**
-   * Gets the assignmentId.
-   *
-   * Passed in value to correlate with other assignments.
-   *
-   * @return the assignmentId
-   */
-  public String getAssignmentId() {
-    return assignmentId;
-  }
-
-  /**
-   * Gets the targetType.
-   *
-   * Assignment target type.
-   *
-   * @return the targetType
-   */
-  public String getTargetType() {
-    return targetType;
-  }
+  protected PolicyAssignmentV1() { }
 
   /**
    * Gets the target.
    *
-   * ID of the target account.
+   * assignment target account and type.
    *
    * @return the target
    */
-  public String getTarget() {
+  public AssignmentTargetDetails getTarget() {
     return target;
   }
 
   /**
    * Gets the options.
    *
-   * List of objects with required properties for a policy assignment.
+   * The set of properties required for a policy assignment.
    *
    * @return the options
    */
-  public List<PolicyAssignmentOptions> getOptions() {
+  public PolicyAssignmentV1Options getOptions() {
     return options;
   }
 
@@ -222,8 +164,30 @@ public class PolicyAssignment extends GenericModel {
    *
    * @return the resources
    */
-  public List<PolicyAssignmentResources> getResources() {
+  public List<PolicyAssignmentV1Resources> getResources() {
     return resources;
+  }
+
+  /**
+   * Gets the subject.
+   *
+   * subject details of access type assignment.
+   *
+   * @return the subject
+   */
+  public PolicyAssignmentV1Subject getSubject() {
+    return subject;
+  }
+
+  /**
+   * Gets the template.
+   *
+   * policy template details.
+   *
+   * @return the template
+   */
+  public AssignmentTemplateDetails getTemplate() {
+    return template;
   }
 
   /**

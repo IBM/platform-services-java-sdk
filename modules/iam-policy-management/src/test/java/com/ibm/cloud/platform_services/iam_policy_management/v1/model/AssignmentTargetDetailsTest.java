@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTargetDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,25 +23,26 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetPolicyAssignmentOptions model.
+ * Unit test class for the AssignmentTargetDetails model.
  */
-public class GetPolicyAssignmentOptionsTest {
+public class AssignmentTargetDetailsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetPolicyAssignmentOptions() throws Throwable {
-    GetPolicyAssignmentOptions getPolicyAssignmentOptionsModel = new GetPolicyAssignmentOptions.Builder()
-      .assignmentId("testString")
-      .version("1.0")
+  public void testAssignmentTargetDetails() throws Throwable {
+    AssignmentTargetDetails assignmentTargetDetailsModel = new AssignmentTargetDetails.Builder()
+      .type("Account")
+      .id("testString")
       .build();
-    assertEquals(getPolicyAssignmentOptionsModel.assignmentId(), "testString");
-    assertEquals(getPolicyAssignmentOptionsModel.version(), "1.0");
-  }
+    assertEquals(assignmentTargetDetailsModel.type(), "Account");
+    assertEquals(assignmentTargetDetailsModel.id(), "testString");
 
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetPolicyAssignmentOptionsError() throws Throwable {
-    new GetPolicyAssignmentOptions.Builder().build();
-  }
+    String json = TestUtilities.serialize(assignmentTargetDetailsModel);
 
+    AssignmentTargetDetails assignmentTargetDetailsModelNew = TestUtilities.deserialize(json, AssignmentTargetDetails.class);
+    assertTrue(assignmentTargetDetailsModelNew instanceof AssignmentTargetDetails);
+    assertEquals(assignmentTargetDetailsModelNew.type(), "Account");
+    assertEquals(assignmentTargetDetailsModelNew.id(), "testString");
+  }
 }

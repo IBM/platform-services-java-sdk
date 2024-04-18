@@ -19,6 +19,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListPolicyAssignmentsOptions extends GenericModel {
 
+  protected String version;
   protected String accountId;
   protected String acceptLanguage;
   protected String templateId;
@@ -28,6 +29,7 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
    * Builder.
    */
   public static class Builder {
+    private String version;
     private String accountId;
     private String acceptLanguage;
     private String templateId;
@@ -39,6 +41,7 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
      * @param listPolicyAssignmentsOptions the instance to initialize the Builder with
      */
     private Builder(ListPolicyAssignmentsOptions listPolicyAssignmentsOptions) {
+      this.version = listPolicyAssignmentsOptions.version;
       this.accountId = listPolicyAssignmentsOptions.accountId;
       this.acceptLanguage = listPolicyAssignmentsOptions.acceptLanguage;
       this.templateId = listPolicyAssignmentsOptions.templateId;
@@ -54,9 +57,11 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
+     * @param version the version
      * @param accountId the accountId
      */
-    public Builder(String accountId) {
+    public Builder(String version, String accountId) {
+      this.version = version;
       this.accountId = accountId;
     }
 
@@ -67,6 +72,17 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
      */
     public ListPolicyAssignmentsOptions build() {
       return new ListPolicyAssignmentsOptions(this);
+    }
+
+    /**
+     * Set the version.
+     *
+     * @param version the version
+     * @return the ListPolicyAssignmentsOptions builder
+     */
+    public Builder version(String version) {
+      this.version = version;
+      return this;
     }
 
     /**
@@ -117,8 +133,11 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
   protected ListPolicyAssignmentsOptions() { }
 
   protected ListPolicyAssignmentsOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.version,
+      "version cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.accountId,
       "accountId cannot be null");
+    version = builder.version;
     accountId = builder.accountId;
     acceptLanguage = builder.acceptLanguage;
     templateId = builder.templateId;
@@ -132,6 +151,17 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
    */
   public Builder newBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Gets the version.
+   *
+   * specify version of response body format.
+   *
+   * @return the version
+   */
+  public String version() {
+    return version;
   }
 
   /**

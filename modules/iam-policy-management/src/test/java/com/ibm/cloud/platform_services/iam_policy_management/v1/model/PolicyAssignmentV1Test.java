@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,15 +14,19 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceCreated;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTargetDetails;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTemplateDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ConflictsWith;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorResponse;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolcyTemplateAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Options;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentRecord;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRoot;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRootTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Resources;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcesPolicy;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Subject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -32,15 +36,20 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the PolcyTemplateAssignmentCollection model.
+ * Unit test class for the PolicyAssignmentV1 model.
  */
-public class PolcyTemplateAssignmentCollectionTest {
+public class PolicyAssignmentV1Test {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPolcyTemplateAssignmentCollection() throws Throwable {
-    PolcyTemplateAssignmentCollection polcyTemplateAssignmentCollectionModel = new PolcyTemplateAssignmentCollection();
-    assertNull(polcyTemplateAssignmentCollectionModel.getPolicyAssignments());
+  public void testPolicyAssignmentV1() throws Throwable {
+    PolicyAssignmentV1 policyAssignmentV1Model = new PolicyAssignmentV1();
+    assertNull(policyAssignmentV1Model.getTarget());
+    assertNull(policyAssignmentV1Model.getOptions());
+    assertNull(policyAssignmentV1Model.getResources());
+    assertNull(policyAssignmentV1Model.getSubject());
+    assertNull(policyAssignmentV1Model.getTemplate());
+    assertNull(policyAssignmentV1Model.getStatus());
   }
 }

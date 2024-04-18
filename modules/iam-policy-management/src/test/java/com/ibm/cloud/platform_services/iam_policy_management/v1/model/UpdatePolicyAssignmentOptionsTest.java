@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,19 +23,29 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the PolicyAssignmentOptions model.
+ * Unit test class for the UpdatePolicyAssignmentOptions model.
  */
-public class PolicyAssignmentOptionsTest {
+public class UpdatePolicyAssignmentOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPolicyAssignmentOptions() throws Throwable {
-    PolicyAssignmentOptions policyAssignmentOptionsModel = new PolicyAssignmentOptions();
-    assertNull(policyAssignmentOptionsModel.getSubjectType());
-    assertNull(policyAssignmentOptionsModel.getSubjectId());
-    assertNull(policyAssignmentOptionsModel.getRootRequesterId());
-    assertNull(policyAssignmentOptionsModel.getRootTemplateId());
-    assertNull(policyAssignmentOptionsModel.getRootTemplateVersion());
+  public void testUpdatePolicyAssignmentOptions() throws Throwable {
+    UpdatePolicyAssignmentOptions updatePolicyAssignmentOptionsModel = new UpdatePolicyAssignmentOptions.Builder()
+      .assignmentId("testString")
+      .version("1.0")
+      .ifMatch("testString")
+      .templateVersion("testString")
+      .build();
+    assertEquals(updatePolicyAssignmentOptionsModel.assignmentId(), "testString");
+    assertEquals(updatePolicyAssignmentOptionsModel.version(), "1.0");
+    assertEquals(updatePolicyAssignmentOptionsModel.ifMatch(), "testString");
+    assertEquals(updatePolicyAssignmentOptionsModel.templateVersion(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdatePolicyAssignmentOptionsError() throws Throwable {
+    new UpdatePolicyAssignmentOptions.Builder().build();
+  }
+
 }

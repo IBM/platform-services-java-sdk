@@ -20,12 +20,14 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class GetPolicyAssignmentOptions extends GenericModel {
 
   protected String assignmentId;
+  protected String version;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String assignmentId;
+    private String version;
 
     /**
      * Instantiates a new Builder from an existing GetPolicyAssignmentOptions instance.
@@ -34,6 +36,7 @@ public class GetPolicyAssignmentOptions extends GenericModel {
      */
     private Builder(GetPolicyAssignmentOptions getPolicyAssignmentOptions) {
       this.assignmentId = getPolicyAssignmentOptions.assignmentId;
+      this.version = getPolicyAssignmentOptions.version;
     }
 
     /**
@@ -46,9 +49,11 @@ public class GetPolicyAssignmentOptions extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param assignmentId the assignmentId
+     * @param version the version
      */
-    public Builder(String assignmentId) {
+    public Builder(String assignmentId, String version) {
       this.assignmentId = assignmentId;
+      this.version = version;
     }
 
     /**
@@ -70,6 +75,17 @@ public class GetPolicyAssignmentOptions extends GenericModel {
       this.assignmentId = assignmentId;
       return this;
     }
+
+    /**
+     * Set the version.
+     *
+     * @param version the version
+     * @return the GetPolicyAssignmentOptions builder
+     */
+    public Builder version(String version) {
+      this.version = version;
+      return this;
+    }
   }
 
   protected GetPolicyAssignmentOptions() { }
@@ -77,7 +93,10 @@ public class GetPolicyAssignmentOptions extends GenericModel {
   protected GetPolicyAssignmentOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.assignmentId,
       "assignmentId cannot be empty");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.version,
+      "version cannot be null");
     assignmentId = builder.assignmentId;
+    version = builder.version;
   }
 
   /**
@@ -98,6 +117,17 @@ public class GetPolicyAssignmentOptions extends GenericModel {
    */
   public String assignmentId() {
     return assignmentId;
+  }
+
+  /**
+   * Gets the version.
+   *
+   * specify version of response body format.
+   *
+   * @return the version
+   */
+  public String version() {
+    return version;
   }
 }
 

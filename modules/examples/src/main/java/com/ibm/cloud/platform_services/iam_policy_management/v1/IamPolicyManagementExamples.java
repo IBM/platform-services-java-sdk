@@ -53,9 +53,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySu
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResources;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Resources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateLimitData;
@@ -73,9 +73,16 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyT
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceCreated;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitPolicyTemplateOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Collection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTargetDetails;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTemplateDetails;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRoot;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Options;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyAssignmentOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -109,6 +116,7 @@ public class IamPolicyManagementExamples {
   private static final String EXAMPLE_USER_ID = "IBMid-user1";
   private static final String EXAMPLE_SERVICE_NAME = "iam-groups";
   private static String exampleAccountId = null;
+  private static String exampleTargetAccountId = null;
   private static String examplePolicyId = null;
   private static String examplePolicyEtag = null;
   private static String exampleV2PolicyId = null;
@@ -118,8 +126,10 @@ public class IamPolicyManagementExamples {
   private static String exampleTemplateId = null;
   private static String exampleTemplateEtag = null;
   private static String exampleTemplateVersion = null;
+  private static String exampleBaseTemplateVersion = null;
   private static String exampleAssignmentId = null;
   private static String exampleAssignmentPolicyId = null;
+  private static String exampleAssignmentETag = null;
 
   static {
     System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_policy_management.env");
@@ -132,6 +142,7 @@ public class IamPolicyManagementExamples {
     // Load up our test-specific config properties.
     Map<String, String> config = CredentialUtils.getServiceProperties(IamPolicyManagement.DEFAULT_SERVICE_NAME);
     exampleAccountId = config.get("TEST_ACCOUNT_ID");
+    exampleTargetAccountId = config.get("TEST_TARGET_ACCOUNT_ID");
 
     try {
       System.out.println("createPolicy() result:");
@@ -721,15 +732,15 @@ public class IamPolicyManagementExamples {
       System.out.println("createPolicyTemplate() result:");
       // begin-create_policy_template
       V2PolicyResourceAttribute v2PolicyResourceAttributeModel = new V2PolicyResourceAttribute.Builder()
-        .key("serviceType")
+        .key("serviceName")
+        .value("cloud-object-storage")
         .operator("stringEquals")
-        .value("service")
         .build();
       V2PolicyResource v2PolicyResourceModel = new V2PolicyResource.Builder()
         .attributes(java.util.Arrays.asList(v2PolicyResourceAttributeModel))
         .build();
       Roles rolesModel = new Roles.Builder()
-        .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
+        .roleId("crn:v1:bluemix:public:iam::::serviceRole:Writer")
         .build();
       Grant grantModel = new Grant.Builder()
         .roles(java.util.Arrays.asList(rolesModel))
@@ -737,13 +748,22 @@ public class IamPolicyManagementExamples {
       Control controlModel = new Control.Builder()
         .grant(grantModel)
         .build();
+       V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
+        .key("serviceName")
+        .value("compliance")
+        .operator("stringEquals")
+        .build();
+      V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
+        .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeService)))
+        .build();
       TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
-        .type("access")
+        .type("authorization")
         .resource(v2PolicyResourceModel)
+        .subject(policySubjectModel)
         .control(controlModel)
         .build();
       CreatePolicyTemplateOptions createPolicyTemplateOptions = new CreatePolicyTemplateOptions.Builder()
-        .name("SDKExamplesTest")
+        .name("SDKS2SExamplesTest")
         .accountId(exampleAccountId)
         .policy(templatePolicyModel)
         .build();
@@ -752,7 +772,7 @@ public class IamPolicyManagementExamples {
       PolicyTemplateLimitData policyTemplate = response.getResult();
 
       exampleTemplateId = policyTemplate.getId();
-      exampleTemplateVersion = policyTemplate.getVersion();
+      exampleBaseTemplateVersion = policyTemplate.getVersion();
 
       System.out.println(policyTemplate);
       // end-create_policy_template
@@ -786,15 +806,15 @@ public class IamPolicyManagementExamples {
       System.out.println("replacePolicyTemplate() result:");
       // begin-replace_policy_template
       V2PolicyResourceAttribute v2PolicyResourceAttributeModel = new V2PolicyResourceAttribute.Builder()
-        .key("serviceType")
+        .key("serviceName")
         .operator("stringEquals")
-        .value("service")
+        .value("kms")
         .build();
       V2PolicyResource v2PolicyResourceModel = new V2PolicyResource.Builder()
         .attributes(java.util.Arrays.asList(v2PolicyResourceAttributeModel))
         .build();
       Roles rolesModel = new Roles.Builder()
-        .roleId("crn:v1:bluemix:public:iam::::role:Editor")
+        .roleId("crn:v1:bluemix:public:iam::::serviceRole:Reader")
         .build();
       Grant grantModel = new Grant.Builder()
         .roles(java.util.Arrays.asList(rolesModel))
@@ -802,14 +822,23 @@ public class IamPolicyManagementExamples {
       Control controlModel = new Control.Builder()
         .grant(grantModel)
         .build();
+      V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
+        .key("serviceName")
+        .value("compliance")
+        .operator("stringEquals")
+        .build();
+      V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
+        .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeService)))
+        .build();
       TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
-        .type("access")
+        .type("authorization")
         .resource(v2PolicyResourceModel)
+        .subject(policySubjectModel)
         .control(controlModel)
         .build();
       ReplacePolicyTemplateOptions replacePolicyTemplateOptions = new ReplacePolicyTemplateOptions.Builder()
         .policyTemplateId(exampleTemplateId)
-        .version(exampleTemplateVersion)
+        .version(exampleBaseTemplateVersion)
         .ifMatch(exampleTemplateEtag)
         .policy(templatePolicyModel)
         .build();
@@ -845,9 +874,9 @@ public class IamPolicyManagementExamples {
       System.out.println("createPolicyTemplateVersion() result:");
       // begin-create_policy_template_version
       V2PolicyResourceAttribute v2PolicyResourceAttributeModel = new V2PolicyResourceAttribute.Builder()
-        .key("serviceType")
+        .key("serviceName")
         .operator("stringEquals")
-        .value("service")
+        .value("appid")
         .build();
       V2PolicyResource v2PolicyResourceModel = new V2PolicyResource.Builder()
         .attributes(java.util.Arrays.asList(v2PolicyResourceAttributeModel))
@@ -861,19 +890,29 @@ public class IamPolicyManagementExamples {
       Control controlModel = new Control.Builder()
         .grant(grantModel)
         .build();
+       V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
+        .key("serviceName")
+        .value("compliance")
+        .operator("stringEquals")
+        .build();
+      V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
+        .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeService)))
+        .build();
       TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
-        .type("access")
+        .type("authorization")
         .resource(v2PolicyResourceModel)
+        .subject(policySubjectModel)
         .control(controlModel)
         .build();
       CreatePolicyTemplateVersionOptions createPolicyTemplateVersionOptions = new CreatePolicyTemplateVersionOptions.Builder()
         .policyTemplateId(exampleTemplateId)
         .policy(templatePolicyModel)
+        .committed(true)
         .build();
 
       Response<PolicyTemplateLimitData> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
       PolicyTemplateLimitData policyTemplate = response.getResult();
-
+      exampleTemplateVersion = policyTemplate.getVersion();
       System.out.println(policyTemplate);
       // end-create_policy_template_version
 
@@ -924,7 +963,7 @@ public class IamPolicyManagementExamples {
       // begin-commit_policy_template
       CommitPolicyTemplateOptions commitPolicyTemplateOptions = new CommitPolicyTemplateOptions.Builder()
         .policyTemplateId(exampleTemplateId)
-        .version(exampleTemplateVersion)
+        .version(exampleBaseTemplateVersion)
         .build();
 
       Response<Void> response = service.commitPolicyTemplate(commitPolicyTemplateOptions).execute();
@@ -936,17 +975,82 @@ public class IamPolicyManagementExamples {
     }
 
     try {
+      System.out.println("createPolicyTemplateAssignment() result:");
+      // begin-create_policy_template_assignment
+      AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
+        .type("Account")
+        .id(exampleTargetAccountId)
+        .build();
+
+      AssignmentTemplateDetails assignmentTemplateDetails = new AssignmentTemplateDetails.Builder()
+        .id(exampleTemplateId)
+        .version(exampleBaseTemplateVersion)
+        .build();
+      PolicyAssignmentV1OptionsRoot rootAssignmentDetails = new PolicyAssignmentV1OptionsRoot.Builder()
+        .requesterId("test_sdk")
+        .assignmentId("test")
+        .build();
+      PolicyAssignmentV1Options assignmentV1Options = new PolicyAssignmentV1Options.Builder()
+        .root(rootAssignmentDetails)
+        .build();
+
+      CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
+        .version("1.0")
+        .target(assignmentTargetDetails)
+        .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
+        .options(assignmentV1Options)
+        .build();
+
+      Response<PolicyAssignmentV1Collection> response = service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();
+
+      PolicyAssignmentV1Collection result = response.getResult();
+      PolicyAssignmentV1 assignment = result.getAssignments().get(0);
+      exampleAssignmentId = assignment.getId();
+      PolicyAssignmentV1Resources resource = assignment.getResources().get(0);
+      PolicyAssignmentResourcePolicy policy = resource.getPolicy();
+      AssignmentResourceCreated resourceCreated = policy.getResourceCreated();
+      exampleAssignmentPolicyId = resourceCreated.getId();
+      List<String> values = response.getHeaders().values("ETag");
+        exampleAssignmentETag = values.get(0);
+
+      System.out.println(result);
+      // end-create_policy_template_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("updatePolicyAssignment() result:");
+      // begin-update_policy_assignment
+      UpdatePolicyAssignmentOptions updatePolicyAssignmentOptions = new UpdatePolicyAssignmentOptions.Builder()
+        .assignmentId(exampleAssignmentId)
+        .version("1.0")
+        .templateVersion(exampleTemplateVersion)
+        .ifMatch(exampleAssignmentETag)
+        .build();
+
+      Response<PolicyAssignmentV1> response = service.updatePolicyAssignment(updatePolicyAssignmentOptions).execute();
+
+      PolicyAssignmentV1 policyAssignmentRecord = response.getResult();
+
+      System.out.println(policyAssignmentRecord);
+      // end-update_policy_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
       System.out.println("listPolicyAssignments() result:");
       // begin-list_policy_assignments
       ListPolicyAssignmentsOptions listPolicyAssignmentsOptions = new ListPolicyAssignmentsOptions.Builder()
         .accountId(exampleAccountId)
+        .version("1.0")
         .build();
 
-      Response<PolicyTemplateAssignmentCollection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
-      PolicyTemplateAssignmentCollection polcyTemplateAssignmentCollection = response.getResult();
-
-      exampleAssignmentId = polcyTemplateAssignmentCollection.getAssignments().get(0).getId();
-
+      Response<PolicyAssignmentV1Collection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
+      PolicyAssignmentV1Collection polcyTemplateAssignmentCollection = response.getResult();
       System.out.println(polcyTemplateAssignmentCollection);
       // end-list_policy_assignments
 
@@ -960,11 +1064,12 @@ public class IamPolicyManagementExamples {
       // begin-get_policy_assignment
       GetPolicyAssignmentOptions getPolicyAssignmentOptions = new GetPolicyAssignmentOptions.Builder()
         .assignmentId(exampleAssignmentId)
+        .version("1.0")
         .build();
 
-      Response<PolicyAssignment> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
-      PolicyAssignment policyAssignmentRecord = response.getResult();
-      PolicyAssignmentResources resource = policyAssignmentRecord.getResources().get(0);
+      Response<PolicyAssignmentV1> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
+      PolicyAssignmentV1 policyAssignmentRecord = response.getResult();
+      PolicyAssignmentV1Resources resource = policyAssignmentRecord.getResources().get(0);
       PolicyAssignmentResourcePolicy policy = resource.getPolicy();
       AssignmentResourceCreated resourceCreated = policy.getResourceCreated();
       exampleAssignmentPolicyId = resourceCreated.getId();
@@ -993,6 +1098,20 @@ public class IamPolicyManagementExamples {
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s\nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("deletePolicyAssignment() result:");
+      // begin-delete_policy_assignment
+      DeletePolicyAssignmentOptions deletePolicyAssignmentOptions = new DeletePolicyAssignmentOptions.Builder()
+        .assignmentId(exampleAssignmentId)
+        .build();
+
+      Response<Void> response = service.deletePolicyAssignment(deletePolicyAssignmentOptions).execute();
+      // end-delete_policy_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
 
     try {

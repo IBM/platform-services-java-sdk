@@ -12,28 +12,38 @@
  */
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import java.util.List;
-
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * A collection of policies assignments.
+ * The policy assignment resources.
  */
-public class PolicyTemplateAssignmentCollection extends GenericModel {
+public class PolicyAssignmentV1Resources extends GenericModel {
 
-  protected List<PolicyAssignment> assignments;
+  protected AssignmentTemplateDetails target;
+  protected PolicyAssignmentResourcePolicy policy;
 
-  protected PolicyTemplateAssignmentCollection() { }
+  protected PolicyAssignmentV1Resources() { }
 
   /**
-   * Gets the assignments.
+   * Gets the target.
    *
-   * List of policy assignments.
+   * policy template details.
    *
-   * @return the assignments
+   * @return the target
    */
-  public List<PolicyAssignment> getAssignments() {
-    return assignments;
+  public AssignmentTemplateDetails getTarget() {
+    return target;
+  }
+
+  /**
+   * Gets the policy.
+   *
+   * Set of properties for the assigned resource.
+   *
+   * @return the policy
+   */
+  public PolicyAssignmentResourcePolicy getPolicy() {
+    return policy;
   }
 }
 

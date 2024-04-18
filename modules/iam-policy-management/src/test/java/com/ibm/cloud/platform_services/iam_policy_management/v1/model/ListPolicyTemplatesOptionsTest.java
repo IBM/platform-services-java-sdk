@@ -35,10 +35,20 @@ public class ListPolicyTemplatesOptionsTest {
       .accountId("testString")
       .acceptLanguage("default")
       .state("active")
+      .name("testString")
+      .policyServiceType("service")
+      .policyServiceName("testString")
+      .policyServiceGroupId("testString")
+      .policyType("access")
       .build();
     assertEquals(listPolicyTemplatesOptionsModel.accountId(), "testString");
     assertEquals(listPolicyTemplatesOptionsModel.acceptLanguage(), "default");
     assertEquals(listPolicyTemplatesOptionsModel.state(), "active");
+    assertEquals(listPolicyTemplatesOptionsModel.name(), "testString");
+    assertEquals(listPolicyTemplatesOptionsModel.policyServiceType(), "service");
+    assertEquals(listPolicyTemplatesOptionsModel.policyServiceName(), "testString");
+    assertEquals(listPolicyTemplatesOptionsModel.policyServiceGroupId(), "testString");
+    assertEquals(listPolicyTemplatesOptionsModel.policyType(), "access");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

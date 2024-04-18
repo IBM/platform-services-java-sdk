@@ -13,13 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceCreated;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ConflictsWith;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetails;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorResponse;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResources;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTemplateDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -29,16 +23,26 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the PolicyAssignmentResources model.
+ * Unit test class for the AssignmentTemplateDetails model.
  */
-public class PolicyAssignmentResourcesTest {
+public class AssignmentTemplateDetailsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPolicyAssignmentResources() throws Throwable {
-    PolicyAssignmentResources policyAssignmentResourcesModel = new PolicyAssignmentResources();
-    assertNull(policyAssignmentResourcesModel.getTarget());
-    assertNull(policyAssignmentResourcesModel.getPolicy());
+  public void testAssignmentTemplateDetails() throws Throwable {
+    AssignmentTemplateDetails assignmentTemplateDetailsModel = new AssignmentTemplateDetails.Builder()
+      .id("testString")
+      .version("testString")
+      .build();
+    assertEquals(assignmentTemplateDetailsModel.id(), "testString");
+    assertEquals(assignmentTemplateDetailsModel.version(), "testString");
+
+    String json = TestUtilities.serialize(assignmentTemplateDetailsModel);
+
+    AssignmentTemplateDetails assignmentTemplateDetailsModelNew = TestUtilities.deserialize(json, AssignmentTemplateDetails.class);
+    assertTrue(assignmentTemplateDetailsModelNew instanceof AssignmentTemplateDetails);
+    assertEquals(assignmentTemplateDetailsModelNew.id(), "testString");
+    assertEquals(assignmentTemplateDetailsModelNew.version(), "testString");
   }
 }

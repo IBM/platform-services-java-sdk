@@ -21,6 +21,8 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRe
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -63,6 +65,20 @@ public class TemplatePolicyTest {
     assertEquals(v2PolicyResourceModel.attributes(), java.util.Arrays.asList(v2PolicyResourceAttributeModel));
     assertEquals(v2PolicyResourceModel.tags(), java.util.Arrays.asList(v2PolicyResourceTagModel));
 
+    V2PolicySubjectAttribute v2PolicySubjectAttributeModel = new V2PolicySubjectAttribute.Builder()
+      .key("testString")
+      .operator("stringEquals")
+      .value("testString")
+      .build();
+    assertEquals(v2PolicySubjectAttributeModel.key(), "testString");
+    assertEquals(v2PolicySubjectAttributeModel.operator(), "stringEquals");
+    assertEquals(v2PolicySubjectAttributeModel.value(), "testString");
+
+    V2PolicySubject v2PolicySubjectModel = new V2PolicySubject.Builder()
+      .attributes(java.util.Arrays.asList(v2PolicySubjectAttributeModel))
+      .build();
+    assertEquals(v2PolicySubjectModel.attributes(), java.util.Arrays.asList(v2PolicySubjectAttributeModel));
+
     V2PolicyRuleRuleAttribute v2PolicyRuleModel = new V2PolicyRuleRuleAttribute.Builder()
       .key("testString")
       .operator("stringEquals")
@@ -91,6 +107,7 @@ public class TemplatePolicyTest {
       .type("access")
       .description("testString")
       .resource(v2PolicyResourceModel)
+      .subject(v2PolicySubjectModel)
       .pattern("testString")
       .rule(v2PolicyRuleModel)
       .control(controlModel)
@@ -98,6 +115,7 @@ public class TemplatePolicyTest {
     assertEquals(templatePolicyModel.type(), "access");
     assertEquals(templatePolicyModel.description(), "testString");
     assertEquals(templatePolicyModel.resource(), v2PolicyResourceModel);
+    assertEquals(templatePolicyModel.subject(), v2PolicySubjectModel);
     assertEquals(templatePolicyModel.pattern(), "testString");
     assertEquals(templatePolicyModel.rule(), v2PolicyRuleModel);
     assertEquals(templatePolicyModel.control(), controlModel);
@@ -109,6 +127,7 @@ public class TemplatePolicyTest {
     assertEquals(templatePolicyModelNew.type(), "access");
     assertEquals(templatePolicyModelNew.description(), "testString");
     assertEquals(templatePolicyModelNew.resource().toString(), v2PolicyResourceModel.toString());
+    assertEquals(templatePolicyModelNew.subject().toString(), v2PolicySubjectModel.toString());
     assertEquals(templatePolicyModelNew.pattern(), "testString");
     assertEquals(templatePolicyModelNew.rule().toString(), v2PolicyRuleModel.toString());
     assertEquals(templatePolicyModelNew.control().toString(), controlModel.toString());

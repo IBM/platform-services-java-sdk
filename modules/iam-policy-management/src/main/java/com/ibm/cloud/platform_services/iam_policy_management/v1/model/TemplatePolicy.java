@@ -32,6 +32,7 @@ public class TemplatePolicy extends GenericModel {
   protected String type;
   protected String description;
   protected V2PolicyResource resource;
+  protected V2PolicySubject subject;
   protected String pattern;
   protected V2PolicyRule rule;
   protected Control control;
@@ -43,6 +44,7 @@ public class TemplatePolicy extends GenericModel {
     private String type;
     private String description;
     private V2PolicyResource resource;
+    private V2PolicySubject subject;
     private String pattern;
     private V2PolicyRule rule;
     private Control control;
@@ -56,6 +58,7 @@ public class TemplatePolicy extends GenericModel {
       this.type = templatePolicy.type;
       this.description = templatePolicy.description;
       this.resource = templatePolicy.resource;
+      this.subject = templatePolicy.subject;
       this.pattern = templatePolicy.pattern;
       this.rule = templatePolicy.rule;
       this.control = templatePolicy.control;
@@ -71,10 +74,12 @@ public class TemplatePolicy extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param type the type
+     * @param resource the resource
      * @param control the control
      */
-    public Builder(String type, Control control) {
+    public Builder(String type, V2PolicyResource resource, Control control) {
       this.type = type;
+      this.resource = resource;
       this.control = control;
     }
 
@@ -121,6 +126,17 @@ public class TemplatePolicy extends GenericModel {
     }
 
     /**
+     * Set the subject.
+     *
+     * @param subject the subject
+     * @return the TemplatePolicy builder
+     */
+    public Builder subject(V2PolicySubject subject) {
+      this.subject = subject;
+      return this;
+    }
+
+    /**
      * Set the pattern.
      *
      * @param pattern the pattern
@@ -159,11 +175,14 @@ public class TemplatePolicy extends GenericModel {
   protected TemplatePolicy(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.resource,
+      "resource cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.control,
       "control cannot be null");
     type = builder.type;
     description = builder.description;
     resource = builder.resource;
+    subject = builder.subject;
     pattern = builder.pattern;
     rule = builder.rule;
     control = builder.control;
@@ -210,6 +229,17 @@ public class TemplatePolicy extends GenericModel {
    */
   public V2PolicyResource resource() {
     return resource;
+  }
+
+  /**
+   * Gets the subject.
+   *
+   * The subject attributes for whom the policy grants access.
+   *
+   * @return the subject
+   */
+  public V2PolicySubject subject() {
+    return subject;
   }
 
   /**

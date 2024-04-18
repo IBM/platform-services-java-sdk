@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Subject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,25 +23,14 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetPolicyAssignmentOptions model.
+ * Unit test class for the PolicyAssignmentV1Subject model.
  */
-public class GetPolicyAssignmentOptionsTest {
+public class PolicyAssignmentV1SubjectTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetPolicyAssignmentOptions() throws Throwable {
-    GetPolicyAssignmentOptions getPolicyAssignmentOptionsModel = new GetPolicyAssignmentOptions.Builder()
-      .assignmentId("testString")
-      .version("1.0")
-      .build();
-    assertEquals(getPolicyAssignmentOptionsModel.assignmentId(), "testString");
-    assertEquals(getPolicyAssignmentOptionsModel.version(), "1.0");
+  public void testPolicyAssignmentV1Subject() throws Throwable {
+    PolicyAssignmentV1Subject policyAssignmentV1SubjectModel = new PolicyAssignmentV1Subject();
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetPolicyAssignmentOptionsError() throws Throwable {
-    new GetPolicyAssignmentOptions.Builder().build();
-  }
-
 }

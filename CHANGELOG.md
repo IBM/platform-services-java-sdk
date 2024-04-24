@@ -1,3 +1,10 @@
+## [0.53.4](https://github.com/IBM/platform-services-java-sdk/compare/0.53.3...0.53.4) (2024-04-24)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** update create_account response payload ([#242](https://github.com/IBM/platform-services-java-sdk/issues/242)) ([b9e60a4](https://github.com/IBM/platform-services-java-sdk/commit/b9e60a46fece51c6980446d3e142dd6164190375))
+
 ## [0.53.3](https://github.com/IBM/platform-services-java-sdk/compare/0.53.2...0.53.3) (2024-04-18)
 
 

@@ -33,5 +33,8 @@ public class CreateAccountResponseTest {
   public void testCreateAccountResponse() throws Throwable {
     CreateAccountResponse createAccountResponseModel = new CreateAccountResponse();
     assertNull(createAccountResponseModel.getAccountId());
+    assertNull(createAccountResponseModel.getIamServiceId());
+    assertNull(createAccountResponseModel.getIamApikeyId());
+    assertNull(createAccountResponseModel.getIamApikey());
   }
 }

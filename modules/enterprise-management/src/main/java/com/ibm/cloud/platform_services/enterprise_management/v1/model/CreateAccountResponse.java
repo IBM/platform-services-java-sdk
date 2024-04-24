@@ -22,6 +22,12 @@ public class CreateAccountResponse extends GenericModel {
 
   @SerializedName("account_id")
   protected String accountId;
+  @SerializedName("iam_service_id")
+  protected String iamServiceId;
+  @SerializedName("iam_apikey_id")
+  protected String iamApikeyId;
+  @SerializedName("iam_apikey")
+  protected String iamApikey;
 
   protected CreateAccountResponse() { }
 

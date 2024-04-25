@@ -1,3 +1,10 @@
+## [0.53.5](https://github.com/IBM/platform-services-java-sdk/compare/0.53.4...0.53.5) (2024-04-25)
+
+
+### Bug Fixes
+
+* **Enterprise Management:** re-gen service after recent create_account api response changes ([#243](https://github.com/IBM/platform-services-java-sdk/issues/243)) ([925f8bc](https://github.com/IBM/platform-services-java-sdk/commit/925f8bc83321bb21d00e6867925feae98e0fa8b3))
+
 ## [0.53.4](https://github.com/IBM/platform-services-java-sdk/compare/0.53.3...0.53.4) (2024-04-24)
 
 

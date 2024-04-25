@@ -41,5 +41,38 @@ public class CreateAccountResponse extends GenericModel {
   public String getAccountId() {
     return accountId;
   }
+
+  /**
+   * Gets the iamServiceId.
+   *
+   * The iam_service_id of the account entity that was created.
+   *
+   * @return the iamServiceId
+   */
+  public String getIamServiceId() {
+    return iamServiceId;
+  }
+
+  /**
+   * Gets the iamApikeyId.
+   *
+   * The iam_apikey_id of the account entity that was created.
+   *
+   * @return the iamApikeyId
+   */
+  public String getIamApikeyId() {
+    return iamApikeyId;
+  }
+
+  /**
+   * Gets the iamApikey.
+   *
+   * The iam_apikey of the account entity with owner iam policies that was created.
+   *
+   * @return the iamApikey
+   */
+  public String getIamApikey() {
+    return iamApikey;
+  }
 }
 

@@ -416,7 +416,7 @@ public class EnterpriseManagementTest {
   @Test
   public void testCreateAccountWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"account_id\": \"accountId\"}";
+    String mockResponseBody = "{\"account_id\": \"accountId\", \"iam_service_id\": \"iamServiceId\", \"iam_apikey_id\": \"iamApikeyId\", \"iam_apikey\": \"iamApikey\"}";
     String createAccountPath = "/accounts";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

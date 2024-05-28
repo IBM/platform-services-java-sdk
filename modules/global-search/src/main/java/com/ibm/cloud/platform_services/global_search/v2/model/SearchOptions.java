@@ -76,6 +76,21 @@ public class SearchOptions extends GenericModel {
     String X_FALSE = "false";
   }
 
+  /**
+   * Determines if documents belonging to Project family should be included in result set or not. Possible values are
+   * false (default), true or any. If false, documents belonging to all families except Project are returned; if true,
+   * only documents belonging to Project family are returned; if any, documents of any family are returned. Only
+   * authorized ServiceIds can use this query parameter.
+   */
+  public interface IsProjectResource {
+    /** true. */
+    String X_TRUE = "true";
+    /** false. */
+    String X_FALSE = "false";
+    /** any. */
+    String ANY = "any";
+  }
+
   protected String query;
   protected List<String> fields;
   protected String searchCursor;
@@ -90,6 +105,7 @@ public class SearchOptions extends GenericModel {
   protected String isPublic;
   protected String impersonateUser;
   protected String canTag;
+  protected String isProjectResource;
 
   /**
    * Builder.
@@ -109,6 +125,7 @@ public class SearchOptions extends GenericModel {
     private String isPublic;
     private String impersonateUser;
     private String canTag;
+    private String isProjectResource;
 
     /**
      * Instantiates a new Builder from an existing SearchOptions instance.
@@ -130,6 +147,7 @@ public class SearchOptions extends GenericModel {
       this.isPublic = searchOptions.isPublic;
       this.impersonateUser = searchOptions.impersonateUser;
       this.canTag = searchOptions.canTag;
+      this.isProjectResource = searchOptions.isProjectResource;
     }
 
     /**
@@ -334,6 +352,17 @@ public class SearchOptions extends GenericModel {
       this.canTag = canTag;
       return this;
     }
+
+    /**
+     * Set the isProjectResource.
+     *
+     * @param isProjectResource the isProjectResource
+     * @return the SearchOptions builder
+     */
+    public Builder isProjectResource(String isProjectResource) {
+      this.isProjectResource = isProjectResource;
+      return this;
+    }
   }
 
   protected SearchOptions() { }
@@ -353,6 +382,7 @@ public class SearchOptions extends GenericModel {
     isPublic = builder.isPublic;
     impersonateUser = builder.impersonateUser;
     canTag = builder.canTag;
+    isProjectResource = builder.isProjectResource;
   }
 
   /**
@@ -538,6 +568,20 @@ public class SearchOptions extends GenericModel {
    */
   public String canTag() {
     return canTag;
+  }
+
+  /**
+   * Gets the isProjectResource.
+   *
+   * Determines if documents belonging to Project family should be included in result set or not. Possible values are
+   * false (default), true or any. If false, documents belonging to all families except Project are returned; if true,
+   * only documents belonging to Project family are returned; if any, documents of any family are returned. Only
+   * authorized ServiceIds can use this query parameter.
+   *
+   * @return the isProjectResource
+   */
+  public String isProjectResource() {
+    return isProjectResource;
   }
 }
 

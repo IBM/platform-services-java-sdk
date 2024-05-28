@@ -80,6 +80,7 @@ public class GlobalSearchTest {
       .isPublic("false")
       .impersonateUser("testString")
       .canTag("false")
+      .isProjectResource("false")
       .build();
 
     // Invoke search() with a valid options model and verify the result
@@ -107,6 +108,7 @@ public class GlobalSearchTest {
     assertEquals(query.get("is_public"), "false");
     assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("can_tag"), "false");
+    assertEquals(query.get("is_project_resource"), "false");
   }
 
   // Test the search operation with and without retries enabled

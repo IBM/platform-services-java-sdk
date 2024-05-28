@@ -157,6 +157,9 @@ public class GlobalSearch extends BaseService {
     if (searchOptions.canTag() != null) {
       builder.query("can_tag", String.valueOf(searchOptions.canTag()));
     }
+    if (searchOptions.isProjectResource() != null) {
+      builder.query("is_project_resource", String.valueOf(searchOptions.isProjectResource()));
+    }
     final JsonObject contentJson = new JsonObject();
     if (searchOptions.query() != null) {
       contentJson.addProperty("query", searchOptions.query());

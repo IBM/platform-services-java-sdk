@@ -1,3 +1,10 @@
+## [0.53.6](https://github.com/IBM/platform-services-java-sdk/compare/0.53.5...0.53.6) (2024-05-28)
+
+
+### Bug Fixes
+
+* **Global Search:** add support for is_project_resource query param ([00f4eea](https://github.com/IBM/platform-services-java-sdk/commit/00f4eeaa6564b6db8ceb6dcbcf12d748b1b5848e))
+
 ## [0.53.5](https://github.com/IBM/platform-services-java-sdk/compare/0.53.4...0.53.5) (2024-04-25)
 
 

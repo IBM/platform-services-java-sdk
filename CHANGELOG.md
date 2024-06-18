@@ -1,3 +1,10 @@
+# [0.54.0](https://github.com/IBM/platform-services-java-sdk/compare/0.53.6...0.54.0) (2024-06-18)
+
+
+### Features
+
+* **Usage Reports:** re-gen service to pickup changes to Instance Reports  ([#246](https://github.com/IBM/platform-services-java-sdk/issues/246)) ([d09b8cb](https://github.com/IBM/platform-services-java-sdk/commit/d09b8cb1d9e4453e10dfe6acc052865c0b23ab81))
+
 ## [0.53.6](https://github.com/IBM/platform-services-java-sdk/compare/0.53.5...0.53.6) (2024-05-28)
 
 

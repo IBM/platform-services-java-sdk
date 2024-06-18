@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.usage_reports.v4.model;
 
 import java.util.List;
@@ -38,6 +39,10 @@ public class Metric extends GenericModel {
   @SerializedName("non_chargeable")
   protected Boolean nonChargeable;
   protected List<Discount> discounts;
+  @SerializedName("volume_discount")
+  protected Double volumeDiscount;
+  @SerializedName("volume_cost")
+  protected Double volumeCost;
 
   protected Metric() { }
 
@@ -160,6 +165,29 @@ public class Metric extends GenericModel {
    */
   public List<Discount> getDiscounts() {
     return discounts;
+  }
+
+  /**
+   * Gets the volumeDiscount.
+   *
+   * This percentage reflects the reduction to the original cost that you receive under a volume based pricing
+   * structure.
+   *
+   * @return the volumeDiscount
+   */
+  public Double getVolumeDiscount() {
+    return volumeDiscount;
+  }
+
+  /**
+   * Gets the volumeCost.
+   *
+   * The original cost adjusted for volume based discounts that are applied at the account level.
+   *
+   * @return the volumeCost
+   */
+  public Double getVolumeCost() {
+    return volumeCost;
   }
 }
 

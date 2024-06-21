@@ -1,3 +1,10 @@
+## [0.54.1](https://github.com/IBM/platform-services-java-sdk/compare/0.54.0...0.54.1) (2024-06-21)
+
+
+### Bug Fixes
+
+* **Global Tagging:** add 'update' option to attach_tag operation ([#247](https://github.com/IBM/platform-services-java-sdk/issues/247)) ([4b5e597](https://github.com/IBM/platform-services-java-sdk/commit/4b5e597465a39923663a88cce9c5534d1abf76ca))
+
 # [0.54.0](https://github.com/IBM/platform-services-java-sdk/compare/0.53.6...0.54.0) (2024-06-18)
 
 

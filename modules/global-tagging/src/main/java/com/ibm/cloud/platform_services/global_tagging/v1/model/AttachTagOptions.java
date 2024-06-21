@@ -43,6 +43,7 @@ public class AttachTagOptions extends GenericModel {
   protected String accountId;
   protected String tagType;
   protected Boolean replace;
+  protected Boolean update;
 
   /**
    * Builder.
@@ -56,6 +57,7 @@ public class AttachTagOptions extends GenericModel {
     private String accountId;
     private String tagType;
     private Boolean replace;
+    private Boolean update;
 
     /**
      * Instantiates a new Builder from an existing AttachTagOptions instance.
@@ -71,6 +73,7 @@ public class AttachTagOptions extends GenericModel {
       this.accountId = attachTagOptions.accountId;
       this.tagType = attachTagOptions.tagType;
       this.replace = attachTagOptions.replace;
+      this.update = attachTagOptions.update;
     }
 
     /**
@@ -218,6 +221,17 @@ public class AttachTagOptions extends GenericModel {
       this.replace = replace;
       return this;
     }
+
+    /**
+     * Set the update.
+     *
+     * @param update the update
+     * @return the AttachTagOptions builder
+     */
+    public Builder update(Boolean update) {
+      this.update = update;
+      return this;
+    }
   }
 
   protected AttachTagOptions() { }
@@ -233,6 +247,7 @@ public class AttachTagOptions extends GenericModel {
     accountId = builder.accountId;
     tagType = builder.tagType;
     replace = builder.replace;
+    update = builder.update;
   }
 
   /**
@@ -335,13 +350,28 @@ public class AttachTagOptions extends GenericModel {
   /**
    * Gets the replace.
    *
-   * Flag to request replacement of all attached tags. Set 'true' if you want to replace all the list of tags attached
-   * to the resource. Default value is false.
+   * Flag to request replacement of all attached tags. Set `true` if you want to replace all tags attached to the
+   * resource with the current ones. Default value is false.
    *
    * @return the replace
    */
   public Boolean replace() {
     return replace;
+  }
+
+  /**
+   * Gets the update.
+   *
+   * Flag to request update of attached tags in the format `key:value`. Here's how it works for each tag in the request
+   * body: If the tag to attach is in the format `key:value`, the System will atomically detach all existing tags
+   * starting with `key:` and attach the new `key:value` tag. If no such tags exist, a new `key:value` tag will be
+   * attached. If the tag is not in the `key:value` format (e.g., a simple label), the System will attach the label as
+   * usual. The update query parameter is available for user and access management tags, but not for service tags.
+   *
+   * @return the update
+   */
+  public Boolean update() {
+    return update;
   }
 }
 

@@ -48,6 +48,7 @@ public class AttachTagOptionsTest {
       .accountId("testString")
       .tagType("user")
       .replace(false)
+      .update(false)
       .build();
     assertEquals(attachTagOptionsModel.resources(), java.util.Arrays.asList(resourceModel));
     assertEquals(attachTagOptionsModel.tagName(), "testString");
@@ -57,6 +58,7 @@ public class AttachTagOptionsTest {
     assertEquals(attachTagOptionsModel.accountId(), "testString");
     assertEquals(attachTagOptionsModel.tagType(), "user");
     assertEquals(attachTagOptionsModel.replace(), Boolean.valueOf(false));
+    assertEquals(attachTagOptionsModel.update(), Boolean.valueOf(false));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

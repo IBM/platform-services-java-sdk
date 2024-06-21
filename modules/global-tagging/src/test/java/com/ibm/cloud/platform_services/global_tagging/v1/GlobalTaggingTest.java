@@ -326,6 +326,7 @@ public class GlobalTaggingTest {
       .accountId("testString")
       .tagType("user")
       .replace(false)
+      .update(false)
       .build();
 
     // Invoke attachTag() with a valid options model and verify the result
@@ -347,6 +348,7 @@ public class GlobalTaggingTest {
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("tag_type"), "user");
     assertEquals(Boolean.valueOf(query.get("replace")), Boolean.valueOf(false));
+    assertEquals(Boolean.valueOf(query.get("update")), Boolean.valueOf(false));
   }
 
   // Test the attachTag operation with and without retries enabled

@@ -48,7 +48,9 @@ import java.util.Map.Entry;
  * two formats: `key:value` or `label`. The tagging API supports three types of tag: `user` `service`, and `access`
  * tags. `service` tags cannot be attached to IMS resources. `service` tags must be in the form
  * `service_prefix:tag_label` where `service_prefix` identifies the Service owning the tag. `access` tags cannot be
- * attached to IMS and Cloud Foundry resources. They must be in the form `key:value`.
+ * attached to IMS and Cloud Foundry resources. They must be in the form `key:value`. You can replace all resource's
+ * tags using the `replace` query parameter in the attach operation. You can update the `value` of a resource's tag in
+ * the format `key:value`, using the `update` query parameter in the attach operation.
  *
  * API Version: 1.2.0
  */
@@ -331,6 +333,9 @@ public class GlobalTagging extends BaseService {
     }
     if (attachTagOptions.replace() != null) {
       builder.query("replace", String.valueOf(attachTagOptions.replace()));
+    }
+    if (attachTagOptions.update() != null) {
+      builder.query("update", String.valueOf(attachTagOptions.update()));
     }
     final JsonObject contentJson = new JsonObject();
     contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(attachTagOptions.resources()));

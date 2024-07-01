@@ -1206,22 +1206,12 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .id(testS2STemplateId)
         .version(testS2SBaseTemplateVersion)
         .build();
-      
-      
-      PolicyAssignmentV1OptionsRoot rootAssignmentDetails = new PolicyAssignmentV1OptionsRoot.Builder()
-        .requesterId("test_sdk")
-        .assignmentId("test")
-        .build();
-      
-      PolicyAssignmentV1Options assignmentV1Options = new PolicyAssignmentV1Options.Builder()
-        .root(rootAssignmentDetails)
-        .build();
+    
 
       CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
         .version("1.0")
         .target(assignmentTargetDetails)
         .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
-        .options(assignmentV1Options)
         .build();
 
       Response<PolicyAssignmentV1Collection> response = service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();

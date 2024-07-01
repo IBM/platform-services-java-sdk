@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import java.util.Date;
@@ -38,7 +39,6 @@ public class PolicyAssignmentV1 extends GenericModel {
   }
 
   protected AssignmentTargetDetails target;
-  protected PolicyAssignmentV1Options options;
   protected String id;
   @SerializedName("account_id")
   protected String accountId;
@@ -67,17 +67,6 @@ public class PolicyAssignmentV1 extends GenericModel {
    */
   public AssignmentTargetDetails getTarget() {
     return target;
-  }
-
-  /**
-   * Gets the options.
-   *
-   * The set of properties required for a policy assignment.
-   *
-   * @return the options
-   */
-  public PolicyAssignmentV1Options getOptions() {
-    return options;
   }
 
   /**

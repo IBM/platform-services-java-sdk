@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -74,13 +75,9 @@ public class TemplatePolicy extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param type the type
-     * @param resource the resource
-     * @param control the control
      */
-    public Builder(String type, V2PolicyResource resource, Control control) {
+    public Builder(String type) {
       this.type = type;
-      this.resource = resource;
-      this.control = control;
     }
 
     /**
@@ -175,10 +172,6 @@ public class TemplatePolicy extends GenericModel {
   protected TemplatePolicy(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.resource,
-      "resource cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.control,
-      "control cannot be null");
     type = builder.type;
     description = builder.description;
     resource = builder.resource;

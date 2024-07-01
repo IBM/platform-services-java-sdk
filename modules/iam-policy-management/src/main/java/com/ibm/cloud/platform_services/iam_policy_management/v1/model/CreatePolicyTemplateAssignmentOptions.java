@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ public class CreatePolicyTemplateAssignmentOptions extends GenericModel {
 
   protected String version;
   protected AssignmentTargetDetails target;
-  protected PolicyAssignmentV1Options options;
   protected List<AssignmentTemplateDetails> templates;
   protected String acceptLanguage;
 
@@ -34,7 +34,6 @@ public class CreatePolicyTemplateAssignmentOptions extends GenericModel {
   public static class Builder {
     private String version;
     private AssignmentTargetDetails target;
-    private PolicyAssignmentV1Options options;
     private List<AssignmentTemplateDetails> templates;
     private String acceptLanguage;
 
@@ -46,7 +45,6 @@ public class CreatePolicyTemplateAssignmentOptions extends GenericModel {
     private Builder(CreatePolicyTemplateAssignmentOptions createPolicyTemplateAssignmentOptions) {
       this.version = createPolicyTemplateAssignmentOptions.version;
       this.target = createPolicyTemplateAssignmentOptions.target;
-      this.options = createPolicyTemplateAssignmentOptions.options;
       this.templates = createPolicyTemplateAssignmentOptions.templates;
       this.acceptLanguage = createPolicyTemplateAssignmentOptions.acceptLanguage;
     }
@@ -62,13 +60,11 @@ public class CreatePolicyTemplateAssignmentOptions extends GenericModel {
      *
      * @param version the version
      * @param target the target
-     * @param options the options
      * @param templates the templates
      */
-    public Builder(String version, AssignmentTargetDetails target, PolicyAssignmentV1Options options, List<AssignmentTemplateDetails> templates) {
+    public Builder(String version, AssignmentTargetDetails target, List<AssignmentTemplateDetails> templates) {
       this.version = version;
       this.target = target;
-      this.options = options;
       this.templates = templates;
     }
 
@@ -120,17 +116,6 @@ public class CreatePolicyTemplateAssignmentOptions extends GenericModel {
     }
 
     /**
-     * Set the options.
-     *
-     * @param options the options
-     * @return the CreatePolicyTemplateAssignmentOptions builder
-     */
-    public Builder options(PolicyAssignmentV1Options options) {
-      this.options = options;
-      return this;
-    }
-
-    /**
      * Set the templates.
      * Existing templates will be replaced.
      *
@@ -161,13 +146,10 @@ public class CreatePolicyTemplateAssignmentOptions extends GenericModel {
       "version cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.target,
       "target cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.options,
-      "options cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.templates,
       "templates cannot be null");
     version = builder.version;
     target = builder.target;
-    options = builder.options;
     templates = builder.templates;
     acceptLanguage = builder.acceptLanguage;
   }
@@ -201,17 +183,6 @@ public class CreatePolicyTemplateAssignmentOptions extends GenericModel {
    */
   public AssignmentTargetDetails target() {
     return target;
-  }
-
-  /**
-   * Gets the options.
-   *
-   * The set of properties required for a policy assignment.
-   *
-   * @return the options
-   */
-  public PolicyAssignmentV1Options options() {
-    return options;
   }
 
   /**

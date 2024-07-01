@@ -22,9 +22,6 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObjec
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorResponse;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Options;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRoot;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRootTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Resources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Subject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
@@ -46,7 +43,6 @@ public class PolicyAssignmentV1Test {
   public void testPolicyAssignmentV1() throws Throwable {
     PolicyAssignmentV1 policyAssignmentV1Model = new PolicyAssignmentV1();
     assertNull(policyAssignmentV1Model.getTarget());
-    assertNull(policyAssignmentV1Model.getOptions());
     assertNull(policyAssignmentV1Model.getResources());
     assertNull(policyAssignmentV1Model.getSubject());
     assertNull(policyAssignmentV1Model.getTemplate());

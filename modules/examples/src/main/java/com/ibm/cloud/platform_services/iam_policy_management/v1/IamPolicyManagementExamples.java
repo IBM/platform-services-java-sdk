@@ -78,8 +78,6 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyA
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTargetDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTemplateDetails;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRoot;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Options;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyAssignmentOptions;

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.resource_controller.v2.model;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -21,6 +22,7 @@ public class ListReclamationsOptions extends GenericModel {
 
   protected String accountId;
   protected String resourceInstanceId;
+  protected String resourceGroupId;
 
   /**
    * Builder.
@@ -28,6 +30,7 @@ public class ListReclamationsOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private String resourceInstanceId;
+    private String resourceGroupId;
 
     /**
      * Instantiates a new Builder from an existing ListReclamationsOptions instance.
@@ -37,6 +40,7 @@ public class ListReclamationsOptions extends GenericModel {
     private Builder(ListReclamationsOptions listReclamationsOptions) {
       this.accountId = listReclamationsOptions.accountId;
       this.resourceInstanceId = listReclamationsOptions.resourceInstanceId;
+      this.resourceGroupId = listReclamationsOptions.resourceGroupId;
     }
 
     /**
@@ -75,6 +79,17 @@ public class ListReclamationsOptions extends GenericModel {
       this.resourceInstanceId = resourceInstanceId;
       return this;
     }
+
+    /**
+     * Set the resourceGroupId.
+     *
+     * @param resourceGroupId the resourceGroupId
+     * @return the ListReclamationsOptions builder
+     */
+    public Builder resourceGroupId(String resourceGroupId) {
+      this.resourceGroupId = resourceGroupId;
+      return this;
+    }
   }
 
   protected ListReclamationsOptions() { }
@@ -82,6 +97,7 @@ public class ListReclamationsOptions extends GenericModel {
   protected ListReclamationsOptions(Builder builder) {
     accountId = builder.accountId;
     resourceInstanceId = builder.resourceInstanceId;
+    resourceGroupId = builder.resourceGroupId;
   }
 
   /**
@@ -113,6 +129,17 @@ public class ListReclamationsOptions extends GenericModel {
    */
   public String resourceInstanceId() {
     return resourceInstanceId;
+  }
+
+  /**
+   * Gets the resourceGroupId.
+   *
+   * The ID of the resource group.
+   *
+   * @return the resourceGroupId
+   */
+  public String resourceGroupId() {
+    return resourceGroupId;
   }
 }
 

@@ -242,6 +242,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
         ResourceInstance result = response.getResult();
         assertNotNull(result);
+        assertNotNull(result.isOnetimeCredentials());
         assertEquals(result.getId(), testInstanceCrn);
         assertEquals(result.getGuid(), testInstanceGuid);
         assertEquals(result.getCrn(), testInstanceCrn);
@@ -915,6 +916,7 @@ public class ResourceControllerIT extends SdkIntegrationTestBase {
 
         ResourceKey result = response.getResult();
         assertNotNull(result);
+        assertNotNull(result.isOnetimeCredentials());
         assertEquals(result.getId(), testInstanceKeyCrn);
         assertEquals(result.getGuid(), testInstanceKeyGuid);
         assertEquals(result.getCrn(), testInstanceKeyCrn);

@@ -1202,29 +1202,28 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
     @Test(dependsOnMethods = { "testCreateS2SPolicyTemplate" })
     public void testCreatePolicyAssignmentError() throws Exception {
-      try{
-      AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
-        .type("Enterprise")
-        .id(testTargetEnterpriseAccountId)
-        .build();
+      try {
+        AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
+            .type("Enterprise")
+            .id(testTargetEnterpriseAccountId)
+            .build();
 
-      AssignmentTemplateDetails assignmentTemplateDetails = new AssignmentTemplateDetails.Builder()
-        .id(testS2STemplateId)
-        .version(testS2SBaseTemplateVersion)
-        .build();
-    
+        AssignmentTemplateDetails assignmentTemplateDetails = new AssignmentTemplateDetails.Builder()
+            .id(testS2STemplateId)
+            .version(testS2SBaseTemplateVersion)
+            .build();
 
-      CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
-        .version("1.0")
-        .target(assignmentTargetDetails)
-        .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
-        .build();
-      Response<PolicyAssignmentV1Collection> response = service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();
+        CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
+            .version("1.0")
+            .target(assignmentTargetDetails)
+            .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
+            .build();
+        service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();
       } catch (BadRequestException e) {
-            assertEquals(e.getStatusCode(), 400);
-            assertEquals(e.getMessage(), "Invalid body format. Check the input parameters. instance.target.type is not one of enum values: Account");
-        } 
-        
+        assertEquals(e.getStatusCode(), 400);
+        assertEquals(e.getMessage(),
+            "Invalid body format. Check the input parameters. instance.target.type is not one of enum values: Account");
+      }
     }
 
     @Test(dependsOnMethods = { "testCreateS2SPolicyTemplate" })
@@ -1239,7 +1238,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .id(testS2STemplateId)
         .version(testS2SBaseTemplateVersion)
         .build();
-    
 
       CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
         .version("1.0")

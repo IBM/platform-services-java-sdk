@@ -10,7 +10,6 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
 
 import static org.testng.Assert.assertEquals;
@@ -54,7 +53,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     private static final String TEST_EDITOR_ROLE_CRN = "crn:v1:bluemix:public:iam::::role:Editor";
     private static final String TEST_SERVICE_NAME = "iam-groups";
     private static final String POLICY_TYPE = "access";
-    private static final	String TEST_SERVICE_ROLE_CRN = "crn:v1:bluemix:public:iam-identity::::serviceRole:ServiceIdCreator";
+    private static final String TEST_SERVICE_ROLE_CRN = "crn:v1:bluemix:public:iam-identity::::serviceRole:ServiceIdCreator";
 
     String testAccountId = null;
     String testTargetAccountId = null;
@@ -98,9 +97,9 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     }
 
     /**
-     * This method is invoked before any @Test-annotated methods, and is responsible for
-     * creating the instance of the service that will be used by the rest of the test methods,
-     * as well as any other required initialization.
+     * This method is invoked before any @Test-annotated methods, and is
+     * responsible for creating the instance of the service that will be used by
+     * the rest of the test methods, as well as any other required initialization.
      */
     @BeforeClass
     public void constructService() {
@@ -136,16 +135,16 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     public void testCreateAccessPolicy() {
 
         ResourceAttribute resourceAttributeAccount = new ResourceAttribute.Builder()
-          .name("accountId")
-          .value(testAccountId)
-          .operator("stringEquals")
-          .build();
+                .name("accountId")
+                .value(testAccountId)
+                .operator("stringEquals")
+                .build();
 
         ResourceAttribute resourceAttributeService = new ResourceAttribute.Builder()
-          .name("serviceType")
-          .value("service")
-          .operator("stringEquals")
-          .build();
+                .name("serviceType")
+                .value("service")
+                .operator("stringEquals")
+                .build();
 
         ResourceTag resourceAttributeTag = new ResourceTag.Builder()
                 .name("project")
@@ -154,30 +153,30 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
                 .build();
 
         SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
-          .name("iam_id")
-          .value(TEST_USER_ID)
-          .build();
+                .name("iam_id")
+                .value(TEST_USER_ID)
+                .build();
 
         PolicyResource policyResourceModel = new PolicyResource.Builder()
-          .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-            resourceAttributeService)))
-          .tags(new ArrayList<ResourceTag>(Arrays.asList(resourceAttributeTag)))
-          .build();
+                .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
+                        resourceAttributeService)))
+                .tags(new ArrayList<ResourceTag>(Arrays.asList(resourceAttributeTag)))
+                .build();
 
         PolicyRole policyRoleModel = new PolicyRole.Builder()
-          .roleId(TEST_VIEW_ROLE_CRN)
-          .build();
+                .roleId(TEST_VIEW_ROLE_CRN)
+                .build();
 
         PolicySubject policySubjectModel = new PolicySubject.Builder()
-          .attributes(new ArrayList<SubjectAttribute>(Arrays.asList(subjectAttributeModel)))
-          .build();
+                .attributes(new ArrayList<SubjectAttribute>(Arrays.asList(subjectAttributeModel)))
+                .build();
 
         CreatePolicyOptions options = new CreatePolicyOptions.Builder()
-          .type(POLICY_TYPE)
-          .subjects(Arrays.asList(policySubjectModel))
-          .roles(Arrays.asList(policyRoleModel))
-          .resources(Arrays.asList(policyResourceModel))
-          .build();
+                .type(POLICY_TYPE)
+                .subjects(Arrays.asList(policySubjectModel))
+                .roles(Arrays.asList(policyRoleModel))
+                .resources(Arrays.asList(policyResourceModel))
+                .build();
 
         Response<Policy> response = service.createPolicy(options).execute();
         assertNotNull(response);
@@ -209,7 +208,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertNotNull(result);
         assertEquals(result.getId(), testPolicyId);
 
-
         List<String> values = response.getHeaders().values(HEADER_ETAG);
         assertNotNull(values);
         testPolicyEtag = values.get(0);
@@ -221,34 +219,34 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertNotNull(testPolicyEtag);
 
         ResourceAttribute resourceAttributeAccount = new ResourceAttribute.Builder()
-          .name("accountId")
-          .value(testAccountId)
-          .operator("stringEquals")
-          .build();
+                .name("accountId")
+                .value(testAccountId)
+                .operator("stringEquals")
+                .build();
 
         ResourceAttribute resourceAttributeService = new ResourceAttribute.Builder()
-          .name("serviceName")
-          .value(TEST_SERVICE_NAME)
-          .operator("stringEquals")
-          .build();
+                .name("serviceName")
+                .value(TEST_SERVICE_NAME)
+                .operator("stringEquals")
+                .build();
 
         SubjectAttribute subjectAttributeModel = new SubjectAttribute.Builder()
-          .name("iam_id")
-          .value(TEST_USER_ID)
-          .build();
+                .name("iam_id")
+                .value(TEST_USER_ID)
+                .build();
 
         PolicyResource policyResourceModel = new PolicyResource.Builder()
-          .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-            resourceAttributeService)))
-          .build();
+                .attributes(new ArrayList<ResourceAttribute>(Arrays.asList(resourceAttributeAccount,
+                        resourceAttributeService)))
+                .build();
 
         PolicyRole policyRoleModel = new PolicyRole.Builder()
-          .roleId(TEST_EDITOR_ROLE_CRN)
-          .build();
+                .roleId(TEST_EDITOR_ROLE_CRN)
+                .build();
 
         PolicySubject policySubjectModel = new PolicySubject.Builder()
-          .attributes(new ArrayList<SubjectAttribute>(Arrays.asList(subjectAttributeModel)))
-          .build();
+                .attributes(new ArrayList<SubjectAttribute>(Arrays.asList(subjectAttributeModel)))
+                .build();
 
         ReplacePolicyOptions options = new ReplacePolicyOptions.Builder()
                 .policyId(testPolicyId)
@@ -328,85 +326,83 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     public void testCreateV2AccessPolicy() {
 
         V2PolicyResourceAttribute resourceAttributeAccount = new V2PolicyResourceAttribute.Builder()
-          .key("accountId")
-          .value(testAccountId)
-          .operator("stringEquals")
-          .build();
+                .key("accountId")
+                .value(testAccountId)
+                .operator("stringEquals")
+                .build();
 
         V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
-          .key("serviceType")
-          .value("service")
-          .operator("stringEquals")
-          .build();
-        
-        V2PolicyResourceTag resourceAttributeTag = new V2PolicyResourceTag.Builder()
-          .key("project")
-          .value("prototype")
-          .operator("stringEquals")
-          .build();
+                .key("serviceType")
+                .value("service")
+                .operator("stringEquals")
+                .build();
 
+        V2PolicyResourceTag resourceAttributeTag = new V2PolicyResourceTag.Builder()
+                .key("project")
+                .value("prototype")
+                .operator("stringEquals")
+                .build();
 
         V2PolicySubjectAttribute subjectAttributeModel = new V2PolicySubjectAttribute.Builder()
-          .key("iam_id")
-          .value(TEST_USER_ID_TWO)
-          .operator("stringEquals")
-          .build();
+                .key("iam_id")
+                .value(TEST_USER_ID_TWO)
+                .operator("stringEquals")
+                .build();
 
         V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
-          .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-            resourceAttributeService)))
-          .tags(new ArrayList<V2PolicyResourceTag>(Arrays.asList(resourceAttributeTag)))
-          .build();
+                .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeAccount,
+                        resourceAttributeService)))
+                .tags(new ArrayList<V2PolicyResourceTag>(Arrays.asList(resourceAttributeTag)))
+                .build();
 
         V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
-          .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeModel)))
-          .build();
+                .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeModel)))
+                .build();
 
         Roles rolesModel = new Roles.Builder()
-          .roleId(TEST_VIEW_ROLE_CRN)
-          .build();
-        
+                .roleId(TEST_VIEW_ROLE_CRN)
+                .build();
+
         Grant policyGrantModel = new Grant.Builder()
-          .roles(Arrays.asList(rolesModel))
-          .build();
+                .roles(Arrays.asList(rolesModel))
+                .build();
 
         Control controlModel = new Control.Builder()
-          .grant(policyGrantModel)
-          .build();
+                .grant(policyGrantModel)
+                .build();
 
         NestedConditionRuleAttribute weeklyConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
-          .key("{{environment.attributes.day_of_week}}")
-          .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
-          .operator("dayOfWeekAnyOf")
-          .build();
-        
+                .key("{{environment.attributes.day_of_week}}")
+                .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
+                .operator("dayOfWeekAnyOf")
+                .build();
 
         NestedConditionRuleAttribute startConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
-          .key("{{environment.attributes.current_time}}")
-          .value("09:00:00+00:00")
-          .operator("timeGreaterThanOrEquals")
-          .build();
+                .key("{{environment.attributes.current_time}}")
+                .value("09:00:00+00:00")
+                .operator("timeGreaterThanOrEquals")
+                .build();
 
         NestedConditionRuleAttribute endConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
-          .key("{{environment.attributes.current_time}}")
-          .value("17:00:00+00:00")
-          .operator("timeLessThanOrEquals")
-          .build();
+                .key("{{environment.attributes.current_time}}")
+                .value("17:00:00+00:00")
+                .operator("timeLessThanOrEquals")
+                .build();
 
         V2PolicyRuleRuleWithNestedConditions policyRuleModel = new V2PolicyRuleRuleWithNestedConditions.Builder()
-          .operator("and")
-          .conditions(new ArrayList<NestedCondition>(Arrays.asList(weeklyConditionAttributeModel,
-            startConditionAttributeModel, endConditionAttributeModel)))
-          .build();
+                .operator("and")
+                .conditions(new ArrayList<NestedCondition>(Arrays.asList(weeklyConditionAttributeModel,
+                        startConditionAttributeModel, endConditionAttributeModel)))
+                .build();
 
         CreateV2PolicyOptions options = new CreateV2PolicyOptions.Builder()
-          .type(POLICY_TYPE)
-          .subject(policySubjectModel)
-          .control(controlModel)
-          .resource(policyResourceModel)
-          .rule(policyRuleModel)
-          .pattern("time-based-conditions:weekly:custom-hours")
-          .build();
+                .type(POLICY_TYPE)
+                .subject(policySubjectModel)
+                .control(controlModel)
+                .resource(policyResourceModel)
+                .rule(policyRuleModel)
+                .pattern("time-based-conditions:weekly:custom-hours")
+                .build();
 
         Response<V2Policy> response = service.createV2Policy(options).execute();
         assertNotNull(response);
@@ -440,7 +436,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertNotNull(result);
         assertEquals(result.getId(), testV2PolicyId);
 
-
         List<String> values = response.getHeaders().values(HEADER_ETAG);
         assertNotNull(values);
         testV2PolicyEtag = values.get(0);
@@ -452,67 +447,66 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertNotNull(testV2PolicyEtag);
 
         V2PolicyResourceAttribute resourceAttributeAccount = new V2PolicyResourceAttribute.Builder()
-          .key("accountId")
-          .value(testAccountId)
-          .operator("stringEquals")
-          .build();
+                .key("accountId")
+                .value(testAccountId)
+                .operator("stringEquals")
+                .build();
 
         V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
-          .key("serviceName")
-          .value(TEST_SERVICE_NAME)
-          .operator("stringEquals")
-          .build();
+                .key("serviceName")
+                .value(TEST_SERVICE_NAME)
+                .operator("stringEquals")
+                .build();
 
         V2PolicySubjectAttribute subjectAttributeModel = new V2PolicySubjectAttribute.Builder()
-          .key("iam_id")
-          .value(TEST_USER_ID_TWO)
-          .operator("stringEquals")
-          .build();
+                .key("iam_id")
+                .value(TEST_USER_ID_TWO)
+                .operator("stringEquals")
+                .build();
 
         V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
-          .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeAccount,
-            resourceAttributeService)))
-          .build();
+                .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeAccount,
+                        resourceAttributeService)))
+                .build();
 
         V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
-          .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeModel)))
-          .build();
-        
+                .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeModel)))
+                .build();
+
         Roles rolesModel = new Roles.Builder()
-          .roleId(TEST_EDITOR_ROLE_CRN)
-          .build();
+                .roleId(TEST_EDITOR_ROLE_CRN)
+                .build();
 
         Grant policyGrantModel = new Grant.Builder()
-          .roles(Arrays.asList(rolesModel))
-          .build();
+                .roles(Arrays.asList(rolesModel))
+                .build();
 
         Control controlModel = new Control.Builder()
-          .grant(policyGrantModel)
-          .build();
+                .grant(policyGrantModel)
+                .build();
         NestedConditionRuleAttribute weeklyConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
-          .key("{{environment.attributes.day_of_week}}")
-          .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
-          .operator("dayOfWeekAnyOf")
-          .build();
-        
+                .key("{{environment.attributes.day_of_week}}")
+                .value(new ArrayList<String>(Arrays.asList("1+00:00", "2+00:00", "3+00:00", "4+00:00", "5+00:00")))
+                .operator("dayOfWeekAnyOf")
+                .build();
 
         NestedConditionRuleAttribute startConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
-          .key("{{environment.attributes.current_time}}")
-          .value("09:00:00+00:00")
-          .operator("timeGreaterThanOrEquals")
-          .build();
+                .key("{{environment.attributes.current_time}}")
+                .value("09:00:00+00:00")
+                .operator("timeGreaterThanOrEquals")
+                .build();
 
         NestedConditionRuleAttribute endConditionAttributeModel = new NestedConditionRuleAttribute.Builder()
-          .key("{{environment.attributes.current_time}}")
-          .value("17:00:00+00:00")
-          .operator("timeLessThanOrEquals")
-          .build();
+                .key("{{environment.attributes.current_time}}")
+                .value("17:00:00+00:00")
+                .operator("timeLessThanOrEquals")
+                .build();
 
         V2PolicyRuleRuleWithNestedConditions policyRuleModel = new V2PolicyRuleRuleWithNestedConditions.Builder()
-          .operator("and")
-          .conditions(new ArrayList<NestedCondition>(Arrays.asList(weeklyConditionAttributeModel,
-            startConditionAttributeModel, endConditionAttributeModel)))
-          .build();
+                .operator("and")
+                .conditions(new ArrayList<NestedCondition>(Arrays.asList(weeklyConditionAttributeModel,
+                        startConditionAttributeModel, endConditionAttributeModel)))
+                .build();
 
         ReplaceV2PolicyOptions options = new ReplaceV2PolicyOptions.Builder()
                 .id(testV2PolicyId)
@@ -574,13 +568,13 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     public void testCreateCustomRole() {
 
         CreateRoleOptions options = new CreateRoleOptions.Builder()
-          .accountId(testAccountId)
-          .name(testCustomRoleName)
-          .displayName(testCustomRoleDisplayName)
-          .description(testCustomRoleDescription)
-          .serviceName(TEST_SERVICE_NAME)
-          .actions(testCustomRoleActions)
-          .build();
+                .accountId(testAccountId)
+                .name(testCustomRoleName)
+                .displayName(testCustomRoleDisplayName)
+                .description(testCustomRoleDescription)
+                .serviceName(TEST_SERVICE_NAME)
+                .actions(testCustomRoleActions)
+                .build();
 
         Response<CustomRole> response = service.createRole(options).execute();
         assertNotNull(response);
@@ -620,7 +614,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(result.getServiceName(), TEST_SERVICE_NAME);
         assertEquals(result.getActions(), testCustomRoleActions);
 
-
         List<String> values = response.getHeaders().values(HEADER_ETAG);
         assertNotNull(values);
         testCustomRoleEtag = values.get(0);
@@ -633,12 +626,12 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         String updatedRoleDescription = "Updated description";
         ReplaceRoleOptions options = new ReplaceRoleOptions.Builder()
-          .roleId(testCustomRoleId)
-          .ifMatch(testCustomRoleEtag)
-          .displayName(testCustomRoleDisplayName)
-          .description(updatedRoleDescription)
-          .actions(testCustomRoleActions)
-          .build();
+                .roleId(testCustomRoleId)
+                .ifMatch(testCustomRoleEtag)
+                .displayName(testCustomRoleDisplayName)
+                .description(updatedRoleDescription)
+                .actions(testCustomRoleActions)
+                .build();
 
         Response<CustomRole> response = service.replaceRole(options).execute();
         assertNotNull(response);
@@ -679,13 +672,13 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertTrue(foundTestRole);
     }
 
-     public void testListV2Roles() {
+    public void testListV2Roles() {
 
         ListRolesOptions options = new ListRolesOptions.Builder()
                 .accountId(testAccountId)
                 .serviceGroupId("IAM")
                 .build();
-        
+
         Response<RoleCollection> response = service.listRoles(options).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
@@ -714,604 +707,602 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
     @Test
     public void testCreatePolicyTemplate() throws Exception {
-      V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
-        .key("serviceType")
-        .value("service")
-        .operator("stringEquals")
-        .build();
+        V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
+                .key("serviceType")
+                .value("service")
+                .operator("stringEquals")
+                .build();
 
-      Roles rolesModel = new Roles.Builder()
-        .roleId(TEST_VIEW_ROLE_CRN)
-        .build();
-      
-      Grant policyGrantModel = new Grant.Builder()
-        .roles(Arrays.asList(rolesModel))
-        .build();
+        Roles rolesModel = new Roles.Builder()
+                .roleId(TEST_VIEW_ROLE_CRN)
+                .build();
 
-      Control controlModel = new Control.Builder()
-        .grant(policyGrantModel)
-        .build();
+        Grant policyGrantModel = new Grant.Builder()
+                .roles(Arrays.asList(rolesModel))
+                .build();
 
-      V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
-        .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
-        .build();
+        Control controlModel = new Control.Builder()
+                .grant(policyGrantModel)
+                .build();
 
-      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
-        .type(POLICY_TYPE)
-        .description("SDK Test Policy")
-        .resource(policyResourceModel)
-        .control(controlModel)
-        .build();
+        V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
+                .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
+                .build();
 
-      CreatePolicyTemplateOptions createPolicyTemplateOptions = new CreatePolicyTemplateOptions.Builder()
-        .name(TEST_TEMPLATE_NAME)
-        .accountId(testAccountId)
-        .policy(templatePolicyModel)
-        .description("SDK Test template with viewer role")
-        .build();
+        TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+                .type(POLICY_TYPE)
+                .description("SDK Test Policy")
+                .resource(policyResourceModel)
+                .control(controlModel)
+                .build();
 
-      Response<PolicyTemplateLimitData> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 201);
+        CreatePolicyTemplateOptions createPolicyTemplateOptions = new CreatePolicyTemplateOptions.Builder()
+                .name(TEST_TEMPLATE_NAME)
+                .accountId(testAccountId)
+                .policy(templatePolicyModel)
+                .description("SDK Test template with viewer role")
+                .build();
 
-      PolicyTemplateLimitData result = response.getResult();
+        Response<PolicyTemplateLimitData> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 201);
 
-      assertNotNull(result);
-      assertEquals(result.getPolicy(), templatePolicyModel);
-      testTemplateId = result.getId();
-      assertEquals(result.getState(), "active");
+        PolicyTemplateLimitData result = response.getResult();
+
+        assertNotNull(result);
+        assertEquals(result.getPolicy(), templatePolicyModel);
+        testTemplateId = result.getId();
+        assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testCreatePolicyTemplate"})
     public void testGetPolicyTemplate() {
-      assertNotNull(testTemplateId);
-      GetPolicyTemplateOptions getPolicyTemplateOptions = new GetPolicyTemplateOptions.Builder()
-        .policyTemplateId(testTemplateId)
-        .build();
+        assertNotNull(testTemplateId);
+        GetPolicyTemplateOptions getPolicyTemplateOptions = new GetPolicyTemplateOptions.Builder()
+                .policyTemplateId(testTemplateId)
+                .build();
 
-      Response<PolicyTemplate> response = service.getPolicyTemplate(getPolicyTemplateOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+        Response<PolicyTemplate> response = service.getPolicyTemplate(getPolicyTemplateOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
 
-      PolicyTemplate result = response.getResult();
+        PolicyTemplate result = response.getResult();
 
-      assertNotNull(result);
-      assertEquals(result.getId(), testTemplateId);
-      testTemplateVersion = result.getVersion();
-      List<String> values = response.getHeaders().values(HEADER_ETAG);
-      assertNotNull(values);
-      testTemplateEtag = values.get(0);
-      assertEquals(result.getState(), "active");
+        assertNotNull(result);
+        assertEquals(result.getId(), testTemplateId);
+        testTemplateVersion = result.getVersion();
+        List<String> values = response.getHeaders().values(HEADER_ETAG);
+        assertNotNull(values);
+        testTemplateEtag = values.get(0);
+        assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testGetPolicyTemplate"})
     public void testReplacePolicyTemplate() {
-      assertNotNull(testTemplateId);
-      assertNotNull(testTemplateEtag);
-      V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
-        .key("serviceType")
-        .value("service")
-        .operator("stringEquals")
-        .build();
+        assertNotNull(testTemplateId);
+        assertNotNull(testTemplateEtag);
+        V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
+                .key("serviceType")
+                .value("service")
+                .operator("stringEquals")
+                .build();
 
-      Roles rolesModel = new Roles.Builder()
-        .roleId(TEST_EDITOR_ROLE_CRN)
-        .build();
-      
-      Grant policyGrantModel = new Grant.Builder()
-        .roles(Arrays.asList(rolesModel))
-        .build();
+        Roles rolesModel = new Roles.Builder()
+                .roleId(TEST_EDITOR_ROLE_CRN)
+                .build();
 
-      Control controlModel = new Control.Builder()
-        .grant(policyGrantModel)
-        .build();
+        Grant policyGrantModel = new Grant.Builder()
+                .roles(Arrays.asList(rolesModel))
+                .build();
 
-      V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
-        .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
-        .build();
+        Control controlModel = new Control.Builder()
+                .grant(policyGrantModel)
+                .build();
 
-      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
-        .type(POLICY_TYPE)
-        .description("SDK test Template")
-        .resource(policyResourceModel)
-        .control(controlModel)
-        .build();
+        V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
+                .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
+                .build();
 
-      ReplacePolicyTemplateOptions replacePolicyTemplateOptions = new ReplacePolicyTemplateOptions.Builder()
-        .policyTemplateId(testTemplateId)
-        .version(testTemplateVersion)
-        .ifMatch(testTemplateEtag)
-        .policy(templatePolicyModel)
-        .description("Updated SDK test template with editor role")
-        .build();
+        TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+                .type(POLICY_TYPE)
+                .description("SDK test Template")
+                .resource(policyResourceModel)
+                .control(controlModel)
+                .build();
 
-      Response<PolicyTemplate> response = service.replacePolicyTemplate(replacePolicyTemplateOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+        ReplacePolicyTemplateOptions replacePolicyTemplateOptions = new ReplacePolicyTemplateOptions.Builder()
+                .policyTemplateId(testTemplateId)
+                .version(testTemplateVersion)
+                .ifMatch(testTemplateEtag)
+                .policy(templatePolicyModel)
+                .description("Updated SDK test template with editor role")
+                .build();
 
-      PolicyTemplate result = response.getResult();
-      assertEquals(result.getPolicy(), templatePolicyModel);
-      assertEquals(result.getDescription(), "Updated SDK test template with editor role");
-      assertEquals(result.getState(), "active");
+        Response<PolicyTemplate> response = service.replacePolicyTemplate(replacePolicyTemplateOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+
+        PolicyTemplate result = response.getResult();
+        assertEquals(result.getPolicy(), templatePolicyModel);
+        assertEquals(result.getDescription(), "Updated SDK test template with editor role");
+        assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testReplacePolicyTemplate"})
     public void testListPolicyTemplates() throws Exception, InterruptedException {
-      assertNotNull(testTemplateId);
+        assertNotNull(testTemplateId);
 
-      ListPolicyTemplatesOptions listPolicyTemplatesOptions = new ListPolicyTemplatesOptions.Builder()
-        .accountId(testAccountId)
-        .acceptLanguage("default")
-        .build();
+        ListPolicyTemplatesOptions listPolicyTemplatesOptions = new ListPolicyTemplatesOptions.Builder()
+                .accountId(testAccountId)
+                .acceptLanguage("default")
+                .build();
 
-      
-      Response<PolicyTemplateCollection> response = service.listPolicyTemplates(listPolicyTemplatesOptions).execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+        Response<PolicyTemplateCollection> response = service.listPolicyTemplates(listPolicyTemplatesOptions).execute();
 
-      PolicyTemplateCollection result = response.getResult();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
 
-      assertNotNull(result);
-      // Confirm the test policy is present
-      boolean foundTestPolicyTemplate = false;
-      for (PolicyTemplate policyTemplate : result.getPolicyTemplates()) {
-          if (testTemplateId.equals(policyTemplate.getId())) {
-              foundTestPolicyTemplate = true;
-              break;
-          }
-      }
-      assertTrue(foundTestPolicyTemplate);
-      assertEquals(result.getPolicyTemplates().get(0).getState(), "active");
+        PolicyTemplateCollection result = response.getResult();
+
+        assertNotNull(result);
+        // Confirm the test policy is present
+        boolean foundTestPolicyTemplate = false;
+        for (PolicyTemplate policyTemplate : result.getPolicyTemplates()) {
+            if (testTemplateId.equals(policyTemplate.getId())) {
+                foundTestPolicyTemplate = true;
+                break;
+            }
+        }
+        assertTrue(foundTestPolicyTemplate);
+        assertEquals(result.getPolicyTemplates().get(0).getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testListPolicyTemplates"})
     public void testCreatePolicyTemplateVersion() {
-      assertNotNull(testTemplateId);
+        assertNotNull(testTemplateId);
 
-      V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
-        .key("serviceType")
-        .value("service")
-        .operator("stringEquals")
-        .build();
+        V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
+                .key("serviceType")
+                .value("service")
+                .operator("stringEquals")
+                .build();
 
-      Roles rolesModel = new Roles.Builder()
-        .roleId(TEST_VIEW_ROLE_CRN)
-        .build();
-      
-      Grant policyGrantModel = new Grant.Builder()
-        .roles(Arrays.asList(rolesModel))
-        .build();
+        Roles rolesModel = new Roles.Builder()
+                .roleId(TEST_VIEW_ROLE_CRN)
+                .build();
 
-      Control controlModel = new Control.Builder()
-        .grant(policyGrantModel)
-        .build();
+        Grant policyGrantModel = new Grant.Builder()
+                .roles(Arrays.asList(rolesModel))
+                .build();
 
-      V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
-        .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
-        .build();
+        Control controlModel = new Control.Builder()
+                .grant(policyGrantModel)
+                .build();
 
-      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
-        .type(POLICY_TYPE)
-        .description("SDK Test Policy")
-        .resource(policyResourceModel)
-        .control(controlModel)
-        .build();
+        V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
+                .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
+                .build();
 
-      CreatePolicyTemplateVersionOptions createPolicyTemplateVersionOptions = new CreatePolicyTemplateVersionOptions.Builder()
-        .policyTemplateId(testTemplateId)
-        .policy(templatePolicyModel)
-        .description("SDK Test template with viewer role")
-        .build();
+        TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+                .type(POLICY_TYPE)
+                .description("SDK Test Policy")
+                .resource(policyResourceModel)
+                .control(controlModel)
+                .build();
 
-      // Invoke operation
-      Response<PolicyTemplateLimitData> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 201);
+        CreatePolicyTemplateVersionOptions createPolicyTemplateVersionOptions = new CreatePolicyTemplateVersionOptions.Builder()
+                .policyTemplateId(testTemplateId)
+                .policy(templatePolicyModel)
+                .description("SDK Test template with viewer role")
+                .build();
 
-      PolicyTemplateLimitData result = response.getResult();
+        // Invoke operation
+        Response<PolicyTemplateLimitData> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
 
-      assertNotNull(result);
-      testNewTemplateVersion = result.getVersion();
-      assertEquals(result.getPolicy(), templatePolicyModel);
-      assertTrue(Integer.parseInt(testNewTemplateVersion) > Integer.parseInt(testTemplateVersion));
-      assertEquals(result.getState(), "active");
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 201);
+
+        PolicyTemplateLimitData result = response.getResult();
+
+        assertNotNull(result);
+        testNewTemplateVersion = result.getVersion();
+        assertEquals(result.getPolicy(), templatePolicyModel);
+        assertTrue(Integer.parseInt(testNewTemplateVersion) > Integer.parseInt(testTemplateVersion));
+        assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testCreatePolicyTemplateVersion"})
     public void testGetPolicyTemplateVersion() {
-      assertNotNull(testTemplateId);
-      assertNotNull(testNewTemplateVersion);
+        assertNotNull(testTemplateId);
+        assertNotNull(testNewTemplateVersion);
 
-      GetPolicyTemplateVersionOptions getPolicyTemplateVersionOptions = new GetPolicyTemplateVersionOptions.Builder()
-        .policyTemplateId(testTemplateId)
-        .version(testNewTemplateVersion)
-        .build();
+        GetPolicyTemplateVersionOptions getPolicyTemplateVersionOptions = new GetPolicyTemplateVersionOptions.Builder()
+                .policyTemplateId(testTemplateId)
+                .version(testNewTemplateVersion)
+                .build();
 
-      Response<PolicyTemplate> response = service.getPolicyTemplateVersion(getPolicyTemplateVersionOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+        Response<PolicyTemplate> response = service.getPolicyTemplateVersion(getPolicyTemplateVersionOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
 
-      PolicyTemplate result = response.getResult();
-      assertNotNull(result);
-      assertEquals(result.getState(), "active");
+        PolicyTemplate result = response.getResult();
+        assertNotNull(result);
+        assertEquals(result.getState(), "active");
     }
 
-    @Test(dependsOnMethods = { "testGetPolicyTemplateVersion" })
+    @Test(dependsOnMethods = {"testGetPolicyTemplateVersion"})
     public void testCommitPolicyTemplate() {
-      assertNotNull(testTemplateId);
-      assertNotNull(testTemplateEtag);
-      CommitPolicyTemplateOptions commitPolicyTemplateOptions = new CommitPolicyTemplateOptions.Builder()
-        .policyTemplateId(testTemplateId)
-        .version(testTemplateVersion)
-        .build();
+        assertNotNull(testTemplateId);
+        assertNotNull(testTemplateEtag);
+        CommitPolicyTemplateOptions commitPolicyTemplateOptions = new CommitPolicyTemplateOptions.Builder()
+                .policyTemplateId(testTemplateId)
+                .version(testTemplateVersion)
+                .build();
 
-      Response<Void> response = service.commitPolicyTemplate(commitPolicyTemplateOptions).execute();
+        Response<Void> response = service.commitPolicyTemplate(commitPolicyTemplateOptions).execute();
 
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 204);
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 204);
 
-      GetPolicyTemplateVersionOptions getPolicyTemplateVersionOptions = new GetPolicyTemplateVersionOptions.Builder()
-        .policyTemplateId(testTemplateId)
-        .version(testTemplateVersion)
-        .build();
+        GetPolicyTemplateVersionOptions getPolicyTemplateVersionOptions = new GetPolicyTemplateVersionOptions.Builder()
+                .policyTemplateId(testTemplateId)
+                .version(testTemplateVersion)
+                .build();
 
-      Response<PolicyTemplate> getResponse = service.getPolicyTemplateVersion(getPolicyTemplateVersionOptions).execute();
-      assertNotNull(getResponse);
-      assertEquals(getResponse.getStatusCode(), 200);
+        Response<PolicyTemplate> getResponse = service.getPolicyTemplateVersion(getPolicyTemplateVersionOptions).execute();
+        assertNotNull(getResponse);
+        assertEquals(getResponse.getStatusCode(), 200);
 
-      List<String> values = getResponse.getHeaders().values(HEADER_ETAG);
-      assertNotNull(values);
-      testTemplateEtag = values.get(0);
+        List<String> values = getResponse.getHeaders().values(HEADER_ETAG);
+        assertNotNull(values);
+        testTemplateEtag = values.get(0);
 
-      // Once template is committed, it cannot be updated. Check that update template for first version fails
-      try {
-        V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
-          .key("serviceType")
-          .value("service")
-          .operator("stringEquals")
-          .build();
+        // Once template is committed, it cannot be updated. Check that update template for first version fails
+        try {
+            V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
+                    .key("serviceType")
+                    .value("service")
+                    .operator("stringEquals")
+                    .build();
 
-        Roles rolesModel = new Roles.Builder()
-          .roleId(TEST_EDITOR_ROLE_CRN)
-          .build();
-        
-        Grant policyGrantModel = new Grant.Builder()
-          .roles(Arrays.asList(rolesModel))
-          .build();
+            Roles rolesModel = new Roles.Builder()
+                    .roleId(TEST_EDITOR_ROLE_CRN)
+                    .build();
 
-        Control controlModel = new Control.Builder()
-          .grant(policyGrantModel)
-          .build();
+            Grant policyGrantModel = new Grant.Builder()
+                    .roles(Arrays.asList(rolesModel))
+                    .build();
 
-        V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
-          .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
-          .build();
+            Control controlModel = new Control.Builder()
+                    .grant(policyGrantModel)
+                    .build();
 
-        TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
-          .type(POLICY_TYPE)
-          .description("SDK test Template")
-          .resource(policyResourceModel)
-          .control(controlModel)
-          .build();
+            V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
+                    .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
+                    .build();
 
-        ReplacePolicyTemplateOptions replacePolicyTemplateOptions = new ReplacePolicyTemplateOptions.Builder()
-          .policyTemplateId(testTemplateId)
-          .version(testTemplateVersion)
-          .ifMatch(testTemplateEtag)
-          .policy(templatePolicyModel)
-          .description("Updated SDK test template with editor role")
-          .build();
+            TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+                    .type(POLICY_TYPE)
+                    .description("SDK test Template")
+                    .resource(policyResourceModel)
+                    .control(controlModel)
+                    .build();
 
-        Response<PolicyTemplate> updateResponse = service.replacePolicyTemplate(replacePolicyTemplateOptions).execute();
-      } catch (ServiceResponseException e) {
-        assertEquals(e.getMessage(), "Policy template id '" + testTemplateId + "' and version '" + testTemplateVersion + "' is committed and cannot be updated");
-        assertEquals(e.getStatusCode(), 400);
-      }
+            ReplacePolicyTemplateOptions replacePolicyTemplateOptions = new ReplacePolicyTemplateOptions.Builder()
+                    .policyTemplateId(testTemplateId)
+                    .version(testTemplateVersion)
+                    .ifMatch(testTemplateEtag)
+                    .policy(templatePolicyModel)
+                    .description("Updated SDK test template with editor role")
+                    .build();
+
+            Response<PolicyTemplate> updateResponse = service.replacePolicyTemplate(replacePolicyTemplateOptions).execute();
+        } catch (ServiceResponseException e) {
+            assertEquals(e.getMessage(), "Policy template id '" + testTemplateId + "' and version '" + testTemplateVersion + "' is committed and cannot be updated");
+            assertEquals(e.getStatusCode(), 400);
+        }
     }
 
     @Test(dependsOnMethods = {"testCommitPolicyTemplate"})
     public void testDeletePolicyTemplateVersion() {
-      DeletePolicyTemplateVersionOptions deletePolicyTemplateVersionOptions = new DeletePolicyTemplateVersionOptions.Builder()
-        .policyTemplateId(testTemplateId)
-        .version(testTemplateVersion)
-        .build();
+        DeletePolicyTemplateVersionOptions deletePolicyTemplateVersionOptions = new DeletePolicyTemplateVersionOptions.Builder()
+                .policyTemplateId(testTemplateId)
+                .version(testTemplateVersion)
+                .build();
 
-      Response<Void> response = service.deletePolicyTemplateVersion(deletePolicyTemplateVersionOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 204);
+        Response<Void> response = service.deletePolicyTemplateVersion(deletePolicyTemplateVersionOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 204);
     }
 
     @Test(dependsOnMethods = {"testDeletePolicyTemplateVersion"})
     public void testListPolicyTemplateVersions() {
-      ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptions = new ListPolicyTemplateVersionsOptions.Builder()
-        .policyTemplateId(testTemplateId)
-        .build();
+        ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptions = new ListPolicyTemplateVersionsOptions.Builder()
+                .policyTemplateId(testTemplateId)
+                .build();
 
-      Response<PolicyTemplateVersionsCollection> response = service.listPolicyTemplateVersions(listPolicyTemplateVersionsOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+        Response<PolicyTemplateVersionsCollection> response = service.listPolicyTemplateVersions(listPolicyTemplateVersionsOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
 
-      PolicyTemplateVersionsCollection result = response.getResult();
-      assertNotNull(result);
-      assertTrue(result.getVersions().size() == 1);
-      // Confirm new test policy template version is present
-      // and old version is not present
-      boolean foundTestPolicyTemplateVersion = true;
-      boolean foundNewTestPolicyTemplateVersion = false;
-      for (PolicyTemplate policyTemplate : result.getVersions()) {
-          if (testTemplateVersion.equals(policyTemplate.getVersion())) {
-              foundTestPolicyTemplateVersion = false;
-              break;
-          }
-          if (testNewTemplateVersion.equals(policyTemplate.getVersion())) {
-              foundNewTestPolicyTemplateVersion = true;
-          }
-      }
-      assertTrue(foundTestPolicyTemplateVersion);
-      assertTrue(foundNewTestPolicyTemplateVersion);
+        PolicyTemplateVersionsCollection result = response.getResult();
+        assertNotNull(result);
+        assertTrue(result.getVersions().size() == 1);
+        // Confirm new test policy template version is present
+        // and old version is not present
+        boolean foundTestPolicyTemplateVersion = true;
+        boolean foundNewTestPolicyTemplateVersion = false;
+        for (PolicyTemplate policyTemplate : result.getVersions()) {
+            if (testTemplateVersion.equals(policyTemplate.getVersion())) {
+                foundTestPolicyTemplateVersion = false;
+                break;
+            }
+            if (testNewTemplateVersion.equals(policyTemplate.getVersion())) {
+                foundNewTestPolicyTemplateVersion = true;
+            }
+        }
+        assertTrue(foundTestPolicyTemplateVersion);
+        assertTrue(foundNewTestPolicyTemplateVersion);
     }
 
     @Test
     public void testCreateS2SPolicyTemplate() throws Exception {
-      V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
-        .key("serviceName")
-        .value("cloud-object-storage")
-        .operator("stringEquals")
-        .build();
+        V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
+                .key("serviceName")
+                .value("cloud-object-storage")
+                .operator("stringEquals")
+                .build();
 
-      Roles rolesModel = new Roles.Builder()
-        .roleId("crn:v1:bluemix:public:iam::::serviceRole:Writer")
-        .build();
-      
-      Grant policyGrantModel = new Grant.Builder()
-        .roles(Arrays.asList(rolesModel))
-        .build();
+        Roles rolesModel = new Roles.Builder()
+                .roleId("crn:v1:bluemix:public:iam::::serviceRole:Writer")
+                .build();
 
-      Control controlModel = new Control.Builder()
-        .grant(policyGrantModel)
-        .build();
+        Grant policyGrantModel = new Grant.Builder()
+                .roles(Arrays.asList(rolesModel))
+                .build();
 
-      V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
-        .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
-        .build();
+        Control controlModel = new Control.Builder()
+                .grant(policyGrantModel)
+                .build();
 
-      V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
-        .key("serviceName")
-        .value("compliance")
-        .operator("stringEquals")
-        .build();
+        V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
+                .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
+                .build();
 
-      V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
-        .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeService)))
-        .build();
+        V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
+                .key("serviceName")
+                .value("compliance")
+                .operator("stringEquals")
+                .build();
 
-      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
-        .type("authorization")
-        .description("SDK S2S Test Policy Template")
-        .resource(policyResourceModel)
-        .subject(policySubjectModel)
-        .control(controlModel)
-        .build();
+        V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
+                .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeService)))
+                .build();
 
-      CreatePolicyTemplateOptions createPolicyTemplateOptions = new CreatePolicyTemplateOptions.Builder()
-        .name("S2STest")
-        .accountId(testAccountId)
-        .policy(templatePolicyModel)
-        .description("SDK Test template with viewer role")
-        .committed(true)
-        .build();
+        TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+                .type("authorization")
+                .description("SDK S2S Test Policy Template")
+                .resource(policyResourceModel)
+                .subject(policySubjectModel)
+                .control(controlModel)
+                .build();
 
-      Response<PolicyTemplateLimitData> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 201);
+        CreatePolicyTemplateOptions createPolicyTemplateOptions = new CreatePolicyTemplateOptions.Builder()
+                .name("S2STest")
+                .accountId(testAccountId)
+                .policy(templatePolicyModel)
+                .description("SDK Test template with viewer role")
+                .committed(true)
+                .build();
 
-      PolicyTemplateLimitData result = response.getResult();
+        Response<PolicyTemplateLimitData> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 201);
 
-      assertNotNull(result);
-      assertEquals(result.getPolicy(), templatePolicyModel);
-      testS2STemplateId = result.getId();
-      testS2SBaseTemplateVersion = result.getVersion();
-      assertEquals(result.getState(), "active");
+        PolicyTemplateLimitData result = response.getResult();
+
+        assertNotNull(result);
+        assertEquals(result.getPolicy(), templatePolicyModel);
+        testS2STemplateId = result.getId();
+        testS2SBaseTemplateVersion = result.getVersion();
+        assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testCreateS2SPolicyTemplate"})
     public void testCreatePolicyS2STemplateVersion() {
-      assertNotNull(testS2STemplateId);
+        assertNotNull(testS2STemplateId);
 
-      V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
-        .key("serviceName")
-        .value("kms")
-        .operator("stringEquals")
-        .build();
+        V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
+                .key("serviceName")
+                .value("kms")
+                .operator("stringEquals")
+                .build();
 
-      Roles rolesModel = new Roles.Builder()
-        .roleId("crn:v1:bluemix:public:iam::::serviceRole:Reader")
-        .build();
-      
-      Grant policyGrantModel = new Grant.Builder()
-        .roles(Arrays.asList(rolesModel))
-        .build();
+        Roles rolesModel = new Roles.Builder()
+                .roleId("crn:v1:bluemix:public:iam::::serviceRole:Reader")
+                .build();
 
-      Control controlModel = new Control.Builder()
-        .grant(policyGrantModel)
-        .build();
+        Grant policyGrantModel = new Grant.Builder()
+                .roles(Arrays.asList(rolesModel))
+                .build();
 
-      V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
-        .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
-        .build();
+        Control controlModel = new Control.Builder()
+                .grant(policyGrantModel)
+                .build();
 
-       V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
-        .key("serviceName")
-        .value("compliance")
-        .operator("stringEquals")
-        .build();
+        V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
+                .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
+                .build();
 
-      V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
-        .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeService)))
-        .build();
+        V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
+                .key("serviceName")
+                .value("compliance")
+                .operator("stringEquals")
+                .build();
 
-      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
-        .type("authorization")
-        .description("SDK S2S Test Policy Template version")
-        .resource(policyResourceModel)
-        .subject(policySubjectModel)
-        .control(controlModel)
-        .build();
+        V2PolicySubject policySubjectModel = new V2PolicySubject.Builder()
+                .attributes(new ArrayList<V2PolicySubjectAttribute>(Arrays.asList(subjectAttributeService)))
+                .build();
 
-      CreatePolicyTemplateVersionOptions createPolicyTemplateVersionOptions = new CreatePolicyTemplateVersionOptions.Builder()
-        .policyTemplateId(testS2STemplateId)
-        .policy(templatePolicyModel)
-        .description("SDK Test template with viewer role")
-        .committed(true)
-        .build();
+        TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+                .type("authorization")
+                .description("SDK S2S Test Policy Template version")
+                .resource(policyResourceModel)
+                .subject(policySubjectModel)
+                .control(controlModel)
+                .build();
 
-      // Invoke operation
-      Response<PolicyTemplateLimitData> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
-      
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 201);
+        CreatePolicyTemplateVersionOptions createPolicyTemplateVersionOptions = new CreatePolicyTemplateVersionOptions.Builder()
+                .policyTemplateId(testS2STemplateId)
+                .policy(templatePolicyModel)
+                .description("SDK Test template with viewer role")
+                .committed(true)
+                .build();
 
-      PolicyTemplateLimitData result = response.getResult();
+        // Invoke operation
+        Response<PolicyTemplateLimitData> response = service.createPolicyTemplateVersion(createPolicyTemplateVersionOptions).execute();
 
-      assertNotNull(result);
-      testS2STemplateVersion = result.getVersion();
-      assertEquals(result.getPolicy(), templatePolicyModel);
-      assertTrue(Integer.parseInt(testS2STemplateVersion) > Integer.parseInt(testS2SBaseTemplateVersion));
-      assertEquals(result.getState(), "active");
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 201);
+
+        PolicyTemplateLimitData result = response.getResult();
+
+        assertNotNull(result);
+        testS2STemplateVersion = result.getVersion();
+        assertEquals(result.getPolicy(), templatePolicyModel);
+        assertTrue(Integer.parseInt(testS2STemplateVersion) > Integer.parseInt(testS2SBaseTemplateVersion));
+        assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = {"testListPolicyTemplateVersions"})
     public void testListPolicyAssignments() throws Exception {
-      ListPolicyAssignmentsOptions listPolicyAssignmentsOptions = new ListPolicyAssignmentsOptions.Builder()
-      .accountId(testAccountId)
-      .version("1.0")
-      .build();
+        ListPolicyAssignmentsOptions listPolicyAssignmentsOptions = new ListPolicyAssignmentsOptions.Builder()
+                .accountId(testAccountId)
+                .version("1.0")
+                .build();
 
-      Response<PolicyAssignmentV1Collection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-      PolicyAssignmentV1Collection result = response.getResult();
-      assertNotNull(result);
-      assertNotNull(result.getAssignments());
-      List<PolicyAssignmentV1> assignments = result.getAssignments();
-      // As long there is one assignment in test account, then there should be one assignment to run next test.
-      assertNotNull(assignments);
+        Response<PolicyAssignmentV1Collection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+        PolicyAssignmentV1Collection result = response.getResult();
+        assertNotNull(result);
+        assertNotNull(result.getAssignments());
+        List<PolicyAssignmentV1> assignments = result.getAssignments();
+        // As long there is one assignment in test account, then there should be one assignment to run next test.
+        assertNotNull(assignments);
     }
 
-    @Test(dependsOnMethods = { "testCreateS2SPolicyTemplate" })
+    @Test(dependsOnMethods = {"testCreateS2SPolicyTemplate"})
     public void testCreatePolicyAssignmentError() throws Exception {
-      try{
-      AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
-        .type("Enterprise")
-        .id(testTargetEnterpriseAccountId)
-        .build();
 
-      AssignmentTemplateDetails assignmentTemplateDetails = new AssignmentTemplateDetails.Builder()
-        .id(testS2STemplateId)
-        .version(testS2SBaseTemplateVersion)
-        .build();
-    
+        try {
+            AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
+                    .type("Enterprise")
+                    .id(testTargetEnterpriseAccountId)
+                    .build();
 
-      CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
-        .version("1.0")
-        .target(assignmentTargetDetails)
-        .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
-        .build();
-      Response<PolicyAssignmentV1Collection> response = service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();
-      } catch (BadRequestException e) {
+            AssignmentTemplateDetails assignmentTemplateDetails = new AssignmentTemplateDetails.Builder()
+                    .id(testS2STemplateId)
+                    .version(testS2SBaseTemplateVersion)
+                    .build();
+
+            CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
+                    .version("1.0")
+                    .target(assignmentTargetDetails)
+                    .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
+                    .build();
+            Response<PolicyAssignmentV1Collection> response = service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();
+        } catch (BadRequestException e) {
             assertEquals(e.getStatusCode(), 400);
             assertEquals(e.getMessage(), "Invalid body format. Check the input parameters. instance.target.type is not one of enum values: Account");
-        } 
-        
+        }
+
     }
 
-    @Test(dependsOnMethods = { "testCreateS2SPolicyTemplate" })
+    @Test(dependsOnMethods = {"testCreateS2SPolicyTemplate"})
     public void testCreatePolicyAssignment() throws Exception {
 
-      AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
-        .type("Account")
-        .id(testTargetAccountId)
-        .build();
+        AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
+                .type("Account")
+                .id(testTargetAccountId)
+                .build();
 
-      AssignmentTemplateDetails assignmentTemplateDetails = new AssignmentTemplateDetails.Builder()
-        .id(testS2STemplateId)
-        .version(testS2SBaseTemplateVersion)
-        .build();
-    
+        AssignmentTemplateDetails assignmentTemplateDetails = new AssignmentTemplateDetails.Builder()
+                .id(testS2STemplateId)
+                .version(testS2SBaseTemplateVersion)
+                .build();
 
-      CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
-        .version("1.0")
-        .target(assignmentTargetDetails)
-        .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
-        .build();
+        CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
+                .version("1.0")
+                .target(assignmentTargetDetails)
+                .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
+                .build();
 
-      Response<PolicyAssignmentV1Collection> response = service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 201);
+        Response<PolicyAssignmentV1Collection> response = service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 201);
 
-      PolicyAssignmentV1Collection result = response.getResult();
-      assertNotNull(result);
-      assertNotNull(result.getAssignments());
-      PolicyAssignmentV1 assignment = result.getAssignments().get(0);
-      testAssignmentId = assignment.getId();
-      PolicyAssignmentV1Resources resource = assignment.getResources().get(0);
-      PolicyAssignmentResourcePolicy policy = resource.getPolicy();
-      AssignmentResourceCreated resource_created = policy.getResourceCreated();
-      testAssignmentPolicyId = resource_created.getId();
+        PolicyAssignmentV1Collection result = response.getResult();
+        assertNotNull(result);
+        assertNotNull(result.getAssignments());
+        PolicyAssignmentV1 assignment = result.getAssignments().get(0);
+        testAssignmentId = assignment.getId();
+        PolicyAssignmentV1Resources resource = assignment.getResources().get(0);
+        PolicyAssignmentResourcePolicy policy = resource.getPolicy();
+        AssignmentResourceCreated resource_created = policy.getResourceCreated();
+        testAssignmentPolicyId = resource_created.getId();
 
-      List<String> values = response.getHeaders().values(HEADER_ETAG);
+        List<String> values = response.getHeaders().values(HEADER_ETAG);
         assertNotNull(values);
         testAssignmentETag = values.get(0);
     }
 
-    @Test(dependsOnMethods = { "testCreatePolicyAssignment" })
-      public void testUpdatePolicyAssignment() {
+    @Test(dependsOnMethods = {"testCreatePolicyAssignment"})
+    public void testUpdatePolicyAssignment() {
         assertNotNull(testAssignmentPolicyId);
 
         UpdatePolicyAssignmentOptions updatePolicyAssignmentOptions = new UpdatePolicyAssignmentOptions.Builder()
-        .assignmentId(testAssignmentId)
-        .version("1.0")
-        .templateVersion(testS2STemplateVersion)
-        .ifMatch(testAssignmentETag)
-        .build();
+                .assignmentId(testAssignmentId)
+                .version("1.0")
+                .templateVersion(testS2STemplateVersion)
+                .ifMatch(testAssignmentETag)
+                .build();
 
-      Response<PolicyAssignmentV1> response = service.updatePolicyAssignment(updatePolicyAssignmentOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+        Response<PolicyAssignmentV1> response = service.updatePolicyAssignment(updatePolicyAssignmentOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
 
-      PolicyAssignmentV1 result = response.getResult();
-      PolicyAssignmentV1Resources resource = result.getResources().get(0);
-      PolicyAssignmentResourcePolicy policy = resource.getPolicy();
-      AssignmentResourceCreated resource_created = policy.getResourceCreated();
-      assertEquals(testAssignmentPolicyId, resource_created.getId());
+        PolicyAssignmentV1 result = response.getResult();
+        PolicyAssignmentV1Resources resource = result.getResources().get(0);
+        PolicyAssignmentResourcePolicy policy = resource.getPolicy();
+        AssignmentResourceCreated resource_created = policy.getResourceCreated();
+        assertEquals(testAssignmentPolicyId, resource_created.getId());
     }
 
-    @Test(dependsOnMethods = { "testUpdatePolicyAssignment" })
+    @Test(dependsOnMethods = {"testUpdatePolicyAssignment"})
     public void testGetPolicyAssignment() throws Exception {
-      assertNotNull(testAssignmentId);
-      GetPolicyAssignmentOptions getPolicyAssignmentOptions = new GetPolicyAssignmentOptions.Builder()
-        .assignmentId(testAssignmentId)
-        .version("1.0")
-        .build();
+        assertNotNull(testAssignmentId);
+        GetPolicyAssignmentOptions getPolicyAssignmentOptions = new GetPolicyAssignmentOptions.Builder()
+                .assignmentId(testAssignmentId)
+                .version("1.0")
+                .build();
 
-      Response<PolicyAssignmentV1> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
+        Response<PolicyAssignmentV1> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
 
-      PolicyAssignmentV1 result = response.getResult();
-      PolicyAssignmentV1Resources resource = result.getResources().get(0);
-      PolicyAssignmentResourcePolicy policy = resource.getPolicy();
-      AssignmentResourceCreated resource_created = policy.getResourceCreated();
-      assertEquals(testAssignmentPolicyId, resource_created.getId());
+        PolicyAssignmentV1 result = response.getResult();
+        PolicyAssignmentV1Resources resource = result.getResources().get(0);
+        PolicyAssignmentResourcePolicy policy = resource.getPolicy();
+        AssignmentResourceCreated resource_created = policy.getResourceCreated();
+        assertEquals(testAssignmentPolicyId, resource_created.getId());
 
-      assertNotNull(result);
-      assertEquals(result.getId(), testAssignmentId);
+        assertNotNull(result);
+        assertEquals(result.getId(), testAssignmentId);
     }
 
-    @Test(dependsOnMethods = { "testGetPolicyAssignment" })
-      public void testGetTemplateMetaDataV2AccessPolicy() {
+    @Test(dependsOnMethods = {"testGetPolicyAssignment"})
+    public void testGetTemplateMetaDataV2AccessPolicy() {
         assertNotNull(testAssignmentPolicyId);
 
         GetV2PolicyOptions options = new GetV2PolicyOptions.Builder()
@@ -1330,24 +1321,24 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
     @Test(dependsOnMethods = {"testGetTemplateMetaDataV2AccessPolicy"})
     public void testDeletePolicyAssignment() {
-      DeletePolicyAssignmentOptions deletePolicyAssignmentOptions = new DeletePolicyAssignmentOptions.Builder()
-        .assignmentId(testAssignmentId)
-        .build();
+        DeletePolicyAssignmentOptions deletePolicyAssignmentOptions = new DeletePolicyAssignmentOptions.Builder()
+                .assignmentId(testAssignmentId)
+                .build();
 
-      Response<Void> response = service.deletePolicyAssignment(deletePolicyAssignmentOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 204);
+        Response<Void> response = service.deletePolicyAssignment(deletePolicyAssignmentOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 204);
     }
 
     @Test(dependsOnMethods = {"testDeletePolicyAssignment"})
     public void testDeletePolicyTemplate() {
-      DeletePolicyTemplateOptions deletePolicyTemplateOptions = new DeletePolicyTemplateOptions.Builder()
-        .policyTemplateId(testS2STemplateId)
-        .build();
+        DeletePolicyTemplateOptions deletePolicyTemplateOptions = new DeletePolicyTemplateOptions.Builder()
+                .policyTemplateId(testS2STemplateId)
+                .build();
 
-      Response<Void> response = service.deletePolicyTemplate(deletePolicyTemplateOptions).execute();
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 204);
+        Response<Void> response = service.deletePolicyTemplate(deletePolicyTemplateOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 204);
     }
 
     @AfterClass
@@ -1380,24 +1371,24 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
                 // Delete v2 policy
                 if (policy.getHref().contains("v2/policies")) {
-                  if ((testV2PolicyId != null || testV2PolicyId.equals(policy.getId())) || createdAt < fiveMinutesAgo) {
-                      DeleteV2PolicyOptions deleteOptions = new DeleteV2PolicyOptions.Builder()
-                              .id(policy.getId()).build();
-                      Response<Void> deleteResponse = service.deleteV2Policy(deleteOptions).execute();
-                      assertNotNull(deleteResponse);
-                      assertEquals(deleteResponse.getStatusCode(), 204);
-                      log("Cleanup test policy id: " + policy.getId());
-                  }
+                    if ((testV2PolicyId != null || testV2PolicyId.equals(policy.getId())) || createdAt < fiveMinutesAgo) {
+                        DeleteV2PolicyOptions deleteOptions = new DeleteV2PolicyOptions.Builder()
+                                .id(policy.getId()).build();
+                        Response<Void> deleteResponse = service.deleteV2Policy(deleteOptions).execute();
+                        assertNotNull(deleteResponse);
+                        assertEquals(deleteResponse.getStatusCode(), 204);
+                        log("Cleanup test policy id: " + policy.getId());
+                    }
                 } else {
-                  // Delete v1 policy
-                  if ((testPolicyId != null || testPolicyId.equals(policy.getId())) || createdAt < fiveMinutesAgo) {
-                      DeletePolicyOptions deleteOptions = new DeletePolicyOptions.Builder()
-                              .policyId(policy.getId()).build();
-                      Response<Void> deleteResponse = service.deletePolicy(deleteOptions).execute();
-                      assertNotNull(deleteResponse);
-                      assertEquals(deleteResponse.getStatusCode(), 204);
-                      log("Cleanup test policy id: " + policy.getId());
-                  }
+                    // Delete v1 policy
+                    if ((testPolicyId != null || testPolicyId.equals(policy.getId())) || createdAt < fiveMinutesAgo) {
+                        DeletePolicyOptions deleteOptions = new DeletePolicyOptions.Builder()
+                                .policyId(policy.getId()).build();
+                        Response<Void> deleteResponse = service.deletePolicy(deleteOptions).execute();
+                        assertNotNull(deleteResponse);
+                        assertEquals(deleteResponse.getStatusCode(), 204);
+                        log("Cleanup test policy id: " + policy.getId());
+                    }
                 }
             }
         }
@@ -1415,26 +1406,26 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         // Iterate across the list of custom roles
         for (CustomRole role : rolesList.getCustomRoles()) {
-          if (role.getName().contains(testCustomRoleNamePrefix)) {
-              long createdAt = role.getCreatedAt().getTime();
+            if (role.getName().contains(testCustomRoleNamePrefix)) {
+                long createdAt = role.getCreatedAt().getTime();
 
-              // delete the role or any test role older than 5 minutes
-              if ((testCustomRoleId != null && testCustomRoleId.equals(role.getId())) || createdAt < fiveMinutesAgo) {
-                  DeleteRoleOptions deleteOptions = new DeleteRoleOptions.Builder()
-                    .roleId(role.getId()).build();
+                // delete the role or any test role older than 5 minutes
+                if ((testCustomRoleId != null && testCustomRoleId.equals(role.getId())) || createdAt < fiveMinutesAgo) {
+                    DeleteRoleOptions deleteOptions = new DeleteRoleOptions.Builder()
+                            .roleId(role.getId()).build();
 
-                  Response<Void> deleteResponse = service.deleteRole(deleteOptions).execute();
-                  assertNotNull(deleteResponse);
-                  assertEquals(deleteResponse.getStatusCode(), 204);
-                  log("Cleanup test role id: " + role.getId());
-              }
-          }
+                    Response<Void> deleteResponse = service.deleteRole(deleteOptions).execute();
+                    assertNotNull(deleteResponse);
+                    assertEquals(deleteResponse.getStatusCode(), 204);
+                    log("Cleanup test role id: " + role.getId());
+                }
+            }
         }
 
         // Delete policy template
         ListPolicyTemplatesOptions listPolicyTemplatesOptions = new ListPolicyTemplatesOptions.Builder()
-        .accountId(testAccountId)
-        .build();
+                .accountId(testAccountId)
+                .build();
 
         Response<PolicyTemplateCollection> templateResponse = service.listPolicyTemplates(listPolicyTemplatesOptions).execute();
         assertNotNull(templateResponse);
@@ -1442,21 +1433,21 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
         PolicyTemplateCollection policyTemplateCollectionResult = templateResponse.getResult();
         for (PolicyTemplate policyTemplate : policyTemplateCollectionResult.getPolicyTemplates()) {
-          // Delete the test policy template or any test templates older than 5 minutes
-          if (policyTemplate.getName().contains(TEST_TEMPLATE_PREFIX)) {
-            long createdAt = policyTemplate.getCreatedAt().getTime();
+            // Delete the test policy template or any test templates older than 5 minutes
+            if (policyTemplate.getName().contains(TEST_TEMPLATE_PREFIX)) {
+                long createdAt = policyTemplate.getCreatedAt().getTime();
 
-            if ((testTemplateId != null || testTemplateId.equals(policyTemplate.getId())) || createdAt < fiveMinutesAgo) {
-              DeletePolicyTemplateOptions deletePolicyTemplateOptions = new DeletePolicyTemplateOptions.Builder()
-                .policyTemplateId(policyTemplate.getId())
-                .build();
+                if ((testTemplateId != null || testTemplateId.equals(policyTemplate.getId())) || createdAt < fiveMinutesAgo) {
+                    DeletePolicyTemplateOptions deletePolicyTemplateOptions = new DeletePolicyTemplateOptions.Builder()
+                            .policyTemplateId(policyTemplate.getId())
+                            .build();
 
-              Response<Void> response = service.deletePolicyTemplate(deletePolicyTemplateOptions).execute();
-              assertNotNull(response);
-              assertEquals(response.getStatusCode(), 204);
-              log("Cleanup test template id: " + policyTemplate.getId());
+                    Response<Void> response = service.deletePolicyTemplate(deletePolicyTemplateOptions).execute();
+                    assertNotNull(response);
+                    assertEquals(response.getStatusCode(), 204);
+                    log("Cleanup test template id: " + policyTemplate.getId());
+                }
             }
-          }
         }
     }
 }

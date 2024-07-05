@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.IamPolicyManagement;
@@ -61,9 +62,6 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Collection;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Options;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRoot;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRootTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Resources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Subject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyCollection;
@@ -1967,7 +1965,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyAssignmentsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"options\": {\"root\": {\"requester_id\": \"requesterId\", \"assignment_id\": \"assignmentId\", \"template\": {\"id\": \"id\", \"version\": \"version\"}}}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"id\": \"id\", \"version\": \"version\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
+    String mockResponseBody = "{\"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
     String listPolicyAssignmentsPath = "/v1/policy_assignments";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2026,7 +2024,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testCreatePolicyTemplateAssignmentWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"options\": {\"root\": {\"requester_id\": \"requesterId\", \"assignment_id\": \"assignmentId\", \"template\": {\"id\": \"id\", \"version\": \"version\"}}}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"id\": \"id\", \"version\": \"version\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
+    String mockResponseBody = "{\"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
     String createPolicyTemplateAssignmentPath = "/v1/policy_assignments";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2039,24 +2037,6 @@ public class IamPolicyManagementTest {
       .id("testString")
       .build();
 
-    // Construct an instance of the PolicyAssignmentV1OptionsRootTemplate model
-    PolicyAssignmentV1OptionsRootTemplate policyAssignmentV1OptionsRootTemplateModel = new PolicyAssignmentV1OptionsRootTemplate.Builder()
-      .id("testString")
-      .version("testString")
-      .build();
-
-    // Construct an instance of the PolicyAssignmentV1OptionsRoot model
-    PolicyAssignmentV1OptionsRoot policyAssignmentV1OptionsRootModel = new PolicyAssignmentV1OptionsRoot.Builder()
-      .requesterId("testString")
-      .assignmentId("testString")
-      .template(policyAssignmentV1OptionsRootTemplateModel)
-      .build();
-
-    // Construct an instance of the PolicyAssignmentV1Options model
-    PolicyAssignmentV1Options policyAssignmentV1OptionsModel = new PolicyAssignmentV1Options.Builder()
-      .root(policyAssignmentV1OptionsRootModel)
-      .build();
-
     // Construct an instance of the AssignmentTemplateDetails model
     AssignmentTemplateDetails assignmentTemplateDetailsModel = new AssignmentTemplateDetails.Builder()
       .id("testString")
@@ -2067,7 +2047,6 @@ public class IamPolicyManagementTest {
     CreatePolicyTemplateAssignmentOptions createPolicyTemplateAssignmentOptionsModel = new CreatePolicyTemplateAssignmentOptions.Builder()
       .version("1.0")
       .target(assignmentTargetDetailsModel)
-      .options(policyAssignmentV1OptionsModel)
       .templates(java.util.Arrays.asList(assignmentTemplateDetailsModel))
       .acceptLanguage("default")
       .build();
@@ -2112,7 +2091,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testGetPolicyAssignmentWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"options\": {\"root\": {\"requester_id\": \"requesterId\", \"assignment_id\": \"assignmentId\", \"template\": {\"id\": \"id\", \"version\": \"version\"}}}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"id\": \"id\", \"version\": \"version\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}";
+    String mockResponseBody = "{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}";
     String getPolicyAssignmentPath = "/v1/policy_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2165,7 +2144,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testUpdatePolicyAssignmentWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"options\": {\"root\": {\"requester_id\": \"requesterId\", \"assignment_id\": \"assignmentId\", \"template\": {\"id\": \"id\", \"version\": \"version\"}}}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"id\": \"id\", \"version\": \"version\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}";
+    String mockResponseBody = "{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}";
     String updatePolicyAssignmentPath = "/v1/policy_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

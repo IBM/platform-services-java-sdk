@@ -10,8 +10,10 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.iam_policy_management.v1.utils;
 
+import java.util.Base64;
 import java.util.Map;
 import java.util.Set;
 import java.util.List;
@@ -115,8 +117,8 @@ public class TestUtilities {
         return list;
     }
 
-    public static byte[] createMockByteArray(String bytes) {
-        return bytes.getBytes();
+    public static byte[] createMockByteArray(String encodedString) throws Exception {
+        return Base64.getDecoder().decode(encodedString);
     }
 
     public static Date createMockDate(String date) throws Exception {

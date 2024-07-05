@@ -34,6 +34,7 @@ import org.testng.annotations.Test;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
+import com.ibm.cloud.sdk.core.service.exception.BadRequestException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 /**
@@ -57,6 +58,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
     String testAccountId = null;
     String testTargetAccountId = null;
+    String testTargetEnterpriseAccountId = null;
     String testPolicyId = null;
     String testPolicyEtag = null;
     String testV2PolicyId = null;
@@ -116,6 +118,9 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         testTargetAccountId = config.get("TEST_TARGET_ACCOUNT_ID");
         assertNotNull(testTargetAccountId);
 
+        testTargetEnterpriseAccountId = config.get("TEST_TARGET_ENTERPRISE_ACCOUNT_ID");
+        assertNotNull(testTargetEnterpriseAccountId);
+
         // Construct the service from our external configuration.
         service = IamPolicyManagement.newInstance();
         assertNotNull(service);
@@ -124,6 +129,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         log("Using Account Id: " + testAccountId);
         log("Using Service URL: " + service.getServiceUrl());
         log("Using Child Account in Enterprise" + testTargetAccountId);
+        log("Using  Enterprise Account" + testTargetEnterpriseAccountId);
     }
 
     @Test
@@ -1195,6 +1201,32 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     }
 
     @Test(dependsOnMethods = { "testCreateS2SPolicyTemplate" })
+    public void testCreatePolicyAssignmentError() throws Exception {
+      try {
+        AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
+            .type("Enterprise")
+            .id(testTargetEnterpriseAccountId)
+            .build();
+
+        AssignmentTemplateDetails assignmentTemplateDetails = new AssignmentTemplateDetails.Builder()
+            .id(testS2STemplateId)
+            .version(testS2SBaseTemplateVersion)
+            .build();
+
+        CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
+            .version("1.0")
+            .target(assignmentTargetDetails)
+            .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
+            .build();
+        service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();
+      } catch (BadRequestException e) {
+        assertEquals(e.getStatusCode(), 400);
+        assertEquals(e.getMessage(),
+            "Invalid body format. Check the input parameters. instance.target.type is not one of enum values: Account");
+      }
+    }
+
+    @Test(dependsOnMethods = { "testCreateS2SPolicyTemplate" })
     public void testCreatePolicyAssignment() throws Exception {
 
       AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
@@ -1206,22 +1238,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .id(testS2STemplateId)
         .version(testS2SBaseTemplateVersion)
         .build();
-      
-      
-      PolicyAssignmentV1OptionsRoot rootAssignmentDetails = new PolicyAssignmentV1OptionsRoot.Builder()
-        .requesterId("test_sdk")
-        .assignmentId("test")
-        .build();
-      
-      PolicyAssignmentV1Options assignmentV1Options = new PolicyAssignmentV1Options.Builder()
-        .root(rootAssignmentDetails)
-        .build();
 
       CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
         .version("1.0")
         .target(assignmentTargetDetails)
         .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
-        .options(assignmentV1Options)
         .build();
 
       Response<PolicyAssignmentV1Collection> response = service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();

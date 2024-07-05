@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.88.0-b0b4c159-20240402-205910
+ * IBM OpenAPI SDK Code Generator Version: 3.90.1-64fd3296-20240515-180710
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -1388,7 +1388,6 @@ public class IamPolicyManagement extends BaseService {
     builder.query("version", String.valueOf(createPolicyTemplateAssignmentOptions.version()));
     final JsonObject contentJson = new JsonObject();
     contentJson.add("target", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyTemplateAssignmentOptions.target()));
-    contentJson.add("options", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyTemplateAssignmentOptions.options()));
     contentJson.add("templates", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPolicyTemplateAssignmentOptions.templates()));
     builder.bodyJson(contentJson);
     ResponseConverter<PolicyAssignmentV1Collection> responseConverter =

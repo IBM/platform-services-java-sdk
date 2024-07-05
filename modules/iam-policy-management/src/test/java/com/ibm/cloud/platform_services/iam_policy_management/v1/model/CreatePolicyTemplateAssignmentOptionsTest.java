@@ -16,9 +16,6 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTargetDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTemplateDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateAssignmentOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Options;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRoot;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1OptionsRootTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -43,27 +40,6 @@ public class CreatePolicyTemplateAssignmentOptionsTest {
     assertEquals(assignmentTargetDetailsModel.type(), "Account");
     assertEquals(assignmentTargetDetailsModel.id(), "testString");
 
-    PolicyAssignmentV1OptionsRootTemplate policyAssignmentV1OptionsRootTemplateModel = new PolicyAssignmentV1OptionsRootTemplate.Builder()
-      .id("testString")
-      .version("testString")
-      .build();
-    assertEquals(policyAssignmentV1OptionsRootTemplateModel.id(), "testString");
-    assertEquals(policyAssignmentV1OptionsRootTemplateModel.version(), "testString");
-
-    PolicyAssignmentV1OptionsRoot policyAssignmentV1OptionsRootModel = new PolicyAssignmentV1OptionsRoot.Builder()
-      .requesterId("testString")
-      .assignmentId("testString")
-      .template(policyAssignmentV1OptionsRootTemplateModel)
-      .build();
-    assertEquals(policyAssignmentV1OptionsRootModel.requesterId(), "testString");
-    assertEquals(policyAssignmentV1OptionsRootModel.assignmentId(), "testString");
-    assertEquals(policyAssignmentV1OptionsRootModel.template(), policyAssignmentV1OptionsRootTemplateModel);
-
-    PolicyAssignmentV1Options policyAssignmentV1OptionsModel = new PolicyAssignmentV1Options.Builder()
-      .root(policyAssignmentV1OptionsRootModel)
-      .build();
-    assertEquals(policyAssignmentV1OptionsModel.root(), policyAssignmentV1OptionsRootModel);
-
     AssignmentTemplateDetails assignmentTemplateDetailsModel = new AssignmentTemplateDetails.Builder()
       .id("testString")
       .version("testString")
@@ -74,13 +50,11 @@ public class CreatePolicyTemplateAssignmentOptionsTest {
     CreatePolicyTemplateAssignmentOptions createPolicyTemplateAssignmentOptionsModel = new CreatePolicyTemplateAssignmentOptions.Builder()
       .version("1.0")
       .target(assignmentTargetDetailsModel)
-      .options(policyAssignmentV1OptionsModel)
       .templates(java.util.Arrays.asList(assignmentTemplateDetailsModel))
       .acceptLanguage("default")
       .build();
     assertEquals(createPolicyTemplateAssignmentOptionsModel.version(), "1.0");
     assertEquals(createPolicyTemplateAssignmentOptionsModel.target(), assignmentTargetDetailsModel);
-    assertEquals(createPolicyTemplateAssignmentOptionsModel.options(), policyAssignmentV1OptionsModel);
     assertEquals(createPolicyTemplateAssignmentOptionsModel.templates(), java.util.Arrays.asList(assignmentTemplateDetailsModel));
     assertEquals(createPolicyTemplateAssignmentOptionsModel.acceptLanguage(), "default");
   }

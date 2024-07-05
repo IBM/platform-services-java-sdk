@@ -1,3 +1,10 @@
+## [0.54.2](https://github.com/IBM/platform-services-java-sdk/compare/0.54.1...0.54.2) (2024-07-05)
+
+
+### Bug Fixes
+
+* **IAM Policy Management:** remove `options` property from PolicyAssignment ([#248](https://github.com/IBM/platform-services-java-sdk/issues/248)) ([9897bb5](https://github.com/IBM/platform-services-java-sdk/commit/9897bb545a86a91e02bf2d23ca4bc40c4d9a6d29))
+
 ## [0.54.1](https://github.com/IBM/platform-services-java-sdk/compare/0.54.0...0.54.1) (2024-06-21)
 
 

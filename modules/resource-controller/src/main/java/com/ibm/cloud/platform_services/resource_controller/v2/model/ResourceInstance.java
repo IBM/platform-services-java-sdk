@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.resource_controller.v2.model;
 
 import java.util.Date;
@@ -84,6 +85,8 @@ public class ResourceInstance extends GenericModel {
   protected String resourceGroupCrn;
   @SerializedName("target_crn")
   protected String targetCrn;
+  @SerializedName("onetime_credentials")
+  protected Boolean onetimeCredentials;
   protected Map<String, Object> parameters;
   @SerializedName("allow_cleanup")
   protected Boolean allowCleanup;
@@ -344,6 +347,18 @@ public class ResourceInstance extends GenericModel {
    */
   public String getTargetCrn() {
     return targetCrn;
+  }
+
+  /**
+   * Gets the onetimeCredentials.
+   *
+   * Whether newly created resource key credentials can be retrieved by using get resource key or get a list of all of
+   * the resource keys requests.
+   *
+   * @return the onetimeCredentials
+   */
+  public Boolean isOnetimeCredentials() {
+    return onetimeCredentials;
   }
 
   /**

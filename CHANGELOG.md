@@ -1,3 +1,10 @@
+# [0.55.0](https://github.com/IBM/platform-services-java-sdk/compare/0.54.2...0.55.0) (2024-07-11)
+
+
+### Features
+
+* **Resource Controller:** add "onetime_credentials" property in ResourceInstance and ResourceKey schemas ([#249](https://github.com/IBM/platform-services-java-sdk/issues/249)) ([3db4b70](https://github.com/IBM/platform-services-java-sdk/commit/3db4b70aa4af9e9f17c3e2e615cde5851e977c10))
+
 ## [0.54.2](https://github.com/IBM/platform-services-java-sdk/compare/0.54.1...0.54.2) (2024-07-05)
 
 

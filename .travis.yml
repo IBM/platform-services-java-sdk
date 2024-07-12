@@ -52,7 +52,7 @@ jobs:
         - node --version
         - npm --version
         - npm install
-        - pip install --user bump2version
+        - pip install --user bump-my-version
       script:
         - npm run semantic-release
 

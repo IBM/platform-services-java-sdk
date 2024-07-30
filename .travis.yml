@@ -27,11 +27,6 @@ stages:
   - name: Publish-Release
     if: tag IS present
 
-before_install:
-  - sudo apt-get update
-  - env | grep TRAVIS
-  - python -V
-
 jobs:
   include:
     - stage: Build-Test
@@ -46,13 +41,21 @@ jobs:
       script:
         - mvn verify -fae -DskipITs $MVN_ARGS
 
-    - stage: Semantic-Release
+    - name: Detect-Secrets
+      language: python
+      python: 3.12
       install:
-        - nvm install 18
-        - node --version
-        - npm --version
-        - npm install
+        - pip install --upgrade "git+https://github.com/ibm/detect-secrets.git@master#egg=detect-secrets"
+      script:
+        - detect-secrets scan --update .secrets.baseline
+        - detect-secrets -v audit --report --fail-on-unaudited --fail-on-live --fail-on-audited-real .secrets.baseline
+
+    - stage: Semantic-Release
+      language: node_js
+      node_js: 22
+      install:
         - pip install --user bump-my-version
+        - npm install
       script:
         - npm run semantic-release
 

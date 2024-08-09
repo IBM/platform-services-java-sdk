@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class UpdateProfileTemplateVersionOptions extends GenericModel {
   protected String description;
   protected TemplateProfileComponentRequest profile;
   protected List<PolicyTemplateReference> policyTemplateReferences;
+  protected ActionControls actionControls;
 
   /**
    * Builder.
@@ -43,6 +45,7 @@ public class UpdateProfileTemplateVersionOptions extends GenericModel {
     private String description;
     private TemplateProfileComponentRequest profile;
     private List<PolicyTemplateReference> policyTemplateReferences;
+    private ActionControls actionControls;
 
     /**
      * Instantiates a new Builder from an existing UpdateProfileTemplateVersionOptions instance.
@@ -58,6 +61,7 @@ public class UpdateProfileTemplateVersionOptions extends GenericModel {
       this.description = updateProfileTemplateVersionOptions.description;
       this.profile = updateProfileTemplateVersionOptions.profile;
       this.policyTemplateReferences = updateProfileTemplateVersionOptions.policyTemplateReferences;
+      this.actionControls = updateProfileTemplateVersionOptions.actionControls;
     }
 
     /**
@@ -192,6 +196,17 @@ public class UpdateProfileTemplateVersionOptions extends GenericModel {
       this.policyTemplateReferences = policyTemplateReferences;
       return this;
     }
+
+    /**
+     * Set the actionControls.
+     *
+     * @param actionControls the actionControls
+     * @return the UpdateProfileTemplateVersionOptions builder
+     */
+    public Builder actionControls(ActionControls actionControls) {
+      this.actionControls = actionControls;
+      return this;
+    }
   }
 
   protected UpdateProfileTemplateVersionOptions() { }
@@ -211,6 +226,7 @@ public class UpdateProfileTemplateVersionOptions extends GenericModel {
     description = builder.description;
     profile = builder.profile;
     policyTemplateReferences = builder.policyTemplateReferences;
+    actionControls = builder.actionControls;
   }
 
   /**
@@ -312,6 +328,15 @@ public class UpdateProfileTemplateVersionOptions extends GenericModel {
    */
   public List<PolicyTemplateReference> policyTemplateReferences() {
     return policyTemplateReferences;
+  }
+
+  /**
+   * Gets the actionControls.
+   *
+   * @return the actionControls
+   */
+  public ActionControls actionControls() {
+    return actionControls;
   }
 }
 

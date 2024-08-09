@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class CreateProfileTemplateOptions extends GenericModel {
   protected String description;
   protected TemplateProfileComponentRequest profile;
   protected List<PolicyTemplateReference> policyTemplateReferences;
+  protected ActionControls actionControls;
 
   /**
    * Builder.
@@ -37,6 +39,7 @@ public class CreateProfileTemplateOptions extends GenericModel {
     private String description;
     private TemplateProfileComponentRequest profile;
     private List<PolicyTemplateReference> policyTemplateReferences;
+    private ActionControls actionControls;
 
     /**
      * Instantiates a new Builder from an existing CreateProfileTemplateOptions instance.
@@ -49,6 +52,7 @@ public class CreateProfileTemplateOptions extends GenericModel {
       this.description = createProfileTemplateOptions.description;
       this.profile = createProfileTemplateOptions.profile;
       this.policyTemplateReferences = createProfileTemplateOptions.policyTemplateReferences;
+      this.actionControls = createProfileTemplateOptions.actionControls;
     }
 
     /**
@@ -137,6 +141,17 @@ public class CreateProfileTemplateOptions extends GenericModel {
       this.policyTemplateReferences = policyTemplateReferences;
       return this;
     }
+
+    /**
+     * Set the actionControls.
+     *
+     * @param actionControls the actionControls
+     * @return the CreateProfileTemplateOptions builder
+     */
+    public Builder actionControls(ActionControls actionControls) {
+      this.actionControls = actionControls;
+      return this;
+    }
   }
 
   protected CreateProfileTemplateOptions() { }
@@ -147,6 +162,7 @@ public class CreateProfileTemplateOptions extends GenericModel {
     description = builder.description;
     profile = builder.profile;
     policyTemplateReferences = builder.policyTemplateReferences;
+    actionControls = builder.actionControls;
   }
 
   /**
@@ -213,6 +229,15 @@ public class CreateProfileTemplateOptions extends GenericModel {
    */
   public List<PolicyTemplateReference> policyTemplateReferences() {
     return policyTemplateReferences;
+  }
+
+  /**
+   * Gets the actionControls.
+   *
+   * @return the actionControls
+   */
+  public ActionControls actionControls() {
+    return actionControls;
   }
 }
 

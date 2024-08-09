@@ -993,6 +993,28 @@ public class IamIdentityExamples {
         }
 
         try {
+            System.out.println("getEffectiveAccountSettings() result:");
+
+            // begin-getEffectiveAccountSettings
+
+            GetEffectiveAccountSettingsOptions getEffectiveAccountSettingsOptions = new GetEffectiveAccountSettingsOptions.Builder()
+                    .accountId(accountId)
+                    .build();
+
+            Response<EffectiveAccountSettingsResponse> response = service.getEffectiveAccountSettings(getEffectiveAccountSettingsOptions).execute();
+            EffectiveAccountSettingsResponse effectiveAccountSettingsResponse = response.getResult();
+
+
+            System.out.println(effectiveAccountSettingsResponse);
+
+            // end-getEffectiveAccountSettings
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
             System.out.println("createReport() result:");
 
             // begin-create_report

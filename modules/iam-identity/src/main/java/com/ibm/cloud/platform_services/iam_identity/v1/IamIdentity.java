@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.86.2-8b8592a4-20240313-204553
+ * IBM OpenAPI SDK Code Generator Version: 3.93.0-c40121e6-20240729-182103
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -52,6 +52,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileTempla
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DisableApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.EffectiveAccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EnableApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ExceptionResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsAssignmentOptions;
@@ -60,6 +61,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsT
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetEffectiveAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestAccountSettingsTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
@@ -2072,6 +2074,36 @@ public class IamIdentity extends BaseService {
   }
 
   /**
+   * Get effective account settings configuration.
+   *
+   * Returns effective account settings for given account ID.
+   *
+   * @param getEffectiveAccountSettingsOptions the {@link GetEffectiveAccountSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link EffectiveAccountSettingsResponse}
+   */
+  public ServiceCall<EffectiveAccountSettingsResponse> getEffectiveAccountSettings(GetEffectiveAccountSettingsOptions getEffectiveAccountSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getEffectiveAccountSettingsOptions,
+      "getEffectiveAccountSettingsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getEffectiveAccountSettingsOptions.accountId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/accounts/{account_id}/effective_settings/identity", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getEffectiveAccountSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getEffectiveAccountSettingsOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(getEffectiveAccountSettingsOptions.includeHistory()));
+    }
+    if (getEffectiveAccountSettingsOptions.resolveUserMfa() != null) {
+      builder.query("resolve_user_mfa", String.valueOf(getEffectiveAccountSettingsOptions.resolveUserMfa()));
+    }
+    ResponseConverter<EffectiveAccountSettingsResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EffectiveAccountSettingsResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
    * List assignments.
    *
    * List trusted profile template assignments.
@@ -2328,6 +2360,9 @@ public class IamIdentity extends BaseService {
     if (createProfileTemplateOptions.policyTemplateReferences() != null) {
       contentJson.add("policy_template_references", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createProfileTemplateOptions.policyTemplateReferences()));
     }
+    if (createProfileTemplateOptions.actionControls() != null) {
+      contentJson.add("action_controls", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createProfileTemplateOptions.actionControls()));
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<TrustedProfileTemplateResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TrustedProfileTemplateResponse>() { }.getType());
@@ -2469,6 +2504,9 @@ public class IamIdentity extends BaseService {
     if (createProfileTemplateVersionOptions.policyTemplateReferences() != null) {
       contentJson.add("policy_template_references", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createProfileTemplateVersionOptions.policyTemplateReferences()));
     }
+    if (createProfileTemplateVersionOptions.actionControls() != null) {
+      contentJson.add("action_controls", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createProfileTemplateVersionOptions.actionControls()));
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<TrustedProfileTemplateResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TrustedProfileTemplateResponse>() { }.getType());
@@ -2539,6 +2577,9 @@ public class IamIdentity extends BaseService {
     }
     if (updateProfileTemplateVersionOptions.policyTemplateReferences() != null) {
       contentJson.add("policy_template_references", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateProfileTemplateVersionOptions.policyTemplateReferences()));
+    }
+    if (updateProfileTemplateVersionOptions.actionControls() != null) {
+      contentJson.add("action_controls", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateProfileTemplateVersionOptions.actionControls()));
     }
     builder.bodyJson(contentJson);
     ResponseConverter<TrustedProfileTemplateResponse> responseConverter =

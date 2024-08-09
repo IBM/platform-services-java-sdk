@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
 import java.util.List;
@@ -32,6 +33,8 @@ public class TrustedProfileTemplateResponse extends GenericModel {
   protected TemplateProfileComponentResponse profile;
   @SerializedName("policy_template_references")
   protected List<PolicyTemplateReference> policyTemplateReferences;
+  @SerializedName("action_controls")
+  protected ActionControls actionControls;
   protected List<EnityHistoryRecord> history;
   @SerializedName("entity_tag")
   protected String entityTag;
@@ -133,6 +136,15 @@ public class TrustedProfileTemplateResponse extends GenericModel {
    */
   public List<PolicyTemplateReference> getPolicyTemplateReferences() {
     return policyTemplateReferences;
+  }
+
+  /**
+   * Gets the actionControls.
+   *
+   * @return the actionControls
+   */
+  public ActionControls getActionControls() {
+    return actionControls;
   }
 
   /**

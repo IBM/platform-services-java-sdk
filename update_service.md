@@ -130,6 +130,29 @@ Example:
 git diff     # alternative: use the "source control" view within vscode
 ```
 
+#### Revert insignificant changes
+When the Java SDK code for a service is re-generated, it is not uncommon for some generated classes
+(especially model classes) to see changes only in their copyright statements, with no other changes
+to their generated source.
+
+These types of changes are insignificant, and they can (and to some degree should), be reverted.
+Reverting these changes will help to avoid cluttering your PRs and git change history,
+and in some respects the copyright year should not be changed if no other changes are being made to the file.
+Unfortunately, it's difficult for the generator to operate this way so it simply re-generates all classes
+associated with a service and if this re-generation is occurring in a different year than the previous
+generation, then you'll see the change to the copyright statement.
+
+To automatically revert these changes, just run the `fix-copyrights.sh` script
+in the project root directory:
+```
+cd <project-root>
+scripts/fix-copyrights.sh
+```
+The script will examine each file with uncommitted changes, and for those files with changes
+only in their copyright statement, a `git checkout` is performed to
+discard the changes and revert the files to their pervious version.
+
+
 ### 5. Run unit tests
 Next, run the unit tests. You can run the unit tests for all the services like this:  
 ```sh

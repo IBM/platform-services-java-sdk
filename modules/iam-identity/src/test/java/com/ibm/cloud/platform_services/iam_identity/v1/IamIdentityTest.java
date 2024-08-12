@@ -10,15 +10,23 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.iam_identity.v1;
 
 import com.ibm.cloud.platform_services.iam_identity.v1.IamIdentity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountBasedMfaEnrollment;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsAccountSection;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsAssignedTemplatesSection;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsComponent;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsEffectiveSection;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControls;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsIdentities;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsPolicies;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsRules;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Activity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyInsideCreateServiceIdRequest;
@@ -55,6 +63,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileTempla
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DisableApiKeyOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.EffectiveAccountSettingsResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.EffectiveAccountSettingsUserMFA;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EnableApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EntityActivity;
@@ -66,6 +76,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsT
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetEffectiveAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestAccountSettingsTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
@@ -3433,6 +3444,61 @@ public class IamIdentityTest {
     iamIdentityService.getReport(null).execute();
   }
 
+  // Test the getEffectiveAccountSettings operation with a valid options model parameter
+  @Test
+  public void testGetEffectiveAccountSettingsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"effective\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"account\": {\"account_id\": \"accountId\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"assigned_templates\": [{\"template_id\": \"templateId\", \"template_version\": 15, \"template_name\": \"templateName\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}]}";
+    String getEffectiveAccountSettingsPath = "/v1/accounts/testString/effective_settings/identity";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetEffectiveAccountSettingsOptions model
+    GetEffectiveAccountSettingsOptions getEffectiveAccountSettingsOptionsModel = new GetEffectiveAccountSettingsOptions.Builder()
+      .accountId("testString")
+      .includeHistory(false)
+      .resolveUserMfa(false)
+      .build();
+
+    // Invoke getEffectiveAccountSettings() with a valid options model and verify the result
+    Response<EffectiveAccountSettingsResponse> response = iamIdentityService.getEffectiveAccountSettings(getEffectiveAccountSettingsOptionsModel).execute();
+    assertNotNull(response);
+    EffectiveAccountSettingsResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getEffectiveAccountSettingsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
+    assertEquals(Boolean.valueOf(query.get("resolve_user_mfa")), Boolean.valueOf(false));
+  }
+
+  // Test the getEffectiveAccountSettings operation with and without retries enabled
+  @Test
+  public void testGetEffectiveAccountSettingsWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetEffectiveAccountSettingsWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetEffectiveAccountSettingsWOptions();
+  }
+
+  // Test the getEffectiveAccountSettings operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetEffectiveAccountSettingsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getEffectiveAccountSettings(null).execute();
+  }
+
   // Test the listTrustedProfileAssignments operation with a valid options model parameter
   @Test
   public void testListTrustedProfileAssignmentsWOptions() throws Throwable {
@@ -3713,7 +3779,7 @@ public class IamIdentityTest {
   @Test
   public void testListProfileTemplatesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profile_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profile_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listProfileTemplatesPath = "/v1/profile_templates";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -3768,7 +3834,7 @@ public class IamIdentityTest {
   @Test
   public void testCreateProfileTemplateWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createProfileTemplatePath = "/v1/profile_templates";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -3813,6 +3879,31 @@ public class IamIdentityTest {
       .version("testString")
       .build();
 
+    // Construct an instance of the ActionControlsIdentities model
+    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsRules model
+    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsPolicies model
+    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControls model
+    ActionControls actionControlsModel = new ActionControls.Builder()
+      .identities(actionControlsIdentitiesModel)
+      .rules(actionControlsRulesModel)
+      .policies(actionControlsPoliciesModel)
+      .build();
+
     // Construct an instance of the CreateProfileTemplateOptions model
     CreateProfileTemplateOptions createProfileTemplateOptionsModel = new CreateProfileTemplateOptions.Builder()
       .accountId("testString")
@@ -3820,6 +3911,7 @@ public class IamIdentityTest {
       .description("testString")
       .profile(templateProfileComponentRequestModel)
       .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
+      .actionControls(actionControlsModel)
       .build();
 
     // Invoke createProfileTemplate() with a valid options model and verify the result
@@ -3854,7 +3946,7 @@ public class IamIdentityTest {
   @Test
   public void testGetLatestProfileTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getLatestProfileTemplateVersionPath = "/v1/profile_templates/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -3957,7 +4049,7 @@ public class IamIdentityTest {
   @Test
   public void testListVersionsOfProfileTemplateWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profile_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profile_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listVersionsOfProfileTemplatePath = "/v1/profile_templates/testString/versions";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4018,7 +4110,7 @@ public class IamIdentityTest {
   @Test
   public void testCreateProfileTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createProfileTemplateVersionPath = "/v1/profile_templates/testString/versions";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4063,6 +4155,31 @@ public class IamIdentityTest {
       .version("testString")
       .build();
 
+    // Construct an instance of the ActionControlsIdentities model
+    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsRules model
+    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsPolicies model
+    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControls model
+    ActionControls actionControlsModel = new ActionControls.Builder()
+      .identities(actionControlsIdentitiesModel)
+      .rules(actionControlsRulesModel)
+      .policies(actionControlsPoliciesModel)
+      .build();
+
     // Construct an instance of the CreateProfileTemplateVersionOptions model
     CreateProfileTemplateVersionOptions createProfileTemplateVersionOptionsModel = new CreateProfileTemplateVersionOptions.Builder()
       .templateId("testString")
@@ -4071,6 +4188,7 @@ public class IamIdentityTest {
       .description("testString")
       .profile(templateProfileComponentRequestModel)
       .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
+      .actionControls(actionControlsModel)
       .build();
 
     // Invoke createProfileTemplateVersion() with a valid options model and verify the result
@@ -4112,7 +4230,7 @@ public class IamIdentityTest {
   @Test
   public void testGetProfileTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getProfileTemplateVersionPath = "/v1/profile_templates/testString/versions/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4166,7 +4284,7 @@ public class IamIdentityTest {
   @Test
   public void testUpdateProfileTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String updateProfileTemplateVersionPath = "/v1/profile_templates/testString/versions/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4211,6 +4329,31 @@ public class IamIdentityTest {
       .version("testString")
       .build();
 
+    // Construct an instance of the ActionControlsIdentities model
+    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsRules model
+    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsPolicies model
+    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControls model
+    ActionControls actionControlsModel = new ActionControls.Builder()
+      .identities(actionControlsIdentitiesModel)
+      .rules(actionControlsRulesModel)
+      .policies(actionControlsPoliciesModel)
+      .build();
+
     // Construct an instance of the UpdateProfileTemplateVersionOptions model
     UpdateProfileTemplateVersionOptions updateProfileTemplateVersionOptionsModel = new UpdateProfileTemplateVersionOptions.Builder()
       .ifMatch("testString")
@@ -4221,6 +4364,7 @@ public class IamIdentityTest {
       .description("testString")
       .profile(templateProfileComponentRequestModel)
       .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
+      .actionControls(actionControlsModel)
       .build();
 
     // Invoke updateProfileTemplateVersion() with a valid options model and verify the result

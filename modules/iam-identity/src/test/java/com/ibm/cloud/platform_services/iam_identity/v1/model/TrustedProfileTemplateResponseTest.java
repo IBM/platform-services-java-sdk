@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,6 +13,10 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControls;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsIdentities;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsPolicies;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsRules;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.PolicyTemplateReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
@@ -46,6 +50,7 @@ public class TrustedProfileTemplateResponseTest {
     assertNull(trustedProfileTemplateResponseModel.isCommitted());
     assertNull(trustedProfileTemplateResponseModel.getProfile());
     assertNull(trustedProfileTemplateResponseModel.getPolicyTemplateReferences());
+    assertNull(trustedProfileTemplateResponseModel.getActionControls());
     assertNull(trustedProfileTemplateResponseModel.getHistory());
     assertNull(trustedProfileTemplateResponseModel.getEntityTag());
     assertNull(trustedProfileTemplateResponseModel.getCrn());

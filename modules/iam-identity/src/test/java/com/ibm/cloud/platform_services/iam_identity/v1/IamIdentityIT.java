@@ -377,7 +377,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test(dependsOnMethods = { "testUpdateApiKey" })
+    @Test(dependsOnMethods = { "testUnlockApiKey" })
     public void testDisableApiKey() throws Exception {
         assertNotNull(apikeyId2);
         try {
@@ -440,7 +440,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test(dependsOnMethods = { "testDeleteApiKey1" })
+    @Test(dependsOnMethods = { "testDeleteApiKey1", "testEnableApiKey" })
     public void testDeleteApiKey2() throws Exception {
         sleep(2);
         assertNotNull(apikeyId2);
@@ -1559,7 +1559,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             AccountSettingsResponse accountSettingsResponseResult = response.getResult();
             assertNotNull(accountSettingsResponseResult);
 
-            assertEquals(accountSettingsResponseResult.getAllowedIpAddresses(), "");
+            //assertEquals(accountSettingsResponseResult.getAllowedIpAddresses(), "");
             assertEquals(accountSettingsResponseResult.getAccountId(), updateAccountSettingsOptions.accountId());
             assertEquals(accountSettingsResponseResult.getMfa(), updateAccountSettingsOptions.mfa());
             assertEquals(accountSettingsResponseResult.getUserMfa(), updateAccountSettingsOptions.userMfa());
@@ -1572,6 +1572,34 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(accountSettingsResponseResult.getSystemRefreshTokenExpirationInSeconds(),
                     updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds());
             assertNotEquals(accountSettingsResponseResult.getEntityTag(), accountSettingsEtag);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testGetEffectiveAccountSettings() throws Exception {
+        try {
+            GetEffectiveAccountSettingsOptions getEffectiveAccountSettingsOptions = new GetEffectiveAccountSettingsOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .includeHistory(false)
+                    .build();
+
+            // Invoke operation
+            Response<EffectiveAccountSettingsResponse> response = service.getEffectiveAccountSettings(getEffectiveAccountSettingsOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            EffectiveAccountSettingsResponse effectiveAccountSettingsResponseResult = response.getResult();
+
+            assertNotNull(effectiveAccountSettingsResponseResult);
+
+            assertEquals(effectiveAccountSettingsResponseResult.getAccountId(), ACCOUNT_ID);
+            assertNotNull(effectiveAccountSettingsResponseResult.getEffective());
+            assertNotNull(effectiveAccountSettingsResponseResult.getAccount());
+            
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

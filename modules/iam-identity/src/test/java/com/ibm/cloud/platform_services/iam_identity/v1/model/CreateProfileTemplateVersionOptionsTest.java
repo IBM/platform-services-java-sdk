@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,6 +13,10 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControls;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsIdentities;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsPolicies;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsRules;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.PolicyTemplateReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
@@ -87,6 +91,36 @@ public class CreateProfileTemplateVersionOptionsTest {
     assertEquals(policyTemplateReferenceModel.id(), "testString");
     assertEquals(policyTemplateReferenceModel.version(), "testString");
 
+    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+    assertEquals(actionControlsIdentitiesModel.add(), Boolean.valueOf(true));
+    assertEquals(actionControlsIdentitiesModel.remove(), Boolean.valueOf(true));
+
+    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+    assertEquals(actionControlsRulesModel.add(), Boolean.valueOf(true));
+    assertEquals(actionControlsRulesModel.remove(), Boolean.valueOf(true));
+
+    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+    assertEquals(actionControlsPoliciesModel.add(), Boolean.valueOf(true));
+    assertEquals(actionControlsPoliciesModel.remove(), Boolean.valueOf(true));
+
+    ActionControls actionControlsModel = new ActionControls.Builder()
+      .identities(actionControlsIdentitiesModel)
+      .rules(actionControlsRulesModel)
+      .policies(actionControlsPoliciesModel)
+      .build();
+    assertEquals(actionControlsModel.identities(), actionControlsIdentitiesModel);
+    assertEquals(actionControlsModel.rules(), actionControlsRulesModel);
+    assertEquals(actionControlsModel.policies(), actionControlsPoliciesModel);
+
     CreateProfileTemplateVersionOptions createProfileTemplateVersionOptionsModel = new CreateProfileTemplateVersionOptions.Builder()
       .templateId("testString")
       .accountId("testString")
@@ -94,6 +128,7 @@ public class CreateProfileTemplateVersionOptionsTest {
       .description("testString")
       .profile(templateProfileComponentRequestModel)
       .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
+      .actionControls(actionControlsModel)
       .build();
     assertEquals(createProfileTemplateVersionOptionsModel.templateId(), "testString");
     assertEquals(createProfileTemplateVersionOptionsModel.accountId(), "testString");
@@ -101,6 +136,7 @@ public class CreateProfileTemplateVersionOptionsTest {
     assertEquals(createProfileTemplateVersionOptionsModel.description(), "testString");
     assertEquals(createProfileTemplateVersionOptionsModel.profile(), templateProfileComponentRequestModel);
     assertEquals(createProfileTemplateVersionOptionsModel.policyTemplateReferences(), java.util.Arrays.asList(policyTemplateReferenceModel));
+    assertEquals(createProfileTemplateVersionOptionsModel.actionControls(), actionControlsModel);
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

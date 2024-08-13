@@ -1,3 +1,10 @@
+# [0.57.0](https://github.com/IBM/platform-services-java-sdk/compare/0.56.0...0.57.0) (2024-08-13)
+
+
+### Features
+
+* add fix-copyrights.sh script ([#254](https://github.com/IBM/platform-services-java-sdk/issues/254)) ([c867fd4](https://github.com/IBM/platform-services-java-sdk/commit/c867fd49cecbf0c431f89c6303b0e431592d9dae))
+
 # [0.56.0](https://github.com/IBM/platform-services-java-sdk/compare/0.55.0...0.56.0) (2024-08-12)
 
 

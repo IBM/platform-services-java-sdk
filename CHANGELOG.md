@@ -1,3 +1,10 @@
+## [0.57.1](https://github.com/IBM/platform-services-java-sdk/compare/0.57.0...0.57.1) (2024-08-13)
+
+
+### Bug Fixes
+
+* **build:** bump dependency versions ([#255](https://github.com/IBM/platform-services-java-sdk/issues/255)) ([520406f](https://github.com/IBM/platform-services-java-sdk/commit/520406fa813550b8ca6609612ead4707ca714159))
+
 # [0.57.0](https://github.com/IBM/platform-services-java-sdk/compare/0.56.0...0.57.0) (2024-08-13)
 
 

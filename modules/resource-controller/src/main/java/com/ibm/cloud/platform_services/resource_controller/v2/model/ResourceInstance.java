@@ -468,7 +468,9 @@ public class ResourceInstance extends GenericModel {
    * The relative path to the resource aliases for the instance.
    *
    * @return the resourceAliasesUrl
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String getResourceAliasesUrl() {
     return resourceAliasesUrl;
   }
@@ -479,7 +481,9 @@ public class ResourceInstance extends GenericModel {
    * The relative path to the resource bindings for the instance.
    *
    * @return the resourceBindingsUrl
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String getResourceBindingsUrl() {
     return resourceBindingsUrl;
   }

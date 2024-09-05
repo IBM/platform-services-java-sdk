@@ -1,3 +1,10 @@
+# [0.58.0](https://github.com/IBM/platform-services-java-sdk/compare/0.57.1...0.58.0) (2024-09-05)
+
+
+### Features
+
+* **Resource Controller:** deprecate alias, bindings APIs, and related schema items ([#256](https://github.com/IBM/platform-services-java-sdk/issues/256)) ([5baf49d](https://github.com/IBM/platform-services-java-sdk/commit/5baf49d56c9c920703848d1fc9d4bcc5cddc65cf))
+
 ## [0.57.1](https://github.com/IBM/platform-services-java-sdk/compare/0.57.0...0.57.1) (2024-08-13)
 
 

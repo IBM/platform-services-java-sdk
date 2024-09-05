@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.91.0-d9755c53-20240605-153412
+ * IBM OpenAPI SDK Code Generator Version: 3.94.1-71478489-20240820-161623
  */
 
 package com.ibm.cloud.platform_services.resource_controller.v2;
@@ -67,6 +67,7 @@ import com.ibm.cloud.sdk.core.util.ResponseConverterUtils;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
 /**
  * Manage lifecycle of your Cloud resources using Resource Controller APIs. Resources are provisioned globally in an
@@ -76,6 +77,7 @@ import java.util.Map.Entry;
  * API Version: 2.0
  */
 public class ResourceController extends BaseService {
+  private static final Logger LOGGER = Logger.getLogger(ResourceController.class.getName());
 
   /**
    * Default service name used when configuring the `ResourceController` client.
@@ -333,8 +335,11 @@ public class ResourceController extends BaseService {
    *
    * @param listResourceAliasesForInstanceOptions the {@link ListResourceAliasesForInstanceOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAliasesList}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceAliasesList> listResourceAliasesForInstance(ListResourceAliasesForInstanceOptions listResourceAliasesForInstanceOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: listResourceAliasesForInstance");
     com.ibm.cloud.sdk.core.util.Validator.notNull(listResourceAliasesForInstanceOptions,
       "listResourceAliasesForInstanceOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -632,8 +637,11 @@ public class ResourceController extends BaseService {
    *
    * @param listResourceBindingsOptions the {@link ListResourceBindingsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBindingsList}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceBindingsList> listResourceBindings(ListResourceBindingsOptions listResourceBindingsOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: listResourceBindings");
     if (listResourceBindingsOptions == null) {
       listResourceBindingsOptions = new ListResourceBindingsOptions.Builder().build();
     }
@@ -681,7 +689,9 @@ public class ResourceController extends BaseService {
    * View all of the resource bindings that exist for all of your resource aliases.
    *
    * @return a {@link ServiceCall} with a result of type {@link ResourceBindingsList}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public ServiceCall<ResourceBindingsList> listResourceBindings() {
     return listResourceBindings(null);
   }
@@ -693,8 +703,11 @@ public class ResourceController extends BaseService {
    *
    * @param createResourceBindingOptions the {@link CreateResourceBindingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBinding}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceBinding> createResourceBinding(CreateResourceBindingOptions createResourceBindingOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: createResourceBinding");
     com.ibm.cloud.sdk.core.util.Validator.notNull(createResourceBindingOptions,
       "createResourceBindingOptions cannot be null");
     RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_bindings"));
@@ -729,8 +742,11 @@ public class ResourceController extends BaseService {
    *
    * @param getResourceBindingOptions the {@link GetResourceBindingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBinding}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceBinding> getResourceBinding(GetResourceBindingOptions getResourceBindingOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: getResourceBinding");
     com.ibm.cloud.sdk.core.util.Validator.notNull(getResourceBindingOptions,
       "getResourceBindingOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -753,8 +769,11 @@ public class ResourceController extends BaseService {
    *
    * @param deleteResourceBindingOptions the {@link DeleteResourceBindingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<Void> deleteResourceBinding(DeleteResourceBindingOptions deleteResourceBindingOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: deleteResourceBinding");
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteResourceBindingOptions,
       "deleteResourceBindingOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -775,8 +794,11 @@ public class ResourceController extends BaseService {
    *
    * @param updateResourceBindingOptions the {@link UpdateResourceBindingOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBinding}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceBinding> updateResourceBinding(UpdateResourceBindingOptions updateResourceBindingOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: updateResourceBinding");
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateResourceBindingOptions,
       "updateResourceBindingOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -802,8 +824,11 @@ public class ResourceController extends BaseService {
    *
    * @param listResourceAliasesOptions the {@link ListResourceAliasesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAliasesList}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceAliasesList> listResourceAliases(ListResourceAliasesOptions listResourceAliasesOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: listResourceAliases");
     if (listResourceAliasesOptions == null) {
       listResourceAliasesOptions = new ListResourceAliasesOptions.Builder().build();
     }
@@ -854,7 +879,9 @@ public class ResourceController extends BaseService {
    * View all of the resource aliases that exist for every resource instance.
    *
    * @return a {@link ServiceCall} with a result of type {@link ResourceAliasesList}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public ServiceCall<ResourceAliasesList> listResourceAliases() {
     return listResourceAliases(null);
   }
@@ -866,8 +893,11 @@ public class ResourceController extends BaseService {
    *
    * @param createResourceAliasOptions the {@link CreateResourceAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAlias}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceAlias> createResourceAlias(CreateResourceAliasOptions createResourceAliasOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: createResourceAlias");
     com.ibm.cloud.sdk.core.util.Validator.notNull(createResourceAliasOptions,
       "createResourceAliasOptions cannot be null");
     RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v2/resource_aliases"));
@@ -894,8 +924,11 @@ public class ResourceController extends BaseService {
    *
    * @param getResourceAliasOptions the {@link GetResourceAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAlias}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceAlias> getResourceAlias(GetResourceAliasOptions getResourceAliasOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: getResourceAlias");
     com.ibm.cloud.sdk.core.util.Validator.notNull(getResourceAliasOptions,
       "getResourceAliasOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -919,8 +952,11 @@ public class ResourceController extends BaseService {
    *
    * @param deleteResourceAliasOptions the {@link DeleteResourceAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<Void> deleteResourceAlias(DeleteResourceAliasOptions deleteResourceAliasOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: deleteResourceAlias");
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteResourceAliasOptions,
       "deleteResourceAliasOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -944,8 +980,11 @@ public class ResourceController extends BaseService {
    *
    * @param updateResourceAliasOptions the {@link UpdateResourceAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceAlias}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceAlias> updateResourceAlias(UpdateResourceAliasOptions updateResourceAliasOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: updateResourceAlias");
     com.ibm.cloud.sdk.core.util.Validator.notNull(updateResourceAliasOptions,
       "updateResourceAliasOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -971,8 +1010,11 @@ public class ResourceController extends BaseService {
    *
    * @param listResourceBindingsForAliasOptions the {@link ListResourceBindingsForAliasOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ResourceBindingsList}
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+   @Deprecated
   public ServiceCall<ResourceBindingsList> listResourceBindingsForAlias(ListResourceBindingsForAliasOptions listResourceBindingsForAliasOptions) {
+    LOGGER.warning("A deprecated operation has been invoked: listResourceBindingsForAlias");
     com.ibm.cloud.sdk.core.util.Validator.notNull(listResourceBindingsForAliasOptions,
       "listResourceBindingsForAliasOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();

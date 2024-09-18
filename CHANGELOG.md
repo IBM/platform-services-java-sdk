@@ -1,3 +1,10 @@
+## [0.58.1](https://github.com/IBM/platform-services-java-sdk/compare/0.58.0...0.58.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* **build:** bump core to 9.21.2 ([#258](https://github.com/IBM/platform-services-java-sdk/issues/258)) ([301f337](https://github.com/IBM/platform-services-java-sdk/commit/301f337536a3b9921e47aaa808822503aff1a3de))
+
 # [0.58.0](https://github.com/IBM/platform-services-java-sdk/compare/0.57.1...0.58.0) (2024-09-05)
 
 

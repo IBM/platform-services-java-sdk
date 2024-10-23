@@ -60,8 +60,7 @@ Service Name | Artifact Coordinates
 [IAM Policy Management](https://cloud.ibm.com/apidocs/iam-policy-management?code=java) | com.ibm.cloud:iam-policy-management:0.58.2
 [IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=java) | com.ibm.cloud:ibm-cloud-shell:0.58.2
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=java) | com.ibm.cloud:open-service-broker:0.58.2
-[Partner Billing Units](https://cloud.ibm.com/apidocs/partner-apis/billing-unit?code=java) | com.ibm.cloud:partner-billing-units:0.58.2
-[Partner Usage Reports](https://cloud.ibm.com/apidocs/partner-apis/resource-usage-reports?code=java) | com.ibm.cloud:partner-usage-reports:0.58.2
+[Partner Management APIs](https://cloud.ibm.com/apidocs/partner-apis/partner?code=go) | com.ibm.cloud:partner-management:0.58.2
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=java) | com.ibm.cloud:resource-controller:0.58.2
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=java) | com.ibm.cloud:resource-manager:0.58.2
 [Usage Metering](https://cloud.ibm.com/apidocs/usage-metering?code=java) | com.ibm.cloud:usage-metering:0.58.2

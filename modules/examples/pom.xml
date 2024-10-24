@@ -89,12 +89,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>partner-billing-units</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>partner-usage-reports</artifactId>
+            <artifactId>partner-management</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

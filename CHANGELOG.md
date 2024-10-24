@@ -1,3 +1,10 @@
+# [0.59.0](https://github.com/IBM/platform-services-java-sdk/compare/0.58.2...0.59.0) (2024-10-24)
+
+
+### Features
+
+* **Partner Management APIs:** add new service to project ([#260](https://github.com/IBM/platform-services-java-sdk/issues/260)) ([10c99a2](https://github.com/IBM/platform-services-java-sdk/commit/10c99a2e7e16fb8925d2b2030308221904442788))
+
 ## [0.58.2](https://github.com/IBM/platform-services-java-sdk/compare/0.58.1...0.58.2) (2024-10-16)
 
 

@@ -1,3 +1,10 @@
+# [0.60.0](https://github.com/IBM/platform-services-java-sdk/compare/0.59.0...0.60.0) (2024-10-28)
+
+
+### Features
+
+* **Usage Reports:** add "created_by_email_id" to Offer schema ([#257](https://github.com/IBM/platform-services-java-sdk/issues/257)) ([fd0eee9](https://github.com/IBM/platform-services-java-sdk/commit/fd0eee92cd731fe1c31a9ab62a48ff31ba631e4f))
+
 # [0.59.0](https://github.com/IBM/platform-services-java-sdk/compare/0.58.2...0.59.0) (2024-10-24)
 
 

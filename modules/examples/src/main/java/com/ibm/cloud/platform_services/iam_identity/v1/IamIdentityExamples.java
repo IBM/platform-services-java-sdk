@@ -1997,6 +1997,7 @@ public class IamIdentityExamples {
 
             identityservice.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
 
+            
             // end-delete_preference_on_scope_account
 
         } catch (ServiceResponseException e) {

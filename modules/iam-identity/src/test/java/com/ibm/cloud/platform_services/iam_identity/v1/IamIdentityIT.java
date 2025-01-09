@@ -56,6 +56,9 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private static String ASSIGNMENT_TARGET_TYPE_ACCOUNT = "Account";
     private static String ACCOUNT_SETTINGS_TEMPLATE_NAME = "Java-SDK-IT-AccountSettingsTemplate";
     private static String APIKEY_ACTION_WHEN_LEAKED_DEFAULT="none";
+    private static String SERVICE = "console";
+    private static String VALUE_STRING = "/billing";
+    private static String PREFERENCE_ID_1 = "landing_page";
 
     private static String ACCOUNT_ID;
     private static String IAM_ID;
@@ -63,6 +66,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private static String IAM_APIKEY;
     private static String ENTERPRISE_ACCOUNT_ID;
     private static String ENTERPRISE_SUBACCOUNT_ID;
+    private static String TRUSTED_PROFILE_FOR_PREFERENCES;
 
     private static String IAM_ID_INVALID = "IAM-InvalidId";
     private static String ACCOUNT_ID_INVALID = "Account-InvalidId";
@@ -130,6 +134,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         IAM_APIKEY = config.get("APIKEY");
         ENTERPRISE_ACCOUNT_ID = config.get("ENTERPRISE_ACCOUNT_ID");
         ENTERPRISE_SUBACCOUNT_ID = config.get("ENTERPRISE_SUBACCOUNT_ID");
+        TRUSTED_PROFILE_FOR_PREFERENCES = "iam-"+ config.get("PROFILEID1");
 
         profileId1 = config.get("profileId1");
 
@@ -1599,7 +1604,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(effectiveAccountSettingsResponseResult.getAccountId(), ACCOUNT_ID);
             assertNotNull(effectiveAccountSettingsResponseResult.getEffective());
             assertNotNull(effectiveAccountSettingsResponseResult.getAccount());
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -2584,6 +2589,105 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             Response<Void> deleteResponse = service.deleteAllVersionsOfAccountSettingsTemplate(deleteTeplateOptions).execute();
             assertNotNull(deleteResponse);
             assertEquals(deleteResponse.getStatusCode(), 204);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    public void testUpdatePreferenceOnScopeAccount() throws Exception {
+        assertNotNull(PREFERENCE_ID_1);
+        try {
+            UpdatePreferenceOnScopeAccountOptions updatePreferenceOption = new UpdatePreferenceOnScopeAccountOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .iamId(TRUSTED_PROFILE_FOR_PREFERENCES)
+                    .service(SERVICE)
+                    .preferenceId(PREFERENCE_ID_1)
+                    .valueString(VALUE_STRING)
+                    .build();
+
+            Response<IdentityPreferenceResponse> response = service.updatePreferenceOnScopeAccount(updatePreferenceOption).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            IdentityPreferenceResponse preferenceResult = response.getResult();
+            assertNotNull(preferenceResult);
+
+            assertEquals(preferenceResult.getService(), SERVICE);
+            assertEquals(preferenceResult.getId(), PREFERENCE_ID_1);
+            assertEquals(preferenceResult.getAccountId(), ACCOUNT_ID);
+            assertEquals(preferenceResult.getScope(), "account");
+            assertEquals(preferenceResult.getValueString(), VALUE_STRING);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    public void testGetPreferenceOnScopeAccount() throws Exception {
+        assertNotNull(PREFERENCE_ID_1);
+        try {
+            GetPreferencesOnScopeAccountOptions getPreferenceOption = new GetPreferencesOnScopeAccountOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .iamId(IAM_ID)
+                    .service(SERVICE)
+                    .preferenceId(PREFERENCE_ID_1)
+                    .build();
+
+            Response<IdentityPreferenceResponse> response = service.getPreferencesOnScopeAccount(getPreferenceOption).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            IdentityPreferenceResponse preferenceResult = response.getResult();
+            assertNotNull(preferenceResult);
+
+            assertEquals(preferenceResult.getService(), SERVICE);
+            assertEquals(preferenceResult.getId(), PREFERENCE_ID_1);
+            assertEquals(preferenceResult.getAccountId(), ACCOUNT_ID);
+            assertEquals(preferenceResult.getScope(), "account");
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    public void testGetAllPreferencesOnScopeAccount() throws Exception {
+        assertNotNull(PREFERENCE_ID_1);
+        try {
+            GetAllPreferencesOnScopeAccountOptions getAllPreferencesOption = new GetAllPreferencesOnScopeAccountOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .iamId(IAM_ID)
+                    .build();
+
+            Response<AllIdentityPreferencesResponse> response = service.getAllPreferencesOnScopeAccount(getAllPreferencesOption).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            //lists all preferences for the account, returns empty if no preference available to show
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testUpdatePreferenceOnScopeAccount" ,"testGetPreferenceOnScopeAccount", "testGetAllPreferencesOnScopeAccount" })
+    public void testDeletePreferenceOnScopeAccount() throws Exception {
+        assertNotNull(PREFERENCE_ID_1);
+        try {
+            DeletePreferencesOnScopeAccountOptions deletePreferenceOption = new DeletePreferencesOnScopeAccountOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .iamId(TRUSTED_PROFILE_FOR_PREFERENCES)
+                    .service(SERVICE)
+                    .preferenceId(PREFERENCE_ID_1)
+                    .build();
+
+            Response<Void> response = service.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

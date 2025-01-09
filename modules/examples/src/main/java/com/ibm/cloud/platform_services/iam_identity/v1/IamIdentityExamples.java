@@ -27,7 +27,7 @@ import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
 
 //
-// This class provides an example of how to use the IAM Identity service.
+// This class provides an example of how to use the IAM Identity identityservice.
 //
 // The following configuration properties are assumed to be defined:
 //
@@ -59,6 +59,9 @@ public class IamIdentityExamples {
     private static String profileTemplateName = "Example-Profile-Template";
     private static String profileTemplateProfileName = "Profile-From-Example-Template";
     private static String accountSettingsTemplateName = "Example-Account-Settings-Template";
+    private static String service = "console";
+    private static String valueString = "/billing";
+    private static String preferenceId1 = "landing_page";
 
     //values to be read from the env file
     private static String accountId;
@@ -67,6 +70,7 @@ public class IamIdentityExamples {
     private static String iamApiKey;
     private static String enterpriseAccountId;
     private static String enterpriseSubAccountId;
+    private static String trustedProfileForPreferences; //already existing profile just prefixed with iam
 
     // Variables used to hold various values shared between operations.
     private static String apikeyId;
@@ -97,7 +101,7 @@ public class IamIdentityExamples {
     }
 
     public static void main(String[] args) throws Exception {
-        IamIdentity service = IamIdentity.newInstance();
+        IamIdentity identityservice = IamIdentity.newInstance();
 
         // Load up our test-specific config properties.
         Map<String, String> config = CredentialUtils.getServiceProperties(IamIdentity.DEFAULT_SERVICE_NAME);
@@ -107,6 +111,7 @@ public class IamIdentityExamples {
         iamIdMember = config.get("IAM_ID_MEMBER");
         enterpriseAccountId = config.get("ENTERPRISE_ACCOUNT_ID");
         enterpriseSubAccountId = config.get("ENTERPRISE_SUBACCOUNT_ID");
+        trustedProfileForPreferences = "iam-" + config.get("PROFILEID1");
 
         try {
             System.out.println("createApiKey() result:");
@@ -119,7 +124,7 @@ public class IamIdentityExamples {
                     .description("Example ApiKey")
                     .build();
 
-            Response<ApiKey> response = service.createApiKey(createApiKeyOptions).execute();
+            Response<ApiKey> response = identityservice.createApiKey(createApiKeyOptions).execute();
             ApiKey apiKey = response.getResult();
             apikeyId = apiKey.getId();
 
@@ -143,7 +148,7 @@ public class IamIdentityExamples {
                     .includeHistory(true)
                     .build();
 
-            Response<ApiKeyList> response = service.listApiKeys(listApiKeysOptions).execute();
+            Response<ApiKeyList> response = identityservice.listApiKeys(listApiKeysOptions).execute();
             ApiKeyList apiKeyList = response.getResult();
 
             System.out.println(apiKeyList);
@@ -165,7 +170,7 @@ public class IamIdentityExamples {
                     .includeHistory(false)
                     .build();
 
-            Response<ApiKey> response = service.getApiKeysDetails(getApiKeysDetailsOptions).execute();
+            Response<ApiKey> response = identityservice.getApiKeysDetails(getApiKeysDetailsOptions).execute();
             ApiKey apiKey = response.getResult();
 
             System.out.println(apiKey);
@@ -188,7 +193,7 @@ public class IamIdentityExamples {
                     .includeActivity(true)
                     .build();
 
-            Response<ApiKey> response = service.getApiKey(getApiKeyOptions).execute();
+            Response<ApiKey> response = identityservice.getApiKey(getApiKeyOptions).execute();
             ApiKey apiKey = response.getResult();
             apikeyEtag = response.getHeaders().values("Etag").get(0);
 
@@ -212,7 +217,7 @@ public class IamIdentityExamples {
                     .description("This is an updated description")
                     .build();
 
-            Response<ApiKey> response = service.updateApiKey(updateApiKeyOptions).execute();
+            Response<ApiKey> response = identityservice.updateApiKey(updateApiKeyOptions).execute();
             ApiKey apiKey = response.getResult();
 
             System.out.println(apiKey);
@@ -232,7 +237,7 @@ public class IamIdentityExamples {
                     .id(apikeyId)
                     .build();
 
-            Response<Void> response = service.lockApiKey(lockApiKeyOptions).execute();
+            Response<Void> response = identityservice.lockApiKey(lockApiKeyOptions).execute();
 
             // end-lock_api_key
 
@@ -250,7 +255,7 @@ public class IamIdentityExamples {
                     .id(apikeyId)
                     .build();
 
-            Response<Void> response = service.unlockApiKey(unlockApiKeyOptions).execute();
+            Response<Void> response = identityservice.unlockApiKey(unlockApiKeyOptions).execute();
 
             // end-unlock_api_key
 
@@ -268,7 +273,7 @@ public class IamIdentityExamples {
                     .id(apikeyId)
                     .build();
 
-            Response<Void> response = service.disableApiKey(disableApiKeyOptions).execute();
+            Response<Void> response = identityservice.disableApiKey(disableApiKeyOptions).execute();
 
             // end-disable_api_key
 
@@ -286,7 +291,7 @@ public class IamIdentityExamples {
                     .id(apikeyId)
                     .build();
 
-            Response<Void> response = service.enableApiKey(enableApiKeyOptions).execute();
+            Response<Void> response = identityservice.enableApiKey(enableApiKeyOptions).execute();
 
             // end-enable_api_key
 
@@ -304,7 +309,7 @@ public class IamIdentityExamples {
                     .id(apikeyId)
                     .build();
 
-            Response<Void> response = service.deleteApiKey(deleteApiKeyOptions).execute();
+            Response<Void> response = identityservice.deleteApiKey(deleteApiKeyOptions).execute();
 
             // end-delete_api_key
 
@@ -325,7 +330,7 @@ public class IamIdentityExamples {
                     .description("Example ServiceId")
                     .build();
 
-            Response<ServiceId> response = service.createServiceId(createServiceIdOptions).execute();
+            Response<ServiceId> response = identityservice.createServiceId(createServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
             svcId = serviceId.getId();
 
@@ -348,7 +353,7 @@ public class IamIdentityExamples {
                     .includeActivity(false)
                     .build();
 
-            Response<ServiceId> response = service.getServiceId(getServiceIdOptions).execute();
+            Response<ServiceId> response = identityservice.getServiceId(getServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
             svcIdEtag = response.getHeaders().values("Etag").get(0);
 
@@ -371,7 +376,7 @@ public class IamIdentityExamples {
                     .name(serviceIdName)
                     .build();
 
-            Response<ServiceIdList> response = service.listServiceIds(listServiceIdsOptions).execute();
+            Response<ServiceIdList> response = identityservice.listServiceIds(listServiceIdsOptions).execute();
             ServiceIdList serviceIdList = response.getResult();
 
             System.out.println(serviceIdList);
@@ -394,7 +399,7 @@ public class IamIdentityExamples {
                     .description("This is an updated description")
                     .build();
 
-            Response<ServiceId> response = service.updateServiceId(updateServiceIdOptions).execute();
+            Response<ServiceId> response = identityservice.updateServiceId(updateServiceIdOptions).execute();
             ServiceId serviceId = response.getResult();
 
             System.out.println(serviceId);
@@ -414,7 +419,7 @@ public class IamIdentityExamples {
                     .id(svcId)
                     .build();
 
-            Response<Void> response = service.lockServiceId(lockServiceIdOptions).execute();
+            Response<Void> response = identityservice.lockServiceId(lockServiceIdOptions).execute();
 
             // end-lock_service_id
 
@@ -432,7 +437,7 @@ public class IamIdentityExamples {
                     .id(svcId)
                     .build();
 
-            Response<Void> response = service.unlockServiceId(unlockServiceIdOptions).execute();
+            Response<Void> response = identityservice.unlockServiceId(unlockServiceIdOptions).execute();
 
             // end-unlock_service_id
 
@@ -450,7 +455,7 @@ public class IamIdentityExamples {
                     .id(svcId)
                     .build();
 
-            Response<Void> response = service.deleteServiceId(deleteServiceIdOptions).execute();
+            Response<Void> response = identityservice.deleteServiceId(deleteServiceIdOptions).execute();
 
             // end-delete_service_id
 
@@ -471,7 +476,7 @@ public class IamIdentityExamples {
                     .accountId(accountId)
                     .build();
 
-            Response<TrustedProfile> response = service.createProfile(createProfileOptions).execute();
+            Response<TrustedProfile> response = identityservice.createProfile(createProfileOptions).execute();
             TrustedProfile profile = response.getResult();
             profileId = profile.getId();
 
@@ -494,7 +499,7 @@ public class IamIdentityExamples {
                     .includeActivity(false)
                     .build();
 
-            Response<TrustedProfile> response = service.getProfile(getProfileOptions).execute();
+            Response<TrustedProfile> response = identityservice.getProfile(getProfileOptions).execute();
             TrustedProfile profile = response.getResult();
             profileEtag = response.getHeaders().values("Etag").get(0);
 
@@ -517,7 +522,7 @@ public class IamIdentityExamples {
                     .includeHistory(false)
                     .build();
 
-            Response<TrustedProfilesList> response = service.listProfiles(listProfilesOptions).execute();
+            Response<TrustedProfilesList> response = identityservice.listProfiles(listProfilesOptions).execute();
             TrustedProfilesList profiles = response.getResult();
 
             System.out.println(profiles);
@@ -541,7 +546,7 @@ public class IamIdentityExamples {
                     .description(newDescription)
                     .build();
 
-            Response<TrustedProfile> response = service.updateProfile(updateProfileOptions).execute();
+            Response<TrustedProfile> response = identityservice.updateProfile(updateProfileOptions).execute();
             TrustedProfile profile = response.getResult();
 
             System.out.println(profile);
@@ -575,7 +580,7 @@ public class IamIdentityExamples {
                     .conditions(conditions)
                     .build();
 
-            Response<ProfileClaimRule> response = service.createClaimRule(createClaimRuleOptions).execute();
+            Response<ProfileClaimRule> response = identityservice.createClaimRule(createClaimRuleOptions).execute();
             ProfileClaimRule claimRule = response.getResult();
             claimRuleId = claimRule.getId();
 
@@ -598,7 +603,7 @@ public class IamIdentityExamples {
                     .ruleId(claimRuleId)
                     .build();
 
-            Response<ProfileClaimRule> response = service.getClaimRule(getClaimRuleOptions).execute();
+            Response<ProfileClaimRule> response = identityservice.getClaimRule(getClaimRuleOptions).execute();
             ProfileClaimRule claimRule = response.getResult();
             claimRuleEtag = response.getHeaders().values("Etag").get(0);
 
@@ -620,7 +625,7 @@ public class IamIdentityExamples {
                     .profileId(profileId)
                     .build();
 
-            Response<ProfileClaimRuleList> response = service.listClaimRules(listClaimRulesOptions).execute();
+            Response<ProfileClaimRuleList> response = identityservice.listClaimRules(listClaimRulesOptions).execute();
             ProfileClaimRuleList claimRules = response.getResult();
 
             System.out.println(claimRules);
@@ -656,7 +661,7 @@ public class IamIdentityExamples {
                     .realmName(realmName)
                     .build();
 
-            Response<ProfileClaimRule> response = service.updateClaimRule(updateClaimRuleOptions).execute();
+            Response<ProfileClaimRule> response = identityservice.updateClaimRule(updateClaimRuleOptions).execute();
             ProfileClaimRule claimRule = response.getResult();
 
             System.out.println(claimRule);
@@ -677,7 +682,7 @@ public class IamIdentityExamples {
                     .profileId(profileId)
                     .ruleId(claimRuleId)
                     .build();
-            Response<Void> response = service.deleteClaimRule(deleteClaimRuleOptions).execute();
+            Response<Void> response = identityservice.deleteClaimRule(deleteClaimRuleOptions).execute();
 
             // end-delete_claim_rule
 
@@ -706,7 +711,7 @@ public class IamIdentityExamples {
                     .link(link)
                     .build();
 
-            Response<ProfileLink> response = service.createLink(createLinkOptions).execute();
+            Response<ProfileLink> response = identityservice.createLink(createLinkOptions).execute();
             ProfileLink linkResponse = response.getResult();
             linkId = linkResponse.getId();
 
@@ -729,7 +734,7 @@ public class IamIdentityExamples {
                     .linkId(linkId)
                     .build();
 
-            Response<ProfileLink> response = service.getLink(getLinkOptions).execute();
+            Response<ProfileLink> response = identityservice.getLink(getLinkOptions).execute();
             ProfileLink link = response.getResult();
 
             System.out.println(link);
@@ -750,7 +755,7 @@ public class IamIdentityExamples {
                     .profileId(profileId)
                     .build();
 
-            Response<ProfileLinkList> response = service.listLinks(listLinksOptions).execute();
+            Response<ProfileLinkList> response = identityservice.listLinks(listLinksOptions).execute();
             ProfileLinkList links = response.getResult();
 
             System.out.println(links);
@@ -771,7 +776,7 @@ public class IamIdentityExamples {
                     .profileId(profileId)
                     .linkId(linkId)
                     .build();
-            Response<Void> response = service.deleteLink(deleteLinkOptions).execute();
+            Response<Void> response = identityservice.deleteLink(deleteLinkOptions).execute();
 
             // end-delete_link
 
@@ -788,7 +793,7 @@ public class IamIdentityExamples {
             // begin-get_profile_identities
             GetProfileIdentitiesOptions getProfileIdentitiesOptions = new GetProfileIdentitiesOptions.Builder()
                     .profileId(profileId).build();
-            Response<ProfileIdentitiesResponse> response = service.getProfileIdentities(getProfileIdentitiesOptions)
+            Response<ProfileIdentitiesResponse> response = identityservice.getProfileIdentities(getProfileIdentitiesOptions)
                     .execute();
 
             ProfileIdentitiesResponse profileIdentityResponseResult = response.getResult();
@@ -826,7 +831,7 @@ public class IamIdentityExamples {
                     .ifMatch(profileIdentitiesEtag)
                     .build();
 
-            Response<ProfileIdentitiesResponse> response = service.setProfileIdentities(setProfileIdentitiesOptions)
+            Response<ProfileIdentitiesResponse> response = identityservice.setProfileIdentities(setProfileIdentitiesOptions)
                     .execute();
             ProfileIdentitiesResponse profileIdentitiesResponseResult = response.getResult();
 
@@ -856,7 +861,7 @@ public class IamIdentityExamples {
                     .accounts(accounts)
                     .description(description)
                     .build();
-            Response<ProfileIdentityResponse> response = service.setProfileIdentity(setProfileIdentityOptions).execute();
+            Response<ProfileIdentityResponse> response = identityservice.setProfileIdentity(setProfileIdentityOptions).execute();
 
             ProfileIdentityResponse profileIdentityResponseResult = response.getResult();
             System.out.println(profileIdentityResponseResult);
@@ -877,7 +882,7 @@ public class IamIdentityExamples {
                     .identityType("user")
                     .identifierId(iamIdMember)
                     .build();
-            Response<ProfileIdentityResponse> response = service.getProfileIdentity(getProfileIdentityOptions).execute();
+            Response<ProfileIdentityResponse> response = identityservice.getProfileIdentity(getProfileIdentityOptions).execute();
 
             ProfileIdentityResponse profileIdentityResponseResult = response.getResult();
             System.out.println(profileIdentityResponseResult);
@@ -898,7 +903,7 @@ public class IamIdentityExamples {
                     .identityType("user")
                     .identifierId(iamIdMember)
                     .build();
-            Response<Void> response = service.deleteProfileIdentity(deleteProfileIdentityOptions).execute();
+            Response<Void> response = identityservice.deleteProfileIdentity(deleteProfileIdentityOptions).execute();
 
             Void profileIdentityResponseResult = response.getResult();
             System.out.println(profileIdentityResponseResult);
@@ -920,7 +925,7 @@ public class IamIdentityExamples {
                     .profileId(profileId)
                     .build();
 
-            Response<Void> response = service.deleteProfile(deleteProfileOptions).execute();
+            Response<Void> response = identityservice.deleteProfile(deleteProfileOptions).execute();
 
             // end-delete_profile
 
@@ -940,7 +945,7 @@ public class IamIdentityExamples {
                     .accountId(accountId)
                     .build();
 
-            Response<AccountSettingsResponse> response = service.getAccountSettings(getAccountSettingsOptions).execute();
+            Response<AccountSettingsResponse> response = identityservice.getAccountSettings(getAccountSettingsOptions).execute();
             AccountSettingsResponse accountSettingsResponse = response.getResult();
 
             accountSettingsEtag = response.getHeaders().values("Etag").get(0);
@@ -980,7 +985,7 @@ public class IamIdentityExamples {
                     .systemRefreshTokenExpirationInSeconds("259200")
                     .build();
 
-            Response<AccountSettingsResponse> response = service.updateAccountSettings(updateAccountSettingsOptions).execute();
+            Response<AccountSettingsResponse> response = identityservice.updateAccountSettings(updateAccountSettingsOptions).execute();
             AccountSettingsResponse accountSettingsResponse = response.getResult();
 
             System.out.println(accountSettingsResponse);
@@ -1001,7 +1006,7 @@ public class IamIdentityExamples {
                     .accountId(accountId)
                     .build();
 
-            Response<EffectiveAccountSettingsResponse> response = service.getEffectiveAccountSettings(getEffectiveAccountSettingsOptions).execute();
+            Response<EffectiveAccountSettingsResponse> response = identityservice.getEffectiveAccountSettings(getEffectiveAccountSettingsOptions).execute();
             EffectiveAccountSettingsResponse effectiveAccountSettingsResponse = response.getResult();
 
 
@@ -1023,7 +1028,7 @@ public class IamIdentityExamples {
                     .accountId(accountId)
                     .build();
 
-            Response<ReportReference> response = service.createReport(createReportOptions).execute();
+            Response<ReportReference> response = identityservice.createReport(createReportOptions).execute();
             ReportReference reportReference = response.getResult();
 
             reportReferenceValue = reportReference.getReference();
@@ -1047,7 +1052,7 @@ public class IamIdentityExamples {
                     .reference(reportReferenceValue)
                     .build();
 
-            Response<Report> response = service.getReport(getReportOptions).execute();
+            Response<Report> response = identityservice.getReport(getReportOptions).execute();
             Report fetchedReport = response.getResult();
 
             System.out.println(fetchedReport);
@@ -1069,7 +1074,7 @@ public class IamIdentityExamples {
                     .type("mfa_status")
                     .build();
 
-            Response<ReportReference> response = service.createMfaReport(createMfaReportOptions).execute();
+            Response<ReportReference> response = identityservice.createMfaReport(createMfaReportOptions).execute();
             ReportReference reportReference = response.getResult();
 
             reportReferenceValue = reportReference.getReference();
@@ -1093,7 +1098,7 @@ public class IamIdentityExamples {
                     .reference(reportReferenceValue)
                     .build();
 
-            Response<ReportMfaEnrollmentStatus> response = service.getMfaReport(getMfaReportOptions).execute();
+            Response<ReportMfaEnrollmentStatus> response = identityservice.getMfaReport(getMfaReportOptions).execute();
             ReportMfaEnrollmentStatus fetchedReport = response.getResult();
 
             System.out.println(fetchedReport);
@@ -1114,7 +1119,7 @@ public class IamIdentityExamples {
                     .iamId(iamId)
                     .build();
 
-            Response<UserMfaEnrollments> response = service.getMfaStatus(getMfaStatusOptions).execute();
+            Response<UserMfaEnrollments> response = identityservice.getMfaStatus(getMfaStatusOptions).execute();
             UserMfaEnrollments userMfaEnrollmentsResponse = response.getResult();
 
             System.out.println(userMfaEnrollmentsResponse);
@@ -1159,7 +1164,7 @@ public class IamIdentityExamples {
                     .profile(profile)
                     .build();
 
-            Response<TrustedProfileTemplateResponse> response = service.createProfileTemplate(createProfileTemplateOptions).execute();
+            Response<TrustedProfileTemplateResponse> response = identityservice.createProfileTemplate(createProfileTemplateOptions).execute();
             TrustedProfileTemplateResponse trustedProfileTemplateResult = response.getResult();
 
             // Save the id for use by other test methods.
@@ -1185,7 +1190,7 @@ public class IamIdentityExamples {
                     .version(Long.toString(profileTemplateVersion))
                     .build();
 
-            Response<TrustedProfileTemplateResponse> response = service.getProfileTemplateVersion(getProfileTemplateOptions).execute();
+            Response<TrustedProfileTemplateResponse> response = identityservice.getProfileTemplateVersion(getProfileTemplateOptions).execute();
             TrustedProfileTemplateResponse profileTemplateResult = response.getResult();
 
             // Grab the Etag value from the response for use in the update operation.
@@ -1209,7 +1214,7 @@ public class IamIdentityExamples {
                     .accountId(enterpriseAccountId)
                     .build();
 
-            Response<TrustedProfileTemplateList> response = service.listProfileTemplates(listOptions).execute();
+            Response<TrustedProfileTemplateList> response = identityservice.listProfileTemplates(listOptions).execute();
             TrustedProfileTemplateList listResult = response.getResult();
             System.out.println(listResult);
 
@@ -1234,7 +1239,7 @@ public class IamIdentityExamples {
                     .description("IAM enterprise trusted profile template example - updated")
                     .build();
 
-            Response<TrustedProfileTemplateResponse> updateResponse = service.updateProfileTemplateVersion(updateOptions).execute();
+            Response<TrustedProfileTemplateResponse> updateResponse = identityservice.updateProfileTemplateVersion(updateOptions).execute();
             TrustedProfileTemplateResponse updateResult = updateResponse.getResult();
 
             // Grab the Etag value from the response for use in the update operation.
@@ -1259,7 +1264,7 @@ public class IamIdentityExamples {
                     .version(Long.toString(profileTemplateVersion))
                     .build();
 
-            Response<Void> commitResponse = service.commitProfileTemplate(commitOptions).execute();
+            Response<Void> commitResponse = identityservice.commitProfileTemplate(commitOptions).execute();
 
             // end-commit_profile_template
 
@@ -1282,7 +1287,7 @@ public class IamIdentityExamples {
                     .target(enterpriseSubAccountId)
                     .build();
 
-            Response<TemplateAssignmentResponse> assignResponse = service.createTrustedProfileAssignment(assignOptions).execute();
+            Response<TemplateAssignmentResponse> assignResponse = identityservice.createTrustedProfileAssignment(assignOptions).execute();
             TemplateAssignmentResponse assignmentResponseResult = assignResponse.getResult();
 
             // Save the id for use by other test methods.
@@ -1308,7 +1313,7 @@ public class IamIdentityExamples {
                     .assignmentId(profileTemplateAssignmentId)
                     .build();
 
-            Response<TemplateAssignmentResponse> getResponse = service.getTrustedProfileAssignment(getOptions).execute();
+            Response<TemplateAssignmentResponse> getResponse = identityservice.getTrustedProfileAssignment(getOptions).execute();
             TemplateAssignmentResponse getResult = getResponse.getResult();
 
             System.out.println(getResult);
@@ -1330,7 +1335,7 @@ public class IamIdentityExamples {
                     .templateId(profileTemplateId)
                     .build();
 
-            Response<TemplateAssignmentListResponse> listResponse = service.listTrustedProfileAssignments(listOptions).execute();
+            Response<TemplateAssignmentListResponse> listResponse = identityservice.listTrustedProfileAssignments(listOptions).execute();
             TemplateAssignmentListResponse listResult = listResponse.getResult();
             System.out.println(listResult);
 
@@ -1388,7 +1393,7 @@ public class IamIdentityExamples {
                     .profile(profile)
                     .build();
 
-            Response<TrustedProfileTemplateResponse> createResponse = service.createProfileTemplateVersion(createOptions).execute();
+            Response<TrustedProfileTemplateResponse> createResponse = identityservice.createProfileTemplateVersion(createOptions).execute();
             TrustedProfileTemplateResponse createResult = createResponse.getResult();
 
             // Save the version for use by other test methods.
@@ -1411,7 +1416,7 @@ public class IamIdentityExamples {
                     .templateId(profileTemplateId)
                     .build();
 
-            Response<TrustedProfileTemplateResponse> getResponse = service.getLatestProfileTemplateVersion(getOptions).execute();
+            Response<TrustedProfileTemplateResponse> getResponse = identityservice.getLatestProfileTemplateVersion(getOptions).execute();
             TrustedProfileTemplateResponse getResult = getResponse.getResult();
 
             System.out.println(getResult);
@@ -1432,7 +1437,7 @@ public class IamIdentityExamples {
                     .templateId(profileTemplateId)
                     .build();
 
-            Response<TrustedProfileTemplateList> listResponse = service.listVersionsOfProfileTemplate(listOptions).execute();
+            Response<TrustedProfileTemplateList> listResponse = identityservice.listVersionsOfProfileTemplate(listOptions).execute();
             TrustedProfileTemplateList listResult = listResponse.getResult();
 
             System.out.println(listResult);
@@ -1449,9 +1454,9 @@ public class IamIdentityExamples {
                     .templateId(profileTemplateId)
                     .version(Long.toString(profileTemplateVersion))
                     .build();
-            service.commitProfileTemplate(commitOptions).execute();
+            identityservice.commitProfileTemplate(commitOptions).execute();
 
-            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, service);
+            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, identityservice);
 
             System.out.println("updateTrustedProfileAssignment() result:");
 
@@ -1463,7 +1468,7 @@ public class IamIdentityExamples {
                     .ifMatch(profileTemplateAssignmentEtag)
                     .build();
 
-            Response<TemplateAssignmentResponse> updateResponse = service.updateTrustedProfileAssignment(updateOptions).execute();
+            Response<TemplateAssignmentResponse> updateResponse = identityservice.updateTrustedProfileAssignment(updateOptions).execute();
             TemplateAssignmentResponse updateResult = updateResponse.getResult();
 
             // Grab the Etag value from the response for use in the update operation.
@@ -1481,7 +1486,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("deleteTrustedProfileAssignment() result:");
 
-            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, service);
+            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, identityservice);
 
             // begin-delete_trusted_profile_assignment
 
@@ -1489,7 +1494,7 @@ public class IamIdentityExamples {
                     .assignmentId(profileTemplateAssignmentId)
                     .build();
 
-            Response<ExceptionResponse> deleteResponse = service.deleteTrustedProfileAssignment(deleteOptions).execute();
+            Response<ExceptionResponse> deleteResponse = identityservice.deleteTrustedProfileAssignment(deleteOptions).execute();
 
             // end-delete_trusted_profile_assignment
 
@@ -1502,7 +1507,7 @@ public class IamIdentityExamples {
 
         try {
             System.out.println("deleteProfileTemplateVersion() result:");
-            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, service);
+            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, identityservice);
 
             // begin-delete_profile_template_version
 
@@ -1511,7 +1516,7 @@ public class IamIdentityExamples {
                     .version("1")
                     .build();
 
-            Response<Void> deleteResponse = service.deleteProfileTemplateVersion(deleteOptions).execute();
+            Response<Void> deleteResponse = identityservice.deleteProfileTemplateVersion(deleteOptions).execute();
 
             // end-delete_profile_template_version
 
@@ -1525,7 +1530,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("deleteProfileTemplateAllVersions() result:");
 
-            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, service);
+            waitUntilTrustedProfileAssignmentFinished(profileTemplateAssignmentId, identityservice);
 
             // begin-delete_all_versions_of_profile_template
 
@@ -1533,7 +1538,7 @@ public class IamIdentityExamples {
                     .templateId(profileTemplateId)
                     .build();
 
-            Response<Void> deleteResponse = service.deleteAllVersionsOfProfileTemplate(deleteTeplateOptions).execute();
+            Response<Void> deleteResponse = identityservice.deleteAllVersionsOfProfileTemplate(deleteTeplateOptions).execute();
 
             // end-delete_all_versions_of_profile_template
 
@@ -1561,7 +1566,7 @@ public class IamIdentityExamples {
                     .accountSettings(accountSettings)
                     .build();
 
-            Response<AccountSettingsTemplateResponse> createResponse = service.createAccountSettingsTemplate(createOptions).execute();
+            Response<AccountSettingsTemplateResponse> createResponse = identityservice.createAccountSettingsTemplate(createOptions).execute();
             AccountSettingsTemplateResponse createResult = createResponse.getResult();
 
             // Save the id for use by other test methods.
@@ -1587,7 +1592,7 @@ public class IamIdentityExamples {
                     .version(Long.toString(accountSettingsTemplateVersion))
                     .build();
 
-            Response<AccountSettingsTemplateResponse> response = service.getAccountSettingsTemplateVersion(getOptions).execute();
+            Response<AccountSettingsTemplateResponse> response = identityservice.getAccountSettingsTemplateVersion(getOptions).execute();
             AccountSettingsTemplateResponse getResult = response.getResult();
 
             // Grab the Etag value from the response for use in the update operation.
@@ -1611,7 +1616,7 @@ public class IamIdentityExamples {
                     .accountId(enterpriseAccountId)
                     .build();
 
-            Response<AccountSettingsTemplateList> response = service.listAccountSettingsTemplates(listOptions).execute();
+            Response<AccountSettingsTemplateList> response = identityservice.listAccountSettingsTemplates(listOptions).execute();
             AccountSettingsTemplateList result = response.getResult();
 
             System.out.println(result);
@@ -1642,7 +1647,7 @@ public class IamIdentityExamples {
                     .accountSettings(accountSettings)
                     .build();
 
-            Response<AccountSettingsTemplateResponse> updateResponse = service.updateAccountSettingsTemplateVersion(updateOptions).execute();
+            Response<AccountSettingsTemplateResponse> updateResponse = identityservice.updateAccountSettingsTemplateVersion(updateOptions).execute();
             AccountSettingsTemplateResponse updateResult = updateResponse.getResult();
 
             // Grab the Etag value from the response for use in the update operation.
@@ -1667,7 +1672,7 @@ public class IamIdentityExamples {
                     .version(Long.toString(accountSettingsTemplateVersion))
                     .build();
 
-            Response<Void> commitResponse = service.commitAccountSettingsTemplate(commitOptions).execute();
+            Response<Void> commitResponse = identityservice.commitAccountSettingsTemplate(commitOptions).execute();
 
             // end-commit_account_settings_template
 
@@ -1690,7 +1695,7 @@ public class IamIdentityExamples {
                     .target(enterpriseSubAccountId)
                     .build();
 
-            Response<TemplateAssignmentResponse> assignResponse = service.createAccountSettingsAssignment(assignOptions).execute();
+            Response<TemplateAssignmentResponse> assignResponse = identityservice.createAccountSettingsAssignment(assignOptions).execute();
             TemplateAssignmentResponse assignmentResult = assignResponse.getResult();
 
             // Save the id for use by other test methods.
@@ -1716,7 +1721,7 @@ public class IamIdentityExamples {
                     .accountId(enterpriseAccountId)
                     .build();
 
-            Response<AccountSettingsTemplateList> listResponse = service.listAccountSettingsTemplates(listOptions).execute();
+            Response<AccountSettingsTemplateList> listResponse = identityservice.listAccountSettingsTemplates(listOptions).execute();
             AccountSettingsTemplateList listResult = listResponse.getResult();
 
             System.out.println(listResult);
@@ -1737,7 +1742,7 @@ public class IamIdentityExamples {
                     .assignmentId(accountSettingsTemplateAssignmentId)
                     .build();
 
-            Response<TemplateAssignmentResponse> getResponse = service.getAccountSettingsAssignment(getOptions).execute();
+            Response<TemplateAssignmentResponse> getResponse = identityservice.getAccountSettingsAssignment(getOptions).execute();
             TemplateAssignmentResponse getResult = getResponse.getResult();
 
             // Grab the Etag value from the response for use in the update operation.
@@ -1771,7 +1776,7 @@ public class IamIdentityExamples {
                     .accountSettings(accountSettings)
                     .build();
 
-            Response<AccountSettingsTemplateResponse> createResponse = service.createAccountSettingsTemplateVersion(createOptions).execute();
+            Response<AccountSettingsTemplateResponse> createResponse = identityservice.createAccountSettingsTemplateVersion(createOptions).execute();
             AccountSettingsTemplateResponse createResult = createResponse.getResult();
 
             // Save the version for use by other test methods.
@@ -1795,7 +1800,7 @@ public class IamIdentityExamples {
                     .templateId(accountSettingsTemplateId)
                     .build();
 
-            Response<AccountSettingsTemplateResponse> getResponse = service.getLatestAccountSettingsTemplateVersion(getOptions).execute();
+            Response<AccountSettingsTemplateResponse> getResponse = identityservice.getLatestAccountSettingsTemplateVersion(getOptions).execute();
             AccountSettingsTemplateResponse getResult = getResponse.getResult();
 
             System.out.println(getResult);
@@ -1816,7 +1821,7 @@ public class IamIdentityExamples {
                     .templateId(accountSettingsTemplateId)
                     .build();
 
-            Response<AccountSettingsTemplateList> listResponse = service.listVersionsOfAccountSettingsTemplate(listOptions).execute();
+            Response<AccountSettingsTemplateList> listResponse = identityservice.listVersionsOfAccountSettingsTemplate(listOptions).execute();
             AccountSettingsTemplateList listResult = listResponse.getResult();
 
             System.out.println(listResult);
@@ -1836,9 +1841,9 @@ public class IamIdentityExamples {
                     .version(Long.toString(accountSettingsTemplateVersion))
                     .build();
 
-            service.commitAccountSettingsTemplate(commitOptions).execute();
+            identityservice.commitAccountSettingsTemplate(commitOptions).execute();
 
-            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, service);
+            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, identityservice);
 
             // begin-update_account_settings_assignment
 
@@ -1848,7 +1853,7 @@ public class IamIdentityExamples {
                     .ifMatch(accountSettingsTemplateAssignmentEtag)
                     .build();
 
-            Response<TemplateAssignmentResponse> updateResponse = service.updateAccountSettingsAssignment(updateOptions).execute();
+            Response<TemplateAssignmentResponse> updateResponse = identityservice.updateAccountSettingsAssignment(updateOptions).execute();
             TemplateAssignmentResponse updateResult = updateResponse.getResult();
 
             // Grab the Etag value from the response for use in the update operation.
@@ -1866,7 +1871,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("deleteAccountSettingsAssignment() result:");
 
-            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, service);
+            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, identityservice);
 
             // begin-delete_account_settings_assignment
 
@@ -1874,7 +1879,7 @@ public class IamIdentityExamples {
                     .assignmentId(accountSettingsTemplateAssignmentId)
                     .build();
 
-            Response<ExceptionResponse> deleteResponse = service.deleteAccountSettingsAssignment(deleteOptions).execute();
+            Response<ExceptionResponse> deleteResponse = identityservice.deleteAccountSettingsAssignment(deleteOptions).execute();
 
             // end-delete_account_settings_assignment
 
@@ -1887,7 +1892,7 @@ public class IamIdentityExamples {
 
         try {
             System.out.println("deleteAccountSettingsTemplateVersion() result:");
-            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, service);
+            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, identityservice);
 
             // begin-delete_account_settings_template_version
 
@@ -1896,7 +1901,7 @@ public class IamIdentityExamples {
                     .version("1")
                     .build();
 
-            Response<Void> deleteResponse = service.deleteAccountSettingsTemplateVersion(deleteOptions).execute();
+            Response<Void> deleteResponse = identityservice.deleteAccountSettingsTemplateVersion(deleteOptions).execute();
 
             // end-delete_account_settings_template_version
 
@@ -1910,7 +1915,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("deleteAllVersionsOfAccountSettingsTemplate() result:");
 
-            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, service);
+            waitUntilAccountSettingsAssignmentFinished(accountSettingsTemplateAssignmentId, identityservice);
 
             // begin-delete_all_versions_of_account_settings_template
 
@@ -1918,11 +1923,81 @@ public class IamIdentityExamples {
                     .templateId(accountSettingsTemplateId)
                     .build();
 
-            Response<Void> deleteResponse = service.deleteAllVersionsOfAccountSettingsTemplate(deleteTeplateOptions).execute();
+            Response<Void> deleteResponse = identityservice.deleteAllVersionsOfAccountSettingsTemplate(deleteTeplateOptions).execute();
 
             // end-delete_all_versions_of_account_settings_template
 
             System.out.printf("deleteProfileTemplateAllVersions() response status code: %d%n", deleteResponse.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("updatePreferenceOnScopeAccount() result:");
+
+            // begin-update_preference_on_scope_account
+
+            UpdatePreferenceOnScopeAccountOptions updatePreferenceOption = new UpdatePreferenceOnScopeAccountOptions.Builder()
+                    .service(service)
+                    .accountId(accountId)
+                    .iamId(trustedProfileForPreferences)
+                    .preferenceId(preferenceId1)
+                    .valueString(valueString)
+                    .build();
+
+            Response<IdentityPreferenceResponse> response = identityservice.updatePreferenceOnScopeAccount(updatePreferenceOption).execute();
+            IdentityPreferenceResponse preference = response.getResult();
+
+            System.out.println(preference);
+
+            // end-update_preference_on_scope_account
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getPreferenceOnScopeAccount() result:");
+
+            // begin-get_preference_on_scope_account
+
+            GetPreferencesOnScopeAccountOptions getPreferenceOption = new GetPreferencesOnScopeAccountOptions.Builder()
+                    .service(service)
+                    .accountId(accountId)
+                    .iamId(iamId)
+                    .preferenceId(preferenceId1)
+                    .build();
+
+            Response<IdentityPreferenceResponse> response = identityservice.getPreferencesOnScopeAccount(getPreferenceOption).execute();
+            IdentityPreferenceResponse preference = response.getResult();
+
+            System.out.println(preference);
+
+            // end-get_preference_on_scope_account
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deletePreferencesOnScopeAccount() result:");
+
+            // begin-delete_preference_on_scope_account
+
+            DeletePreferencesOnScopeAccountOptions deletePreferenceOption = new DeletePreferencesOnScopeAccountOptions.Builder()
+                    .service(service)
+                    .accountId(accountId)
+                    .iamId(iamId)
+                    .preferenceId(preferenceId1)
+                    .build();
+
+            identityservice.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
+
+            // end-delete_preference_on_scope_account
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

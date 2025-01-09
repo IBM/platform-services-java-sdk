@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.93.0-c40121e6-20240729-182103
+ * IBM OpenAPI SDK Code Generator Version: 3.98.0-8be2046a-20241205-162752
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -22,6 +22,7 @@ import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AllIdentityPreferencesResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitAccountSettingsTemplateOptions;
@@ -46,6 +47,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOf
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeletePreferencesOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileTemplateVersionOptions;
@@ -58,6 +60,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ExceptionResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAllPreferencesOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
@@ -67,6 +70,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestProfileTem
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetPreferencesOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentitiesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
@@ -74,6 +78,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileTemplateV
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetTrustedProfileAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferenceResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
@@ -113,6 +118,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettin
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdatePreferenceOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
@@ -186,9 +192,7 @@ public class IamIdentity extends BaseService {
    * Get API keys for a given service or user IAM ID and account ID.
    *
    * Returns the list of API key details for a given service or user IAM ID and account ID. Users can manage user API
-   * keys for themself, or service ID API keys for service IDs that are bound to an entity they have access to. In case
-   * of service IDs and their API keys, a user must be either an account owner, a IBM Cloud org manager or IBM Cloud
-   * space developer in order to manage service IDs of the entity.
+   * keys for themself, or service ID API keys for service IDs they have access to.
    *
    * @param listApiKeysOptions the {@link ListApiKeysOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApiKeyList}
@@ -239,9 +243,7 @@ public class IamIdentity extends BaseService {
    * Get API keys for a given service or user IAM ID and account ID.
    *
    * Returns the list of API key details for a given service or user IAM ID and account ID. Users can manage user API
-   * keys for themself, or service ID API keys for service IDs that are bound to an entity they have access to. In case
-   * of service IDs and their API keys, a user must be either an account owner, a IBM Cloud org manager or IBM Cloud
-   * space developer in order to manage service IDs of the entity.
+   * keys for themself, or service ID API keys for service IDs they have access to.
    *
    * @return a {@link ServiceCall} with a result of type {@link ApiKeyList}
    */
@@ -253,7 +255,7 @@ public class IamIdentity extends BaseService {
    * Create an API key.
    *
    * Creates an API key for a UserID or service ID. Users can manage user API keys for themself, or service ID API keys
-   * for service IDs that are bound to an entity they have access to.
+   * for service IDs they have access to.
    *
    * @param createApiKeyOptions the {@link CreateApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApiKey}
@@ -304,7 +306,7 @@ public class IamIdentity extends BaseService {
    * Get details of an API key by its value.
    *
    * Returns the details of an API key by its value. Users can manage user API keys for themself, or service ID API keys
-   * for service IDs that are bound to an entity they have access to.
+   * for service IDs they have access to.
    *
    * @param getApiKeysDetailsOptions the {@link GetApiKeysDetailsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApiKey}
@@ -334,7 +336,7 @@ public class IamIdentity extends BaseService {
    * Get details of an API key by its value.
    *
    * Returns the details of an API key by its value. Users can manage user API keys for themself, or service ID API keys
-   * for service IDs that are bound to an entity they have access to.
+   * for service IDs they have access to.
    *
    * @return a {@link ServiceCall} with a result of type {@link ApiKey}
    */
@@ -346,9 +348,7 @@ public class IamIdentity extends BaseService {
    * Get details of an API key.
    *
    * Returns the details of an API key. Users can manage user API keys for themself, or service ID API keys for service
-   * IDs that are bound to an entity they have access to. In case of service IDs and their API keys, a user must be
-   * either an account owner, a IBM Cloud org manager or IBM Cloud space developer in order to manage service IDs of the
-   * entity.
+   * IDs they have access to.
    *
    * @param getApiKeyOptions the {@link GetApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApiKey}
@@ -380,8 +380,8 @@ public class IamIdentity extends BaseService {
    *
    * Updates properties of an API key. This does NOT affect existing access tokens. Their token content will stay
    * unchanged until the access token is refreshed. To update an API key, pass the property to be modified. To delete
-   * one property's value, pass the property with an empty value "".Users can manage user API keys for themself, or
-   * service ID API keys for service IDs that are bound to an entity they have access to.
+   * one property's value, pass the property with an empty value "". Users can manage user API keys for themself, or
+   * service ID API keys for service IDs they have access to.
    *
    * @param updateApiKeyOptions the {@link UpdateApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ApiKey}
@@ -421,7 +421,7 @@ public class IamIdentity extends BaseService {
    * Deletes an API key.
    *
    * Deletes an API key. Existing tokens will remain valid until expired. Users can manage user API keys for themself,
-   * or service ID API keys for service IDs that are bound to an entity they have access to.
+   * or service ID API keys for service IDs they have access to.
    *
    * @param deleteApiKeyOptions the {@link DeleteApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -443,9 +443,8 @@ public class IamIdentity extends BaseService {
   /**
    * Lock the API key.
    *
-   * Locks an API key by ID. Users can manage user API keys for themself, or service ID API keys for service IDs that
-   * are bound to an entity they have access to. In case of service IDs and their API keys, a user must be either an
-   * account owner, a IBM Cloud org manager or IBM Cloud space developer in order to manage service IDs of the entity.
+   * Locks an API key by ID. Users can manage user API keys for themself, or service ID API keys for service IDs they
+   * have access to.
    *
    * @param lockApiKeyOptions the {@link LockApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -467,9 +466,8 @@ public class IamIdentity extends BaseService {
   /**
    * Unlock the API key.
    *
-   * Unlocks an API key by ID. Users can manage user API keys for themself, or service ID API keys for service IDs that
-   * are bound to an entity they have access to. In case of service IDs and their API keys, a user must be either an
-   * account owner, a IBM Cloud org manager or IBM Cloud space developer in order to manage service IDs of the entity.
+   * Unlocks an API key by ID. Users can manage user API keys for themself, or service ID API keys for service IDs they
+   * have access to.
    *
    * @param unlockApiKeyOptions the {@link UnlockApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -489,10 +487,10 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * disable the API key.
+   * Disable the API key.
    *
-   * Disable an API key. Users can manage user API keys for themself, or service ID API keys for service IDs that are
-   * bound to an entity they have access to.
+   * Disable an API key. Users can manage user API keys for themself, or service ID API keys for service IDs they have
+   * access to.
    *
    * @param disableApiKeyOptions the {@link DisableApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -514,8 +512,8 @@ public class IamIdentity extends BaseService {
   /**
    * Enable the API key.
    *
-   * Enable an API key. Users can manage user API keys for themself, or service ID API keys for service IDs that are
-   * bound to an entity they have access to.
+   * Enable an API key. Users can manage user API keys for themself, or service ID API keys for service IDs they have
+   * access to.
    *
    * @param enableApiKeyOptions the {@link EnableApiKeyOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -538,8 +536,8 @@ public class IamIdentity extends BaseService {
    * List service IDs.
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
-   * that are bound to an entity they have access to. Note: apikey details are only included in the response when
-   * creating a Service ID with an api key.
+   * they have access to. Note: apikey details are only included in the response when creating a Service ID with an api
+   * key.
    *
    * @param listServiceIdsOptions the {@link ListServiceIdsOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
@@ -584,8 +582,8 @@ public class IamIdentity extends BaseService {
    * List service IDs.
    *
    * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
-   * that are bound to an entity they have access to. Note: apikey details are only included in the response when
-   * creating a Service ID with an api key.
+   * they have access to. Note: apikey details are only included in the response when creating a Service ID with an api
+   * key.
    *
    * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
    */
@@ -597,7 +595,7 @@ public class IamIdentity extends BaseService {
    * Create a service ID.
    *
    * Creates a service ID for an IBM Cloud account. Users can manage user API keys for themself, or service ID API keys
-   * for service IDs that are bound to an entity they have access to.
+   * for service IDs they have access to.
    *
    * @param createServiceIdOptions the {@link CreateServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceId}
@@ -636,8 +634,8 @@ public class IamIdentity extends BaseService {
    * Get details of a service ID.
    *
    * Returns the details of a service ID. Users can manage user API keys for themself, or service ID API keys for
-   * service IDs that are bound to an entity they have access to. Note: apikey details are only included in the response
-   * when creating a Service ID with an api key.
+   * service IDs they have access to. Note: apikey details are only included in the response when creating a Service ID
+   * with an api key.
    *
    * @param getServiceIdOptions the {@link GetServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceId}
@@ -670,8 +668,8 @@ public class IamIdentity extends BaseService {
    * Updates properties of a service ID. This does NOT affect existing access tokens. Their token content will stay
    * unchanged until the access token is refreshed. To update a service ID, pass the property to be modified. To delete
    * one property's value, pass the property with an empty value "".Users can manage user API keys for themself, or
-   * service ID API keys for service IDs that are bound to an entity they have access to. Note: apikey details are only
-   * included in the response when creating a Service ID with an apikey.
+   * service ID API keys for service IDs they have access to. Note: apikey details are only included in the response
+   * when creating a Service ID with an apikey.
    *
    * @param updateServiceIdOptions the {@link UpdateServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ServiceId}
@@ -710,7 +708,7 @@ public class IamIdentity extends BaseService {
    * Deletes a service ID and all API keys associated to it. Before deleting the service ID, all associated API keys are
    * deleted. In case a Delete Conflict (status code 409) a retry of the request may help as the service ID is only
    * deleted if the associated API keys were successfully deleted before. Users can manage user API keys for themself,
-   * or service ID API keys for service IDs that are bound to an entity they have access to.
+   * or service ID API keys for service IDs they have access to.
    *
    * @param deleteServiceIdOptions the {@link DeleteServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -732,9 +730,8 @@ public class IamIdentity extends BaseService {
   /**
    * Lock the service ID.
    *
-   * Locks a service ID by ID. Users can manage user API keys for themself, or service ID API keys for service IDs that
-   * are bound to an entity they have access to. In case of service IDs and their API keys, a user must be either an
-   * account owner, a IBM Cloud org manager or IBM Cloud space developer in order to manage service IDs of the entity.
+   * Locks a service ID by ID. Users can manage user API keys for themself, or service ID API keys for service IDs they
+   * have access to.
    *
    * @param lockServiceIdOptions the {@link LockServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -757,9 +754,7 @@ public class IamIdentity extends BaseService {
    * Unlock the service ID.
    *
    * Unlocks a service ID by ID. Users can manage user API keys for themself, or service ID API keys for service IDs
-   * that are bound to an entity they have access to. In case of service IDs and their API keys, a user must be either
-   * an account owner, a IBM Cloud org manager or IBM Cloud space developer in order to manage service IDs of the
-   * entity.
+   * they have access to.
    *
    * @param unlockServiceIdOptions the {@link UnlockServiceIdOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -2100,6 +2095,116 @@ public class IamIdentity extends BaseService {
     }
     ResponseConverter<EffectiveAccountSettingsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EffectiveAccountSettingsResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update Identity Preference on scope account.
+   *
+   * Update one Identity Preference on scope 'account'.
+   *
+   * @param updatePreferenceOnScopeAccountOptions the {@link UpdatePreferenceOnScopeAccountOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link IdentityPreferenceResponse}
+   */
+  public ServiceCall<IdentityPreferenceResponse> updatePreferenceOnScopeAccount(UpdatePreferenceOnScopeAccountOptions updatePreferenceOnScopeAccountOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updatePreferenceOnScopeAccountOptions,
+      "updatePreferenceOnScopeAccountOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", updatePreferenceOnScopeAccountOptions.accountId());
+    pathParamsMap.put("iam_id", updatePreferenceOnScopeAccountOptions.iamId());
+    pathParamsMap.put("service", updatePreferenceOnScopeAccountOptions.service());
+    pathParamsMap.put("preference_id", updatePreferenceOnScopeAccountOptions.preferenceId());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updatePreferenceOnScopeAccount");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("value_string", updatePreferenceOnScopeAccountOptions.valueString());
+    if (updatePreferenceOnScopeAccountOptions.valueListOfStrings() != null) {
+      contentJson.add("value_list_of_strings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updatePreferenceOnScopeAccountOptions.valueListOfStrings()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<IdentityPreferenceResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<IdentityPreferenceResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete Identity Preference on scope account.
+   *
+   * Delete one Identity Preference on scope 'account'.
+   *
+   * @param deletePreferencesOnScopeAccountOptions the {@link DeletePreferencesOnScopeAccountOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deletePreferencesOnScopeAccount(DeletePreferencesOnScopeAccountOptions deletePreferencesOnScopeAccountOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deletePreferencesOnScopeAccountOptions,
+      "deletePreferencesOnScopeAccountOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", deletePreferencesOnScopeAccountOptions.accountId());
+    pathParamsMap.put("iam_id", deletePreferencesOnScopeAccountOptions.iamId());
+    pathParamsMap.put("service", deletePreferencesOnScopeAccountOptions.service());
+    pathParamsMap.put("preference_id", deletePreferencesOnScopeAccountOptions.preferenceId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deletePreferencesOnScopeAccount");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get Identity Preference on scope account.
+   *
+   * Get one Identity Preference on scope 'account'.
+   *
+   * @param getPreferencesOnScopeAccountOptions the {@link GetPreferencesOnScopeAccountOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link IdentityPreferenceResponse}
+   */
+  public ServiceCall<IdentityPreferenceResponse> getPreferencesOnScopeAccount(GetPreferencesOnScopeAccountOptions getPreferencesOnScopeAccountOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getPreferencesOnScopeAccountOptions,
+      "getPreferencesOnScopeAccountOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getPreferencesOnScopeAccountOptions.accountId());
+    pathParamsMap.put("iam_id", getPreferencesOnScopeAccountOptions.iamId());
+    pathParamsMap.put("service", getPreferencesOnScopeAccountOptions.service());
+    pathParamsMap.put("preference_id", getPreferencesOnScopeAccountOptions.preferenceId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/preferences/accounts/{account_id}/identities/{iam_id}/{service}/{preference_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getPreferencesOnScopeAccount");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<IdentityPreferenceResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<IdentityPreferenceResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get all Identity Preferences for one account.
+   *
+   * Get all Identity Preferences for one account / user combination.
+   *
+   * @param getAllPreferencesOnScopeAccountOptions the {@link GetAllPreferencesOnScopeAccountOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AllIdentityPreferencesResponse}
+   */
+  public ServiceCall<AllIdentityPreferencesResponse> getAllPreferencesOnScopeAccount(GetAllPreferencesOnScopeAccountOptions getAllPreferencesOnScopeAccountOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getAllPreferencesOnScopeAccountOptions,
+      "getAllPreferencesOnScopeAccountOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getAllPreferencesOnScopeAccountOptions.accountId());
+    pathParamsMap.put("iam_id", getAllPreferencesOnScopeAccountOptions.iamId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/preferences/accounts/{account_id}/identities/{iam_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getAllPreferencesOnScopeAccount");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<AllIdentityPreferencesResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AllIdentityPreferencesResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

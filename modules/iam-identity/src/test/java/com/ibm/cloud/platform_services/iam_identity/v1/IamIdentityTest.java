@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -28,6 +28,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsIdent
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsPolicies;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsRules;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Activity;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AllIdentityPreferencesResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyInsideCreateServiceIdRequest;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
@@ -57,6 +58,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOf
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeletePreferencesOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileTemplateVersionOptions;
@@ -73,6 +75,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ExceptionResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAllPreferencesOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetApiKeysDetailsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetClaimRuleOptions;
@@ -82,6 +85,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLatestProfileTem
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetMfaStatusOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetPreferencesOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentitiesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
@@ -90,6 +94,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdBasedMfaEnrollment;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferenceResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
@@ -143,6 +148,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettin
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdatePreferenceOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
@@ -3497,6 +3503,221 @@ public class IamIdentityTest {
   public void testGetEffectiveAccountSettingsNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     iamIdentityService.getEffectiveAccountSettings(null).execute();
+  }
+
+  // Test the updatePreferenceOnScopeAccount operation with a valid options model parameter
+  @Test
+  public void testUpdatePreferenceOnScopeAccountWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"service\": \"service\", \"id\": \"id\", \"account_id\": \"accountId\", \"scope\": \"scope\", \"value_string\": \"valueString\", \"value_list_of_strings\": [\"valueListOfStrings\"]}";
+    String updatePreferenceOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString/testString/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the UpdatePreferenceOnScopeAccountOptions model
+    UpdatePreferenceOnScopeAccountOptions updatePreferenceOnScopeAccountOptionsModel = new UpdatePreferenceOnScopeAccountOptions.Builder()
+      .accountId("testString")
+      .iamId("testString")
+      .service("testString")
+      .preferenceId("testString")
+      .valueString("testString")
+      .valueListOfStrings(java.util.Arrays.asList("testString"))
+      .build();
+
+    // Invoke updatePreferenceOnScopeAccount() with a valid options model and verify the result
+    Response<IdentityPreferenceResponse> response = iamIdentityService.updatePreferenceOnScopeAccount(updatePreferenceOnScopeAccountOptionsModel).execute();
+    assertNotNull(response);
+    IdentityPreferenceResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updatePreferenceOnScopeAccountPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the updatePreferenceOnScopeAccount operation with and without retries enabled
+  @Test
+  public void testUpdatePreferenceOnScopeAccountWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testUpdatePreferenceOnScopeAccountWOptions();
+
+    iamIdentityService.disableRetries();
+    testUpdatePreferenceOnScopeAccountWOptions();
+  }
+
+  // Test the updatePreferenceOnScopeAccount operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdatePreferenceOnScopeAccountNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.updatePreferenceOnScopeAccount(null).execute();
+  }
+
+  // Test the deletePreferencesOnScopeAccount operation with a valid options model parameter
+  @Test
+  public void testDeletePreferencesOnScopeAccountWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deletePreferencesOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString/testString/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeletePreferencesOnScopeAccountOptions model
+    DeletePreferencesOnScopeAccountOptions deletePreferencesOnScopeAccountOptionsModel = new DeletePreferencesOnScopeAccountOptions.Builder()
+      .accountId("testString")
+      .iamId("testString")
+      .service("testString")
+      .preferenceId("testString")
+      .build();
+
+    // Invoke deletePreferencesOnScopeAccount() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.deletePreferencesOnScopeAccount(deletePreferencesOnScopeAccountOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deletePreferencesOnScopeAccountPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deletePreferencesOnScopeAccount operation with and without retries enabled
+  @Test
+  public void testDeletePreferencesOnScopeAccountWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testDeletePreferencesOnScopeAccountWOptions();
+
+    iamIdentityService.disableRetries();
+    testDeletePreferencesOnScopeAccountWOptions();
+  }
+
+  // Test the deletePreferencesOnScopeAccount operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeletePreferencesOnScopeAccountNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.deletePreferencesOnScopeAccount(null).execute();
+  }
+
+  // Test the getPreferencesOnScopeAccount operation with a valid options model parameter
+  @Test
+  public void testGetPreferencesOnScopeAccountWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"service\": \"service\", \"id\": \"id\", \"account_id\": \"accountId\", \"scope\": \"scope\", \"value_string\": \"valueString\", \"value_list_of_strings\": [\"valueListOfStrings\"]}";
+    String getPreferencesOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString/testString/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetPreferencesOnScopeAccountOptions model
+    GetPreferencesOnScopeAccountOptions getPreferencesOnScopeAccountOptionsModel = new GetPreferencesOnScopeAccountOptions.Builder()
+      .accountId("testString")
+      .iamId("testString")
+      .service("testString")
+      .preferenceId("testString")
+      .build();
+
+    // Invoke getPreferencesOnScopeAccount() with a valid options model and verify the result
+    Response<IdentityPreferenceResponse> response = iamIdentityService.getPreferencesOnScopeAccount(getPreferencesOnScopeAccountOptionsModel).execute();
+    assertNotNull(response);
+    IdentityPreferenceResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getPreferencesOnScopeAccountPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getPreferencesOnScopeAccount operation with and without retries enabled
+  @Test
+  public void testGetPreferencesOnScopeAccountWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetPreferencesOnScopeAccountWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetPreferencesOnScopeAccountWOptions();
+  }
+
+  // Test the getPreferencesOnScopeAccount operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetPreferencesOnScopeAccountNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getPreferencesOnScopeAccount(null).execute();
+  }
+
+  // Test the getAllPreferencesOnScopeAccount operation with a valid options model parameter
+  @Test
+  public void testGetAllPreferencesOnScopeAccountWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"preferences\": [{\"service\": \"service\", \"id\": \"id\", \"account_id\": \"accountId\", \"scope\": \"scope\", \"value_string\": \"valueString\", \"value_list_of_strings\": [\"valueListOfStrings\"]}]}";
+    String getAllPreferencesOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetAllPreferencesOnScopeAccountOptions model
+    GetAllPreferencesOnScopeAccountOptions getAllPreferencesOnScopeAccountOptionsModel = new GetAllPreferencesOnScopeAccountOptions.Builder()
+      .accountId("testString")
+      .iamId("testString")
+      .build();
+
+    // Invoke getAllPreferencesOnScopeAccount() with a valid options model and verify the result
+    Response<AllIdentityPreferencesResponse> response = iamIdentityService.getAllPreferencesOnScopeAccount(getAllPreferencesOnScopeAccountOptionsModel).execute();
+    assertNotNull(response);
+    AllIdentityPreferencesResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getAllPreferencesOnScopeAccountPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getAllPreferencesOnScopeAccount operation with and without retries enabled
+  @Test
+  public void testGetAllPreferencesOnScopeAccountWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetAllPreferencesOnScopeAccountWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetAllPreferencesOnScopeAccountWOptions();
+  }
+
+  // Test the getAllPreferencesOnScopeAccount operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetAllPreferencesOnScopeAccountNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getAllPreferencesOnScopeAccount(null).execute();
   }
 
   // Test the listTrustedProfileAssignments operation with a valid options model parameter

@@ -1,4 +1,4 @@
-[![Build Status](https://app.travis-ci.com/IBM/platform-services-java-sdk.svg?branch=main)](https://app.travis-ci.com/IBM/platform-services-java-sdk)
+[![Build Status](https://github.com/IBM/platform-services-java-sdk/actions/workflows/build.yaml/badge.svg)](https://github.com/IBM/platform-services-java-sdk/actions/workflows/build.yaml)
 [![Javadoc](https://img.shields.io/static/v1?label=javadoc&message=latest&color=blue)](https://ibm.github.io/platform-services-java-sdk/docs/latest)
 [![Release](https://img.shields.io/github/v/release/IBM/platform-services-java-sdk)](https://github.com/IBM/platform-services-java-sdk/releases/latest)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)

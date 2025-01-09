@@ -1,3 +1,10 @@
+# [0.61.0](https://github.com/IBM/platform-services-java-sdk/compare/0.60.2...0.61.0) (2025-01-09)
+
+
+### Features
+
+* **IAM Identity:** add Identity Preference API ([#261](https://github.com/IBM/platform-services-java-sdk/issues/261)) ([c51449b](https://github.com/IBM/platform-services-java-sdk/commit/c51449ba95e9d2d846fe95b42aa0dd045aacc76a))
+
 ## [0.60.2](https://github.com/IBM/platform-services-java-sdk/compare/0.60.1...0.60.2) (2025-01-09)
 
 

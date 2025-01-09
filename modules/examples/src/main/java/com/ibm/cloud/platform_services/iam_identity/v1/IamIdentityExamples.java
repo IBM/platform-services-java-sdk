@@ -111,7 +111,7 @@ public class IamIdentityExamples {
         iamIdMember = config.get("IAM_ID_MEMBER");
         enterpriseAccountId = config.get("ENTERPRISE_ACCOUNT_ID");
         enterpriseSubAccountId = config.get("ENTERPRISE_SUBACCOUNT_ID");
-        trustedProfileForPreferences = "iam-"+ config.get("PROFILEID1");
+        trustedProfileForPreferences = "iam-" + config.get("PROFILEID1");
 
         try {
             System.out.println("createApiKey() result:");
@@ -1981,7 +1981,7 @@ public class IamIdentityExamples {
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-        }      
+        }
 
         try {
             System.out.println("deletePreferencesOnScopeAccount() result:");
@@ -1997,7 +1997,6 @@ public class IamIdentityExamples {
 
             identityservice.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
 
-            
             // end-delete_preference_on_scope_account
 
         } catch (ServiceResponseException e) {

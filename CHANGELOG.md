@@ -1,3 +1,10 @@
+## [0.60.1](https://github.com/IBM/platform-services-java-sdk/compare/0.60.0...0.60.1) (2025-01-09)
+
+
+### Bug Fixes
+
+* enable github workflows ([c286124](https://github.com/IBM/platform-services-java-sdk/commit/c286124ad4ce7a9e89fcbf066e338e7523c16c12))
+
 # [0.60.0](https://github.com/IBM/platform-services-java-sdk/compare/0.59.0...0.60.0) (2024-10-28)
 
 

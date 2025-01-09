@@ -1604,7 +1604,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(effectiveAccountSettingsResponseResult.getAccountId(), ACCOUNT_ID);
             assertNotNull(effectiveAccountSettingsResponseResult.getEffective());
             assertNotNull(effectiveAccountSettingsResponseResult.getAccount());
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -2618,7 +2618,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(preferenceResult.getAccountId(), ACCOUNT_ID);
             assertEquals(preferenceResult.getScope(), "account");
             assertEquals(preferenceResult.getValueString(), VALUE_STRING);
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -2646,7 +2646,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(preferenceResult.getId(), PREFERENCE_ID_1);
             assertEquals(preferenceResult.getAccountId(), ACCOUNT_ID);
             assertEquals(preferenceResult.getScope(), "account");
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -2665,8 +2665,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
-            //lists all preferences for the account, returns empty if no preference available to show 
-            
+            //lists all preferences for the account, returns empty if no preference available to show
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -2684,10 +2684,10 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .preferenceId(PREFERENCE_ID_1)
                     .build();
 
-            Response<void> response = service.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
+            Response<Void> response = service.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 204);
-            
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

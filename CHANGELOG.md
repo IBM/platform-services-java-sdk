@@ -1,3 +1,10 @@
+## [0.60.2](https://github.com/IBM/platform-services-java-sdk/compare/0.60.1...0.60.2) (2025-01-09)
+
+
+### Bug Fixes
+
+* add javadoc publish script ([90cc197](https://github.com/IBM/platform-services-java-sdk/commit/90cc197a02769421b900eb222c16f9b9c336d978))
+
 ## [0.60.1](https://github.com/IBM/platform-services-java-sdk/compare/0.60.0...0.60.1) (2025-01-09)
 
 

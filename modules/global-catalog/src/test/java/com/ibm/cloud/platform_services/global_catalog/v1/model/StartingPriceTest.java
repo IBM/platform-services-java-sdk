@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,8 +19,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.StartingPrice;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -45,22 +43,22 @@ public class StartingPriceTest {
     Amount amountModel = new Amount.Builder()
       .country("testString")
       .currency("testString")
-      .prices(new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)))
+      .prices(java.util.Arrays.asList(priceModel))
       .build();
     assertEquals(amountModel.country(), "testString");
     assertEquals(amountModel.currency(), "testString");
-    assertEquals(amountModel.prices(), new java.util.ArrayList<Price>(java.util.Arrays.asList(priceModel)));
+    assertEquals(amountModel.prices(), java.util.Arrays.asList(priceModel));
 
     StartingPrice startingPriceModel = new StartingPrice.Builder()
       .planId("testString")
       .deploymentId("testString")
       .unit("testString")
-      .amount(new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)))
+      .amount(java.util.Arrays.asList(amountModel))
       .build();
     assertEquals(startingPriceModel.planId(), "testString");
     assertEquals(startingPriceModel.deploymentId(), "testString");
     assertEquals(startingPriceModel.unit(), "testString");
-    assertEquals(startingPriceModel.amount(), new java.util.ArrayList<Amount>(java.util.Arrays.asList(amountModel)));
+    assertEquals(startingPriceModel.amount(), java.util.Arrays.asList(amountModel));
 
     String json = TestUtilities.serialize(startingPriceModel);
 

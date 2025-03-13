@@ -13,33 +13,31 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Alias-related metadata.
+ * Location of your applications media source files.
  */
-public class AliasMetaData extends GenericModel {
+public class UIMediaSourceMetaData extends GenericModel {
 
   protected String type;
-  @SerializedName("plan_id")
-  protected String planId;
+  protected String url;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String type;
-    private String planId;
+    private String url;
 
     /**
-     * Instantiates a new Builder from an existing AliasMetaData instance.
+     * Instantiates a new Builder from an existing UIMediaSourceMetaData instance.
      *
-     * @param aliasMetaData the instance to initialize the Builder with
+     * @param uiMediaSourceMetaData the instance to initialize the Builder with
      */
-    private Builder(AliasMetaData aliasMetaData) {
-      this.type = aliasMetaData.type;
-      this.planId = aliasMetaData.planId;
+    private Builder(UIMediaSourceMetaData uiMediaSourceMetaData) {
+      this.type = uiMediaSourceMetaData.type;
+      this.url = uiMediaSourceMetaData.url;
     }
 
     /**
@@ -49,19 +47,19 @@ public class AliasMetaData extends GenericModel {
     }
 
     /**
-     * Builds a AliasMetaData.
+     * Builds a UIMediaSourceMetaData.
      *
-     * @return the new AliasMetaData instance
+     * @return the new UIMediaSourceMetaData instance
      */
-    public AliasMetaData build() {
-      return new AliasMetaData(this);
+    public UIMediaSourceMetaData build() {
+      return new UIMediaSourceMetaData(this);
     }
 
     /**
      * Set the type.
      *
      * @param type the type
-     * @return the AliasMetaData builder
+     * @return the UIMediaSourceMetaData builder
      */
     public Builder type(String type) {
       this.type = type;
@@ -69,28 +67,28 @@ public class AliasMetaData extends GenericModel {
     }
 
     /**
-     * Set the planId.
+     * Set the url.
      *
-     * @param planId the planId
-     * @return the AliasMetaData builder
+     * @param url the url
+     * @return the UIMediaSourceMetaData builder
      */
-    public Builder planId(String planId) {
-      this.planId = planId;
+    public Builder url(String url) {
+      this.url = url;
       return this;
     }
   }
 
-  protected AliasMetaData() { }
+  protected UIMediaSourceMetaData() { }
 
-  protected AliasMetaData(Builder builder) {
+  protected UIMediaSourceMetaData(Builder builder) {
     type = builder.type;
-    planId = builder.planId;
+    url = builder.url;
   }
 
   /**
    * New builder.
    *
-   * @return a AliasMetaData builder
+   * @return a UIMediaSourceMetaData builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -99,7 +97,7 @@ public class AliasMetaData extends GenericModel {
   /**
    * Gets the type.
    *
-   * Type of alias.
+   * Type of source, for example, git.
    *
    * @return the type
    */
@@ -108,14 +106,14 @@ public class AliasMetaData extends GenericModel {
   }
 
   /**
-   * Gets the planId.
+   * Gets the url.
    *
-   * Points to the plan that this object is an alias for.
+   * URL to source.
    *
-   * @return the planId
+   * @return the url
    */
-  public String planId() {
-    return planId;
+  public String url() {
+    return url;
   }
 }
 

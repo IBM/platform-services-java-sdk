@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.Bullets;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMediaSourceMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaMedia;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -32,29 +32,25 @@ public class UIMetaMediaTest {
 
   @Test
   public void testUIMetaMedia() throws Throwable {
-    Bullets bulletsModel = new Bullets.Builder()
-      .title("testString")
-      .description("testString")
-      .icon("testString")
-      .quantity(Long.valueOf("26"))
+    UIMediaSourceMetaData uiMediaSourceMetaDataModel = new UIMediaSourceMetaData.Builder()
+      .type("testString")
+      .url("testString")
       .build();
-    assertEquals(bulletsModel.title(), "testString");
-    assertEquals(bulletsModel.description(), "testString");
-    assertEquals(bulletsModel.icon(), "testString");
-    assertEquals(bulletsModel.quantity(), Long.valueOf("26"));
+    assertEquals(uiMediaSourceMetaDataModel.type(), "testString");
+    assertEquals(uiMediaSourceMetaDataModel.url(), "testString");
 
     UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
       .caption("testString")
       .thumbnailUrl("testString")
       .type("testString")
       .url("testString")
-      .source(bulletsModel)
+      .source(java.util.Arrays.asList(uiMediaSourceMetaDataModel))
       .build();
     assertEquals(uiMetaMediaModel.caption(), "testString");
     assertEquals(uiMetaMediaModel.thumbnailUrl(), "testString");
     assertEquals(uiMetaMediaModel.type(), "testString");
     assertEquals(uiMetaMediaModel.url(), "testString");
-    assertEquals(uiMetaMediaModel.source(), bulletsModel);
+    assertEquals(uiMetaMediaModel.source(), java.util.Arrays.asList(uiMediaSourceMetaDataModel));
 
     String json = TestUtilities.serialize(uiMetaMediaModel);
 
@@ -64,6 +60,5 @@ public class UIMetaMediaTest {
     assertEquals(uiMetaMediaModelNew.thumbnailUrl(), "testString");
     assertEquals(uiMetaMediaModelNew.type(), "testString");
     assertEquals(uiMetaMediaModelNew.url(), "testString");
-    assertEquals(uiMetaMediaModelNew.source().toString(), bulletsModel.toString());
   }
 }

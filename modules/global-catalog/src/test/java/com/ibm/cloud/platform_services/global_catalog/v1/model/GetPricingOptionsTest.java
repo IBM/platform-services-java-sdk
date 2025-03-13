@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,9 +34,11 @@ public class GetPricingOptionsTest {
     GetPricingOptions getPricingOptionsModel = new GetPricingOptions.Builder()
       .id("testString")
       .account("testString")
+      .deploymentRegion("testString")
       .build();
     assertEquals(getPricingOptionsModel.id(), "testString");
     assertEquals(getPricingOptionsModel.account(), "testString");
+    assertEquals(getPricingOptionsModel.deploymentRegion(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

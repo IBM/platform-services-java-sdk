@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -18,8 +18,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.TemplateMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -44,7 +42,7 @@ public class TemplateMetaDataTest {
     assertEquals(sourceMetaDataModel.url(), "testString");
 
     TemplateMetaData templateMetaDataModel = new TemplateMetaData.Builder()
-      .services(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .services(java.util.Arrays.asList("testString"))
       .defaultMemory(Long.valueOf("26"))
       .startCmd("testString")
       .source(sourceMetaDataModel)
@@ -53,9 +51,9 @@ public class TemplateMetaDataTest {
       .templateId("testString")
       .executableFile("testString")
       .buildpack("testString")
-      .environmentVariables(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+      .environmentVariables(java.util.Collections.singletonMap("key1", "testString"))
       .build();
-    assertEquals(templateMetaDataModel.services(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(templateMetaDataModel.services(), java.util.Arrays.asList("testString"));
     assertEquals(templateMetaDataModel.defaultMemory(), Long.valueOf("26"));
     assertEquals(templateMetaDataModel.startCmd(), "testString");
     assertEquals(templateMetaDataModel.source(), sourceMetaDataModel);
@@ -64,7 +62,7 @@ public class TemplateMetaDataTest {
     assertEquals(templateMetaDataModel.templateId(), "testString");
     assertEquals(templateMetaDataModel.executableFile(), "testString");
     assertEquals(templateMetaDataModel.buildpack(), "testString");
-    assertEquals(templateMetaDataModel.environmentVariables(), new java.util.HashMap<String, String>() { { put("foo", "testString"); } });
+    assertEquals(templateMetaDataModel.environmentVariables(), java.util.Collections.singletonMap("key1", "testString"));
 
     String json = TestUtilities.serialize(templateMetaDataModel);
 

@@ -16,9 +16,9 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The restoreCatalogEntry options.
+ * The getPricingDeployments options.
  */
-public class RestoreCatalogEntryOptions extends GenericModel {
+public class GetPricingDeploymentsOptions extends GenericModel {
 
   protected String id;
   protected String account;
@@ -31,13 +31,13 @@ public class RestoreCatalogEntryOptions extends GenericModel {
     private String account;
 
     /**
-     * Instantiates a new Builder from an existing RestoreCatalogEntryOptions instance.
+     * Instantiates a new Builder from an existing GetPricingDeploymentsOptions instance.
      *
-     * @param restoreCatalogEntryOptions the instance to initialize the Builder with
+     * @param getPricingDeploymentsOptions the instance to initialize the Builder with
      */
-    private Builder(RestoreCatalogEntryOptions restoreCatalogEntryOptions) {
-      this.id = restoreCatalogEntryOptions.id;
-      this.account = restoreCatalogEntryOptions.account;
+    private Builder(GetPricingDeploymentsOptions getPricingDeploymentsOptions) {
+      this.id = getPricingDeploymentsOptions.id;
+      this.account = getPricingDeploymentsOptions.account;
     }
 
     /**
@@ -56,19 +56,19 @@ public class RestoreCatalogEntryOptions extends GenericModel {
     }
 
     /**
-     * Builds a RestoreCatalogEntryOptions.
+     * Builds a GetPricingDeploymentsOptions.
      *
-     * @return the new RestoreCatalogEntryOptions instance
+     * @return the new GetPricingDeploymentsOptions instance
      */
-    public RestoreCatalogEntryOptions build() {
-      return new RestoreCatalogEntryOptions(this);
+    public GetPricingDeploymentsOptions build() {
+      return new GetPricingDeploymentsOptions(this);
     }
 
     /**
      * Set the id.
      *
      * @param id the id
-     * @return the RestoreCatalogEntryOptions builder
+     * @return the GetPricingDeploymentsOptions builder
      */
     public Builder id(String id) {
       this.id = id;
@@ -79,7 +79,7 @@ public class RestoreCatalogEntryOptions extends GenericModel {
      * Set the account.
      *
      * @param account the account
-     * @return the RestoreCatalogEntryOptions builder
+     * @return the GetPricingDeploymentsOptions builder
      */
     public Builder account(String account) {
       this.account = account;
@@ -87,9 +87,9 @@ public class RestoreCatalogEntryOptions extends GenericModel {
     }
   }
 
-  protected RestoreCatalogEntryOptions() { }
+  protected GetPricingDeploymentsOptions() { }
 
-  protected RestoreCatalogEntryOptions(Builder builder) {
+  protected GetPricingDeploymentsOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
     id = builder.id;
@@ -99,7 +99,7 @@ public class RestoreCatalogEntryOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a RestoreCatalogEntryOptions builder
+   * @return a GetPricingDeploymentsOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);
@@ -108,7 +108,7 @@ public class RestoreCatalogEntryOptions extends GenericModel {
   /**
    * Gets the id.
    *
-   * The catalog entry's unique ID.
+   * The object's unique ID.
    *
    * @return the id
    */

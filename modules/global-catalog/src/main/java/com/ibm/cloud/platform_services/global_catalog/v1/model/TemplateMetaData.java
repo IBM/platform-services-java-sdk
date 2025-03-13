@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.ArrayList;
@@ -57,6 +58,11 @@ public class TemplateMetaData extends GenericModel {
     private String buildpack;
     private Map<String, String> environmentVariables;
 
+    /**
+     * Instantiates a new Builder from an existing TemplateMetaData instance.
+     *
+     * @param templateMetaData the instance to initialize the Builder with
+     */
     private Builder(TemplateMetaData templateMetaData) {
       this.services = templateMetaData.services;
       this.defaultMemory = templateMetaData.defaultMemory;
@@ -86,9 +92,9 @@ public class TemplateMetaData extends GenericModel {
     }
 
     /**
-     * Adds an services to services.
+     * Adds a new element to services.
      *
-     * @param services the new services
+     * @param services the new element to be added
      * @return the TemplateMetaData builder
      */
     public Builder addServices(String services) {
@@ -212,6 +218,8 @@ public class TemplateMetaData extends GenericModel {
       return this;
     }
   }
+
+  protected TemplateMetaData() { }
 
   protected TemplateMetaData(Builder builder) {
     services = builder.services;

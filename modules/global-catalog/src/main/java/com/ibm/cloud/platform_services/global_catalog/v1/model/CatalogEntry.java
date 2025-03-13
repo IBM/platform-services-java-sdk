@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.Date;
@@ -49,11 +50,11 @@ public class CatalogEntry extends GenericModel {
   protected Boolean group;
   protected Provider provider;
   protected Boolean active;
+  protected String url;
   protected CatalogEntryMetadata metadata;
   protected String id;
   @SerializedName("catalog_crn")
   protected String catalogCrn;
-  protected String url;
   @SerializedName("children_url")
   protected String childrenUrl;
   @SerializedName("geo_tags")
@@ -62,6 +63,8 @@ public class CatalogEntry extends GenericModel {
   protected List<String> pricingTags;
   protected Date created;
   protected Date updated;
+
+  protected CatalogEntry() { }
 
   /**
    * Gets the name.
@@ -177,6 +180,17 @@ public class CatalogEntry extends GenericModel {
   }
 
   /**
+   * Gets the url.
+   *
+   * URL to get details about this object.
+   *
+   * @return the url
+   */
+  public String getUrl() {
+    return url;
+  }
+
+  /**
    * Gets the metadata.
    *
    * Model used to describe metadata object returned.
@@ -207,17 +221,6 @@ public class CatalogEntry extends GenericModel {
    */
   public String getCatalogCrn() {
     return catalogCrn;
-  }
-
-  /**
-   * Gets the url.
-   *
-   * URL to get details about this object.
-   *
-   * @return the url
-   */
-  public String getUrl() {
-    return url;
   }
 
   /**

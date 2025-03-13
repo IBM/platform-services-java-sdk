@@ -10,13 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-
 package com.ibm.cloud.platform_services.global_catalog.v1;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
-import static org.testng.AssertJUnit.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -26,6 +20,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
+import static org.testng.AssertJUnit.assertNotNull;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -55,13 +53,13 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.Visibility;
 import com.ibm.cloud.platform_services.test.SdkIntegrationTestBase;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ConflictException;
-import com.ibm.cloud.sdk.core.service.exception.ForbiddenException;
 import com.ibm.cloud.sdk.core.service.exception.NotFoundException;
 
 /**
  * Integration test class for the GlobalCatalog service.
  */
 public class GlobalCatalogIT extends SdkIntegrationTestBase {
+
     GlobalCatalog service = null;
 
     private static final long timestamp = System.currentTimeMillis() / 1000L;
@@ -97,6 +95,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
     UploadArtifactOptions uploadArtifactDelete;
     GetArtifactOptions getArtifact;
     DeleteArtifactOptions deleteArtifact;
+    CatalogEntry fetchedObject;
 
     @Override
     public String getConfigFilename() {
@@ -118,37 +117,21 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertNotNull(service);
         assertNotNull(service.getServiceUrl());
 
-        List<String> tags = Arrays.asList("a", "b", "c");
-        List<String> tagsUpdated = Arrays.asList("x", "y", "z");
+        List<String> tags = Arrays.asList("a", "b", "c", "support_ibm");
         Overview overviewValueDefault = new Overview.Builder()
                 .displayName("display")
                 .longDescription("long")
                 .description("desc")
                 .build();
-        Overview overviewValueUpdated = new Overview.Builder()
-                .displayName("displayUpdated")
-                .longDescription("longUpdated")
-                .description("descUpdated")
-                .build();
         Map<String, Overview> overview = new HashMap<>();
-        Map<String, Overview> overviewUpdated = new HashMap<>();
         overview.put("en", overviewValueDefault);
-        overviewUpdated.put("en", overviewValueUpdated);
         Image image = new Image.Builder()
                 .image("image")
                 .smallImage("small")
                 .mediumImage("medium")
                 .featureImage("feature")
                 .build();
-        Image imageUpdated = new Image.Builder()
-                .image("imageUpdated")
-                .smallImage("smallUpdated")
-                .mediumImage("mediumUpdated")
-                .featureImage("featureUpdated")
-                .build();
         Provider provider = new Provider.Builder().email("bogus@us.ibm.com").name("someName").build();
-        Provider providerUpdated = new Provider.Builder().email("bogus@us.ibm.com").name("someNameUpdated").build();
-
         defaultCreate = new CreateCatalogEntryOptions.Builder()
                 .id(id)
                 .name(name)
@@ -162,18 +145,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
                 .build();
         defaultDelete = new DeleteCatalogEntryOptions.Builder().id(id).force(false).build();
         forceDelete = new DeleteCatalogEntryOptions.Builder().id(id).force(true).build();
-        defaultGet = new GetCatalogEntryOptions.Builder().id(id).build();
-        defaultUpdate = new UpdateCatalogEntryOptions.Builder()
-                .id(id)
-                .name(nameUpdated)
-                .active(active)
-                .kind(kind)
-                .disabled(disabled)
-                .overviewUi(overviewUpdated)
-                .images(imageUpdated)
-                .tags(tagsUpdated)
-                .provider(providerUpdated)
-                .build();
+        defaultGet = new GetCatalogEntryOptions.Builder().id(id).complete(true).build();
         defaultChild = new CreateCatalogEntryOptions.Builder()
                 .id(idChild)
                 .name(nameChild)
@@ -261,7 +233,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         log("createCatalogEntry result: " + result.toString());
     }
 
-    @Test(dependsOnMethods = { "testCreateCatalogEntry" })
+    @Test(dependsOnMethods = {"testCreateCatalogEntry"})
     public void testGetCatalogEntry() {
         service.createCatalogEntry(defaultCreate).execute();
         Response<CatalogEntry> response = service.getCatalogEntry(defaultGet).execute();
@@ -269,6 +241,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
 
         CatalogEntry result = response.getResult();
+        fetchedObject = result;
         assertNotNull(result);
         assertEquals(result.getId(), defaultCreate.id());
         assertEquals(result.getName(), defaultCreate.name());
@@ -280,9 +253,36 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         log("createCatalogEntry result: " + result.toString());
     }
 
-    @Test(dependsOnMethods = { "testGetCatalogEntry" })
+    @Test(dependsOnMethods = {"testGetCatalogEntry"})
     public void testUpdateCatalogEntry() {
         service.createCatalogEntry(defaultCreate).execute();
+        List<String> tagsUpdated = Arrays.asList("x", "y", "z", "support_ibm");
+        Overview overviewValueUpdated = new Overview.Builder()
+                .displayName("displayUpdated")
+                .longDescription("longUpdated")
+                .description("descUpdated")
+                .build();
+        Map<String, Overview> overviewUpdated = new HashMap<>();
+        overviewUpdated.put("en", overviewValueUpdated);
+        Image imageUpdated = new Image.Builder()
+                .image("imageUpdated")
+                .smallImage("smallUpdated")
+                .mediumImage("mediumUpdated")
+                .featureImage("featureUpdated")
+                .build();
+        Provider providerUpdated = new Provider.Builder().email("bogus@us.ibm.com").name("someNameUpdated").build();
+        defaultUpdate = new UpdateCatalogEntryOptions.Builder()
+                .id(id)
+                .name(nameUpdated)
+                .active(active)
+                .kind(kind)
+                .disabled(disabled)
+                .overviewUi(overviewUpdated)
+                .images(imageUpdated)
+                .tags(tagsUpdated)
+                .provider(providerUpdated)
+                .url(fetchedObject.getUrl())
+                .build();
         Response<CatalogEntry> response = service.updateCatalogEntry(defaultUpdate).execute();
         assertNotNull(response);
         assertEquals(response.getStatusCode(), 200);
@@ -299,7 +299,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         log("createCatalogEntry result: " + result.toString());
     }
 
-    @Test(dependsOnMethods = { "testUpdateCatalogEntry" })
+    @Test(dependsOnMethods = {"testUpdateCatalogEntry"})
     public void testDeleteCatalogEntry() {
         service.createCatalogEntry(defaultCreate).execute();
         Response<Void> response = service.deleteCatalogEntry(forceDelete).execute();
@@ -307,19 +307,19 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(dependsOnMethods = { "testDeleteCatalogEntry" }, expectedExceptions = {NotFoundException.class})
+    @Test(dependsOnMethods = {"testDeleteCatalogEntry"}, expectedExceptions = {NotFoundException.class})
     public void testGetCatalogEntryAfterDeleteFailure() {
         service.createCatalogEntry(defaultCreate).execute();
         service.deleteCatalogEntry(forceDelete).execute();
         service.getCatalogEntry(defaultGet).execute();
     }
 
-    @Test(dependsOnMethods = { "testDeleteCatalogEntry" }, expectedExceptions = {NotFoundException.class})
+    @Test(dependsOnMethods = {"testDeleteCatalogEntry"}, expectedExceptions = {NotFoundException.class})
     public void testGetCatalogEntryFailure() {
         service.getCatalogEntry(defaultGet).execute();
     }
 
-    @Test(dependsOnMethods = { "testDeleteCatalogEntry" })
+    @Test(dependsOnMethods = {"testDeleteCatalogEntry"})
     public void testDeleteCatalogEntryFailure() {
         service.createCatalogEntry(defaultCreate).execute();
         Response<Void> response = service.deleteCatalogEntry(forceDelete).execute();
@@ -327,12 +327,12 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         assertEquals(response.getStatusCode(), 200);
     }
 
-    @Test(dependsOnMethods = { "testUpdateCatalogEntry" }, expectedExceptions = {NotFoundException.class})
+    @Test(dependsOnMethods = {"testUpdateCatalogEntry"}, expectedExceptions = {NotFoundException.class})
     public void testUpdateCatalogEntryFailure() {
         service.updateCatalogEntry(defaultUpdate).execute();
     }
 
-    @Test(dependsOnMethods = { "testUpdateCatalogEntryFailure" }, expectedExceptions = {ConflictException.class})
+    @Test(dependsOnMethods = {"testUpdateCatalogEntryFailure"}, expectedExceptions = {ConflictException.class})
     public void testCreateCatalogEntryFailure() {
         service.createCatalogEntry(defaultCreate).execute();
         service.createCatalogEntry(defaultCreate).execute();
@@ -423,7 +423,7 @@ public class GlobalCatalogIT extends SdkIntegrationTestBase {
         service.getVisibility(getVisibility).execute();
     }
 
-    @Test(expectedExceptions = {ForbiddenException.class})
+    @Test
     public void testUpdateVisibility() {
         service.createCatalogEntry(defaultCreate).execute();
         service.updateVisibility(updateVisibility).execute();

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.ArrayList;
@@ -39,6 +40,11 @@ public class StartingPrice extends GenericModel {
     private String unit;
     private List<Amount> amount;
 
+    /**
+     * Instantiates a new Builder from an existing StartingPrice instance.
+     *
+     * @param startingPrice the instance to initialize the Builder with
+     */
     private Builder(StartingPrice startingPrice) {
       this.planId = startingPrice.planId;
       this.deploymentId = startingPrice.deploymentId;
@@ -62,9 +68,9 @@ public class StartingPrice extends GenericModel {
     }
 
     /**
-     * Adds an amount to amount.
+     * Adds a new element to amount.
      *
-     * @param amount the new amount
+     * @param amount the new element to be added
      * @return the StartingPrice builder
      */
     public Builder addAmount(Amount amount) {
@@ -122,6 +128,8 @@ public class StartingPrice extends GenericModel {
       return this;
     }
   }
+
+  protected StartingPrice() { }
 
   protected StartingPrice(Builder builder) {
     planId = builder.planId;

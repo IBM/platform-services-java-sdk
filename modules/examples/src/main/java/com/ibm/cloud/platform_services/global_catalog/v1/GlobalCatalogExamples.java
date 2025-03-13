@@ -13,6 +13,17 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Artifacts;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.AuditSearchResult;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntry;
@@ -40,17 +51,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.UploadArtifactOpt
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Visibility;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 //
 // This file provides an example of how to use the Global Catalog service.
@@ -80,6 +80,7 @@ public class GlobalCatalogExamples {
         GlobalCatalog service = GlobalCatalog.newInstance();
 
         String catalogEntryId = "";
+        CatalogEntry fetchedObject = null;
 
         try {
             System.out.println("createCatalogEntry() result:");
@@ -153,6 +154,7 @@ public class GlobalCatalogExamples {
 
             Response<CatalogEntry> response = service.getCatalogEntry(getCatalogEntryOptions).execute();
             CatalogEntry catalogEntry = response.getResult();
+            fetchedObject = catalogEntry;
 
             System.out.println(catalogEntry);
 
@@ -208,6 +210,7 @@ public class GlobalCatalogExamples {
                     .provider(providerModel)
                     .active(true)
                     .metadata(metadataModel)
+                    .url(fetchedObject.getUrl())
                     .build();
 
             Response<CatalogEntry> response = service.updateCatalogEntry(updateCatalogEntryOptions).execute();
@@ -324,6 +327,7 @@ public class GlobalCatalogExamples {
             System.out.println("updateVisibility returned the following error: " + e.getMessage());
         }
 
+
         try {
             System.out.println("getPricing() result:");
 
@@ -343,6 +347,7 @@ public class GlobalCatalogExamples {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
         }
+
 
         try {
             System.out.println("getAuditLogs() result:");

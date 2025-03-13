@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,8 +17,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.CFMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -41,13 +39,13 @@ public class CFMetaDataTest {
       .bindable(true)
       .asyncProvisioningSupported(true)
       .asyncUnprovisioningSupported(true)
-      .requires(new java.util.ArrayList<String>(java.util.Arrays.asList("testString")))
+      .requires(java.util.Arrays.asList("testString"))
       .planUpdateable(true)
       .state("testString")
       .serviceCheckEnabled(true)
       .testCheckInterval(Long.valueOf("26"))
       .serviceKeySupported(true)
-      .cfGuid(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+      .cfGuid(java.util.Collections.singletonMap("key1", "testString"))
       .build();
     assertEquals(cfMetaDataModel.type(), "testString");
     assertEquals(cfMetaDataModel.iamCompatible(), Boolean.valueOf(true));
@@ -56,13 +54,13 @@ public class CFMetaDataTest {
     assertEquals(cfMetaDataModel.bindable(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.asyncProvisioningSupported(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.asyncUnprovisioningSupported(), Boolean.valueOf(true));
-    assertEquals(cfMetaDataModel.requires(), new java.util.ArrayList<String>(java.util.Arrays.asList("testString")));
+    assertEquals(cfMetaDataModel.requires(), java.util.Arrays.asList("testString"));
     assertEquals(cfMetaDataModel.planUpdateable(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.state(), "testString");
     assertEquals(cfMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.testCheckInterval(), Long.valueOf("26"));
     assertEquals(cfMetaDataModel.serviceKeySupported(), Boolean.valueOf(true));
-    assertEquals(cfMetaDataModel.cfGuid(), new java.util.HashMap<String, String>() { { put("foo", "testString"); } });
+    assertEquals(cfMetaDataModel.cfGuid(), java.util.Collections.singletonMap("key1", "testString"));
 
     String json = TestUtilities.serialize(cfMetaDataModel);
 

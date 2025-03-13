@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -21,8 +22,8 @@ public class SLAMetaData extends GenericModel {
 
   protected String terms;
   protected String tenancy;
-  protected String provisioning;
-  protected String responsiveness;
+  protected Double provisioning;
+  protected Double responsiveness;
   protected DRMetaData dr;
 
   /**
@@ -31,10 +32,15 @@ public class SLAMetaData extends GenericModel {
   public static class Builder {
     private String terms;
     private String tenancy;
-    private String provisioning;
-    private String responsiveness;
+    private Double provisioning;
+    private Double responsiveness;
     private DRMetaData dr;
 
+    /**
+     * Instantiates a new Builder from an existing SLAMetaData instance.
+     *
+     * @param slaMetaData the instance to initialize the Builder with
+     */
     private Builder(SLAMetaData slaMetaData) {
       this.terms = slaMetaData.terms;
       this.tenancy = slaMetaData.tenancy;
@@ -86,7 +92,7 @@ public class SLAMetaData extends GenericModel {
      * @param provisioning the provisioning
      * @return the SLAMetaData builder
      */
-    public Builder provisioning(String provisioning) {
+    public Builder provisioning(Double provisioning) {
       this.provisioning = provisioning;
       return this;
     }
@@ -97,7 +103,7 @@ public class SLAMetaData extends GenericModel {
      * @param responsiveness the responsiveness
      * @return the SLAMetaData builder
      */
-    public Builder responsiveness(String responsiveness) {
+    public Builder responsiveness(Double responsiveness) {
       this.responsiveness = responsiveness;
       return this;
     }
@@ -113,6 +119,8 @@ public class SLAMetaData extends GenericModel {
       return this;
     }
   }
+
+  protected SLAMetaData() { }
 
   protected SLAMetaData(Builder builder) {
     terms = builder.terms;
@@ -161,7 +169,7 @@ public class SLAMetaData extends GenericModel {
    *
    * @return the provisioning
    */
-  public String provisioning() {
+  public Double provisioning() {
     return provisioning;
   }
 
@@ -172,7 +180,7 @@ public class SLAMetaData extends GenericModel {
    *
    * @return the responsiveness
    */
-  public String responsiveness() {
+  public Double responsiveness() {
     return responsiveness;
   }
 

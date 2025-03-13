@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,17 +34,17 @@ public class GetAuditLogsOptionsTest {
     GetAuditLogsOptions getAuditLogsOptionsModel = new GetAuditLogsOptions.Builder()
       .id("testString")
       .account("testString")
-      .ascending("testString")
+      .ascending("false")
       .startat("testString")
-      .offset(Long.valueOf("26"))
-      .limit(Long.valueOf("200"))
+      .offset(Long.valueOf("0"))
+      .limit(Long.valueOf("50"))
       .build();
     assertEquals(getAuditLogsOptionsModel.id(), "testString");
     assertEquals(getAuditLogsOptionsModel.account(), "testString");
-    assertEquals(getAuditLogsOptionsModel.ascending(), "testString");
+    assertEquals(getAuditLogsOptionsModel.ascending(), "false");
     assertEquals(getAuditLogsOptionsModel.startat(), "testString");
-    assertEquals(getAuditLogsOptionsModel.offset(), Long.valueOf("26"));
-    assertEquals(getAuditLogsOptionsModel.limit(), Long.valueOf("200"));
+    assertEquals(getAuditLogsOptionsModel.offset(), Long.valueOf("0"));
+    assertEquals(getAuditLogsOptionsModel.limit(), Long.valueOf("50"));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

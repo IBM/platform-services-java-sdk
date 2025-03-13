@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.ArrayList;
@@ -47,6 +48,11 @@ public class Strings extends GenericModel {
     private String popupWarningMessage;
     private String instruction;
 
+    /**
+     * Instantiates a new Builder from an existing Strings instance.
+     *
+     * @param strings the instance to initialize the Builder with
+     */
     private Builder(Strings strings) {
       this.bullets = strings.bullets;
       this.media = strings.media;
@@ -73,9 +79,9 @@ public class Strings extends GenericModel {
     }
 
     /**
-     * Adds an bullets to bullets.
+     * Adds a new element to bullets.
      *
-     * @param bullets the new bullets
+     * @param bullets the new element to be added
      * @return the Strings builder
      */
     public Builder addBullets(Bullets bullets) {
@@ -89,9 +95,9 @@ public class Strings extends GenericModel {
     }
 
     /**
-     * Adds an media to media.
+     * Adds a new element to media.
      *
-     * @param media the new media
+     * @param media the new element to be added
      * @return the Strings builder
      */
     public Builder addMedia(UIMetaMedia media) {
@@ -183,6 +189,8 @@ public class Strings extends GenericModel {
       return this;
     }
   }
+
+  protected Strings() { }
 
   protected Strings(Builder builder) {
     bullets = builder.bullets;

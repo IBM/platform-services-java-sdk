@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -15,12 +15,11 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Bullets;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Strings;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMediaSourceMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMetaMedia;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -46,30 +45,37 @@ public class StringsTest {
     assertEquals(bulletsModel.icon(), "testString");
     assertEquals(bulletsModel.quantity(), Long.valueOf("26"));
 
+    UIMediaSourceMetaData uiMediaSourceMetaDataModel = new UIMediaSourceMetaData.Builder()
+      .type("testString")
+      .url("testString")
+      .build();
+    assertEquals(uiMediaSourceMetaDataModel.type(), "testString");
+    assertEquals(uiMediaSourceMetaDataModel.url(), "testString");
+
     UIMetaMedia uiMetaMediaModel = new UIMetaMedia.Builder()
       .caption("testString")
       .thumbnailUrl("testString")
       .type("testString")
       .url("testString")
-      .source(bulletsModel)
+      .source(java.util.Arrays.asList(uiMediaSourceMetaDataModel))
       .build();
     assertEquals(uiMetaMediaModel.caption(), "testString");
     assertEquals(uiMetaMediaModel.thumbnailUrl(), "testString");
     assertEquals(uiMetaMediaModel.type(), "testString");
     assertEquals(uiMetaMediaModel.url(), "testString");
-    assertEquals(uiMetaMediaModel.source(), bulletsModel);
+    assertEquals(uiMetaMediaModel.source(), java.util.Arrays.asList(uiMediaSourceMetaDataModel));
 
     Strings stringsModel = new Strings.Builder()
-      .bullets(new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)))
-      .media(new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)))
+      .bullets(java.util.Arrays.asList(bulletsModel))
+      .media(java.util.Arrays.asList(uiMetaMediaModel))
       .notCreatableMsg("testString")
       .notCreatableRobotMsg("testString")
       .deprecationWarning("testString")
       .popupWarningMessage("testString")
       .instruction("testString")
       .build();
-    assertEquals(stringsModel.bullets(), new java.util.ArrayList<Bullets>(java.util.Arrays.asList(bulletsModel)));
-    assertEquals(stringsModel.media(), new java.util.ArrayList<UIMetaMedia>(java.util.Arrays.asList(uiMetaMediaModel)));
+    assertEquals(stringsModel.bullets(), java.util.Arrays.asList(bulletsModel));
+    assertEquals(stringsModel.media(), java.util.Arrays.asList(uiMetaMediaModel));
     assertEquals(stringsModel.notCreatableMsg(), "testString");
     assertEquals(stringsModel.notCreatableRobotMsg(), "testString");
     assertEquals(stringsModel.deprecationWarning(), "testString");

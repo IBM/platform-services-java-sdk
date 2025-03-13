@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class UpdateCatalogEntryOptions extends GenericModel {
   protected String parentId;
   protected Boolean group;
   protected Boolean active;
+  protected String url;
   protected ObjectMetadataSet metadata;
   protected String account;
   protected String move;
@@ -66,10 +68,16 @@ public class UpdateCatalogEntryOptions extends GenericModel {
     private String parentId;
     private Boolean group;
     private Boolean active;
+    private String url;
     private ObjectMetadataSet metadata;
     private String account;
     private String move;
 
+    /**
+     * Instantiates a new Builder from an existing UpdateCatalogEntryOptions instance.
+     *
+     * @param updateCatalogEntryOptions the instance to initialize the Builder with
+     */
     private Builder(UpdateCatalogEntryOptions updateCatalogEntryOptions) {
       this.id = updateCatalogEntryOptions.id;
       this.name = updateCatalogEntryOptions.name;
@@ -82,6 +90,7 @@ public class UpdateCatalogEntryOptions extends GenericModel {
       this.parentId = updateCatalogEntryOptions.parentId;
       this.group = updateCatalogEntryOptions.group;
       this.active = updateCatalogEntryOptions.active;
+      this.url = updateCatalogEntryOptions.url;
       this.metadata = updateCatalogEntryOptions.metadata;
       this.account = updateCatalogEntryOptions.account;
       this.move = updateCatalogEntryOptions.move;
@@ -126,9 +135,9 @@ public class UpdateCatalogEntryOptions extends GenericModel {
     }
 
     /**
-     * Adds an tags to tags.
+     * Adds a new element to tags.
      *
-     * @param tags the new tags
+     * @param tags the new element to be added
      * @return the UpdateCatalogEntryOptions builder
      */
     public Builder addTags(String tags) {
@@ -264,6 +273,17 @@ public class UpdateCatalogEntryOptions extends GenericModel {
     }
 
     /**
+     * Set the url.
+     *
+     * @param url the url
+     * @return the UpdateCatalogEntryOptions builder
+     */
+    public Builder url(String url) {
+      this.url = url;
+      return this;
+    }
+
+    /**
      * Set the metadata.
      *
      * @param metadata the metadata
@@ -297,6 +317,8 @@ public class UpdateCatalogEntryOptions extends GenericModel {
     }
   }
 
+  protected UpdateCatalogEntryOptions() { }
+
   protected UpdateCatalogEntryOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
@@ -325,6 +347,7 @@ public class UpdateCatalogEntryOptions extends GenericModel {
     parentId = builder.parentId;
     group = builder.group;
     active = builder.active;
+    url = builder.url;
     metadata = builder.metadata;
     account = builder.account;
     move = builder.move;
@@ -461,6 +484,17 @@ public class UpdateCatalogEntryOptions extends GenericModel {
    */
   public Boolean active() {
     return active;
+  }
+
+  /**
+   * Gets the url.
+   *
+   * Url of the object.
+   *
+   * @return the url
+   */
+  public String url() {
+    return url;
   }
 
   /**

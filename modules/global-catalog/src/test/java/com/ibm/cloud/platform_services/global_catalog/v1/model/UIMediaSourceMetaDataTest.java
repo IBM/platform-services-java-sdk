@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.Broker;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.UIMediaSourceMetaData;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,26 +23,26 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Broker model.
+ * Unit test class for the UIMediaSourceMetaData model.
  */
-public class BrokerTest {
+public class UIMediaSourceMetaDataTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testBroker() throws Throwable {
-    Broker brokerModel = new Broker.Builder()
-      .name("testString")
-      .guid("testString")
+  public void testUIMediaSourceMetaData() throws Throwable {
+    UIMediaSourceMetaData uiMediaSourceMetaDataModel = new UIMediaSourceMetaData.Builder()
+      .type("testString")
+      .url("testString")
       .build();
-    assertEquals(brokerModel.name(), "testString");
-    assertEquals(brokerModel.guid(), "testString");
+    assertEquals(uiMediaSourceMetaDataModel.type(), "testString");
+    assertEquals(uiMediaSourceMetaDataModel.url(), "testString");
 
-    String json = TestUtilities.serialize(brokerModel);
+    String json = TestUtilities.serialize(uiMediaSourceMetaDataModel);
 
-    Broker brokerModelNew = TestUtilities.deserialize(json, Broker.class);
-    assertTrue(brokerModelNew instanceof Broker);
-    assertEquals(brokerModelNew.name(), "testString");
-    assertEquals(brokerModelNew.guid(), "testString");
+    UIMediaSourceMetaData uiMediaSourceMetaDataModelNew = TestUtilities.deserialize(json, UIMediaSourceMetaData.class);
+    assertTrue(uiMediaSourceMetaDataModelNew instanceof UIMediaSourceMetaData);
+    assertEquals(uiMediaSourceMetaDataModelNew.type(), "testString");
+    assertEquals(uiMediaSourceMetaDataModelNew.url(), "testString");
   }
 }

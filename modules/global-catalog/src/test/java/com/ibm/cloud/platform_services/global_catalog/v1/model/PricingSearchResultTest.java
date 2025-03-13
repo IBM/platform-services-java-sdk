@@ -16,8 +16,12 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Amount;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Metrics;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Price;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.PricingGet;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.PricingSearchResult;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.StartingPrice;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
+import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -25,27 +29,23 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Metrics model.
+ * Unit test class for the PricingSearchResult model.
  */
-public class MetricsTest {
+public class PricingSearchResultTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testMetrics() throws Throwable {
-    Metrics metricsModel = new Metrics();
-    assertNull(metricsModel.getPartRef());
-    assertNull(metricsModel.getMetricId());
-    assertNull(metricsModel.getTierModel());
-    assertNull(metricsModel.getChargeUnit());
-    assertNull(metricsModel.getChargeUnitName());
-    assertNull(metricsModel.getChargeUnitQuantity());
-    assertNull(metricsModel.getResourceDisplayName());
-    assertNull(metricsModel.getChargeUnitDisplayName());
-    assertNull(metricsModel.getUsageCapQty());
-    assertNull(metricsModel.getDisplayCap());
-    assertNull(metricsModel.getEffectiveFrom());
-    assertNull(metricsModel.getEffectiveUntil());
-    assertNull(metricsModel.getAmounts());
+  public void testPricingSearchResult() throws Throwable {
+    PricingSearchResult pricingSearchResultModel = new PricingSearchResult();
+    assertNull(pricingSearchResultModel.getOffset());
+    assertNull(pricingSearchResultModel.getLimit());
+    assertNull(pricingSearchResultModel.getCount());
+    assertNull(pricingSearchResultModel.getResourceCount());
+    assertNull(pricingSearchResultModel.getFirst());
+    assertNull(pricingSearchResultModel.getLast());
+    assertNull(pricingSearchResultModel.getPrev());
+    assertNull(pricingSearchResultModel.getNext());
+    assertNull(pricingSearchResultModel.getResources());
   }
 }

@@ -19,9 +19,9 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * A paginated search result containing audit logs.
+ * A paginated result containing pricing entries.
  */
-public class AuditSearchResult extends GenericModel {
+public class PricingSearchResult extends GenericModel {
 
   protected Long offset;
   protected Long limit;
@@ -32,9 +32,9 @@ public class AuditSearchResult extends GenericModel {
   protected String last;
   protected String prev;
   protected String next;
-  protected List<Message> resources;
+  protected List<PricingGet> resources;
 
-  protected AuditSearchResult() { }
+  protected PricingSearchResult() { }
 
   /**
    * Gets the offset.
@@ -127,11 +127,11 @@ public class AuditSearchResult extends GenericModel {
   /**
    * Gets the resources.
    *
-   * The resources (audit messages) contained in this page of search results.
+   * The resources (prices) contained in this page of search results.
    *
    * @return the resources
    */
-  public List<Message> getResources() {
+  public List<PricingGet> getResources() {
     return resources;
   }
 }

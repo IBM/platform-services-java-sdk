@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
-import com.ibm.cloud.platform_services.global_catalog.v1.model.Broker;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.GetPricingDeploymentsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,26 +23,25 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Broker model.
+ * Unit test class for the GetPricingDeploymentsOptions model.
  */
-public class BrokerTest {
+public class GetPricingDeploymentsOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testBroker() throws Throwable {
-    Broker brokerModel = new Broker.Builder()
-      .name("testString")
-      .guid("testString")
+  public void testGetPricingDeploymentsOptions() throws Throwable {
+    GetPricingDeploymentsOptions getPricingDeploymentsOptionsModel = new GetPricingDeploymentsOptions.Builder()
+      .id("testString")
+      .account("testString")
       .build();
-    assertEquals(brokerModel.name(), "testString");
-    assertEquals(brokerModel.guid(), "testString");
-
-    String json = TestUtilities.serialize(brokerModel);
-
-    Broker brokerModelNew = TestUtilities.deserialize(json, Broker.class);
-    assertTrue(brokerModelNew instanceof Broker);
-    assertEquals(brokerModelNew.name(), "testString");
-    assertEquals(brokerModelNew.guid(), "testString");
+    assertEquals(getPricingDeploymentsOptionsModel.id(), "testString");
+    assertEquals(getPricingDeploymentsOptionsModel.account(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetPricingDeploymentsOptionsError() throws Throwable {
+    new GetPricingDeploymentsOptions.Builder().build();
+  }
+
 }

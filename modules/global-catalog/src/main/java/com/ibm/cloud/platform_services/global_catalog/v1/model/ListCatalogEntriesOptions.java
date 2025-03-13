@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -45,6 +46,11 @@ public class ListCatalogEntriesOptions extends GenericModel {
     private Long offset;
     private Long limit;
 
+    /**
+     * Instantiates a new Builder from an existing ListCatalogEntriesOptions instance.
+     *
+     * @param listCatalogEntriesOptions the instance to initialize the Builder with
+     */
     private Builder(ListCatalogEntriesOptions listCatalogEntriesOptions) {
       this.account = listCatalogEntriesOptions.account;
       this.include = listCatalogEntriesOptions.include;
@@ -184,6 +190,8 @@ public class ListCatalogEntriesOptions extends GenericModel {
     }
   }
 
+  protected ListCatalogEntriesOptions() { }
+
   protected ListCatalogEntriesOptions(Builder builder) {
     account = builder.account;
     include = builder.include;
@@ -274,8 +282,8 @@ public class ListCatalogEntriesOptions extends GenericModel {
   /**
    * Gets the languages.
    *
-   * Return the data strings in a specified langauge. By default, the strings returned are of the language preferred by
-   * your browser through the Accept-Langauge header, which allows an override of the header. Languages are specified in
+   * Return the data strings in a specified language. By default, the strings returned are of the language preferred by
+   * your browser through the Accept-Language header, which allows an override of the header. Languages are specified in
    * standard form, such as `en-us`. To include all languages use a wildcard (*).
    *
    * @return the languages

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-4c92c221-20210211-060810
+ * IBM OpenAPI SDK Code Generator Version: 3.102.0-615ec964-20250307-203034
  */
 
 package com.ibm.cloud.platform_services.global_catalog.v1;
@@ -30,11 +30,13 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.GetArtifactOption
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetAuditLogsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetCatalogEntryOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetChildObjectsOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.GetPricingDeploymentsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetPricingOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetVisibilityOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ListArtifactsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ListCatalogEntriesOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.PricingGet;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.PricingSearchResult;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.RestoreCatalogEntryOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UpdateCatalogEntryOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UpdateVisibilityOptions;
@@ -60,12 +62,18 @@ import java.util.Map.Entry;
  * regions, and more. For more information, see the [catalog
  * documentation](https://cloud.ibm.com/docs/overview/catalog.html#global-catalog-overview).
  *
- * @version v1
+ * API Version: 1.0.3
  */
 public class GlobalCatalog extends BaseService {
 
+  /**
+   * Default service name used when configuring the `GlobalCatalog` client.
+   */
   public static final String DEFAULT_SERVICE_NAME = "global_catalog";
 
+  /**
+   * Default service endpoint URL.
+   */
   public static final String DEFAULT_SERVICE_URL = "https://globalcatalog.cloud.ibm.com/api/v1";
 
  /**
@@ -208,6 +216,9 @@ public class GlobalCatalog extends BaseService {
     if (createCatalogEntryOptions.active() != null) {
       contentJson.addProperty("active", createCatalogEntryOptions.active());
     }
+    if (createCatalogEntryOptions.url() != null) {
+      contentJson.addProperty("url", createCatalogEntryOptions.url());
+    }
     if (createCatalogEntryOptions.metadata() != null) {
       contentJson.add("metadata", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createCatalogEntryOptions.metadata()));
     }
@@ -300,6 +311,9 @@ public class GlobalCatalog extends BaseService {
     }
     if (updateCatalogEntryOptions.active() != null) {
       contentJson.addProperty("active", updateCatalogEntryOptions.active());
+    }
+    if (updateCatalogEntryOptions.url() != null) {
+      contentJson.addProperty("url", updateCatalogEntryOptions.url());
     }
     if (updateCatalogEntryOptions.metadata() != null) {
       contentJson.add("metadata", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateCatalogEntryOptions.metadata()));
@@ -507,8 +521,40 @@ public class GlobalCatalog extends BaseService {
     if (getPricingOptions.account() != null) {
       builder.query("account", String.valueOf(getPricingOptions.account()));
     }
+    if (getPricingOptions.deploymentRegion() != null) {
+      builder.query("deployment_region", String.valueOf(getPricingOptions.deploymentRegion()));
+    }
     ResponseConverter<PricingGet> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PricingGet>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get the pricing deployments for a plan.
+   *
+   * This endpoint returns the deployment pricing for a plan. For a plan it returns a pricing for each visible child
+   * deployment object. Static pricing is defined in the catalog. Dynamic pricing is stored in IBM Cloud Pricing
+   * Catalog. This can be used by an unauthenticated user for publicly available services.
+   *
+   * @param getPricingDeploymentsOptions the {@link GetPricingDeploymentsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link PricingSearchResult}
+   */
+  public ServiceCall<PricingSearchResult> getPricingDeployments(GetPricingDeploymentsOptions getPricingDeploymentsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getPricingDeploymentsOptions,
+      "getPricingDeploymentsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getPricingDeploymentsOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/{id}/pricing/deployment", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("global_catalog", "v1", "getPricingDeployments");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getPricingDeploymentsOptions.account() != null) {
+      builder.query("account", String.valueOf(getPricingDeploymentsOptions.account()));
+    }
+    ResponseConverter<PricingSearchResult> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PricingSearchResult>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

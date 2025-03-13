@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -42,14 +42,14 @@ public class SLAMetaDataTest {
     SLAMetaData slaMetaDataModel = new SLAMetaData.Builder()
       .terms("testString")
       .tenancy("testString")
-      .provisioning("testString")
-      .responsiveness("testString")
+      .provisioning(Double.valueOf("72.5"))
+      .responsiveness(Double.valueOf("72.5"))
       .dr(drMetaDataModel)
       .build();
     assertEquals(slaMetaDataModel.terms(), "testString");
     assertEquals(slaMetaDataModel.tenancy(), "testString");
-    assertEquals(slaMetaDataModel.provisioning(), "testString");
-    assertEquals(slaMetaDataModel.responsiveness(), "testString");
+    assertEquals(slaMetaDataModel.provisioning(), Double.valueOf("72.5"));
+    assertEquals(slaMetaDataModel.responsiveness(), Double.valueOf("72.5"));
     assertEquals(slaMetaDataModel.dr(), drMetaDataModel);
 
     String json = TestUtilities.serialize(slaMetaDataModel);
@@ -58,8 +58,8 @@ public class SLAMetaDataTest {
     assertTrue(slaMetaDataModelNew instanceof SLAMetaData);
     assertEquals(slaMetaDataModelNew.terms(), "testString");
     assertEquals(slaMetaDataModelNew.tenancy(), "testString");
-    assertEquals(slaMetaDataModelNew.provisioning(), "testString");
-    assertEquals(slaMetaDataModelNew.responsiveness(), "testString");
+    assertEquals(slaMetaDataModelNew.provisioning(), Double.valueOf("72.5"));
+    assertEquals(slaMetaDataModelNew.responsiveness(), Double.valueOf("72.5"));
     assertEquals(slaMetaDataModelNew.dr().toString(), drMetaDataModel.toString());
   }
 }

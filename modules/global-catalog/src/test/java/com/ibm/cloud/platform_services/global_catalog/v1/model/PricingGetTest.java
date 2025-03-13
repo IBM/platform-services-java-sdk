@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,8 +22,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -39,9 +37,13 @@ public class PricingGetTest {
   @Test
   public void testPricingGet() throws Throwable {
     PricingGet pricingGetModel = new PricingGet();
+    assertNull(pricingGetModel.getDeploymentId());
+    assertNull(pricingGetModel.getDeploymentLocation());
+    assertNull(pricingGetModel.isDeploymentLocationNoPriceAvailable());
     assertNull(pricingGetModel.getType());
     assertNull(pricingGetModel.getOrigin());
     assertNull(pricingGetModel.getStartingPrice());
     assertNull(pricingGetModel.getMetrics());
+    assertNull(pricingGetModel.getDeploymentRegions());
   }
 }

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.Date;
@@ -34,7 +35,7 @@ public class Metrics extends GenericModel {
   @SerializedName("charge_unit_name")
   protected String chargeUnitName;
   @SerializedName("charge_unit_quantity")
-  protected String chargeUnitQuantity;
+  protected Long chargeUnitQuantity;
   @SerializedName("resource_display_name")
   protected String resourceDisplayName;
   @SerializedName("charge_unit_display_name")
@@ -48,6 +49,8 @@ public class Metrics extends GenericModel {
   @SerializedName("effective_until")
   protected Date effectiveUntil;
   protected List<Amount> amounts;
+
+  protected Metrics() { }
 
   /**
    * Gets the partRef.
@@ -111,7 +114,7 @@ public class Metrics extends GenericModel {
    *
    * @return the chargeUnitQuantity
    */
-  public String getChargeUnitQuantity() {
+  public Long getChargeUnitQuantity() {
     return chargeUnitQuantity;
   }
 

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.ArrayList;
@@ -67,6 +68,11 @@ public class CFMetaData extends GenericModel {
     private Boolean serviceKeySupported;
     private Map<String, String> cfGuid;
 
+    /**
+     * Instantiates a new Builder from an existing CFMetaData instance.
+     *
+     * @param cfMetaData the instance to initialize the Builder with
+     */
     private Builder(CFMetaData cfMetaData) {
       this.type = cfMetaData.type;
       this.iamCompatible = cfMetaData.iamCompatible;
@@ -100,9 +106,9 @@ public class CFMetaData extends GenericModel {
     }
 
     /**
-     * Adds an requires to requires.
+     * Adds a new element to requires.
      *
-     * @param requires the new requires
+     * @param requires the new element to be added
      * @return the CFMetaData builder
      */
     public Builder addRequires(String requires) {
@@ -270,6 +276,8 @@ public class CFMetaData extends GenericModel {
       return this;
     }
   }
+
+  protected CFMetaData() { }
 
   protected CFMetaData(Builder builder) {
     type = builder.type;

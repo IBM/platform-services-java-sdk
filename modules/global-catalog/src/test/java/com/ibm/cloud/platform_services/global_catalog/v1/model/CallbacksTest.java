@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -41,7 +41,7 @@ public class CallbacksTest {
       .dashboardDetailTabExtUrl("testString")
       .serviceMonitorApi("testString")
       .serviceMonitorApp("testString")
-      .apiEndpoint(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+      .apiEndpoint(java.util.Collections.singletonMap("key1", "testString"))
       .build();
     assertEquals(callbacksModel.controllerUrl(), "testString");
     assertEquals(callbacksModel.brokerUrl(), "testString");
@@ -52,7 +52,7 @@ public class CallbacksTest {
     assertEquals(callbacksModel.dashboardDetailTabExtUrl(), "testString");
     assertEquals(callbacksModel.serviceMonitorApi(), "testString");
     assertEquals(callbacksModel.serviceMonitorApp(), "testString");
-    assertEquals(callbacksModel.apiEndpoint(), new java.util.HashMap<String, String>() { { put("foo", "testString"); } });
+    assertEquals(callbacksModel.apiEndpoint(), java.util.Collections.singletonMap("key1", "testString"));
 
     String json = TestUtilities.serialize(callbacksModel);
 

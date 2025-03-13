@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class CreateCatalogEntryOptions extends GenericModel {
   protected String parentId;
   protected Boolean group;
   protected Boolean active;
+  protected String url;
   protected ObjectMetadataSet metadata;
   protected String account;
 
@@ -65,9 +67,15 @@ public class CreateCatalogEntryOptions extends GenericModel {
     private String parentId;
     private Boolean group;
     private Boolean active;
+    private String url;
     private ObjectMetadataSet metadata;
     private String account;
 
+    /**
+     * Instantiates a new Builder from an existing CreateCatalogEntryOptions instance.
+     *
+     * @param createCatalogEntryOptions the instance to initialize the Builder with
+     */
     private Builder(CreateCatalogEntryOptions createCatalogEntryOptions) {
       this.name = createCatalogEntryOptions.name;
       this.kind = createCatalogEntryOptions.kind;
@@ -80,6 +88,7 @@ public class CreateCatalogEntryOptions extends GenericModel {
       this.parentId = createCatalogEntryOptions.parentId;
       this.group = createCatalogEntryOptions.group;
       this.active = createCatalogEntryOptions.active;
+      this.url = createCatalogEntryOptions.url;
       this.metadata = createCatalogEntryOptions.metadata;
       this.account = createCatalogEntryOptions.account;
     }
@@ -123,9 +132,9 @@ public class CreateCatalogEntryOptions extends GenericModel {
     }
 
     /**
-     * Adds an tags to tags.
+     * Adds a new element to tags.
      *
-     * @param tags the new tags
+     * @param tags the new element to be added
      * @return the CreateCatalogEntryOptions builder
      */
     public Builder addTags(String tags) {
@@ -261,6 +270,17 @@ public class CreateCatalogEntryOptions extends GenericModel {
     }
 
     /**
+     * Set the url.
+     *
+     * @param url the url
+     * @return the CreateCatalogEntryOptions builder
+     */
+    public Builder url(String url) {
+      this.url = url;
+      return this;
+    }
+
+    /**
      * Set the metadata.
      *
      * @param metadata the metadata
@@ -282,6 +302,8 @@ public class CreateCatalogEntryOptions extends GenericModel {
       return this;
     }
   }
+
+  protected CreateCatalogEntryOptions() { }
 
   protected CreateCatalogEntryOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,
@@ -311,6 +333,7 @@ public class CreateCatalogEntryOptions extends GenericModel {
     parentId = builder.parentId;
     group = builder.group;
     active = builder.active;
+    url = builder.url;
     metadata = builder.metadata;
     account = builder.account;
   }
@@ -446,6 +469,17 @@ public class CreateCatalogEntryOptions extends GenericModel {
    */
   public Boolean active() {
     return active;
+  }
+
+  /**
+   * Gets the url.
+   *
+   * Url of the object.
+   *
+   * @return the url
+   */
+  public String url() {
+    return url;
   }
 
   /**

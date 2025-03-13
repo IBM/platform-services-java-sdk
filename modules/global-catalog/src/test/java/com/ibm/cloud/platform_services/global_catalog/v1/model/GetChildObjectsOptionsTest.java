@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -41,8 +41,8 @@ public class GetChildObjectsOptionsTest {
       .descending("testString")
       .languages("testString")
       .complete(true)
-      .offset(Long.valueOf("26"))
-      .limit(Long.valueOf("200"))
+      .offset(Long.valueOf("0"))
+      .limit(Long.valueOf("50"))
       .build();
     assertEquals(getChildObjectsOptionsModel.id(), "testString");
     assertEquals(getChildObjectsOptionsModel.kind(), "testString");
@@ -53,8 +53,8 @@ public class GetChildObjectsOptionsTest {
     assertEquals(getChildObjectsOptionsModel.descending(), "testString");
     assertEquals(getChildObjectsOptionsModel.languages(), "testString");
     assertEquals(getChildObjectsOptionsModel.complete(), Boolean.valueOf(true));
-    assertEquals(getChildObjectsOptionsModel.offset(), Long.valueOf("26"));
-    assertEquals(getChildObjectsOptionsModel.limit(), Long.valueOf("200"));
+    assertEquals(getChildObjectsOptionsModel.offset(), Long.valueOf("0"));
+    assertEquals(getChildObjectsOptionsModel.limit(), Long.valueOf("50"));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

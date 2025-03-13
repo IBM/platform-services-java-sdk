@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -40,7 +40,7 @@ public class PlanMetaDataTest {
       .testCheckInterval(Long.valueOf("26"))
       .singleScopeInstance("testString")
       .serviceCheckEnabled(true)
-      .cfGuid(new java.util.HashMap<String, String>() { { put("foo", "testString"); } })
+      .cfGuid(java.util.Collections.singletonMap("key1", "testString"))
       .build();
     assertEquals(planMetaDataModel.bindable(), Boolean.valueOf(true));
     assertEquals(planMetaDataModel.reservable(), Boolean.valueOf(true));
@@ -50,7 +50,7 @@ public class PlanMetaDataTest {
     assertEquals(planMetaDataModel.testCheckInterval(), Long.valueOf("26"));
     assertEquals(planMetaDataModel.singleScopeInstance(), "testString");
     assertEquals(planMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));
-    assertEquals(planMetaDataModel.cfGuid(), new java.util.HashMap<String, String>() { { put("foo", "testString"); } });
+    assertEquals(planMetaDataModel.cfGuid(), java.util.Collections.singletonMap("key1", "testString"));
 
     String json = TestUtilities.serialize(planMetaDataModel);
 

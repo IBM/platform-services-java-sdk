@@ -13,6 +13,17 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Artifacts;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.AuditSearchResult;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.CatalogEntry;
@@ -24,14 +35,12 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.GetArtifactOption
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetAuditLogsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetCatalogEntryOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetChildObjectsOptions;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.GetPricingOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetVisibilityOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Image;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ListArtifactsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ListCatalogEntriesOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataSet;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Overview;
-import com.ibm.cloud.platform_services.global_catalog.v1.model.PricingGet;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Provider;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.RestoreCatalogEntryOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UpdateCatalogEntryOptions;
@@ -40,17 +49,6 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.UploadArtifactOpt
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Visibility;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 //
 // This file provides an example of how to use the Global Catalog service.
@@ -80,6 +78,7 @@ public class GlobalCatalogExamples {
         GlobalCatalog service = GlobalCatalog.newInstance();
 
         String catalogEntryId = "";
+        CatalogEntry fetchedObject = null;
 
         try {
             System.out.println("createCatalogEntry() result:");
@@ -153,6 +152,7 @@ public class GlobalCatalogExamples {
 
             Response<CatalogEntry> response = service.getCatalogEntry(getCatalogEntryOptions).execute();
             CatalogEntry catalogEntry = response.getResult();
+            fetchedObject = catalogEntry;
 
             System.out.println(catalogEntry);
 
@@ -208,6 +208,7 @@ public class GlobalCatalogExamples {
                     .provider(providerModel)
                     .active(true)
                     .metadata(metadataModel)
+                    .url(fetchedObject.getUrl())
                     .build();
 
             Response<CatalogEntry> response = service.updateCatalogEntry(updateCatalogEntryOptions).execute();
@@ -322,26 +323,6 @@ public class GlobalCatalogExamples {
             System.out.printf("updateVisibility() response status code: %d%n", response.getStatusCode());
         } catch (ServiceResponseException e) {
             System.out.println("updateVisibility returned the following error: " + e.getMessage());
-        }
-
-        try {
-            System.out.println("getPricing() result:");
-
-            // begin-get_pricing
-
-            GetPricingOptions getPricingOptions = new GetPricingOptions.Builder()
-                    .id(catalogEntryId).build();
-
-            Response<PricingGet> response = service.getPricing(getPricingOptions).execute();
-            PricingGet pricingGet = response.getResult();
-
-            System.out.println(pricingGet);
-
-            // end-get_pricing
-
-        } catch (ServiceResponseException e) {
-            logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
-                    e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {

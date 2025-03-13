@@ -1,3 +1,10 @@
+## [0.61.1](https://github.com/IBM/platform-services-java-sdk/compare/0.61.0...0.61.1) (2025-03-13)
+
+
+### Bug Fixes
+
+* **Global Catalog:** fix price field capitalization ([#265](https://github.com/IBM/platform-services-java-sdk/issues/265)) ([6cfe485](https://github.com/IBM/platform-services-java-sdk/commit/6cfe485a99d5cc704369a69400b3f9447a324170))
+
 # [0.61.0](https://github.com/IBM/platform-services-java-sdk/compare/0.60.2...0.61.0) (2025-01-09)
 
 

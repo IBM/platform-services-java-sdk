@@ -35,12 +35,14 @@ import com.ibm.cloud.platform_services.global_catalog.v1.model.GetArtifactOption
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetAuditLogsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetCatalogEntryOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetChildObjectsOptions;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.GetPricingOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.GetVisibilityOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Image;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ListArtifactsOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ListCatalogEntriesOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.ObjectMetadataSet;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Overview;
+import com.ibm.cloud.platform_services.global_catalog.v1.model.PricingGet;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.Provider;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.RestoreCatalogEntryOptions;
 import com.ibm.cloud.platform_services.global_catalog.v1.model.UpdateCatalogEntryOptions;
@@ -324,6 +326,28 @@ public class GlobalCatalogExamples {
         } catch (ServiceResponseException e) {
             System.out.println("updateVisibility returned the following error: " + e.getMessage());
         }
+
+
+        try {
+            System.out.println("getPricing() result:");
+
+            // begin-get_pricing
+
+            GetPricingOptions getPricingOptions = new GetPricingOptions.Builder()
+                    .id(catalogEntryId).build();
+
+            Response<PricingGet> response = service.getPricing(getPricingOptions).execute();
+            PricingGet pricingGet = response.getResult();
+
+            System.out.println(pricingGet);
+
+            // end-get_pricing
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
+                    e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
 
         try {
             System.out.println("getAuditLogs() result:");

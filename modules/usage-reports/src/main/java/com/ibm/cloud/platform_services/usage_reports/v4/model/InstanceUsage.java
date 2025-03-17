@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,8 +10,10 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.usage_reports.v4.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -64,6 +66,12 @@ public class InstanceUsage extends GenericModel {
   protected String planName;
   @SerializedName("pricing_plan_id")
   protected String pricingPlanId;
+  @SerializedName("subscription_id")
+  protected String subscriptionId;
+  @SerializedName("created_at")
+  protected Date createdAt;
+  @SerializedName("deleted_at")
+  protected Date deletedAt;
   protected String month;
   protected List<Metric> usage;
   protected Boolean pending;
@@ -315,6 +323,39 @@ public class InstanceUsage extends GenericModel {
    */
   public String getPricingPlanId() {
     return pricingPlanId;
+  }
+
+  /**
+   * Gets the subscriptionId.
+   *
+   * The ID of service subscription with effective from timestamp.
+   *
+   * @return the subscriptionId
+   */
+  public String getSubscriptionId() {
+    return subscriptionId;
+  }
+
+  /**
+   * Gets the createdAt.
+   *
+   * The timestamp in RFC 3339 string format at which instance is created.
+   *
+   * @return the createdAt
+   */
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  /**
+   * Gets the deletedAt.
+   *
+   * The timestamp in RFC 3339 string format at which instance is deleted.
+   *
+   * @return the deletedAt
+   */
+  public Date getDeletedAt() {
+    return deletedAt;
   }
 
   /**

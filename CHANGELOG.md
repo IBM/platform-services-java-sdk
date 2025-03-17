@@ -1,3 +1,10 @@
+# [0.62.0](https://github.com/IBM/platform-services-java-sdk/compare/0.61.1...0.62.0) (2025-03-17)
+
+
+### Features
+
+* **Usage Reports:** added subscription_id, created_at, deleted_at to InstanceUsage API response ([#266](https://github.com/IBM/platform-services-java-sdk/issues/266)) ([caa3c9a](https://github.com/IBM/platform-services-java-sdk/commit/caa3c9a636fb6ccb0ea9c0cb8518e7512fad0023))
+
 ## [0.61.1](https://github.com/IBM/platform-services-java-sdk/compare/0.61.0...0.61.1) (2025-03-13)
 
 

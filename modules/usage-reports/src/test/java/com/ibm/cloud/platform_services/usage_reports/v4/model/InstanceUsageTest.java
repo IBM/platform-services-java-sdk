@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -56,6 +56,9 @@ public class InstanceUsageTest {
     assertNull(instanceUsageModel.getPlanId());
     assertNull(instanceUsageModel.getPlanName());
     assertNull(instanceUsageModel.getPricingPlanId());
+    assertNull(instanceUsageModel.getSubscriptionId());
+    assertNull(instanceUsageModel.getCreatedAt());
+    assertNull(instanceUsageModel.getDeletedAt());
     assertNull(instanceUsageModel.getMonth());
     assertNull(instanceUsageModel.getUsage());
     assertNull(instanceUsageModel.isPending());

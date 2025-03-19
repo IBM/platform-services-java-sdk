@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,6 +14,7 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.IamPolicyManagement;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AccountSettingsAccessManagement;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceCreated;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTargetDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTemplateDetails;
@@ -40,14 +41,21 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.EnrichedRo
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorResponse;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ExternalAccountIdentityInteraction;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ExternalAccountIdentityInteractionPatch;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.First;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetSettingsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GrantWithEnrichedRoles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypes;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypesBase;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypesPatch;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.LimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
@@ -58,21 +66,32 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2Poli
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedCondition;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedConditionRuleAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.NestedConditionRuleWithConditions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Next;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PoliciesPager;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Collection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Resources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Subject;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentsPager;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicySubject;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentItems;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentItemsPolicyAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentItemsPolicyAssignmentV1;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateLimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsPager;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplatesPager;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Previous;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleOptions;
@@ -90,6 +109,8 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMe
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateSettingsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PoliciesPager;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
@@ -108,6 +129,7 @@ import com.ibm.cloud.sdk.core.security.NoAuthAuthenticator;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -141,7 +163,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPoliciesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"policies\": [{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"template\": {\"id\": \"id\", \"version\": \"version\", \"assignment_id\": \"assignmentId\", \"root_id\": \"rootId\", \"root_version\": \"rootVersion\"}}]}";
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"policies\": [{\"id\": \"id\", \"type\": \"type\", \"description\": \"description\", \"subjects\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"roles\": [{\"role_id\": \"roleId\", \"display_name\": \"displayName\", \"description\": \"description\"}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"template\": {\"id\": \"id\", \"version\": \"version\", \"assignment_id\": \"assignmentId\", \"root_id\": \"rootId\", \"root_version\": \"rootVersion\"}}]}";
     String listPoliciesPath = "/v1/policies";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -161,6 +183,8 @@ public class IamPolicyManagementTest {
       .sort("id")
       .format("include_last_permit")
       .state("active")
+      .limit(Long.valueOf("10"))
+      .start("testString")
       .build();
 
     // Invoke listPolicies() with a valid options model and verify the result
@@ -189,6 +213,8 @@ public class IamPolicyManagementTest {
     assertEquals(query.get("sort"), "id");
     assertEquals(query.get("format"), "include_last_permit");
     assertEquals(query.get("state"), "active");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(query.get("start"), "testString");
   }
 
   // Test the listPolicies operation with and without retries enabled
@@ -208,6 +234,90 @@ public class IamPolicyManagementTest {
     iamPolicyManagementService.listPolicies(null).execute();
   }
 
+  // Test the listPolicies operation using the PoliciesPager.getNext() method
+  @Test
+  public void testListPoliciesWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"policies\":[{\"id\":\"id\",\"type\":\"type\",\"description\":\"description\",\"subjects\":[{\"attributes\":[{\"name\":\"name\",\"value\":\"value\"}]}],\"roles\":[{\"role_id\":\"roleId\",\"display_name\":\"displayName\",\"description\":\"description\"}],\"resources\":[{\"attributes\":[{\"name\":\"name\",\"value\":\"value\",\"operator\":\"operator\"}],\"tags\":[{\"name\":\"name\",\"value\":\"value\",\"operator\":\"operator\"}]}],\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"state\":\"active\",\"template\":{\"id\":\"id\",\"version\":\"version\",\"assignment_id\":\"assignmentId\",\"root_id\":\"rootId\",\"root_version\":\"rootVersion\"}}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"policies\":[{\"id\":\"id\",\"type\":\"type\",\"description\":\"description\",\"subjects\":[{\"attributes\":[{\"name\":\"name\",\"value\":\"value\"}]}],\"roles\":[{\"role_id\":\"roleId\",\"display_name\":\"displayName\",\"description\":\"description\"}],\"resources\":[{\"attributes\":[{\"name\":\"name\",\"value\":\"value\",\"operator\":\"operator\"}],\"tags\":[{\"name\":\"name\",\"value\":\"value\",\"operator\":\"operator\"}]}],\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"state\":\"active\",\"template\":{\"id\":\"id\",\"version\":\"version\",\"assignment_id\":\"assignmentId\",\"root_id\":\"rootId\",\"root_version\":\"rootVersion\"}}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListPoliciesOptions listPoliciesOptions = new ListPoliciesOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .iamId("testString")
+      .accessGroupId("testString")
+      .type("access")
+      .serviceType("service")
+      .tagName("testString")
+      .tagValue("testString")
+      .sort("id")
+      .format("include_last_permit")
+      .state("active")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    List<PolicyTemplateMetaData> allResults = new ArrayList<>();
+    PoliciesPager pager = new PoliciesPager(iamPolicyManagementService, listPoliciesOptions);
+    while (pager.hasNext()) {
+      List<PolicyTemplateMetaData> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listPolicies operation using the PoliciesPager.getAll() method
+  @Test
+  public void testListPoliciesWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"policies\":[{\"id\":\"id\",\"type\":\"type\",\"description\":\"description\",\"subjects\":[{\"attributes\":[{\"name\":\"name\",\"value\":\"value\"}]}],\"roles\":[{\"role_id\":\"roleId\",\"display_name\":\"displayName\",\"description\":\"description\"}],\"resources\":[{\"attributes\":[{\"name\":\"name\",\"value\":\"value\",\"operator\":\"operator\"}],\"tags\":[{\"name\":\"name\",\"value\":\"value\",\"operator\":\"operator\"}]}],\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"state\":\"active\",\"template\":{\"id\":\"id\",\"version\":\"version\",\"assignment_id\":\"assignmentId\",\"root_id\":\"rootId\",\"root_version\":\"rootVersion\"}}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"policies\":[{\"id\":\"id\",\"type\":\"type\",\"description\":\"description\",\"subjects\":[{\"attributes\":[{\"name\":\"name\",\"value\":\"value\"}]}],\"roles\":[{\"role_id\":\"roleId\",\"display_name\":\"displayName\",\"description\":\"description\"}],\"resources\":[{\"attributes\":[{\"name\":\"name\",\"value\":\"value\",\"operator\":\"operator\"}],\"tags\":[{\"name\":\"name\",\"value\":\"value\",\"operator\":\"operator\"}]}],\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"state\":\"active\",\"template\":{\"id\":\"id\",\"version\":\"version\",\"assignment_id\":\"assignmentId\",\"root_id\":\"rootId\",\"root_version\":\"rootVersion\"}}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListPoliciesOptions listPoliciesOptions = new ListPoliciesOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .iamId("testString")
+      .accessGroupId("testString")
+      .type("access")
+      .serviceType("service")
+      .tagName("testString")
+      .tagValue("testString")
+      .sort("id")
+      .format("include_last_permit")
+      .state("active")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    PoliciesPager pager = new PoliciesPager(iamPolicyManagementService, listPoliciesOptions);
+    List<PolicyTemplateMetaData> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
   // Test the createPolicy operation with a valid options model parameter
   @Test
   public void testCreatePolicyWOptions() throws Throwable {
@@ -824,7 +934,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListV2PoliciesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"policies\": [{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19, \"template\": {\"id\": \"id\", \"version\": \"version\", \"assignment_id\": \"assignmentId\", \"root_id\": \"rootId\", \"root_version\": \"rootVersion\"}}]}";
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"policies\": [{\"type\": \"access\", \"description\": \"description\", \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"id\": \"id\", \"href\": \"href\", \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"state\": \"active\", \"last_permit_at\": \"lastPermitAt\", \"last_permit_frequency\": 19, \"template\": {\"id\": \"id\", \"version\": \"version\", \"assignment_id\": \"assignmentId\", \"root_id\": \"rootId\", \"root_version\": \"rootVersion\"}}]}";
     String listV2PoliciesPath = "/v2/policies";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -844,6 +954,8 @@ public class IamPolicyManagementTest {
       .sort("testString")
       .format("include_last_permit")
       .state("active")
+      .limit(Long.valueOf("10"))
+      .start("testString")
       .build();
 
     // Invoke listV2Policies() with a valid options model and verify the result
@@ -872,6 +984,8 @@ public class IamPolicyManagementTest {
     assertEquals(query.get("sort"), "testString");
     assertEquals(query.get("format"), "include_last_permit");
     assertEquals(query.get("state"), "active");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(query.get("start"), "testString");
   }
 
   // Test the listV2Policies operation with and without retries enabled
@@ -891,6 +1005,90 @@ public class IamPolicyManagementTest {
     iamPolicyManagementService.listV2Policies(null).execute();
   }
 
+  // Test the listV2Policies operation using the V2PoliciesPager.getNext() method
+  @Test
+  public void testListV2PoliciesWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"policies\":[{\"type\":\"access\",\"description\":\"description\",\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"id\":\"id\",\"href\":\"href\",\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}},\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"state\":\"active\",\"last_permit_at\":\"lastPermitAt\",\"last_permit_frequency\":19,\"template\":{\"id\":\"id\",\"version\":\"version\",\"assignment_id\":\"assignmentId\",\"root_id\":\"rootId\",\"root_version\":\"rootVersion\"}}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"policies\":[{\"type\":\"access\",\"description\":\"description\",\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"id\":\"id\",\"href\":\"href\",\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}},\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"state\":\"active\",\"last_permit_at\":\"lastPermitAt\",\"last_permit_frequency\":19,\"template\":{\"id\":\"id\",\"version\":\"version\",\"assignment_id\":\"assignmentId\",\"root_id\":\"rootId\",\"root_version\":\"rootVersion\"}}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListV2PoliciesOptions listV2PoliciesOptions = new ListV2PoliciesOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .iamId("testString")
+      .accessGroupId("testString")
+      .type("access")
+      .serviceType("service")
+      .serviceName("testString")
+      .serviceGroupId("testString")
+      .sort("testString")
+      .format("include_last_permit")
+      .state("active")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    List<V2PolicyTemplateMetaData> allResults = new ArrayList<>();
+    V2PoliciesPager pager = new V2PoliciesPager(iamPolicyManagementService, listV2PoliciesOptions);
+    while (pager.hasNext()) {
+      List<V2PolicyTemplateMetaData> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listV2Policies operation using the V2PoliciesPager.getAll() method
+  @Test
+  public void testListV2PoliciesWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"policies\":[{\"type\":\"access\",\"description\":\"description\",\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"id\":\"id\",\"href\":\"href\",\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}},\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"state\":\"active\",\"last_permit_at\":\"lastPermitAt\",\"last_permit_frequency\":19,\"template\":{\"id\":\"id\",\"version\":\"version\",\"assignment_id\":\"assignmentId\",\"root_id\":\"rootId\",\"root_version\":\"rootVersion\"}}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"policies\":[{\"type\":\"access\",\"description\":\"description\",\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"id\":\"id\",\"href\":\"href\",\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}},\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"state\":\"active\",\"last_permit_at\":\"lastPermitAt\",\"last_permit_frequency\":19,\"template\":{\"id\":\"id\",\"version\":\"version\",\"assignment_id\":\"assignmentId\",\"root_id\":\"rootId\",\"root_version\":\"rootVersion\"}}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListV2PoliciesOptions listV2PoliciesOptions = new ListV2PoliciesOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .iamId("testString")
+      .accessGroupId("testString")
+      .type("access")
+      .serviceType("service")
+      .serviceName("testString")
+      .serviceGroupId("testString")
+      .sort("testString")
+      .format("include_last_permit")
+      .state("active")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    V2PoliciesPager pager = new V2PoliciesPager(iamPolicyManagementService, listV2PoliciesOptions);
+    List<V2PolicyTemplateMetaData> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
   // Test the createV2Policy operation with a valid options model parameter
   @Test
   public void testCreateV2PolicyWOptions() throws Throwable {
@@ -1225,7 +1423,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyTemplatesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"policy_templates\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"policy_templates\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listPolicyTemplatesPath = "/v1/policy_templates";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1242,6 +1440,8 @@ public class IamPolicyManagementTest {
       .policyServiceName("testString")
       .policyServiceGroupId("testString")
       .policyType("access")
+      .limit(Long.valueOf("10"))
+      .start("testString")
       .build();
 
     // Invoke listPolicyTemplates() with a valid options model and verify the result
@@ -1267,6 +1467,8 @@ public class IamPolicyManagementTest {
     assertEquals(query.get("policy_service_name"), "testString");
     assertEquals(query.get("policy_service_group_id"), "testString");
     assertEquals(query.get("policy_type"), "access");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(query.get("start"), "testString");
   }
 
   // Test the listPolicyTemplates operation with and without retries enabled
@@ -1286,6 +1488,84 @@ public class IamPolicyManagementTest {
     iamPolicyManagementService.listPolicyTemplates(null).execute();
   }
 
+  // Test the listPolicyTemplates operation using the PolicyTemplatesPager.getNext() method
+  @Test
+  public void testListPolicyTemplatesWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListPolicyTemplatesOptions listPolicyTemplatesOptions = new ListPolicyTemplatesOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .state("active")
+      .name("testString")
+      .policyServiceType("service")
+      .policyServiceName("testString")
+      .policyServiceGroupId("testString")
+      .policyType("access")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    List<PolicyTemplate> allResults = new ArrayList<>();
+    PolicyTemplatesPager pager = new PolicyTemplatesPager(iamPolicyManagementService, listPolicyTemplatesOptions);
+    while (pager.hasNext()) {
+      List<PolicyTemplate> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listPolicyTemplates operation using the PolicyTemplatesPager.getAll() method
+  @Test
+  public void testListPolicyTemplatesWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListPolicyTemplatesOptions listPolicyTemplatesOptions = new ListPolicyTemplatesOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .state("active")
+      .name("testString")
+      .policyServiceType("service")
+      .policyServiceName("testString")
+      .policyServiceGroupId("testString")
+      .policyType("access")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    PolicyTemplatesPager pager = new PolicyTemplatesPager(iamPolicyManagementService, listPolicyTemplatesOptions);
+    List<PolicyTemplate> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
   // Test the createPolicyTemplate operation with a valid options model parameter
   @Test
   public void testCreatePolicyTemplateWOptions() throws Throwable {
@@ -1634,7 +1914,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyTemplateVersionsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"versions\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"versions\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listPolicyTemplateVersionsPath = "/v1/policy_templates/testString/versions";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1645,6 +1925,8 @@ public class IamPolicyManagementTest {
     ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptionsModel = new ListPolicyTemplateVersionsOptions.Builder()
       .policyTemplateId("testString")
       .state("active")
+      .limit(Long.valueOf("10"))
+      .start("testString")
       .build();
 
     // Invoke listPolicyTemplateVersions() with a valid options model and verify the result
@@ -1664,6 +1946,8 @@ public class IamPolicyManagementTest {
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(query.get("state"), "active");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(query.get("start"), "testString");
   }
 
   // Test the listPolicyTemplateVersions operation with and without retries enabled
@@ -1683,6 +1967,72 @@ public class IamPolicyManagementTest {
     iamPolicyManagementService.listPolicyTemplateVersions(null).execute();
   }
 
+  // Test the listPolicyTemplateVersions operation using the PolicyTemplateVersionsPager.getNext() method
+  @Test
+  public void testListPolicyTemplateVersionsWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptions = new ListPolicyTemplateVersionsOptions.Builder()
+      .policyTemplateId("testString")
+      .state("active")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    List<PolicyTemplate> allResults = new ArrayList<>();
+    PolicyTemplateVersionsPager pager = new PolicyTemplateVersionsPager(iamPolicyManagementService, listPolicyTemplateVersionsOptions);
+    while (pager.hasNext()) {
+      List<PolicyTemplate> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listPolicyTemplateVersions operation using the PolicyTemplateVersionsPager.getAll() method
+  @Test
+  public void testListPolicyTemplateVersionsWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptions = new ListPolicyTemplateVersionsOptions.Builder()
+      .policyTemplateId("testString")
+      .state("active")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    PolicyTemplateVersionsPager pager = new PolicyTemplateVersionsPager(iamPolicyManagementService, listPolicyTemplateVersionsOptions);
+    List<PolicyTemplate> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
   // Test the replacePolicyTemplate operation with a valid options model parameter
   @Test
   public void testReplacePolicyTemplateWOptions() throws Throwable {
@@ -1965,7 +2315,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyAssignmentsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
     String listPolicyAssignmentsPath = "/v1/policy_assignments";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1979,12 +2329,14 @@ public class IamPolicyManagementTest {
       .acceptLanguage("default")
       .templateId("testString")
       .templateVersion("testString")
+      .limit(Long.valueOf("10"))
+      .start("testString")
       .build();
 
     // Invoke listPolicyAssignments() with a valid options model and verify the result
-    Response<PolicyAssignmentV1Collection> response = iamPolicyManagementService.listPolicyAssignments(listPolicyAssignmentsOptionsModel).execute();
+    Response<PolicyTemplateAssignmentCollection> response = iamPolicyManagementService.listPolicyAssignments(listPolicyAssignmentsOptionsModel).execute();
     assertNotNull(response);
-    PolicyAssignmentV1Collection responseObj = response.getResult();
+    PolicyTemplateAssignmentCollection responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request sent to the mock server
@@ -2001,6 +2353,8 @@ public class IamPolicyManagementTest {
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("template_id"), "testString");
     assertEquals(query.get("template_version"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(query.get("start"), "testString");
   }
 
   // Test the listPolicyAssignments operation with and without retries enabled
@@ -2020,6 +2374,78 @@ public class IamPolicyManagementTest {
     iamPolicyManagementService.listPolicyAssignments(null).execute();
   }
 
+  // Test the listPolicyAssignments operation using the PolicyAssignmentsPager.getNext() method
+  @Test
+  public void testListPolicyAssignmentsWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":10}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":10}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListPolicyAssignmentsOptions listPolicyAssignmentsOptions = new ListPolicyAssignmentsOptions.Builder()
+      .version("1.0")
+      .accountId("testString")
+      .acceptLanguage("default")
+      .templateId("testString")
+      .templateVersion("testString")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    List<PolicyTemplateAssignmentItems> allResults = new ArrayList<>();
+    PolicyAssignmentsPager pager = new PolicyAssignmentsPager(iamPolicyManagementService, listPolicyAssignmentsOptions);
+    while (pager.hasNext()) {
+      List<PolicyTemplateAssignmentItems> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listPolicyAssignments operation using the PolicyAssignmentsPager.getAll() method
+  @Test
+  public void testListPolicyAssignmentsWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":10}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":10}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListPolicyAssignmentsOptions listPolicyAssignmentsOptions = new ListPolicyAssignmentsOptions.Builder()
+      .version("1.0")
+      .accountId("testString")
+      .acceptLanguage("default")
+      .templateId("testString")
+      .templateVersion("testString")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    PolicyAssignmentsPager pager = new PolicyAssignmentsPager(iamPolicyManagementService, listPolicyAssignmentsOptions);
+    List<PolicyTemplateAssignmentItems> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
   // Test the createPolicyTemplateAssignment operation with a valid options model parameter
   @Test
   public void testCreatePolicyTemplateAssignmentWOptions() throws Throwable {
@@ -2105,9 +2531,9 @@ public class IamPolicyManagementTest {
       .build();
 
     // Invoke getPolicyAssignment() with a valid options model and verify the result
-    Response<PolicyAssignmentV1> response = iamPolicyManagementService.getPolicyAssignment(getPolicyAssignmentOptionsModel).execute();
+    Response<PolicyTemplateAssignmentItems> response = iamPolicyManagementService.getPolicyAssignment(getPolicyAssignmentOptionsModel).execute();
     assertNotNull(response);
-    PolicyAssignmentV1 responseObj = response.getResult();
+    PolicyTemplateAssignmentItems responseObj = response.getResult();
     assertNotNull(responseObj);
 
     // Verify the contents of the request sent to the mock server
@@ -2245,6 +2671,132 @@ public class IamPolicyManagementTest {
   public void testDeletePolicyAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     iamPolicyManagementService.deletePolicyAssignment(null).execute();
+  }
+
+  // Test the getSettings operation with a valid options model parameter
+  @Test
+  public void testGetSettingsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"external_account_identity_interaction\": {\"identity_types\": {\"user\": {\"state\": \"enabled\", \"external_allowed_accounts\": [\"externalAllowedAccounts\"]}, \"service_id\": {\"state\": \"enabled\", \"external_allowed_accounts\": [\"externalAllowedAccounts\"]}, \"service\": {\"state\": \"enabled\", \"external_allowed_accounts\": [\"externalAllowedAccounts\"]}}}}";
+    String getSettingsPath = "/v1/accounts/testString/settings/access_management";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetSettingsOptions model
+    GetSettingsOptions getSettingsOptionsModel = new GetSettingsOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .build();
+
+    // Invoke getSettings() with a valid options model and verify the result
+    Response<AccountSettingsAccessManagement> response = iamPolicyManagementService.getSettings(getSettingsOptionsModel).execute();
+    assertNotNull(response);
+    AccountSettingsAccessManagement responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getSettingsPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getSettings operation with and without retries enabled
+  @Test
+  public void testGetSettingsWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testGetSettingsWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testGetSettingsWOptions();
+  }
+
+  // Test the getSettings operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetSettingsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.getSettings(null).execute();
+  }
+
+  // Test the updateSettings operation with a valid options model parameter
+  @Test
+  public void testUpdateSettingsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"external_account_identity_interaction\": {\"identity_types\": {\"user\": {\"state\": \"enabled\", \"external_allowed_accounts\": [\"externalAllowedAccounts\"]}, \"service_id\": {\"state\": \"enabled\", \"external_allowed_accounts\": [\"externalAllowedAccounts\"]}, \"service\": {\"state\": \"enabled\", \"external_allowed_accounts\": [\"externalAllowedAccounts\"]}}}}";
+    String updateSettingsPath = "/v1/accounts/testString/settings/access_management";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the IdentityTypesBase model
+    IdentityTypesBase identityTypesBaseModel = new IdentityTypesBase.Builder()
+      .state("enabled")
+      .externalAllowedAccounts(java.util.Arrays.asList("testString"))
+      .build();
+
+    // Construct an instance of the IdentityTypesPatch model
+    IdentityTypesPatch identityTypesPatchModel = new IdentityTypesPatch.Builder()
+      .user(identityTypesBaseModel)
+      .serviceId(identityTypesBaseModel)
+      .service(identityTypesBaseModel)
+      .build();
+
+    // Construct an instance of the ExternalAccountIdentityInteractionPatch model
+    ExternalAccountIdentityInteractionPatch externalAccountIdentityInteractionPatchModel = new ExternalAccountIdentityInteractionPatch.Builder()
+      .identityTypes(identityTypesPatchModel)
+      .build();
+
+    // Construct an instance of the UpdateSettingsOptions model
+    UpdateSettingsOptions updateSettingsOptionsModel = new UpdateSettingsOptions.Builder()
+      .accountId("testString")
+      .ifMatch("testString")
+      .externalAccountIdentityInteraction(externalAccountIdentityInteractionPatchModel)
+      .acceptLanguage("default")
+      .build();
+
+    // Invoke updateSettings() with a valid options model and verify the result
+    Response<AccountSettingsAccessManagement> response = iamPolicyManagementService.updateSettings(updateSettingsOptionsModel).execute();
+    assertNotNull(response);
+    AccountSettingsAccessManagement responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PATCH");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateSettingsPath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the updateSettings operation with and without retries enabled
+  @Test
+  public void testUpdateSettingsWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testUpdateSettingsWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testUpdateSettingsWOptions();
+  }
+
+  // Test the updateSettings operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateSettingsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.updateSettings(null).execute();
   }
 
   // Perform setup needed before each test method

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -37,12 +37,16 @@ public class ListPolicyAssignmentsOptionsTest {
       .acceptLanguage("default")
       .templateId("testString")
       .templateVersion("testString")
+      .limit(Long.valueOf("50"))
+      .start("testString")
       .build();
     assertEquals(listPolicyAssignmentsOptionsModel.version(), "1.0");
     assertEquals(listPolicyAssignmentsOptionsModel.accountId(), "testString");
     assertEquals(listPolicyAssignmentsOptionsModel.acceptLanguage(), "default");
     assertEquals(listPolicyAssignmentsOptionsModel.templateId(), "testString");
     assertEquals(listPolicyAssignmentsOptionsModel.templateVersion(), "testString");
+    assertEquals(listPolicyAssignmentsOptionsModel.limit(), Long.valueOf("50"));
+    assertEquals(listPolicyAssignmentsOptionsModel.start(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

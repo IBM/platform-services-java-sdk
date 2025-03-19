@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -99,6 +99,8 @@ public class ListPoliciesOptions extends GenericModel {
   protected String sort;
   protected String format;
   protected String state;
+  protected Long limit;
+  protected String start;
 
   /**
    * Builder.
@@ -115,6 +117,8 @@ public class ListPoliciesOptions extends GenericModel {
     private String sort;
     private String format;
     private String state;
+    private Long limit;
+    private String start;
 
     /**
      * Instantiates a new Builder from an existing ListPoliciesOptions instance.
@@ -133,6 +137,8 @@ public class ListPoliciesOptions extends GenericModel {
       this.sort = listPoliciesOptions.sort;
       this.format = listPoliciesOptions.format;
       this.state = listPoliciesOptions.state;
+      this.limit = listPoliciesOptions.limit;
+      this.start = listPoliciesOptions.start;
     }
 
     /**
@@ -279,6 +285,28 @@ public class ListPoliciesOptions extends GenericModel {
       this.state = state;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListPoliciesOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListPoliciesOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
+      return this;
+    }
   }
 
   protected ListPoliciesOptions() { }
@@ -297,6 +325,8 @@ public class ListPoliciesOptions extends GenericModel {
     sort = builder.sort;
     format = builder.format;
     state = builder.state;
+    limit = builder.limit;
+    start = builder.start;
   }
 
   /**
@@ -444,6 +474,28 @@ public class ListPoliciesOptions extends GenericModel {
    */
   public String state() {
     return state;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * The number of documents to include in collection.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * Page token that refers to the page of collection to return.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 }
 

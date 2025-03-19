@@ -13,14 +13,21 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
 
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AccountSettingsAccessManagement;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ExternalAccountIdentityInteractionPatch;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetSettingsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypesBase;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypesPatch;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentItems;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
@@ -38,6 +45,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateV2Po
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateSettingsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyTemplateMetaData;
@@ -84,6 +92,8 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePoli
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
+
+import java.util.Collections;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
@@ -128,6 +138,7 @@ public class IamPolicyManagementExamples {
   private static String exampleAssignmentId = null;
   private static String exampleAssignmentPolicyId = null;
   private static String exampleAssignmentETag = null;
+  private static String exampleAccountSettingsETag = null;
 
   static {
     System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_policy_management.env");
@@ -1039,8 +1050,8 @@ public class IamPolicyManagementExamples {
         .version("1.0")
         .build();
 
-      Response<PolicyAssignmentV1Collection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
-      PolicyAssignmentV1Collection polcyTemplateAssignmentCollection = response.getResult();
+      Response<PolicyTemplateAssignmentCollection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
+      PolicyTemplateAssignmentCollection polcyTemplateAssignmentCollection = response.getResult();
       System.out.println(polcyTemplateAssignmentCollection);
       // end-list_policy_assignments
 
@@ -1057,8 +1068,8 @@ public class IamPolicyManagementExamples {
         .version("1.0")
         .build();
 
-      Response<PolicyAssignmentV1> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
-      PolicyAssignmentV1 policyAssignmentRecord = response.getResult();
+      Response<PolicyTemplateAssignmentItems> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
+      PolicyTemplateAssignmentItems policyAssignmentRecord = response.getResult();
       PolicyAssignmentV1Resources resource = policyAssignmentRecord.getResources().get(0);
       PolicyAssignmentResourcePolicy policy = resource.getPolicy();
       AssignmentResourceCreated resourceCreated = policy.getResourceCreated();
@@ -1131,6 +1142,51 @@ public class IamPolicyManagementExamples {
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-get_access_management_account_settings
+      GetSettingsOptions getSettingsOptions = new GetSettingsOptions.Builder()
+              .accountId(exampleAccountId)
+              .acceptLanguage("default")
+              .build();
+
+      Response<AccountSettingsAccessManagement> response = service.getSettings(getSettingsOptions).execute();
+      // end-get_access_management_account_settings
+      System.out.printf("getSettings() response status code: %d%n", response.getStatusCode());
+      List<String> values = response.getHeaders().values("ETag");
+      exampleAccountSettingsETag = values.get(0);
+      System.out.println(response.getResult());
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-update_access_management_account_settings
+      IdentityTypesBase.Builder monitorBuilder = new IdentityTypesBase.Builder()
+              .state("monitor")
+              .externalAllowedAccounts(Collections.emptyList());
+      IdentityTypesPatch identityTypesPatch = new IdentityTypesPatch.Builder()
+              .serviceId(monitorBuilder.build())
+              .service(monitorBuilder.build())
+              .user(monitorBuilder.build())
+              .build();
+      ExternalAccountIdentityInteractionPatch externalAccountIdentityInteractionPatch = new ExternalAccountIdentityInteractionPatch.Builder()
+              .identityTypes(identityTypesPatch).build();
+      UpdateSettingsOptions updateSettingsOptions = new UpdateSettingsOptions.Builder()
+              .accountId(exampleAccountId)
+              .acceptLanguage("default")
+              .externalAccountIdentityInteraction(externalAccountIdentityInteractionPatch)
+              .ifMatch(exampleAccountSettingsETag)
+              .build();
+      Response<AccountSettingsAccessManagement> response = service.updateSettings(updateSettingsOptions).execute();
+      // end-update_access_management_account_settings
+      System.out.printf("updateSettings() response status code: %d%n", response.getStatusCode());
+      System.out.println(response.getResult());
+    } catch (ServiceResponseException e) {
+      logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
   }
 }

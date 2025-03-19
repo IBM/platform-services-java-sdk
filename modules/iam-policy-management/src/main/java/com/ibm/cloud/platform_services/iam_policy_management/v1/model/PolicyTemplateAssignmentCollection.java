@@ -15,22 +15,20 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import java.util.List;
 
-import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * A collection of policy Templates.
+ * A collection of policies assignments.
  */
-public class PolicyTemplateCollection extends GenericModel {
+public class PolicyTemplateAssignmentCollection extends GenericModel {
 
   protected Long limit;
   protected First first;
   protected Next next;
   protected Previous previous;
-  @SerializedName("policy_templates")
-  protected List<PolicyTemplate> policyTemplates;
+  protected List<PolicyTemplateAssignmentItems> assignments;
 
-  protected PolicyTemplateCollection() { }
+  protected PolicyTemplateAssignmentCollection() { }
 
   /**
    * Gets the limit.
@@ -77,14 +75,14 @@ public class PolicyTemplateCollection extends GenericModel {
   }
 
   /**
-   * Gets the policyTemplates.
+   * Gets the assignments.
    *
-   * List of policy templates.
+   * List of policy assignments.
    *
-   * @return the policyTemplates
+   * @return the assignments
    */
-  public List<PolicyTemplate> getPolicyTemplates() {
-    return policyTemplates;
+  public List<PolicyTemplateAssignmentItems> getAssignments() {
+    return assignments;
   }
 }
 

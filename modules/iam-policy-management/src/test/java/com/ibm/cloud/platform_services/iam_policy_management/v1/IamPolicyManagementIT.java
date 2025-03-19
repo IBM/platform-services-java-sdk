@@ -20,6 +20,7 @@ import static org.testng.AssertJUnit.assertNotNull;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     String testS2SBaseTemplateVersion = null;
     String testS2STemplateVersion = null;
     String testAssignmentETag = null;
+    String testAccountSettingsETag = null;
 
     @Override
     public String getConfigFilename() {
@@ -1189,41 +1191,15 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       .version("1.0")
       .build();
 
-      Response<PolicyAssignmentV1Collection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
+      Response<PolicyTemplateAssignmentCollection> response = service.listPolicyAssignments(listPolicyAssignmentsOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
-      PolicyAssignmentV1Collection result = response.getResult();
+        PolicyTemplateAssignmentCollection result = response.getResult();
       assertNotNull(result);
       assertNotNull(result.getAssignments());
-      List<PolicyAssignmentV1> assignments = result.getAssignments();
+      List<PolicyTemplateAssignmentItems> assignments = result.getAssignments();
       // As long there is one assignment in test account, then there should be one assignment to run next test.
       assertNotNull(assignments);
-    }
-
-    @Test(dependsOnMethods = { "testCreateS2SPolicyTemplate" })
-    public void testCreatePolicyAssignmentError() throws Exception {
-      try {
-        AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
-            .type("Enterprise")
-            .id(testTargetEnterpriseAccountId)
-            .build();
-
-        AssignmentTemplateDetails assignmentTemplateDetails = new AssignmentTemplateDetails.Builder()
-            .id(testS2STemplateId)
-            .version(testS2SBaseTemplateVersion)
-            .build();
-
-        CreatePolicyTemplateAssignmentOptions createPolicyAssignmentOptions = new CreatePolicyTemplateAssignmentOptions.Builder()
-            .version("1.0")
-            .target(assignmentTargetDetails)
-            .templates(new ArrayList<AssignmentTemplateDetails>(Arrays.asList(assignmentTemplateDetails)))
-            .build();
-        service.createPolicyTemplateAssignment(createPolicyAssignmentOptions).execute();
-      } catch (BadRequestException e) {
-        assertEquals(e.getStatusCode(), 400);
-        assertEquals(e.getMessage(),
-            "Invalid body format. Check the input parameters. instance.target.type is not one of enum values: Account");
-      }
     }
 
     @Test(dependsOnMethods = { "testCreateS2SPolicyTemplate" })
@@ -1294,11 +1270,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .version("1.0")
         .build();
 
-      Response<PolicyAssignmentV1> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
+      Response<PolicyTemplateAssignmentItems> response = service.getPolicyAssignment(getPolicyAssignmentOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
 
-      PolicyAssignmentV1 result = response.getResult();
+      PolicyTemplateAssignmentItems result = response.getResult();
       PolicyAssignmentV1Resources resource = result.getResources().get(0);
       PolicyAssignmentResourcePolicy policy = resource.getPolicy();
       AssignmentResourceCreated resource_created = policy.getResourceCreated();
@@ -1346,6 +1322,64 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       Response<Void> response = service.deletePolicyTemplate(deletePolicyTemplateOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test
+    public void testGetAccessManagementAccountSettings() {
+        GetSettingsOptions getSettingsOptions = new GetSettingsOptions.Builder()
+                .accountId(testAccountId)
+                .acceptLanguage("default")
+                .build();
+        Response<AccountSettingsAccessManagement> response = service.getSettings(getSettingsOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+        AccountSettingsAccessManagement amAccountSettings = response.getResult();
+        assertNotNull(amAccountSettings);
+        ExternalAccountIdentityInteraction externalAccountIdentityInteraction = amAccountSettings.getExternalAccountIdentityInteraction();
+        assertNotNull(externalAccountIdentityInteraction);
+        IdentityTypes identityTypes = externalAccountIdentityInteraction.getIdentityTypes();
+        assertNotNull(identityTypes);
+        assertNotNull(identityTypes.getService());
+        assertNotNull(identityTypes.getUser());
+        assertNotNull(identityTypes.getServiceId());
+        List<String> values = response.getHeaders().values(HEADER_ETAG);
+        assertNotNull(values);
+        testAccountSettingsETag = values.get(0);
+    }
+
+    @Test(dependsOnMethods = {"testGetAccessManagementAccountSettings"})
+    public void testUpdateAccessManagementAccountSettings() {
+        IdentityTypesBase.Builder monitorBuilder = new IdentityTypesBase.Builder()
+                .state("monitor")
+                .externalAllowedAccounts(Collections.emptyList());
+        IdentityTypesPatch identityTypesPatch = new IdentityTypesPatch.Builder()
+                .serviceId(monitorBuilder.build())
+                .service(monitorBuilder.build())
+                .user(monitorBuilder.build())
+                .build();
+        ExternalAccountIdentityInteractionPatch externalAccountIdentityInteractionPatch = new ExternalAccountIdentityInteractionPatch.Builder()
+                .identityTypes(identityTypesPatch).build();
+        UpdateSettingsOptions updateSettingsOptions = new UpdateSettingsOptions.Builder()
+                .accountId(testAccountId)
+                .acceptLanguage("default")
+                .externalAccountIdentityInteraction(externalAccountIdentityInteractionPatch)
+                .ifMatch(testAccountSettingsETag)
+                .build();
+        Response<AccountSettingsAccessManagement> response = service.updateSettings(updateSettingsOptions).execute();
+        assertNotNull(response);
+        assertEquals(response.getStatusCode(), 200);
+        AccountSettingsAccessManagement amAccountSettings = response.getResult();
+        assertNotNull(amAccountSettings);
+        ExternalAccountIdentityInteraction externalAccountIdentityInteraction = amAccountSettings.getExternalAccountIdentityInteraction();
+        assertNotNull(externalAccountIdentityInteraction);
+        IdentityTypes identityTypes = externalAccountIdentityInteraction.getIdentityTypes();
+        assertNotNull(identityTypes);
+        assertNotNull(identityTypes.getService());
+        assertEquals(identityTypes.getService().state(), "monitor");
+        assertNotNull(identityTypes.getUser());
+        assertEquals(identityTypes.getUser().state(), "monitor");
+        assertNotNull(identityTypes.getServiceId());
+        assertEquals(identityTypes.getServiceId().state(), "monitor");
     }
 
     @AfterClass

@@ -13,7 +13,10 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AccountSettingsAccessManagement;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ExternalAccountIdentityInteraction;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypes;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypesBase;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,29 +26,15 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListPolicyTemplateVersionsOptions model.
+ * Unit test class for the AccountSettingsAccessManagement model.
  */
-public class ListPolicyTemplateVersionsOptionsTest {
+public class AccountSettingsAccessManagementTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListPolicyTemplateVersionsOptions() throws Throwable {
-    ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptionsModel = new ListPolicyTemplateVersionsOptions.Builder()
-      .policyTemplateId("testString")
-      .state("active")
-      .limit(Long.valueOf("50"))
-      .start("testString")
-      .build();
-    assertEquals(listPolicyTemplateVersionsOptionsModel.policyTemplateId(), "testString");
-    assertEquals(listPolicyTemplateVersionsOptionsModel.state(), "active");
-    assertEquals(listPolicyTemplateVersionsOptionsModel.limit(), Long.valueOf("50"));
-    assertEquals(listPolicyTemplateVersionsOptionsModel.start(), "testString");
+  public void testAccountSettingsAccessManagement() throws Throwable {
+    AccountSettingsAccessManagement accountSettingsAccessManagementModel = new AccountSettingsAccessManagement();
+    assertNull(accountSettingsAccessManagementModel.getExternalAccountIdentityInteraction());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListPolicyTemplateVersionsOptionsError() throws Throwable {
-    new ListPolicyTemplateVersionsOptions.Builder().build();
-  }
-
 }

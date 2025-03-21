@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -59,6 +59,8 @@ public class ErrorObject extends GenericModel {
     String POLICY_ASSIGNMENT_NOT_FOUND = "policy_assignment_not_found";
     /** policy_assignment_conflict_error. */
     String POLICY_ASSIGNMENT_CONFLICT_ERROR = "policy_assignment_conflict_error";
+    /** resource_not_found. */
+    String RESOURCE_NOT_FOUND = "resource_not_found";
   }
 
   protected String code;

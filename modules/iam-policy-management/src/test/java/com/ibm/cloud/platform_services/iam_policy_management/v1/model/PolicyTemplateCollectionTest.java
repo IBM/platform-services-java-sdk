@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,9 +14,12 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.First;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Next;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Previous;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
@@ -43,6 +46,10 @@ public class PolicyTemplateCollectionTest {
   @Test
   public void testPolicyTemplateCollection() throws Throwable {
     PolicyTemplateCollection policyTemplateCollectionModel = new PolicyTemplateCollection();
+    assertNull(policyTemplateCollectionModel.getLimit());
+    assertNull(policyTemplateCollectionModel.getFirst());
+    assertNull(policyTemplateCollectionModel.getNext());
+    assertNull(policyTemplateCollectionModel.getPrevious());
     assertNull(policyTemplateCollectionModel.getPolicyTemplates());
   }
 }

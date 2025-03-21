@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,7 +14,10 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControl;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.First;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Next;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Previous;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetadata;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
@@ -43,6 +46,10 @@ public class V2PolicyCollectionTest {
   @Test
   public void testV2PolicyCollection() throws Throwable {
     V2PolicyCollection v2PolicyCollectionModel = new V2PolicyCollection();
+    assertNull(v2PolicyCollectionModel.getLimit());
+    assertNull(v2PolicyCollectionModel.getFirst());
+    assertNull(v2PolicyCollectionModel.getNext());
+    assertNull(v2PolicyCollectionModel.getPrevious());
     assertNull(v2PolicyCollectionModel.getPolicies());
   }
 }

@@ -16,45 +16,35 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * subject details of access type assignment.
+ * The policy assignment resources.
  */
-public class PolicyAssignmentV1Subject extends GenericModel {
+public class PolicyAssignmentResources extends GenericModel {
+
+  protected String target;
+  protected PolicyAssignmentResourcePolicy policy;
+
+  protected PolicyAssignmentResources() { }
 
   /**
-   * The identity type of the subject of the assignment.
-   */
-  public interface Type {
-    /** iam_id. */
-    String IAM_ID = "iam_id";
-    /** access_group_id. */
-    String ACCESS_GROUP_ID = "access_group_id";
-  }
-
-  protected String id;
-  protected String type;
-
-  protected PolicyAssignmentV1Subject() { }
-
-  /**
-   * Gets the id.
+   * Gets the target.
    *
-   * The unique identifier of the subject of the assignment.
+   * Account ID where resources are assigned.
    *
-   * @return the id
+   * @return the target
    */
-  public String getId() {
-    return id;
+  public String getTarget() {
+    return target;
   }
 
   /**
-   * Gets the type.
+   * Gets the policy.
    *
-   * The identity type of the subject of the assignment.
+   * Set of properties for the assigned resource.
    *
-   * @return the type
+   * @return the policy
    */
-  public String getType() {
-    return type;
+  public PolicyAssignmentResourcePolicy getPolicy() {
+    return policy;
   }
 }
 

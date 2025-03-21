@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -25,6 +25,8 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
   protected String acceptLanguage;
   protected String templateId;
   protected String templateVersion;
+  protected Long limit;
+  protected String start;
 
   /**
    * Builder.
@@ -35,6 +37,8 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
     private String acceptLanguage;
     private String templateId;
     private String templateVersion;
+    private Long limit;
+    private String start;
 
     /**
      * Instantiates a new Builder from an existing ListPolicyAssignmentsOptions instance.
@@ -47,6 +51,8 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
       this.acceptLanguage = listPolicyAssignmentsOptions.acceptLanguage;
       this.templateId = listPolicyAssignmentsOptions.templateId;
       this.templateVersion = listPolicyAssignmentsOptions.templateVersion;
+      this.limit = listPolicyAssignmentsOptions.limit;
+      this.start = listPolicyAssignmentsOptions.start;
     }
 
     /**
@@ -129,6 +135,28 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
       this.templateVersion = templateVersion;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListPolicyAssignmentsOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListPolicyAssignmentsOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
+      return this;
+    }
   }
 
   protected ListPolicyAssignmentsOptions() { }
@@ -143,6 +171,8 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
     acceptLanguage = builder.acceptLanguage;
     templateId = builder.templateId;
     templateVersion = builder.templateVersion;
+    limit = builder.limit;
+    start = builder.start;
   }
 
   /**
@@ -218,6 +248,28 @@ public class ListPolicyAssignmentsOptions extends GenericModel {
    */
   public String templateVersion() {
     return templateVersion;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * The number of documents to include in collection.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * Page token that refers to the page of collection to return.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 }
 

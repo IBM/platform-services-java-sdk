@@ -16,45 +16,35 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * subject details of access type assignment.
+ * Details with href linking to following page of requested collection.
  */
-public class PolicyAssignmentV1Subject extends GenericModel {
+public class Next extends GenericModel {
+
+  protected String href;
+  protected String start;
+
+  protected Next() { }
 
   /**
-   * The identity type of the subject of the assignment.
-   */
-  public interface Type {
-    /** iam_id. */
-    String IAM_ID = "iam_id";
-    /** access_group_id. */
-    String ACCESS_GROUP_ID = "access_group_id";
-  }
-
-  protected String id;
-  protected String type;
-
-  protected PolicyAssignmentV1Subject() { }
-
-  /**
-   * Gets the id.
+   * Gets the href.
    *
-   * The unique identifier of the subject of the assignment.
+   * The href linking to the page of requested collection.
    *
-   * @return the id
+   * @return the href
    */
-  public String getId() {
-    return id;
+  public String getHref() {
+    return href;
   }
 
   /**
-   * Gets the type.
+   * Gets the start.
    *
-   * The identity type of the subject of the assignment.
+   * Page token that refers to the page of collection.
    *
-   * @return the type
+   * @return the start
    */
-  public String getType() {
-    return type;
+  public String getStart() {
+    return start;
   }
 }
 

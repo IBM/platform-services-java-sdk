@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypesBase;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,29 +23,31 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ListPolicyTemplateVersionsOptions model.
+ * Unit test class for the IdentityTypesBase model.
  */
-public class ListPolicyTemplateVersionsOptionsTest {
+public class IdentityTypesBaseTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testListPolicyTemplateVersionsOptions() throws Throwable {
-    ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptionsModel = new ListPolicyTemplateVersionsOptions.Builder()
-      .policyTemplateId("testString")
-      .state("active")
-      .limit(Long.valueOf("50"))
-      .start("testString")
+  public void testIdentityTypesBase() throws Throwable {
+    IdentityTypesBase identityTypesBaseModel = new IdentityTypesBase.Builder()
+      .state("enabled")
+      .externalAllowedAccounts(java.util.Arrays.asList("testString"))
       .build();
-    assertEquals(listPolicyTemplateVersionsOptionsModel.policyTemplateId(), "testString");
-    assertEquals(listPolicyTemplateVersionsOptionsModel.state(), "active");
-    assertEquals(listPolicyTemplateVersionsOptionsModel.limit(), Long.valueOf("50"));
-    assertEquals(listPolicyTemplateVersionsOptionsModel.start(), "testString");
+    assertEquals(identityTypesBaseModel.state(), "enabled");
+    assertEquals(identityTypesBaseModel.externalAllowedAccounts(), java.util.Arrays.asList("testString"));
+
+    String json = TestUtilities.serialize(identityTypesBaseModel);
+
+    IdentityTypesBase identityTypesBaseModelNew = TestUtilities.deserialize(json, IdentityTypesBase.class);
+    assertTrue(identityTypesBaseModelNew instanceof IdentityTypesBase);
+    assertEquals(identityTypesBaseModelNew.state(), "enabled");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListPolicyTemplateVersionsOptionsError() throws Throwable {
-    new ListPolicyTemplateVersionsOptions.Builder().build();
+  public void testIdentityTypesBaseError() throws Throwable {
+    new IdentityTypesBase.Builder().build();
   }
 
 }

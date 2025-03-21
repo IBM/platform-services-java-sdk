@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -58,6 +58,8 @@ public class ListPolicyTemplatesOptions extends GenericModel {
   protected String policyServiceName;
   protected String policyServiceGroupId;
   protected String policyType;
+  protected Long limit;
+  protected String start;
 
   /**
    * Builder.
@@ -71,6 +73,8 @@ public class ListPolicyTemplatesOptions extends GenericModel {
     private String policyServiceName;
     private String policyServiceGroupId;
     private String policyType;
+    private Long limit;
+    private String start;
 
     /**
      * Instantiates a new Builder from an existing ListPolicyTemplatesOptions instance.
@@ -86,6 +90,8 @@ public class ListPolicyTemplatesOptions extends GenericModel {
       this.policyServiceName = listPolicyTemplatesOptions.policyServiceName;
       this.policyServiceGroupId = listPolicyTemplatesOptions.policyServiceGroupId;
       this.policyType = listPolicyTemplatesOptions.policyType;
+      this.limit = listPolicyTemplatesOptions.limit;
+      this.start = listPolicyTemplatesOptions.start;
     }
 
     /**
@@ -199,6 +205,28 @@ public class ListPolicyTemplatesOptions extends GenericModel {
       this.policyType = policyType;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListPolicyTemplatesOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListPolicyTemplatesOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
+      return this;
+    }
   }
 
   protected ListPolicyTemplatesOptions() { }
@@ -214,6 +242,8 @@ public class ListPolicyTemplatesOptions extends GenericModel {
     policyServiceName = builder.policyServiceName;
     policyServiceGroupId = builder.policyServiceGroupId;
     policyType = builder.policyType;
+    limit = builder.limit;
+    start = builder.start;
   }
 
   /**
@@ -322,6 +352,28 @@ public class ListPolicyTemplatesOptions extends GenericModel {
    */
   public String policyType() {
     return policyType;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * The number of documents to include in collection.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * Page token that refers to the page of collection to return.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 }
 

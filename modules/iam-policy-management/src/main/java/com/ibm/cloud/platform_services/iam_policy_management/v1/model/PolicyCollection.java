@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,9 +22,57 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class PolicyCollection extends GenericModel {
 
+  protected Long limit;
+  protected First first;
+  protected Next next;
+  protected Previous previous;
   protected List<PolicyTemplateMetaData> policies;
 
   protected PolicyCollection() { }
+
+  /**
+   * Gets the limit.
+   *
+   * The number of documents to include per each page of collection.
+   *
+   * @return the limit
+   */
+  public Long getLimit() {
+    return limit;
+  }
+
+  /**
+   * Gets the first.
+   *
+   * Details with href linking to first page of requested collection.
+   *
+   * @return the first
+   */
+  public First getFirst() {
+    return first;
+  }
+
+  /**
+   * Gets the next.
+   *
+   * Details with href linking to following page of requested collection.
+   *
+   * @return the next
+   */
+  public Next getNext() {
+    return next;
+  }
+
+  /**
+   * Gets the previous.
+   *
+   * Details with href linking to previous page of requested collection.
+   *
+   * @return the previous
+   */
+  public Previous getPrevious() {
+    return previous;
+  }
 
   /**
    * Gets the policies.

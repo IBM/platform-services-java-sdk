@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -32,6 +32,8 @@ public class ListPolicyTemplateVersionsOptions extends GenericModel {
 
   protected String policyTemplateId;
   protected String state;
+  protected Long limit;
+  protected String start;
 
   /**
    * Builder.
@@ -39,6 +41,8 @@ public class ListPolicyTemplateVersionsOptions extends GenericModel {
   public static class Builder {
     private String policyTemplateId;
     private String state;
+    private Long limit;
+    private String start;
 
     /**
      * Instantiates a new Builder from an existing ListPolicyTemplateVersionsOptions instance.
@@ -48,6 +52,8 @@ public class ListPolicyTemplateVersionsOptions extends GenericModel {
     private Builder(ListPolicyTemplateVersionsOptions listPolicyTemplateVersionsOptions) {
       this.policyTemplateId = listPolicyTemplateVersionsOptions.policyTemplateId;
       this.state = listPolicyTemplateVersionsOptions.state;
+      this.limit = listPolicyTemplateVersionsOptions.limit;
+      this.start = listPolicyTemplateVersionsOptions.start;
     }
 
     /**
@@ -95,6 +101,28 @@ public class ListPolicyTemplateVersionsOptions extends GenericModel {
       this.state = state;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListPolicyTemplateVersionsOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListPolicyTemplateVersionsOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
+      return this;
+    }
   }
 
   protected ListPolicyTemplateVersionsOptions() { }
@@ -104,6 +132,8 @@ public class ListPolicyTemplateVersionsOptions extends GenericModel {
       "policyTemplateId cannot be empty");
     policyTemplateId = builder.policyTemplateId;
     state = builder.state;
+    limit = builder.limit;
+    start = builder.start;
   }
 
   /**
@@ -135,6 +165,28 @@ public class ListPolicyTemplateVersionsOptions extends GenericModel {
    */
   public String state() {
     return state;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * The number of documents to include in collection.
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * Page token that refers to the page of collection to return.
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
   }
 }
 

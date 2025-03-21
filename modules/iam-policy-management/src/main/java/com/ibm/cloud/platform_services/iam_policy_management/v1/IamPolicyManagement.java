@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,13 +12,14 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.90.1-64fd3296-20240515-180710
+ * IBM OpenAPI SDK Code Generator Version: 3.100.0-2ad7a784-20250212-162551
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
 
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AccountSettingsAccessManagement;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitPolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateAssignmentOptions;
@@ -38,6 +39,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyO
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetSettingsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
@@ -50,6 +52,8 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssi
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Collection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentItems;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateLimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateMetaData;
@@ -61,6 +65,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2P
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateSettingsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyTemplateMetaData;
@@ -179,6 +184,12 @@ public class IamPolicyManagement extends BaseService {
     }
     if (listPoliciesOptions.state() != null) {
       builder.query("state", String.valueOf(listPoliciesOptions.state()));
+    }
+    if (listPoliciesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listPoliciesOptions.limit()));
+    }
+    if (listPoliciesOptions.start() != null) {
+      builder.query("start", String.valueOf(listPoliciesOptions.start()));
     }
     ResponseConverter<PolicyCollection> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyCollection>() { }.getType());
@@ -639,6 +650,12 @@ public class IamPolicyManagement extends BaseService {
     if (listV2PoliciesOptions.state() != null) {
       builder.query("state", String.valueOf(listV2PoliciesOptions.state()));
     }
+    if (listV2PoliciesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listV2PoliciesOptions.limit()));
+    }
+    if (listV2PoliciesOptions.start() != null) {
+      builder.query("start", String.valueOf(listV2PoliciesOptions.start()));
+    }
     ResponseConverter<V2PolicyCollection> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<V2PolicyCollection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1058,6 +1075,12 @@ public class IamPolicyManagement extends BaseService {
     if (listPolicyTemplatesOptions.policyType() != null) {
       builder.query("policy_type", String.valueOf(listPolicyTemplatesOptions.policyType()));
     }
+    if (listPolicyTemplatesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listPolicyTemplatesOptions.limit()));
+    }
+    if (listPolicyTemplatesOptions.start() != null) {
+      builder.query("start", String.valueOf(listPolicyTemplatesOptions.start()));
+    }
     ResponseConverter<PolicyTemplateCollection> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateCollection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1210,6 +1233,12 @@ public class IamPolicyManagement extends BaseService {
     if (listPolicyTemplateVersionsOptions.state() != null) {
       builder.query("state", String.valueOf(listPolicyTemplateVersionsOptions.state()));
     }
+    if (listPolicyTemplateVersionsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listPolicyTemplateVersionsOptions.limit()));
+    }
+    if (listPolicyTemplateVersionsOptions.start() != null) {
+      builder.query("start", String.valueOf(listPolicyTemplateVersionsOptions.start()));
+    }
     ResponseConverter<PolicyTemplateVersionsCollection> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateVersionsCollection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1337,9 +1366,9 @@ public class IamPolicyManagement extends BaseService {
    * assignments an empty array is returned.
    *
    * @param listPolicyAssignmentsOptions the {@link ListPolicyAssignmentsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PolicyAssignmentV1Collection}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyTemplateAssignmentCollection}
    */
-  public ServiceCall<PolicyAssignmentV1Collection> listPolicyAssignments(ListPolicyAssignmentsOptions listPolicyAssignmentsOptions) {
+  public ServiceCall<PolicyTemplateAssignmentCollection> listPolicyAssignments(ListPolicyAssignmentsOptions listPolicyAssignmentsOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(listPolicyAssignmentsOptions,
       "listPolicyAssignmentsOptions cannot be null");
     RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/policy_assignments"));
@@ -1359,8 +1388,14 @@ public class IamPolicyManagement extends BaseService {
     if (listPolicyAssignmentsOptions.templateVersion() != null) {
       builder.query("template_version", String.valueOf(listPolicyAssignmentsOptions.templateVersion()));
     }
-    ResponseConverter<PolicyAssignmentV1Collection> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyAssignmentV1Collection>() { }.getType());
+    if (listPolicyAssignmentsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listPolicyAssignmentsOptions.limit()));
+    }
+    if (listPolicyAssignmentsOptions.start() != null) {
+      builder.query("start", String.valueOf(listPolicyAssignmentsOptions.start()));
+    }
+    ResponseConverter<PolicyTemplateAssignmentCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateAssignmentCollection>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -1401,9 +1436,9 @@ public class IamPolicyManagement extends BaseService {
    * Retrieve a policy template assignment by providing a policy assignment ID.
    *
    * @param getPolicyAssignmentOptions the {@link GetPolicyAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PolicyAssignmentV1}
+   * @return a {@link ServiceCall} with a result of type {@link PolicyTemplateAssignmentItems}
    */
-  public ServiceCall<PolicyAssignmentV1> getPolicyAssignment(GetPolicyAssignmentOptions getPolicyAssignmentOptions) {
+  public ServiceCall<PolicyTemplateAssignmentItems> getPolicyAssignment(GetPolicyAssignmentOptions getPolicyAssignmentOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getPolicyAssignmentOptions,
       "getPolicyAssignmentOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -1415,8 +1450,8 @@ public class IamPolicyManagement extends BaseService {
     }
     builder.header("Accept", "application/json");
     builder.query("version", String.valueOf(getPolicyAssignmentOptions.version()));
-    ResponseConverter<PolicyAssignmentV1> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyAssignmentV1>() { }.getType());
+    ResponseConverter<PolicyTemplateAssignmentItems> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PolicyTemplateAssignmentItems>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -1469,6 +1504,93 @@ public class IamPolicyManagement extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve Access Management account settings by account ID.
+   *
+   * Retrieve Access Management settings for an account by providing the account ID.
+   *
+   * @param getSettingsOptions the {@link GetSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsAccessManagement}
+   */
+  public ServiceCall<AccountSettingsAccessManagement> getSettings(GetSettingsOptions getSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getSettingsOptions,
+      "getSettingsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getSettingsOptions.accountId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/accounts/{account_id}/settings/access_management", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "getSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getSettingsOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", getSettingsOptions.acceptLanguage());
+    }
+    ResponseConverter<AccountSettingsAccessManagement> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsAccessManagement>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update Access Management account settings by account ID.
+   *
+   * Update access management settings for an account.
+   *
+   * ### External Account Identity Interaction
+   *
+   * Update the way identities within an external account are allowed to interact with the requested account by
+   * providing:
+   * * the `account_id` as a parameter
+   * * the external account ID(s) and state for the specific identity in the request body
+   *
+   * External account identity interaction includes the following `identity_types`: `user` (user identities defined as
+   * [IBMid's](https://test.cloud.ibm.com/docs/account?topic=account-identity-overview#users-bestpract)), `service_id`
+   * (defined as [IAM
+   * ServiceIds](https://test.cloud.ibm.com/docs/account?topic=account-identity-overview#serviceid-bestpract)),
+   * `service` (defined by a service’s [CRN](https://test.cloud.ibm.com/docs/account?topic=account-crn)). To update an
+   * Identity’s setting, the `state` and `external_allowed_accounts` fields are required.
+   *
+   * Different identity states are:
+   * * "enabled": An identity type is allowed to access resources in the account provided it has access policies on
+   * those resources.
+   * * "limited": An identity type is allowed to access resources in the account provided it has access policies on
+   * those resources AND it is associated with either the account the resources are in or one of the allowed accounts.
+   * This setting leverages the "external_allowed_accounts" list.
+   * * "monitor": Has no direct impact on an Identity’s access. Instead, it creates AT events for access decisions as if
+   * the account were in a limited “state”.
+   *
+   * **Note**: The state "enabled" is a special case. In this case, access is given to all accounts and there is no need
+   * to specify a particular list. Therefore, when updating "state" to "enabled" for an identity type
+   * "external_allowed_accounts" should be left empty.
+   *
+   * @param updateSettingsOptions the {@link UpdateSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsAccessManagement}
+   */
+  public ServiceCall<AccountSettingsAccessManagement> updateSettings(UpdateSettingsOptions updateSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateSettingsOptions,
+      "updateSettingsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", updateSettingsOptions.accountId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/accounts/{account_id}/settings/access_management", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "updateSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateSettingsOptions.ifMatch());
+    if (updateSettingsOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", updateSettingsOptions.acceptLanguage());
+    }
+    final JsonObject contentJson = new JsonObject();
+    if (updateSettingsOptions.externalAccountIdentityInteraction() != null) {
+      contentJson.add("external_account_identity_interaction", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateSettingsOptions.externalAccountIdentityInteraction()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<AccountSettingsAccessManagement> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsAccessManagement>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

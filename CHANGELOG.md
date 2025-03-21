@@ -1,3 +1,10 @@
+# [0.63.0](https://github.com/IBM/platform-services-java-sdk/compare/0.62.0...0.63.0) (2025-03-21)
+
+
+### Features
+
+* **IAM Policy Management:** add access management account settings API ([#267](https://github.com/IBM/platform-services-java-sdk/issues/267)) ([7d4dbe3](https://github.com/IBM/platform-services-java-sdk/commit/7d4dbe30903db1cbbea79dfe241083979342889b))
+
 # [0.62.0](https://github.com/IBM/platform-services-java-sdk/compare/0.61.1...0.62.0) (2025-03-17)
 
 

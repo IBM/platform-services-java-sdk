@@ -169,7 +169,9 @@ public class ApiKey extends GenericModel {
   /**
    * Gets the supportSessions.
    *
-   * Defines if the API key supports sessions. Sessions are only supported for user apikeys.
+   * Defines whether you can manage CLI login sessions for the API key. When `true`, sessions are created and can be
+   * reviewed or revoked. When `false`, no sessions are tracked. To block access, delete or rotate the API key.
+   * Available only for user API keys.
    *
    * @return the supportSessions
    */

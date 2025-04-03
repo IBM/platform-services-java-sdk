@@ -312,6 +312,56 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
+    
+    @Test(dependsOnMethods = { "testCreateApiKey1", "testCreateApiKey2" })
+    public void testListApiKeysByFilter() throws Exception {
+        try {
+            List<ApiKey> apiKeys = new ArrayList<>();
+
+            // Retrieve one api key at a time and save off the objects that we're interested in,
+            // then validate the results at the end.
+            long pagesize = 1;
+            String filterString="name co \"Java\"";
+
+            String pagetoken = null;
+            do {
+                // Get the "next" page of results.
+                ListApiKeysOptions listApiKeysOptions = new ListApiKeysOptions.Builder()
+                        .accountId(ACCOUNT_ID)
+                        .iamId(IAM_ID)
+                        .pagetoken(pagetoken)
+                        .pagesize(pagesize)
+                        .includeHistory(false)
+                        .filter(filterString)
+                        .build();
+
+                Response<ApiKeyList> response = service.listApiKeys(listApiKeysOptions).execute();
+                assertNotNull(response);
+                assertEquals(response.getStatusCode(), 200);
+
+                ApiKeyList apiKeyListResult = response.getResult();
+                assertNotNull(apiKeyListResult);
+
+                assertEquals(apiKeyListResult.getLimit(), Long.valueOf(pagesize));
+
+                // Walk through the returned results and save off the Apikeys that we created earlier.
+                for (ApiKey apikey : apiKeyListResult.getApikeys()) {
+                    if (APIKEY_NAME.equals(apikey.getName())) {
+                        apiKeys.add(apikey);
+                    }
+                }
+
+                // Retrieve the pagetoken value for the next page of results.
+                pagetoken = getPageTokenFromURL(apiKeyListResult.getNext());
+            } while (pagetoken != null);
+
+            // Make sure we got back two apikeys.
+            assertEquals(apiKeys.size(), 2);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
 
     @Test(dependsOnMethods = { "testListApiKeys" })
     public void testUpdateApiKey() throws Exception {
@@ -538,6 +588,35 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .accountId(ACCOUNT_ID)
                     .name(SERVICEID_NAME)
                     .pagesize(100)
+                    .build();
+
+            Response<ServiceIdList> response = service.listServiceIds(listServiceIdsOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+            ServiceIdList serviceIdListResult = response.getResult();
+            assertNotNull(serviceIdListResult);
+
+            // Verify that we received exactly 1 serviceId.
+            assertNotNull(serviceIdListResult.getServiceids());
+            assertEquals(serviceIdListResult.getServiceids().size(), 1);
+            assertNotNull(serviceIdListResult.getOffset());
+            assertEquals(serviceIdListResult.getOffset(), Long.valueOf(0));
+            assertNull(serviceIdListResult.getNext());
+
+            assertEquals(serviceIdListResult.getServiceids().get(0).getName(), SERVICEID_NAME);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testGetServiceId" })
+    public void testListServiceIdsWithFilter() throws Exception {
+        try {
+            ListServiceIdsOptions listServiceIdsOptions = new ListServiceIdsOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .pagesize(100)
+                    .filter("name co \"Java\"")
                     .build();
 
             Response<ServiceIdList> response = service.listServiceIds(listServiceIdsOptions).execute();
@@ -817,6 +896,53 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                         .pagetoken(pagetoken)
                         .pagesize(pagesize)
                         .includeHistory(false)
+                        .build();
+
+                Response<TrustedProfilesList> response = service.listProfiles(listProfilesOptions).execute();
+                assertNotNull(response);
+                assertEquals(response.getStatusCode(), 200);
+
+                TrustedProfilesList profilesListResult = response.getResult();
+                assertNotNull(profilesListResult);
+
+                assertEquals(profilesListResult.getLimit(), Long.valueOf(pagesize));
+
+                // Walk through the returned results
+                for (TrustedProfile profile : profilesListResult.getProfiles()) {
+                    if (PROFILE_NAME_1.equals(profile.getName()) || PROFILE_NAME_2.equals(profile.getName())) {
+                        profiles.add(profile);
+                    }
+                }
+
+                // Retrieve the pagetoken value for the next page of results.
+                pagetoken = getPageTokenFromURL(profilesListResult.getNext());
+            } while (pagetoken != null);
+
+            assertEquals(profiles.size(), 2);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testCreateProfile1", "testCreateProfile2" })
+    public void testListProfilesWithFilter() throws Exception {
+        try {
+            List<TrustedProfile> profiles = new ArrayList<>();
+
+            // Retrieve one profile at a time and save off the objects that we're interested in,
+            // then validate the results at the end.
+            long pagesize = 1;
+
+            String pagetoken = null;
+            do {
+                // Get the "next" page of results.
+                ListProfilesOptions listProfilesOptions = new ListProfilesOptions.Builder()
+                        .accountId(ACCOUNT_ID)
+                        .pagetoken(pagetoken)
+                        .pagesize(pagesize)
+                        .includeHistory(false)
+                        .filter("name co \"Java\"")
                         .build();
 
                 Response<TrustedProfilesList> response = service.listProfiles(listProfilesOptions).execute();
@@ -2595,6 +2721,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Test
     public void testUpdatePreferenceOnScopeAccount() throws Exception {
         assertNotNull(PREFERENCE_ID_1);
         try {
@@ -2625,6 +2752,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Test
     public void testGetPreferenceOnScopeAccount() throws Exception {
         assertNotNull(PREFERENCE_ID_1);
         try {
@@ -2653,6 +2781,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
+    @Test
     public void testGetAllPreferencesOnScopeAccount() throws Exception {
         assertNotNull(PREFERENCE_ID_1);
         try {

@@ -37,6 +37,7 @@ public class ListServiceIdsOptions extends GenericModel {
   protected String sort;
   protected String order;
   protected Boolean includeHistory;
+  protected String filter;
 
   /**
    * Builder.
@@ -49,6 +50,7 @@ public class ListServiceIdsOptions extends GenericModel {
     private String sort;
     private String order;
     private Boolean includeHistory;
+    private String filter;
 
     /**
      * Instantiates a new Builder from an existing ListServiceIdsOptions instance.
@@ -63,6 +65,7 @@ public class ListServiceIdsOptions extends GenericModel {
       this.sort = listServiceIdsOptions.sort;
       this.order = listServiceIdsOptions.order;
       this.includeHistory = listServiceIdsOptions.includeHistory;
+      this.filter = listServiceIdsOptions.filter;
     }
 
     /**
@@ -156,6 +159,17 @@ public class ListServiceIdsOptions extends GenericModel {
       this.includeHistory = includeHistory;
       return this;
     }
+
+    /**
+     * Set the filter.
+     *
+     * @param filter the filter
+     * @return the ListServiceIdsOptions builder
+     */
+    public Builder filter(String filter) {
+      this.filter = filter;
+      return this;
+    }
   }
 
   protected ListServiceIdsOptions() { }
@@ -168,6 +182,7 @@ public class ListServiceIdsOptions extends GenericModel {
     sort = builder.sort;
     order = builder.order;
     includeHistory = builder.includeHistory;
+    filter = builder.filter;
   }
 
   /**
@@ -255,6 +270,18 @@ public class ListServiceIdsOptions extends GenericModel {
    */
   public Boolean includeHistory() {
     return includeHistory;
+  }
+
+  /**
+   * Gets the filter.
+   *
+   * An optional filter query parameter used to refine the results of the search operation. For more information see
+   * [Filtering list results](#filter-list-results) section.
+   *
+   * @return the filter
+   */
+  public String filter() {
+    return filter;
   }
 }
 

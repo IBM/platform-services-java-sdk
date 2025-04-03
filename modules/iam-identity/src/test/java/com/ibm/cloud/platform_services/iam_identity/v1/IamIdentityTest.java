@@ -215,6 +215,7 @@ public class IamIdentityTest {
       .sort("testString")
       .order("asc")
       .includeHistory(false)
+      .filter("testString")
       .build();
 
     // Invoke listApiKeys() with a valid options model and verify the result
@@ -242,6 +243,7 @@ public class IamIdentityTest {
     assertEquals(query.get("sort"), "testString");
     assertEquals(query.get("order"), "asc");
     assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
+    assertEquals(query.get("filter"), "testString");
   }
 
   // Test the listApiKeys operation with and without retries enabled
@@ -743,6 +745,7 @@ public class IamIdentityTest {
       .sort("testString")
       .order("asc")
       .includeHistory(false)
+      .filter("testString")
       .build();
 
     // Invoke listServiceIds() with a valid options model and verify the result
@@ -768,6 +771,7 @@ public class IamIdentityTest {
     assertEquals(query.get("sort"), "testString");
     assertEquals(query.get("order"), "asc");
     assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
+    assertEquals(query.get("filter"), "testString");
   }
 
   // Test the listServiceIds operation with and without retries enabled
@@ -1179,6 +1183,7 @@ public class IamIdentityTest {
       .order("asc")
       .includeHistory(false)
       .pagetoken("testString")
+      .filter("testString")
       .build();
 
     // Invoke listProfiles() with a valid options model and verify the result
@@ -1204,6 +1209,7 @@ public class IamIdentityTest {
     assertEquals(query.get("order"), "asc");
     assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
     assertEquals(query.get("pagetoken"), "testString");
+    assertEquals(query.get("filter"), "testString");
   }
 
   // Test the listProfiles operation with and without retries enabled

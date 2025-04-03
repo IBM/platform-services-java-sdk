@@ -37,6 +37,7 @@ public class ListProfilesOptions extends GenericModel {
   protected String order;
   protected Boolean includeHistory;
   protected String pagetoken;
+  protected String filter;
 
   /**
    * Builder.
@@ -49,6 +50,7 @@ public class ListProfilesOptions extends GenericModel {
     private String order;
     private Boolean includeHistory;
     private String pagetoken;
+    private String filter;
 
     /**
      * Instantiates a new Builder from an existing ListProfilesOptions instance.
@@ -63,6 +65,7 @@ public class ListProfilesOptions extends GenericModel {
       this.order = listProfilesOptions.order;
       this.includeHistory = listProfilesOptions.includeHistory;
       this.pagetoken = listProfilesOptions.pagetoken;
+      this.filter = listProfilesOptions.filter;
     }
 
     /**
@@ -165,6 +168,17 @@ public class ListProfilesOptions extends GenericModel {
       this.pagetoken = pagetoken;
       return this;
     }
+
+    /**
+     * Set the filter.
+     *
+     * @param filter the filter
+     * @return the ListProfilesOptions builder
+     */
+    public Builder filter(String filter) {
+      this.filter = filter;
+      return this;
+    }
   }
 
   protected ListProfilesOptions() { }
@@ -179,6 +193,7 @@ public class ListProfilesOptions extends GenericModel {
     order = builder.order;
     includeHistory = builder.includeHistory;
     pagetoken = builder.pagetoken;
+    filter = builder.filter;
   }
 
   /**
@@ -266,6 +281,18 @@ public class ListProfilesOptions extends GenericModel {
    */
   public String pagetoken() {
     return pagetoken;
+  }
+
+  /**
+   * Gets the filter.
+   *
+   * An optional filter query parameter used to refine the results of the search operation. For more information see
+   * [Filtering list results](#filter-list-results) section.
+   *
+   * @return the filter
+   */
+  public String filter() {
+    return filter;
   }
 }
 

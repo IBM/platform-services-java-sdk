@@ -41,6 +41,7 @@ public class ListApiKeysOptionsTest {
       .sort("testString")
       .order("asc")
       .includeHistory(false)
+      .filter("testString")
       .build();
     assertEquals(listApiKeysOptionsModel.accountId(), "testString");
     assertEquals(listApiKeysOptionsModel.iamId(), "testString");
@@ -51,5 +52,6 @@ public class ListApiKeysOptionsTest {
     assertEquals(listApiKeysOptionsModel.sort(), "testString");
     assertEquals(listApiKeysOptionsModel.order(), "asc");
     assertEquals(listApiKeysOptionsModel.includeHistory(), Boolean.valueOf(false));
+    assertEquals(listApiKeysOptionsModel.filter(), "testString");
   }
 }

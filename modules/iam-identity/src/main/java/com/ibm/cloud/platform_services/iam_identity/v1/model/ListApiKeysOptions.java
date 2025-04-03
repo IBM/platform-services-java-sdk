@@ -59,6 +59,7 @@ public class ListApiKeysOptions extends GenericModel {
   protected String sort;
   protected String order;
   protected Boolean includeHistory;
+  protected String filter;
 
   /**
    * Builder.
@@ -73,6 +74,7 @@ public class ListApiKeysOptions extends GenericModel {
     private String sort;
     private String order;
     private Boolean includeHistory;
+    private String filter;
 
     /**
      * Instantiates a new Builder from an existing ListApiKeysOptions instance.
@@ -89,6 +91,7 @@ public class ListApiKeysOptions extends GenericModel {
       this.sort = listApiKeysOptions.sort;
       this.order = listApiKeysOptions.order;
       this.includeHistory = listApiKeysOptions.includeHistory;
+      this.filter = listApiKeysOptions.filter;
     }
 
     /**
@@ -204,6 +207,17 @@ public class ListApiKeysOptions extends GenericModel {
       this.includeHistory = includeHistory;
       return this;
     }
+
+    /**
+     * Set the filter.
+     *
+     * @param filter the filter
+     * @return the ListApiKeysOptions builder
+     */
+    public Builder filter(String filter) {
+      this.filter = filter;
+      return this;
+    }
   }
 
   protected ListApiKeysOptions() { }
@@ -218,6 +232,7 @@ public class ListApiKeysOptions extends GenericModel {
     sort = builder.sort;
     order = builder.order;
     includeHistory = builder.includeHistory;
+    filter = builder.filter;
   }
 
   /**
@@ -330,6 +345,18 @@ public class ListApiKeysOptions extends GenericModel {
    */
   public Boolean includeHistory() {
     return includeHistory;
+  }
+
+  /**
+   * Gets the filter.
+   *
+   * An optional filter query parameter used to refine the results of the search operation. For more information see
+   * [Filtering list results](#filter-list-results) section.
+   *
+   * @return the filter
+   */
+  public String filter() {
+    return filter;
   }
 }
 

@@ -39,6 +39,7 @@ public class ListServiceIdsOptionsTest {
       .sort("testString")
       .order("asc")
       .includeHistory(false)
+      .filter("testString")
       .build();
     assertEquals(listServiceIdsOptionsModel.accountId(), "testString");
     assertEquals(listServiceIdsOptionsModel.name(), "testString");
@@ -47,5 +48,6 @@ public class ListServiceIdsOptionsTest {
     assertEquals(listServiceIdsOptionsModel.sort(), "testString");
     assertEquals(listServiceIdsOptionsModel.order(), "asc");
     assertEquals(listServiceIdsOptionsModel.includeHistory(), Boolean.valueOf(false));
+    assertEquals(listServiceIdsOptionsModel.filter(), "testString");
   }
 }

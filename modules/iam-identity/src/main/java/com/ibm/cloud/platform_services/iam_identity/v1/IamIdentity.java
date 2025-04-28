@@ -234,6 +234,9 @@ public class IamIdentity extends BaseService {
     if (listApiKeysOptions.includeHistory() != null) {
       builder.query("include_history", String.valueOf(listApiKeysOptions.includeHistory()));
     }
+    if (listApiKeysOptions.filter() != null) {
+      builder.query("filter", String.valueOf(listApiKeysOptions.filter()));
+    }
     ResponseConverter<ApiKeyList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ApiKeyList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -573,6 +576,9 @@ public class IamIdentity extends BaseService {
     if (listServiceIdsOptions.includeHistory() != null) {
       builder.query("include_history", String.valueOf(listServiceIdsOptions.includeHistory()));
     }
+    if (listServiceIdsOptions.filter() != null) {
+      builder.query("filter", String.valueOf(listServiceIdsOptions.filter()));
+    }
     ResponseConverter<ServiceIdList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceIdList>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -838,6 +844,9 @@ public class IamIdentity extends BaseService {
     }
     if (listProfilesOptions.pagetoken() != null) {
       builder.query("pagetoken", String.valueOf(listProfilesOptions.pagetoken()));
+    }
+    if (listProfilesOptions.filter() != null) {
+      builder.query("filter", String.valueOf(listProfilesOptions.filter()));
     }
     ResponseConverter<TrustedProfilesList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TrustedProfilesList>() { }.getType());
@@ -1251,7 +1260,9 @@ public class IamIdentity extends BaseService {
   /**
    * Add a specific identity that can assume the trusted profile.
    *
-   * Add a specific identity that can assume the trusted profile.
+   * Add a specific identity that can assume the trusted profile. This API will update the trusted profile itself, thus
+   * calling it repeatedly for the same profile can lead to conflicts responded with HTTP code 409. Make sure to call
+   * this API only once in a few seconds for the same trusted profile.
    *
    * @param setProfileIdentityOptions the {@link SetProfileIdentityOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfileIdentityResponse}
@@ -1310,7 +1321,7 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Delete the identity that can assume the trusted profile.
+   * Delete the identity that can assume the trusted profile. This API will update the trusted profile itself, thus calling it repeatedly for the same profile can lead to conflicts responded with HTTP code 409. Make sure to call this API only once in a few seconds for the same trusted profile.
    *
    * Delete the identity that can assume the trusted profile.
    *
@@ -2101,7 +2112,24 @@ public class IamIdentity extends BaseService {
   /**
    * Update Identity Preference on scope account.
    *
-   * Update one Identity Preference on scope 'account'.
+   * Update one Identity Preference on scope 'account'. supported preferences:
+   *   The following preferences are storing values for identities inside an account,
+   *   i.e. for each account that an identity is member of, the value stored might be different.
+   *   This means, users who might be member of multiple accounts can have multiple preferences, one per account.
+   *   Identities like Service Ids or Trusted Profiles can only exist in one account,
+   *   therefore they can only have one preference inside their related account.
+   *   preference: console/landing_page
+   *     service: console
+   *     preferenceId: landing_page
+   *     supportedIdentityType: Trusted Profiles, Users
+   *     type: string
+   *     validation: valid URL (without host part), e.g. /billing or /iam
+   *   preference: console/global_left_navigation
+   *     service: console
+   *     preferenceId: global_left_navigation
+   *     supportedIdentityType: Trusted Profiles, Users
+   *     type: list of strings
+   *     validation: each entry in the list of strings must match the identifier of one navigation entry in the console.
    *
    * @param updatePreferenceOnScopeAccountOptions the {@link UpdatePreferenceOnScopeAccountOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link IdentityPreferenceResponse}

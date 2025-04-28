@@ -39,6 +39,7 @@ public class ListProfilesOptionsTest {
       .order("asc")
       .includeHistory(false)
       .pagetoken("testString")
+      .filter("testString")
       .build();
     assertEquals(listProfilesOptionsModel.accountId(), "testString");
     assertEquals(listProfilesOptionsModel.name(), "testString");
@@ -47,6 +48,7 @@ public class ListProfilesOptionsTest {
     assertEquals(listProfilesOptionsModel.order(), "asc");
     assertEquals(listProfilesOptionsModel.includeHistory(), Boolean.valueOf(false));
     assertEquals(listProfilesOptionsModel.pagetoken(), "testString");
+    assertEquals(listProfilesOptionsModel.filter(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

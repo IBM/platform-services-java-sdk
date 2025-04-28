@@ -1,3 +1,10 @@
+# [0.64.0](https://github.com/IBM/platform-services-java-sdk/compare/0.63.1...0.64.0) (2025-04-28)
+
+
+### Features
+
+* **IAM Identity:** add filter parameter for search api ([#268](https://github.com/IBM/platform-services-java-sdk/issues/268)) ([e1ac9d2](https://github.com/IBM/platform-services-java-sdk/commit/e1ac9d2f872504ee394dc2cf76cbb5be1e3a2ecc))
+
 ## [0.63.1](https://github.com/IBM/platform-services-java-sdk/compare/0.63.0...0.63.1) (2025-04-16)
 
 

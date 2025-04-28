@@ -1,3 +1,10 @@
+## [0.63.1](https://github.com/IBM/platform-services-java-sdk/compare/0.63.0...0.63.1) (2025-04-16)
+
+
+### Bug Fixes
+
+* **build:** bump java core to 9.23.1 ([655b280](https://github.com/IBM/platform-services-java-sdk/commit/655b2805557c7d3e53d302c2e5c35b9e8e2cee64))
+
 # [0.63.0](https://github.com/IBM/platform-services-java-sdk/compare/0.62.0...0.63.0) (2025-03-21)
 
 

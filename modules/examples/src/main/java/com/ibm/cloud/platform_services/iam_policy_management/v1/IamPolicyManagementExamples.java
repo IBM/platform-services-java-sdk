@@ -1349,11 +1349,11 @@ public class IamPolicyManagementExamples {
     try {
       System.out.println("listActionControlTemplateVersions() result:");
       // begin-list_action_control_template_versions
-      ListActionControlTemplateVersionsOptions listPolicyTemplateVersionsOptions = new ListActionControlTemplateVersionsOptions.Builder()
+      ListActionControlTemplateVersionsOptions listActionControlTemplateVersionsOptions = new ListActionControlTemplateVersionsOptions.Builder()
         .actionControlTemplateId(exampleActionControlTemplateId)
         .build();
 
-      Response<ActionControlTemplateVersionsCollection> response = service.listActionControlTemplateVersions(listPolicyTemplateVersionsOptions).execute();
+      Response<ActionControlTemplateVersionsCollection> response = service.listActionControlTemplateVersions(listActionControlTemplateVersionsOptions).execute();
       ActionControlTemplateVersionsCollection actionControlTemplateVersionsCollection = response.getResult();
 
       System.out.println(actionControlTemplateVersionsCollection);

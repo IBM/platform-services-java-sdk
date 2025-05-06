@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -181,7 +181,7 @@ public class V2PolicyTemplateMetaData extends GenericModel {
   /**
    * Gets the createdById.
    *
-   * The iam ID of the entity that created the policy.
+   * The IAM ID of the entity that created the policy.
    *
    * @return the createdById
    */
@@ -203,7 +203,7 @@ public class V2PolicyTemplateMetaData extends GenericModel {
   /**
    * Gets the lastModifiedById.
    *
-   * The iam ID of the entity that last modified the policy.
+   * The IAM ID of the entity that last modified the policy.
    *
    * @return the lastModifiedById
    */

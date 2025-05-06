@@ -153,9 +153,9 @@ public class UpdateSettingsOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * The revision number for updating Access Management Account Settings and must match the ETag value of the existing
+   * The revision number for updating Access Management Account Settings and must match the Etag value of the existing
    * Access Management Account Settings. The Etag can be retrieved using the GET
-   * /v1/accounts/{account_id}/settings/access_management API and looking at the ETag response header.
+   * /v1/accounts/{account_id}/settings/access_management API and looking at the Etag response header.
    *
    * @return the ifMatch
    */

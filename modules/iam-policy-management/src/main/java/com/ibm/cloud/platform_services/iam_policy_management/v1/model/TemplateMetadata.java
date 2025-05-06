@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -58,7 +58,7 @@ public class TemplateMetadata extends GenericModel {
   /**
    * Gets the assignmentId.
    *
-   * policy assignment id.
+   * Policy assignment ID.
    *
    * @return the assignmentId
    */
@@ -69,7 +69,7 @@ public class TemplateMetadata extends GenericModel {
   /**
    * Gets the rootId.
    *
-   * orchestrator template id.
+   * Orchestrator template ID.
    *
    * @return the rootId
    */
@@ -80,7 +80,7 @@ public class TemplateMetadata extends GenericModel {
   /**
    * Gets the rootVersion.
    *
-   * orchestrator template version.
+   * Orchestrator template version.
    *
    * @return the rootVersion
    */

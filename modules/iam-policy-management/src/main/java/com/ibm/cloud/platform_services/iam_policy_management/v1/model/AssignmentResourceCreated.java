@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -16,7 +16,7 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * On success, includes the  policy assigned.
+ * On success, includes the  policy that is assigned.
  */
 public class AssignmentResourceCreated extends GenericModel {
 
@@ -27,7 +27,7 @@ public class AssignmentResourceCreated extends GenericModel {
   /**
    * Gets the id.
    *
-   * policy id.
+   * Policy id.
    *
    * @return the id
    */

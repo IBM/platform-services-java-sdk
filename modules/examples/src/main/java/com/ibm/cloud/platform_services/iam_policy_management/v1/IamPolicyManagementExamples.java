@@ -89,6 +89,28 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Assignment
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlAssignmentsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateActionControl;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateActionControlAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignmentTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlTemplatesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplateVersionsCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitActionControlTemplateOptions;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -139,6 +161,12 @@ public class IamPolicyManagementExamples {
   private static String exampleAssignmentPolicyId = null;
   private static String exampleAssignmentETag = null;
   private static String exampleAccountSettingsETag = null;
+  private static String exampleActionControlTemplateId = null;
+  private static String exampleActionControlTemplateEtag = null;
+  private static String exampleActionControlTemplateVersion = null;
+  private static String exampleBaseActionControlTemplateVersion = null;
+  private static String exampleActionControlAssignmentId = null;
+  private static String exampleActionControlAssignmentETag = null;
 
   static {
     System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_policy_management.env");
@@ -1187,6 +1215,318 @@ public class IamPolicyManagementExamples {
     } catch (ServiceResponseException e) {
       logger.error(String.format("Service returned status code %s: %s%nError details: %s",
               e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createActionControlTemplate() result:");
+      // begin-create_action_control_template
+
+      // Construct an instance of the TemplateActionControl model
+      TemplateActionControl templateActionControlModel = new TemplateActionControl.Builder()
+        .serviceName("am-test-service")
+        .description("Test Java SDK integration testcases")
+        .actions(java.util.Arrays.asList("am-test-service.test.delete"))
+        .build();
+
+      CreateActionControlTemplateOptions createActionControlTemplateOptions = new CreateActionControlTemplateOptions.Builder()
+        .name("JavaSDKExampleTest")
+        .accountId(exampleAccountId)
+        .description("ActionControl SDK Test template")
+        .actionControl(templateActionControlModel)
+        .build();
+
+      Response<ActionControlTemplate> response = service.createActionControlTemplate(createActionControlTemplateOptions).execute();
+      ActionControlTemplate actionControlTemplate = response.getResult();
+
+      exampleActionControlTemplateId = actionControlTemplate.getId();
+      exampleBaseActionControlTemplateVersion = actionControlTemplate.getVersion();
+
+      System.out.println(actionControlTemplate);
+      // end-create_action_control_template
+
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getActionControlTemplate() result:");
+      // begin-get_action_control_template
+      GetActionControlTemplateOptions getActionControlTemplateOptions = new GetActionControlTemplateOptions.Builder()
+        .actionControlTemplateId(exampleActionControlTemplateId)
+        .build();
+
+      Response<ActionControlTemplate> response = service.getActionControlTemplate(getActionControlTemplateOptions).execute();
+      ActionControlTemplate actionControlTemplate = response.getResult();
+
+      exampleActionControlTemplateEtag = response.getHeaders().values("Etag").get(0);
+
+      System.out.println(actionControlTemplate);
+      // end-get_action_control_template
+
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("replaceActionControlTemplate() result:");
+      // begin-replace_action_control_template
+      // Construct an instance of the TemplateActionControl model
+      TemplateActionControl templateActionControlModel = new TemplateActionControl.Builder()
+        .serviceName("am-test-service")
+        .description("Java SDK action control example testcase")
+        .actions(java.util.Arrays.asList("am-test-service.test.delete"))
+        .build();
+
+      // Construct an instance of the ReplaceActionControlTemplateOptions model
+      ReplaceActionControlTemplateOptions replaceActionControlTemplateOptions = new ReplaceActionControlTemplateOptions.Builder()
+        .actionControlTemplateId(exampleActionControlTemplateId)
+        .version(exampleBaseActionControlTemplateVersion)
+        .ifMatch(exampleActionControlTemplateEtag)
+        .actionControl(templateActionControlModel)
+        .committed(true)
+        .description("Updated Java SDK action control template")
+        .build();
+
+      Response<ActionControlTemplate> response = service.replaceActionControlTemplate(replaceActionControlTemplateOptions).execute();
+      ActionControlTemplate actionControlTemplate = response.getResult();
+
+      System.out.println(actionControlTemplate);
+      // end-replace_action_control_template
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listActionControlTemplates() result:");
+      // begin-list_action_control_templates
+      ListActionControlTemplatesOptions listActionControlTemplatesOptions = new ListActionControlTemplatesOptions.Builder()
+        .accountId(exampleAccountId)
+        .build();
+
+      Response<ActionControlTemplateCollection> response = service.listActionControlTemplates(listActionControlTemplatesOptions).execute();
+      ActionControlTemplateCollection actionControlTemplateCollection = response.getResult();
+
+      System.out.println(actionControlTemplateCollection);
+      // end-list_action_control_templates
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createActionControlTemplateVersion() result:");
+      // begin-create_action_control_template_version
+
+      // Construct an instance of the TemplateActionControl model
+      TemplateActionControl templateActionControlModel = new TemplateActionControl.Builder()
+        .serviceName("am-test-service")
+        .description("Test Java SDK integration testcases")
+        .actions(java.util.Arrays.asList("am-test-service.test.create"))
+        .build();
+
+      CreateActionControlTemplateVersionOptions createActionControlTemplateVersionOptions = new CreateActionControlTemplateVersionOptions.Builder()
+      .description("ActionControl SDK Test template without actionControl")
+      .actionControl(templateActionControlModel)
+      .committed(true)
+      .actionControlTemplateId(exampleActionControlTemplateId)
+      .build();
+
+      // Invoke operation
+      Response<ActionControlTemplate> response = service.createActionControlTemplateVersion(createActionControlTemplateVersionOptions).execute();
+      ActionControlTemplate actionControlTemplate = response.getResult();
+      exampleActionControlTemplateVersion = actionControlTemplate.getVersion();
+      System.out.println(actionControlTemplate);
+      // end-create_action_control_template_version
+
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listActionControlTemplateVersions() result:");
+      // begin-list_action_control_template_versions
+      ListActionControlTemplateVersionsOptions listPolicyTemplateVersionsOptions = new ListActionControlTemplateVersionsOptions.Builder()
+        .actionControlTemplateId(exampleActionControlTemplateId)
+        .build();
+
+      Response<ActionControlTemplateVersionsCollection> response = service.listActionControlTemplateVersions(listPolicyTemplateVersionsOptions).execute();
+      ActionControlTemplateVersionsCollection actionControlTemplateVersionsCollection = response.getResult();
+
+      System.out.println(actionControlTemplateVersionsCollection);
+      // end-list_action_control_template_versions
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getActionControlTemplateVersion() result:");
+      // begin-get_action_control_template_version
+      GetActionControlTemplateVersionOptions getActionControlTemplateVersionOptions = new GetActionControlTemplateVersionOptions.Builder()
+        .actionControlTemplateId(exampleActionControlTemplateId)
+        .version(exampleActionControlTemplateVersion)
+        .build();
+
+      Response<ActionControlTemplate> response = service.getActionControlTemplateVersion(getActionControlTemplateVersionOptions).execute();
+      ActionControlTemplate actionControlTemplate = response.getResult();
+
+      exampleActionControlTemplateEtag = response.getHeaders().values("Etag").get(0);
+
+      System.out.println(actionControlTemplate);
+      // end-get_action_control_template_version
+
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-commit_action_control_template
+      CommitActionControlTemplateOptions commitActionControlTemplateOptions = new CommitActionControlTemplateOptions.Builder()
+        .actionControlTemplateId(exampleActionControlTemplateId)
+        .version(exampleBaseActionControlTemplateVersion)
+        .build();
+
+      Response<Void> response = service.commitActionControlTemplate(commitActionControlTemplateOptions).execute();
+      // end-commit_action_control_template
+      System.out.printf("commitActionControlTemplate() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createActionControlTemplateAssignment() result:");
+      // begin-create_action_control_template_assignment
+      AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
+        .type("Account")
+        .id(exampleTargetAccountId)
+        .build();
+
+      ActionControlAssignmentTemplate assignmentTemplateDetails = new ActionControlAssignmentTemplate.Builder()
+        .id(exampleActionControlTemplateId)
+        .version(exampleBaseActionControlTemplateVersion)
+        .build();
+
+      CreateActionControlTemplateAssignmentOptions createActionControlAssignmentOptions = new CreateActionControlTemplateAssignmentOptions.Builder()
+        .target(assignmentTargetDetails)
+        .templates(new ArrayList<ActionControlAssignmentTemplate>(Arrays.asList(assignmentTemplateDetails)))
+        .build();
+
+      Response<ActionControlAssignmentCollection> response = service.createActionControlTemplateAssignment(createActionControlAssignmentOptions).execute();
+
+      ActionControlAssignmentCollection result = response.getResult();
+      ActionControlAssignment assignment = result.getAssignments().get(0);
+      exampleActionControlAssignmentId = assignment.getId();
+
+      List<String> values = response.getHeaders().values("Etag");
+      exampleActionControlAssignmentETag = values.get(0);
+
+      System.out.println(result);
+      // end-create_action_control_template_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("updateActionControlAssignment() result:");
+      // begin-update_action_control_assignment
+      UpdateActionControlAssignmentOptions updateActionControlAssignmentOptions = new UpdateActionControlAssignmentOptions.Builder()
+        .assignmentId(exampleActionControlAssignmentId)
+        .templateVersion(exampleActionControlTemplateVersion)
+        .ifMatch(exampleActionControlAssignmentETag)
+        .build();
+
+      Response<ActionControlAssignment> response = service.updateActionControlAssignment(updateActionControlAssignmentOptions).execute();
+      ActionControlAssignment actionControlAssignmentRecord = response.getResult();
+
+      System.out.println(actionControlAssignmentRecord);
+      // end-update_action_control_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listActionControlAssignments() result:");
+      // begin-list_action_control_assignments
+
+      ListActionControlAssignmentsOptions listActionControlAssignmentsOptions = new ListActionControlAssignmentsOptions.Builder()
+      .accountId(exampleAccountId)
+      .build();
+      Response<ActionControlAssignmentCollection> response = service.listActionControlAssignments(listActionControlAssignmentsOptions).execute();
+      ActionControlAssignmentCollection result = response.getResult();
+
+      System.out.println(result);
+      // end-list_action_control_assignments
+
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getActionControlAssignment() result:");
+      // begin-get_action_control_assignment
+      GetActionControlAssignmentOptions getActionControlAssignmentOptions = new GetActionControlAssignmentOptions.Builder()
+        .assignmentId(exampleActionControlAssignmentId)
+        .build();
+
+      Response<ActionControlAssignment> response = service.getActionControlAssignment(getActionControlAssignmentOptions).execute();
+      ActionControlAssignment assignmentRecord = response.getResult();
+      System.out.println(assignmentRecord);
+      // end-get_action_control_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("deleteActionControlAssignment() result:");
+      // begin-delete_action_control_assignment
+      DeleteActionControlAssignmentOptions deleteActionControlAssignmentOptions = new DeleteActionControlAssignmentOptions.Builder()
+        .assignmentId(exampleActionControlAssignmentId)
+        .build();
+
+      Response<Void> response = service.deleteActionControlAssignment(deleteActionControlAssignmentOptions).execute();
+      // end-delete_action_control_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_action_control_template_version
+      DeleteActionControlTemplateVersionOptions deleteActionControlTemplateVersionOptions = new DeleteActionControlTemplateVersionOptions.Builder()
+        .actionControlTemplateId(exampleActionControlTemplateId)
+        .version(exampleBaseActionControlTemplateVersion)
+        .build();
+
+      Response<Void> response = service.deleteActionControlTemplateVersion(deleteActionControlTemplateVersionOptions).execute();
+      // end-delete_action_control_template_version
+      System.out.printf("deleteActionControlTemplateVersion() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_action_control_template
+      DeleteActionControlTemplateOptions deleteActionControlTemplateOptions = new DeleteActionControlTemplateOptions.Builder()
+        .actionControlTemplateId(exampleActionControlTemplateId)
+        .build();
+
+      Response<Void> response = service.deleteActionControlTemplate(deleteActionControlTemplateOptions).execute();
+      // end-delete_action_control_template
+      System.out.printf("deleteActionControlTemplate() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
   }
 }

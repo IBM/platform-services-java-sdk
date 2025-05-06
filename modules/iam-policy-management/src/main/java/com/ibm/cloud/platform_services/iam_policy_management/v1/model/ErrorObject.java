@@ -61,6 +61,10 @@ public class ErrorObject extends GenericModel {
     String POLICY_ASSIGNMENT_CONFLICT_ERROR = "policy_assignment_conflict_error";
     /** resource_not_found. */
     String RESOURCE_NOT_FOUND = "resource_not_found";
+    /** action_control_template_not_found. */
+    String ACTION_CONTROL_TEMPLATE_NOT_FOUND = "action_control_template_not_found";
+    /** action_control_assignment_not_found. */
+    String ACTION_CONTROL_ASSIGNMENT_NOT_FOUND = "action_control_assignment_not_found";
   }
 
   protected String code;

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -16,7 +16,7 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Rule that specifies additional access granted (e.g., time-based condition).
+ * Rule that specifies additional access that is granted (For example, time-based condition).
  */
 public class RuleAttribute extends GenericModel {
 
@@ -198,7 +198,7 @@ public class RuleAttribute extends GenericModel {
    * Gets the value.
    *
    * The value of a rule, resource, or subject attribute; can be boolean or string for resource and subject attribute.
-   * Can be string or an array of strings (e.g., array of days to permit access) for rule attribute.
+   * Can be a string or an array of strings (for example, an array of days to permit access) for rule attribute.
    *
    * @return the value
    */

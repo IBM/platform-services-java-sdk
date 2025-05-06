@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,7 +14,7 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 /**
- * Rule that specifies additional access granted (e.g., time-based condition).
+ * Rule that specifies additional access that is granted (For example, time-based condition).
  */
 public class NestedConditionRuleAttribute extends NestedCondition {
 

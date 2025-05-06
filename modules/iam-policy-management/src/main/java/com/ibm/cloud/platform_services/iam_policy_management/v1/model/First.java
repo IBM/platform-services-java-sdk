@@ -16,7 +16,7 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Details with href linking to first page of requested collection.
+ * Details with linking href to first page of requested collection.
  */
 public class First extends GenericModel {
 

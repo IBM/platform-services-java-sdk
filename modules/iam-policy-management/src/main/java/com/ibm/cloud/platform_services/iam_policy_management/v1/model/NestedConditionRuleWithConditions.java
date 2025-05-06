@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Rule that specifies additional access granted (e.g., time-based condition) accross multiple conditions.
+ * Rule that specifies additional access that is granted (for example, time-based condition) accross multiple
+ * conditions.
  */
 public class NestedConditionRuleWithConditions extends NestedCondition {
 

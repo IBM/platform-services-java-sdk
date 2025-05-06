@@ -15,15 +15,31 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.IamPolicyManagement;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AccountSettingsAccessManagement;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignmentResource;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignmentResourceActionControl;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignmentResourceCreated;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignmentTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignmentsPager;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplateVersionsCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplateVersionsPager;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplatesPager;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceCreated;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTargetDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTemplateDetails;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitActionControlTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitPolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ConflictsWith;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponse;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControl;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ControlResponseControlWithEnrichedRoles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateOptions;
@@ -31,6 +47,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePoli
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateOptions;
@@ -44,6 +63,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorRespo
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ExternalAccountIdentityInteraction;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ExternalAccountIdentityInteractionPatch;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.First;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateOptions;
@@ -57,6 +79,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTy
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypesBase;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.IdentityTypesPatch;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.LimitData;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlAssignmentsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
@@ -92,6 +117,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemp
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsPager;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplatesPager;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Previous;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceActionControlTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleOptions;
@@ -104,9 +130,11 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollec
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateActionControl;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateCountData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetadata;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateActionControlAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateSettingsOptions;
@@ -2315,7 +2343,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyAssignmentsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 0}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
     String listPolicyAssignmentsPath = "/v1/policy_assignments";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2378,8 +2406,8 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyAssignmentsWithPagerGetNext() throws Throwable {
     // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":10}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
-    String mockResponsePage2 = "{\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":10}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":0}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":0}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -2416,8 +2444,8 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyAssignmentsWithPagerGetAll() throws Throwable {
     // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":10}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
-    String mockResponsePage2 = "{\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":10}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":0}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"assignments\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"policy\":{\"resource_created\":{\"id\":\"id\"},\"status\":\"status\",\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":0}}}],\"subject\":{\"id\":\"id\",\"type\":\"iam_id\"},\"template\":{\"id\":\"id\",\"version\":\"version\"},\"status\":\"in_progress\"}],\"total_count\":2,\"limit\":1}";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -2450,7 +2478,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testCreatePolicyTemplateAssignmentWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"assignments\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 0}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}]}";
     String createPolicyTemplateAssignmentPath = "/v1/policy_assignments";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2517,7 +2545,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testGetPolicyAssignmentWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}";
+    String mockResponseBody = "{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 0}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}";
     String getPolicyAssignmentPath = "/v1/policy_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2570,7 +2598,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testUpdatePolicyAssignmentWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 10}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}";
+    String mockResponseBody = "{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"policy\": {\"resource_created\": {\"id\": \"id\"}, \"status\": \"status\", \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 0}}}], \"subject\": {\"id\": \"id\", \"type\": \"iam_id\"}, \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"status\": \"in_progress\"}";
     String updatePolicyAssignmentPath = "/v1/policy_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2797,6 +2825,1052 @@ public class IamPolicyManagementTest {
   public void testUpdateSettingsNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     iamPolicyManagementService.updateSettings(null).execute();
+  }
+
+  // Test the listActionControlTemplates operation with a valid options model parameter
+  @Test
+  public void testListActionControlTemplatesWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"action_control_templates\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"committed\": false, \"action_control\": {\"service_name\": \"serviceName\", \"description\": \"description\", \"actions\": [\"actions\"]}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"version\": \"version\", \"state\": \"active\"}]}";
+    String listActionControlTemplatesPath = "/v1/action_control_templates";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListActionControlTemplatesOptions model
+    ListActionControlTemplatesOptions listActionControlTemplatesOptionsModel = new ListActionControlTemplatesOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .limit(Long.valueOf("10"))
+      .start("testString")
+      .build();
+
+    // Invoke listActionControlTemplates() with a valid options model and verify the result
+    Response<ActionControlTemplateCollection> response = iamPolicyManagementService.listActionControlTemplates(listActionControlTemplatesOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlTemplateCollection responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listActionControlTemplatesPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(query.get("start"), "testString");
+  }
+
+  // Test the listActionControlTemplates operation with and without retries enabled
+  @Test
+  public void testListActionControlTemplatesWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testListActionControlTemplatesWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testListActionControlTemplatesWOptions();
+  }
+
+  // Test the listActionControlTemplates operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListActionControlTemplatesNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.listActionControlTemplates(null).execute();
+  }
+
+  // Test the listActionControlTemplates operation using the ActionControlTemplatesPager.getNext() method
+  @Test
+  public void testListActionControlTemplatesWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"action_control_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"committed\":false,\"action_control\":{\"service_name\":\"serviceName\",\"description\":\"description\",\"actions\":[\"actions\"]},\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"version\":\"version\",\"state\":\"active\"}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"action_control_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"committed\":false,\"action_control\":{\"service_name\":\"serviceName\",\"description\":\"description\",\"actions\":[\"actions\"]},\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"version\":\"version\",\"state\":\"active\"}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListActionControlTemplatesOptions listActionControlTemplatesOptions = new ListActionControlTemplatesOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    List<ActionControlTemplate> allResults = new ArrayList<>();
+    ActionControlTemplatesPager pager = new ActionControlTemplatesPager(iamPolicyManagementService, listActionControlTemplatesOptions);
+    while (pager.hasNext()) {
+      List<ActionControlTemplate> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listActionControlTemplates operation using the ActionControlTemplatesPager.getAll() method
+  @Test
+  public void testListActionControlTemplatesWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"action_control_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"committed\":false,\"action_control\":{\"service_name\":\"serviceName\",\"description\":\"description\",\"actions\":[\"actions\"]},\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"version\":\"version\",\"state\":\"active\"}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"action_control_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"committed\":false,\"action_control\":{\"service_name\":\"serviceName\",\"description\":\"description\",\"actions\":[\"actions\"]},\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"version\":\"version\",\"state\":\"active\"}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListActionControlTemplatesOptions listActionControlTemplatesOptions = new ListActionControlTemplatesOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    ActionControlTemplatesPager pager = new ActionControlTemplatesPager(iamPolicyManagementService, listActionControlTemplatesOptions);
+    List<ActionControlTemplate> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the createActionControlTemplate operation with a valid options model parameter
+  @Test
+  public void testCreateActionControlTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"committed\": false, \"action_control\": {\"service_name\": \"serviceName\", \"description\": \"description\", \"actions\": [\"actions\"]}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"version\": \"version\", \"state\": \"active\"}";
+    String createActionControlTemplatePath = "/v1/action_control_templates";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the TemplateActionControl model
+    TemplateActionControl templateActionControlModel = new TemplateActionControl.Builder()
+      .serviceName("testString")
+      .description("testString")
+      .actions(java.util.Arrays.asList("testString"))
+      .build();
+
+    // Construct an instance of the CreateActionControlTemplateOptions model
+    CreateActionControlTemplateOptions createActionControlTemplateOptionsModel = new CreateActionControlTemplateOptions.Builder()
+      .name("testString")
+      .accountId("testString")
+      .description("testString")
+      .committed(true)
+      .actionControl(templateActionControlModel)
+      .acceptLanguage("default")
+      .build();
+
+    // Invoke createActionControlTemplate() with a valid options model and verify the result
+    Response<ActionControlTemplate> response = iamPolicyManagementService.createActionControlTemplate(createActionControlTemplateOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlTemplate responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createActionControlTemplatePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createActionControlTemplate operation with and without retries enabled
+  @Test
+  public void testCreateActionControlTemplateWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testCreateActionControlTemplateWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testCreateActionControlTemplateWOptions();
+  }
+
+  // Test the createActionControlTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateActionControlTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.createActionControlTemplate(null).execute();
+  }
+
+  // Test the getActionControlTemplate operation with a valid options model parameter
+  @Test
+  public void testGetActionControlTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"committed\": false, \"action_control\": {\"service_name\": \"serviceName\", \"description\": \"description\", \"actions\": [\"actions\"]}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"version\": \"version\", \"state\": \"active\"}";
+    String getActionControlTemplatePath = "/v1/action_control_templates/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetActionControlTemplateOptions model
+    GetActionControlTemplateOptions getActionControlTemplateOptionsModel = new GetActionControlTemplateOptions.Builder()
+      .actionControlTemplateId("testString")
+      .state("active")
+      .build();
+
+    // Invoke getActionControlTemplate() with a valid options model and verify the result
+    Response<ActionControlTemplate> response = iamPolicyManagementService.getActionControlTemplate(getActionControlTemplateOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlTemplate responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getActionControlTemplatePath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("state"), "active");
+  }
+
+  // Test the getActionControlTemplate operation with and without retries enabled
+  @Test
+  public void testGetActionControlTemplateWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testGetActionControlTemplateWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testGetActionControlTemplateWOptions();
+  }
+
+  // Test the getActionControlTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetActionControlTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.getActionControlTemplate(null).execute();
+  }
+
+  // Test the deleteActionControlTemplate operation with a valid options model parameter
+  @Test
+  public void testDeleteActionControlTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteActionControlTemplatePath = "/v1/action_control_templates/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteActionControlTemplateOptions model
+    DeleteActionControlTemplateOptions deleteActionControlTemplateOptionsModel = new DeleteActionControlTemplateOptions.Builder()
+      .actionControlTemplateId("testString")
+      .build();
+
+    // Invoke deleteActionControlTemplate() with a valid options model and verify the result
+    Response<Void> response = iamPolicyManagementService.deleteActionControlTemplate(deleteActionControlTemplateOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteActionControlTemplatePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteActionControlTemplate operation with and without retries enabled
+  @Test
+  public void testDeleteActionControlTemplateWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testDeleteActionControlTemplateWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testDeleteActionControlTemplateWOptions();
+  }
+
+  // Test the deleteActionControlTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteActionControlTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.deleteActionControlTemplate(null).execute();
+  }
+
+  // Test the createActionControlTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testCreateActionControlTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"committed\": false, \"action_control\": {\"service_name\": \"serviceName\", \"description\": \"description\", \"actions\": [\"actions\"]}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"version\": \"version\", \"state\": \"active\"}";
+    String createActionControlTemplateVersionPath = "/v1/action_control_templates/testString/versions";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the TemplateActionControl model
+    TemplateActionControl templateActionControlModel = new TemplateActionControl.Builder()
+      .serviceName("testString")
+      .description("testString")
+      .actions(java.util.Arrays.asList("testString"))
+      .build();
+
+    // Construct an instance of the CreateActionControlTemplateVersionOptions model
+    CreateActionControlTemplateVersionOptions createActionControlTemplateVersionOptionsModel = new CreateActionControlTemplateVersionOptions.Builder()
+      .actionControlTemplateId("testString")
+      .name("testString")
+      .description("testString")
+      .actionControl(templateActionControlModel)
+      .committed(true)
+      .build();
+
+    // Invoke createActionControlTemplateVersion() with a valid options model and verify the result
+    Response<ActionControlTemplate> response = iamPolicyManagementService.createActionControlTemplateVersion(createActionControlTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlTemplate responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createActionControlTemplateVersionPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createActionControlTemplateVersion operation with and without retries enabled
+  @Test
+  public void testCreateActionControlTemplateVersionWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testCreateActionControlTemplateVersionWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testCreateActionControlTemplateVersionWOptions();
+  }
+
+  // Test the createActionControlTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateActionControlTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.createActionControlTemplateVersion(null).execute();
+  }
+
+  // Test the listActionControlTemplateVersions operation with a valid options model parameter
+  @Test
+  public void testListActionControlTemplateVersionsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"versions\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"committed\": false, \"action_control\": {\"service_name\": \"serviceName\", \"description\": \"description\", \"actions\": [\"actions\"]}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"version\": \"version\", \"state\": \"active\"}]}";
+    String listActionControlTemplateVersionsPath = "/v1/action_control_templates/testString/versions";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListActionControlTemplateVersionsOptions model
+    ListActionControlTemplateVersionsOptions listActionControlTemplateVersionsOptionsModel = new ListActionControlTemplateVersionsOptions.Builder()
+      .actionControlTemplateId("testString")
+      .state("active")
+      .limit(Long.valueOf("10"))
+      .start("testString")
+      .build();
+
+    // Invoke listActionControlTemplateVersions() with a valid options model and verify the result
+    Response<ActionControlTemplateVersionsCollection> response = iamPolicyManagementService.listActionControlTemplateVersions(listActionControlTemplateVersionsOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlTemplateVersionsCollection responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listActionControlTemplateVersionsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("state"), "active");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(query.get("start"), "testString");
+  }
+
+  // Test the listActionControlTemplateVersions operation with and without retries enabled
+  @Test
+  public void testListActionControlTemplateVersionsWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testListActionControlTemplateVersionsWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testListActionControlTemplateVersionsWOptions();
+  }
+
+  // Test the listActionControlTemplateVersions operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListActionControlTemplateVersionsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.listActionControlTemplateVersions(null).execute();
+  }
+
+  // Test the listActionControlTemplateVersions operation using the ActionControlTemplateVersionsPager.getNext() method
+  @Test
+  public void testListActionControlTemplateVersionsWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"committed\":false,\"action_control\":{\"service_name\":\"serviceName\",\"description\":\"description\",\"actions\":[\"actions\"]},\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"version\":\"version\",\"state\":\"active\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"committed\":false,\"action_control\":{\"service_name\":\"serviceName\",\"description\":\"description\",\"actions\":[\"actions\"]},\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"version\":\"version\",\"state\":\"active\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListActionControlTemplateVersionsOptions listActionControlTemplateVersionsOptions = new ListActionControlTemplateVersionsOptions.Builder()
+      .actionControlTemplateId("testString")
+      .state("active")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    List<ActionControlTemplate> allResults = new ArrayList<>();
+    ActionControlTemplateVersionsPager pager = new ActionControlTemplateVersionsPager(iamPolicyManagementService, listActionControlTemplateVersionsOptions);
+    while (pager.hasNext()) {
+      List<ActionControlTemplate> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listActionControlTemplateVersions operation using the ActionControlTemplateVersionsPager.getAll() method
+  @Test
+  public void testListActionControlTemplateVersionsWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"committed\":false,\"action_control\":{\"service_name\":\"serviceName\",\"description\":\"description\",\"actions\":[\"actions\"]},\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"version\":\"version\",\"state\":\"active\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"committed\":false,\"action_control\":{\"service_name\":\"serviceName\",\"description\":\"description\",\"actions\":[\"actions\"]},\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"version\":\"version\",\"state\":\"active\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListActionControlTemplateVersionsOptions listActionControlTemplateVersionsOptions = new ListActionControlTemplateVersionsOptions.Builder()
+      .actionControlTemplateId("testString")
+      .state("active")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    ActionControlTemplateVersionsPager pager = new ActionControlTemplateVersionsPager(iamPolicyManagementService, listActionControlTemplateVersionsOptions);
+    List<ActionControlTemplate> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the replaceActionControlTemplate operation with a valid options model parameter
+  @Test
+  public void testReplaceActionControlTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"committed\": false, \"action_control\": {\"service_name\": \"serviceName\", \"description\": \"description\", \"actions\": [\"actions\"]}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"version\": \"version\", \"state\": \"active\"}";
+    String replaceActionControlTemplatePath = "/v1/action_control_templates/testString/versions/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the TemplateActionControl model
+    TemplateActionControl templateActionControlModel = new TemplateActionControl.Builder()
+      .serviceName("testString")
+      .description("testString")
+      .actions(java.util.Arrays.asList("testString"))
+      .build();
+
+    // Construct an instance of the ReplaceActionControlTemplateOptions model
+    ReplaceActionControlTemplateOptions replaceActionControlTemplateOptionsModel = new ReplaceActionControlTemplateOptions.Builder()
+      .actionControlTemplateId("testString")
+      .version("testString")
+      .ifMatch("testString")
+      .name("testString")
+      .description("testString")
+      .actionControl(templateActionControlModel)
+      .committed(true)
+      .build();
+
+    // Invoke replaceActionControlTemplate() with a valid options model and verify the result
+    Response<ActionControlTemplate> response = iamPolicyManagementService.replaceActionControlTemplate(replaceActionControlTemplateOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlTemplate responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, replaceActionControlTemplatePath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the replaceActionControlTemplate operation with and without retries enabled
+  @Test
+  public void testReplaceActionControlTemplateWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testReplaceActionControlTemplateWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testReplaceActionControlTemplateWOptions();
+  }
+
+  // Test the replaceActionControlTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testReplaceActionControlTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.replaceActionControlTemplate(null).execute();
+  }
+
+  // Test the deleteActionControlTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testDeleteActionControlTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteActionControlTemplateVersionPath = "/v1/action_control_templates/testString/versions/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteActionControlTemplateVersionOptions model
+    DeleteActionControlTemplateVersionOptions deleteActionControlTemplateVersionOptionsModel = new DeleteActionControlTemplateVersionOptions.Builder()
+      .actionControlTemplateId("testString")
+      .version("testString")
+      .build();
+
+    // Invoke deleteActionControlTemplateVersion() with a valid options model and verify the result
+    Response<Void> response = iamPolicyManagementService.deleteActionControlTemplateVersion(deleteActionControlTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteActionControlTemplateVersionPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteActionControlTemplateVersion operation with and without retries enabled
+  @Test
+  public void testDeleteActionControlTemplateVersionWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testDeleteActionControlTemplateVersionWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testDeleteActionControlTemplateVersionWOptions();
+  }
+
+  // Test the deleteActionControlTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteActionControlTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.deleteActionControlTemplateVersion(null).execute();
+  }
+
+  // Test the getActionControlTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testGetActionControlTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"committed\": false, \"action_control\": {\"service_name\": \"serviceName\", \"description\": \"description\", \"actions\": [\"actions\"]}, \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"version\": \"version\", \"state\": \"active\"}";
+    String getActionControlTemplateVersionPath = "/v1/action_control_templates/testString/versions/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetActionControlTemplateVersionOptions model
+    GetActionControlTemplateVersionOptions getActionControlTemplateVersionOptionsModel = new GetActionControlTemplateVersionOptions.Builder()
+      .actionControlTemplateId("testString")
+      .version("testString")
+      .build();
+
+    // Invoke getActionControlTemplateVersion() with a valid options model and verify the result
+    Response<ActionControlTemplate> response = iamPolicyManagementService.getActionControlTemplateVersion(getActionControlTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlTemplate responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getActionControlTemplateVersionPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getActionControlTemplateVersion operation with and without retries enabled
+  @Test
+  public void testGetActionControlTemplateVersionWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testGetActionControlTemplateVersionWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testGetActionControlTemplateVersionWOptions();
+  }
+
+  // Test the getActionControlTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetActionControlTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.getActionControlTemplateVersion(null).execute();
+  }
+
+  // Test the commitActionControlTemplate operation with a valid options model parameter
+  @Test
+  public void testCommitActionControlTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String commitActionControlTemplatePath = "/v1/action_control_templates/testString/versions/testString/commit";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the CommitActionControlTemplateOptions model
+    CommitActionControlTemplateOptions commitActionControlTemplateOptionsModel = new CommitActionControlTemplateOptions.Builder()
+      .actionControlTemplateId("testString")
+      .version("testString")
+      .build();
+
+    // Invoke commitActionControlTemplate() with a valid options model and verify the result
+    Response<Void> response = iamPolicyManagementService.commitActionControlTemplate(commitActionControlTemplateOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, commitActionControlTemplatePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the commitActionControlTemplate operation with and without retries enabled
+  @Test
+  public void testCommitActionControlTemplateWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testCommitActionControlTemplateWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testCommitActionControlTemplateWOptions();
+  }
+
+  // Test the commitActionControlTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCommitActionControlTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.commitActionControlTemplate(null).execute();
+  }
+
+  // Test the listActionControlAssignments operation with a valid options model parameter
+  @Test
+  public void testListActionControlAssignmentsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"assignments\": [{\"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"operation\": \"create\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"action_control\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 0}}}], \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"status\": \"accepted\"}]}";
+    String listActionControlAssignmentsPath = "/v1/action_control_assignments";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListActionControlAssignmentsOptions model
+    ListActionControlAssignmentsOptions listActionControlAssignmentsOptionsModel = new ListActionControlAssignmentsOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .templateId("testString")
+      .templateVersion("testString")
+      .limit(Long.valueOf("10"))
+      .start("testString")
+      .build();
+
+    // Invoke listActionControlAssignments() with a valid options model and verify the result
+    Response<ActionControlAssignmentCollection> response = iamPolicyManagementService.listActionControlAssignments(listActionControlAssignmentsOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlAssignmentCollection responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listActionControlAssignmentsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("template_id"), "testString");
+    assertEquals(query.get("template_version"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(query.get("start"), "testString");
+  }
+
+  // Test the listActionControlAssignments operation with and without retries enabled
+  @Test
+  public void testListActionControlAssignmentsWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testListActionControlAssignmentsWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testListActionControlAssignmentsWOptions();
+  }
+
+  // Test the listActionControlAssignments operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListActionControlAssignmentsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.listActionControlAssignments(null).execute();
+  }
+
+  // Test the listActionControlAssignments operation using the ActionControlAssignmentsPager.getNext() method
+  @Test
+  public void testListActionControlAssignmentsWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"assignments\":[{\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"operation\":\"create\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"action_control\":{\"resource_created\":{\"id\":\"id\"},\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":0}}}],\"template\":{\"id\":\"id\",\"version\":\"version\"},\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"status\":\"accepted\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"assignments\":[{\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"operation\":\"create\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"action_control\":{\"resource_created\":{\"id\":\"id\"},\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":0}}}],\"template\":{\"id\":\"id\",\"version\":\"version\"},\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"status\":\"accepted\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListActionControlAssignmentsOptions listActionControlAssignmentsOptions = new ListActionControlAssignmentsOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .templateId("testString")
+      .templateVersion("testString")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    List<ActionControlAssignment> allResults = new ArrayList<>();
+    ActionControlAssignmentsPager pager = new ActionControlAssignmentsPager(iamPolicyManagementService, listActionControlAssignmentsOptions);
+    while (pager.hasNext()) {
+      List<ActionControlAssignment> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listActionControlAssignments operation using the ActionControlAssignmentsPager.getAll() method
+  @Test
+  public void testListActionControlAssignmentsWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"assignments\":[{\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"operation\":\"create\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"action_control\":{\"resource_created\":{\"id\":\"id\"},\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":0}}}],\"template\":{\"id\":\"id\",\"version\":\"version\"},\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"status\":\"accepted\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"assignments\":[{\"id\":\"id\",\"account_id\":\"accountId\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\",\"operation\":\"create\",\"resources\":[{\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"action_control\":{\"resource_created\":{\"id\":\"id\"},\"error_message\":{\"trace\":\"trace\",\"errors\":[{\"code\":\"insufficent_permissions\",\"message\":\"message\",\"details\":{\"conflicts_with\":{\"etag\":\"etag\",\"role\":\"role\",\"policy\":\"policy\"}},\"more_info\":\"moreInfo\"}],\"status_code\":0}}}],\"template\":{\"id\":\"id\",\"version\":\"version\"},\"target\":{\"type\":\"Account\",\"id\":\"id\"},\"status\":\"accepted\"}],\"total_count\":2,\"limit\":1}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListActionControlAssignmentsOptions listActionControlAssignmentsOptions = new ListActionControlAssignmentsOptions.Builder()
+      .accountId("testString")
+      .acceptLanguage("default")
+      .templateId("testString")
+      .templateVersion("testString")
+      .limit(Long.valueOf("10"))
+      .build();
+
+    ActionControlAssignmentsPager pager = new ActionControlAssignmentsPager(iamPolicyManagementService, listActionControlAssignmentsOptions);
+    List<ActionControlAssignment> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the createActionControlTemplateAssignment operation with a valid options model parameter
+  @Test
+  public void testCreateActionControlTemplateAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"assignments\": [{\"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"operation\": \"create\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"action_control\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 0}}}], \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"status\": \"accepted\"}]}";
+    String createActionControlTemplateAssignmentPath = "/v1/action_control_assignments";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the AssignmentTargetDetails model
+    AssignmentTargetDetails assignmentTargetDetailsModel = new AssignmentTargetDetails.Builder()
+      .type("Account")
+      .id("testString")
+      .build();
+
+    // Construct an instance of the ActionControlAssignmentTemplate model
+    ActionControlAssignmentTemplate actionControlAssignmentTemplateModel = new ActionControlAssignmentTemplate.Builder()
+      .id("testString")
+      .version("testString")
+      .build();
+
+    // Construct an instance of the CreateActionControlTemplateAssignmentOptions model
+    CreateActionControlTemplateAssignmentOptions createActionControlTemplateAssignmentOptionsModel = new CreateActionControlTemplateAssignmentOptions.Builder()
+      .target(assignmentTargetDetailsModel)
+      .templates(java.util.Arrays.asList(actionControlAssignmentTemplateModel))
+      .acceptLanguage("default")
+      .build();
+
+    // Invoke createActionControlTemplateAssignment() with a valid options model and verify the result
+    Response<ActionControlAssignmentCollection> response = iamPolicyManagementService.createActionControlTemplateAssignment(createActionControlTemplateAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlAssignmentCollection responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createActionControlTemplateAssignmentPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createActionControlTemplateAssignment operation with and without retries enabled
+  @Test
+  public void testCreateActionControlTemplateAssignmentWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testCreateActionControlTemplateAssignmentWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testCreateActionControlTemplateAssignmentWOptions();
+  }
+
+  // Test the createActionControlTemplateAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateActionControlTemplateAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.createActionControlTemplateAssignment(null).execute();
+  }
+
+  // Test the getActionControlAssignment operation with a valid options model parameter
+  @Test
+  public void testGetActionControlAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"operation\": \"create\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"action_control\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 0}}}], \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"status\": \"accepted\"}";
+    String getActionControlAssignmentPath = "/v1/action_control_assignments/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetActionControlAssignmentOptions model
+    GetActionControlAssignmentOptions getActionControlAssignmentOptionsModel = new GetActionControlAssignmentOptions.Builder()
+      .assignmentId("testString")
+      .build();
+
+    // Invoke getActionControlAssignment() with a valid options model and verify the result
+    Response<ActionControlAssignment> response = iamPolicyManagementService.getActionControlAssignment(getActionControlAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlAssignment responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getActionControlAssignmentPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getActionControlAssignment operation with and without retries enabled
+  @Test
+  public void testGetActionControlAssignmentWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testGetActionControlAssignmentWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testGetActionControlAssignmentWOptions();
+  }
+
+  // Test the getActionControlAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetActionControlAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.getActionControlAssignment(null).execute();
+  }
+
+  // Test the updateActionControlAssignment operation with a valid options model parameter
+  @Test
+  public void testUpdateActionControlAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"account_id\": \"accountId\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"operation\": \"create\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"action_control\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"trace\": \"trace\", \"errors\": [{\"code\": \"insufficent_permissions\", \"message\": \"message\", \"details\": {\"conflicts_with\": {\"etag\": \"etag\", \"role\": \"role\", \"policy\": \"policy\"}}, \"more_info\": \"moreInfo\"}], \"status_code\": 0}}}], \"template\": {\"id\": \"id\", \"version\": \"version\"}, \"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"status\": \"accepted\"}";
+    String updateActionControlAssignmentPath = "/v1/action_control_assignments/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the UpdateActionControlAssignmentOptions model
+    UpdateActionControlAssignmentOptions updateActionControlAssignmentOptionsModel = new UpdateActionControlAssignmentOptions.Builder()
+      .assignmentId("testString")
+      .ifMatch("testString")
+      .templateVersion("testString")
+      .build();
+
+    // Invoke updateActionControlAssignment() with a valid options model and verify the result
+    Response<ActionControlAssignment> response = iamPolicyManagementService.updateActionControlAssignment(updateActionControlAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    ActionControlAssignment responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PATCH");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateActionControlAssignmentPath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the updateActionControlAssignment operation with and without retries enabled
+  @Test
+  public void testUpdateActionControlAssignmentWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testUpdateActionControlAssignmentWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testUpdateActionControlAssignmentWOptions();
+  }
+
+  // Test the updateActionControlAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateActionControlAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.updateActionControlAssignment(null).execute();
+  }
+
+  // Test the deleteActionControlAssignment operation with a valid options model parameter
+  @Test
+  public void testDeleteActionControlAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteActionControlAssignmentPath = "/v1/action_control_assignments/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteActionControlAssignmentOptions model
+    DeleteActionControlAssignmentOptions deleteActionControlAssignmentOptionsModel = new DeleteActionControlAssignmentOptions.Builder()
+      .assignmentId("testString")
+      .build();
+
+    // Invoke deleteActionControlAssignment() with a valid options model and verify the result
+    Response<Void> response = iamPolicyManagementService.deleteActionControlAssignment(deleteActionControlAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteActionControlAssignmentPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteActionControlAssignment operation with and without retries enabled
+  @Test
+  public void testDeleteActionControlAssignmentWRetries() throws Throwable {
+    iamPolicyManagementService.enableRetries(4, 30);
+    testDeleteActionControlAssignmentWOptions();
+
+    iamPolicyManagementService.disableRetries();
+    testDeleteActionControlAssignmentWOptions();
+  }
+
+  // Test the deleteActionControlAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteActionControlAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamPolicyManagementService.deleteActionControlAssignment(null).execute();
   }
 
   // Perform setup needed before each test method

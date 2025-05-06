@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -83,7 +83,7 @@ public class PolicyAssignmentV1 extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account GUID that the policies assignments belong to..
+   * The account GUID that the policies assignments belong to.
    *
    * @return the accountId
    */
@@ -116,7 +116,7 @@ public class PolicyAssignmentV1 extends GenericModel {
   /**
    * Gets the createdById.
    *
-   * The iam ID of the entity that created the policy assignment.
+   * The IAM ID of the entity that created the policy assignment.
    *
    * @return the createdById
    */
@@ -138,7 +138,7 @@ public class PolicyAssignmentV1 extends GenericModel {
   /**
    * Gets the lastModifiedById.
    *
-   * The iam ID of the entity that last modified the policy assignment.
+   * The IAM ID of the entity that last modified the policy assignment.
    *
    * @return the lastModifiedById
    */
@@ -160,7 +160,7 @@ public class PolicyAssignmentV1 extends GenericModel {
   /**
    * Gets the subject.
    *
-   * subject details of access type assignment.
+   * Subject details of access type assignment.
    *
    * @return the subject
    */

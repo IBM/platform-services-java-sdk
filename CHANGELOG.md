@@ -1,3 +1,10 @@
+# [0.65.0](https://github.com/IBM/platform-services-java-sdk/compare/0.64.0...0.65.0) (2025-05-07)
+
+
+### Features
+
+* **IAM Policy Management:** add support for action control templates from IAM ([#270](https://github.com/IBM/platform-services-java-sdk/issues/270)) ([85af54e](https://github.com/IBM/platform-services-java-sdk/commit/85af54e7f7e1e423db54ce4fee31b75ae0339927))
+
 # [0.64.0](https://github.com/IBM/platform-services-java-sdk/compare/0.63.1...0.64.0) (2025-04-28)
 
 
